@@ -106,10 +106,7 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, \dots,
   \url{https://netlib.org/port/}
 }
 \references{
-  David M. Gay (1990),
-  Usage summary for selected optimization routines.
-  Computing Science Technical Report 153, AT&T Bell Laboratories, Murray
-  Hill.
+  \bibshow{R:Gay:1990}
 }  
 \author{
   \R port: Douglas Bates and Deepayan Sarkar.

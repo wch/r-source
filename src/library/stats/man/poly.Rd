@@ -83,10 +83,8 @@ polym  (\dots, degree = 1, coefs = NULL, raw = FALSE)
   improvements for correct prediction on subsets.
 }
 \references{
-  \bibshow{R:Chambers+Hastie:1992}
-
-  Kennedy, W. J. Jr and Gentle, J. E. (1980)
-  \emph{Statistical Computing} Marcel Dekker.
+  \bibshow{R:Chambers+Hastie:1992,
+    R:Kennedy+Gentle:1980}
 }
 
 \seealso{

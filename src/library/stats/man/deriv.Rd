@@ -94,12 +94,8 @@ deriv3(expr, \dots)
   expression.
 }
 \references{
-  Griewank, A.  and  Corliss, G. F. (1991)
-  \emph{Automatic Differentiation of Algorithms: Theory, Implementation,
-    and Application}.
-  SIAM proceedings, Philadelphia.
-
-  \bibshow{R:Bates+Chambers:1992}
+  \bibshow{R:Bates+Chambers:1992,
+    R:Griewank+Corliss:1991}
 }
 \seealso{
   \code{\link{nlm}} and \code{\link{optim}} for numeric minimization

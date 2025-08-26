@@ -56,9 +56,8 @@ decompose(x, type = c("additive", "multiplicative"), filter = NULL)
   \item{type}{The value of \code{type}.}
 }
 \references{
-  M. Kendall and A. Stuart (1983)
-  \emph{The Advanced Theory of Statistics}, Vol.3,
-  Griffin. pp.\sspace{}410--414.
+  \bibinfo{R:Kendall+Stuart:1983}{note}{Pages 410--414}
+  \bibshow{R:Kendall+Stuart:1983}
 }
 \author{
   David Meyer \email{David.Meyer@wu.ac.at}

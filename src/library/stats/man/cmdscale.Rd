@@ -86,17 +86,11 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE,
   \bibinfo{R:Mardia+Kent+Bibby:1979}{footer}{Chapter 14}
   \bibshow{*,
     R:Becker+Chambers+Wilks:1988,
+    R:Cox+Cox:2001,
     R:Krzanowski+Marriott:1994,
     R:Mardia+Kent+Bibby:1979,
-    R:Seber:1984}
-  
-  Cox, T. F. and Cox, M. A. A. (2001).
-  \emph{Multidimensional Scaling}.  Second edition.
-  Chapman and Hall.
-
-  Torgerson, W. S. (1958).
-  \emph{Theory and Methods of Scaling}.
-  New York: Wiley.
+    R:Seber:1984,
+    R:Torgerson:1958}
 }
 \seealso{
   \code{\link{dist}}.

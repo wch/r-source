@@ -114,12 +114,8 @@ nlm(f, p, \dots, hessian = FALSE, typsize = rep(1, length(p)),
   translation of Fortran code by Richard H. Jones.
 }
 \references{
-  Dennis, J. E. and Schnabel, R. B. (1983).
-  \emph{Numerical Methods for Unconstrained Optimization and Nonlinear
-    Equations}.
-  Prentice-Hall, Englewood Cliffs, NJ.
-
-  \bibshow{R:Schnabel+Koonatz+Weiss:1985}
+  \bibshow{R:Dennis+Schnabel:1983,
+    R:Schnabel+Koonatz+Weiss:1985}
 }
 \seealso{
   \code{\link{optim}} and \code{\link{nlminb}}.

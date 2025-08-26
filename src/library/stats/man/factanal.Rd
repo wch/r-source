@@ -36,7 +36,7 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   \item{start}{\code{NULL} or a matrix of starting values, each column
     giving an initial set of uniquenesses.}
   \item{scores}{Type of scores to produce, if any.  The default is none,
-    \code{"regression"} gives Thompson's scores, \code{"Bartlett"} given
+    \code{"regression"} gives Thomson's scores, \code{"Bartlett"} given
     Bartlett's weighted least-squares scores. Partial matching allows
     these names to be abbreviated.}
   \item{rotation}{a \code{\link{function}} or \code{\link{character}}
@@ -107,9 +107,9 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   \bibcitep{|R:Lawley+Maxwell:1971|page 32}.
 
   Scores can only be produced if a data matrix is supplied and used.
-  The first method is the regression method of Thomson (1951), the
-  second the weighted least squares method of \bibcitet{R:Bartlett:1937a,
-  R:Thomson:1938}.
+  The first method is the regression method of
+  \bibcitet{R:Thomson:1951}, the second the weighted least squares
+  method of \bibcitet{R:Bartlett:1937a, R:Thomson:1938}.
   Both are estimates of the unobserved scores \eqn{f}.  Thomson's method
   regresses (in the population) the unknown \eqn{f} on \eqn{x} to yield
   \deqn{\hat f = \Lambda^\prime \Sigma^{-1} x}{hat f = \Lambda' \Sigma^-1 x}
@@ -163,10 +163,6 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
 
 \references{
   \bibshow{*}
-  
-  Thomson, G. H. (1951).
-  \emph{The Factorial Analysis of Human Ability}.
-  London University Press.
 }
 
 \seealso{

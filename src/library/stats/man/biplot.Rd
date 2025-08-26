@@ -66,11 +66,8 @@ biplot(x, \dots)
   a plot is produced on the current graphics device.
 }
 \references{
-  \bibshow{R:Gabriel:1971}
-
-  J.C. Gower and D. J. Hand (1996).
-  \emph{Biplots}.
-  Chapman & Hall.
+  \bibshow{R:Gabriel:1971,
+    R:Gower+Hand:1996}
 }
 \seealso{\code{\link{biplot.princomp}}, also for examples.}
 \keyword{hplot}

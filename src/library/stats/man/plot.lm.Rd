@@ -151,14 +151,9 @@
   \bibshow{*,
     R:Belsley+Kuh+Welsch:1980,
     R:Cook+Weisberg:1982,
+    R:Firth:1991,
     R:Hinkley:1975,
     R:McCullagh+Nelder:1989}
-
-  Firth, D. (1991) Generalized Linear Models.
-  In Hinkley, D. V. and Reid, N. and Snell, E. J., eds:
-  Pp.\sspace{}55-82 in Statistical Theory and Modelling.
-  In Honour of Sir David Cox, FRS.
-  London: Chapman and Hall.
 }
 \author{
   John Maindonald and Martin Maechler.

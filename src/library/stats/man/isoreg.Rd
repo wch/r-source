@@ -54,11 +54,8 @@ isoreg(x, y = NULL)
   \sQuote{Patches are welcome!}
 }
 \references{
-  Barlow, R. E., Bartholomew, D. J., Bremner, J. M., and Brunk, H. D. (1972)
-  \emph{Statistical Inference under Order Restrictions}; Wiley, London.
-
-  Robertson, T., Wright, F. T. and Dykstra, R. L. (1988)
-  \emph{Order Restricted Statistical Inference}; Wiley, New York.
+  \bibshow{R:Barlow+Bartholomew+Bremner:1972,
+    R:Robertson+Wright+Dykstra:1988}
 }
 %%\author{Original C code by Brian Ripley; all else: Martin Maechler}
 \seealso{the plotting method \code{\link{plot.isoreg}} with more examples;

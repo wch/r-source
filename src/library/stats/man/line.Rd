@@ -45,18 +45,12 @@ line(x, y, iter = 1)
   \code{residuals}, \code{fitted}, and \code{print}.
 }
 \references{
-  \bibshow{R:Tukey:1977}
-
-  \bibshow{R:Velleman+Hoaglin:1981}
-  Chapter 5.
+  \bibinfo{R:Velleman+Hoaglin:1981}{note}{Chapter 5}
   %% MM has C version of the Fortran code for  rline() there
-
-  Emerson, J. D. and Hoaglin, D. C. (1983).
-  Resistant Lines for \eqn{y} versus \eqn{x}.
-  Chapter 5 of \emph{Understanding Robust and Exploratory Data Analysis},
-  eds. David C. Hoaglin, Frederick Mosteller and John W. Tukey.  Wiley.
-
-  \bibshow{R:Johnstone+Velleman:1985}
+  \bibshow{R:Tukey:1977,
+    R:Velleman+Hoaglin:1981,
+    R:Emerson+Hoaglin:1983,
+    R:Johnstone+Velleman:1985}
 }
 \seealso{
   \code{\link{lm}}.

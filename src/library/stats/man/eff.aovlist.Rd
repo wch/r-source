@@ -43,8 +43,7 @@ eff.aovlist(aovlist)
   for each fixed-effect term in the model.
 }
 \references{
-  Heiberger, R. M. (1989)
-  \emph{Computation for the Analysis of Designed Experiments}.  Wiley.
+  \bibshow{R:Heiberger:1989}
 }
 
 \seealso{

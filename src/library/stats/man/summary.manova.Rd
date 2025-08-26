@@ -36,8 +36,9 @@
   approximately an F distribution.  The approximations used follow
   S-PLUS and SAS (the latter apart from some cases of the
   \I{Hotelling}--\I{Lawley} statistic), but many other distributional
-  approximations exist: see Anderson (1984) and
-  \bibcitet{R:Krzanowski+Marriott:1994} for further references.  All four approximate F statistics are
+  approximations exist: see \bibcitet{R:Anderson:1984} and
+  \bibcitet{R:Krzanowski+Marriott:1994} for further references.
+  All four approximate F statistics are
   the same when the term being tested has one degree of freedom, but in
   other cases that for the Roy statistic is an upper bound.
 
@@ -61,10 +62,9 @@
   (degrees of freedom) for the terms (and not the residuals).
 }
 \references{
-  \bibshow{*, R:Krzanowski:1988}
-  
-  Anderson, T. W. (1994) \emph{An Introduction to Multivariate
-    Statistical Analysis.} Wiley.
+  \bibshow{*,
+    R:Anderson:1984,
+    R:Krzanowski:1988}
 }
 \seealso{
   \code{\link{manova}}, \code{\link{aov}}

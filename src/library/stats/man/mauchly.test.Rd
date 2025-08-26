@@ -63,8 +63,7 @@ mauchly.test(object, ...)
 \value{An object of class \code{"htest"}} %% perhaps elaborate?
 
 \references{
-  T. W. Anderson (1958).  \emph{An Introduction to Multivariate
-  Statistical Analysis.} Wiley.
+  \bibshow{R:Anderson:1958}
 }
 
 \seealso{\code{\link{SSD}}, \code{\link{anova.mlm}},

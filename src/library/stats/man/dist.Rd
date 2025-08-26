@@ -134,11 +134,8 @@ as.dist(m, diag = FALSE, upper = FALSE)
 }
 \references{
   \bibshow{R:Becker+Chambers+Wilks:1988,
+    R:Borg+Groenen:1997,
     R:Mardia+Kent+Bibby:1979}
-
-  Borg, I. and Groenen, P. (1997)
-  \emph{Modern Multidimensional Scaling.  Theory and Applications.}
-  Springer.
 }
 \seealso{
   \code{\link[cluster]{daisy}} in the \CRANpkg{cluster} package with more

@@ -154,20 +154,10 @@ hat(x, intercept = TRUE)
   package.
 }
 \references{
-  \bibshow{*}
-
-  Fox, J. (1997).
-  \emph{Applied Regression, Linear Models, and Related Methods}.
-  Sage.
-
-  Fox, J. (2002)
-  \emph{An R and S-Plus Companion to Applied Regression}.
-  Sage Publ.
-
-  Fox, J. and Weisberg, S. (2019).
-  \emph{An R Companion to Applied Regression}, third edition.
-  Sage Publications.
-  \url{https://www.john-fox.ca/Companion/}.
+  \bibshow{*,
+    R:Fox:2000,
+    R:Fox:2002,
+    R:Fox+Weisberg:2019}
 }
 \seealso{
   \code{\link{influence}} (containing \code{\link{lm.influence}}).

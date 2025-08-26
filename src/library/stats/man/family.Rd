@@ -171,11 +171,8 @@ quasipoisson(link = "log")
 }
 \references{
   \bibshow{*,
+    R:Cox+Snell:1981,
     R:Dobson:1983}
-
-  Cox, D. R. and  Snell, E. J. (1981).
-  \emph{Applied Statistics; Principles and Examples.}
-  London: Chapman and Hall.
 }
 \seealso{
   \code{\link{glm}}, \code{\link{power}}, \code{\link{make.link}}.
