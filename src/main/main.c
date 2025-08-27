@@ -1096,7 +1096,7 @@ void setup_Rmainloop(void)
 	if (R_CurrentExpr != R_UnboundValue &&
 	    TYPEOF(R_CurrentExpr) == CLOSXP) {
 		PROTECT(R_CurrentExpr = lang1(cmd));
-		R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
+		R_CurrentExpr = eval(R_CurrentExpr, R_BaseEnv);
 		UNPROTECT(1);
 	}
 	UNPROTECT(1);
@@ -1182,7 +1182,7 @@ void setup_Rmainloop(void)
 	if (R_CurrentExpr != R_UnboundValue &&
 	    TYPEOF(R_CurrentExpr) == CLOSXP) {
 		PROTECT(R_CurrentExpr = lang1(cmd));
-		R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
+		R_CurrentExpr = eval(R_CurrentExpr, R_BaseEnv);
 		UNPROTECT(1);
 	}
 	UNPROTECT(1);
@@ -1323,7 +1323,7 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 		SEXP hcall;
 		R_Busy(1);
 		PROTECT(hcall = LCONS(hooksym, R_NilValue));
-		eval(hcall, R_GlobalEnv);
+		eval(hcall, R_BaseEnv);
 		UNPROTECT(1);
 	    }
 	}
@@ -1571,7 +1571,7 @@ void R_dot_Last(void)
     R_CurrentExpr = R_findVar(cmd, R_BaseNamespace);
     if (R_CurrentExpr != R_UnboundValue && TYPEOF(R_CurrentExpr) == CLOSXP) {
 	PROTECT(R_CurrentExpr = lang1(cmd));
-	R_CurrentExpr = eval(R_CurrentExpr, R_GlobalEnv);
+	R_CurrentExpr = eval(R_CurrentExpr, R_BaseEnv);
 	UNPROTECT(1);
     }
     UNPROTECT(1);

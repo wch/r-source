@@ -1591,7 +1591,7 @@ Rf_getCallingDLL(void)
     if(!found) return R_NilValue;
 
     PROTECT(e = lang2(install("getCallingDLLe"), rho));
-    ans = eval(e,  R_GlobalEnv);
+    ans = eval(e,  R_BaseEnv);
     UNPROTECT(1);
     return(ans);
 }
@@ -1619,7 +1619,7 @@ R_FindNativeSymbolFromDLL(char *name, DllReference *dll,
 	if (env != R_NilValue) {
 	    SEXP e;
 	    PROTECT(e = lang2(install("getCallingDLLe"), env));
-	    dll->obj = eval(e, R_GlobalEnv);
+	    dll->obj = eval(e, R_BaseEnv);
 	    UNPROTECT(1);
 	} else dll->obj = Rf_getCallingDLL();
 	PROTECT(dll->obj); numProtects++;

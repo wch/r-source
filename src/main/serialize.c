@@ -1790,7 +1790,7 @@ static SEXP R_FindNamespace1(SEXP info)
     SEXP s_getNamespace = install("..getNamespace");
     PROTECT(expr = LCONS(s_getNamespace,
 			 LCONS(info, LCONS(where, R_NilValue))));
-    val = eval(expr, R_GlobalEnv);
+    val = eval(expr, R_BaseEnv);
     UNPROTECT(3);
     return val;
 }

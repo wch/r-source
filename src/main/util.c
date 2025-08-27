@@ -1154,7 +1154,7 @@ const char *getTZinfo(void)
     // call Sys.timezone()
     SEXP expr = PROTECT(install("Sys.timezone"));
     SEXP call = PROTECT(lang1(expr));
-    SEXP ans = PROTECT(eval(call, R_GlobalEnv));
+    SEXP ans = PROTECT(eval(call, R_BaseEnv));
     if(TYPEOF(ans) == STRSXP && LENGTH(ans) == 1) {
 	SEXP el = STRING_ELT(ans, 0);
 	if (el != NA_STRING) {
