@@ -1236,7 +1236,7 @@ bibentry(bibtype = "Book",
 
 bibentry(bibtype = "TechReport",
          key = "R:Freeny:1977",
-         author = person(given = c("A.", "E."),
+         author = person(given = c("Anne", "E."),
                          family = "Freeny"),
          title = "A Portable Linear Regression Package with Test Programs",
          institution = "Bell Laboratories",
