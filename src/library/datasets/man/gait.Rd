@@ -20,13 +20,14 @@
   }
 }
 \source{
-  In the FDA book (2006), p.8, \emph{\dQuote{The Motion Analysis Laboratory at
-  Children's Hospital, San Diego, collected these data}}.
+  In the FDA book \bibcitep{|R:Ramsay+Silverman:2005|page 8},
+  \emph{\dQuote{The Motion Analysis Laboratory at Children's Hospital,
+      San Diego, collected these data}}.
 }
 \note{
   This is the version of the data as in the \CRANpkg{fda} package and 
-  corresponding textbooks, but with named dimensions. One record appears to be 
-  duplicated from the original paper,
+  corresponding textbooks, but with named dimensions.  One record
+  appears to be duplicated from the original paper,
   \bibcitet{R:Olshen+Biden+Wyatt:1989}, which 
   analyses a sample of 38 boys. The \code{gait} dataset has 39 boys but 
   \code{boy19} and \code{boy26} have identical measurements.
