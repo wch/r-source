@@ -642,6 +642,25 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
 
     ## http/https.
     pos <- which(schemes == "http" | schemes == "https")
+    if(length(pos)) {
+        ## Catch malformedURLs like 'http:/foo/bar' and 'https:///foo/bar'.
+        if(any(ind <- !nzchar(parts[pos, "authority"]))) {
+            len <- sum(ind)
+            msg <- rep.int("Invalid URL: missing authority part", len)
+            bad <- rbind(bad,
+                         .gather(urls[pos[ind]], parents[pos[ind]],
+                                 m = msg))
+            pos <- pos[!ind]
+        }
+        if(any(ind <- grepl("#", parts[pos, "fragment"]))) {
+            len <- sum(ind)
+            msg <- rep.int("Invalid URL: '#' not allowed in fragment", len)
+            bad <- rbind(bad,
+                         .gather(urls[pos[ind]], parents[pos[ind]],
+                                 m = msg))
+            pos <- pos[!ind]
+        }
+    }
     if(length(pos) && remote) {
         urlspos <- urls[pos]
         ## Check DOI URLs via the DOI handle API, as we nowadays do for
