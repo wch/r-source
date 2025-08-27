@@ -37,14 +37,11 @@ morley
   \CRANpkg{MASS}.
 }
 \source{
-  A. J. Weekes (1986)
-  \emph{A Genstat Primer}.
-  London: Edward Arnold.
-
   \bibinfo{R:Stigler:1977}{footer}{(See Table 6.)}
   \bibinfo{R:Michelson:1882}{footer}{(See Table 24.)}  
   \bibshow{R:Michelson:1882,
-    R:Stigler:1977}
+    R:Stigler:1977,
+    R:Weekes:1986}
 }
 \examples{
 require(stats); require(graphics)

@@ -23,10 +23,8 @@
   (\code{AL}, \code{AM}, \code{AH}, \code{BL}, \code{BM}, \code{BH}).
 }
 \source{
-  Tippett, L. H. C. (1950)
-  \emph{Technological Applications of Statistics}.
-  Wiley.  Page 106.
-
+  \bibinfo{R:Tippett:1950}{note}{Page 106}
+  \bibshow{R:Tippett:1950}
 }
 \references{
   \bibshow{R:McNeil:1977, R:Tukey:1977}

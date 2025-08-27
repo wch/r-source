@@ -32,9 +32,7 @@ freeny.y
   and \code{market.potential} obtained from the above two data objects.
 }
 \source{
-  A. E. Freeny (1977)
-  \emph{A Portable Linear Regression Package with Test Programs}.
-  Bell Laboratories memorandum.
+  \bibshow{R:Freeny:1977}
 }
 \references{
   \bibshow{R:Becker+Chambers+Wilks:1988}

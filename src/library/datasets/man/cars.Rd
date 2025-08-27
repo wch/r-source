@@ -20,9 +20,7 @@
   }
 }
 \source{
-  Ezekiel, M. (1930)
-  \emph{Methods of Correlation Analysis}.
-  Wiley.
+  \bibshow{R:Ezekiel:1930}
 }
 \references{
   \bibshow{R:McNeil:1977}

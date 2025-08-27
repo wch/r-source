@@ -24,13 +24,8 @@
     \tab Volume of timber in cubic ft\cr}
 }
 \source{
-  Meyer, H. A. (1953)
-  \emph{Forest Mensuration}.
-  Penns Valley Publishers, Inc.
-
-  Ryan, T. A., Joiner, B. L. and Ryan, B. F. (1976)
-  \emph{The Minitab Student Handbook}.
-  Duxbury Press.
+  \bibshow{R:Meyer:1953,
+    R:Ryan+Joiner+Ryan:1976}
 }
 \references{
   \bibshow{R:Atkinson:1986}

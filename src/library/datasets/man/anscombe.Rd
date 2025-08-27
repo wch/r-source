@@ -22,9 +22,8 @@
     with mean 7.5 and standard deviation 2.03}
 }
 \source{
-  Tufte, Edward R. (1989).
-  \emph{The Visual Display of Quantitative Information}, 13--14.
-  Graphics Press.
+  \bibinfo{R:Tufte:1990}{note}{Pages 13--14}
+  \bibshow{R:Tufte:1990}
 }
 \references{
   \bibshow{R:Anscombe:1973}

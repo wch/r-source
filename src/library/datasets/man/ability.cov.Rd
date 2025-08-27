@@ -28,11 +28,8 @@
 }
 \usage{ability.cov}
 \source{
-  \bibshow{R:Bartholomew:1987}
-
-  Bartholomew, D. J. and Knott, M. (1990).
-  \emph{Latent Variable Analysis and Factor Analysis}.
-  Second Edition, Arnold.
+  \bibshow{R:Bartholomew:1987,
+    R:Bartholomew+Knott:1999}
 }
 \references{
   \bibshow{R:Smith+Stanley:1983}

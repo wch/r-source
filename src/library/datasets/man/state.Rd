@@ -70,11 +70,7 @@ state.x77
   \eqn{2.589988110336 km^2}.
 }
 \source{
-  U.S. Department of Commerce, Bureau of the Census (1977)
-  \emph{Statistical Abstract of the United States}.
-
-  U.S. Department of Commerce, Bureau of the Census (1977)
-  \emph{County and City Data Book}.
+  \bibshow{R:USDOC:1977:a, R:USDOC:1977:b}
 }
 \references{
   \bibshow{R:Becker+Chambers+Wilks:1988}

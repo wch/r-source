@@ -20,9 +20,7 @@
   }
 }
 \source{
-  Weast, R. C., ed. (1973)
-  \emph{Handbook of Chemistry and Physics}.
-  \I{CRC Press}.
+  \bibshow{R:Weast:1973}
 }
 \references{
   \bibshow{R:McNeil:1977}

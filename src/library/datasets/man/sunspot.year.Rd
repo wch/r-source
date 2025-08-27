@@ -21,8 +21,8 @@ sunspot.year
   observations, and is of class \code{"ts"}.
 }
 \source{
-  H. Tong (1996)
-  \emph{Non-Linear Time Series}. Clarendon Press, Oxford, p.\sspace{}471.
+  \bibinfo{R:Tong:1996}{note}{Page 471}
+  \bibshow{R:Tong:1996}
 }
 \seealso{
   For \emph{monthly} sunspot numbers, see \code{\link{sunspot.month}}
