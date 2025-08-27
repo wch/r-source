@@ -818,9 +818,7 @@ function(dir, packages)
 .install_R_bibliographies_as_RDS <- 
 function(dir) {
     bibfiles <- Sys.glob(file.path(dir, "*.R"))
-    bibentries <- do.call(c, lapply(bibfiles,
-                                    utils::readCitationFile, 
-                                    list(Encoding = "UTF-8")))
+    bibentries <- do.call(c, lapply(bibfiles, .read_bibentries))
     keys <- .bibentry_get_key(bibentries)
     if(any(ind <- !nzchar(keys))) {
         msg <- paste(c("Found the following bibentries with no key:",

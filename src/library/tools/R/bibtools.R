@@ -33,10 +33,7 @@ function(dir = NULL)
         dir <- file.path(.R_top_srcdir_from_Rd(), 
                          "share", "bibliographies")
     bibfiles <- Sys.glob(file.path(dir, "*.R"))
-    bibentries <-
-        do.call(c, lapply(bibfiles,
-                          utils::readCitationFile,
-                          list(Encoding = "UTF-8")))
+    bibentries <- do.call(c, lapply(bibfiles, .read_bibentries))
     saveRDS(bibentries, file.path(dir, "R.rds"))
 }
 
@@ -120,6 +117,8 @@ function(file, text)
     key <- lapply(bib,
                   function(e) {
                       a <- e$author
+                      if(is.null(a))
+                          a <- e$editor
                       a <- a[seq_len(min(length(a), 3L))]
                       sprintf("R:%s:%s",
                               paste(gsub("[^[:alpha:]-]", "_",
@@ -129,6 +128,10 @@ function(file, text)
                   })
     do.call(c, Map(function(u, v) { u$key <- v; u }, bib, key))
 }
+
+.read_bibentries <-
+function(file)
+    utils::readCitationFile(file, list(Encoding = "UTF-8"))
 
 .dump_bibentries <-
 function(bib, con = stdout())
