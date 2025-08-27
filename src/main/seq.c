@@ -1156,7 +1156,7 @@ attribute_hidden SEXP do_sequence(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("'nvec' must be a vector of non-negative integers"));
 	ans_len += length;
     }
-    PROTECT(ans = allocVector(INTSXP, ans_len));
+    ans = allocVector(INTSXP, ans_len);
     ans_elt = INTEGER(ans);
     lengths_elt = INTEGER(lengths);
     for (i = i2 = i3 = 0; i < lengths_len; i++, i2++, i3++, lengths_elt++) {
@@ -1166,19 +1166,14 @@ attribute_hidden SEXP do_sequence(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    i3 = 0; /* recycle */
 	length = *lengths_elt;
 	from_elt = INTEGER(from)[i2];
-	if (length != 0 && from_elt == NA_INTEGER) {
-	    UNPROTECT(1);
+	if (length != 0 && from_elt == NA_INTEGER)
 	    error(_("'from' contains NAs"));
-	}
 	by_elt = INTEGER(by)[i3];
-	if (length >= 2 && by_elt == NA_INTEGER) {
-	    UNPROTECT(1);
+	if (length >= 2 && by_elt == NA_INTEGER)
 	    error(_("'by' contains NAs"));
-	}
 	// int to = from_elt + (length - 1) * by_elt;
 	for (k = 0, j = from_elt; k < length; j += by_elt, k++)
 	    *(ans_elt++) = j;
     }
-    UNPROTECT(1);
     return ans;
 }
