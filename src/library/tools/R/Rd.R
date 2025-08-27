@@ -638,6 +638,32 @@ function(x, predicate)
     nodes
 }
 
+### * .Rd_find_nodes_from_macros
+
+.Rd_find_nodes_from_macros <-
+function(x, macros)
+{
+    nodes <- list()
+    recurse <- function(e) {
+        i <- vapply(e,
+                    function(z) {
+                        (!is.null(a <- attr(z, "Rd_tag")) &&
+                         (a == "USERMACRO") &&
+                         !is.null(a <- attr(z, "macro")) &&
+                         (a %in% macros))
+                    },
+                    NA)
+        if(any(i)) {
+            i <- which(i)
+            nodes <<- c(nodes, e[i + 1L])
+        }
+        if(is.list(e))
+            lapply(e, recurse)
+    }
+    lapply(x, recurse)
+    nodes
+}
+
 ### * .Rd_apply
 
 ## A first shot at recursively transforming nodes in Rd objects: nodes
