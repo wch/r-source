@@ -1131,7 +1131,7 @@ attribute_hidden SEXP do_sequence(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     lengths = CAR(args);
     if (!isInteger(lengths))
-	error(_("'lengths' is not of mode integer"));
+	error(_("'nvec' is not of mode integer"));
     from = CADR(args);
     if (!isInteger(from))
 	error(_("'from' is not of mode integer"));
@@ -1144,16 +1144,16 @@ attribute_hidden SEXP do_sequence(SEXP call, SEXP op, SEXP args, SEXP rho)
     by_len = length(by);
     if (lengths_len != 0) {
 	if (from_len == 0)
-	    error(_("'from' has length 0, but not 'lengths'"));
+	    error(_("'from' has length 0, but not 'nvec'"));
 	if (by_len == 0)
-	    error(_("'by' has length 0, but not 'lengths'"));
+	    error(_("'by' has length 0, but not 'nvec'"));
     }
     ans_len = 0;
     lengths_elt = INTEGER(lengths);
     for (i = 0; i < lengths_len; i++, lengths_elt++) {
 	length = *lengths_elt;
 	if (length == NA_INTEGER || length < 0)
-	    error(_("'lengths' must be a vector of non-negative integers"));
+	    error(_("'nvec' must be a vector of non-negative integers"));
 	ans_len += length;
     }
     PROTECT(ans = allocVector(INTSXP, ans_len));
