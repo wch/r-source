@@ -55,7 +55,7 @@ SweaveHooks(options, run = FALSE, envir = .GlobalEnv)
   functions and returns the names of the active hooks for a code chunk.
 }
 \author{
-  Friedrich Leisch, with contributions by Seth Falcon.
+  Friedrich Leisch, with contributions by Seth Falcon and Vincent Goulet.
 }
 \seealso{
   The \code{\link{Sweave}}, \code{\link{RweaveLatex}} and

@@ -130,7 +130,9 @@ RtangleFinish(object, error = FALSE)
   }
 }
 
-\author{Friedrich Leisch and R-core.}
+\author{
+  Friedrich Leisch and R-core, with contributions by Vincent Goulet.
+} 
 \seealso{
   \sQuote{\href{../doc/Sweave.pdf}{Sweave User Manual}}, a vignette in
   the \pkg{utils} package.%% ../vignettes/Sweave.Rnw

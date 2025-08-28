@@ -334,7 +334,9 @@ my.Swd <- function(name, width, height, ...)
   \code{clean = TRUE} would start operating on an empty workspace.
 }
 
-\author{Friedrich Leisch and R-core}
+\author{
+  Friedrich Leisch and R-core, with contributions by Vincent Goulet.
+}
 
 \seealso{
   \sQuote{\href{../doc/Sweave.pdf}{Sweave User Manual}}, a vignette in
