@@ -6,37 +6,65 @@
 \name{Rtangle}
 \alias{Rtangle}
 \alias{RtangleSetup}
-\title{R Driver for \code{Stangle}}
+\alias{RtangleRuncode}
+\alias{RtangleWritedoc}
+\alias{RtangleFinish}
+\title{R Driver for Stangle}
 \description{
   A driver for \code{\link{Stangle}} that extracts \R code chunks.
-  Notably all \code{RtangleSetup()} arguments may be used as arguments
-  in the \code{\link{Stangle}()} call.
 }
 \usage{
 Rtangle()
+
 RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
-             split = FALSE, quiet = FALSE, drop.evalFALSE = FALSE, ...)
+             split = FALSE, quiet = FALSE, drop.evalFALSE = FALSE, \dots)
+
+RtangleRuncode(object, chunk, options)
+
+RtangleWritedoc(object, chunk)
+
+RtangleFinish(object, error = FALSE)
 }
 \arguments{
   \item{file}{name of Sweave source file.  See the description of the
-    corresponding argument of \code{\link{Sweave}}.}
+    corresponding argument of \code{\link{Stangle}}.}
   \item{syntax}{an object of class \code{SweaveSyntax}.}
-  \item{output}{name of output file used unless \code{split = TRUE}:
-    see \sQuote{Details}.}
-  \item{annotate}{a logical or \code{\link{function}}.  When true, as by
-    default, code chunks are separated by comment lines specifying the
-    names and line numbers of the code chunks.
-    If \code{FALSE} the decorating comments are omitted.  Alternatively,
-    \code{annotate} may be a function, see section \sQuote{Chunk annotation}.}
+  \item{output}{name of output file unless \code{split = TRUE}; see
+    \sQuote{Details}.}
+  \item{annotate}{a logical or \code{\link{function}}.  When \code{TRUE}
+    code chunks are separated by comment lines specifying the names and
+    line numbers of the code chunks. If \code{FALSE} the decorating
+    comments are omitted.  Alternatively, \code{annotate} may be a
+    function, see section \sQuote{Chunk annotation}.} 
   \item{split}{split output into a file for each code chunk?}
   \item{quiet}{logical to suppress all progress messages.}
-  \item{drop.evalFALSE}{logical; When false, as by default, all chunks with
+  \item{drop.evalFALSE}{logical. When \code{FALSE} all chunks with
     option \code{eval = FALSE} are \emph{commented out} in the output;
     otherwise (\code{drop.evalFALSE = TRUE}) they are omitted entirely.}
   \item{\dots}{additional named arguments setting defaults for further
     options listed in \sQuote{Supported Options}.}
+  \item{object}{an object created by the \code{setup} function of the
+    driver.}
+  \item{chunk}{text of a code chunk.}
+  \item{options}{named list of character strings.}
+  \item{error}{if \code{TRUE}, finish assuming an error occurred in
+    \code{\link{Sweave}}.}
 }
 \details{
+  See \code{\link{RweaveLatex}} for details on Sweave drivers.
+
+  \code{Rtangle} is the Stangle driver.
+  \code{RtangleSetup}, \code{RtangleRuncode},
+  \code{RtangleWritedoc} and \code{RtangleFinish}
+  are functions for the
+  \code{setup}, \code{runcode}, \code{writedoc} and \code{finish}
+  elements of the driver, respectively.
+  The \code{checkopts} element uses the function 
+  \code{\link{RweaveLatexOptions}} of the \code{RweaveLatex} driver.
+
+  All \code{RtangleSetup} arguments may be used as arguments in the
+  \code{\link{Stangle}} call.
+
   Unless \code{split = TRUE}, the default name of the output file is
   \code{basename(file)} with an extension corresponding to the Sweave
   syntax (e.g., \file{Rnw}, \file{Stex}) replaced by \file{R}.  File
@@ -47,8 +75,8 @@ RtangleSetup(file, syntax, output = NULL, annotate = TRUE,
   chunk is written to a separate file with extension the name of the
   \sQuote{engine} (default \file{.R}).
 
-  Note that this driver does more than simply extract the code chunks verbatim,
-  because chunks may re-use earlier chunks.
+  Note that this driver does more than simply extract the code chunks
+  verbatim, because chunks may re-use earlier chunks.
 }
 
 \section{Chunk annotation (\code{annotate})}{
