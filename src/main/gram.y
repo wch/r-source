@@ -3931,6 +3931,7 @@ static int yylex(void)
     case '~':
     case '$':
     case '@':
+    case '\\':
     case LEFT_ASSIGN:
     case RIGHT_ASSIGN:
     case EQ_ASSIGN:
