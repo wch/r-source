@@ -233,6 +233,9 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
   which they are printed.  If \code{row.names} is specified and does
   not refer to the first column, that column is discarded from such files.
 
+  It is not documented what happens when both \code{row.names} is specified
+  and the header line has one less entry than the number of columns.
+
   The number of data columns is determined by looking at the first five
   lines of input (or the whole input if it has less than five lines), or
   from the length of \code{col.names} if it is specified and is longer.
