@@ -2198,6 +2198,15 @@ stopifnot(r == quote(._NULL_()),
 ## _classed_ warning
 
 
+## implement messageCondition and use it in packageStartupMessage
+classes <- c("testMessage", "message", "condition")
+tools::assertCondition(message(messageCondition("a test", class = "testMessage")),
+                       classes) |> suppressMessages()
+classes <- c("packageStartupMessage", "simpleMessage", "message", "condition")
+tools::assertCondition(packageStartupMessage("a startup message"),
+                       classes) |> suppressMessages()
+suppressPackageStartupMessages(packageStartupMessage("shouldn't see me"))
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

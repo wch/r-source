@@ -66,10 +66,9 @@ function(..., domain = NULL, appendLF = TRUE)
     if(appendLF) paste0(msg, "\n") else msg
 }
 
-.packageStartupMessage <- function (message, call = NULL)
-    structure(list(message = message, call = call),
-              class = c("packageStartupMessage",
-                        "simpleMessage", "message", "condition"))
+messageCondition <- function(message, ..., class = NULL, call = NULL)
+    structure(list(message = as.character(message), call = call, ...),
+              class = c(class, "message", "condition"))
 
 suppressPackageStartupMessages <- function (expr)
     withCallingHandlers(expr, packageStartupMessage=function(c)
@@ -79,5 +78,6 @@ packageStartupMessage <- function(..., domain = NULL, appendLF = TRUE)
 {
     call <- sys.call()
     msg <- .makeMessage(..., domain=domain, appendLF = appendLF)
-    message(.packageStartupMessage(msg, call))
+    class <- c("packageStartupMessage", "simpleMessage")
+    message(messageCondition(msg, class = class, call = call))
 }

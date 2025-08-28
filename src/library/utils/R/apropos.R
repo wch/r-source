@@ -31,7 +31,7 @@
                     ".encode_numeric_version", ".decode_numeric_version",
                     ".make_numeric_version",
                     ".expand_R_libs_env_var", ".kronecker",
-                    ".packageStartupMessage", ".rmpkg")
+                    ".rmpkg")
 
 
 apropos <- function (what, where = FALSE, ignore.case = TRUE,
