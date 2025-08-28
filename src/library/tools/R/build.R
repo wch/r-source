@@ -258,7 +258,7 @@ inRbuildignore <- function(files, pkgdir) {
         ensure_installed <- function()
 	    if (!pkgInstalled) {
 		messageLog(Log,
-			   "installing the package to build vignettes")
+			   "installing the package (it is needed to build vignettes)")
 		pkgInstalled <<- temp_install_pkg(pkgdir, libdir)
 	    }
 
@@ -594,7 +594,7 @@ inRbuildignore <- function(files, pkgdir) {
             ## </FIXME>
         }
 
-	messageLog(Log, "installing the package to process help pages")
+	messageLog(Log, "installing the package (it is needed to process help pages)")
 
         dir.create(libdir, mode = "0755", showWarnings = FALSE)
         savelib <- .libPaths()
