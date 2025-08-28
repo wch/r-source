@@ -29,7 +29,7 @@ cleanupLatex <- function(x) {
     }
 }
 
-makeJSS <- function() {
+make_bibstyle_JSS <- function() {
 
     # First, some utilities
 
@@ -400,7 +400,7 @@ makeJSS <- function() {
 }
 
 bibstyle <- local({
-    styles <- list(JSS = makeJSS())
+    styles <- list(JSS = make_bibstyle_JSS())
     default <- "JSS"
     function(style, envir, ..., .init = FALSE, .default=TRUE) {
         newfns <- list(...)
@@ -413,7 +413,7 @@ bibstyle <- local({
 		stopifnot(!.init)
 		styles[[style]] <<- envir
 	    }
-	    if (.init) styles[[style]] <<- makeJSS()
+	    if (.init) styles[[style]] <<- make_bibstyle_JSS()
 	    if (length(newfns) && style == "JSS")
 		stop("The default JSS style may not be modified.")
 	    for (n in names(newfns))
