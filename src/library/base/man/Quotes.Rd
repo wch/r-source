@@ -10,6 +10,8 @@
 \alias{'}%'
 \alias{"}%"
 \alias{`}%`
+\alias{r'}%'
+\alias{r"}%"
 \concept{quotes}
 \concept{backslash}
 \concept{raw character strings}
