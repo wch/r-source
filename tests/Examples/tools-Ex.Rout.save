@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-08-22 r88671) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-08-27 r88724) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -96,7 +96,7 @@ $status
 
 $stdout
  [1] ""                                                                                 
- [2] "R Under development (unstable) (2025-08-22 r88671) -- \"Unsuffered Consequences\""
+ [2] "R Under development (unstable) (2025-08-27 r88724) -- \"Unsuffered Consequences\""
  [3] "Copyright (C) 2025 The R Foundation for Statistical Computing"                    
  [4] "Platform: x86_64-pc-linux-gnu"                                                    
  [5] ""                                                                                 
@@ -112,10 +112,10 @@ $stdout
 [15] "'help.start()' for an HTML browser interface to help."                            
 [16] "Type 'q()' to quit R."                                                            
 [17] ""                                                                                 
-[18] "> x <- readRDS(\"/tmp/RtmpT3CdWm/runri110c511b9e01c4\")"                          
+[18] "> x <- readRDS(\"/tmp/RtmpjrnqE8/runri2309077fd2bc56\")"                          
 [19] "> options(repos = x$repos)"                                                       
 [20] "> y <- tryCatch(list(do.call(x$fun, x$args, quote = TRUE)), error = identity)"    
-[21] "> saveRDS(y, \"/tmp/RtmpT3CdWm/runro110c5145a81969\")"                            
+[21] "> saveRDS(y, \"/tmp/RtmpjrnqE8/runro230907d287351\")"                             
 [22] "> "                                                                               
 
 $stderr
@@ -266,8 +266,8 @@ Error in assertWarning(ff()) :
 +     year = 2013,
 +     url = "https://www.R-project.org"),
 +   bibentry(bibtype = "article",
-+     author = c(person(c("George", "E.", "P."), "Box"),
-+                person(c("David",  "R."),      "Cox")),
++     author = c(person(c("George", "Edward", "Pelham"), "Box"),
++                person(c("David",  "Roxbee"), "Cox")),
 +     year = 1964,
 +     title = "An Analysis of Transformations",
 +     journal = "Journal of the Royal Statistical Society, Series B",
@@ -277,7 +277,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x5569adf24600>
+<environment: 0x55a759bc34c8>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -1451,11 +1451,11 @@ An illustration of lexical scoping.
 > ### ** Examples
 > ## IGNORE_RDIFF_BEGIN
 > R_user_dir("FOO", "cache")
-[1] "/home/Hornik/.cache/R/FOO"
+[1] "/home/hornik/.cache/R/FOO"
 > 
 > ## Create one, platform agnostically, must work if <normal> :
 > (Rdb <- R_user_dir("base"))
-[1] "/home/Hornik/.local/share/R/base"
+[1] "/home/hornik/.local/share/R/base"
 > if(newD <- !dir.exists(Rdb)) # should work user specifically:
 +     newD <- dir.create(Rdb, recursive=TRUE)
 > dir(Rdb) # typically empty
@@ -1607,7 +1607,7 @@ needs Deep Thought
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.422 0.013 0.866 0.349 0.07 
+Time elapsed:  0.338 0.018 0.748 0.284 0.109 
 > grDevices::dev.off()
 null device 
           1 
