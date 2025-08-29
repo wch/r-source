@@ -38,7 +38,7 @@ bibentry(bibtype = "Article",
 
 bibentry(bibtype = "Article",
          key = "R:Emerson:1998",
-         author = person(given = c("J.", "W."),
+         author = person(given = c("John", "W."),
                          family = "Emerson"),
          title = "Mosaic Displays in {S-PLUS}: A General Implementation and a Case Study",
          journal = "ASA Statistical Computing and Statistical Graphics Newsletter",
