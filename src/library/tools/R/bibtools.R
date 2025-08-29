@@ -137,3 +137,25 @@ function(file)
 function(bib, con = stdout())
     writeLines(paste(format(bib, "R"), collapse = "\n\n"), con,
                useBytes = TRUE)
+
+.persons_from_bibentry <-
+function(bib)
+{
+    aut <- lapply(unclass(bib), `[[`, "author")
+    len <- lengths(aut)
+    ind <- (len > 0L)
+    aut[ind] <- Map(`names<-`,
+                    aut[ind],
+                    Map(rep.int,
+                        .bibentry_get_key(bib[ind]),
+                        len[ind]))
+    edi <- lapply(unclass(bib), `[[`, "editor")
+    len <- lengths(edi)
+    ind <- (len > 0L)
+    edi[ind] <- Map(`names<-`,
+                    edi[ind],
+                    Map(rep.int,
+                        .bibentry_get_key(bib[ind]),
+                        len[ind]))
+    do.call(c, c(aut, edi))
+}
