@@ -35,8 +35,8 @@ dump(list, file = "dumpdata.R", append = FALSE,
 }
 \details{
   If some of the objects named do not exist (in scope), they are
-  omitted, with a warning.  If \code{file} is a file and no objects
-  exist then no file is created.
+  omitted, with a warning.  If \code{file} is a character string and no
+  objects exist then no file is created.
 
   \I{\code{\link{source}}ing} may not produce an identical copy of
   \code{dump}ed objects.  A warning is issued if it is likely that
