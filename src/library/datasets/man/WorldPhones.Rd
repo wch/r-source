@@ -22,9 +22,6 @@
   The years are: 1951, 1956, 1957, 1958, 1959, 1960, 1961.
 }
 \source{
-  AT&T (1961) \emph{The World's Telephones}.
-}
-\references{
   \bibshow{R:McNeil:1977}
 }
 \examples{
