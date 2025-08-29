@@ -190,7 +190,7 @@ function(x)
                   headers,
                   rdpath,
                   string2id(.bibentry_get_key(y)),
-                  toRd(y),
+                  toRd(y, style = "R"),
                   footers),
           collapse = "\n\n")
 }

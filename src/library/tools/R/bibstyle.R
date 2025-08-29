@@ -399,8 +399,57 @@ make_bibstyle_JSS <- function() {
     environment()
 }
 
+make_bibstyle_R <- function() {
+    env <- make_bibstyle_JSS()
+    
+    shortName <- function(person) {
+        if(length(family <- person$family)) {
+            result <- cleanupLatex(family)
+            if(length(given <- person$given)) {
+                given <- vapply(given, cleanupLatex, "")
+                paste(result,
+                      paste0(substring(given, 1L, 1L),
+                             ifelse(nchar(given) > 1L, ".", ""),
+                             collapse = " "),
+                      sep = ", ")
+            } else result
+        }
+        else paste(cleanupLatex(person$given), collapse = " ")
+    }
+    environment(shortName) <- env
+    
+    authorList <- function(paper) {
+        names <- vapply(paper$author, shortName, "")
+        if (length(names) > 1L)
+            result <- paste(names, collapse = " and ")
+        else
+            result <- names
+        result
+    }
+    environment(authorList) <- env
+    
+    editorList <- function(paper) {
+        names <- vapply(paper$editor, shortName, "")
+        if (length(names) > 1L)
+            result <- paste(paste(names, collapse = " and "), "(eds.)")
+        else if (length(names))
+            result <- paste(names, "(ed.)")
+        else
+            result <- NULL
+        result
+    }
+    environment(editorList) <- env
+    
+    env$shortName <- shortName
+    env$authorList <- authorList
+    env$editorList <- editorList
+    
+    env
+}
+
 bibstyle <- local({
-    styles <- list(JSS = make_bibstyle_JSS())
+    styles <- list(JSS = make_bibstyle_JSS(),
+                   R = make_bibstyle_R())
     default <- "JSS"
     function(style, envir, ..., .init = FALSE, .default=TRUE) {
         newfns <- list(...)
