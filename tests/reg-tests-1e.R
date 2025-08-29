@@ -2207,6 +2207,13 @@ tools::assertCondition(packageStartupMessage("a startup message"),
                        classes) |> suppressMessages()
 suppressPackageStartupMessages(packageStartupMessage("shouldn't see me"))
 
+## "dumping" nothing to an existing connection was an error in R <= 4.5
+## PR#18729
+tmpfile <- tempfile()
+con <- file(tmpfile, "w")
+dump(character(), con)
+close(con)
+unlink(tmpfile)
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
