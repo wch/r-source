@@ -72,10 +72,11 @@ sapply(pv$s0, unlist)
 sapply(pv$s., unlist) # not really close, but ..
 
 pv$s0$two.sided[1] <-  1 ## artificially
-stopifnot(all.equal(pv$s0, pv$s., tol = 0.5 + 1e-6), # seen 0.5
+stopifnot(all.equal(pv$s0, pv$s., tolerance = 0.5 + 1e-6), # seen 0.5
 	  ## "less" are close:
 	  all.equal(unlist(pv[[c("s0","less")]]),
-		    unlist(pv[[c("s.","less")]]), tol = 0.03),
+		    unlist(pv[[c("s.","less")]]),
+                    tolerance = 0.03),
 	  0 <= unlist(pv), unlist(pv) <= 1) # <- no further NA ..
 ## b)
 sapply(stR[["statistic"]], unlist)
