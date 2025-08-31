@@ -551,7 +551,8 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
                  (grepl("^https?://cran.r-project.org/web/views/[[:alnum:]]+[.]html$",
                         ul)) ||
                  startsWith(ul, "http://cran.r-project.org") ||
-                 any(startsWith(ul, mirrors)))
+                 any(startsWith(ul, mirrors) &
+                     (sub("/$", "", ul) != mirrors)))
         R <- grepl("^http://(www|bugs|journal).r-project.org", ul)
         spaces <- grepl(" ", u)
         c(if(cran) u else "", if(spaces) u else "", if(R) u else "")
