@@ -588,3 +588,75 @@ function(formula, data, subset, na.action = na.pass, ...)
     y$data.name <- DNAME
     y
 }
+
+.dwilcox <-
+function(x, m, n, z = NULL)
+{
+    if(is.null(z))
+        return(dwilcox(x, m, n))
+
+    stopifnot(length(z) == m + n)
+    if(!all(2 * z == floor(2 * z)) || any(z < 1))
+        stop("'z' is not a rank vector")
+
+    y <- rep.int(NA_real_, length(x))
+    i <- which(!is.na(x))
+    if(!any(i))
+        return(y)
+
+    ## scores can be x.5: in that case need to multiply by f=2.
+    f <- 2 - (max(z - floor(z)) == 0)
+    s <- as.integer(sort(floor(f * z)))
+    d <- .Call(C_cpermdist2, s, as.integer(m))
+    w <- seq_along(d)
+    x <- f * (x[i] + m * (m + 1) / 2)
+    w <- w[match(x, w)]
+    y[i] <- ifelse(is.na(w), 0, d[w])
+
+    y
+}
+
+.pwilcox <-
+function(q, m, n, z = NULL, lower.tail = TRUE)
+{
+    if(is.null(z))
+        return(pwilcox(q, m, n, lower.tail = lower.tail))
+
+    y <- rep.int(NA_real_, length(q))
+    i <- which(!is.na(q))
+    if(!any(i))
+        return(y)
+
+    ## Support of U
+    u <- (0 : (2 * m * n)) / 2
+    ## Density
+    d <- .dwilcox(u, m, n, z)
+    y[i] <- vapply(q[i],
+                   function(e)
+                       sum(d[u < e + sqrt(.Machine$double.eps)]),
+                   0)
+    if(lower.tail) y else 1 - y
+}
+
+.qwilcox <-
+function(p, m, n, z = NULL, lower.tail = TRUE)    
+{
+    if(is.null(z))
+        return(qwilcox(p, m, n, lower.tail = lower.tail))
+
+    y <- rep.int(NA_real_, length(p))
+    if(any(i <- (p < 0) | (p > 1)))
+        y[i] <- NaN
+    i <- !is.na(p) & !i
+    if(!any(i))
+        return(y)
+    
+    u <- (0 : (2 * m * n)) / 2
+    v <- .pwilcox(u, m, n, z)
+    if(!lower.tail)
+        p <- 1 - p
+    ## See qwilcox C code:
+    p <- p - 10 * .Machine$double.eps
+    y[i] <- vapply(p[i], function(e) u[v >= e][1L], 0)
+    y
+}
