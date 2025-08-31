@@ -114,25 +114,24 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
         n.y <- as.double(length(y))
         if(is.null(exact))
             exact <- (n.x < 50) && (n.y < 50)
-        STAT <- .wilcox_test_two_stat(x, y, mu, n.x, n.y, digits.rank)
-        TIES <- STAT$ties
-        if(exact && !TIES) {
+        if(exact) {
 	    METHOD <- sub("test", "exact test", METHOD, fixed = TRUE)
-            PVAL <- .wilcox_test_two_pval_exact(STAT$statistic,
-                                                n.x, n.y,
+            STAT <- .wilcox_test_two_stat_exact(x, y, mu, n.x, n.y,
+                                                digits.rank)
+            PVAL <- .wilcox_test_two_pval_exact(STAT, n.x, n.y,
                                                 alternative)
             if(conf.int)
                 CINT <- .wilcox_test_two_cint_exact(x, y, n.x, n.y,
+                                                    STAT$z,
                                                     alternative,
                                                     conf.level)
         }
-        else { ## not exact, maybe ties or zeroes
+        else { ## not exact
             if(correct)
                 METHOD <- paste(METHOD, "with continuity correction")
-            PVAL <- .wilcox_test_two_pval_asymp(STAT$statistic,
-                                                STAT$mean,
-                                                STAT$sd,
-                                                alternative,
+            STAT <- .wilcox_test_two_stat_asymp(x, y, mu, n.x, n.y,
+                                                digits.rank)
+            PVAL <- .wilcox_test_two_pval_asymp(STAT, alternative,
                                                 correct)
             if(conf.int)
                 CINT <- .wilcox_test_two_cint_asymp(x, y, n.x, n.y,
@@ -141,11 +140,6 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                                     correct,
                                                     tol.root,
                                                     digits.rank)
-            if(exact && TIES) {
-                warning("cannot compute exact p-value with ties")
-                if(conf.int)
-                    warning("cannot compute exact confidence intervals with ties")
-            }
         }
     }
 
@@ -378,8 +372,18 @@ function(x, n, alternative, conf.level, correct,
     } # regular (Wmumin, Wmumax)
     list(conf.int = CONF.INT, estimate = ESTIMATE)
 }
+
+.wilcox_test_two_stat_exact <-
+function(x, y, mu, n.x = length(x), n.y = length(y), digits.rank)
+{
+    r <- c(x - mu, y)
+    r <- rank(if(is.finite(digits.rank)) signif(r, digits.rank) else r)
+    TIES <- (length(r) != length(unique(r)))
+    STATISTIC <- c("W" = sum(r[seq_along(x)]) - n.x * (n.x + 1) / 2)
+    list(statistic = STATISTIC, z = if(TIES) r else NULL)
+}
     
-.wilcox_test_two_stat <-
+.wilcox_test_two_stat_asymp <-
 function(x, y, mu, n.x = length(x), n.y = length(y), digits.rank)
 {
     r <- c(x - mu, y)
@@ -392,70 +396,89 @@ function(x, y, mu, n.x = length(x), n.y = length(y), digits.rank)
                   ((n.x + n.y + 1)
                       - sum(NTIES^3 - NTIES)
                       / ((n.x + n.y) * (n.x + n.y - 1))))
-    list(statistic = STATISTIC, mean = MEAN, sd = SIGMA, ties = TIES)
+    list(statistic = STATISTIC, ex = MEAN, sd = SIGMA, ties = TIES)
 }
 
 .wilcox_test_two_pval_exact <-
-function(STATISTIC, n.x, n.y, alternative)
+function(STAT, n.x, n.y, alternative)
 {
+    u <- STAT$statistic
+    z <- STAT$z
     switch(alternative,
            "two.sided" = {
-               p <- if(STATISTIC > (n.x * n.y / 2))
-                        pwilcox(STATISTIC - 1, n.x, n.y, lower.tail = FALSE)
+               p <- if(u > (n.x * n.y / 2))
+                        .pwilcox(u - 1, n.x, n.y, z, lower.tail = FALSE)
                     else
-                        pwilcox(STATISTIC, n.x, n.y)
+                        .pwilcox(u, n.x, n.y, z)
                min(2 * p, 1)
            },
            "greater" = {
-               pwilcox(STATISTIC - 1, n.x, n.y, lower.tail = FALSE)
+               .pwilcox(u - 1, n.x, n.y, z, lower.tail = FALSE)
            },
-           "less" = pwilcox(STATISTIC, n.x, n.y))
+           "less" = .pwilcox(u, n.x, n.y, z))
 }
 
 .wilcox_test_two_cint_exact <-
-function(x, y, n.x, n.y, alternative, conf.level)
+function(x, y, n.x, n.y, z, alternative, conf.level)
 {
     ## Exact confidence interval for the location parameter
     ## mean(x) - mean(y) in the two-sample case (cf. the
     ## one-sample case).
     alpha <- 1 - conf.level
     diffs <- sort(outer(x, y, `-`))
+    w <- if(is.null(z))
+             (n.x * n.y) : 1L
+         else {
+             i <- seq_along(x)
+             m <- n.x * (n.x + 1) / 2
+             vapply(diffs, \(d) sum(rank(c(x - d, y))[i]) - m, 0)
+         }
     CONF.INT <-
         switch(alternative,
                "two.sided" = {
-                   qu <- qwilcox(alpha/2, n.x, n.y)
+                   qu <- .qwilcox(alpha/2, n.x, n.y, z)
+                   ql <- n.x * n.y - qu
+                   lci <- if(qu <= min(w)) max(diffs)
+                          else min(diffs[w <= qu])
+                   uci <- if(ql >= max(w)) min(diffs)
+                          else max(diffs[w > ql])
                    if(qu == 0) qu <- 1
-                   ql <- n.x*n.y - qu
-                   achieved.alpha <- 2*pwilcox(trunc(qu)-1,n.x,n.y)
-                   c(diffs[qu], diffs[ql + 1])
+                   achieved.alpha <-
+                       2 * .pwilcox(trunc(qu) - 1, n.x, n.y, z)
+                   c(uci, lci)
                },
                "greater" = {
-                   qu <- qwilcox(alpha, n.x, n.y)
+                   qu <- .qwilcox(alpha, n.x, n.y, z)
+                   ql <- n.x * n.y - qu
+                   uci <- if(ql >= max(w)) min(diffs)
+                          else max(diffs[w > ql])
                    if(qu == 0) qu <- 1
-                   achieved.alpha <- pwilcox(trunc(qu)-1,n.x,n.y)
-                   c(diffs[qu], +Inf)
+                   achieved.alpha <-
+                       .pwilcox(trunc(qu) - 1, n.x, n.y, z)
+                   c(uci, +Inf)
                },
                "less" = {
-                   qu <- qwilcox(alpha, n.x, n.y)
+                   qu <- .qwilcox(alpha, n.x, n.y, z)
+                   lci <- if(qu <= min(w)) max(diffs)
+                          else min(diffs[w <= qu])
                    if(qu == 0) qu <- 1
-                   ql <- n.x*n.y - qu
-                   achieved.alpha <- pwilcox(trunc(qu)-1,n.x,n.y)
-                   c(-Inf, diffs[ql + 1])
+                   achieved.alpha <-
+                       .pwilcox(trunc(qu) - 1, n.x, n.y, z)
+                   c(-Inf, lci)
                })
-    if(achieved.alpha-alpha > alpha/2) {
+    if(achieved.alpha - alpha > alpha / 2) {
         warning("Requested conf.level not achievable")
         conf.level <- 1 - achieved.alpha
     }
     attr(CONF.INT, "conf.level") <- conf.level
     ESTIMATE <- c("difference in location" = median(diffs))
     list(conf.int = CONF.INT, estimate = ESTIMATE)
-}
+}        
     
-
 .wilcox_test_two_pval_asymp <-
-function(STATISTIC, MEAN, SIGMA, alternative, correct)
+function(STAT, alternative, correct)
 {
-    z <- STATISTIC - MEAN
+    z <- STAT$statistic - STAT$ex
     CORRECTION <- if(correct)
                       switch(alternative,
                              "two.sided" = sign(z) * 0.5,
@@ -463,7 +486,7 @@ function(STATISTIC, MEAN, SIGMA, alternative, correct)
                              "less" = -0.5)
                   else
                       0
-    z <- (z - CORRECTION) / SIGMA
+    z <- (z - CORRECTION) / STAT$sd
     switch(alternative,
            "less" = pnorm(z),
            "greater" = pnorm(z, lower.tail = FALSE),
