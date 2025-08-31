@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-04-19 r84284) -- "Unsuffered Consequences"
-Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin22.4.0 (64-bit)
+R Under development (unstable) (2025-08-31 r88747) -- "Unsuffered Consequences"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -622,14 +622,12 @@ mean of x mean of y
 > 
 > wilcox.test(A, B)
 
-	Wilcoxon rank sum test with continuity correction
+	Wilcoxon rank sum exact test
 
 data:  A and B
-W = 89, p-value = 0.0075
+W = 89, p-value = 0.0065
 alternative hypothesis: true location shift is not equal to 0
 
-Warning message:
-In wilcox.test.default(A, B) : cannot compute exact p-value with ties
 > 
 > plot(ecdf(A), do.points=FALSE, verticals=TRUE, xlim=range(A, B))
 > plot(ecdf(B), do.points=FALSE, verticals=TRUE, add=TRUE)

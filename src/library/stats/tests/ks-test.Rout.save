@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-08-29 r88740) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-08-31 r88747) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -311,17 +311,25 @@ greater.(pseudo)median   2.0 2.0e+00
 +                  lapply(seq_along(x0), function(k)
 +                          wilcox.test(x = x.set$s0[[k]], y = x.set$s.[[k]],
 +                                      exact=TRUE, conf.int=TRUE, alternative = alt)))
-There were 27 warnings (use warnings() to see them)
-> length(w2 <- warnings()) # 27
-[1] 27
-> unique(w2) # 3 different ones
 Warning messages:
-1: In .wilcox_test_two_cint_exact(x, y, n.x, n.y, alternative,  ... :
+1: In .wilcox_test_two_cint_exact(x, y, n.x, n.y, STAT$z, alternative,  :
   Requested conf.level not achievable
-2: In wilcox.test.default(x = x.set$s0[[k]], y = x.set$s.[[k]],  ... :
-  cannot compute exact p-value with ties
-3: In wilcox.test.default(x = x.set$s0[[k]], y = x.set$s.[[k]],  ... :
-  cannot compute exact confidence intervals with ties
+2: In .wilcox_test_two_cint_exact(x, y, n.x, n.y, STAT$z, alternative,  :
+  Requested conf.level not achievable
+3: In .wilcox_test_two_cint_exact(x, y, n.x, n.y, STAT$z, alternative,  :
+  Requested conf.level not achievable
+4: In .wilcox_test_two_cint_exact(x, y, n.x, n.y, STAT$z, alternative,  :
+  Requested conf.level not achievable
+5: In .wilcox_test_two_cint_exact(x, y, n.x, n.y, STAT$z, alternative,  :
+  Requested conf.level not achievable
+6: In .wilcox_test_two_cint_exact(x, y, n.x, n.y, STAT$z, alternative,  :
+  Requested conf.level not achievable
+> length(w2 <- warnings()) # 27
+[1] 6
+> unique(w2) # 3 different ones
+Warning message:
+In .wilcox_test_two_cint_exact(x, y, n.x, n.y, STAT$z,  ... :
+  Requested conf.level not achievable
 > 
 > table(uc2 <- unlist(c2 <- lapply(R2, function(A) lapply(A, class))))
 
@@ -344,31 +352,31 @@ W       7.5  7.5     7.5
 W      12.0 12.0    12.0
 
 $p.value
-     two.sided less   greater
-[1,]         1  0.5 1.0000000
-[2,]         1  0.5 0.7928919
-[3,]         1  0.5 0.6734524
-[4,]         1  0.5 0.6156105
-[5,]         1  0.5 0.5837406
+     two.sided      less   greater
+[1,] 1.0000000 0.5000000 1.0000000
+[2,] 1.0000000 0.5000000 0.8333333
+[3,] 1.0000000 0.5000000 0.7000000
+[4,] 0.9714286 0.4857143 0.6285714
+[5,] 0.9682540 0.4841270 0.5873016
 
 $estimate
-                           two.sided          less       greater
-difference in location -1.000000e-09 -1.000000e-09 -1.000000e-09
-difference in location -4.467848e-05 -4.467848e-05 -4.467848e-05
-difference in location -4.692131e-05 -4.692131e-05 -4.692131e-05
-difference in location  1.937902e-05  1.937902e-05  1.937902e-05
-difference in location  3.741417e-05  3.741417e-05  3.741417e-05
+                       two.sided   less greater
+difference in location    -1e-09 -1e-09  -1e-09
+difference in location    -5e-10 -5e-10  -5e-10
+difference in location     0e+00  0e+00   0e+00
+difference in location     0e+00  0e+00   0e+00
+difference in location     0e+00  0e+00   0e+00
 
 > 
 > noquote(sapply(stR2[["conf.int"]], function(.) vapply(., formatCI, "")))
-     two.sided                 less                  greater              
-[1,] [-1e-09, -1e-09] (0%)     [-Inf, -1e-09] (50%)  [-1e-09, Inf] (50%)  
-[2,] [-1, 1] (95%)             [-Inf, 1] (95%)       [-1, Inf] (95%)      
-[3,] [-2, 2] (95%)             [-Inf, 2] (95%)       [-2, Inf] (95%)      
-[4,] [-3, 3] (95%)             [-Inf, 2.00005] (95%) [-2.00003, Inf] (95%)
-[5,] [-2.99998, 2.99996] (95%) [-Inf, 2.00005] (95%) [-2.00006, Inf] (95%)
+     two.sided             less                 greater            
+[1,] [-1e-09, -1e-09] (0%) [-Inf, -1e-09] (50%) [-1e-09, Inf] (50%)
+[2,] [-1, 1] (67%)         [-Inf, 1] (83%)      [-1, Inf] (83%)    
+[3,] [-2, 2] (95%)         [-Inf, 2] (95%)      [-2, Inf] (95%)    
+[4,] [-3, 2] (95%)         [-Inf, 2] (95%)      [-3, Inf] (95%)    
+[5,] [-3, 2] (95%)         [-Inf, 2] (95%)      [-3, Inf] (95%)    
 > 
 > 
 > proc.time()
    user  system elapsed 
-  0.246   0.024   0.250 
+  0.202   0.034   0.215 

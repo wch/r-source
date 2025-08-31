@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-08-11 r88568) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-08-31 r88747) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -5124,7 +5124,7 @@ function (V)
         r[seq.int(from = 1L, by = p + 1L, length.out = p)] <- 1
     r
 }
-<bytecode: 0x55ad678570e0>
+<bytecode: 0x563b2649c7a8>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7772,7 +7772,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x55ad6780b2c8>
+<environment: 0x563b259d6d40>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -12074,69 +12074,29 @@ P value adjustment method: holm
 > Month <- factor(Month, labels = month.abb[5:9])
 > ## These give warnings because of ties :
 > pairwise.wilcox.test(Ozone, Month)
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
 
-	Pairwise comparisons using Wilcoxon rank sum test with continuity correction 
+	Pairwise comparisons using Wilcoxon rank sum exact test 
 
 data:  Ozone and Month 
 
-    May    Jun    Jul    Aug   
-Jun 0.5775 -      -      -     
-Jul 0.0003 0.0848 -      -     
-Aug 0.0011 0.1295 1.0000 -     
-Sep 0.4744 1.0000 0.0060 0.0227
+    May     Jun     Jul     Aug    
+Jun 0.59876 -       -       -      
+Jul 0.00011 0.07531 -       -      
+Aug 0.00058 0.12296 1.00000 -      
+Sep 0.48080 1.00000 0.00423 0.01901
 
 P value adjustment method: holm 
 > pairwise.wilcox.test(Ozone, Month, p.adjust.method = "bonf")
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
-Warning in wilcox.test.default(xi, xj, paired = paired, ...) :
-  cannot compute exact p-value with ties
 
-	Pairwise comparisons using Wilcoxon rank sum test with continuity correction 
+	Pairwise comparisons using Wilcoxon rank sum exact test 
 
 data:  Ozone and Month 
 
-    May    Jun    Jul    Aug   
-Jun 1.0000 -      -      -     
-Jul 0.0003 0.1414 -      -     
-Aug 0.0012 0.2591 1.0000 -     
-Sep 1.0000 1.0000 0.0074 0.0325
+    May     Jun     Jul     Aug    
+Jun 1.00000 -       -       -      
+Jul 0.00011 0.12551 -       -      
+Aug 0.00064 0.24591 1.00000 -      
+Sep 1.00000 1.00000 0.00528 0.02715
 
 P value adjustment method: bonferroni 
 > detach()
@@ -12713,14 +12673,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x55ad6718bf60>
-<environment: 0x55ad6713aa08>
+<bytecode: 0x563b246f9b48>
+<environment: 0x563b2473f3e8>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x55ad6718be10>
-<environment: 0x55ad6713aa08>
+<bytecode: 0x563b246f9ad8>
+<environment: 0x563b2473f3e8>
 
 > 
 > 
@@ -17079,8 +17039,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x55ad67f59fe8>
-<environment: 0x55ad66e6c268>
+<bytecode: 0x563b266f0588>
+<environment: 0x563b261aea08>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -19106,13 +19066,11 @@ difference in location
 > boxplot(Ozone ~ Month, data = airquality)
 > wilcox.test(Ozone ~ Month, data = airquality,
 +             subset = Month %in% c(5, 8))
-Warning in wilcox.test.default(x = DATA[[1L]], y = DATA[[2L]], ...) :
-  cannot compute exact p-value with ties
 
-	Wilcoxon rank sum test with continuity correction
+	Wilcoxon rank sum exact test
 
 data:  Ozone by Month
-W = 127.5, p-value = 0.0001208
+W = 127.5, p-value = 6.109e-05
 alternative hypothesis: true location shift is not equal to 0
 
 > 
@@ -19675,7 +19633,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.623 0.156 6.783 0 0 
+Time elapsed:  5.053 0.132 5.188 0 0 
 > grDevices::dev.off()
 null device 
           1 
