@@ -160,7 +160,7 @@ wilcox.test(x, \dots)
   one sample is large (several thousands or more).
 }
 \references{
-  \bibinfo{R:Hollander+Wolfe:1973}{footer}{Pages 27--33 (one-sample),
+  \bibinfo{R:Hollander+Wolfe:1973}{note}{Pages 27--33 (one-sample),
     68--75 (two-sample)}
   \bibshow{*}
 }
