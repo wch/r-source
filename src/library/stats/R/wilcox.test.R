@@ -67,25 +67,27 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
         n <- as.double(length(x))
         if(is.null(exact))
             exact <- (n < 50)
-        STAT <- .wilcox_test_one_stat(x, mu, n, digits.rank)
-        TIES <- STAT$ties
-        ZEROES <- STAT$zeroes
-        if(exact && !TIES && !ZEROES) {
-	    METHOD <- sub("test", "exact test", METHOD, fixed = TRUE)
-            PVAL <- .wilcox_test_one_pval_exact(STAT$statistic,
-                                                n,
-                                                alternative)
+        ZERO <- any(x == mu)
+        ## Argh.  Having exact zeroes (after subtracting y if paired)
+        ## and subtracting mu) is a problem.  Wilcoxon suggested droping
+        ## them, Pratt suggested keeping them, see e.g.
+        ## <https://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test#Zeros>.
+        ## Unclear how the conditional/permutation distribution works in
+        ## case of zeroes, so for not do not use an exact test then.
+        if(exact && !ZERO) {
+            METHOD <- sub("test", "exact test", METHOD, fixed = TRUE)
+            STAT <- .wilcox_test_one_stat_exact(x, mu, n, digits.rank)
+            PVAL <- .wilcox_test_one_pval_exact(STAT, n, alternative)
             if(conf.int)
                 CINT <- .wilcox_test_one_cint_exact(x, n,
+                                                    STAT$z,
                                                     alternative,
                                                     conf.level)
-        } else { ## not exact, maybe ties or zeroes
+        } else { ## not exact, maybe zeroes
             if(correct)
                 METHOD <- paste(METHOD, "with continuity correction")
-            PVAL <- .wilcox_test_one_pval_asymp(STAT$statistic,
-                                                STAT$mean,
-                                                STAT$sd,
-                                                alternative,
+            STAT <- .wilcox_test_one_stat_asymp(x, mu, n, digits.rank)
+            PVAL <- .wilcox_test_one_pval_asymp(STAT, alternative,
                                                 correct)
             if(conf.int)
                 CINT <- .wilcox_test_one_cint_asymp(x, n,
@@ -94,12 +96,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                                     correct,
                                                     tol.root,
                                                     digits.rank)
-            if(exact && TIES) {
-                warning("cannot compute exact p-value with ties")
-                if(conf.int)
-                    warning("cannot compute exact confidence interval with ties")
-            }
-            if(exact && ZEROES) {
+            if(exact && ZERO) {
                 warning("cannot compute exact p-value with zeroes")
                 if(conf.int)
                     warning("cannot compute exact confidence interval with zeroes")
@@ -157,12 +154,28 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
     RVAL
 }
 
-.wilcox_test_one_stat <-
+.wilcox_test_one_stat_exact <-
 function(x, mu, n = length(x), digits.rank)
 {
     x <- x - mu
-    ZEROES <- any(x == 0)
-    if(ZEROES) {
+    ## Should not happen ...
+    ZERO <- any(x == 0)
+    if(ZERO) {
+        x <- x[x != 0]
+        n <- length(x)
+    }
+    r <- rank(abs(if(is.finite(digits.rank)) signif(x, digits.rank) else x))
+    TIES <- length(r) != length(unique(r))
+    STATISTIC <- c("V" = sum(r[x > 0]))
+    list(statistic = STATISTIC, z =  if(TIES) r else NULL)
+}
+
+.wilcox_test_one_stat_asymp <-
+function(x, mu, n = length(x), digits.rank)
+{
+    x <- x - mu
+    ZERO <- any(x == 0)
+    if(ZERO) {
         x <- x[x != 0]
         n <- length(x)
     }
@@ -173,26 +186,28 @@ function(x, mu, n = length(x), digits.rank)
     NTIES <- table(r)
     SIGMA <- sqrt(n * (n + 1) * (2 * n + 1) / 24
                   - sum(NTIES^3 - NTIES) / 48)
-    list(statistic = STATISTIC, mean = MEAN, sd = SIGMA,
-         ties = TIES, zeroes = ZEROES)
+    list(statistic = STATISTIC, ex = MEAN, sd = SIGMA,
+         ties = TIES, zero = ZERO)
 }
 
 .wilcox_test_one_pval_exact <-
-function(STATISTIC, n, alternative)
+function(STAT, n, alternative)
 {
+    q <- STAT$statistic
+    z <- STAT$z
     switch(alternative,
            "two.sided" = {
-               p <- if(STATISTIC > (n * (n + 1) / 4))
-                        psignrank(STATISTIC - 1, n, lower.tail = FALSE)
-                    else psignrank(STATISTIC, n)
+               p <- if(q > (n * (n + 1) / 4))
+                        .psignrank(q - 1, n, z, lower.tail = FALSE)
+                    else .psignrank(q, n, z)
                min(2 * p, 1)
            },
-           "greater" = psignrank(STATISTIC - 1, n, lower.tail = FALSE),
-           "less" = psignrank(STATISTIC, n))
+           "greater" = .psignrank(q - 1, n, z, lower.tail = FALSE),
+           "less" = .psignrank(q, n, z))
 }
 
 .wilcox_test_one_cint_exact <-
-function(x, n, alternative, conf.level)
+function(x, n, z, alternative, conf.level)
 {
     ## Exact confidence interval for the median in the
     ## one-sample case.  When used with paired values this
@@ -200,27 +215,46 @@ function(x, n, alternative, conf.level)
     alpha <- 1 - conf.level
     diffs <- outer(x, x, `+`)
     diffs <- sort(diffs[!lower.tri(diffs)]) / 2
+    w <- if(is.null(z))
+             (n * (n + 1) / 2) : 1L
+         else {
+             vapply(diffs,
+                    \(d) { xx <- x - d; sum(rank(abs(xx))[xx > 0]) },
+                    0)
+         }
     CONF.INT <-
         switch(alternative,
                "two.sided" = {
-                   qu <- qsignrank(alpha / 2, n)
+                   qu <- .qsignrank(alpha / 2, n, z)
+                   ql <- n * (n + 1) / 2 - qu
+                   lci <- if(qu <= min(w)) max(diffs)
+                          else min(diffs[w <= qu])
+                   uci <- if(ql >= max(w)) min(diffs)
+                          else max(diffs[w > ql])
+                               c(uci, lci)
                    if(qu == 0) qu <- 1
-                   ql <- n*(n+1)/2 - qu
-                   achieved.alpha <- 2*psignrank(trunc(qu)-1,n)
-                   c(diffs[qu], diffs[ql+1])
+                   achieved.alpha <-
+                       2 * .psignrank(trunc(qu) - 1, n, z)
+                   c(uci, lci)
                },
                "greater" = {
-                   qu <- qsignrank(alpha, n)
+                   qu <- .qsignrank(alpha, n, z)
+                   ql <- n * (n + 1) / 2 - qu
+                   uci <- if(ql >= max(w)) min(diffs)
+                          else max(diffs[w > ql])
                    if(qu == 0) qu <- 1
-                   achieved.alpha <- psignrank(trunc(qu)-1,n)
-                   c(diffs[qu], +Inf)
+                   achieved.alpha <-
+                       .psignrank(trunc(qu) - 1, n, z)
+                   c(uci, +Inf)
                },
                "less" = {
-                   qu <- qsignrank(alpha, n)
+                   qu <- .qsignrank(alpha, n, z)
+                   lci <- if(qu <= min(w)) max(diffs)
+                          else min(diffs[w <= qu])
                    if(qu == 0) qu <- 1
-                   ql <- n*(n+1)/2 - qu
-                   achieved.alpha <- psignrank(trunc(qu)-1,n)
-                   c(-Inf, diffs[ql+1])
+                   achieved.alpha <-
+                       .psignrank(trunc(qu) - 1, n, z)
+                   c(-Inf, lci)
                })
     if(achieved.alpha - alpha > alpha/2){
         warning("requested conf.level not achievable")
@@ -232,9 +266,9 @@ function(x, n, alternative, conf.level)
 }
 
 .wilcox_test_one_pval_asymp <-
-function(STATISTIC, MEAN, SIGMA, alternative, correct)
+function(STAT, alternative, correct)
 {
-    z <- STATISTIC - MEAN
+    z <- STAT$statistic - STAT$ex    
     CORRECTION <- if(correct)
                       switch(alternative,
                              "two.sided" = sign(z) * 0.5,
@@ -242,7 +276,7 @@ function(STATISTIC, MEAN, SIGMA, alternative, correct)
                              "less" = -0.5)
                   else
                       0
-    z <- (z - CORRECTION) / SIGMA
+    z <- (z - CORRECTION) / STAT$sd
     switch(alternative,
            "less" = pnorm(z),
            "greater" = pnorm(z, lower.tail = FALSE),
@@ -402,20 +436,20 @@ function(x, y, mu, n.x = length(x), n.y = length(y), digits.rank)
 .wilcox_test_two_pval_exact <-
 function(STAT, n.x, n.y, alternative)
 {
-    u <- STAT$statistic
+    q <- STAT$statistic
     z <- STAT$z
     switch(alternative,
            "two.sided" = {
-               p <- if(u > (n.x * n.y / 2))
-                        .pwilcox(u - 1, n.x, n.y, z, lower.tail = FALSE)
+               p <- if(q > (n.x * n.y / 2))
+                        .pwilcox(q - 1, n.x, n.y, z, lower.tail = FALSE)
                     else
-                        .pwilcox(u, n.x, n.y, z)
+                        .pwilcox(q, n.x, n.y, z)
                min(2 * p, 1)
            },
            "greater" = {
-               .pwilcox(u - 1, n.x, n.y, z, lower.tail = FALSE)
+               .pwilcox(q - 1, n.x, n.y, z, lower.tail = FALSE)
            },
-           "less" = .pwilcox(u, n.x, n.y, z))
+           "less" = .pwilcox(q, n.x, n.y, z))
 }
 
 .wilcox_test_two_cint_exact <-
