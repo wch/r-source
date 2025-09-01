@@ -684,3 +684,69 @@ function(p, m, n, z = NULL, lower.tail = TRUE)
     y[i] <- vapply(p[i], function(e) s[v >= e][1L], 0)
     y
 }
+
+.dsignrank <-
+function(x, n, z = NULL)
+{
+    if(is.null(z))
+        return(dsignrank(x, n))
+
+    stopifnot(length(z) == n)
+    if (!all(2 * z == floor(2 * z)) || any(z < 1)) 
+        stop("'z' is not a rank vector")
+    y <- rep.int(NA_real_, length(x))
+    i <- which(!is.na(x))
+    if (!any(i)) 
+        return(y)
+    f <- 2 - (max(z - floor(z)) == 0)
+    d <- .Call(C_cpermdist1,
+               as.integer(sort(floor(f * z))))
+    w <- seq.int(0, length(d) - 1L)
+    x <- f * x[i]
+    w <- w[match(x, w)] + 1L
+    y[i] <- ifelse(is.na(w), 0, d[w])
+    y
+}
+
+.psignrank <-
+function(q, n, z = NULL, lower.tail = TRUE)
+{
+    if(is.null(z))
+        return(psignrank(q, n, lower.tail = lower.tail))
+
+    y <- rep.int(NA_real_, length(q))
+    i <- which(!is.na(q))
+    if(!any(i)) 
+        return(y)
+
+    ## Support of V
+    s <- seq.int(0, n * (n + 1)) / 2
+    ## Density
+    d <- .dsignrank(s, n, z)
+    y[i] <- vapply(q[i],
+                   function(e)
+                       sum(d[s < e + sqrt(.Machine$double.eps)]),
+                   0)
+    if(lower.tail) y else 1 - y
+}
+
+.qsignrank <-
+function(p, n, z = NULL, lower.tail = TRUE)
+{
+    if(is.null(z))
+        return(qsignrank(p, n, lower.tail = lower.tail))
+
+    if (any(i <- (p < 0) | (p > 1))) 
+        y[i] <- NaN
+    i <- !is.na(p) & !i
+    if (!any(i)) 
+        return(y)
+
+    s <- seq.int(0, n * (n + 1)) / 2
+    v <- .psignrank(s, n, z)
+    if (!lower.tail) 
+        p <- 1 - p
+    p <- p - 10 * .Machine$double.eps
+    y[i] <- vapply(p[i], function(e) s[v >= e][1L], 0)
+    y
+}   
