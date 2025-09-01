@@ -454,7 +454,13 @@ static void QuartzInitPatterns(QuartzDesc *xd)
     /* Gradients and tiling patterns are different types so need 
      * separate arrays */
     xd->gradients = malloc(sizeof(QGradientRef) * xd->numPatterns);
+    if (!xd->gradients)
+	error("allocation failure in QuartzInitPatterns");
     xd->patterns = malloc(sizeof(QPatternRef) * xd->numPatterns);
+    if (!xd->patterns) {
+	free(xd->gradients);
+	error("allocation failure in QuartzInitPatterns");
+    }
     for (i = 0; i < xd->numPatterns; i++) {
         xd->gradients[i] = NULL;
         xd->patterns[i] = NULL;
@@ -800,6 +806,8 @@ static void QuartzInitClipPaths(QuartzDesc *xd)
     /* Zero clip paths */
     xd->numClipPaths = maxClipPaths;
     xd->clipPaths = malloc(sizeof(QPathRef) * xd->numClipPaths);
+    if (!xd->clipPaths)
+	error("allocation failure in QuartzInitClipPaths");
     for (i = 0; i < xd->numClipPaths; i++) {
         xd->clipPaths[i] = NULL;
     }
@@ -948,6 +956,8 @@ static void QuartzInitMasks(QuartzDesc *xd)
     int i;
     xd->numMasks = 20;
     xd->masks = malloc(sizeof(QMaskRef) * xd->numMasks);
+    if (!xd->masks)
+	error("allocation failure in QuartzInitMasks");
     for (i = 0; i < xd->numMasks; i++) {
         xd->masks[i] = NULL;
     }
@@ -1116,6 +1126,8 @@ static void QuartzInitGroups(QuartzDesc *xd)
     int i;
     xd->numGroups = maxGroups;
     xd->groups = malloc(sizeof(CGLayerRef) * xd->numGroups);
+    if (!xd->groups)
+	error("allocation failure in QuartzInitGroups");
     for (i = 0; i < xd->numGroups; i++) {
         xd->groups[i] = NULL;
     }
@@ -2039,7 +2051,9 @@ static void RQuartz_Text(double x, double y, const char *text, double rot, doubl
     if (!glyphs) error("allocation failure in RQuartz_Text");
     CGFontGetGlyphsForUnichars(font, buffer, glyphs, len);
     int      *advances = malloc(sizeof(int) * len);
+    if (!advances) error("allocation failure in RQuartz_Text");
     CGSize   *g_adv    = malloc(sizeof(CGSize) * len);
+    if (!g_adv) error("allocation failure in RQuartz_Text");
 
     CGFontGetGlyphAdvances(font, glyphs, len, advances);
     for(i =0 ; i < len; i++) {

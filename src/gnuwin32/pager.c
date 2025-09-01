@@ -3,7 +3,7 @@
  *  file pager.c
  *  Copyright (C) 1998--2002  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004--8     The R Foundation
- *  Copyright (C) 2004--2023  The R Core Team
+ *  Copyright (C) 2004--2025  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -112,6 +112,10 @@ static xbuf file2xbuf(const char *name, int enc, int del)
     p[rr] = '\0';
     cnt = mbstowcs(NULL, p, 0);
     wp = (wchar_t *) malloc((cnt+1) * sizeof(wchar_t));
+    if (!wp) {
+	R_ShowMessage(G_("Insufficient memory to display file in internal pager"));
+	return NULL;
+    }
     mbstowcs(wp, p, cnt+1);
     for (q = wp, ms = 1, dim = cnt; *q; q++) {
 	if (*q == '\t')

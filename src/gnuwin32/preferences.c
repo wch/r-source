@@ -309,10 +309,14 @@ void applyGUI(Gui newGUI)
 
     if(strcmp(newGUI->language, curGUI.language)) {
 	char *buf = malloc(50);
-	askok(G_("The language for menus cannot be changed on a\n running console.\n\nSave the preferences and restart Rgui to apply to menus.\n"));
-	snprintf(buf, 50, "LANGUAGE=%s", newGUI->language);
-	putenv(buf);
-	/* no free here: storage remains in use */
+	if (!buf)
+	    R_ShowMessage(G_("Not enough memory"));
+	else {
+	    askok(G_("The language for menus cannot be changed on a\n running console.\n\nSave the preferences and restart Rgui to apply to menus.\n"));
+	    snprintf(buf, 50, "LANGUAGE=%s", newGUI->language);
+	    putenv(buf);
+	    /* no free here: storage remains in use */
+	}
     }
 
 

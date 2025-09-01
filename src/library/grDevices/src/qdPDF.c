@@ -88,6 +88,10 @@ QuartzPDF_DeviceCreate(void *dd, QuartzFunctions_t *fn, QuartzParameters_t *par)
     if (!qf) qf = fn;
 
     QuartzPDFDevice *dev = calloc(1, sizeof(QuartzPDFDevice));
+    if (!dev) {
+	warning("not enough memory in QuartzPDF_DeviceCreate");
+	return ret;
+    }
 
     if ((!par->file || ! *par->file)) par->file = "Rplots.pdf";
 
