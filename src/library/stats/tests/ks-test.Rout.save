@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-09-01 r88751) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-09-01 r88754) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -170,9 +170,9 @@ $s.[[5]]
 +                               wilcox.test(x, exact=TRUE, conf.int=TRUE, alternative = alt)
 +                               ## )
 +                               )))
-There were 55 warnings (use warnings() to see them)
+There were 54 warnings (use warnings() to see them)
 > length(ww <- warnings()) # 52 (or 43 for x0 <- 0:3)
-[1] 55
+[1] 54
 > unique(ww) # 4 different ones
 Warning messages:
 1: cannot compute confidence interval when all observations are zero or tied
@@ -280,18 +280,12 @@ greater.(pseudo)median   2.0 2.0e+00
 +     matrix("", nx, length(alts))))
 , , s0
 
-     two.sided                    less                 
-[1,] [NaN, NaN] (0%)              [-Inf, NaN] (0%)     
-[2,] [0.5, 0.5] (0%)              [-Inf, 0.5] (0%)     
-[3,] [6.57258e-05, 1.99993] (60%) [-Inf, 1.00002] (60%)
-[4,] [5.6384e-05, 2.99994] (80%)  [-Inf, 2.00002] (80%)
-[5,] [0.999997, 3] (80%)          [-Inf, 2.99998] (80%)
-     greater                 
-[1,] [NaN, Inf] (0%)         
-[2,] [0.500007, Inf] (20%)   
-[3,] [8.76344e-05, Inf] (80%)
-[4,] [9.39734e-05, Inf] (90%)
-[5,] [0.999983, Inf] (90%)   
+     two.sided                 less                   greater              
+[1,] [NaN, NaN] (0%)           [-Inf, NaN] (0%)       [NaN, Inf] (0%)      
+[2,] [0, 1] (60%)              [-Inf, 0.500013] (60%) [0, Inf] (80%)       
+[3,] [0, 2] (80%)              [-Inf, 1.50005] (80%)  [0, Inf] (90%)       
+[4,] [0.499959, 2.50004] (80%) [-Inf, 2.00001] (80%)  [0.499959, Inf] (90%)
+[5,] [0.499982, 3.50002] (90%) [-Inf, 3] (90%)        [0.499982, Inf] (95%)
 
 , , s.
 
@@ -379,4 +373,4 @@ difference in location     0e+00  0e+00   0e+00
 > 
 > proc.time()
    user  system elapsed 
-  0.513   0.048   0.551 
+  0.248   0.032   0.272 
