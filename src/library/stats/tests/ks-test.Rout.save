@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-08-31 r88747) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-09-01 r88751) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -182,7 +182,7 @@ Warning messages:
   cannot compute exact confidence interval with zeroes
 4: In .wilcox_test_one_cint_asymp(x, n, alternative, conf.level,  ... :
   requested conf.level not achievable
-5: In .wilcox_test_one_cint_exact(x, n, alternative, conf.level) :
+5: In .wilcox_test_one_cint_exact(x, n, STAT$z, alternative,  ... :
   requested conf.level not achievable
 > 
 > cc <- lapply(RR, function(A) lapply(A, function(bb) lapply(bb, class)))
@@ -379,4 +379,4 @@ difference in location     0e+00  0e+00   0e+00
 > 
 > proc.time()
    user  system elapsed 
-  0.202   0.034   0.215 
+  0.513   0.048   0.551 

@@ -324,9 +324,9 @@ tryCmsg(contour(matrix(rnorm(100), 10, 10), levels = 0, labels = numeric()))
 invisible(warnings())
 .tmp <- lapply(list(0, 1, 0:1, 1:2, c(1,1), -1:1), function(x) wilcox.test(x))
 if(!interactive())
-stopifnot(length(print(uw <- unique(warnings()))) == 2)
+stopifnot(length(print(uw <- unique(warnings()))) == 1)
 ## unique() gave only one warning in  R <= 3.3.1
-
+## For R >= 4.6.0 warnings for exact with ties are gone.
 
 options(warn = 2)# no warnings allowed
 

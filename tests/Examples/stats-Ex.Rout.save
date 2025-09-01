@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-08-31 r88747) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-09-01 r88752) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -5124,7 +5124,7 @@ function (V)
         r[seq.int(from = 1L, by = p + 1L, length.out = p)] <- 1
     r
 }
-<bytecode: 0x563b2649c7a8>
+<bytecode: 0x56332a2a4b80>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7772,7 +7772,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x563b259d6d40>
+<environment: 0x5633297ac158>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -12673,14 +12673,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x563b246f9b48>
-<environment: 0x563b2473f3e8>
+<bytecode: 0x5633285093c8>
+<environment: 0x563328502628>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x563b246f9ad8>
-<environment: 0x563b2473f3e8>
+<bytecode: 0x563328509518>
+<environment: 0x563328502628>
 
 > 
 > 
@@ -17039,8 +17039,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x563b266f0588>
-<environment: 0x563b261aea08>
+<bytecode: 0x56332a4c5a58>
+<environment: 0x56332a23e3c0>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -19076,13 +19076,11 @@ alternative hypothesis: true location shift is not equal to 0
 > 
 > ## accuracy in ties determination via 'digits.rank':
 > wilcox.test( 4:2,      3:1,     paired=TRUE) # Warning:  cannot compute exact p-value with ties
-Warning in wilcox.test.default(4:2, 3:1, paired = TRUE) :
-  cannot compute exact p-value with ties
 
-	Wilcoxon signed rank test with continuity correction
+	Wilcoxon signed rank exact test
 
 data:  4:2 and 3:1
-V = 6, p-value = 0.1489
+V = 6, p-value = 0.25
 alternative hypothesis: true location shift is not equal to 0
 
 > wilcox.test((4:2)/10, (3:1)/10, paired=TRUE) # no ties => *no* warning
@@ -19094,13 +19092,11 @@ V = 6, p-value = 0.25
 alternative hypothesis: true location shift is not equal to 0
 
 > wilcox.test((4:2)/10, (3:1)/10, paired=TRUE, digits.rank = 9) # same ties as (4:2, 3:1)
-Warning in wilcox.test.default((4:2)/10, (3:1)/10, paired = TRUE, digits.rank = 9) :
-  cannot compute exact p-value with ties
 
-	Wilcoxon signed rank test with continuity correction
+	Wilcoxon signed rank exact test
 
 data:  (4:2)/10 and (3:1)/10
-V = 6, p-value = 0.1489
+V = 6, p-value = 0.25
 alternative hypothesis: true location shift is not equal to 0
 
 > 
@@ -19633,7 +19629,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.053 0.132 5.188 0 0 
+Time elapsed:  5.082 0.116 5.2 0 0 
 > grDevices::dev.off()
 null device 
           1 
