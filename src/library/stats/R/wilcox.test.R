@@ -629,8 +629,9 @@ function(x, m, n, z = NULL)
 
     ## scores can be x.5: in that case need to multiply by f=2.
     f <- 2 - (max(z - floor(z)) == 0)
-    s <- as.integer(sort(floor(f * z)))
-    d <- .Call(C_cpermdist2, s, as.integer(m))
+    d <- .Call(C_cpermdist2,
+               as.integer(sort(floor(f * z))),
+               as.integer(m))
     w <- seq_along(d)
     x <- f * (x[i] + m * (m + 1) / 2)
     w <- w[match(x, w)]
@@ -651,12 +652,12 @@ function(q, m, n, z = NULL, lower.tail = TRUE)
         return(y)
 
     ## Support of U
-    u <- (0 : (2 * m * n)) / 2
+    s <- (0 : (2 * m * n)) / 2
     ## Density
-    d <- .dwilcox(u, m, n, z)
+    d <- .dwilcox(s, m, n, z)
     y[i] <- vapply(q[i],
                    function(e)
-                       sum(d[u < e + sqrt(.Machine$double.eps)]),
+                       sum(d[s < e + sqrt(.Machine$double.eps)]),
                    0)
     if(lower.tail) y else 1 - y
 }
@@ -674,12 +675,12 @@ function(p, m, n, z = NULL, lower.tail = TRUE)
     if(!any(i))
         return(y)
     
-    u <- (0 : (2 * m * n)) / 2
-    v <- .pwilcox(u, m, n, z)
+    s <- (0 : (2 * m * n)) / 2
+    v <- .pwilcox(s, m, n, z)
     if(!lower.tail)
         p <- 1 - p
     ## See qwilcox C code:
     p <- p - 10 * .Machine$double.eps
-    y[i] <- vapply(p[i], function(e) u[v >= e][1L], 0)
+    y[i] <- vapply(p[i], function(e) s[v >= e][1L], 0)
     y
 }
