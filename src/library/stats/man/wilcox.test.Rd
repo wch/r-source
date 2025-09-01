@@ -39,7 +39,9 @@ wilcox.test(x, \dots)
   \item{exact}{a logical indicating whether an exact p-value
     should be computed.}
   \item{correct}{a logical indicating whether to apply continuity
-    correction in the normal approximation for the p-value.}
+    correction in the normal approximation for the p-value, or an
+    integer \eqn{k} between 0 and 3 giving the number of correction
+    terms to use from the Edgeworth series for the normal approximation.}
   \item{conf.int}{a logical indicating whether a confidence interval
     should be computed.}
   \item{conf.level}{confidence level of the interval.}
@@ -85,8 +87,19 @@ wilcox.test(x, \dots)
   of \code{y}).
 
   By default (if \code{exact} is not specified), an exact p-value
-  is computed if the samples contain less than 50 finite values and
-  there are no ties.  Otherwise, a normal approximation is used.
+  is computed if the samples contain less than 50 finite values.
+  Otherwise, a normal approximation is used.  If there are ties, exact
+  inference is performed using the conditional/permutation distribution
+  given the observed ranks, using an implementation of the
+  Streitberg-Röhmel shift algorithm
+  \bibcitep{R:Streitberg+Roehmel:1986, R:Streitberg+Roehmel:1987}
+  contributed by \I{Torsten Hothorn}.
+
+  If the normal approximation is used and there are no ties, improved
+  asymptotic p-values can be obtained via including up to \eqn{k = 3}
+  correction terms of the Edgeworth series for the normal approximation,
+  as given in \bibcitet{R:Fellingham+Stoker:1964} for the signed rank
+  test and in \bibcitet{R:Fix+Hodges_Jr_:1955} for the rank sum test.
 
   For stability reasons, it may be advisable to use rounded data or to set
   \code{digits.rank = 7}, say, such that determination of ties does not
@@ -219,8 +232,8 @@ wilcox.test(Ozone ~ Month, data = airquality,
             subset = Month \%in\% c(5, 8))
 
 ## accuracy in ties determination via 'digits.rank':
-wilcox.test( 4:2,      3:1,     paired=TRUE) # Warning:  cannot compute exact p-value with ties
-wilcox.test((4:2)/10, (3:1)/10, paired=TRUE) # no ties => *no* warning
+wilcox.test( 4:2,      3:1,     paired=TRUE) 
+wilcox.test((4:2)/10, (3:1)/10, paired=TRUE) 
 wilcox.test((4:2)/10, (3:1)/10, paired=TRUE, digits.rank = 9) # same ties as (4:2, 3:1)
 }
 \keyword{htest}

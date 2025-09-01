@@ -88,6 +88,14 @@
 
       \item \code{chkDots()}' optional argument \code{allowed} has been
       implemented thanks to \I{Trevor Davis}' proposal in \PR{18936}.
+
+      \item \code{wilcox.test()} can now perform exact (conditional)
+      inference in case of ties.  Based on contributions by
+      \I{Torstehn Hothorn}.
+
+      \item \code{wilcox.test()} can now optionally compute improved
+      asymptotic p-values by including up to 3 correction terms of the
+      Edgeworth series for the normal approximation.
     }
   }
 
