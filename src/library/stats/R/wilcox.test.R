@@ -100,7 +100,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 CINT <- .wilcox_test_one_cint_asymp(x, n,
                                                     alternative,
                                                     conf.level,
-                                                    correct,
+                                                    correct >= 0,
                                                     tol.root,
                                                     digits.rank)
             if(exact && ZERO) {
@@ -141,7 +141,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 CINT <- .wilcox_test_two_cint_asymp(x, y, n.x, n.y,
                                                     alternative,
                                                     conf.level,
-                                                    correct,
+                                                    correct >= 0,
                                                     tol.root,
                                                     digits.rank)
         }
@@ -204,12 +204,14 @@ function(STAT, n, alternative)
     z <- STAT$z
     switch(alternative,
            "two.sided" = {
+               ## FIXME: Is the conditional distribution really
+               ## symmetric about its mean?
                p <- if(q > (n * (n + 1) / 4))
-                        .psignrank(q - 1, n, z, lower.tail = FALSE)
+                        .psignrank(q - 1/4, n, z, lower.tail = FALSE)
                     else .psignrank(q, n, z)
                min(2 * p, 1)
            },
-           "greater" = .psignrank(q - 1, n, z, lower.tail = FALSE),
+           "greater" = .psignrank(q - 1/4, n, z, lower.tail = FALSE),
            "less" = .psignrank(q, n, z))
 }
 
@@ -222,6 +224,7 @@ function(x, n, z, alternative, conf.level)
     alpha <- 1 - conf.level
     diffs <- outer(x, x, `+`)
     diffs <- sort(diffs[!lower.tri(diffs)]) / 2
+    ## Of course the 'diffs' are really the Walsh averages.
     w <- if(is.null(z))
              (n * (n + 1) / 2) : 1L
          else {
@@ -232,6 +235,8 @@ function(x, n, z, alternative, conf.level)
     CONF.INT <-
         switch(alternative,
                "two.sided" = {
+                   ## FIXME: Is the conditional distribution really
+                   ## symmetric about its mean?
                    qu <- .qsignrank(alpha / 2, n, z)
                    ql <- n * (n + 1) / 2 - qu
                    lci <- if(qu <= min(w)) max(diffs)
@@ -239,28 +244,27 @@ function(x, n, z, alternative, conf.level)
                    uci <- if(ql >= max(w)) min(diffs)
                           else max(diffs[w > ql])
                                c(uci, lci)
-                   if(qu == 0) qu <- 1
                    achieved.alpha <-
-                       2 * .psignrank(trunc(qu) - 1, n, z)
+                       2 * .psignrank(qu - 1/4, n, z)
                    c(uci, lci)
                },
                "greater" = {
+                   ## FIXME: Is the conditional distribution really
+                   ## symmetric about its mean?
                    qu <- .qsignrank(alpha, n, z)
                    ql <- n * (n + 1) / 2 - qu
                    uci <- if(ql >= max(w)) min(diffs)
                           else max(diffs[w > ql])
-                   if(qu == 0) qu <- 1
                    achieved.alpha <-
-                       .psignrank(trunc(qu) - 1, n, z)
+                       .psignrank(qu - 1/4, n, z)
                    c(uci, +Inf)
                },
                "less" = {
                    qu <- .qsignrank(alpha, n, z)
                    lci <- if(qu <= min(w)) max(diffs)
                           else min(diffs[w <= qu])
-                   if(qu == 0) qu <- 1
                    achieved.alpha <-
-                       .psignrank(trunc(qu) - 1, n, z)
+                       .psignrank(qu - 1/4, n, z)
                    c(-Inf, lci)
                })
     if(achieved.alpha - alpha > alpha/2){
@@ -268,6 +272,9 @@ function(x, n, z, alternative, conf.level)
         conf.level <- 1 - signif(achieved.alpha, 2)
     }
     attr(CONF.INT, "conf.level") <- conf.level
+    ## FIXME: This is the Hodges-Lehmann estimate and not what is
+    ## suggested in Bauer (1972) (as in \CRANpkg{coin}: is this really
+    ## what we want?
     ESTIMATE <- c("(pseudo)median" = median(diffs))
     list(conf.int = CONF.INT, estimate = ESTIMATE)
 }
@@ -360,6 +367,8 @@ function(x, n, alternative, conf.level, correct,
         Wmumax <- if(!is.finite(Wmumin)) NA else W(mumax) # if(): warn only once
     }
     if(n == 0 || !is.finite(Wmumax)) { # incl. "all zero / ties" warning above
+        ## FIXME: in the one-sides cases this gives (-Inf, NaN) and
+        ## (NaN, Inf): is this really what we want?
         CONF.INT <-
             structure(c(if(alternative == "less"   ) -Inf else NaN,
                         if(alternative == "greater") +Inf else NaN),
@@ -434,6 +443,8 @@ function(x, n, alternative, conf.level, correct,
                    })
         attr(CONF.INT, "conf.level") <- conf.level
         correct <- FALSE # for W(): no continuity correction for estimate
+        ## FIXME: Perhaps instead simply give the Hodges-Lehmann
+        ## estimate?  In particular as we now use 'correct = FALSE'.
         ESTIMATE <- c("(pseudo)median" =
                           uniroot(W, lower = mumin, upper = mumax,
                                   tol = tol.root)$root)
@@ -474,14 +485,16 @@ function(STAT, n.x, n.y, alternative)
     z <- STAT$z
     switch(alternative,
            "two.sided" = {
+               ## FIXME: Is the conditional distribution really
+               ## symmetric about its mean?
                p <- if(q > (n.x * n.y / 2))
-                        .pwilcox(q - 1, n.x, n.y, z, lower.tail = FALSE)
+                        .pwilcox(q - 1/4, n.x, n.y, z, lower.tail = FALSE)
                     else
                         .pwilcox(q, n.x, n.y, z)
                min(2 * p, 1)
            },
            "greater" = {
-               .pwilcox(q - 1, n.x, n.y, z, lower.tail = FALSE)
+               .pwilcox(q - 1/4, n.x, n.y, z, lower.tail = FALSE)
            },
            "less" = .pwilcox(q, n.x, n.y, z))
 }
@@ -504,25 +517,28 @@ function(x, y, n.x, n.y, z, alternative, conf.level)
     CONF.INT <-
         switch(alternative,
                "two.sided" = {
+                   ## FIXME: Is the conditional distribution really
+                   ## symmetric about its mean?
                    qu <- .qwilcox(alpha/2, n.x, n.y, z)
                    ql <- n.x * n.y - qu
                    lci <- if(qu <= min(w)) max(diffs)
                           else min(diffs[w <= qu])
                    uci <- if(ql >= max(w)) min(diffs)
                           else max(diffs[w > ql])
-                   if(qu == 0) qu <- 1
                    achieved.alpha <-
-                       2 * .pwilcox(trunc(qu) - 1, n.x, n.y, z)
+                       2 * .pwilcox(qu - 1/4, n.x, n.y, z)
                    c(uci, lci)
                },
                "greater" = {
+                   ## FIXME: Is the conditional distribution really
+                   ## symmetric about its mean?
                    qu <- .qwilcox(alpha, n.x, n.y, z)
                    ql <- n.x * n.y - qu
                    uci <- if(ql >= max(w)) min(diffs)
                           else max(diffs[w > ql])
                    if(qu == 0) qu <- 1
                    achieved.alpha <-
-                       .pwilcox(trunc(qu) - 1, n.x, n.y, z)
+                       .pwilcox(qu - 1/4, n.x, n.y, z)
                    c(uci, +Inf)
                },
                "less" = {
@@ -531,7 +547,7 @@ function(x, y, n.x, n.y, z, alternative, conf.level)
                           else min(diffs[w <= qu])
                    if(qu == 0) qu <- 1
                    achieved.alpha <-
-                       .pwilcox(trunc(qu) - 1, n.x, n.y, z)
+                       .pwilcox(qu - 1/4, n.x, n.y, z)
                    c(-Inf, lci)
                })
     if(achieved.alpha - alpha > alpha / 2) {
@@ -539,6 +555,9 @@ function(x, y, n.x, n.y, z, alternative, conf.level)
         conf.level <- 1 - achieved.alpha
     }
     attr(CONF.INT, "conf.level") <- conf.level
+    ## FIXME: This is the Hodges-Lehmann estimate and not what is
+    ## suggested in Bauer (1972) (as in \CRANpkg{coin}: is this really
+    ## what we want?
     ESTIMATE <- c("difference in location" = median(diffs))
     list(conf.int = CONF.INT, estimate = ESTIMATE)
 }
@@ -661,6 +680,8 @@ function(x, y, n.x, n.y, alternative, conf.level, correct,
                })
     attr(CONF.INT, "conf.level") <- conf.level
     correct <- FALSE # for W(): no continuity correction for estimate
+    ## FIXME: Perhaps instead simply give the Hodges-Lehmann
+    ## estimate?  In particular as we now use 'correct = FALSE'.
     ESTIMATE <- c("difference in location" =
                       uniroot(W, lower=mumin, upper=mumax,
                               tol = tol.root)$root)
@@ -721,6 +742,7 @@ function(x, m, n, z = NULL)
         return(dwilcox(x, m, n))
 
     stopifnot(length(z) == m + n)
+    ## FIXME: why floor() and not as.integer()?
     if(!all(2 * z == floor(2 * z)) || any(z < 1))
         stop("'z' is not a rank vector")
 
@@ -730,8 +752,10 @@ function(x, m, n, z = NULL)
         return(y)
 
     ## scores can be x.5: in that case need to multiply by f=2.
+    ## FIXME: why floor() and not as.integer()?    
     f <- 2 - (max(z - floor(z)) == 0)
     d <- .Call(C_cpermdist2,
+               ## FIXME: why not sort(as.integer(f * z)) ?
                as.integer(sort(floor(f * z))),
                as.integer(m))
     w <- seq_along(d)
@@ -755,11 +779,14 @@ function(q, m, n, z = NULL, lower.tail = TRUE)
 
     ## Support of U
     s <- (0 : (2 * m * n)) / 2
+    ## FIXME: can we simplify to 0 : (m * n) if z is all integer?
     ## Density
     d <- .dwilcox(s, m, n, z)
     y[i] <- vapply(q[i],
-                   function(e)
-                       sum(d[s < e + sqrt(.Machine$double.eps)]),
+                   function(e) {
+                       ## FIXME: maybe use a smaller fuzz?
+                       sum(d[s < e + sqrt(.Machine$double.eps)])
+                   },
                    0)
     if(lower.tail) y else 1 - y
 }
@@ -778,6 +805,7 @@ function(p, m, n, z = NULL, lower.tail = TRUE)
         return(y)
     
     s <- (0 : (2 * m * n)) / 2
+    ## FIXME: can we simplify to 0 : (m * n) if z is all integer?
     v <- .pwilcox(s, m, n, z)
     if(!lower.tail)
         p <- 1 - p
@@ -794,14 +822,17 @@ function(x, n, z = NULL)
         return(dsignrank(x, n))
 
     stopifnot(length(z) == n)
+    ## FIXME: why floor() and not as.integer()?    
     if (!all(2 * z == floor(2 * z)) || any(z < 1)) 
         stop("'z' is not a rank vector")
     y <- rep.int(NA_real_, length(x))
     i <- which(!is.na(x))
     if (!any(i)) 
         return(y)
+    ## FIXME: why floor() and not as.integer()?
     f <- 2 - (max(z - floor(z)) == 0)
     d <- .Call(C_cpermdist1,
+               ## FIXME: why not sort(as.integer(f * z)) ?
                as.integer(sort(floor(f * z))))
     w <- seq.int(0, length(d) - 1L)
     x <- f * x[i]
@@ -813,8 +844,11 @@ function(x, n, z = NULL)
 .psignrank <-
 function(q, n, z = NULL, lower.tail = TRUE)
 {
-    if(is.null(z))
-        return(psignrank(q, n, lower.tail = lower.tail))
+    if(is.null(z)) {
+        ## FIXME: currently
+        ## psignrank(2.5, 2) != psignrank(2, 2) ?
+        return(psignrank(trunc(q), n, lower.tail = lower.tail))
+    }
 
     y <- rep.int(NA_real_, length(q))
     i <- which(!is.na(q))
@@ -823,11 +857,15 @@ function(q, n, z = NULL, lower.tail = TRUE)
 
     ## Support of V
     s <- seq.int(0, n * (n + 1)) / 2
+    ## FIXME: can we simplify to seq.int(0, n * (n + 1) / 2) is z is all
+    ## integer?
     ## Density
     d <- .dsignrank(s, n, z)
     y[i] <- vapply(q[i],
-                   function(e)
-                       sum(d[s < e + sqrt(.Machine$double.eps)]),
+                   function(e) {
+                       ## FIXME: maybe use a smaller fuzz?
+                       sum(d[s < e + sqrt(.Machine$double.eps)])
+                   },
                    0)
     if(lower.tail) y else 1 - y
 }
@@ -845,6 +883,8 @@ function(p, n, z = NULL, lower.tail = TRUE)
         return(y)
 
     s <- seq.int(0, n * (n + 1)) / 2
+    ## FIXME: can we simplify to seq.int(0, n * (n + 1) / 2) is z is all
+    ## integer?
     v <- .psignrank(s, n, z)
     if (!lower.tail) 
         p <- 1 - p
