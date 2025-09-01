@@ -23,7 +23,7 @@ BJsales.lead
   \url{https://robjhyndman.com/TSDL/}
 }
 \references{
-  \bibinfo{R:Brockwell+Davis:1991}{footer}{Page 414.}
+  \bibinfo{R:Brockwell+Davis:1991}{note}{Page 414}
   \bibshow{*, R:Brockwell+Davis:1991}
 }
 \keyword{datasets}

@@ -66,7 +66,7 @@ boxplot.stats(x, coef = 1.5, do.conf = TRUE, do.out = TRUE)
   interval for the difference in two medians.
 }
 \references{
-  \bibinfo{R:Tukey:1977}{footer}{Section 2C}
+  \bibinfo{R:Tukey:1977}{note}{Section 2C}
   
   \bibshow{*,
     R:Emerson+Strenio:1983,

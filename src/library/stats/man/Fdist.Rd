@@ -96,7 +96,7 @@ rf(n, df1, df2, ncp)
   else \emph{via} \code{\link{qbeta}}.
 }
 \references{
-  \bibinfo{R:Johnson+Kotz+Balakrishnan:1995}{footer}{Chapters 27 and 30.}
+  \bibinfo{R:Johnson+Kotz+Balakrishnan:1995}{note}{Chapters 27 and 30}
   \bibshow{*,
     R:Becker+Chambers+Wilks:1988,
     R:Johnson+Kotz+Balakrishnan:1995}

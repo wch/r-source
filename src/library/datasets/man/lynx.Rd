@@ -14,7 +14,7 @@
 }
 \usage{lynx}
 \source{
-  \bibinfo{R:Brockwell+Davis:1991}{footer}{Series G (page 557).}
+  \bibinfo{R:Brockwell+Davis:1991}{note}{Series G (page 557)}
   \bibshow{R:Brockwell+Davis:1991}
 }
 \references{

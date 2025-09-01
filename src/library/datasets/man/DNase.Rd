@@ -39,7 +39,7 @@
   \code{print}) for its grouped-data classes.
 }
 \source{
-  \bibinfo{R:Davidian+Giltinan:1995}{footer}{(Section 5.2.4, page 134.)}
+  \bibinfo{R:Davidian+Giltinan:1995}{note}{Section 5.2.4, page 134}
   \bibshow{R:Davidian+Giltinan:1995,
     R:Pinheiro+Bates:2000}
 }

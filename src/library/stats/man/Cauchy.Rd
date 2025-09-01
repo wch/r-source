@@ -64,7 +64,7 @@ rcauchy(n, location = 0, scale = 1)
   \code{rcauchy} uses inversion.
 }
 \references{
-  \bibinfo{R:Johnson+Kotz+Balakrishnan:1994}{footer}{Chapter 16.}
+  \bibinfo{R:Johnson+Kotz+Balakrishnan:1994}{note}{Chapter 16}
   \bibshow{R:Becker+Chambers+Wilks:1988,
     R:Johnson+Kotz+Balakrishnan:1994}
 }

@@ -46,7 +46,7 @@ plot.design(x, y = NULL, fun = mean, data = NULL, \dots,
   horizontal line.
 }
 \references{
-  \bibinfo{R:Chambers+Hastie:1992}{footer}{Pages 546--7 (and 163--4).}
+  \bibinfo{R:Chambers+Hastie:1992}{note}{Pages 546--7 (and 163--4)}
   \bibshow{R:Chambers+Hastie:1992,
     R:Freeny+Landwehr:1992}
 }
