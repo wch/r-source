@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-09-01 r88752) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-09-01 r88756) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -5124,7 +5124,7 @@ function (V)
         r[seq.int(from = 1L, by = p + 1L, length.out = p)] <- 1
     r
 }
-<bytecode: 0x56332a2a4b80>
+<bytecode: 0x5640aec7bad0>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7772,7 +7772,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x5633297ac158>
+<environment: 0x5640ae173ae8>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -12080,10 +12080,10 @@ P value adjustment method: holm
 data:  Ozone and Month 
 
     May     Jun     Jul     Aug    
-Jun 0.59876 -       -       -      
-Jul 0.00011 0.07531 -       -      
-Aug 0.00058 0.12296 1.00000 -      
-Sep 0.48080 1.00000 0.00423 0.01901
+Jun 0.57887 -       -       -      
+Jul 0.00011 0.07109 -       -      
+Aug 0.00055 0.11661 1.00000 -      
+Sep 0.47271 1.00000 0.00423 0.01901
 
 P value adjustment method: holm 
 > pairwise.wilcox.test(Ozone, Month, p.adjust.method = "bonf")
@@ -12094,8 +12094,8 @@ data:  Ozone and Month
 
     May     Jun     Jul     Aug    
 Jun 1.00000 -       -       -      
-Jul 0.00011 0.12551 -       -      
-Aug 0.00064 0.24591 1.00000 -      
+Jul 0.00011 0.11848 -       -      
+Aug 0.00061 0.23323 1.00000 -      
 Sep 1.00000 1.00000 0.00528 0.02715
 
 P value adjustment method: bonferroni 
@@ -12673,14 +12673,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x5633285093c8>
-<environment: 0x563328502628>
+<bytecode: 0x5640abb39c20>
+<environment: 0x5640abaf9c48>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x563328509518>
-<environment: 0x563328502628>
+<bytecode: 0x5640abb39d70>
+<environment: 0x5640abaf9c48>
 
 > 
 > 
@@ -17039,8 +17039,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x56332a4c5a58>
-<environment: 0x56332a23e3c0>
+<bytecode: 0x5640aee9c0a8>
+<environment: 0x5640ade91680>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -19075,7 +19075,7 @@ alternative hypothesis: true location shift is not equal to 0
 
 > 
 > ## accuracy in ties determination via 'digits.rank':
-> wilcox.test( 4:2,      3:1,     paired=TRUE) # Warning:  cannot compute exact p-value with ties
+> wilcox.test( 4:2,      3:1,     paired=TRUE) 
 
 	Wilcoxon signed rank exact test
 
@@ -19083,7 +19083,7 @@ data:  4:2 and 3:1
 V = 6, p-value = 0.25
 alternative hypothesis: true location shift is not equal to 0
 
-> wilcox.test((4:2)/10, (3:1)/10, paired=TRUE) # no ties => *no* warning
+> wilcox.test((4:2)/10, (3:1)/10, paired=TRUE) 
 
 	Wilcoxon signed rank exact test
 
@@ -19629,7 +19629,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.082 0.116 5.2 0 0 
+Time elapsed:  5.056 0.133 5.193 0 0 
 > grDevices::dev.off()
 null device 
           1 
