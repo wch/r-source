@@ -60,6 +60,13 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
     if(length(x) < 1L)
         stop("not enough (non-missing) 'x' observations")
 
+    if(is.numeric(correct)) {
+        if(!(correct %in% (0 : 3)))
+            stop("'correct' must be an integer between 0 and 3")
+    } else {
+        correct <- (isTRUE(correct) - 1)
+    }
+
     CINT <- NULL
 
     if(is.null(y)) {
@@ -84,10 +91,10 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                                     alternative,
                                                     conf.level)
         } else { ## not exact, maybe zeroes
-            if(correct)
+            if(correct >= 0)
                 METHOD <- paste(METHOD, "with continuity correction")
             STAT <- .wilcox_test_one_stat_asymp(x, mu, n, digits.rank)
-            PVAL <- .wilcox_test_one_pval_asymp(STAT, alternative,
+            PVAL <- .wilcox_test_one_pval_asymp(STAT, n, alternative,
                                                 correct)
             if(conf.int)
                 CINT <- .wilcox_test_one_cint_asymp(x, n,
@@ -124,12 +131,12 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                                     conf.level)
         }
         else { ## not exact
-            if(correct)
+            if(correct >= 0)
                 METHOD <- paste(METHOD, "with continuity correction")
             STAT <- .wilcox_test_two_stat_asymp(x, y, mu, n.x, n.y,
                                                 digits.rank)
-            PVAL <- .wilcox_test_two_pval_asymp(STAT, alternative,
-                                                correct)
+            PVAL <- .wilcox_test_two_pval_asymp(STAT, n.x, n.y,
+                                                alternative, correct)
             if(conf.int)
                 CINT <- .wilcox_test_two_cint_asymp(x, y, n.x, n.y,
                                                     alternative,
@@ -266,10 +273,14 @@ function(x, n, z, alternative, conf.level)
 }
 
 .wilcox_test_one_pval_asymp <-
-function(STAT, alternative, correct)
+function(STAT, n, alternative, correct)
 {
-    z <- STAT$statistic - STAT$ex    
-    CORRECTION <- if(correct)
+    z <- STAT$statistic - STAT$ex
+    ## Edgeworth approximations only work if there are no ties (or
+    ## zeroes).
+    if((correct > 0) && (STAT$ties || STAT$zero))
+        correct <- 0
+    CORRECTION <- if(correct >= 0)
                       switch(alternative,
                              "two.sided" = sign(z) * 0.5,
                              "greater" = 0.5,
@@ -277,11 +288,34 @@ function(STAT, alternative, correct)
                   else
                       0
     z <- (z - CORRECTION) / STAT$sd
+    F <- function(z, lower.tail = TRUE) {
+        y <- pnorm(z, lower.tail = lower.tail)
+        if(correct < 1) return(y)
+        ## Edgeworth expansion given in Fellingham and Stoker (1964),
+        ## <doi:10.1080/01621459.1964.10480738>
+        n4 <- 12 * (3 * n^2 + 3 * n - 1)
+        d4 <- 5 * n * (n + 1) * (2 * n + 1)
+        l4 <- - n4 / d4
+        n6 <- 576 * (3 * n^4 + 6 * n^2 - 3 * n + 1)
+        d6 <- 7 * (n * (n + 1) * (2 * n + 1))^2
+        l6 <- n6 / d6
+        ## \frac{\lambda_4}{4!} H_3(z)
+        e <- l4 / 24 * z * (z^2 - 3)
+        if(correct > 1) {
+            ## \frac{\lambda_6}{6!} H_5(z)
+            e <- e + l6 / 720 * z * (z^4 - 10 * z^2 + 15)
+        }
+        if(correct > 2) {
+            ## \frac{35 \lambda_4^2}{8!} H_7(z)
+            e <- e + 35 * l4^2 / 40320 * z *
+                (z^6 - 21 * z^4 + 105 * z^2 - 105)
+        }
+        if(lower.tail) y - e else y + e
+    }
     switch(alternative,
-           "less" = pnorm(z),
-           "greater" = pnorm(z, lower.tail = FALSE),
-           "two.sided" = 2 * min(pnorm(z),
-                                 pnorm(z, lower.tail = FALSE)))
+           "less" = F(z),
+           "greater" = F(z, lower.tail = FALSE),
+           "two.sided" = 2 * min(p <- F(z), 1 - p))
 }
 
 .wilcox_test_one_cint_asymp <-
@@ -507,13 +541,16 @@ function(x, y, n.x, n.y, z, alternative, conf.level)
     attr(CONF.INT, "conf.level") <- conf.level
     ESTIMATE <- c("difference in location" = median(diffs))
     list(conf.int = CONF.INT, estimate = ESTIMATE)
-}        
-    
+}
+
 .wilcox_test_two_pval_asymp <-
-function(STAT, alternative, correct)
+function(STAT, n.x, n.y, alternative, correct)
 {
     z <- STAT$statistic - STAT$ex
-    CORRECTION <- if(correct)
+    ## Edgeworth approximations only work if there are no ties.
+    if((correct > 0) && STAT$ties)
+        correct <- 0
+    CORRECTION <- if(correct >= 0)
                       switch(alternative,
                              "two.sided" = sign(z) * 0.5,
                              "greater" = 0.5,
@@ -521,13 +558,44 @@ function(STAT, alternative, correct)
                   else
                       0
     z <- (z - CORRECTION) / STAT$sd
+    F <- function(z, lower.tail = TRUE) {
+        y <- pnorm(z, lower.tail = lower.tail)
+        if(correct < 1) return(y)
+        ## Edgeworth expansion given in Fix and Hodges (1955),
+        ## <doi:10.1214/aoms/1177728547>
+        ## Use Eqn 11 in the form of Fellingham and Stoker (1964).
+        m <- n.x
+        n <- n.y
+        n4 <- m^2 + n^2 + m * n + m + n
+        d4 <- 20 * m * n * (m + n + 1)
+        l4 <- - n4 / d4
+        n6 <- (2 * (m^4 + n^4)
+            + 4 * m * n * (m^2 + n^2)
+            + 6 * m^2 * n^2
+            + 4 * (m^3 + n^3)
+            + 7 * m * n * (m + n)
+            + (m^2 + n^2) + 2 * m * n - (m + n))
+        d6 <- 210 * m^2 * n^2 * (m + n + 1)^2
+        l6 <- n6 / d6
+        ## \frac{\lambda_4}{4!} H_3(z)
+        e <- l4 / 24 * z * (z^2 - 3)
+        if(correct > 1) {
+            ## \frac{\lambda_6}{6!} H_5(z)
+            e <- e + l6 / 720 * z * (z^4 - 10 * z^2 + 15)
+        }
+        if(correct > 2) {
+            ## \frac{35 \lambda_4^2}{8!} H_7(z)
+            e <- e + 35 * l4^2 / 40320 * z *
+                (z^6 - 21 * z^4 + 105 * z^2 - 105)
+        }
+        if(lower.tail) y - e else y + e
+    }
     switch(alternative,
-           "less" = pnorm(z),
-           "greater" = pnorm(z, lower.tail = FALSE),
-           "two.sided" = 2 * min(pnorm(z),
-                                 pnorm(z, lower.tail = FALSE)))
+           "less" = F(z),
+           "greater" = F(z, lower.tail = FALSE),
+           "two.sided" = 2 * min(p <- F(z), 1 - p))
 }
-
+    
 .wilcox_test_two_cint_asymp <-
 function(x, y, n.x, n.y, alternative, conf.level, correct,
          tol.root, digits.rank)
