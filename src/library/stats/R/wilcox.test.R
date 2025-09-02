@@ -873,6 +873,7 @@ function(p, n, z = NULL, lower.tail = TRUE)
     if(is.null(z))
         return(qsignrank(p, n, lower.tail = lower.tail))
 
+    y <- rep.int(NA_real_, length(p))
     if (any(i <- (p < 0) | (p > 1))) 
         y[i] <- NaN
     i <- !is.na(p) & !i
