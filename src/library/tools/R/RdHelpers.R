@@ -1,7 +1,7 @@
 #  File src/library/tools/R/RdHelpers.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2019-2023 The R Core Team
+#  Copyright (C) 2019-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -145,6 +145,16 @@ function(x)
             )
 }
 
+Rd_expr_bibshow_bibstyle <- local({
+    .bibstyle <- "R"
+    function(new) {
+        if(!missing(new))
+            .bibstyle <<- new
+        else
+            .bibstyle
+    }
+})
+
 Rd_expr_bibshow <-
 function(x)
 {
@@ -190,7 +200,7 @@ function(x)
                   headers,
                   rdpath,
                   string2id(.bibentry_get_key(y)),
-                  toRd(y, style = "R"),
+                  toRd(y, style = Rd_expr_bibshow_bibstyle()),
                   footers),
           collapse = "\n\n")
 }
@@ -290,11 +300,11 @@ function(x, textual = FALSE)
             after[ind] <- paste0(", ", after[ind])
         y <- paste0("(",
                     paste0(before,
-                           sprintf("\\if{html}{\\out{<a href=\"#reference+%s+%s\">}}",
+                           sprintf("\\if{html}{\\out{<a href=\"#reference+%s+%s\"><span class=\"citation\">}}",
                                    rdpath,
                                    string2id(keys)),
                            y,
-                           rep_len("\\if{html}{\\out{</a>}}", n),
+                           rep_len("\\if{html}{\\out{</span></a>}}", n),
                            after,
                            collapse = ";"),
                     ")")
