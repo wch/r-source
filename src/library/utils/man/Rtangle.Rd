@@ -9,7 +9,7 @@
 \alias{RtangleRuncode}
 \alias{RtangleWritedoc}
 \alias{RtangleFinish}
-\title{R Driver for Stangle}
+\title{R Driver for \I{Stangle}}
 \description{
   A driver for \code{\link{Stangle}} that extracts \R code chunks.
 }
@@ -53,7 +53,7 @@ RtangleFinish(object, error = FALSE)
 \details{
   See \code{\link{RweaveLatex}} for details on Sweave drivers.
 
-  \code{Rtangle} is the Stangle driver.
+  \code{Rtangle} is the \I{Stangle} driver.
   \code{RtangleSetup}, \code{RtangleRuncode},
   \code{RtangleWritedoc} and \code{RtangleFinish}
   are functions for the

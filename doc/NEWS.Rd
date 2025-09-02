@@ -95,7 +95,7 @@
 
       \item \code{wilcox.test()} can now optionally compute improved
       asymptotic p-values by including up to 3 correction terms of the
-      Edgeworth series for the normal approximation.
+      \I{Edgeworth} series for the normal approximation.
 
       \item \code{barplot(.., orderH = *)} for stacked bar plots allows to
       sort the stacks each according to size.

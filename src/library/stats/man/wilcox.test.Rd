@@ -41,7 +41,7 @@ wilcox.test(x, \dots)
   \item{correct}{a logical indicating whether to apply continuity
     correction in the normal approximation for the p-value, or an
     integer \eqn{k} between 0 and 3 giving the number of correction
-    terms to use from the Edgeworth series for the normal approximation.}
+    terms to use from the \I{Edgeworth} series for the normal approximation.}
   \item{conf.int}{a logical indicating whether a confidence interval
     should be computed.}
   \item{conf.level}{confidence level of the interval.}
@@ -91,13 +91,13 @@ wilcox.test(x, \dots)
   Otherwise, a normal approximation is used.  If there are ties, exact
   inference is performed using the conditional/permutation distribution
   given the observed ranks, using an implementation of the
-  Streitberg-Röhmel shift algorithm
+  \I{Streitberg}--\I{Röhmel} shift algorithm
   \bibcitep{R:Streitberg+Roehmel:1986, R:Streitberg+Roehmel:1987}
   contributed by \I{Torsten Hothorn}.
 
   If the normal approximation is used and there are no ties, improved
   asymptotic p-values can be obtained via including up to \eqn{k = 3}
-  correction terms of the Edgeworth series for the normal approximation,
+  correction terms of the \I{Edgeworth} series for the normal approximation,
   as given in \bibcitet{R:Fellingham+Stoker:1964} for the signed rank
   test and in \bibcitet{R:Fix+Hodges_Jr_:1955} for the rank sum test.
 
