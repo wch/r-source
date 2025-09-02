@@ -20,7 +20,9 @@ bibentry(bibtype = "Book",
          title = "The Elements of Graphing Data",
          publisher = "Wadsworth",
          year = "1985",
-         address = "Monterey, CA")
+         address = "Monterey, CA",
+         isbn = "0534037305",
+         pointers = "https://permalink.obvsg.at/AC00236773")
 
 bibentry(bibtype = "Article",
          key = "R:Cohen:1980",

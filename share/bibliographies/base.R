@@ -7,7 +7,9 @@ bibentry(bibtype = "Book",
          title = "Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables",
          publisher = "Dover",
          year = "1972",
-         address = "New York")
+         address = "New York",
+         isbn = "0471800074",
+         pointers = "https://permalink.obvsg.at/AC05624541")
 
 bibentry(bibtype = "Article",
          key = "R:Ahrens+Dieter:1973",
@@ -49,7 +51,9 @@ bibentry(bibtype = "Book",
          title = "The New {S} Language",
          publisher = "Chapman and Hall/CRC",
          year = "1988",
-         address = "London")
+         address = "London",
+         isbn = "053409192X",
+         pointers = "https://permalink.obvsg.at/AC00095416")
 
 bibentry(bibtype = "Article",
          key = "R:Box+Muller:1958",
@@ -152,7 +156,9 @@ bibentry(bibtype = "Book",
                     person(given = c("Paul", "A."),
                            family = "Tukey")),
          year = "1983",
-         publisher = "Wadsworth & Brooks/Cole")
+         publisher = "Wadsworth & Brooks/Cole",
+         isbn = "0871504138",
+         pointers = "https://permalink.obvsg.at/AC02269805")
 
 bibentry(bibtype = "Book",
          key = "R:Chambers+Hastie:1992",
@@ -291,7 +297,7 @@ bibentry(bibtype = "Article",
          number = "356",
          journal = "Journal of the American Statistical Association",
          publisher = "Informa UK Limited",
-         author = c(person(given = c("A.", "J."),
+         author = c(person(given = c("Albert", "J."),
                            family = "Kinderman"),
                     person(given = c("J.", "G."),
                            family = "Ramage")),
@@ -318,7 +324,9 @@ bibentry(bibtype = "Book",
                          comment = c(ORCID = "0009-0000-8366-9524")),
          year = "1997",
          edition = "3rd",
-         publisher = "Addison-Wesley Professional")
+         publisher = "Addison-Wesley Professional",
+         isbn = "0201896842",
+         pointers = "https://permalink.obvsg.at/AC02114194")
 
 bibentry(bibtype = "Book",
          key = "R:Knuth:1998:v3",
@@ -328,7 +336,9 @@ bibentry(bibtype = "Book",
                          comment = c(ORCID = "0009-0000-8366-9524")),
          year = "1998",
          edition = "2nd",
-         publisher = "Addison-Wesley Professional")
+         publisher = "Addison-Wesley Professional",
+         isbn = "0201896850",
+         pointers = "https://permalink.obvsg.at/AC02410169")
 
 bibentry(bibtype = "Book",
          key = "R:Knuth:2002:v3",
@@ -339,7 +349,9 @@ bibentry(bibtype = "Book",
          year = "2002",
          edition = "3rd",
          publisher = "Addison-Wesley Professional",
-         note = "Ninth printing")
+         note = "Ninth printing",
+         isbn = "0201896842",
+         pointers = "https://permalink.obvsg.at/AC03569894")
 
 bibentry(bibtype = "Article",
          key = "R:L_Ecuyer+Simard:2007",
@@ -562,9 +574,9 @@ bibentry(bibtype = "Article",
          number = "2",
          journal = "Communications of the ACM",
          publisher = "Association for Computing Machinery (ACM)",
-         author = c(person(given = c("M.", "A."),
+         author = c(person(given = c("Michael", "A."),
                            family = "Jenkins"),
-                    person(given = c("J.", "F."),
+                    person(given = c("Joseph", "F."),
                            family = "Traub")),
          year = "1972",
          month = "feb",
