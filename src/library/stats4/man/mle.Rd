@@ -68,34 +68,35 @@ mle(minuslogl, start,
 od <- options(digits = 5)
 
 ## Simulated EC50 experiment with count data
-x <- 0:10
-y <- c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8)
+ec50 <- data.frame(
+x = 0:10,
+y = c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8))
 
 ## Easy one-dimensional MLE:
-nLL <- function(lambda) -sum(stats::dpois(y, lambda, log = TRUE))
-fit0 <- mle(nLL, start = list(lambda = 5), nobs = NROW(y))
+nLL <- function(lambda) with(ec50,-sum(stats::dpois(y, lambda, log = TRUE)))
+fit0 <- mle(nLL, start = list(lambda = 5), nobs = NROW(ec50))
 
 ## sanity check --- notice that "nobs" must be input
 ## (not guaranteed to be meaningful for any likelihood)
-stopifnot(nobs(fit0) == length(y))
+stopifnot(nobs(fit0) == length(ec50$y))
 
 
 # For 1D, this is preferable:
-fit1 <- mle(nLL, start = list(lambda = 5), nobs = NROW(y),
+fit1 <- mle(nLL, start = list(lambda = 5), nobs = NROW(ec50),
             method = "Brent", lower = 1, upper = 20)
 
 ## This needs a constrained parameter space: most methods will accept NA
 ll <- function(ymax = 15, xhalf = 6) {
-    if(ymax > 0 && xhalf > 0)
-      -sum(stats::dpois(y, lambda = ymax/(1+x/xhalf), log = TRUE))
+    if(ymax > 0 && xhalf > 0) 
+      with(ec50, -sum(stats::dpois(y, lambda = ymax/(1+x/xhalf), log = TRUE)))
     else NA
 }
-(fit <- mle(ll, nobs = length(y)))
+(fit <- mle(ll, nobs = NROW(ec50)))
 mle(ll, fixed = list(xhalf = 6))
 
 ## Alternative using bounds on optimization
 ll2 <- function(ymax = 15, xhalf = 6)
-    -sum(stats::dpois(y, lambda = ymax/(1+x/xhalf), log = TRUE))
+    with(ec50, -sum(stats::dpois(y, lambda = ymax/(1+x/xhalf), log = TRUE)))
 mle(ll2, lower = rep(0, 2))
 
 AIC(fit)
@@ -115,7 +116,7 @@ plot(profile(fit2), absVal = FALSE)
 
 ## A better parametrization:
 ll3 <- function(lymax = log(15), lxhalf = log(6))
-    -sum(stats::dpois(y, lambda = exp(lymax)/(1+x/exp(lxhalf)), log = TRUE))
+    with(ec50, -sum(stats::dpois(y, lambda = exp(lymax)/(1+x/exp(lxhalf)), log = TRUE)))
 (fit3 <- mle(ll3))
 plot(profile(fit3), absVal = FALSE)
 exp(confint(fit3))
@@ -128,8 +129,10 @@ confint(fit4)
 mle(ll, lower = c(0, 4), fixed=list(ymax=23)) # has max on boundary
 
 ## Linear regression using MLE
-x <- 1:10 
-y <- c(0.48, 2.24, 2.22, 5.15, 4.64, 5.53, 7, 8.8, 7.67, 9.23)
+lr <- data.frame(
+x = 1:10, 
+y = c(0.48, 2.24, 2.22, 5.15, 4.64, 5.53, 7, 8.8, 7.67, 9.23))
+
 
 LM_mll <- function(formula, data = environment(formula))
 {
@@ -141,9 +144,9 @@ LM_mll <- function(formula, data = environment(formula))
          -sum(dnorm(y, X \%*\% b, sigma, log=TRUE))
 }
 
-mll <- LM_mll(y ~ x)
+mll <- LM_mll(y ~ x, lr)
 
-summary(lm(y~x)) # for comparison -- notice variance bias in MLE
+summary(lm(y~x, data=lr)) # for comparison -- notice variance bias in MLE
 summary(mle(mll, lower=c(-Inf,-Inf, 0.01)))
 summary(mle(mll, lower=list(sigma = 0.01))) # alternative specification
 
