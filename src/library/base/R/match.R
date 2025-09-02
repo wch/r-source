@@ -51,7 +51,7 @@ match.arg <- function (arg, choices, several.ok = FALSE)
     if (!several.ok) { # most important (default) case:
         ## the arg can be the whole of choices as a default argument.
         if(identical(arg, choices)) return(arg[1L])
-    if(length(arg) != 1L) stop(gettextf("'%s' must be of length 1", "arg"), domain=NA)
+        if(length(arg) != 1L) stop(gettextf("'%s' must be of length 1", "arg"), domain=NA)
     } else if(length(arg) == 0L) stop("'arg' must be of length >= 1")
 
     ## handle each element of arg separately
@@ -62,10 +62,8 @@ match.arg <- function (arg, choices, several.ok = FALSE)
                               "'arg' should be one of %s"),
                      paste(dQuote(chs), collapse=", ")),
              domain = NA)
-    i <- i[i > 0L]
-    if (!several.ok && length(i) > 1) ## can this happen ??
-        stop("there is more than one match in 'match.arg'")
-    choices[i]
+    
+    choices[i[i > 0L]]
 }
 
 charmatch <- function(x, table, nomatch = NA_integer_)
