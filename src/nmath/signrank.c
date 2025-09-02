@@ -150,7 +150,7 @@ double psignrank(double x, double n, int lower_tail, int log_p)
     n = R_forceint(n);
     if (n <= 0) ML_WARN_return_NAN;
 
-    x = R_forceint(x + 1e-7);
+    x = floor(x + 1e-7);
     if (x < 0.0)
 	return(R_DT_0);
     if (x >= n * (n + 1) / 2)

@@ -844,11 +844,8 @@ function(x, n, z = NULL)
 .psignrank <-
 function(q, n, z = NULL, lower.tail = TRUE)
 {
-    if(is.null(z)) {
-        ## FIXME: currently
-        ## psignrank(2.5, 2) != psignrank(2, 2) ?
-        return(psignrank(trunc(q), n, lower.tail = lower.tail))
-    }
+    if(is.null(z))
+        return(psignrank(q, n, lower.tail = lower.tail))
 
     y <- rep.int(NA_real_, length(q))
     i <- which(!is.na(q))
