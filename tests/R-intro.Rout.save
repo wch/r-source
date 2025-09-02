@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-08-31 r88747) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-09-01 r88761) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -625,7 +625,7 @@ mean of x mean of y
 	Wilcoxon rank sum exact test
 
 data:  A and B
-W = 89, p-value = 0.0065
+W = 89, p-value = 0.0054
 alternative hypothesis: true location shift is not equal to 0
 
 > 
