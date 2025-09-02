@@ -9,7 +9,8 @@
 \alias{barplot.formula}
 \title{Bar Plots}
 \description{
-  Creates a bar plot with vertical or horizontal bars.
+  Creates a bar plot with vertical or horizontal bars, stacked or side
+  by side.
 }
 \usage{
 barplot(height, \dots)
@@ -23,7 +24,9 @@ barplot(height, \dots)
         axes = TRUE, axisnames = TRUE,
         cex.axis = par("cex.axis"), cex.names = par("cex.axis"),
         inside = TRUE, plot = TRUE, axis.lty = 0, offset = 0,
-        add = FALSE, ann = !add && par("ann"), args.legend = NULL, \dots)
+        add = FALSE, ann = !add && par("ann"), args.legend = NULL,
+        orderH = c("none", "incr", "decr"),
+        \dots)
 
 \method{barplot}{formula}(formula, data, subset, na.action,
         horiz = FALSE, xlab = NULL, ylab = NULL, \dots)
@@ -118,6 +121,12 @@ barplot(height, \dots)
   \item{args.legend}{list of additional arguments to pass to
     \code{\link{legend}()}; names of the list are used as argument
     names.  Only used if \code{legend.text} is supplied.}
+  \item{orderH}{a string, one of \code{"none", "incr", "decr"} (possibly abbreviated).
+    When (as per default) \code{beside} is false, and stacked bars are
+    drawn and \code{orderH} is not \code{"none"}, it indicates how the stacks
+    should be ordered, each via \code{\link{order}(height[..], decreasing = <L>)},
+    where \code{<L>} is \code{TRUE} or \code{FALSE} when \code{orderH} is
+    \code{"decr"} or \code{"incr"}, respectively.}
   \item{formula}{a formula where the \code{y} variables are numeric data
     to plot against the categorical \code{x} variables.  The formula
     can have one of three forms:
@@ -149,7 +158,9 @@ barplot(height, \dots)
   If \code{beside} is true, use \code{colMeans(mp)} for the
   midpoints of each \emph{group} of bars, see example.
 }
-\author{R Core, with a contribution by Arni Magnusson.}
+\author{R Core, with a contribution by Arni Magnusson, and \code{orderH} by
+  \enc{François}{Francois} Rebaudo, see also Fig.~3 in
+  \doi{10.1111/eea.12693}.}
 \references{
   \bibshow{R:Becker+Chambers+Wilks:1988}
 
@@ -239,5 +250,15 @@ barplot(height = cbind(x = c(465, 91) / 465 * 100,
         col = c(1, 2),
         legend.text = c("A", "B"),
         args.legend = list(x = "topleft"))
+
+% better example ?
+## Using 'orderH' to sort the "stacks" (each separately)
+set.seed(1234)
+mydat <- matrix(rlnorm(4*13, sdlog=1/2), ncol = 13,
+                dimnames = list(NULL, LETTERS[1:13]))
+myCol <- c("#1B9E77", "#D95F02", "#7570B3", "#E7298A")
+barplot(mydat, col=myCol)
+barplot(mydat, col=myCol, orderH = "decr", main= "orderH = 'decr'")
+barplot(mydat, col=myCol, orderH = "incr", main= "orderH = 'incr'")
 }
 \keyword{hplot}

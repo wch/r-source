@@ -91,11 +91,14 @@
 
       \item \code{wilcox.test()} can now perform exact (conditional)
       inference in case of ties.  Based on contributions by
-      \I{Torstehn Hothorn}.
+      \I{Torsten Hothorn}.
 
       \item \code{wilcox.test()} can now optionally compute improved
       asymptotic p-values by including up to 3 correction terms of the
       Edgeworth series for the normal approximation.
+
+      \item \code{barplot(.., orderH = *)} for stacked bar plots allows to
+      sort the stacks each according to size.
     }
   }
 

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-07-21 r88434) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-09-02 r88766) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -446,6 +446,15 @@ Survived 1st 2nd 3rd Crew
 +         col = c(1, 2),
 +         legend.text = c("A", "B"),
 +         args.legend = list(x = "topleft"))
+> 
+> ## Using 'orderH' to sort the "stacks" (each separately)
+> set.seed(1234)
+> mydat <- matrix(rlnorm(4*13, sdlog=1/2), ncol = 13,
++                 dimnames = list(NULL, LETTERS[1:13]))
+> myCol <- c("#1B9E77", "#D95F02", "#7570B3", "#E7298A")
+> barplot(mydat, col=myCol)
+> barplot(mydat, col=myCol, orderH = "decr", main= "orderH = 'decr'")
+> barplot(mydat, col=myCol, orderH = "incr", main= "orderH = 'incr'")
 > 
 > 
 > 
