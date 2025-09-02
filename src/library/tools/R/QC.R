@@ -6661,7 +6661,7 @@ function(package, dir, lib.loc = NULL)
         ## con <- file(file, encoding = enc)
         lines <- iconv(readLines(file, warn = FALSE),
                        from = "UTF-8", to = "", sub = "byte")
-        con <- textConnection(lines)
+        con <- textConnection(lines, name = file)
         on.exit(close(con), add = TRUE)
     } else con <- file
 
