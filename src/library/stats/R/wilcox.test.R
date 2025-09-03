@@ -74,14 +74,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
         n <- as.double(length(x))
         if(is.null(exact))
             exact <- (n < 50)
-        ZERO <- any(x == mu)
-        ## Argh.  Having exact zeroes (after subtracting y if paired)
-        ## and subtracting mu) is a problem.  Wilcoxon suggested droping
-        ## them, Pratt suggested keeping them, see e.g.
-        ## <https://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test#Zeros>.
-        ## Unclear how the conditional/permutation distribution works in
-        ## case of zeroes, so for not do not use an exact test then.
-        if(exact && !ZERO) {
+        if(exact) {
             METHOD <- sub("test", "exact test", METHOD, fixed = TRUE)
             STAT <- .wilcox_test_one_stat_exact(x, mu, n, digits.rank)
             PVAL <- .wilcox_test_one_pval_exact(STAT, n, alternative)
@@ -90,7 +83,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                                     STAT$z,
                                                     alternative,
                                                     conf.level)
-        } else { ## not exact, maybe zeroes
+        } else { ## not exact
             if(correct >= 0)
                 METHOD <- paste(METHOD, "with continuity correction")
             STAT <- .wilcox_test_one_stat_asymp(x, mu, n, digits.rank)
@@ -103,11 +96,6 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                                                     correct >= 0,
                                                     tol.root,
                                                     digits.rank)
-            if(exact && ZERO) {
-                warning("cannot compute exact p-value with zeroes")
-                if(conf.int)
-                    warning("cannot compute exact confidence interval with zeroes")
-            }
 	}
     }
     else {
@@ -161,20 +149,31 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
     RVAL
 }
 
+## Having exact zeroes (after subtracting y if paired) and subtracting
+## mu) traditionally is a problem for the signed rank test.  Wilcoxon
+## suggested dropping them, Pratt suggested keeping them, see e.g.
+## <https://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test#Zeros>.
+## Zeroes are not a problem for exact inference using the permutation
+## distribution.  With V(x) = sum(rank(abs(x))[x > 0]), this is the
+## empirical distribution of V over all 2^n possible sign flip vectors
+## s(x) = (\pm x_1, ..., \pm x_n).  Clearly, abs(s(x)) = abs(x), so with
+## r = rank(abs(x)), V(s(x)) = sum(r[s(x) > 0]).  Zeroes never
+## contribute to the sum, so we can reduce to doing the sign flips for
+## the non-zero elements, and dropping the ranks for the zero elements
+## (but not computing the ranks after dropping the zero elements).
+## For the internal dpq functions we thus use z = rank(abs(x))[x != 0]
+## in case of ties or zeroes.
+
 .wilcox_test_one_stat_exact <-
 function(x, mu, n = length(x), digits.rank)
 {
     x <- x - mu
-    ## Should not happen ...
-    ZERO <- any(x == 0)
-    if(ZERO) {
-        x <- x[x != 0]
-        n <- length(x)
-    }
+    i <- (x == 0)
     r <- rank(abs(if(is.finite(digits.rank)) signif(x, digits.rank) else x))
     TIES <- length(r) != length(unique(r))
+    ZERO <- any(i)
     STATISTIC <- c("V" = sum(r[x > 0]))
-    list(statistic = STATISTIC, z =  if(TIES) r else NULL)
+    list(statistic = STATISTIC, z =  if(TIES || ZERO) r[!i] else NULL)
 }
 
 .wilcox_test_one_stat_asymp <-
@@ -204,11 +203,14 @@ function(STAT, n, alternative)
     z <- STAT$z
     switch(alternative,
            "two.sided" = {
-               ## FIXME: Is the conditional distribution really
-               ## symmetric about its mean?
-               p <- if(q > (n * (n + 1) / 4))
+               ## The permutation distribution is symmetric about
+               ## sum(z)/2, which may be different from n(n+1)/4 in case
+               ## of zeroes.
+               m <- if(is.null(z)) n * (n + 1) / 4 else sum(z) / 2
+               p <- if(q > m)
                         .psignrank(q - 1/4, n, z, lower.tail = FALSE)
-                    else .psignrank(q, n, z)
+                    else
+                        .psignrank(q, n, z)
                min(2 * p, 1)
            },
            "greater" = .psignrank(q - 1/4, n, z, lower.tail = FALSE),
@@ -252,7 +254,7 @@ function(x, n, z, alternative, conf.level)
                    uci <- if(ql >= max(w)) min(diffs)
                           else max(diffs[w > ql])
                    achieved.alpha <-
-                       .psignrank(ql + 1/4, n, z)
+                       .psignrank(ql + 1/4, n, z, lower.tail = FALSE)
                    c(uci, +Inf)
                },
                "less" = {
@@ -739,7 +741,7 @@ function(x, m, n, z = NULL)
         return(y)
 
     ## scores can be x.5: in that case need to multiply by f=2.
-    f <- 2 - (max(z - floor(z)) == 0)
+    f <- 2 - all(z == floor(z))
     d <- .Call(C_dpermdist2,
                sort(as.integer(f * z)),
                as.integer(m))
@@ -810,14 +812,13 @@ function(x, n, z = NULL)
     if(is.null(z))
         return(dsignrank(x, n))
 
-    stopifnot(length(z) == n)
     if (!all(2 * z == floor(2 * z)) || any(z < 1)) 
         stop("'z' is not a rank vector")
     y <- rep.int(NA_real_, length(x))
     i <- which(!is.na(x))
     if (!any(i)) 
         return(y)
-    f <- 2 - (max(z - floor(z)) == 0)
+    f <- 2 - all(z == floor(z))
     d <- .Call(C_dpermdist1,
                sort(as.integer(f * z)))
     w <- seq.int(0, length(d) - 1L)
