@@ -272,10 +272,9 @@ function(x, n, z, alternative, conf.level)
         conf.level <- 1 - signif(achieved.alpha, 2)
     }
     attr(CONF.INT, "conf.level") <- conf.level
-    ## FIXME: This is the Hodges-Lehmann estimate and not what is
-    ## suggested in Bauer (1972) (as in \CRANpkg{coin}: is this really
-    ## what we want?
     ESTIMATE <- c("(pseudo)median" = median(diffs))
+    ## NOTE: This is the Hodges-Lehmann estimate and not what is
+    ## suggested in Bauer (1972) and used in \CRANpkg{coin}.
     list(conf.int = CONF.INT, estimate = ESTIMATE)
 }
 
@@ -443,11 +442,11 @@ function(x, n, alternative, conf.level, correct,
                    })
         attr(CONF.INT, "conf.level") <- conf.level
         correct <- FALSE # for W(): no continuity correction for estimate
-        ## FIXME: Perhaps instead simply give the Hodges-Lehmann
-        ## estimate?  In particular as we now use 'correct = FALSE'.
         ESTIMATE <- c("(pseudo)median" =
                           uniroot(W, lower = mumin, upper = mumax,
                                   tol = tol.root)$root)
+        ## NOTE: this is not the Hodges-Lehmann estimate, which would
+        ## need computing O(n^2) Walsh averages which may be a lot.
     } # regular (Wmumin, Wmumax)
     list(conf.int = CONF.INT, estimate = ESTIMATE)
 }
@@ -555,10 +554,9 @@ function(x, y, n.x, n.y, z, alternative, conf.level)
         conf.level <- 1 - achieved.alpha
     }
     attr(CONF.INT, "conf.level") <- conf.level
-    ## FIXME: This is the Hodges-Lehmann estimate and not what is
-    ## suggested in Bauer (1972) (as in \CRANpkg{coin}: is this really
-    ## what we want?
     ESTIMATE <- c("difference in location" = median(diffs))
+    ## NOTE: This is the Hodges-Lehmann estimate and not what is
+    ## suggested in Bauer (1972) and used in \CRANpkg{coin}.
     list(conf.int = CONF.INT, estimate = ESTIMATE)
 }
 
@@ -680,11 +678,11 @@ function(x, y, n.x, n.y, alternative, conf.level, correct,
                })
     attr(CONF.INT, "conf.level") <- conf.level
     correct <- FALSE # for W(): no continuity correction for estimate
-    ## FIXME: Perhaps instead simply give the Hodges-Lehmann
-    ## estimate?  In particular as we now use 'correct = FALSE'.
     ESTIMATE <- c("difference in location" =
                       uniroot(W, lower=mumin, upper=mumax,
                               tol = tol.root)$root)
+    ## NOTE: this is not the Hodges-Lehmann estimate, which would
+    ## need computing m * n differences which may be a lot.
     list(conf.int = CONF.INT, estimate = ESTIMATE)
 }
 
@@ -742,7 +740,6 @@ function(x, m, n, z = NULL)
         return(dwilcox(x, m, n))
 
     stopifnot(length(z) == m + n)
-    ## FIXME: why floor() and not as.integer()?
     if(!all(2 * z == floor(2 * z)) || any(z < 1))
         stop("'z' is not a rank vector")
 
@@ -752,11 +749,9 @@ function(x, m, n, z = NULL)
         return(y)
 
     ## scores can be x.5: in that case need to multiply by f=2.
-    ## FIXME: why floor() and not as.integer()?    
     f <- 2 - (max(z - floor(z)) == 0)
     d <- .Call(C_dpermdist2,
-               ## FIXME: why not sort(as.integer(f * z)) ?
-               as.integer(sort(floor(f * z))),
+               sort(as.integer(f * z)),
                as.integer(m))
     w <- seq_along(d)
     x <- f * (x[i] + m * (m + 1) / 2)
@@ -784,8 +779,8 @@ function(q, m, n, z = NULL, lower.tail = TRUE)
     d <- .dwilcox(s, m, n, z)
     y[i] <- vapply(q[i],
                    function(e) {
-                       ## FIXME: maybe use a smaller fuzz?
-                       sum(d[s < e + sqrt(.Machine$double.eps)])
+                       ## NOTE: C code in src/nmath uses a fuzz of 1e-7.
+                       sum(d[s < e + 1e-8])
                    },
                    0)
     if(lower.tail) y else 1 - y
@@ -822,18 +817,15 @@ function(x, n, z = NULL)
         return(dsignrank(x, n))
 
     stopifnot(length(z) == n)
-    ## FIXME: why floor() and not as.integer()?    
     if (!all(2 * z == floor(2 * z)) || any(z < 1)) 
         stop("'z' is not a rank vector")
     y <- rep.int(NA_real_, length(x))
     i <- which(!is.na(x))
     if (!any(i)) 
         return(y)
-    ## FIXME: why floor() and not as.integer()?
     f <- 2 - (max(z - floor(z)) == 0)
     d <- .Call(C_dpermdist1,
-               ## FIXME: why not sort(as.integer(f * z)) ?
-               as.integer(sort(floor(f * z))))
+               sort(as.integer(f * z)))
     w <- seq.int(0, length(d) - 1L)
     x <- f * x[i]
     w <- w[match(x, w)] + 1L
@@ -860,8 +852,8 @@ function(q, n, z = NULL, lower.tail = TRUE)
     d <- .dsignrank(s, n, z)
     y[i] <- vapply(q[i],
                    function(e) {
-                       ## FIXME: maybe use a smaller fuzz?
-                       sum(d[s < e + sqrt(.Machine$double.eps)])
+                       ## NOTE: C code in src/nmath uses a fuzz of 1e-7.
+                       sum(d[s < e + 1e-8])
                    },
                    0)
     if(lower.tail) y else 1 - y
