@@ -754,7 +754,7 @@ function(x, m, n, z = NULL)
     ## scores can be x.5: in that case need to multiply by f=2.
     ## FIXME: why floor() and not as.integer()?    
     f <- 2 - (max(z - floor(z)) == 0)
-    d <- .Call(C_cpermdist2,
+    d <- .Call(C_dpermdist2,
                ## FIXME: why not sort(as.integer(f * z)) ?
                as.integer(sort(floor(f * z))),
                as.integer(m))
@@ -831,7 +831,7 @@ function(x, n, z = NULL)
         return(y)
     ## FIXME: why floor() and not as.integer()?
     f <- 2 - (max(z - floor(z)) == 0)
-    d <- .Call(C_cpermdist1,
+    d <- .Call(C_dpermdist1,
                ## FIXME: why not sort(as.integer(f * z)) ?
                as.integer(sort(floor(f * z))))
     w <- seq.int(0, length(d) - 1L)

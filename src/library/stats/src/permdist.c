@@ -49,7 +49,7 @@
     *\param m_a integer indicating the sum of m_a elements of score_a
 */
 
-SEXP cpermdist2(SEXP score_b, SEXP m_a) {
+SEXP dpermdist2(SEXP score_b, SEXP m_a) {
     /* Compute the joint permutation distribution of the sum of the first 'm_a'
        elements of 'score_a' and 'score_b'.  In this case the exact conditional
        distribution in the independent two-sample problem is computed. */
@@ -149,7 +149,7 @@ SEXP cpermdist2(SEXP score_b, SEXP m_a) {
     *\param scores score vector (such as rank(abs(y)) for wilcoxsign_test)
 */
 
-SEXP cpermdist1(SEXP scores) {
+SEXP dpermdist1(SEXP scores) {
     /* compute the permutation distribution of the sum of the absolute values of
        the positive elements of 'scores' */
 

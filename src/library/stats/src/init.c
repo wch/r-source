@@ -144,8 +144,8 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(chisq_sim, 4),
     CALLDEF(d2x2xk, 5),
     CALLDEF(Smirnov_sim, 4),
-    CALLDEF(cpermdist1, 1),
-    CALLDEF(cpermdist2, 2),
+    CALLDEF(dpermdist1, 1),
+    CALLDEF(dpermdist2, 2),
 
     CALLDEF_MATH2_1(dchisq),
     CALLDEF_MATH2_1(dexp),
@@ -315,4 +315,6 @@ void attribute_visible R_init_stats(DllInfo *dll)
     R_RegisterCCallable("stats", "nlsb_iterate", (DL_FUNC) nlsb_iterate);
     R_RegisterCCallable("stats", "Rf_divset", (DL_FUNC) Rf_divset);
     R_RegisterCCallable("stats", "rcont2", (DL_FUNC) rcont2);
+    R_RegisterCCallable("stats", "dpermdist1", (DL_FUNC) dpermdist1);
+    R_RegisterCCallable("stats", "dpermdist2", (DL_FUNC) dpermdist2);
 }
