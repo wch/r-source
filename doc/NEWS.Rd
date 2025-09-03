@@ -173,6 +173,13 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item \code{confint.default()} would fail on S4 model objects
+      because it used \code{stats} methods for \code{coef} and
+      \code{vcov} and their defaults did not know about S4. Now changed
+      to look for the the two functions in the calling frame. The
+      mechanism for \code{AIC.default} and \code{BIC.default} has been
+      changed to do likewise.
+      
       \item Profiling \code{"mle"} objects (\pkg{stats4} package) could fail
       because profile MLE used starting value from full MLE. Now starts from profile MLE
       from previous step.

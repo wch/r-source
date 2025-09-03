@@ -29,7 +29,8 @@ AIC.logLik <- function(object, ..., k = 2)
 AIC.default <- function(object, ..., k = 2)
 {
     ## AIC for various fitted objects --- any for which there's a logLik() method:
-    ll <- if(isNamespaceLoaded("stats4")) stats4::logLik else logLik
+#    ll <- if(isNamespaceLoaded("stats4")) stats4::logLik else logLik
+    ll <- get("logLik", parent.frame())
     if(!missing(...)) {# several objects: produce data.frame
 	lls <- lapply(list(object, ...), ll)
         vals <- vapply(lls,
@@ -62,8 +63,10 @@ BIC.logLik <- function(object, ...)
 
 BIC.default <- function(object, ...)
 {
-    ll   <- if(isNamespaceLoaded("stats4")) stats4::logLik else logLik
-    Nobs <- if(isNamespaceLoaded("stats4")) stats4::nobs   else nobs
+    #ll   <- if(isNamespaceLoaded("stats4")) stats4::logLik else logLik
+    #Nobs <- if(isNamespaceLoaded("stats4")) stats4::nobs   else nobs
+    ll <- get("logLik", parent.frame())
+    Nobs <- get("nobs", parent.frame())
     if(!missing(...)) {# several objects: produce data.frame
         lls <- lapply(list(object, ...), ll)
         vals <- vapply(lls,
