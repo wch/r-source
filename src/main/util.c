@@ -540,8 +540,14 @@ attribute_hidden void Rf_check1arg(SEXP arg, SEXP call, const char *formal)
     if (ns > strlen(formal) || strncmp(supplied, formal, ns))
 	errorcall(call, _("supplied argument name '%s' does not match '%s'"),
 		  supplied, formal);
+    if (R_warn_partial_match_args && ns > 0 && ns < strlen(formal)) {
+	SEXP fsym = install(formal);
+	SEXP cond = R_makePartialMatchWarningCondition(call, tag, fsym);
+	PROTECT(cond);
+	R_signalWarningCondition(cond);
+	UNPROTECT(1);
+    }
 }
-
 
 SEXP nthcdr(SEXP s, int n)
 {
