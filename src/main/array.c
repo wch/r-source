@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1998-2025   The R Core Team
- *  Copyright (C) 2002-2015   The R Foundation
+ *  Copyright (C) 2002-2025   The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1893,11 +1893,8 @@ attribute_hidden SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* colSums(x, n, p, na.rm) and friends */
 attribute_hidden SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP x, ans = R_NilValue;
-    int type;
-
     checkArity(op, args);
-    x = CAR(args); args = CDR(args);
+    SEXP x = CAR(args); args = CDR(args);
     R_xlen_t n = asVecSize(CAR(args)); args = CDR(args);
     R_xlen_t p = asVecSize(CAR(args)); args = CDR(args);
     int NaRm = asLogical(CAR(args));
@@ -1908,19 +1905,22 @@ attribute_hidden SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (NaRm == NA_LOGICAL) error(_("invalid '%s' argument"), "na.rm");
     bool keepNA = !NaRm;
 
-    switch (type = TYPEOF(x)) {
+    int type = TYPEOF(x);
+    switch (type) {
     case LGLSXP:
     case INTSXP:
-    case REALSXP: break;
+    case REALSXP:
+    case CPLXSXP: break;
     default:
-	error(_("'x' must be numeric"));
+	error(_("'x' must be numeric or complex"));
     }
     if ((double)n * (double)p > XLENGTH(x))
 	error(_("'x' is too short")); /* PR#16367 */
 
+    SEXP ans = R_NilValue;
     int OP = PRIMVAL(op);
     if (OP == 0 || OP == 1) { /* columns */
-	PROTECT(ans = allocVector(REALSXP, p));
+	ans = PROTECT(allocVector((type == CPLXSXP) ? CPLXSXP : REALSXP, p));
 #ifdef _OPENMP
 	int nthreads;
 	/* This gives a spurious -Wunused-but-set-variable error */
@@ -1932,8 +1932,8 @@ attribute_hidden SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
     firstprivate(x, ans, n, p, type, NaRm, keepNA, R_NaReal, R_NaInt, OP)
 #endif
 	for (R_xlen_t j = 0; j < p; j++) {
-	    R_xlen_t  cnt = n, i;
-	    LDOUBLE sum = 0.0;
+	    R_xlen_t i, cnt = n; // number of non-NA entries per col.
+	    LDOUBLE sum = 0.; /* -Wall */
 	    switch (type) {
 	    case REALSXP:
 	    {
@@ -1943,7 +1943,7 @@ attribute_hidden SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 		else {
 		    for (cnt = 0, sum = 0., i = 0; i < n; i++, rx++)
 			if (!ISNAN(*rx)) {cnt++; sum += *rx;}
-			else if (keepNA) {sum = NA_REAL; break;} // unused
+		    // else if (keepNA) {sum = NA_REAL; break;}
 		}
 		break;
 	    }
@@ -1963,23 +1963,58 @@ attribute_hidden SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    else if (keepNA) {sum = NA_REAL; break;}
 		break;
 	    }
+	    case CPLXSXP:
+	    {
+		LDOUBLE i_sum = 0.;
+		Rcomplex *cx = COMPLEX(x) + (R_xlen_t)n*j;
+		if (keepNA)
+		    for (sum = 0., i = 0; i < n; i++, cx++) {
+			sum   += cx->r;
+			i_sum += cx->i;
+		    }
+		else {
+		    for (cnt = 0, sum = 0., i_sum = 0., i = 0; i < n; i++, cx++) {
+			if (!ISNAN(cx->r) && !ISNAN(cx->i)) {
+			    cnt++;
+			    sum   += cx->r;
+			    i_sum += cx->i;
+			}
+		    }
+		}
+		if (OP == 1) {
+		    sum   /= cnt; /* NaN for cnt = 0 */
+		    i_sum /= cnt;
+		}
+		Rcomplex csum = { .r = sum, .i = i_sum };
+		COMPLEX(ans)[j] = csum;
+		continue; /* for(j ...) loop */
 	    }
-	    if (OP == 1) sum /= cnt; /* gives NaN for cnt = 0 */
+	    } // switch()
+	    if (OP == 1) sum /= cnt; /* mean() -- gives NaN for cnt = 0 */
 	    REAL(ans)[j] = (double) sum;
-	}
+	} // for (j ..)
     }
     else { /* rows */
-	PROTECT(ans = allocVector(REALSXP, n));
-
+	ans = PROTECT(allocVector((type == CPLXSXP) ? CPLXSXP : REALSXP, n));
 	/* allocate scratch storage to allow accumulating by columns
 	   to improve cache hits */
 	int *Cnt = NULL;
 	LDOUBLE *rans;
+	LDOUBLE *ians; // unused unless CPLXSXP
 	if(n <= 10000) {
 	    R_CheckStack2(n * sizeof(LDOUBLE));
 	    rans = (LDOUBLE *) alloca(n * sizeof(LDOUBLE));
+	    if(type == CPLXSXP) {
+		R_CheckStack2(n * sizeof(LDOUBLE));
+		ians = (LDOUBLE *) alloca(n * sizeof(LDOUBLE));
+		Memzero(ians, n);
+	    }
 	    Memzero(rans, n);
-	} else rans = R_Calloc(n, LDOUBLE);
+	} else {
+	    rans = R_Calloc(n, LDOUBLE);
+	    if(type == CPLXSXP)
+		ians = R_Calloc(n, LDOUBLE);
+	}
 	if (!keepNA && OP == 3) Cnt = R_Calloc(n, int);
 
 	for (R_xlen_t j = 0; j < p; j++) {
@@ -2026,25 +2061,69 @@ attribute_hidden SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    }
 		break;
 	    }
+	    case CPLXSXP:
+	    {
+		LDOUBLE *ia = ians;
+		Rcomplex *cx = COMPLEX(x) + (R_xlen_t)n * j;
+
+		if (keepNA)
+		    for (R_xlen_t i = 0; i < n; i++, cx++) {
+			*ra++ += cx->r;
+			*ia++ += cx->i;
+		    }
+		else
+		    for (R_xlen_t i = 0; i < n; i++, ra++, ia++, cx++)
+			if (!ISNAN(cx->r) && !ISNAN(cx->i)) {
+			    *ra += cx->r;
+			    *ia += cx->i;
+			    if (OP == 3) Cnt[i]++;
+			}
+		break;
+	    }
+
+	    } // switch()
+	} // for(j ...)
+
+	if (OP == 3) { /* mean() */
+	    if (keepNA) {
+		if(type == CPLXSXP) {
+		    for (R_xlen_t i = 0; i < n; i++) { rans[i] /= p; ians[i] /= p; }
+		} else {
+		    for (R_xlen_t i = 0; i < n; i++) rans[i] /= p;
+		}
+	    } else {
+		if(type == CPLXSXP) {
+		    for (R_xlen_t i = 0; i < n; i++) {
+			rans[i] /= Cnt[i]; ians[i] /= Cnt[i]; /* gives NaN for Cnt[i] = 0 */
+		    }
+		} else {
+		    for (R_xlen_t i = 0; i < n; i++) rans[i] /= Cnt[i]; /* gives NaN for Cnt[i] = 0 */
+		}
 	    }
 	}
-	if (OP == 3) {
-	    if (keepNA)
-		for (R_xlen_t i = 0; i < n; i++) rans[i] /= p;
-	    else
-		for (R_xlen_t i = 0; i < n; i++) rans[i] /= Cnt[i];
+	if(type == CPLXSXP) {
+	    for (R_xlen_t i = 0; i < n; i++) {
+		Rcomplex csum = { .r = rans[i], .i = ians[i] };
+		COMPLEX(ans)[i] = csum;
+	    }
+	} else {
+	    for (R_xlen_t i = 0; i < n; i++)
+		REAL(ans)[i] = (double) rans[i];
 	}
-	for (R_xlen_t i = 0; i < n; i++) REAL(ans)[i] = (double) rans[i];
 
 	if (!keepNA && OP == 3) R_Free(Cnt);
-	if(n > 10000) R_Free(rans);
+	if(n > 10000) {
+	    R_Free(rans);
+	    if(type == CPLXSXP)
+		R_Free(ians);
+	}
     }
 
     UNPROTECT(1);
     return ans;
 }
 
-/*
+/* Former  R version   of  array(data, dim, dimnames) :
 {
     data <- as.vector(data)
     dim <- as.integer(dim)
@@ -2069,7 +2148,7 @@ attribute_hidden SEXP do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_xlen_t lendat, i, nans;
 
     checkArity(op, args);
-    vals = CAR(args);
+    vals = CAR(args); // = data
     /* at least NULL can get here */
     switch(TYPEOF(vals)) {
 	case LGLSXP:
@@ -2360,7 +2439,7 @@ attribute_hidden SEXP do_asplit(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP x = CAR(args);   args = CDR(args);
     SEXP da = CAR(args);  args = CDR(args);
     SEXP dc = CAR(args);  args = CDR(args);
-    SEXP dna = CAR(args); args = CDR(args); 
+    SEXP dna = CAR(args); args = CDR(args);
     SEXP dnc = CAR(args); args = CDR(args);
     SEXP d1 = CAR(args);  args = CDR(args);
     SEXP d2 = CAR(args);  args = CDR(args);

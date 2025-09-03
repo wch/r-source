@@ -2055,8 +2055,8 @@ hist(1:100, breaks = 2^(0:8), log = "x")
 
 
 ## subassigning from real to complex keeping zero imaginary part
-ll <- list(NA, 0L, NA_integer_, 0, NA_real_, NaN, -Inf, Inf,
-           0i, NA_complex_)
+ll <- as.list(c(NA, 0L, NA_integer_, 0, NA_real_, NaN, -Inf, Inf,
+                complex(real = 2:-1, imaginary = c(-Inf, 0:1, Inf)), NA_complex_))
 rr <- vapply(ll, Re, 0)
 ii <- vapply(ll, Im, 0) # all 0, but the very last
 chk <- function (x, y = as.vector(x)) stopifnot(identical(Re(y), rr),
@@ -2207,6 +2207,7 @@ tools::assertCondition(packageStartupMessage("a startup message"),
                        classes) |> suppressMessages()
 suppressPackageStartupMessages(packageStartupMessage("shouldn't see me"))
 
+
 ## "dumping" nothing to an existing connection was an error in R <= 4.5
 ## PR#18729
 tmpfile <- tempfile()
@@ -2214,6 +2215,37 @@ con <- file(tmpfile, "w")
 dump(character(), con)
 close(con)
 unlink(tmpfile)
+
+
+## colSums() .. rowMeans() with complex z, where Re() and Im() contain NAs in different places.
+## "Obviously correct" versions (w/o 'dims' arg):
+colSumsC  <- function(x, na.rm = FALSE) apply(x, 2L,  sum, na.rm=na.rm)
+rowSumsC  <- function(x, na.rm = FALSE) apply(x, 1L,  sum, na.rm=na.rm)
+colMeansC <- function(x, na.rm = FALSE) apply(x, 2L, mean, na.rm=na.rm)
+rowMeansC <- function(x, na.rm = FALSE) apply(x, 1L, mean, na.rm=na.rm)
+y <- 1:12; y[c(2,3,5,7,11)] <- NA
+(z <- matrix(complex(re = 12:1, im = y), 3))
+##       [,1] [,2] [,3]  [,4]
+## [1,] 12+1i 9+4i   NA 3+10i
+## [2,]    NA   NA 5+8i    NA
+## [3,]    NA 7+6i 4+9i 1+12i
+stopifnot(!any(is.na(Re(z)))) # no NA's in real part
+for(na in c(TRUE, FALSE))
+  stopifnot(exprs = {
+    identical(colSumsC (z, na.rm=na),
+              colSums  (z, na.rm=na))
+    identical(colMeansC(z, na.rm=na),
+              colMeans (z, na.rm=na))
+    identical(rowSumsC (z, na.rm=na),
+              rowSums  (z, na.rm=na))
+    identical(rowMeansC(z, na.rm=na),
+              rowMeans (z, na.rm=na))
+    identical(sum(colSums(z, na.rm=na)), sum(z, na.rm=na) -> sz)
+    identical(sum(rowSums(z, na.rm=na)), sz)
+  })
+## almost all differed in R <= 4.5.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
