@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-09-01 r88761) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-09-03 r88775) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -170,9 +170,9 @@ $s.[[5]]
 +                               wilcox.test(x, exact=TRUE, conf.int=TRUE, alternative = alt)
 +                               ## )
 +                               )))
-There were 45 warnings (use warnings() to see them)
+There were 50 warnings (use warnings() to see them)
 > length(ww <- warnings()) # 52 (or 43 for x0 <- 0:3)
-[1] 45
+[1] 50
 > unique(ww) # 4 different ones
 Warning messages:
 1: cannot compute confidence interval when all observations are zero or tied
@@ -181,6 +181,8 @@ Warning messages:
 3: In wilcox.test.default(x, exact = TRUE, conf.int = TRUE,  ... :
   cannot compute exact confidence interval with zeroes
 4: In .wilcox_test_one_cint_asymp(x, n, alternative, conf.level,  ... :
+  requested conf.level not achievable
+5: In .wilcox_test_one_cint_exact(x, n, STAT$z, alternative,  ... :
   requested conf.level not achievable
 > 
 > cc <- lapply(RR, function(A) lapply(A, function(bb) lapply(bb, class)))
@@ -293,12 +295,12 @@ greater.(pseudo)median   2.0 2.0e+00
 
 , , s.
 
-     two.sided            less                greater           
-[1,] [1e-09, 1e-09] (95%) [-Inf, 1e-09] (95%) [1e-09, Inf] (95%)
-[2,] [1e-09, 1] (95%)     [-Inf, 1] (95%)     [1e-09, Inf] (95%)
-[3,] [1e-09, 2] (95%)     [-Inf, 2] (95%)     [1e-09, Inf] (95%)
-[4,] [1e-09, 3] (95%)     [-Inf, 3] (95%)     [1e-09, Inf] (95%)
-[5,] [1e-09, 4] (95%)     [-Inf, 4] (95%)     [1e-09, Inf] (95%)
+     two.sided            less                greater          
+[1,] [1e-09, 1e-09] (95%) [-Inf, 1e-09] (95%) [1e-09, Inf] (0%)
+[2,] [1e-09, 1] (95%)     [-Inf, 1] (95%)     [1e-09, Inf] (0%)
+[3,] [1e-09, 2] (95%)     [-Inf, 2] (95%)     [1e-09, Inf] (0%)
+[4,] [1e-09, 3] (95%)     [-Inf, 3] (95%)     [1e-09, Inf] (0%)
+[5,] [1e-09, 4] (95%)     [-Inf, 4] (95%)     [1e-09, Inf] (3%)
 
 > 
 > 
@@ -309,21 +311,19 @@ greater.(pseudo)median   2.0 2.0e+00
 +                  lapply(seq_along(x0), function(k)
 +                          wilcox.test(x = x.set$s0[[k]], y = x.set$s.[[k]],
 +                                      exact=TRUE, conf.int=TRUE, alternative = alt)))
-Warning messages:
-1: In .wilcox_test_two_cint_exact(x, y, n.x, n.y, STAT$z, alternative,  :
-  Requested conf.level not achievable
-2: In .wilcox_test_two_cint_exact(x, y, n.x, n.y, STAT$z, alternative,  :
-  Requested conf.level not achievable
-3: In .wilcox_test_two_cint_exact(x, y, n.x, n.y, STAT$z, alternative,  :
-  Requested conf.level not achievable
-4: In .wilcox_test_two_cint_exact(x, y, n.x, n.y, STAT$z, alternative,  :
-  Requested conf.level not achievable
 > length(w2 <- warnings()) # 27
-[1] 4
+[1] 50
 > unique(w2) # 3 different ones
-Warning message:
-In .wilcox_test_two_cint_exact(x, y, n.x, n.y, STAT$z,  ... :
-  Requested conf.level not achievable
+Warning messages:
+1: cannot compute confidence interval when all observations are zero or tied
+2: In wilcox.test.default(x, exact = TRUE, conf.int = TRUE,  ... :
+  cannot compute exact p-value with zeroes
+3: In wilcox.test.default(x, exact = TRUE, conf.int = TRUE,  ... :
+  cannot compute exact confidence interval with zeroes
+4: In .wilcox_test_one_cint_asymp(x, n, alternative, conf.level,  ... :
+  requested conf.level not achievable
+5: In .wilcox_test_one_cint_exact(x, n, STAT$z, alternative,  ... :
+  requested conf.level not achievable
 > 
 > table(uc2 <- unlist(c2 <- lapply(R2, function(A) lapply(A, class))))
 
@@ -364,8 +364,8 @@ difference in location     0e+00  0e+00   0e+00
 > 
 > noquote(sapply(stR2[["conf.int"]], function(.) vapply(., formatCI, "")))
      two.sided              less                 greater            
-[1,] [-1e-09, -1e-09] (95%) [-Inf, -1e-09] (50%) [-1e-09, Inf] (50%)
-[2,] [-1, 1] (95%)          [-Inf, 1] (83%)      [-1, Inf] (83%)    
+[1,] [-1e-09, -1e-09] (95%) [-Inf, -1e-09] (95%) [-1e-09, Inf] (95%)
+[2,] [-1, 1] (95%)          [-Inf, 1] (95%)      [-1, Inf] (95%)    
 [3,] [-2, 2] (95%)          [-Inf, 2] (95%)      [-2, Inf] (95%)    
 [4,] [-3, 2] (95%)          [-Inf, 2] (95%)      [-3, Inf] (95%)    
 [5,] [-3, 2] (95%)          [-Inf, 2] (95%)      [-3, Inf] (95%)    
@@ -373,4 +373,4 @@ difference in location     0e+00  0e+00   0e+00
 > 
 > proc.time()
    user  system elapsed 
-  0.234   0.041   0.267 
+  0.271   0.028   0.288 

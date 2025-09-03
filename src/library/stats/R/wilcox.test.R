@@ -235,28 +235,24 @@ function(x, n, z, alternative, conf.level)
     CONF.INT <-
         switch(alternative,
                "two.sided" = {
-                   ## FIXME: Is the conditional distribution really
-                   ## symmetric about its mean?
                    qu <- .qsignrank(alpha / 2, n, z)
-                   ql <- n * (n + 1) / 2 - qu
+                   ql <- .qsignrank(1 - alpha / 2, n, z)
                    lci <- if(qu <= min(w)) max(diffs)
                           else min(diffs[w <= qu])
                    uci <- if(ql >= max(w)) min(diffs)
                           else max(diffs[w > ql])
                                c(uci, lci)
                    achieved.alpha <-
-                       2 * .psignrank(qu - 1/4, n, z)
+                       (.psignrank(qu - 1/4, n, z) +
+                        .psignrank(ql + 1/4, n, z, lower.tail = FALSE))
                    c(uci, lci)
                },
                "greater" = {
-                   ## FIXME: Is the conditional distribution really
-                   ## symmetric about its mean?
-                   qu <- .qsignrank(alpha, n, z)
-                   ql <- n * (n + 1) / 2 - qu
+                   ql <- .qsignrank(1 - alpha, n, z)
                    uci <- if(ql >= max(w)) min(diffs)
                           else max(diffs[w > ql])
                    achieved.alpha <-
-                       .psignrank(qu - 1/4, n, z)
+                       .psignrank(ql + 1/4, n, z)
                    c(uci, +Inf)
                },
                "less" = {
@@ -516,35 +512,29 @@ function(x, y, n.x, n.y, z, alternative, conf.level)
     CONF.INT <-
         switch(alternative,
                "two.sided" = {
-                   ## FIXME: Is the conditional distribution really
-                   ## symmetric about its mean?
                    qu <- .qwilcox(alpha/2, n.x, n.y, z)
-                   ql <- n.x * n.y - qu
+                   ql <- .qwilcox(1 - alpha/2, n.x, n.y, z)                   
                    lci <- if(qu <= min(w)) max(diffs)
                           else min(diffs[w <= qu])
                    uci <- if(ql >= max(w)) min(diffs)
                           else max(diffs[w > ql])
                    achieved.alpha <-
-                       2 * .pwilcox(qu - 1/4, n.x, n.y, z)
+                       (.pwilcox(qu - 1/4, n.x, n.y, z) +
+                        .pwilcox(ql + 1/4, n.x, n.y, z, lower.tail = FALSE))
                    c(uci, lci)
                },
                "greater" = {
-                   ## FIXME: Is the conditional distribution really
-                   ## symmetric about its mean?
-                   qu <- .qwilcox(alpha, n.x, n.y, z)
-                   ql <- n.x * n.y - qu
+                   ql <- .qwilcox(1 - alpha, n.x, n.y, z)
                    uci <- if(ql >= max(w)) min(diffs)
                           else max(diffs[w > ql])
-                   if(qu == 0) qu <- 1
                    achieved.alpha <-
-                       .pwilcox(qu - 1/4, n.x, n.y, z)
+                       .pwilcox(ql + 1/4, n.x, n.y, z, lower.tail = FALSE)
                    c(uci, +Inf)
                },
                "less" = {
                    qu <- .qwilcox(alpha, n.x, n.y, z)
                    lci <- if(qu <= min(w)) max(diffs)
                           else min(diffs[w <= qu])
-                   if(qu == 0) qu <- 1
                    achieved.alpha <-
                        .pwilcox(qu - 1/4, n.x, n.y, z)
                    c(-Inf, lci)
