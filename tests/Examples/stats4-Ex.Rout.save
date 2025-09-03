@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-09-02 r88767) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-09-03 r88777) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-apple-darwin21.6.0
 
@@ -57,35 +57,35 @@ Type 'q()' to quit R.
 +             method = "Brent", lower = 1, upper = 20)
 > 
 > ## This needs a constrained parameter space: most methods will accept NA
-> ll <- function(ymax = 15, xhalf = 6) {
+> mll1 <- function(ymax = 15, xhalf = 6) {
 +     if(ymax > 0 && xhalf > 0) 
 +       with(ec50, -sum(stats::dpois(y, lambda = ymax/(1+x/xhalf), log = TRUE)))
 +     else NA
 + }
-> (fit <- mle(ll, nobs = NROW(ec50)))
+> (fit <- mle(mll1, nobs = NROW(ec50)))
 
 Call:
-mle(minuslogl = ll, nobs = NROW(ec50))
+mle(minuslogl = mll1, nobs = NROW(ec50))
 
 Coefficients:
    ymax   xhalf 
 24.9931  3.0571 
-> mle(ll, fixed = list(xhalf = 6))
+> mle(mll1, fixed = list(xhalf = 6))
 
 Call:
-mle(minuslogl = ll, fixed = list(xhalf = 6))
+mle(minuslogl = mll1, fixed = list(xhalf = 6))
 
 Coefficients:
   ymax  xhalf 
 19.288  6.000 
 > 
 > ## Alternative using bounds on optimization
-> ll2 <- function(ymax = 15, xhalf = 6)
+> mll2 <- function(ymax = 15, xhalf = 6)
 +     with(ec50, -sum(stats::dpois(y, lambda = ymax/(1+x/xhalf), log = TRUE)))
-> mle(ll2, lower = rep(0, 2))
+> mle(mll2, lower = rep(0, 2))
 
 Call:
-mle(minuslogl = ll2, lower = rep(0, 2))
+mle(minuslogl = mll2, lower = rep(0, 2))
 
 Coefficients:
    ymax   xhalf 
@@ -100,7 +100,7 @@ Coefficients:
 Maximum likelihood estimation
 
 Call:
-mle(minuslogl = ll, nobs = NROW(ec50))
+mle(minuslogl = mll1, nobs = NROW(ec50))
 
 Coefficients:
       Estimate Std. Error
@@ -124,10 +124,10 @@ xhalf  1.6616  6.4792
 > ## Use bounded optimization
 > ## The lower bounds are really > 0,
 > ## but we use >=0 to stress-test profiling
-> (fit2 <- mle(ll2, lower = c(0, 0)))
+> (fit2 <- mle(mll2, lower = c(0, 0)))
 
 Call:
-mle(minuslogl = ll2, lower = c(0, 0))
+mle(minuslogl = mll2, lower = c(0, 0))
 
 Coefficients:
    ymax   xhalf 
@@ -135,12 +135,12 @@ Coefficients:
 > plot(profile(fit2), absVal = FALSE)
 > 
 > ## A better parametrization:
-> ll3 <- function(lymax = log(15), lxhalf = log(6))
+> mll3 <- function(lymax = log(15), lxhalf = log(6))
 +     with(ec50, -sum(stats::dpois(y, lambda = exp(lymax)/(1+x/exp(lxhalf)), log = TRUE)))
-> (fit3 <- mle(ll3))
+> (fit3 <- mle(mll3))
 
 Call:
-mle(minuslogl = ll3)
+mle(minuslogl = mll3)
 
 Coefficients:
  lymax lxhalf 
@@ -153,7 +153,7 @@ lymax  17.8815 34.6186
 lxhalf  1.6615  6.4794
 > 
 > # Regression tests for bounded cases (this was broken in R 3.x)
-> fit4 <- mle(ll, lower = c(0, 4)) # has max on boundary
+> fit4 <- mle(mll1, lower = c(0, 4)) # has max on boundary
 > confint(fit4)
 Profiling...
        2.5 %  97.5 %
@@ -161,10 +161,10 @@ ymax  17.446 26.5081
 xhalf     NA  6.9109
 > 
 > ## direct check that fixed= and constraints work together
-> mle(ll, lower = c(0, 4), fixed=list(ymax=23)) # has max on boundary
+> mle(mll1, lower = c(0, 4), fixed=list(ymax=23)) # has max on boundary
 
 Call:
-mle(minuslogl = ll, fixed = list(ymax = 23), lower = c(0, 4))
+mle(minuslogl = mll1, fixed = list(ymax = 23), lower = c(0, 4))
 
 Coefficients:
  ymax xhalf 
@@ -186,7 +186,7 @@ Coefficients:
 +          -sum(dnorm(y, X %*% b, sigma, log=TRUE))
 + }
 > 
-> mll <- LM_mll(y ~ x, lr)
+> mll_lm <- LM_mll(y ~ x, lr)
 > 
 > summary(lm(y~x, data=lr)) # for comparison -- notice variance bias in MLE
 
@@ -208,11 +208,11 @@ Residual standard error: 0.787 on 8 degrees of freedom
 Multiple R-squared:  0.937,	Adjusted R-squared:  0.929 
 F-statistic:  119 on 1 and 8 DF,  p-value: 4.39e-06
 
-> summary(mle(mll, lower=c(-Inf,-Inf, 0.01)))
+> summary(mle(mll_lm, lower=c(-Inf,-Inf, 0.01)))
 Maximum likelihood estimation
 
 Call:
-mle(minuslogl = mll, lower = c(-Inf, -Inf, 0.01))
+mle(minuslogl = mll_lm, lower = c(-Inf, -Inf, 0.01))
 
 Coefficients:
               Estimate Std. Error
@@ -221,11 +221,11 @@ b.x           0.946061   0.077499
 sigma         0.703919   0.157400
 
 -2 log L: 21.357 
-> summary(mle(mll, lower=list(sigma = 0.01))) # alternative specification
+> summary(mle(mll_lm, lower=list(sigma = 0.01))) # alternative specification
 Maximum likelihood estimation
 
 Call:
-mle(minuslogl = mll, lower = list(sigma = 0.01))
+mle(minuslogl = mll_lm, lower = list(sigma = 0.01))
 
 Coefficients:
               Estimate Std. Error
@@ -235,13 +235,13 @@ sigma         0.703919   0.157400
 
 -2 log L: 21.357 
 > 
-> confint(mle(mll, lower=list(sigma = 0.01)))
+> confint(mle(mll_lm, lower=list(sigma = 0.01)))
 Profiling...
                  2.5 % 97.5 %
 b.(Intercept) -0.94831 1.1336
 b.x            0.77829 1.1138
 sigma          0.48017 1.1755
-> plot(profile(mle(mll, lower=list(sigma = 0.01))))
+> plot(profile(mle(mll_lm, lower=list(sigma = 0.01))))
 > 
 > Binom_mll <- function(x, n)
 + {
@@ -329,7 +329,7 @@ Coefficients:
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.62 0.024 0.661 0 0 
+Time elapsed:  0.574 0.015 0.593 0 0 
 > grDevices::dev.off()
 null device 
           1 

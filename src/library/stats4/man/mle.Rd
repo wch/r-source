@@ -86,18 +86,18 @@ fit1 <- mle(nLL, start = list(lambda = 5), nobs = NROW(ec50),
             method = "Brent", lower = 1, upper = 20)
 
 ## This needs a constrained parameter space: most methods will accept NA
-ll <- function(ymax = 15, xhalf = 6) {
+mll1 <- function(ymax = 15, xhalf = 6) {
     if(ymax > 0 && xhalf > 0) 
       with(ec50, -sum(stats::dpois(y, lambda = ymax/(1+x/xhalf), log = TRUE)))
     else NA
 }
-(fit <- mle(ll, nobs = NROW(ec50)))
-mle(ll, fixed = list(xhalf = 6))
+(fit <- mle(mll1, nobs = NROW(ec50)))
+mle(mll1, fixed = list(xhalf = 6))
 
 ## Alternative using bounds on optimization
-ll2 <- function(ymax = 15, xhalf = 6)
+mll2 <- function(ymax = 15, xhalf = 6)
     with(ec50, -sum(stats::dpois(y, lambda = ymax/(1+x/xhalf), log = TRUE)))
-mle(ll2, lower = rep(0, 2))
+mle(mll2, lower = rep(0, 2))
 
 AIC(fit)
 BIC(fit)
@@ -111,22 +111,22 @@ confint(fit)
 ## Use bounded optimization
 ## The lower bounds are really > 0,
 ## but we use >=0 to stress-test profiling
-(fit2 <- mle(ll2, lower = c(0, 0)))
+(fit2 <- mle(mll2, lower = c(0, 0)))
 plot(profile(fit2), absVal = FALSE)
 
 ## A better parametrization:
-ll3 <- function(lymax = log(15), lxhalf = log(6))
+mll3 <- function(lymax = log(15), lxhalf = log(6))
     with(ec50, -sum(stats::dpois(y, lambda = exp(lymax)/(1+x/exp(lxhalf)), log = TRUE)))
-(fit3 <- mle(ll3))
+(fit3 <- mle(mll3))
 plot(profile(fit3), absVal = FALSE)
 exp(confint(fit3))
 
 # Regression tests for bounded cases (this was broken in R 3.x)
-fit4 <- mle(ll, lower = c(0, 4)) # has max on boundary
+fit4 <- mle(mll1, lower = c(0, 4)) # has max on boundary
 confint(fit4)
 
 ## direct check that fixed= and constraints work together
-mle(ll, lower = c(0, 4), fixed=list(ymax=23)) # has max on boundary
+mle(mll1, lower = c(0, 4), fixed=list(ymax=23)) # has max on boundary
 
 ## Linear regression using MLE
 lr <- data.frame(
@@ -144,14 +144,14 @@ LM_mll <- function(formula, data = environment(formula))
          -sum(dnorm(y, X \%*\% b, sigma, log=TRUE))
 }
 
-mll <- LM_mll(y ~ x, lr)
+mll_lm <- LM_mll(y ~ x, lr)
 
 summary(lm(y~x, data=lr)) # for comparison -- notice variance bias in MLE
-summary(mle(mll, lower=c(-Inf,-Inf, 0.01)))
-summary(mle(mll, lower=list(sigma = 0.01))) # alternative specification
+summary(mle(mll_lm, lower=c(-Inf,-Inf, 0.01)))
+summary(mle(mll_lm, lower=list(sigma = 0.01))) # alternative specification
 
-confint(mle(mll, lower=list(sigma = 0.01)))
-plot(profile(mle(mll, lower=list(sigma = 0.01))))
+confint(mle(mll_lm, lower=list(sigma = 0.01)))
+plot(profile(mle(mll_lm, lower=list(sigma = 0.01))))
 
 Binom_mll <- function(x, n)
 {
