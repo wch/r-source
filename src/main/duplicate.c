@@ -52,14 +52,15 @@
 */
 #ifdef __APPLE__
 /* it seems macOS builds did not copy >= 2^32 bytes fully */
-#define DUPLICATE_ATOMIC_VECTOR(type, fun, to, from, deep) do {	\
+#define DUPLICATE_ATOMIC_VECTOR(type, fun, fun_ro, to, from, deep) do {	\
   R_xlen_t __n__ = XLENGTH(from); \
   PROTECT(from); \
   PROTECT(to = allocVector(TYPEOF(from), __n__)); \
-  if (__n__ == 1) fun(to)[0] = fun(from)[0]; \
+  if (__n__ == 1) fun(to)[0] = fun_ro(from)[0]; \
   else { \
       R_xlen_t __this; \
-      type *__to = fun(to), *__from = fun(from); \
+      type *__to = fun(to); \
+      const type *__from = fun_ro(from); \
       while(__n__ > 0) { \
 	 __this = (__n__ < 1000000) ? __n__ : 1000000; \
 	 memcpy(__to, __from, __this * sizeof(type));  \
@@ -71,12 +72,12 @@
   UNPROTECT(2); \
 } while (0)
 #else
-#define DUPLICATE_ATOMIC_VECTOR(type, fun, to, from, deep) do {	\
+#define DUPLICATE_ATOMIC_VECTOR(type, fun, fun_ro, to, from, deep) do {	\
   R_xlen_t __n__ = XLENGTH(from); \
   PROTECT(from); \
   PROTECT(to = allocVector(TYPEOF(from), __n__)); \
-  if (__n__ == 1) fun(to)[0] = fun(from)[0]; \
-  else if (__n__) memcpy(fun(to), fun(from), __n__ * sizeof(type)); \
+  if (__n__ == 1) fun(to)[0] = fun_ro(from)[0]; \
+  else if (__n__) memcpy(fun(to), fun_ro(from), __n__ * sizeof(type)); \
   DUPLICATE_ATTRIB(to, from, deep); \
   COPY_TRUELENGTH(to, from); \
   UNPROTECT(2); \
@@ -341,16 +342,16 @@ static SEXP duplicate1(SEXP s, Rboolean deep)
 	COPY_TRUELENGTH(t, s);
 	UNPROTECT(2);
 	break;
-    case LGLSXP: DUPLICATE_ATOMIC_VECTOR(int, LOGICAL, t, s, deep); break;
-    case INTSXP: DUPLICATE_ATOMIC_VECTOR(int, INTEGER, t, s, deep); break;
-    case REALSXP: DUPLICATE_ATOMIC_VECTOR(double, REAL, t, s, deep); break;
-    case CPLXSXP: DUPLICATE_ATOMIC_VECTOR(Rcomplex, COMPLEX, t, s, deep); break;
-    case RAWSXP: DUPLICATE_ATOMIC_VECTOR(Rbyte, RAW, t, s, deep); break;
+    case LGLSXP: DUPLICATE_ATOMIC_VECTOR(int, LOGICAL, LOGICAL_RO, t, s, deep); break;
+    case INTSXP: DUPLICATE_ATOMIC_VECTOR(int, INTEGER, INTEGER_RO, t, s, deep); break;
+    case REALSXP: DUPLICATE_ATOMIC_VECTOR(double, REAL, REAL_RO, t, s, deep); break;
+    case CPLXSXP: DUPLICATE_ATOMIC_VECTOR(Rcomplex, COMPLEX, COMPLEX_RO, t, s, deep); break;
+    case RAWSXP: DUPLICATE_ATOMIC_VECTOR(Rbyte, RAW, RAW_RO, t, s, deep); break;
     case STRSXP:
 	/* direct copying and bypassing the write barrier is OK since
 	   t was just allocated and so it cannot be older than any of
 	   the elements in s.  LT */
-	DUPLICATE_ATOMIC_VECTOR(SEXP, STRING_PTR, t, s, deep);
+	DUPLICATE_ATOMIC_VECTOR(SEXP, STRING_PTR, STRING_PTR_RO, t, s, deep);
 	break;
     case PROMSXP:
 	return s;
