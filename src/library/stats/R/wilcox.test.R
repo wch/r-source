@@ -773,8 +773,10 @@ function(q, m, n, z = NULL, lower.tail = TRUE)
         return(y)
 
     ## Support of U
-    s <- (0 : (2 * m * n)) / 2
-    ## FIXME: can we simplify to 0 : (m * n) if z is all integer?
+    s <- if(all(z == floor(z)))
+             seq.int(0, m * n)
+         else
+             seq.int(0, 2 * m * n) / 2
     ## Density
     d <- .dwilcox(s, m, n, z)
     y[i] <- vapply(q[i],
@@ -798,9 +800,11 @@ function(p, m, n, z = NULL, lower.tail = TRUE)
     i <- !is.na(p) & !i
     if(!any(i))
         return(y)
-    
-    s <- (0 : (2 * m * n)) / 2
-    ## FIXME: can we simplify to 0 : (m * n) if z is all integer?
+
+    s <- if(all(z == floor(z)))
+             seq.int(0, m * n)
+         else
+             seq.int(0, 2 * m * n) / 2
     v <- .pwilcox(s, m, n, z)
     if(!lower.tail)
         p <- 1 - p
@@ -845,9 +849,10 @@ function(q, n, z = NULL, lower.tail = TRUE)
         return(y)
 
     ## Support of V
-    s <- seq.int(0, n * (n + 1)) / 2
-    ## FIXME: can we simplify to seq.int(0, n * (n + 1) / 2) is z is all
-    ## integer?
+    s <- if(all(z == floor(z)))
+             seq.int(0, n * (n + 1) / 2)
+         else
+             seq.int(0, n * (n + 1)) / 2
     ## Density
     d <- .dsignrank(s, n, z)
     y[i] <- vapply(q[i],
