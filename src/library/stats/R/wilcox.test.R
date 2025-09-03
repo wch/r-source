@@ -482,17 +482,17 @@ function(STAT, n.x, n.y, alternative)
     z <- STAT$z
     switch(alternative,
            "two.sided" = {
-               ## FIXME: Is the conditional distribution really
-               ## symmetric about its mean?
-               p <- if(q > (n.x * n.y / 2))
-                        .pwilcox(q - 1/4, n.x, n.y, z, lower.tail = FALSE)
-                    else
-                        .pwilcox(q, n.x, n.y, z)
-               min(2 * p, 1)
+               ## NOTE: the permutation distribution is not necessarily
+               ## symmetric about its mean.  We compute p-values as in
+               ## \CRANpkg{coin} as the twice the min of the lower and
+               ## upper tail probabilities, unlike binom.test() which
+               ## computes the probability of values with density not
+               ## exceeding that of the observed one.
+               min(2 * .pwilcox(q, n.x, n.y, z),
+                   2 * .pwilcox(q - 1/4, n.x, n.y, z, lower.tail = FALSE),
+                   1)
            },
-           "greater" = {
-               .pwilcox(q - 1/4, n.x, n.y, z, lower.tail = FALSE)
-           },
+           "greater" = .pwilcox(q - 1/4, n.x, n.y, z, lower.tail = FALSE),
            "less" = .pwilcox(q, n.x, n.y, z))
 }
 
@@ -868,9 +868,10 @@ function(p, n, z = NULL, lower.tail = TRUE)
     if (!any(i)) 
         return(y)
 
-    s <- seq.int(0, n * (n + 1)) / 2
-    ## FIXME: can we simplify to seq.int(0, n * (n + 1) / 2) is z is all
-    ## integer?
+    s <- if(all(z == floor(z)))
+             seq.int(0, n * (n + 1) / 2)
+         else
+             seq.int(0, n * (n + 1)) / 2
     v <- .psignrank(s, n, z)
     if (!lower.tail) 
         p <- 1 - p
