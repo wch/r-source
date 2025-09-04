@@ -40,6 +40,12 @@ file.show <-
               delete.file = FALSE, pager = getOption("pager"), encoding = "")
 {
     files <- path.expand(c(...))
+    ## skip directories
+    didx <- which(file.info(files)$isdir)
+    if (any(didx)) {
+        warning("directories are ignored")
+        files <- files[-didx]
+    }
     nfiles <- length(files)
     if(nfiles == 0L)
         return(invisible(NULL))
