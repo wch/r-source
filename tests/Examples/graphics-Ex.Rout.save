@@ -2105,6 +2105,23 @@ armed.forces
 + }
 > par(op)
 > 
+> ## Log Plots -- default xlim / ylim  from range(<finite>)
+> set.seed(2); noise <- rnorm(100)/100; xe <- sort(rexp(100, 8))
+> x <- sort(xe + noise); y <- exp(-x^2 + (x < 0)*10)*sin(pi*x)
+> str(data.frame(x,y))
+'data.frame':	100 obs. of  2 variables:
+ $ x: num  -0.00795 -0.00713 0.00294 0.00487 0.00864 ...
+ $ y: num  -5.50e+02 -4.94e+02 9.24e-03 1.53e-02 2.71e-02 ...
+> plot(y ~ x) # (2 outliers, x < 0)
+> plot(y ~ x, log="x") # --> Warning:  2 x values <= 0 omitted from log..plot
+Warning in xy.coords(x, y, xlabel, ylabel, log) :
+  2 x values <= 0 omitted from logarithmic plot
+>                      # still same y-axis limits [~ -570, 0 ]
+> plot(y ~ x, log="x", lim2 = TRUE) # still Warning, but
+Warning in xy.coords(x, y, xlabel, ylabel, log) :
+  2 x values <= 0 omitted from logarithmic plot
+>                                         # nice - reasonable y-axis [0, 0.8]
+> 
 > ##--- Log-Log Plot  with  custom axes
 > lx <- seq(1, 5, length.out = 41)
 > yl <- expression(e^{-frac(1,2) * {log[10](x)}^2})
