@@ -4028,7 +4028,7 @@ Note though that any dynamic libraries the replacement links to will
 need to be found by the linker: this may need the library path to be
 changed in @file{@var{R_HOME}/etc/ldpaths}.
 
-This because less easy in 2025: swapping the BLAS is only possible to
+This became less easy in 2025: swapping the BLAS is only possible to
 one compatible with the LAPACK in use.  For the LAPACK shipped with @R{}
 4.5.0 that means one containing @code{dgemmtr} and @code{zgemmtr}, or
 configuring @R{} with @option{--with-2025blas}.
