@@ -2000,7 +2000,7 @@ attribute_hidden SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 	   to improve cache hits */
 	int *Cnt = NULL;
 	LDOUBLE *rans;
-	LDOUBLE *ians; // unused unless CPLXSXP
+	LDOUBLE *ians = NULL; // unused unless CPLXSXP
 	if(n <= 10000) {
 	    R_CheckStack2(n * sizeof(LDOUBLE));
 	    rans = (LDOUBLE *) alloca(n * sizeof(LDOUBLE));
