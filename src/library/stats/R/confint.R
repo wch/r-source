@@ -156,11 +156,6 @@ confint.profile.nls <-
 
 confint.default <- function (object, parm, level = 0.95, ...)
 {
-## in case object has S4 methods not known in stats namespace
-
-    coef <- get("coef", parent.frame())
-    vcov <- get("vcov", parent.frame())
-
     cf <- coef(object)
     pnames <- names(cf)
     if(missing(parm)) parm <- pnames
