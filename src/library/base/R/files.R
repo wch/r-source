@@ -42,7 +42,7 @@ file.show <-
     files <- path.expand(c(...))
     ## skip directories
     didx <- which(file.info(files)$isdir)
-    if (any(didx)) {
+    if (length(didx)) {
         warning("directories are ignored")
         files <- files[-didx]
     }
