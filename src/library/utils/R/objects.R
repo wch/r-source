@@ -559,7 +559,7 @@ function(x)
     }
     # now check for duplicates
     ln <- length(objs)
-    dups <- rep.int(FALSE, ln)
+    dups <- logical(ln) # FALSE
     if(ln > 1L)
         for(i in 2L:ln)
             for(j in 1L:(i-1L))
@@ -608,10 +608,10 @@ function(x)
     if(tryCatch(!is.character(x), error = function(e) TRUE))
         x <- as.character(substitute(x))
     fs <- getAnywhere(x)
-    if (sum(!fs$dups) == 0L)
-        return(NULL)
-    if (sum(!fs$dups) > 1L)
-        sapply(fs$objs[!fs$dups],
+    if((Nd <- sum(nod <- !fs$dups)) == 0L)
+        NULL
+    else if(Nd > 1L)
+        sapply(fs$objs[nod],
                function(f) if (is.function(f)) args(f))
     else args(fs$objs[[1L]])
 }

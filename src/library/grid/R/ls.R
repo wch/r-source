@@ -1,7 +1,7 @@
 #  File src/library/grid/R/ls.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -722,7 +722,7 @@ pathListing <- function(x, gvpSep=" | ", gAlign=TRUE) {
     vpListings <- seq_along(x$name) %in% grep("^vp", x$type)
     paths <- x$vpPath
     # Only if viewport listings
-    if (sum(vpListings) > 0) {
+    if (any(vpListings)) {
         paths[vpListings] <- appendToPrefix(paths[vpListings],
                                             x$name[vpListings])
         # If viewports are shown, then allow extra space before grobs
@@ -732,14 +732,13 @@ pathListing <- function(x, gvpSep=" | ", gAlign=TRUE) {
 	maxLen <- max(nchar(paths))
 
     # Only if grob listings
-    if (sum(!vpListings) > 0) {
+    if (length(isn_vp <- which(!vpListings))) {
         if (gAlign) {
-            paths[!vpListings] <- padPrefix(paths[!vpListings], maxLen)
+            paths[isn_vp] <- padPrefix(paths[isn_vp], maxLen)
         }
-        paths[!vpListings] <- paste0(paths[!vpListings],
-				     gvpSep,
-				     appendToPrefix(x$gPath[!vpListings],
-						    x$name[!vpListings]))
+        paths[isn_vp] <- paste0(paths[isn_vp], gvpSep,
+                                appendToPrefix(x$gPath[isn_vp],
+                                               x$ name[isn_vp]))
     }
     cat(paths, sep = "\n")
 }
@@ -805,7 +804,7 @@ grid.grep <- function(path, x = NULL, grobs = TRUE, viewports = FALSE,
                              dl$type == "gTreeListing"
                      } else {
                          keep <- dl$type == "grobListing" |
-                             dl$type == "gTreeListing"                         
+                             dl$type == "gTreeListing"
                      }
                      x[keep]
                  })
