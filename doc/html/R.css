@@ -36,6 +36,10 @@ a:visited {
     color: rgb(50%, 0%, 50%);
 }
 
+a.citation {
+    color: rgb(10%, 40%, 10%);
+}
+
 h1 {
     background: white;
     color: rgb(55%, 55%, 55%);
@@ -135,9 +139,4 @@ tr {
 span.rlang {
     font-family: Courier New, Courier;
     color: #666666;
-}
-
-span.citation {
-    color: rgb(10%, 40%, 10%);
-    text-decoration: underline;
 }

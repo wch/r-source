@@ -280,11 +280,11 @@ function(x, textual = FALSE)
             before[ind] <- paste0(before[ind], " ")
         y <- paste0(before,
                     ## Empty \cite{} here is a kludge to 'enterPara' in Rd2HTML.
-                    sprintf("\\if{html}{\\cite{}\\out{<a href=\"#reference+%s+%s\"><span class=\"citation\">}}",
+                    sprintf("\\if{html}{\\cite{}\\out{<a href=\"#reference+%s+%s\" class=\"citation\">}}",
                             rdpath,
                             string2id(keys)),
                     y,
-                    rep_len("\\if{html}{\\out{</span></a>}}", n),
+                    rep_len("\\if{html}{\\out{</a>}}", n),
                     collapse = "; ")
     } else {
         bibp <- c("", "", ";", "a", "",  ",")
@@ -301,11 +301,11 @@ function(x, textual = FALSE)
             after[ind] <- paste0(", ", after[ind])
         y <- paste0("(",
                     paste0(before,
-                           sprintf("\\if{html}{\\out{<a href=\"#reference+%s+%s\"><span class=\"citation\">}}",
+                           sprintf("\\if{html}{\\out{<a href=\"#reference+%s+%s\" class=\"citation\">}}",
                                    rdpath,
                                    string2id(keys)),
                            y,
-                           rep_len("\\if{html}{\\out{</span></a>}}", n),
+                           rep_len("\\if{html}{\\out{</a>}}", n),
                            after,
                            collapse = ";"),
                     ")")
