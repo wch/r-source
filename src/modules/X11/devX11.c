@@ -1325,7 +1325,7 @@ X11_Open(pDevDesc dd, pX11Desc xd, const char *dsp,
 	 int maxcube, int bgcolor, int canvascolor, int res,
 	 int xpos, int ypos)
 {
-    /* if we have to bail out with "error", then must free(dd) and free(xd) */
+    /* if we have to bail out with "error", then must GEfreeDD(dd) and free(xd) */
     /* That means the *caller*: the X11DeviceDriver code frees xd, for example */
 
     XEvent event;
@@ -3204,13 +3204,13 @@ Rf_addX11Device(const char *display, double width, double height, double ps,
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	/* Allocate and initialize the device driver data */
-	if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc)))) return;
+	if (!(dev = GEcreateDD())) return;
 	if (!X11DeviceDriver(dev, display, width, height,
 			     ps, gamma, colormodel, maxcubesize,
 			     bgcolor, canvascolor, sfonts, res,
 			     xpos, ypos, title, useCairo, antialias, family,
                              symbolfamily, usePUA)) {
-	    free(dev);
+	    GEfreeDD(dev);
 	    errorcall(call, _("unable to start device %s"), devname);
 	}
 	dd = GEcreateDevDesc(dev);

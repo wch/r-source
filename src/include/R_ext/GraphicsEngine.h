@@ -322,6 +322,8 @@ void GEaddDevice(pGEDevDesc);
 void GEaddDevice2(pGEDevDesc, const char *);
 void GEaddDevice2f(pGEDevDesc, const char *, const char *);
 void GEkillDevice(pGEDevDesc);
+pDevDesc GEcreateDD();
+void GEfreeDD(pDevDesc dd);
 pGEDevDesc GEcreateDevDesc(pDevDesc dev);
 
 void GEdestroyDevDesc(pGEDevDesc dd);

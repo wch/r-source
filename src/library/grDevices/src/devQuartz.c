@@ -3247,8 +3247,7 @@ Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create, int *errorCode)
         R_CheckDeviceAvailable();
         {
 	    const char *devname = "quartz_off_screen";
-	    /* FIXME: check this allocation */
-            pDevDesc dev    = calloc(1, sizeof(DevDesc));
+            pDevDesc dev    = GEcreateDD();
 
             if (!dev) {
 		if (errorCode) errorCode[0] = -2;
@@ -3256,7 +3255,7 @@ Quartz_C(QuartzParameters_t *par, quartz_create_fn_t q_create, int *errorCode)
 	    }
             if (!(qd = q_create(dev, &qfn, par))) {
                 vmaxset(vmax);
-                free(dev);
+                GEfreeDD(dev);
 		if (errorCode) errorCode[0] = -3;
 		return NULL;
             }
@@ -3358,7 +3357,7 @@ SEXP Quartz(SEXP args)
     R_GE_checkVersionOrDie(R_GE_version);
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
-	pDevDesc dev = calloc(1, sizeof(DevDesc));
+	pDevDesc dev = GEcreateDD();
 
 	if (!dev)
 	    error(_("unable to create device description"));
@@ -3410,7 +3409,7 @@ SEXP Quartz(SEXP args)
 
 	if (qd == NULL) {
 	    vmaxset(vmax);
-	    free(dev);
+	    GEfreeDD(dev);
 	    error(_("unable to create quartz() device target, given type may not be supported"));
 	}
 	const char *devname = "quartz_off_screen";

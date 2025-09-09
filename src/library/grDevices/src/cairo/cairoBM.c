@@ -653,12 +653,12 @@ SEXP in_Cairo(SEXP args)
     BEGIN_SUSPEND_INTERRUPTS {
 	pDevDesc dev;
 	/* Allocate and initialize the device driver data */
-	if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc)))) return 0;
+	if (!(dev = GEcreateDD())) return 0;
 	if (!BMDeviceDriver(dev, devtable[type].gtype, filename, quality,
 			    width, height, pointsize,
 			    bgcolor, res, antialias, family, dpi,
                             symbolfamily, usePUA)) {
-	    free(dev);
+	    GEfreeDD(dev);
 	    error(_("unable to start device '%s'"), devtable[type].name);
 	}
 	gdd = GEcreateDevDesc(dev);

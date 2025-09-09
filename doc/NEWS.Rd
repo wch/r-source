@@ -149,7 +149,10 @@
 
   \subsection{C-LEVEL FACILITIES}{
     \itemize{
-      \item .
+      \item New functions \code{GEcreateDD()} and \code{GEfreeDD()}
+      for allocating (and initialising) \code{DevDesc} structures.
+      Can be used by external graphics devices.
+      Satisfies \PR{18292}.
     }
   }
 

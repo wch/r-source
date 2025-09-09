@@ -772,12 +772,12 @@ SEXP PicTeX(SEXP args)
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
 	pDevDesc dev;
-	if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc))))
+	if (!(dev = GEcreateDD()))
 	    error(_("unable to start %s() device"), "pictex");
 //	    return 0; // that is not a SEXP
 	if(!PicTeXDeviceDriver(dev, file, bg, fg, width, height,
 			       (bool) debug)) {
-	    free(dev);
+	    GEfreeDD(dev);
 	    error(_("unable to start %s() device"), "pictex");
 	}
 	dd = GEcreateDevDesc(dev);

@@ -2864,6 +2864,10 @@ for reallocation (and its name will appear as @code{""} in
 @samp{.Devices}).  Exactly one of the devices is `active': this is the
 the null device if no other device has been opened and not killed.
 
+There is a @code{GEcreateDD()} to allocate and initialise the @code{DevDesc}
+structure and a @code{GEfreeDD()} to free it (if an error is encountered
+during the device driver set up).
+
 Each instance of a graphics device needs to set up a @code{GEDevDesc}
 structure by code very similar to
 
@@ -2875,7 +2879,7 @@ structure by code very similar to
     BEGIN_SUSPEND_INTERRUPTS @{
         pDevDesc dev;
         /* Allocate and initialize the device driver data */
-        if (!(dev = (pDevDesc) calloc(1, sizeof(DevDesc))))
+        if (!(dev = GEcreateDD()))
             return 0; /* or error() */
         /* set up device driver or free 'dev' and error() */
         gdd = GEcreateDevDesc(dev);
