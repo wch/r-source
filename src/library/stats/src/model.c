@@ -674,7 +674,8 @@ SEXP modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(x = allocMatrix(REALSXP, n, nc));
     double *rx = REAL(x);
 
-#ifdef R_MEMORY_PROFILING
+#if defined(R_MEMORY_PROFILING) && defined(USE_RINTERNALS)
+    // RTRACE and SET_RTRACE macros are only available with USE_RINTERNALS
     if (RTRACE(vars)){
        memtrace_report(vars, x);
        SET_RTRACE(x, 1);
@@ -696,7 +697,9 @@ SEXP modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (INTEGER(columns)[i] == 0)
 		continue;
 	    var_i = VECTOR_ELT(variable, i);
-#ifdef R_MEMORY_PROFILING
+#if defined(R_MEMORY_PROFILING) && defined(USE_RINTERNALS)
+	    // RTRACE and SET_RTRACE macros are only available with
+	    // USE_RINTERNALS
 	    if (RTRACE(var_i)){
 	       memtrace_report(var_i, x);
 	       SET_RTRACE(x, 1);
