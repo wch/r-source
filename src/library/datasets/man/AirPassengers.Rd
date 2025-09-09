@@ -16,7 +16,7 @@
   A monthly time series, in thousands.
 }
 \source{
-  \bibcitep{R:Box+Jenkins+Reinsel:1994}
+  \bibshow{R:Box+Jenkins+Reinsel:1994}
 }
  \examples{
 ## The classic 'airline model', by full ML

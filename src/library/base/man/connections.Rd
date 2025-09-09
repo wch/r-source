@@ -655,7 +655,7 @@ socketTimeout(socket, timeout = -1)
   truncated with a warning.
 }
 \references{
-  \bibshow{R:Ripley:2001}
+  \bibshow{*, R:Ripley:2001}
 }
 
 \seealso{
