@@ -15,7 +15,7 @@
 \description{
   Computes confidence intervals for one or more parameters in a fitted
   model.  There is a default and a method for objects inheriting from class
-  \code{"\link{lm}"}.
+  \code{"\link{lm}"} and several other classes.
 }
 \usage{
 confint(object, parm, level = 0.95, \dots)
@@ -40,10 +40,13 @@ confint(object, parm, level = 0.95, \dots)
   1 - (1-level)/2 in \% (by default 2.5\% and 97.5\%).
 }
 \details{
-  \code{confint} is a generic function.  The default method assumes
-  normality, and needs suitable \code{\link{coef}} and
+  \code{confint} is a generic function.  The default method is based on
+  inverting the Wald test, assuming approximate
+  normality of the estimator. It needs suitable \code{\link{coef}} and
   \code{\link{vcov}} methods to be available.  The default method can be
-  called directly for comparison with other methods.
+  called directly for comparison with other methods. It also works for 
+  fitted models in the S4 class system, provided that the \pkg{methods}
+  namespace is loaded.
 
   For objects of class \code{"lm"} the direct formulae based on \eqn{t}
   values are used.
