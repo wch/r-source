@@ -428,13 +428,13 @@ double defaultStrWidthUTF8(const char *str, const pGEcontext gc, pDevDesc dd)
 { return 0; }
 SEXP defaultSetPattern(SEXP pattern, pDevDesc dd)
 { return R_NilValue; }
-void noopReleasePattern(SEXP ref, pDevDesc dd) {};
+void noopReleasePattern(SEXP ref, pDevDesc dd) {}
 SEXP defaultSetClipPath(SEXP path, SEXP ref, pDevDesc dd)
 { return R_NilValue; }
-void noopReleaseClipPath(SEXP ref, pDevDesc dd) {};
+void noopReleaseClipPath(SEXP ref, pDevDesc dd) {}
 SEXP defaultSetMask(SEXP path, SEXP ref, pDevDesc dd)
 { return R_NilValue; }
-void noopReleaseMask(SEXP ref, pDevDesc dd) {};
+void noopReleaseMask(SEXP ref, pDevDesc dd) {}
 SEXP defaultDefineGroup(SEXP source, int op, SEXP destination, pDevDesc dd) 
 { return R_NilValue; }
 void noopUseGroup(SEXP ref, SEXP trans, pDevDesc dd) {}
