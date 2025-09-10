@@ -1661,12 +1661,13 @@ const char *RQuartz_LookUpFontName(int fontface, const char *fontfamily)
     PROTECT_INDEX index;
     PROTECT(ns = R_FindNamespace(ScalarString(mkChar("grDevices"))));
     PROTECT_WITH_INDEX(env = findVar(install(".Quartzenv"), ns), &index);
-    if(TYPEOF(env) == PROMSXP)
+    if(TYPEOF(env) == PROMSXP) {
         if (NoDevices()) {
             REPROTECT(env = eval(env, ns), index);
         } else {
             REPROTECT(env = Rf_eval_with_gd(env, ns, NULL), index);
         }
+    }
     PROTECT(db    = findVar(install(".Quartz.Fonts"), env));
     PROTECT(names = getAttrib(db, R_NamesSymbol));
     if (*fontfamily) {
@@ -2689,7 +2690,7 @@ static SEXP RQuartz_setPattern(SEXP pattern, pDevDesc dd) {
 
         /* Play the pattern function to draw the pattern on the pattern layer*/
         SEXP R_fcall = PROTECT(lang1(R_GE_tilingPatternFunction(pattern)));
-        Rf_eval_with_gd(R_fcall, R_GlobalEnv, desc2GEdesc(dd));
+        Rf_eval_with_gd(R_fcall, R_GlobalEnv, desc2GEDesc(dd));
         UNPROTECT(1);
 
         xd->appendingPattern = savedPattern;
