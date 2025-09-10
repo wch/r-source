@@ -389,7 +389,7 @@ void initVP(pGEDevDesc dd)
     SEXP gsd = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
     PROTECT(vpfnname = findFun(install("grid.top.level.vp"), R_gridEvalEnv));
     PROTECT(vpfn = lang1(vpfnname));
-    PROTECT(vp = eval(vpfn, R_GlobalEnv));
+    PROTECT(vp = Rf_eval_with_gd(vpfn, R_GlobalEnv, dd));
     /* 
      * Set the "native" scale of the top viewport to be the
      * natural device coordinate system (e.g., points in 

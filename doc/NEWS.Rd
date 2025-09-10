@@ -153,6 +153,13 @@
       for allocating (and initialising) \code{DevDesc} structures.
       Can be used by external graphics devices.
       Satisfies \PR{18292}.
+
+      \item New function \code{R_eval_with_gd()} designed to \dQuote{lock} a
+      graphics device during call to \code{eval()} within device drawing
+      routines.
+      External \emph{on-screen} graphics devices should consider using
+      this function to avoid crashes from the device being closed by the
+      user (e.g., a mouse click) during drawing.
     }
   }
 

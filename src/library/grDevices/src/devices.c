@@ -109,6 +109,17 @@ SEXP devset(SEXP args)
 SEXP devoff(SEXP args)
 {
     checkArity_length;
+    int devNum = INTEGER(CAR(args))[0];
+    /* Check device number is valid (64 is max num devices) */
+    if (devNum > 0 && devNum < 64) {
+        pGEDevDesc gdd = GEgetDevice(devNum - 1);
+        /* Check device is valid */
+        if (gdd && gdd->lock) {
+            /* Force unlock so that dev.off() always works */
+            warning(_("Killing locked device"));
+            gdd->lock = FALSE;
+        }
+    }
     killDevice(INTEGER(CAR(args))[0] - 1);
     return R_NilValue;
 }

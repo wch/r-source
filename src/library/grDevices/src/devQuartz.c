@@ -886,7 +886,7 @@ static QPathRef QuartzCreateClipPath(SEXP clipPath, int index,
     CGContextBeginPath(ctx);
     /* Play the clipPath function to build the clipping path */
     R_fcall = PROTECT(lang1(clipPath));
-    eval(R_fcall, R_GlobalEnv);
+    Rf_eval_with_gd(R_fcall, R_GlobalEnv, NULL);
     UNPROTECT(1);
     /* Save the clipping path (for reuse) */
     quartz_clipPath->path = CGContextCopyPath(ctx);
@@ -1068,7 +1068,7 @@ static int QuartzCreateMask(SEXP mask,
 
         /* Play the mask function to build the mask */
         R_fcall = PROTECT(lang1(mask));
-        eval(R_fcall, R_GlobalEnv);
+        Rf_eval_with_gd(R_fcall, R_GlobalEnv, NULL);
         UNPROTECT(1);
 
         /* When working with an alpha mask, convert into a grayscale bitmap */
@@ -1263,7 +1263,7 @@ static SEXP QuartzCreateGroup(SEXP src, int op, SEXP dst,
     if (dst != R_NilValue) {
         /* Play the destination function to draw the destination */
         R_fcall = PROTECT(lang1(dst));
-        eval(R_fcall, R_GlobalEnv);
+        Rf_eval_with_gd(R_fcall, R_GlobalEnv, NULL);
         UNPROTECT(1);
     }
     /* Set the group operator */
@@ -1276,7 +1276,7 @@ static SEXP QuartzCreateGroup(SEXP src, int op, SEXP dst,
         CGContextSetBlendMode(layerContext, QuartzOperator(op));
         /* Play the source function to draw the source */
         R_fcall = PROTECT(lang1(src));
-        eval(R_fcall, R_GlobalEnv);
+        Rf_eval_with_gd(R_fcall, R_GlobalEnv, NULL);
         UNPROTECT(1);
     }
     
@@ -1662,7 +1662,11 @@ const char *RQuartz_LookUpFontName(int fontface, const char *fontfamily)
     PROTECT(ns = R_FindNamespace(ScalarString(mkChar("grDevices"))));
     PROTECT_WITH_INDEX(env = findVar(install(".Quartzenv"), ns), &index);
     if(TYPEOF(env) == PROMSXP)
-        REPROTECT(env = eval(env,ns) ,index);
+        if (NoDevices()) {
+            REPROTECT(env = eval(env, ns), index);
+        } else {
+            REPROTECT(env = Rf_eval_with_gd(env, ns, NULL), index);
+        }
     PROTECT(db    = findVar(install(".Quartz.Fonts"), env));
     PROTECT(names = getAttrib(db, R_NamesSymbol));
     if (*fontfamily) {
@@ -2685,7 +2689,7 @@ static SEXP RQuartz_setPattern(SEXP pattern, pDevDesc dd) {
 
         /* Play the pattern function to draw the pattern on the pattern layer*/
         SEXP R_fcall = PROTECT(lang1(R_GE_tilingPatternFunction(pattern)));
-        eval(R_fcall, R_GlobalEnv);
+        Rf_eval_with_gd(R_fcall, R_GlobalEnv, desc2GEdesc(dd));
         UNPROTECT(1);
 
         xd->appendingPattern = savedPattern;
@@ -2858,7 +2862,7 @@ static void RQuartz_stroke(SEXP path, const pGEcontext gc, pDevDesc dd)
     CGContextBeginPath(ctx);
     /* Play the path function to build the path */
     R_fcall = PROTECT(lang1(path));
-    eval(R_fcall, R_GlobalEnv);
+    Rf_eval_with_gd(R_fcall, R_GlobalEnv, desc2GEDesc(dd));
     UNPROTECT(1);
     /* Decrement the "appending" count */
     xd->appending--;
@@ -2894,7 +2898,7 @@ static void RQuartz_fill(SEXP path, int rule, const pGEcontext gc,
     CGContextBeginPath(ctx);
     /* Play the path function to build the path */
     R_fcall = PROTECT(lang1(path));
-    eval(R_fcall, R_GlobalEnv);
+    Rf_eval_with_gd(R_fcall, R_GlobalEnv, desc2GEDesc(dd));
     UNPROTECT(1);
     /* Decrement the "appending" count */
     xd->appending--;
@@ -2920,7 +2924,7 @@ static void QuartzFillStrokePath(SEXP path, CGContextRef ctx, QuartzDesc *xd)
     CGContextBeginPath(ctx);
     /* Play the path function to build the path */
     R_fcall = PROTECT(lang1(path));
-    eval(R_fcall, R_GlobalEnv);
+    Rf_eval_with_gd(R_fcall, R_GlobalEnv, NULL);
     UNPROTECT(1);
     /* Decrement the "appending" count */
     xd->appending--;

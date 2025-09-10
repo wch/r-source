@@ -1804,8 +1804,14 @@ static char* translateFontFamily(char* family, pX11Desc xd)
 
     PROTECT(graphicsNS = R_FindNamespace(ScalarString(mkChar("grDevices"))));
     PROTECT_WITH_INDEX(x11env = findVar(install(".X11env"), graphicsNS), &xpi);
-    if(TYPEOF(x11env) == PROMSXP)
-	REPROTECT(x11env = eval(x11env, graphicsNS), xpi);
+    if (TYPEOF(x11env) == PROMSXP) {
+        if (NoDevices()) {
+            REPROTECT(x11env = eval(x11env, graphicsNS), xpi);
+        } else {
+            REPROTECT(x11env = Rf_eval_with_gd(x11env, graphicsNS, 
+                                               GEcurrentDevice()), xpi);
+        }
+    }
     PROTECT(fontdb = findVar(install(".X11.Fonts"), x11env));
     PROTECT(fontnames = getAttrib(fontdb, R_NamesSymbol));
     nfonts = LENGTH(fontdb);

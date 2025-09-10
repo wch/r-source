@@ -311,7 +311,7 @@ SEXP gridCallback(GEevent task, pGEDevDesc dd, SEXP data) {
 		 */
 		SEXP fcall;
 		PROTECT(fcall = lang1(install("draw.all")));
-		eval(fcall, R_gridEvalEnv); 
+		Rf_eval_with_gd(fcall, R_gridEvalEnv, dd); 
 		UNPROTECT(1);
 	    }
 	}

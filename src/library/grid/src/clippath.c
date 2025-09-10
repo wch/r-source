@@ -30,7 +30,7 @@ SEXP resolveClipPath(SEXP path, pGEDevDesc dd)
     setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(TRUE));
     PROTECT(resolveFn = findFun(install("resolveClipPath"), R_gridEvalEnv));
     PROTECT(R_fcall = lang2(resolveFn, path));
-    result = eval(R_fcall, R_gridEvalEnv);
+    result = Rf_eval_with_gd(R_fcall, R_gridEvalEnv, dd);
     setGridStateElement(dd, GSS_RESOLVINGPATH, ScalarLogical(FALSE));
     UNPROTECT(2);
     return result;    

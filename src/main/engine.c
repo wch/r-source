@@ -21,6 +21,7 @@
 #include <config.h>
 #endif
 
+#define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Internal.h>
 #include <float.h>  /* for DBL_MAX */
@@ -3256,7 +3257,7 @@ attribute_hidden SEXP do_recordGraphics(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 #endif
     dd->recordGraphics = FALSE;
-    PROTECT(retval = eval(code, evalenv));
+    PROTECT(retval = Rf_eval_with_gd(code, evalenv, dd));
     /*
      * If there is an error or user-interrupt in the above
      * evaluation, dd->recordGraphics is set to TRUE
@@ -3968,3 +3969,43 @@ void GEGlyph(int n, int *glyphs, double *x, double *y,
                        colour, rot, dd->dev);
     }
 }
+
+static void clearLockFlag(void *data)
+{
+    pGEDevDesc dd = (pGEDevDesc) data;
+    if (GEdeviceNumber(dd))
+	dd->lock = FALSE;
+}
+
+static void lockDevice(RCNTXT *cntxt, pGEDevDesc dd)
+{
+    cntxt->cend = &clearLockFlag;
+    cntxt->cenddata = dd;
+    begincontext(cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+                 R_NilValue, R_NilValue);
+    dd->lock = TRUE;
+}
+
+static void unlockDevice(RCNTXT *cntxt)
+{
+    pGEDevDesc dd = (pGEDevDesc) cntxt->cenddata;
+    endcontext(cntxt);
+    clearLockFlag(dd);
+}
+
+SEXP eval_with_gd(SEXP e, SEXP rho, pGEDevDesc dd)
+{
+    if (!dd)
+        dd = GEcurrentDevice();
+    bool lock = dd->lock;
+    RCNTXT cntxt;
+    SEXP result;
+    if (!lock) 
+        lockDevice(&cntxt, dd);
+    PROTECT(result = eval(e, rho));
+    if (!lock)
+        unlockDevice(&cntxt);
+    UNPROTECT(1);
+    return result;
+}
+

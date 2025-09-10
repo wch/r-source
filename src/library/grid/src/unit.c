@@ -50,7 +50,7 @@ int isNewUnit(SEXP unit) {
 SEXP upgradeUnit(SEXP unit) {
     SEXP upgradeFn = PROTECT(findFun(install("upgradeUnit"), R_gridEvalEnv));
     SEXP R_fcall = PROTECT(lang2(upgradeFn, unit));
-    SEXP unit2 = PROTECT(eval(R_fcall, R_gridEvalEnv));
+    SEXP unit2 = PROTECT(Rf_eval_with_gd(R_fcall, R_gridEvalEnv, NULL));
     UNPROTECT(3);
     return unit2;
 }
@@ -233,7 +233,7 @@ int pureNullUnit(SEXP unit, int index, pGEDevDesc dd) {
 						 R_gridEvalEnv));
 		    PROTECT(R_fcall0 = lang2(findGrobFn, 
 					     getListElement(grob, "name")));
-		    grob = eval(R_fcall0, R_gridEvalEnv);
+		    grob = Rf_eval_with_gd(R_fcall0, R_gridEvalEnv, dd);
 		} else {
 		    PROTECT(findGrobFn =findFun(install("findGrobinChildren"), 
 						R_gridEvalEnv));
@@ -241,17 +241,17 @@ int pureNullUnit(SEXP unit, int index, pGEDevDesc dd) {
 					     getListElement(grob, "name"),
 					     getListElement(savedgrob, 
 							    "children")));
-		    grob = eval(R_fcall0, R_gridEvalEnv);
+		    grob = Rf_eval_with_gd(R_fcall0, R_gridEvalEnv, dd);
 		}
 		UNPROTECT(2);
 	    }
 	    PROTECT(R_fcall1 = lang2(widthPreFn, grob));
-            PROTECT(updatedgrob = eval(R_fcall1, R_gridEvalEnv));
+            PROTECT(updatedgrob = Rf_eval_with_gd(R_fcall1, R_gridEvalEnv, dd));
 	    PROTECT(R_fcall2 = lang2(widthFn, updatedgrob));
-	    PROTECT(width = eval(R_fcall2, R_gridEvalEnv));
+	    PROTECT(width = Rf_eval_with_gd(R_fcall2, R_gridEvalEnv, dd));
 	    result = pureNullUnit(width, 0, dd);
 	    PROTECT(R_fcall3 = lang2(widthPostFn, updatedgrob));
-	    eval(R_fcall3, R_gridEvalEnv);
+	    Rf_eval_with_gd(R_fcall3, R_gridEvalEnv, dd);
 	    setGridStateElement(dd, GSS_GPAR, savedgpar);
 	    setGridStateElement(dd, GSS_CURRGROB, savedgrob);
 	    UNPROTECT(11);
@@ -279,7 +279,7 @@ int pureNullUnit(SEXP unit, int index, pGEDevDesc dd) {
 						 R_gridEvalEnv));
 		    PROTECT(R_fcall0 = lang2(findGrobFn, 
 					     getListElement(grob, "name")));
-		    grob = eval(R_fcall0, R_gridEvalEnv);
+		    grob = Rf_eval_with_gd(R_fcall0, R_gridEvalEnv, dd);
 		} else {
 		    PROTECT(findGrobFn =findFun(install("findGrobinChildren"), 
 						R_gridEvalEnv));
@@ -287,17 +287,17 @@ int pureNullUnit(SEXP unit, int index, pGEDevDesc dd) {
 					     getListElement(grob, "name"),
 					     getListElement(savedgrob, 
 							    "children")));
-		    grob = eval(R_fcall0, R_gridEvalEnv);
+		    grob = Rf_eval_with_gd(R_fcall0, R_gridEvalEnv, dd);
 		}
 		UNPROTECT(2);
 	    }
 	    PROTECT(R_fcall1 = lang2(heightPreFn, grob));
-	    PROTECT(updatedgrob = eval(R_fcall1, R_gridEvalEnv));
+	    PROTECT(updatedgrob = Rf_eval_with_gd(R_fcall1, R_gridEvalEnv, dd));
 	    PROTECT(R_fcall2 = lang2(heightFn, updatedgrob));
-	    PROTECT(height = eval(R_fcall2, R_gridEvalEnv));
+	    PROTECT(height = Rf_eval_with_gd(R_fcall2, R_gridEvalEnv, dd));
 	    result = pureNullUnit(height, 0, dd);
 	    PROTECT(R_fcall3 = lang2(heightPostFn, updatedgrob));
-	    eval(R_fcall3, R_gridEvalEnv);
+	    Rf_eval_with_gd(R_fcall3, R_gridEvalEnv, dd);
 	    setGridStateElement(dd, GSS_GPAR, savedgpar);
 	    setGridStateElement(dd, GSS_CURRGROB, savedgrob);
 	    UNPROTECT(11);
@@ -415,14 +415,14 @@ double evaluateGrobUnit(double value, SEXP grob,
 					 R_gridEvalEnv));
 	    PROTECT(R_fcall0 = lang2(findGrobFn, 
 				     getListElement(grob, "name")));
-	    PROTECT(grob = eval(R_fcall0, R_gridEvalEnv));
+	    PROTECT(grob = Rf_eval_with_gd(R_fcall0, R_gridEvalEnv, dd));
 	} else {
 	    PROTECT(findGrobFn = findFun(install("findGrobinChildren"), 
 					 R_gridEvalEnv));
 	    PROTECT(R_fcall0 = lang3(findGrobFn, 
 				     getListElement(grob, "name"),
 				     getListElement(savedgrob, "children")));
-	    PROTECT(grob = eval(R_fcall0, R_gridEvalEnv));
+	    PROTECT(grob = Rf_eval_with_gd(R_fcall0, R_gridEvalEnv, dd));
 	}
 	/*
 	 * Flag to make sure we UNPROTECT these at the end
@@ -432,7 +432,7 @@ double evaluateGrobUnit(double value, SEXP grob,
     /* Call preDraw(grob) 
      */
     PROTECT(R_fcall1 = lang2(preFn, grob));
-    PROTECT(updatedgrob = eval(R_fcall1, R_gridEvalEnv));
+    PROTECT(updatedgrob = Rf_eval_with_gd(R_fcall1, R_gridEvalEnv, dd));
     /* 
      * The call to preDraw may have pushed viewports and/or
      * enforced gpar settings, SO we need to re-establish the
@@ -468,20 +468,20 @@ double evaluateGrobUnit(double value, SEXP grob,
 	    SEXP val;
 	    PROTECT(val = ScalarReal(value));
 	    PROTECT(R_fcall2x = lang3(evalFnx, updatedgrob, val));
-	    PROTECT(unitx = eval(R_fcall2x, R_gridEvalEnv));
+	    PROTECT(unitx = Rf_eval_with_gd(R_fcall2x, R_gridEvalEnv, dd));
 	    PROTECT(R_fcall2y = lang3(evalFny, updatedgrob, val));
-	    PROTECT(unity = eval(R_fcall2y, R_gridEvalEnv));
+	    PROTECT(unity = Rf_eval_with_gd(R_fcall2y, R_gridEvalEnv, dd));
 	}
 	break;
     case 2:
 	PROTECT(R_fcall2x = lang2(evalFnx, updatedgrob));
-	PROTECT(unitx = eval(R_fcall2x, R_gridEvalEnv));
+	PROTECT(unitx = Rf_eval_with_gd(R_fcall2x, R_gridEvalEnv, dd));
 	break;
     case 3:
     case 4:
     case 5:
 	PROTECT(R_fcall2y = lang2(evalFny, updatedgrob));
-	PROTECT(unity = eval(R_fcall2y, R_gridEvalEnv));
+	PROTECT(unity = Rf_eval_with_gd(R_fcall2y, R_gridEvalEnv, dd));
 	break;
     }
     /* 
@@ -554,7 +554,7 @@ double evaluateGrobUnit(double value, SEXP grob,
     /* Call postDraw(grob)
      */
     PROTECT(R_fcall3 = lang2(postFn, updatedgrob));
-    eval(R_fcall3, R_gridEvalEnv);
+    Rf_eval_with_gd(R_fcall3, R_gridEvalEnv, dd);
     /* 
      * Restore the saved gpar state and grob
      */
@@ -1615,13 +1615,22 @@ SEXP validData(SEXP data, SEXP validUnits, int n) {
 					dataCopied = 1;
 				}
 				SEXP fcall = PROTECT(lang2(install("gPath"), singleData));
-				singleData = eval(fcall, R_gridEvalEnv);
+                                if (NoDevices()) {
+                                    singleData = eval(fcall, R_gridEvalEnv);
+                                } else {
+                                    singleData = Rf_eval_with_gd(fcall, R_gridEvalEnv, NULL);
+                                }
 				SET_VECTOR_ELT(data, i % nData, singleData);
 				UNPROTECT(1);
 			}
 			if (Rf_inherits(singleData, "gPath")) {
 				SEXP fcall = PROTECT(lang2(install("depth"), singleData));
-				SEXP depth = PROTECT(eval(fcall, R_gridEvalEnv));
+                                SEXP depth;
+                                if (NoDevices()) {
+                                    depth = PROTECT(eval(fcall, R_gridEvalEnv));
+                                } else {
+                                    depth = PROTECT(Rf_eval_with_gd(fcall, R_gridEvalEnv, NULL));
+                                }
 				int tooDeep = INTEGER(depth)[0] > 1;
 				UNPROTECT(2);
 				if (tooDeep) {

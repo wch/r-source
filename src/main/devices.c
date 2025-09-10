@@ -324,11 +324,24 @@ void removeDevice(int devNum, Rboolean findNext)
 
 void GEkillDevice(pGEDevDesc gdd)
 {
+    Rboolean lock = gdd ? gdd->lock : FALSE;
+    if (lock) {
+        warning(_("can't shut down a locked device"));
+        return;
+    }
     removeDevice(GEdeviceNumber(gdd), TRUE);
 }
 
 void killDevice(int devNum)
 {
+    if((devNum > 0) && (devNum < R_MaxDevices) &&
+       (R_Devices[devNum] != NULL) && active[devNum]) {
+        pGEDevDesc g = R_Devices[devNum];
+        if (g && g->lock) {
+            warning(_("can't shut down a locked device"));
+            return;
+        }
+    }
     removeDevice(devNum, TRUE);
 }
 
@@ -658,6 +671,7 @@ pGEDevDesc GEcreateDevDesc(pDevDesc dev)
     }
 #endif
     gdd->recordGraphics = TRUE;
+    gdd->lock = FALSE;
     gdd->ask = Rf_GetOptionDeviceAsk();
     gdd->dev->eventEnv = R_NilValue;  /* gc needs this */
     gdd->appending = FALSE;

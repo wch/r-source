@@ -285,7 +285,7 @@ static SEXP resolveFill(SEXP pattern, int i)
     INTEGER(index)[0] = i + 1;
     PROTECT(resolveFn = findFun(install("resolveFill"), R_gridEvalEnv));
     PROTECT(R_fcall = lang3(resolveFn, pattern, index));
-    result = eval(R_fcall, R_gridEvalEnv);
+    result = Rf_eval_with_gd(R_fcall, R_gridEvalEnv, NULL);
     UNPROTECT(3);
     return result;
 }
@@ -295,7 +295,7 @@ static SEXP unresolveFill(SEXP pattern)
     SEXP unresolveFn, R_fcall, result;
     PROTECT(unresolveFn = findFun(install("unresolveFill"), R_gridEvalEnv));
     PROTECT(R_fcall = lang2(unresolveFn, pattern));
-    result = eval(R_fcall, R_gridEvalEnv);
+    result = Rf_eval_with_gd(R_fcall, R_gridEvalEnv, NULL);
     UNPROTECT(2);
     return result;
 }

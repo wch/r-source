@@ -1687,7 +1687,11 @@ static SEXP getFontDB(const char *fontdbname) {
     /* under lazy loading this will be a promise on first use */
     if(TYPEOF(PSenv) == PROMSXP) {
 	PROTECT(PSenv);
-	PSenv = eval(PSenv, graphicsNS);
+        if (NoDevices()) {
+            PSenv = eval(PSenv, graphicsNS);
+        } else {
+            PSenv = Rf_eval_with_gd(PSenv, graphicsNS, NULL);
+        }
 	UNPROTECT(2);
 	PROTECT(PSenv);
     }
@@ -2694,7 +2698,11 @@ static void PSFileHeader(FILE *fp,
 	/* under lazy loading this will be a promise on first use */
 	if(TYPEOF(prolog) == PROMSXP) {
 	    PROTECT(prolog);
-	    prolog = eval(prolog, graphicsNS);
+            if (NoDevices()) {
+                prolog = eval(prolog, graphicsNS);
+            } else {
+                prolog = Rf_eval_with_gd(prolog, graphicsNS, NULL);
+            }
 	    UNPROTECT(1);
 	}
 	UNPROTECT(1);
@@ -2712,7 +2720,11 @@ static void PSFileHeader(FILE *fp,
 	/* under lazy loading this will be a promise on first use */
 	if(TYPEOF(prolog) == PROMSXP) {
 	    PROTECT(prolog);
-	    prolog = eval(prolog, graphicsNS);
+            if (NoDevices()) {
+                prolog = eval(prolog, graphicsNS);
+            } else {
+                prolog = Rf_eval_with_gd(prolog, graphicsNS, NULL);
+            }
 	    UNPROTECT(1);
 	}
 	UNPROTECT(1);
@@ -5683,7 +5695,7 @@ static int newTiling(SEXP pattern, PDFDesc *pd)
 
     /* Evaluate the pattern function to generate the pattern */
     R_fcall = PROTECT(lang1(R_GE_tilingPatternFunction(pattern)));
-    eval(R_fcall, R_GlobalEnv);
+    Rf_eval_with_gd(R_fcall, R_GlobalEnv, NULL);
     UNPROTECT(1);
 
     /* Invalidate current settings so normal drawing enforces its settings */
@@ -5860,7 +5872,7 @@ static int newPath(SEXP path, int type, PDFDesc *pd)
 
     /* Evaluate the path function to generate the clipping path */
     R_fcall = PROTECT(lang1(path));
-    eval(R_fcall, R_GlobalEnv);
+    Rf_eval_with_gd(R_fcall, R_GlobalEnv, NULL);
     UNPROTECT(1);
 
     if (type == PDFclipPath) {
@@ -5918,7 +5930,7 @@ static int newMask(SEXP mask, PDFDesc *pd)
 
     /* Evaluate the mask function to generate the mask */
     R_fcall = PROTECT(lang1(mask));
-    eval(R_fcall, R_GlobalEnv);
+    Rf_eval_with_gd(R_fcall, R_GlobalEnv, NULL);
     UNPROTECT(1);
 
     /* Invalidate current settings so normal drawing enforces its settings */
@@ -6109,7 +6121,7 @@ static int newGroup(SEXP source, int op, SEXP destination, PDFDesc *pd)
     if (destination != R_NilValue) {
         /* Evaluate the destination function to generate the destination */
         R_fcall = PROTECT(lang1(destination));
-        eval(R_fcall, R_GlobalEnv);
+        Rf_eval_with_gd(R_fcall, R_GlobalEnv, NULL);
         UNPROTECT(1);
     }
 
@@ -6119,7 +6131,7 @@ static int newGroup(SEXP source, int op, SEXP destination, PDFDesc *pd)
 
     /* Evaluate the source function to generate the source */
     R_fcall = PROTECT(lang1(source));
-    eval(R_fcall, R_GlobalEnv);
+    Rf_eval_with_gd(R_fcall, R_GlobalEnv, NULL);
     UNPROTECT(1);
 
     /* Some finalisation that endpage does

@@ -29,7 +29,7 @@ SEXP resolveMask(SEXP mask, pGEDevDesc dd)
     SEXP resolveFn, R_fcall, result;
     PROTECT(resolveFn = findFun(install("resolveMask"), R_gridEvalEnv));
     PROTECT(R_fcall = lang2(resolveFn, mask));
-    result = eval(R_fcall, R_gridEvalEnv);
+    result = Rf_eval_with_gd(R_fcall, R_gridEvalEnv, dd);
     UNPROTECT(2);
     return result;    
 }
