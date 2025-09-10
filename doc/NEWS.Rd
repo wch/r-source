@@ -21,8 +21,8 @@
       still uses \code{stats4::logLik} and \code{stats4::nobs}, but packages
       no longer need to load \code{stats4} explicitly.
 
-      \item \code{confint.default} now also works on S4 objects, as long as they
-      have \code{coef()} and \code{vcov()} generics.
+      \item \code{confint.default} now also works on S4 objects, as long as
+      suitable \code{coef()} and \code{vcov()} methods exist.
 
       \item \code{binomial(identity)} and \code{quasibinomial(identity)} now work
       without having to quote the argument.
