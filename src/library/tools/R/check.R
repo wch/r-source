@@ -3961,7 +3961,7 @@ add_dummies <- function(dir, Log)
         if(length(out) == 1L && startsWith(out, "Note:")) {
             ## This will be a note about symbols.rds not being available
             if(!is_base_pkg) {
-                noteLog(Log)
+                infoLog(Log)
                 printLog0(Log, c(out, "\n"))
             } else resultLog(Log, "OK")
         } else if(length(out)) {
