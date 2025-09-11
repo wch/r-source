@@ -8692,6 +8692,7 @@ Finally, @code{\bibinfo} allows to modify bibentries.  Using
 @example
 \bibinfo@{@var{keyspec}@}@{@var{field}@}@{@var{value}@}
 @end example
+@noindent
 will set the @var{field} of the bibentry corresponding to @var{keyspec}
 to @var{value}.  This can be used in particular to ``annotate'' the
 bibentry, by adding @samp{note}, @samp{footer} or @samp{header} fields.
@@ -8700,11 +8701,13 @@ For example,
 @example
 \bibcitet@{R:Becker+Chambers+Wilks:1988@}
 @end example
+@noindent
 gives a textual citation of the ``@emph{Blue Book}'' 
 (`@I{Becker, Chambers, and Wilks (1988)}' when first encountered), 
 @example
 \bibcitep@{e.g.\\\\\\,|R:Chambers+Hastie:1992|page 123@}
 @end example
+@noindent
 gives a parenthetical citation of a page in the ``@emph{White Book}'' 
 (`@I{(e.g., Chambers and Hastie 1992, page 123)}' when first encountered).
 An Rd file having cited the above two and also wanting to include the
@@ -8714,12 +8717,14 @@ An Rd file having cited the above two and also wanting to include the
   \bibshow@{*, R:Chambers:1998@}
 @}
 @end example
+@noindent
 If one wanted to highlight a particular page range for the last
 reference, one could use one of
 @example
 \bibinfo@{R:Chambers:1998@}@{note@}@{Pages 23--45@}
 \bibinfo@{R:Chambers:1998@}@{footer@}@{Pages 23--45.@}
 @end example
+@noindent
 before the @code{\bibshow} (the note will be added in-line, the footer
 on a new line).
 
@@ -8736,6 +8741,7 @@ disambiguate by manually adding the suffixes to the year fields, e.g.
 \bibinfo@{R:Eddy:1977a@}@{year@}@{1977a@}
 \bibinfo@{R:Eddy:1977b@}@{year@}@{1977b@}
 @end example
+@noindent
 (see file @file{src/library/grDevices/man/chull.Rd} in the R sources).
 
 @node Processing documentation files
