@@ -714,7 +714,7 @@ setCacheOnAssign <- function(env, onOff = cacheOnAssign(env))
         }
         if(length(possible) > 1L)
             warning(gettextf("objects found in multiple packages: using %s and ignoring %s",
-                             sQuote(names(possible[[1L]])),
+                             sQuote(names(possible[1L])),
                              paste(sQuote(names(possible[-1L])),
                                    collapse = ", ")),
                     domain = NA)
