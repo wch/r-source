@@ -4235,7 +4235,9 @@ non-standard names such as @code{[<-.fractions} must be.)
 
 For packages with many variables to export it may be more convenient to
 specify the names to export with a regular expression using
-@code{exportPattern}.  The directive
+@code{exportPattern}. This pattern should be POSIX 1003.2 extended regular
+expression (see the help for @code{regexp} in @R{} for the precise details).
+The directive
 
 @findex exportPattern
 @example
