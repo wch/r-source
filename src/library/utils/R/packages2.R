@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packages2.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -400,7 +400,7 @@ install.packages <-
                 download.file(p, destfile, method, mode = "wb", ...)
             urls <- unique(pkgs[web])
 
-            if (missing(method) || method == "auto" || method == "libcurl") {
+            if (.download.file.method(method) %in% c("auto", "libcurl")) {
                 # bulk download using libcurl
                 destfiles <- file.path(tmpd, basename(urls))
                 res <- try(df(urls, destfiles, "libcurl", ...))

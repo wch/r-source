@@ -56,6 +56,10 @@
       problem was that the text transformation matrix was not reset
       so glyphs would be rendered incorrectly (often completely outside
       the device, i.e., not visible).
+
+      \item Functions \code{install.packages()} and \code{download.packages()} again
+      consult option \code{download.file.method} when the download method is
+      unspecified.
     }
   }
 }
