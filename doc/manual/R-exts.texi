@@ -1120,7 +1120,8 @@ not those in @samp{Enhances} nor those not mentioned in the
 @file{DESCRIPTION} file.  It is recommended that a package is checked
 with each of these set, as well as with neither.
 
-@strong{WARNING:} Be extremely careful if you do things which would be
+@quotation Warning
+Be extremely careful if you do things which would be
 run at installation time depending on whether suggested packages are
 available or not---this includes top-level code in @R{} code files,
 @code{.onLoad} functions and the definitions of S4 classes and methods.
@@ -1132,6 +1133,7 @@ on a different machine).  Even worse, the problems might not be confined
 to your package, for the namespaces of your suggested packages will also
 be loaded whenever any package which imports yours is installed and so
 may be captured there.
+@end quotation
 
 
 @node The INDEX file
