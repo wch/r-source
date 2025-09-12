@@ -2102,7 +2102,9 @@ attribute_hidden SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* envir :	originally, the "where=" argument */
 
-    if (TYPEOF(CADR(args)) == REALSXP || TYPEOF(CADR(args)) == INTSXP) {
+    if (TYPEOF(CADR(args)) == ENVSXP)
+	genv = CADR(args);
+    else if (TYPEOF(CADR(args)) == REALSXP || TYPEOF(CADR(args)) == INTSXP) {
 	where = asInteger(CADR(args));
 	genv = R_sysframe(where, R_GlobalContext);
     }
@@ -2110,8 +2112,6 @@ attribute_hidden SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("use of NULL environment is defunct"));
 	genv = R_NilValue;  /* -Wall */
     }
-    else if (TYPEOF(CADR(args)) == ENVSXP)
-	genv = CADR(args);
     else if(TYPEOF((genv = simple_as_environment(CADR(args)))) != ENVSXP) {
 	error(_("invalid '%s' argument"), "envir");
 	genv = R_NilValue;  /* -Wall */
