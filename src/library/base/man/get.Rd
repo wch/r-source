@@ -1,6 +1,6 @@
 % File src/library/base/man/get.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{get}
@@ -16,8 +16,8 @@
 get(x, pos = -1, envir = as.environment(pos), mode = "any",
     inherits = TRUE)
 
-mget(x, envir = as.environment(-1), mode = "any", ifnotfound,
-     inherits = FALSE)
+mget(x, envir = as.environment(pos), mode = "any", ifnotfound,
+     inherits = FALSE, pos = -1)
 
 dynGet(x, ifnotfound = , minframe = 1L, inherits = FALSE)
 }

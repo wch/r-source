@@ -1,7 +1,7 @@
 #  File src/library/base/R/get.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,8 +31,8 @@ get0 <- function (x, envir = pos.to.env(-1L), mode = "any", inherits = TRUE,
                   ifnotfound = NULL)
     .Internal(get0(x, envir, mode, inherits, ifnotfound))
 
-mget <- function(x, envir = as.environment(-1L), mode = "any",
-                 ifnotfound, inherits = FALSE)
+mget <- function(x, envir = as.environment(pos), mode = "any",
+                 ifnotfound, inherits = FALSE, pos = -1L)
     .Internal(mget(x, envir, mode,
                    if(missing(ifnotfound))
                        list(function(x) stop(gettextf("value for %s not found", sQuote(x)),
