@@ -1,6 +1,6 @@
 % File src/library/graphics/man/bxp.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{bxp}
@@ -46,7 +46,7 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
     (\code{\link{box}}) should be drawn; defaults to \code{TRUE}, unless
     \code{axes = FALSE} is specified.}
   \item{horizontal}{logical indicating if the  boxplots should be
-    horizontal; default \code{FALSE} means vertical boxes.}
+    horizontal; default \code{FALSE} means vertical boxes. See \sQuote{Note}.}
   \item{ann}{a logical value indicating whether the default annotation
     (title and x and y axis labels) should appear on the plot.}
   \item{add}{logical, if true \emph{add} boxplot to current plot.}
@@ -60,9 +60,6 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
     normally(\code{\dots}), see the following.  (Those in \code{\dots}
     take precedence over those in \code{pars}.)
 
-    Currently, \code{yaxs} and \code{ylim} are used \sQuote{along the
-      boxplot}, i.e., vertically, when \code{horizontal} is
-    false, and \code{xlim} horizontally.
     \code{xaxt}, \code{yaxt}, \code{las}, \code{cex.axis},
     \code{gap.axis}, and
     \code{col.axis} are passed to \code{\link{axis}}, and \code{main},
@@ -110,6 +107,11 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
     range(at, *) + c(-0.5, 0.5)}.  It will usually be a good idea to
   specify \code{xlim} if the "x" axis has a log scale or \code{width} is
   far from uniform.
+
+  If \code{horizontal = TRUE}, the "y" axis is the horizontal axis and the
+  "x" axis is the vertical axis.  Graphical parameters \code{xlim/ylim} and
+  \code{xaxs/yaxs} are reversed in this case.  Other axis related parameters
+  treat the vertical axis as "y" and the horizontal axis as "x".
 }
 \value{
   An invisible vector, actually identical to the \code{at} argument,
