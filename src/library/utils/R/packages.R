@@ -774,6 +774,14 @@ remove.packages <- function(pkgs, lib)
     invisible()
 }
 
+.download.file.method <- function(method)
+{
+    if (missing(method))
+	method <- getOption("download.file.method", default = "auto")
+    match.arg(method, c("auto", "internal", "wininet",
+                        "libcurl", "wget", "curl", "lynx"))
+}
+
 download.packages <- function(pkgs, destdir, available = NULL,
                               repos = getOption("repos"),
                               contriburl = contrib.url(repos, type),
@@ -791,7 +799,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
         available <-
             available.packages(contriburl = contriburl, method = method, ...)
 
-    if (missing(method) || method == "auto" || method == "libcurl")
+    if (.download.file.method(method) %in% c("auto", "libcurl"))
         bulkdown <- matrix(character(), 0L, 3L)
     else
         bulkdown <- NULL

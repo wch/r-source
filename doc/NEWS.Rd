@@ -351,6 +351,10 @@
       \item All four of \code{{col,row}{Sums,Means}(Z, na.rm=TRUE)} now correctly work
       with complex \code{Z} where \code{is.na(Re(Z))} differs from \code{is.na(Im(Z))},
       fixing \PR{18942}, unearthed by \I{Dirk Eddelbuettel}.
+
+      \item Functions \code{install.packages()} and \code{download.packages()} again
+      consult option \code{download.file.method} when the download method is
+      unspecified.
     }
   }
 }

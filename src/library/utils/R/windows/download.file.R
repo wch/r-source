@@ -1,7 +1,7 @@
 #  File src/library/utils/R/windows/download.file.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,10 +22,7 @@ download.file <-
              headers = NULL, ...)
 {
     destfile # check supplied
-    if (missing(method))
-	method <- getOption("download.file.method", default = "auto")
-    method <- match.arg(method, c("auto", "internal", "wininet",
-                                  "libcurl", "wget", "curl", "lynx"))
+    method <- .download.file.method(method)
 
     if(missing(mode) && length(grep("\\.(gz|bz2|xz|tgz|zip|jar|rd[as]|RData)$",
 				    URLdecode(url))))
