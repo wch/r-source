@@ -285,6 +285,11 @@
       using both \code{times} and \code{each} optional arguments.  Fixes
       \PR{18926}, thanks to \I{Ella Kaye} and collaborators at \I{useR! 2025}'s
       \sQuote{\I{R Dev Day}}.
+
+      \item \code{jitter(x, amount, factor)} becomes more robust for
+      non-finite \code{x} or also negative \code{amount}, \code{factor}.
+      \code{help(jitter)} is easier to read, fixing \PR{17279}, thanks to
+      its contributors.
     }
   }
 }
