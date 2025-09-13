@@ -251,12 +251,6 @@
       entries if the length is increased.  Thanks to \I{Mikael Jagan}'s
       \PR{18917}.
 
-      \item Fix for glyph rendering on the \code{quartz()} device when
-      there is other (\dQuote{normal}) text drawn on the device.  The
-      problem was that the text transformation matrix was not reset
-      so glyphs would be rendered incorrectly (often completely outside
-      the device, i.e., not visible).
-
       \item \code{<complex>[i] <- NA} now only sets the \emph{real} part to
       \code{NA}, consistently with the \code{as.complex(NA)} behaviour
       since \R 4.4.0; thanks to \I{Mikael Jagan}'s \PR{18918}.
@@ -291,13 +285,6 @@
       using both \code{times} and \code{each} optional arguments.  Fixes
       \PR{18926}, thanks to \I{Ella Kaye} and collaborators at \I{useR! 2025}'s
       \sQuote{\I{R Dev Day}}.
-
-      \item \I{Tanguy Barthelemy} and colleagues at the
-      \sQuote{\I{R Dev Day}} following \I{Rencontres R} in May 2025
-      extended the help page of \code{lm()}, fixing \PR{18058}.
-      As suggested by \I{Thomas Soeiro}, such notes were also added to the
-      \code{glm()}, \code{poly()} and \code{splines::bs()} and \code{ns()}
-      pages.
     }
   }
 }
@@ -352,9 +339,22 @@
       with complex \code{Z} where \code{is.na(Re(Z))} differs from \code{is.na(Im(Z))},
       fixing \PR{18942}, unearthed by \I{Dirk Eddelbuettel}.
 
+      \item Fix for glyph rendering on the \code{quartz()} device when
+      there is other (\dQuote{normal}) text drawn on the device.  The
+      problem was that the text transformation matrix was not reset
+      so glyphs would be rendered incorrectly (often completely outside
+      the device, i.e., not visible).
+
       \item Functions \code{install.packages()} and \code{download.packages()} again
       consult option \code{download.file.method} when the download method is
       unspecified.
+
+      \item \I{Tanguy Barthelemy} and colleagues at the
+      \sQuote{\I{R Dev Day}} following \I{Rencontres R} in May 2025
+      extended the help page of \code{lm()}, fixing \PR{18058}.
+      As suggested by \I{Thomas Soeiro}, such notes were also added to the
+      \code{glm()}, \code{poly()} and \code{splines::bs()} and \code{ns()}
+      pages.
 
       \item \code{lbeta(1i, 1)} now signals an error, as \code{lbeta()} is not implemented
       for \code{complex}, fixing \PR{18946} from \I{Ben Bolker} and  \I{Kasper Kristensen}.
