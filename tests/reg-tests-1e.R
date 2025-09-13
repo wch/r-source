@@ -2246,6 +2246,17 @@ for(na in c(TRUE, FALSE))
 ## almost all differed in R <= 4.5.1
 
 
+## Ben Bolker + Kasper Kri...'s  PR#18946 -- lbeta(<complex>, *)
+(Lb <- list(
+    b1 = tryCid(  beta(1i, 1) )
+  , b2 = tryCid(  beta(1, 1i) )
+  , l1 = tryCid( lbeta(1i, 1) )
+  , l2 = tryCid( lbeta(1, 1i) )
+))
+stopifnot(vapply(Lb, inherits, what="error", NA))
+## l1 was not an error, but non-sense complex,  in R <= 4.5.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

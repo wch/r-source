@@ -16,7 +16,7 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{AIC.default} and \code{BIC.default} now checks whether 
+      \item \code{AIC.default} and \code{BIC.default} now checks whether
       the \code{methods} namespace is loaded rather than \code{stats4}. It
       still uses \code{stats4::logLik} and \code{stats4::nobs}, but packages
       no longer need to load \code{stats4} explicitly.
@@ -355,6 +355,9 @@
       \item Functions \code{install.packages()} and \code{download.packages()} again
       consult option \code{download.file.method} when the download method is
       unspecified.
+
+      \item \code{lbeta(1i, 1)} now signals an error, as \code{lbeta()} is not implemented
+      for \code{complex}, fixing \PR{18946} from \I{Ben Bolker} and  \I{Kasper Kristensen}.
     }
   }
 }
