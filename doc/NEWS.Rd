@@ -64,6 +64,13 @@
       \item Functions \code{install.packages()} and \code{download.packages()} again
       consult option \code{download.file.method} when the download method is
       unspecified.
+
+      \item \I{Tanguy Barthelemy} and colleagues at the
+      \sQuote{\I{R Dev Day}} following \I{Rencontres R} in May 2025
+      extended the help page of \code{lm()}, fixing \PR{18058}.
+      As suggested by \I{Thomas Soeiro}, such notes were also added to the
+      \code{glm()}, \code{poly()} and \code{splines::bs()} and \code{ns()}
+      pages.
     }
   }
 }

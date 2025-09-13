@@ -1,6 +1,6 @@
 % File src/library/stats/man/poly.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{poly}
@@ -67,6 +67,11 @@ polym  (\dots, degree = 1, coefs = NULL, raw = FALSE)
   \code{polym}: \code{coef} is ignored.  Conversely, if \code{polym} is
   called with a single argument in \code{\dots} it is a wrapper for
   \code{poly}.
+
+  When used in a model \code{\link{formula}} containing a \code{subset = *}
+  part, the \code{x} in \code{poly(x)} is evaluated before subsetting which
+  may lead to unexpected results.  For more information see the
+  \sQuote{Details} section of the \code{\link{model.frame}}.
 }
 \note{
   This routine is intended for statistical purposes such as

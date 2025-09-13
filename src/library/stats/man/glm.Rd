@@ -54,7 +54,9 @@ glm.fit(x, y, weights = rep.int(1, nobs),
     in the fitting process.  Should be \code{NULL} or a numeric vector.}
 
   \item{subset}{an optional vector specifying a subset of observations
-    to be used in the fitting process.}
+    to be used in the fitting process.  (See additional details about how
+    this argument interacts with data-dependent bases in the
+    \sQuote{Details} below.)}
 
   \item{na.action}{a function which indicates what should happen
     when the data contain \code{NA}s.  The default is set by
@@ -169,6 +171,10 @@ glm.fit(x, y, weights = rep.int(1, nobs),
   and \code{mustart} are evaluated in the same way as variables in
   \code{formula}, that is first in \code{data} and then in the
   environment of \code{formula}.
+  Note that values calculated inside the formula, such as \code{mean(x)},
+  are evaluated before subsetting - which may lead to unexpected results
+  if used with \code{subset}.  For more information see the
+  \sQuote{Details} section of the \code{\link{model.frame}}.
 
   For the background to warning messages about
   \sQuote{\I{fitted probabilities numerically 0 or 1 occurred}}

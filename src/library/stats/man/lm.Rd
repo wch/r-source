@@ -1,6 +1,6 @@
 % File src/library/stats/man/lm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{lm}
@@ -37,8 +37,7 @@ lm(formula, data, subset, weights, na.action,
   \item{subset}{an optional vector specifying a subset of observations
     to be used in the fitting process.  (See additional details about how
     this argument interacts with data-dependent bases in the
-    \sQuote{Details} section of the \code{\link{model.frame}}
-    documentation.)}
+    \sQuote{Details} below.)}
 
   \item{weights}{an optional vector of weights to be used in the fitting
     process.  Should be \code{NULL} or a numeric vector.
@@ -132,6 +131,10 @@ lm(formula, data, subset, weights, na.action,
   All of \code{weights}, \code{subset} and \code{offset} are evaluated
   in the same way as variables in \code{formula}, that is first in
   \code{data} and then in the environment of \code{formula}.
+  Note that values calculated inside the formula, such as \code{mean(x)},
+  are evaluated before subsetting - which may lead to unexpected results
+  if used with \code{subset}.  For more information see the
+  \sQuote{Details} section of the \code{\link{model.frame}}.
 }
 \value{
   \code{lm} returns an object of \code{\link{class}} \code{"lm"} or for

@@ -1,6 +1,6 @@
 % File src/library/stats/man/model.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{model.frame}
@@ -41,7 +41,8 @@ get_all_vars(formula, data, \dots)
     a (logical) expression using variables in \code{data} or
     if that is not supplied, in
     \code{formula}.  (See additional details about how this argument
-    interacts with data-dependent bases under \sQuote{Details} below.)}
+    interacts with data-dependent bases and summary statistics
+    under \sQuote{Details} below.)}
 
   \item{na.action}{an optional (name of a) function for treating missing
     values (\code{NA}s). The default is first,
@@ -110,8 +111,11 @@ get_all_vars(formula, data, \dots)
   Because variables in the formula are evaluated before rows are dropped
   based on \code{subset}, the characteristics of data-dependent bases such
   as orthogonal polynomials (i.e. from terms using \code{\link{poly}}) or
-  splines will be computed based on the full data set rather than the
-  subsetted one.
+  splines (such as \code{\link[splines]{bs}()} from package \pkg{splines})
+  will be computed based on the full data set rather than the
+  subsetted one.    This also applies to summary statistics, i.e., all
+  functions of variables returning shorter length results, often length one,
+  such as \code{\link{mean}}.
 
   Unless \code{na.action = NULL}, time-series attributes will be removed
   from the variables found (since they will be wrong if \code{NA}s are

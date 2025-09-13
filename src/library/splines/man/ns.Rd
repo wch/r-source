@@ -44,8 +44,11 @@ ns(x, df = NULL, knots = NULL, intercept = FALSE,
 
   A primary use is in modeling formula to directly specify a
   natural spline term in a model: see the examples.
+  Also, if the formula has a \code{subset = *} part, the \code{x} in
+  \code{ns(x)} is evaluated before subsetting which may lead to unexpected
+  results.  For more information see the \sQuote{Details} section of the
+  \code{\link{model.frame}}.
 }
-
 \value{
   A matrix of dimension \code{length(x) * df} where either \code{df} was
   supplied or if \code{knots} were supplied,
