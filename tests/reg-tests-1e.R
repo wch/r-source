@@ -2255,6 +2255,8 @@ for(na in c(TRUE, FALSE))
 ))
 stopifnot(vapply(Lb, inherits, what="error", NA))
 ## l1 was not an error, but non-sense complex,  in R <= 4.5.1
+stopifnot(identical(log10(1i), log(1i, 10)), log2(c(1,2,4)) == 0:2)
+## (< 24h) lapsus "unimplemented complex fn."
 
 
 ## jitter():  more "robust"

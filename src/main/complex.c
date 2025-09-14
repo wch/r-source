@@ -704,8 +704,8 @@ attribute_hidden SEXP complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 	f = z_atan2; break;
     case 10001: /* round */
 	f = z_rround; break;
-    case 2: /* passed from do_log1arg */
-    case 10:
+    case 10002: /* passed from do_log1arg */
+    case 10010:
     case 10003: /* passed from do_log */
 	f = z_logbase; break;
     case 10004: /* signif */
