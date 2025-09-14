@@ -1,73 +1,153 @@
+/* Rman.css ... Style for on-screen presentation of the R manuals */
+/* Part of the R package, https://www.R-project.org */
+/* Copyright (C) 2025 The R Foundation */
+/* Distributed under GPL 2 or later */
+
+
+/* Body ---------------------------------------------------- */
+
 body {
-    margin-left: 5%;
-    margin-right: 5%;
+  background-color: #e7e7e7; /* from GNU's style.css */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* match www.R-project.org */
+  line-height: 1.4; /* to improve readability */
+  max-width: 100ch; /* long lines are hard to read */
+  margin-left: auto;
+  margin-right: auto;
 }
 
-h1 {             
-    background: white;
-    color: rgb(25%, 25%, 25%);
-    font-family: monospace;
-    font-size: xx-large;
-    text-align: center;
-}
-
-h2 {
-    background: white;
-    color: rgb(40%, 40%, 40%);
-    font-family: monospace;
-    font-size: x-large;
-    text-align: center;
-}
-
-h3 {
-    background: white;
-    color: rgb(40%, 40%, 40%);
-    font-family: monospace;
-    font-size: large;
-}
-
-h4 {
-    background: white;
-    color: rgb(40%, 40%, 40%);
-    font-family: monospace;
-}
-
-span.samp {
-    font-family: monospace;
-}
-
-span.command {
-    font-family: monospace;
-}
-
-span.option {
-    font-family: monospace;
-}
-
-span.file {
-    font-family: monospace;
-}
-
-span.env {
-    font-family: monospace;
-}
-
-ul {
-    margin-top: 0.25ex;
-    margin-bottom: 0.25ex;
-}
-
-li {
-    margin-top: 0.25ex;
-    margin-bottom: 0.25ex;
-}
-
-p {
-    margin-top: 0.6ex;
-    margin-bottom: 1.2ex;
+/* add borders and padding for both top-level divs, following GNU style */
+/* (class names changed in Texinfo 7, so use a universal selector) */
+body > * {
+  background-color: white;
+  padding: 1em 2em; /* reduced below for narrow screens */
+  border: 1px solid #c0c0c0;
 }
 
 /* hide top navigation bar in Texinfo >= 6.8 output */
+/* (class name changed in Texinfo 7) */
 #Top > .header, #Top > .nav-panel {
-    display: none
+  display: none
 }
+
+/* for narrow screens */
+@media screen and (width < 938px) { /* empirically determined for smooth transition */
+  body {
+    max-width: 95%;
+  }
+  body > * {
+    padding: .5em 1em;
+  }
+}
+
+
+/* Nav bar ------------------------------------------------- */
+
+/* to see the separating line when jumping between sections */
+/* (class name changed in Texinfo 7) */
+.section hr, .section-level-extent hr {
+  margin: 2em 0 -0.5em 0;
+}
+
+/* (class name changed in Texinfo 7) */
+.header, .nav-panel {
+  font-size: smaller;
+  padding: .5em 2em 0 2em;
+  text-align: center;
+}
+
+
+/* Header styling ----------------------------------------- */ 
+
+/* black is too strong for large bold text (from GNU style) */
+h1, h2, h3, h4 { color: #333; }
+
+h1 {
+  font-size: 2.5em;
+  font-family: monospace;
+  text-align: center;
+}
+h2 { font-size: 1.8em;  }
+h3 { font-size: 1.35em; }
+h4 { font-size: 1.2em;  }
+
+
+/* Links --------------------------------------------------- */
+
+/* match R-project.org colour & only show underline on hover */
+a:any-link {color: #3864BA; text-decoration: none;}
+a:any-link:hover {text-decoration: underline;}
+
+/* TOC/menus: bold chapters, hide subsections, increase spacing */
+.contents ul { font-weight: bold; }
+.contents ul ul { font-weight: normal; }
+.contents ul ul ul { display: none; }
+li { margin: 0.25em 0; }
+.contents ul li { margin: 0.5em 0; }
+.contents ul ul li { margin: 0.25em 0; }
+
+
+/* Code ---------------------------------------------------- */
+
+/* code blocks: remove indentation, highlight instead */
+div.example {
+  margin-left: 0
+}
+pre {
+  background-color: #f5f5f5;
+  padding: 0.5em;
+  overflow: auto;
+  line-height: 1.6; /* more spaced */
+}
+
+/* inline code: Padding is bad with outer quotes from @samp, but we */
+/* need Texinfo >= 7 for targeted styling, so keep minimal for now. */
+/* We also might not want highlighting for, e.g., env and file. */
+code, kbd, samp, tt.key {
+  font-size: 1.15em; /* match body text */
+  /* background-color: #f5f5f5; padding: 2px 4px; */
+}
+tt.key {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* sometimes used for code comments */
+/* (class name changed in Texinfo 7) */
+span.roman, span.r {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+
+/* Tables -------------------------------------------------- */
+
+table {
+  background: white; /* in case it overflows the body */
+}
+td, th {
+  text-align: left;
+  line-height: 1.2;
+  padding: .2em .3em; /* rows need to be distinguishable from linebreaks */
+}
+
+/* for @cartouche (often embedding a code example) */
+table.cartouche {
+  width: 100%;
+  padding: 0 .5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+table.cartouche * {
+  border: 0;
+  padding: 0;
+  background-color: white; /* remove extra code highlighting */
+}
+
+
+/* Minor tweaks -------------------------------------------- */
+
+/* Texinfo's image scaling only deals with printed output */
+img { max-width: 100%; }
+
+/* hide redundant line; top-level divs have a border */
+/* (class name changed in Texinfo 7) */
+.footnote hr, .footnotes-segment hr { display: none; }

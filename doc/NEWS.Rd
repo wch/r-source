@@ -112,6 +112,11 @@
       that the default \code{xlim} and \code{ylim} range computations only
       use \emph{jointly} finite x- and y-values; indirectly suggested in
       \PR{7986} by \I{Jincai Jiang}.
+
+      \item \file{Rman.css}, the stylesheet for the
+      \command{texi2any}-generated HTML versions of the \R manuals, was
+      improved following joint efforts at the \sQuote{\I{R Dev Days}}
+      of \I{useR! 2024} and \I{RSECon25}.
     }
   }
 
