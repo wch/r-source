@@ -51,10 +51,8 @@
   \code{\dots} and \code{..1}, \code{..2} are \emph{reserved} words in
   \R, see \code{\link{Reserved}}.
 
-  For more, see the
-  \ifelse{html}{\href{/doc/manual/R-intro.html#The-three-dots-argument}{Introduction to R}}{\sQuote{Introduction to R}}
-  manual for usage of these syntactic elements,
-  and \link[methods]{dotsMethods} for their use in formal (S4) methods.
+  \manual{R-intro}{The ... argument},
+  and \code{?\link[methods]{dotsMethods}} for its use in formal (S4) methods.
 }
 \examples{
 tst <- function(n, ...) ...elt(n)

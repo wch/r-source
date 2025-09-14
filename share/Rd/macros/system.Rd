@@ -56,6 +56,9 @@
 % To get things ignored by RdTextFilter() ...
 \newcommand{\I}{#1}
 
+% To cite an R manual, e.g.: \manual{R-exts}{Processing documentation files}
+\newcommand{\manual}{\Sexpr[results=rd]{tools:::Rd_expr_manual("#1", "#2")}}
+
 \newcommand{\bibcitep}{\Sexpr[results=rd,stage=build]{tools:::Rd_expr_bibcite("#1", FALSE)}}
 \newcommand{\bibcitet}{\Sexpr[results=rd,stage=build]{tools:::Rd_expr_bibcite("#1", TRUE)}}
 \newcommand{\bibshow}{\Sexpr[results=rd,stage=build]{tools:::Rd_expr_bibshow("#1")}}

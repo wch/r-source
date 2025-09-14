@@ -1,7 +1,7 @@
 #  File src/library/utils/R/RShowDoc.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -122,8 +122,7 @@ RShowDoc <- function(what, type = c("pdf", "html", "txt"), package)
         file.show(path)
         return(invisible(path))
     } else if((what0 <- sub("#.*", "", what)) %in%
-              c("R-admin", "R-data", "R-exts", "R-FAQ", "R-intro",
-                "R-ints", "R-lang")) {
+              setdiff(R_manuals[,1L], "rw-FAQ")) {
         if(type == "pdf") {
             path <- file.path(R.home("doc"), "manual", paste.(what0, "pdf"))
             if(file.exists(path)) {
@@ -175,3 +174,16 @@ RShowDoc <- function(what, type = c("pdf", "html", "txt"), package)
     }
     stop("document not found")
 }
+
+## also used for the \manual Rd macro
+R_manuals <- matrix(c(
+    "R-FAQ",   "R FAQ",
+    "rw-FAQ",  "R for Windows FAQ",
+    "R-admin", "R Installation and Administration",
+    "R-intro", "An Introduction to R",
+    "R-data",  "R Data Import/Export",
+    "R-exts",  "Writing R Extensions",
+    "R-ints",  "R Internals",
+    "R-lang",  "R Language Definition"
+), ncol = 2L, byrow = TRUE)
+dimnames(R_manuals) <- list(R_manuals[,1L], c("name", "title"))

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/dynamicHelp.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -703,12 +703,15 @@ httpd <- function(path, query, ...)
         ## remake as needed
         utils::make.packages.html(temp = TRUE)
         list(file = file.path(tempdir(), ".R", path))
-    } else if(path == "/doc/html/rw-FAQ.html") {
-        file <- file.path(R.home("doc"), sub("^/doc", "", path))
+    } else if(path %in% c("/doc/html/rw-FAQ.html", "/doc/manual/rw-FAQ.html")) {
+        ## exists on Windows in /doc/html, on Linux in /doc/manual only if made
+        file <- file.path(R.home("doc"),
+                          if(.Platform$OS.type == "windows") "html" else "manual",
+                          "rw-FAQ.html")
         if(file.exists(file))
             list(file = file, "content-type" = mime_type(path))
         else {
-            url <- "https://cran.r-project.org/bin/windows/base/rw-FAQ.html"
+            url <- "https://cloud.R-project.org/bin/windows/base/rw-FAQ.html"
 	    return(list(payload = paste0('Redirect to <a href="', url, '">"',
                                          url, '"</a>'),
 	    		"content-type" = 'text/html',
@@ -727,10 +730,10 @@ httpd <- function(path, query, ...)
             ## tarball has pre-built version of R-admin.html
             list(file = file, "content-type" = mime_type(path))
         } else {
-            ## url <- "https://cran.r-project.org/manuals.html"
+            ## url <- "https://cloud.R-project.org/manuals.html"
             version <-
                 if(grepl("unstable", R.version$status)) "r-devel" else "r-patched"
-            url <- file.path("https://cran.r-project.org/doc/manuals",
+            url <- file.path("https://cloud.R-project.org/doc/manuals",
                              version, basename(path))
 	    return(list(payload = paste0('Redirect to <a href="', url, '">"',
                                          url, '"</a>'),

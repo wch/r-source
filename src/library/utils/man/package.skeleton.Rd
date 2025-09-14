@@ -33,8 +33,7 @@ package.skeleton(name = "anRpackage", list,
   \item{encoding}{optionally a \code{\link{character}} string with an
     encoding for an optional \samp{Encoding:} line in
     \file{DESCRIPTION} when non-ASCII characters will be used; typically
-    one of \code{"latin1"}, \code{"latin2"}, or \code{"UTF-8"}; see the
-    \abbr{WRE} manual.}
+    one of \code{"latin1"}, \code{"latin2"}, or \code{"UTF-8"}.}
 }
 \value{
   Used for its side-effects.
@@ -81,7 +80,7 @@ package.skeleton(name = "anRpackage", list,
 }
 
 \references{
-  Read the \sQuote{Writing R Extensions} manual for more details.
+  Read the \manual{R-exts}{} manual for more details.
 
   Once you have created a \emph{source} package you need to install it:
   see the \sQuote{R Installation and Administration} manual,

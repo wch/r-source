@@ -3615,8 +3615,9 @@ involving other arguments to the same function; they are not restricted
 to be constants as in our simple example here.
 
 
-@node The three dots argument
-@section The @samp{@dots{}} argument
+@node The @samp{...} argument
+@anchor{The three dots argument}@c old node name
+@section The @samp{...} argument
 
 Another frequent requirement is to allow one function to pass on
 argument settings to another.  For example many graphics functions use
@@ -3637,7 +3638,7 @@ fun1 <- function(data, data.frame, graph=TRUE, limit=20, ...) @{
 @end example
 
 Less frequently, a function will need to refer to components of
-@samp{@dots{}}.  The expression @code{list(...)} evaluates all such
+@samp{...}.  The expression @code{list(...)} evaluates all such
 arguments and returns them in a named list, while @code{..1},
 @code{..2}, etc. evaluate them one at a time, with @samp{..n}
 returning the @I{n-th} unmatched argument.

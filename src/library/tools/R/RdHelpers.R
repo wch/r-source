@@ -145,6 +145,23 @@ function(x)
             )
 }
 
+Rd_expr_manual <-
+function(name = "R-exts", node = "Top")
+{
+    if (name %notin% rownames(utils:::R_manuals))
+        stop(sprintf("\\manual must refer to one of %s",
+                     paste(sQuote(rownames(utils:::R_manuals)), collapse = ", ")))
+    baseurl <- switch(name,
+                      "rw-FAQ" = "https://cloud.R-project.org/bin/windows/base/",
+                      "https://cloud.R-project.org/doc/manuals/")
+    title <- utils:::R_manuals[name,2L]
+    if (length(node) == 1L && node %in% c("", "Top"))
+        sprintf("\\href{%s%s.html}{\\cite{%s}}", baseurl, name, title)
+    else
+        sprintf("\\href{%s%s.html#%s}{\\dQuote{%s}} in \\cite{%s}",
+                baseurl, name, .texinfo_node_to_id(node), trimws(node), title)
+}
+
 Rd_expr_bibshow_bibstyle <- local({
     .bibstyle <- "R"
     function(new) {

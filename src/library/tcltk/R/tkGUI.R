@@ -123,21 +123,12 @@ tkStartGUI <- function()
         tkbind(entry, "<Return>", showhelp)
     })
 
-    manuals <- matrix(c(
-	"R-FAQ",     "Frequently asked questions",
-	"R-intro",   "An Introduction to R",
-	"R-admin",   "R Administrators Manual",
-	"R-data",    "R Data Import/Export",
-	"R-exts",    "Writing R extensions",
-	"R-lang",    "R Language Reference",
-	"refman",    "R Reference Manual"
-        ), ncol = 2L, byrow = TRUE)
-
+    ## FIXME: remove or change to HTML since PDF versions are usually not built
     helpPDFMenu <- tkmenu(helpMenu)
     tkadd(helpMenu, "cascade", label = gettext("Manuals in PDF format"),
           menu = helpPDFMenu)
     pdfBase <- file.path(R.home("doc"), "manual")
-    apply(manuals, 1L, function(x) {
+    apply(utils:::R_manuals, 1L, function(x) {
 	f <- file.path(pdfBase, paste0(x[1L], ".pdf") )
         cmd <- function() system(paste(shQuote(getOption("pdfviewer")),
                                        shQuote(f)),

@@ -2468,10 +2468,11 @@ function(x)
 ### ** .replace_chars_by_hex_subs
 
 .replace_chars_by_hex_subs <-
-function(x, re) {
-    char_to_hex_sub <- function(s) {
-        paste0("<", charToRaw(s), ">", collapse = "")
-    }
+function(x, re, style = "html") {
+    char_to_hex_sub <-
+        switch(style,
+               "html" = function(s) paste0("<", charToRaw(s), ">"),
+               "texinfo" = function(s) paste0("_00", charToRaw(s)))
     vapply(strsplit(x, ""),
            function(e) {
                pos <- grep(re, e, perl = TRUE)
@@ -2480,6 +2481,22 @@ function(x, re) {
                paste(e, collapse = "")
            },
            "")
+}
+
+### ** .texinfo_node_to_id
+
+.texinfo_node_to_id <-
+function(x)
+{
+    ## Convert a Texinfo node name to its XHTML identifier as described at
+    ## <https://www.gnu.org/software/texinfo/manual/texinfo/html_node/HTML-Xref-Node-Name-Expansion.html>
+    res <- gsub("\\s+", " ", trimws(x))
+    ASCII_letters_and_digits <-
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    re <- paste0("[^ ", ASCII_letters_and_digits, "]")
+    res <- .replace_chars_by_hex_subs(res, re, style = "texinfo")
+    res <- chartr(" ", "-", res)
+    if (grepl("^[_0-9]", res)) paste0("g_t", res) else res
 }
 
 ### ** .source_assignments

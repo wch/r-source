@@ -117,6 +117,10 @@
       \command{texi2any}-generated HTML versions of the \R manuals, was
       improved following joint efforts at the \sQuote{\I{R Dev Days}}
       of \I{useR! 2024} and \I{RSECon25}.
+
+      \item New system Rd macro \command{\\manual\{\var{name}\}\{\var{node}\}} 
+      to refer to a specific section \emph{etc} (possibly empty, for
+      \samp{Top}) of one of the \R manuals (e.g., \samp{R-exts}).
     }
   }
 

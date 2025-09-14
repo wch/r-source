@@ -813,6 +813,12 @@ Rd2HTML <-
                            if(startsWith(url, "doi:"))
                                url <- paste0("https://doi.org/",
                                              substring(url, 5L))
+                           else if(dynamic) { # use local \manual if available
+                               m <- regexec(".R-project.org/.+/(.+)\\.html", url)
+                               mname <- regmatches(url, m)[[1L]][2L]
+                               if (mname %in% utils:::R_manuals[,1L])
+                                   url <- paste0("/doc/manual/", sub(".*/", "", url))
+                           }
                            enterPara(doParas)
                            of0('<a href="', urlify(url), '">')
                            "</a>"
