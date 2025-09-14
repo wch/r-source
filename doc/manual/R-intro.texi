@@ -3009,6 +3009,10 @@ A stem-and-leaf plot is like a histogram, and @R{} has a function
 > rug(eruptions) # @r{show the actual data points}
 @end example
 
+@ifnotinfo
+@center @image{images/hist,9cm}
+@end ifnotinfo
+
 @findex density
 @cindex Density estimation
 More elegant density plots can be made by @code{density}, and we added a
@@ -3017,10 +3021,6 @@ line produced by @code{density} in this example.  The bandwidth
 smoothing (it usually does for ``interesting'' densities).  (Better
 automated methods of bandwidth choice are available, and in this example
 @code{bw = "SJ"} gives a good result.)
-
-@ifnotinfo
-@image{images/hist,9cm}
-@end ifnotinfo
 
 We can plot the empirical cumulative distribution function by using the
 function @code{ecdf}.
@@ -3043,7 +3043,7 @@ Let us fit a normal distribution and overlay the fitted CDF.
 @end example
 
 @ifnotinfo
-@image{images/ecdf,9cm}
+@center @image{images/ecdf,9cm}
 @end ifnotinfo
 
 Quantile-quantile (Q-Q) plots can help us examine this more carefully.
@@ -3056,14 +3056,14 @@ par(pty="s")       # arrange for a square figure region
 qqnorm(long); qqline(long)
 @end example
 
+@ifnotinfo
+@center @image{images/QQ,7cm}
+@end ifnotinfo
+
 @noindent
-which shows a reasonable fit but a shorter right tail than one would
+This shows a reasonable fit but a shorter right tail than one would
 expect from a normal distribution.  Let us compare this with some
 simulated data from a @math{t} distribution
-
-@ifnotinfo
-@image{images/QQ,7cm}
-@end ifnotinfo
 
 @example
 x <- rt(250, df = 5)
@@ -3151,14 +3151,13 @@ boxplot(A, B)
 @findex boxplot
 @cindex Box plots
 
-@noindent
-which indicates that the first group tends to give higher results than
-the second.
-
 @ifnotinfo
-@image{images/ice,7cm}
+@center @image{images/ice,7cm}
 @end ifnotinfo
 
+@noindent
+The plot indicates that the first group tends to give higher results than
+the second.
 To test for the equality of the means of the two examples, we can use
 an @emph{unpaired} @math{t}-test by
 @cindex Student's @math{t} test
