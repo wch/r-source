@@ -343,6 +343,11 @@ function(dir = NULL, files = NULL,
             readRDS(file.path(dirname(db_file), "paths.rds"))
         ## Files in the db in need of updating:
         indf <- (files %in% db_names) & file_test("-nt", files, db_file)
+        ## FIXME: should also re-process dynamic pages:
+        ## if (length(stages)) {
+        ##     dynamic <- vapply(db, function(rd) any(getDynamicFlags(rd)[stages]), NA)
+        ##     indf <- indf | (files %in% db_names[dynamic])
+        ## }
         ## Also files not in the db:
         indf <- indf | (files %notin% db_names)
 

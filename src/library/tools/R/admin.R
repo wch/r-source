@@ -859,7 +859,8 @@ function(dir, outDir, encoding = "unknown")
     	file.copy(macro_files, macroDir, overwrite = TRUE)
     }
     ## Avoid (costly) rebuilding if not needed.
-    ## Remaking Rdobjects of base packages takes 4s, but only 0.5s if skipped.
+    ## 'make Rdobjects' now takes 13s compared to 0.5s if remaking skips the below.
+    ## FIXME: The test ignores that dynamic pages may need reprocessing.
     pathsFile <- file.path(manOutDir, "paths.rds")
     upToDate <- file_test("-f", db_file) && file.exists(pathsFile) &&
         identical(sort(manfiles), sort(readRDS(pathsFile))) &&
