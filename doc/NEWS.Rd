@@ -118,13 +118,18 @@
       improved following joint efforts at the \sQuote{\I{R Dev Days}}
       of \I{useR! 2024} and \I{RSECon25}.
 
-      \item New system Rd macro \command{\\manual\{\var{name}\}\{\var{node}\}} 
+      \item New system Rd macro \command{\\manual\{\var{name}\}\{\var{node}\}}
       to refer to a specific section \emph{etc} (possibly empty, for
       \samp{Top}) of one of the \R manuals (e.g., \samp{R-exts}).
 
       \item \code{list.files()} now has optional argument \code{fixed}
       to allow literal pattern matching.  Suggested and implemented
       by \I{Duncan Murdoch} in \PR{18925}.
+
+      \item \code{substring(txt, i1, i2)}, \code{substr(..)} and their
+      replacement versions now accept \code{i2 = NULL} to mean \dQuote{to
+      the end_of_string}, thus fulfilling \I{Kevin Ushey} (and others')
+      suggestions in \PR{18851}.
     }
   }
 

@@ -2275,6 +2275,17 @@ stopifnot(990 < j1, j1 < 1010, 0.9 < j2, j2 < 4.4,
 ## x in {Inf,NA,..} failed for 'd' computation;  negative amount / factor gave NaN
 
 
+## substr() / substring() -- allowing stop|last = NULL to mean "suffix" -- PR#18851
+(nL <- nchar(Lstr <- strrep(paste(letters,collapse=""), 4e4))) # nchar(.) > 1e6
+ss <- substring(Lstr, 1e6)
+stopifnot(exprs = {
+    nchar(ss) == nL - 1e6 + 1
+    startsWith(ss, "nopqrst")
+    endsWith  (ss, "xyz")
+    identical(substring(ss, nchar(ss)-7), "stuvwxyz")
+}) ## were all FALSE in R <= 4.5.1: `last = 1000000L' was not large enough
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

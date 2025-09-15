@@ -101,6 +101,8 @@ abbreviate chartr make.names strtrim tolower toupper give error.
 #include "RBufferUtils.h"
 static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
+static int int_max = INT_MAX;
+
 /* Functions to perform analogues of the standard C string library. */
 /* Most are vectorized */
 
@@ -430,20 +432,31 @@ do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(x))
 	error(_("extracting substrings from a non-character object"));
     R_xlen_t len = XLENGTH(x);
-    SEXP s = PROTECT(allocVector(STRSXP, len)),
-	lastel = NULL;
+    SEXP s = PROTECT(allocVector(STRSXP, len));
+
     if (len > 0) {
-	SEXP sa = CADR(args),
-	    so = CADDR(args);
+	SEXP sa = CADR(args), // start
+	    so = CADDR(args); // stop
 	int
 	    k = LENGTH(sa),
 	    l = LENGTH(so);
-	if (!isInteger(sa) || !isInteger(so) || k == 0 || l == 0)
+	if (!isInteger(sa) || k == 0 ||
+	    (so != R_NilValue && (!isInteger(so) || l == 0)))
 	    error(_("invalid substring arguments"));
 
+	int *starts = INTEGER(sa), *stops = NULL;
+	if (so == R_NilValue) {
+	    stops = &int_max;
+	    l = 1;
+	} else { // as.integer(.) in R
+	    stops = INTEGER(so);
+	}
+
+	SEXP lastel = NULL;
 	for (R_xlen_t i = 0; i < len; i++) {
-	    int start = INTEGER(sa)[i % k],
-		stop  = INTEGER(so)[i % l];
+
+	    int start = starts[i % k],
+		stop  = stops [i % l];
 	    SEXP el = STRING_ELT(x,i);
 	    if (el == NA_STRING || start == NA_INTEGER || stop == NA_INTEGER) {
 		SET_STRING_ELT(s, i, NA_STRING);
@@ -634,50 +647,55 @@ substrset(char *buf, const char *const str, cetype_t ienc, int sa, int so,
     }
 }
 
-attribute_hidden SEXP do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
+attribute_hidden SEXP
+do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP s, x, sa, so, value, el, v_el;
-    R_xlen_t i, len;
-    int start, stop, k, l, v;
-    size_t slen;
-    cetype_t ienc, venc;
-    const char *ss, *v_ss;
-    char *buf;
-    const void *vmax;
-
     checkArity(op, args);
-    x = CAR(args);
-    sa = CADR(args);
-    so = CADDR(args);
-    value = CADDDR(args);
-    k = LENGTH(sa);
-    l = LENGTH(so);
-
+    SEXP x = CAR(args);
     if (!isString(x))
 	error(_("replacing substrings in a non-character object"));
-    len = LENGTH(x);
-    PROTECT(s = allocVector(STRSXP, len));
+    R_xlen_t len = XLENGTH(x);
+    SEXP s = PROTECT(allocVector(STRSXP, len));
+
     if (len > 0) {
-	if (!isInteger(sa) || !isInteger(so) || k == 0 || l == 0)
+	SEXP sa = CADR(args), // start
+	    so = CADDR(args); // stop
+	int
+	    k = LENGTH(sa),
+	    l = LENGTH(so);
+	if (!isInteger(sa) || k == 0 ||
+	    (so != R_NilValue && (!isInteger(so) || l == 0)))
 	    error(_("invalid substring arguments"));
 
-	v = LENGTH(value);
-	if (!isString(value) || v == 0) error(_("invalid value"));
+	int *starts = INTEGER(sa), *stops = NULL;
+	if (so == R_NilValue) {
+	    stops = &int_max;
+	    l = 1;
+	} else {
+	    stops = INTEGER(so);
+	}
 
-	vmax = vmaxget();
-	for (i = 0; i < len; i++) {
-	    el = STRING_ELT(x, i);
-	    v_el = STRING_ELT(value, i % v);
-	    start = INTEGER(sa)[i % k];
-	    stop = INTEGER(so)[i % l];
+	SEXP value = CADDDR(args);
+	int v = LENGTH(value);
+	if (!isString(value) || v == 0)
+	    error(_("invalid value"));
+
+	void* vmax = vmaxget();
+	for (R_xlen_t i = 0; i < len; i++) {
+
+	    int start = starts[i % k],
+		stop  = stops [i % l];
+	    SEXP el = STRING_ELT(x, i);
+	    SEXP v_el = STRING_ELT(value, i % v);
 	    if (el == NA_STRING || v_el == NA_STRING ||
 		start == NA_INTEGER || stop == NA_INTEGER) {
 		SET_STRING_ELT(s, i, NA_STRING);
 		continue;
 	    }
-	    ienc = getCharCE(el);
-	    ss = CHAR(el);
-	    slen = strlen(ss);
+
+	    cetype_t ienc = getCharCE(el);
+	    const char* ss = CHAR(el);
+	    int slen = strlen(ss);
 	    if (start < 1) start = 1;
 	    if (stop > (int) slen) stop = (int) slen; /* SBCS optimization */
 	    if (start > stop) {
@@ -685,11 +703,11 @@ attribute_hidden SEXP do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_STRING_ELT(s, i, STRING_ELT(x, i));
 	    } else {
 		int ienc2 = ienc;
-		v_ss = CHAR(v_el);
+		const char* v_ss = CHAR(v_el);
 		/* is the value in the same encoding?
 		   FIXME: could re-encode to UTF-8 rather than to native.
-		 */
-		venc = getCharCE(v_el);
+		*/
+		cetype_t venc = getCharCE(v_el);
 		if (venc != ienc && !IS_ASCII(v_el)) {
 		    ss = translateChar(el);
 		    slen = strlen(ss);
@@ -697,13 +715,14 @@ attribute_hidden SEXP do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 		    ienc2 = CE_NATIVE;
 		}
 		/* might expand under MBCS */
-		buf = R_AllocStringBuffer(slen+strlen(v_ss), &cbuff);
+		char* buf = R_AllocStringBuffer(slen+strlen(v_ss), &cbuff);
 		strcpy(buf, ss);
 		substrset(buf, v_ss, ienc2, start, stop, i, i % v);
 		SET_STRING_ELT(s, i, mkCharCE(buf, ienc2));
 	    }
-	    vmaxset(vmax);
 	}
+	vmaxset(vmax);
+
 	R_FreeStringBufferL(&cbuff);
     }
     SHALLOW_DUPLICATE_ATTRIB(s, x);

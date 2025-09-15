@@ -1,7 +1,7 @@
 #  File src/library/base/R/character.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,25 +19,25 @@
 substr <- function(x, start, stop)
 {
     if(!is.character(x)) x <- as.character(x)
-    .Internal(substr(x, as.integer(start), as.integer(stop)))
+    .Internal(substr(x, as.integer(start), if(!is.null(stop)) as.integer(stop)))
 }
 
-substring <- function(text, first, last=1000000L)
+substring <- function(text, first, last=NULL)
 {
     if(!is.character(text)) text <- as.character(text)
     n <- max(lt <- length(text), length(first), length(last))
     if(lt && lt < n) text <- rep_len(text, length.out = n)
-    .Internal(substr(text, as.integer(first), as.integer(last)))
+    .Internal(substr(text, as.integer(first), if(!is.null(last)) as.integer(last)))
 }
 
 startsWith <- function(x, prefix) .Internal(startsWith(x, prefix))
 endsWith   <- function(x, suffix) .Internal(endsWith  (x, suffix))
 
 `substr<-` <- function(x, start, stop, value)
-    .Internal(`substr<-`(x, as.integer(start), as.integer(stop), value))
+    .Internal(`substr<-`(x, as.integer(start), if(!is.null(stop)) as.integer(stop), value))
 
-`substring<-` <- function(text, first, last=1000000L, value)
-    .Internal(`substr<-`(text, as.integer(first), as.integer(last), value))
+`substring<-` <- function(text, first, last=NULL, value)
+    .Internal(`substr<-`(text, as.integer(first), if(!is.null(last)) as.integer(last), value))
 
 abbreviate <-
     function(names.arg, minlength = 4L, use.classes = TRUE, dot = FALSE,
