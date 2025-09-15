@@ -121,6 +121,10 @@
       \item New system Rd macro \command{\\manual\{\var{name}\}\{\var{node}\}} 
       to refer to a specific section \emph{etc} (possibly empty, for
       \samp{Top}) of one of the \R manuals (e.g., \samp{R-exts}).
+
+      \item \code{list.files()} now has optional argument \code{fixed}
+      to allow literal pattern matching.  Suggested and implemented
+      by \I{Duncan Murdoch} in \PR{18925}.
     }
   }
 

@@ -1,6 +1,6 @@
 % File src/library/base/man/list.files.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{list.files}
@@ -11,11 +11,13 @@
 \usage{
 list.files(path = ".", pattern = NULL, all.files = FALSE,
            full.names = FALSE, recursive = FALSE,
-           ignore.case = FALSE, include.dirs = FALSE, no.. = FALSE)
+           ignore.case = FALSE, include.dirs = FALSE, no.. = FALSE,
+           fixed = FALSE)
 
        dir(path = ".", pattern = NULL, all.files = FALSE,
            full.names = FALSE, recursive = FALSE,
-           ignore.case = FALSE, include.dirs = FALSE, no.. = FALSE)
+           ignore.case = FALSE, include.dirs = FALSE, no.. = FALSE,
+           fixed = FALSE)
 
 list.dirs(path = ".", full.names = TRUE, recursive = TRUE)
 }
@@ -41,6 +43,8 @@ list.dirs(path = ".", full.names = TRUE, recursive = TRUE)
     recursive listings?  (They always are in non-recursive ones).}
   \item{no..}{logical.  Should both \code{"."} and \code{".."} be excluded
     also from non-recursive listings?}
+  \item{fixed}{logical.  If \code{TRUE}, treat \code{pattern} as a literal
+    string to match rather than a regular expression.}
 }
 \description{
   These functions produce a character vector of the names of files or
@@ -94,6 +98,13 @@ list.dirs(path = ".", full.names = TRUE, recursive = TRUE)
 }
 \examples{
 list.files(R.home())
+
+## . is a wildcard by default.
+list.files(R.home(), ".in")
+## If that's not what you want, escape it or use fixed = TRUE
+list.files(R.home(), "\\\\.in")
+list.files(R.home(), ".in", fixed = TRUE)
+
 ## Only files starting with a-l or r
 ## Note that a-l is locale-dependent, but using case-insensitive
 ## matching makes it unambiguous in English locales

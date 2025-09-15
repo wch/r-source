@@ -1587,12 +1587,16 @@ attribute_hidden SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     bool idirs = asBool2(CAR(args), call); args = CDR(args);
 //    if (idirs == NA_LOGICAL)
 //	error(_("invalid '%s' argument"), "include.dirs");
-    int nodots = asLogical(CAR(args));
+    int nodots = asLogical(CAR(args)); args = CDR(args);
     if (nodots == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "no..");
+    int fixed = asLogical(CAR(args));
+    if (nodots == NA_LOGICAL)
+        error(_("invalid '%s' argument"), "fixed");
 
     int flags = REG_EXTENDED;
     if (igcase) flags |= REG_ICASE;
+    if (fixed)  flags |= REG_LITERAL;
     regex_t reg;
     if (pattern && tre_regcomp(&reg, translateChar(STRING_ELT(p, 0)), flags))
 	error(_("invalid 'pattern' regular expression"));
