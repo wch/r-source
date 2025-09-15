@@ -539,6 +539,21 @@ Rd2txt <-
         x
     }
 
+    wrappers <- list(
+        "\\var"    = c("<", ">"),
+        "\\bold"   = c("*", "*"),
+        "\\strong" = c("*", "*"),
+        "\\emph"   = c("_", "_")
+    )
+    writeWrapped <- function(block, tag) {
+        if (isBlankRd(block))
+            return() # skip \emph{} etc, consistent with HTML
+    	LR <- wrappers[[tag]]
+    	put(LR[1L])
+    	writeContent(block, tag)
+    	put(LR[2L])
+    }
+
     writeDR <- function(block, tag) {
         if (length(block) > 1L) {
             putf('## Not run:\n')
@@ -626,22 +641,10 @@ Rd2txt <-
                "\\cite"=,
                "\\dfn"= ,
                "\\special" = writeContent(block, tag),
-               "\\var" = {
-                   put("<")
-                   writeContent(block, tag)
-                   put(">")
-               },
+               "\\var"=,
                "\\bold"=,
-               "\\strong"= {
-                   put("*")
-                   writeContent(block, tag)
-                   put("*")
-               },
-               "\\emph"= {
-                   put("_")
-                   writeContent(block, tag)
-                   put("_")
-               },
+               "\\strong"=,
+               "\\emph" = writeWrapped(block, tag),
                "\\sQuote" =,
                "\\dQuote"= writeQ(block, tag) ,
                "\\preformatted"= {
