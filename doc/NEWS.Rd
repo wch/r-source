@@ -308,6 +308,9 @@
       non-finite \code{x} or also negative \code{amount}, \code{factor}.
       \code{help(jitter)} is easier to read, fixing \PR{17279}, thanks to
       its contributors.
+
+      \item Plain-text help (\code{Rd2txt}) lacked markup for
+      \samp{\cite}d titles, which are now wrapped in single quotes.
     }
   }
 }
