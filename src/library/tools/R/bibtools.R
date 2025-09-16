@@ -26,17 +26,6 @@ function()
     readRDS(file.path(R_bibliographies_dir(), "R.rds"))
 }
 
-update_R_bibentries <-
-function(dir = NULL)
-{
-    if(is.null(dir))
-        dir <- file.path(.R_top_srcdir_from_Rd(), 
-                         "share", "bibliographies")
-    bibfiles <- Sys.glob(file.path(dir, "*.R"))
-    bibentries <- do.call(c, lapply(bibfiles, .read_bibentries))
-    saveRDS(bibentries, file.path(dir, "R.rds"))
-}
-
 ## utils:::.bibentry_get_key
 .bibentry_get_key <-
 function (x) 
