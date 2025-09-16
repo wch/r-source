@@ -129,6 +129,9 @@ BM_Open(pDevDesc dd, pX11Desc xd, int width, int height)
             warning("cairo error '%s'", cairo_status_to_string(res));
             return false;
         }
+# if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1,16,0)
+        cairo_svg_surface_set_document_unit(xd->cs, CAIRO_SVG_UNIT_PT);
+# endif
         if(xd->onefile)
             cairo_svg_surface_restrict_to_version(xd->cs, CAIRO_SVG_VERSION_1_2);
         xd->cc = cairo_create(xd->cs);
@@ -287,6 +290,9 @@ static void BM_NewPage(const pGEcontext gc, pDevDesc dd)
                     xd->cs = NULL;
                     error("cairo error '%s'", cairo_status_to_string(res));
                 }
+# if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1,16,0)
+                cairo_svg_surface_set_document_unit(xd->cs, CAIRO_SVG_UNIT_PT);
+# endif
                 if(xd->onefile)
                     cairo_svg_surface_restrict_to_version(xd->cs, CAIRO_SVG_VERSION_1_2);
                 xd->cc = cairo_create(xd->cs);
