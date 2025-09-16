@@ -64,8 +64,6 @@ confint(object, parm, level = 0.95, \dots)
   Original versions: \code{\link[MASS]{confint.glm}} and
   \code{\link[MASS]{confint.nls}} in package \CRANpkg{MASS}.
 }
-% the glm() example used to be wrapped in \donttest, presumably to avoid
-% loading MASS (?)
 \examples{
 fit <- lm(100/mpg ~ disp + hp + wt + am, data = mtcars)
 confint(fit)

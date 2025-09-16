@@ -122,26 +122,6 @@ N1:P1:K1     0     0
 +   detach("package:cluster")
 + }
 > 
-> # confint.Rd
-> counts <- c(18,17,15,20,10,20,25,13,12)
-> outcome <- gl(3, 1, 9); treatment <- gl(3, 3)
-> glm.D93 <- glm(counts ~ outcome + treatment, family = poisson())
-> confint(glm.D93)
-Waiting for profiling to be done...
-                 2.5 %      97.5 %
-(Intercept)  2.6958215  3.36655581
-outcome2    -0.8577018 -0.06255840
-outcome3    -0.6753696  0.08244089
-treatment2  -0.3932548  0.39325483
-treatment3  -0.3932548  0.39325483
-> confint.default(glm.D93)  # based on asymptotic normality}
-                 2.5 %      97.5 %
-(Intercept)  2.7095672  3.37947764
-outcome2    -0.8505027 -0.05800787
-outcome3    -0.6707552  0.08478093
-treatment2  -0.3919928  0.39199279
-treatment3  -0.3919928  0.39199279
-> 
 > # contrasts.Rd
 > utils::example(factor)
 
