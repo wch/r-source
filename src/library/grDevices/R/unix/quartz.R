@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/unix/quartz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -66,6 +66,7 @@ quartz <- function(title, width, height, pointsize, family, antialias,
     if(!missing(dpi)) new$dpi <- dpi
     if(!checkIntFormat(new$title)) stop("invalid 'title'")
     if(!is.null(file) && !checkIntFormat(file)) stop("invalid 'file'")
+    if(!is.null(file) && file == "") stop("invalid 'file'")
     d <- check.options(new, name.opt = ".quartz.Options", envir = .Quartzenv)
     .External(C_Quartz, d$type, file, d$width, d$height, d$pointsize, d$family,
               d$antialias, d$title, d$bg, d$canvas,

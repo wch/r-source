@@ -71,7 +71,8 @@ void QuartzBitmap_Output(QuartzDesc_t dev, QuartzBitmapDevice *qbd)
             path = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (const UInt8*) buf, strlen(buf), FALSE);
         }
         CFRelease(pathString);
-
+        if (!path)
+            error(_("QuartzBitmap_Output - filename is empty!"));
         CFStringRef scheme = CFURLCopyScheme(path);
        	CFStringRef type  = CFStringCreateWithBytes(kCFAllocatorDefault, (UInt8*) qbd->uti, strlen(qbd->uti), kCFStringEncodingUTF8, FALSE);
     	CGImageRef image = CGBitmapContextCreateImage(qbd->bitmap);
