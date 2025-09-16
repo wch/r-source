@@ -858,13 +858,24 @@ function(dir, outDir, encoding = "unknown")
     	dir.create(macroDir, FALSE)
     	file.copy(macro_files, macroDir, overwrite = TRUE)
     }
+    pathsFile <- file.path(manOutDir, "paths.rds")
     ## Avoid (costly) rebuilding if not needed.
     ## 'make Rdobjects' now takes 13s compared to 0.5s if remaking skips the below.
-    ## FIXME: The test ignores that dynamic pages may need reprocessing.
-    pathsFile <- file.path(manOutDir, "paths.rds")
-    upToDate <- file_test("-f", db_file) && file.exists(pathsFile) &&
-        identical(sort(manfiles), sort(readRDS(pathsFile))) &&
-        all(file_test("-nt", db_file, manfiles))
+    ## This tests if the Rd DB from a previous 'make' can be fully kept or needs
+    ## updating, but ignores that a dynamic help page may need reprocessing even
+    ## without modifying the source Rd file. With the advent of \bibshow, many
+    ## help pages have become dynamic and always rebuilding these is tedious ...
+    ## So for now only do a full rebuild when the system macros were touched.
+    system_file <- file.path(R.home("share"), "Rd", "macros", "system.Rd")
+    if (!file.exists(db_file) || # first build, including from .install_packages
+        file_test("-nt", system_file, db_file)) {
+        db_file <- NULL # do not reuse the old Rd DB
+        upToDate <- FALSE
+    } else {
+        upToDate <- file.exists(pathsFile) &&
+            identical(sort(manfiles), sort(readRDS(pathsFile))) &&
+            all(file_test("-nt", db_file, manfiles))
+    }
     if(!upToDate) {
         db <- .build_Rd_db(dir, manfiles, db_file = db_file,
                            encoding = encoding, built_file = built_file)

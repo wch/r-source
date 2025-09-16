@@ -72,8 +72,10 @@ install-sources: installdirs  @BUILD_TZONE_TRUE@ install-zoneinfo
 	@for f in $(srcdir)/make/*.mk; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/make"; \
 	done
+# 'make Rdobjects' does a full rebuild when the system macros change:
 	@for f in $(srcdir)/Rd/macros/*; do \
-	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/Rd/macros"; \
+	  $(SHELL) $(top_srcdir)/tools/copy-if-change $${f} \
+	    "$(DESTDIR)$(rsharedir)/Rd/macros/`basename $${f}`"; \
 	done
 	@for f in $(srcdir)/sh/*.sh; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/sh"; \
