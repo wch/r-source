@@ -1,9 +1,7 @@
 % File src/library/stats/man/confint.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
-
-% Portions copied from 
 
 \name{confint}
 \title{Confidence Intervals for Model Parameters}
@@ -19,6 +17,7 @@
 }
 \usage{
 confint(object, parm, level = 0.95, \dots)
+
 \S3method{confint}{default}(object, parm, level = 0.95, \dots)
 \S3method{confint}{lm}(object, parm, level = 0.95, \dots)
 \S3method{confint}{glm}(object, parm, level = 0.95, trace = FALSE, test=c("LRT", "Rao"), \dots)
@@ -42,11 +41,10 @@ confint(object, parm, level = 0.95, \dots)
 \details{
   \code{confint} is a generic function.  The default method is based on
   inverting the Wald test, assuming approximate
-  normality of the estimator. It needs suitable \code{\link{coef}} and
+  normality of the estimator.  It needs suitable \code{\link{coef}} and
   \code{\link{vcov}} methods to be available.  The default method can be
-  called directly for comparison with other methods. It also works for 
-  fitted models in the S4 class system, provided that the \pkg{methods}
-  namespace is loaded.
+  called directly for comparison with other methods.  It also works for 
+  fitted models in the S4 class system.
 
   For objects of class \code{"lm"} the direct formulae based on \eqn{t}
   values are used.

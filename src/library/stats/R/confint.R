@@ -3,7 +3,7 @@
 
 # Portions copied from MASS/R/confint.R
 #
-#  Copyright (C) 2003-2023 The R Core Team
+#  Copyright (C) 2003-2025 The R Core Team
 #  Copyright (C) 1994-2006 W. N. Venables and B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -156,7 +156,7 @@ confint.profile.nls <-
 
 confint.default <- function (object, parm, level = 0.95, ...)
 {
-    if(isNamespaceLoaded("methods")) {
+    if(isS4(object)) {
         coef <- stats4::coef
         vcov <- stats4::vcov
     }
