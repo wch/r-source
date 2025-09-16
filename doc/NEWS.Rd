@@ -16,12 +16,12 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item \code{AIC.default} and \code{BIC.default} now checks whether
-      the \code{methods} namespace is loaded rather than \code{stats4}. It
-      still uses \code{stats4::logLik} and \code{stats4::nobs}, but packages
-      no longer need to load \code{stats4} explicitly.
+      \item The default \code{AIC} and \code{BIC} methods now check whether 
+      the \pkg{methods} namespace is loaded rather than \pkg{stats4}. They
+      still use \code{stats4::logLik} (and \code{stats4::nobs}), but packages
+      no longer need to load \pkg{stats4} explicitly.
 
-      \item \code{confint.default} now also works on S4 objects, as long as
+      \item \code{confint.default()} now also works on S4 objects, as long as
       suitable \code{coef()} and \code{vcov()} methods exist.
 
       \item \code{binomial(identity)} and \code{quasibinomial(identity)} now work
