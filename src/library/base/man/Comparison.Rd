@@ -97,7 +97,8 @@ x != y
 
   For numerical and complex values, remember \code{==} and \code{!=} do
   not allow for the finite representation of fractions, nor for rounding
-  error.  Using \code{\link{all.equal}} with \code{identical} or
+  error (\manual{R-FAQ}{Why doesn't R think these numbers are equal?}).
+  Using \code{\link{all.equal}} with \code{identical} or
   \code{\link{isTRUE}} is almost always preferable; see the examples.
   (This also applies to the other comparison operators.)
 

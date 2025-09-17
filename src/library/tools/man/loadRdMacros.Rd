@@ -53,7 +53,8 @@ loadPkgRdMacros(pkgdir, macros = NULL)
   parent.
 }
 \references{
-  See the \sQuote{Writing R Extensions} manual for the syntax of Rd files,
+  See the Chapter \manual{R-exts}{Writing R documentation files}
+  for the syntax of Rd files,
   or \url{https://developer.r-project.org/parseRd.pdf} for a technical
   discussion.
 }
