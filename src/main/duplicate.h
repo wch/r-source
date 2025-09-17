@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2014	    The R Core Team.
+ *  Copyright (C) 1998--2025	    The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -42,11 +42,11 @@ Iterator macro to fill a matrix from a vector with re-use of vector
             (sidx >= nsrc) ? sidx -= nsrc : 0,				\
             didx += drows)
 
-void xcopyComplexWithRecycle(Rcomplex *dst, Rcomplex *src, R_xlen_t dstart, R_xlen_t n, R_xlen_t nsrc);
-void xcopyIntegerWithRecycle(int *dst, int *src, R_xlen_t dstart, R_xlen_t n, R_xlen_t nsrc);
-void xcopyLogicalWithRecycle(int *dst, int *src, R_xlen_t dstart, R_xlen_t n, R_xlen_t nsrc);
-void xcopyRawWithRecycle(Rbyte *dst, Rbyte *src, R_xlen_t dstart, R_xlen_t n, R_xlen_t nsrc);
-void xcopyRealWithRecycle(double *dst, double *src, R_xlen_t dstart, R_xlen_t n, R_xlen_t nsrc);
+void xcopyComplexWithRecycle(Rcomplex *dst, const Rcomplex *src, R_xlen_t dstart, R_xlen_t n, R_xlen_t nsrc);
+void xcopyIntegerWithRecycle(int *dst, const int *src, R_xlen_t dstart, R_xlen_t n, R_xlen_t nsrc);
+void xcopyLogicalWithRecycle(int *dst, const int *src, R_xlen_t dstart, R_xlen_t n, R_xlen_t nsrc);
+void xcopyRawWithRecycle(Rbyte *dst, const Rbyte *src, R_xlen_t dstart, R_xlen_t n, R_xlen_t nsrc);
+void xcopyRealWithRecycle(double *dst, const double *src, R_xlen_t dstart, R_xlen_t n, R_xlen_t nsrc);
 void xcopyStringWithRecycle(SEXP dst, SEXP src, R_xlen_t dstart, R_xlen_t n, R_xlen_t nsrc);
 void xcopyVectorWithRecycle(SEXP dst, SEXP src, R_xlen_t dstart, R_xlen_t n, R_xlen_t nsrc);
 

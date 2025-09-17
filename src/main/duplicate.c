@@ -384,23 +384,23 @@ void copyVector(SEXP s, SEXP t)
 	xcopyStringWithRecycle(s, t, 0, ns, nt);
 	break;
     case LGLSXP:
-	xcopyLogicalWithRecycle(LOGICAL(s), LOGICAL(t), 0, ns, nt);
+	xcopyLogicalWithRecycle(LOGICAL(s), LOGICAL_RO(t), 0, ns, nt);
 	break;
     case INTSXP:
-	xcopyIntegerWithRecycle(INTEGER(s), INTEGER(t), 0, ns, nt);
+	xcopyIntegerWithRecycle(INTEGER(s), INTEGER_RO(t), 0, ns, nt);
 	break;
     case REALSXP:
-	xcopyRealWithRecycle(REAL(s), REAL(t), 0, ns, nt);
+	xcopyRealWithRecycle(REAL(s), REAL_RO(t), 0, ns, nt);
 	break;
     case CPLXSXP:
-	xcopyComplexWithRecycle(COMPLEX(s), COMPLEX(t), 0, ns, nt);
+	xcopyComplexWithRecycle(COMPLEX(s), COMPLEX_RO(t), 0, ns, nt);
 	break;
     case EXPRSXP:
     case VECSXP:
 	xcopyVectorWithRecycle(s, t, 0, ns, nt);
 	break;
     case RAWSXP:
-	xcopyRawWithRecycle(RAW(s), RAW(t), 0, ns, nt);
+	xcopyRawWithRecycle(RAW(s), RAW_RO(t), 0, ns, nt);
 	break;
     default:
 	UNIMPLEMENTED_TYPE("copyVector", s);
@@ -490,7 +490,7 @@ void copyMatrix(SEXP s, SEXP t, Rboolean byrow)
 
 #define COPY_WITH_RECYCLE(VALTYPE, TNAME) \
 attribute_hidden void \
-xcopy##TNAME##WithRecycle(VALTYPE *dst, VALTYPE *src, R_xlen_t dstart, R_xlen_t n, R_xlen_t nsrc) { \
+xcopy##TNAME##WithRecycle(VALTYPE *dst, const VALTYPE *src, R_xlen_t dstart, R_xlen_t n, R_xlen_t nsrc) { \
 							\
     if (nsrc >= n) { /* no recycle needed */		\
 	for(R_xlen_t i = 0; i < n; i++)		\
