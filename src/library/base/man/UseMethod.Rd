@@ -110,9 +110,10 @@ NextMethod(generic = NULL, object = NULL, \dots)
   method.  If no new arguments are supplied, the arguments will be the
   same in number, order and name as those to the current method but
   their values will be promises to evaluate their name in the current
-  method and environment.  Any named arguments matched to \code{\dots}
-  are handled specially: they either replace existing arguments of the
-  same name or are appended to the argument list.  They are passed on as
+  method and environment. Any arguments matched to \code{\dots}
+  are handled specially: named arguments either replace existing arguments
+  of the same name or are appended to the argument list, unnamed arguments are
+  appended to the argument list.  They are passed on as
   the promise that was supplied as an argument to the current
   environment.  (S does this differently!)  If they have been evaluated
   in the current (or a previous environment) they remain evaluated.
