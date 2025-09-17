@@ -257,9 +257,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   Otherwise,
   \describe{
     \item{on Windows,}{you will need to have installed the \I{Rtools}
-  collection as described in the \sQuote{R for Windows FAQ} \emph{and}
-  you must have the \env{PATH} environment variable set up as required
-  by \I{Rtools}.
+  collection from \url{https://CRAN.R-project.org/bin/windows/Rtools/}.
 
   For a 32/64-bit installation of \R on Windows, a small minority of
   packages with compiled code need either \code{INSTALL_opts =
@@ -400,7 +398,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   find out by creating a test directory, but even this need not be the
   whole story: you may have permission to write in a library directory
   but lack permission to write binary files (such as \file{.dll} files)
-  there.  See the \sQuote{R for Windows FAQ} for workarounds.
+  there.  See \manual{rw-FAQ}{I don't have permission to write to the R
+  library directory} for workarounds.
     }
   }
 }

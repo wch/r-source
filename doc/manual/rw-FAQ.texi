@@ -754,7 +754,7 @@ install R.
 
 For an installation to be used by a single user, the simplest way is to
 make use of a `personal library': @xref{I don't have permission to write
-to the @RWVER@\library directory}.
+to the R library directory}.
 
 For a site installation, you can create a site-wide library directory
 anywhere convenient, and add it to the default package search path for
@@ -1207,8 +1207,8 @@ The native (default) builds of R 4.5.0 for Windows on ARM only install
 packages from source. This may be changed in the future.
 
 
-@node I don't have permission to write to the @RWVER@\library directory
-@section I don't have permission to write to the @file{@RWVER@\library} directory.
+@node I don't have permission to write to the R library directory
+@section I don't have permission to write to the R @file{library} directory.
 
 You can install packages anywhere and use the environment variable
 @env{R_LIBS} (@pxref{How do I set environment variables?}) to point to

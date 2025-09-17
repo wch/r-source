@@ -29,11 +29,12 @@ path.expand(path)
   The \sQuote{path names} need not exist nor be valid path names but
   they do need to be representable in the session encoding.
   }
-   \item{On Windows:}{
-  The definition of the \sQuote{home} directory is in the \file{rw-FAQ}
-  2.13: it is taken from the \env{R_USER} environment variable (or
-  possibly \env{HOME} if \env{R_USER} is not set)
+  \item{On Windows:}{
+  The \sQuote{home} directory is taken from the \env{R_USER} environment
+  variable (or possibly \env{HOME} if \env{R_USER} is not set)
   when \code{path.expand} is first called in a session.
+  See \manual{rw-FAQ}{What are HOME and working directories?}
+  for further details.
 
   The \sQuote{path names} need not exist nor be valid path names.
   }

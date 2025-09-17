@@ -61,10 +61,10 @@
   If the environment variable \env{R_USER} is not set, the \R system
   sets it to \env{HOME} if that is set (stripping any trailing slash),
   otherwise to the Windows \sQuote{personal}  directory,
-  otherwise to \code{{HOMEDRIVE}{HOMEPATH}} if \code{HOMEDRIVE} and
-  \code{HOMEDRIVE} are both set
-  otherwise to the working directory.  This is as described in the file
-  \file{rw-FAQ}.
+  otherwise to \file{\env{HOMEDRIVE}\env{HOMEPATH}} if \env{HOMEDRIVE} and
+  \env{HOMEDRIVE} are both set,
+  otherwise to the working directory.  This is as described in
+  \manual{rw-FAQ}{What are HOME and working directories?}.
 }
 \section{Chinese/Japanese/Korean}{
   Users of these languages will need to select a suitable font for the
