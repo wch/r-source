@@ -39,10 +39,10 @@ bug.report <- function(subject = "", address,
         writeLines(c("  Bug reports on R and the base packages need to be submitted",
                      "  to the tracker at <https://bugs.R-project.org/>.",
                      "",
-                     "  We will now try to open that website in a browser"))
+                     "  We will now try to open that website in a browser."))
         flush.console()
         Sys.sleep(2)
-        browseURL("https://bugs.r-project.org/index.cgi")
+        browseURL("https://bugs.R-project.org/")
     }
 
     if (is.null(package)) return(baseR())
@@ -51,11 +51,12 @@ bug.report <- function(subject = "", address,
     if (!inherits(DESC, "packageDescription"))
         stop(gettextf("Package %s: DESCRIPTION file not found",
                       sQuote(package)), domain = NA)
+    if (identical(DESC$Priority, "base")) return(baseR())
+
     info <- paste0(c("Package", " Version", " Maintainer", " Built"),
 		   ": ",
 		   c(DESC$Package, DESC$Version, DESC$Maintainer, DESC$Built))
     info <- c(info, "", bug.report.info())
-    if(identical(DESC$Priority, "base")) return(baseR())
 
     findEmail2 <- function(x) {
         x <- paste(x, collapse = " ") # could be multiple lines
