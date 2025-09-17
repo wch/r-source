@@ -1087,6 +1087,7 @@ bibentry(bibtype = "Book",
          publisher = "Wiley",
          year = "1954",
          address = "New York, NY",
+         isbn = "9780471066330",
          pointers = "https://permalink.obvsg.at/AC01178416")
 
 bibentry(bibtype = "Book",
@@ -1142,6 +1143,7 @@ bibentry(bibtype = "Book",
          publisher = "Academic Press",
          year = "1952",
          address = "New York, NY",
+         isbn = "9781483256627",
          pointers = "https://permalink.obvsg.at/AC01773949")
 
 bibentry(bibtype = "Book",
@@ -1281,6 +1283,7 @@ bibentry(bibtype = "Book",
          publisher = "CRC Press",
          year = "1973",
          address = "Cleveland, OH",
+         isbn = "9780878194544",
          pointers = "https://permalink.obvsg.at/AC11011322")
 
 bibentry(bibtype = "Misc",

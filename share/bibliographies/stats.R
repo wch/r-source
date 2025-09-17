@@ -522,7 +522,8 @@ bibentry(bibtype = "Book",
                          family = "Fisher"),
          title = "Statistical Methods for Research Workers",
          year = "1970",
-         publisher = "Oliver & Boyd")
+         publisher = "Oliver & Boyd",
+         isbn = "978-0050021705")
 
 bibentry(bibtype = "Article",
          key = "R:Fletcher+Reeves:1964",
@@ -1688,7 +1689,8 @@ bibentry(bibtype = "Book",
                          family = "Blom"),
          title = "Statistical Estimates and Transformed Beta-Variables",
          publisher = "Wiley",
-         year = "1958")
+         year = "1958",
+         url = "https://gwern.net/doc/statistics/order/1958-blom-orderstatistics.pdf")
 
 bibentry(bibtype = "Book",
          key = "R:Brockwell+Davis:1996",
@@ -1771,7 +1773,8 @@ bibentry(bibtype = "Book",
                            family = "Walden")),
          title = "Spectral Analysis for Physical Applications",
          publisher = "Cambridge University Press",
-         year = "1998")
+         year = "1998",
+         isbn = "9780521355322")
 
 bibentry(bibtype = "Book",
          key = "R:Silverman:1986",
@@ -1831,7 +1834,8 @@ bibentry(bibtype = "Book",
                          family = "Bloomfield"),
          title = "Fourier Analysis of Time Series: An Introduction",
          publisher = "Wiley",
-         year = "1976")
+         year = "1976",
+         isbn = "9780471082569")
 
 bibentry(bibtype = "Book",
          key = "R:Scott:1992",
@@ -2018,7 +2022,8 @@ bibentry(bibtype = "Book",
                          family = "Jöreskog"),
          title = "Statistical Estimation in Factor Analysis",
          publisher = "Almqvist and Wicksell",
-         year = "1963")
+         year = "1963",
+         url = "https://openlibrary.org/books/OL5972263M/Statistical_estimation_in_factor_analysis")
 
 bibentry(bibtype = "Book",
          key = "R:Lawley+Maxwell:1971",
@@ -2069,7 +2074,8 @@ bibentry(bibtype = "Book",
          title = "Time Series Models",
          publisher = "Harvester Wheatsheaf",
          year = "1993",
-         edition = "Second")
+         edition = "Second",
+         isbn = "9780585133973")
 
 bibentry(bibtype = "Book",
          key = "R:Mardia+Kent+Bibby:1979",
@@ -2082,7 +2088,8 @@ bibentry(bibtype = "Book",
          title = "Multivariate Analysis",
          publisher = "Academic Press",
          year = "1979",
-         address = "London")
+         address = "London",
+         isbn = "9780124712508")
 
 bibentry(bibtype = "Article",
          key = "R:Quade:1979",
@@ -2481,6 +2488,7 @@ bibentry(bibtype = "Book",
                          family = "Horst"),
          title = "Factor Analysis of Data Matrices",
          publisher = "Holt, Rinehart and Winston",
+         isbn = "978-0030502507",
          year = "1965")
 
 bibentry(bibtype = "Book",
@@ -2684,6 +2692,7 @@ bibentry(bibtype = "Book",
          year = "1983",
          volume = "3",
          address = "London",
+         isbn = "9780852642689",
          pointers = "https://permalink.obvsg.at/AC00452847")
 
 bibentry(bibtype = "Proceedings",
