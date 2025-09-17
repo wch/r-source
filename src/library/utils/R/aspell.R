@@ -1564,12 +1564,10 @@ function(dictionary, add = character())
                       "share", "dictionaries", dictionary)
     }
     txt <- paste0(dictionary, ".txt")
-    rds <- paste0(dictionary, ".rds")
     new <- unique(c(if(file.exists(txt))
                         readLines(txt, encoding = "UTF-8"),
                     enc2utf8(add)))
     new <- new[order(tolower(new), new)]
     new <- new[nzchar(new)]
     writeLines(new, txt, useBytes = TRUE)
-    saveRDS(new, rds)
 }

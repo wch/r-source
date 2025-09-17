@@ -57,7 +57,7 @@ install-sources: installdirs  @BUILD_TZONE_TRUE@ install-zoneinfo
 	@for f in $(srcdir)/bibliographies/*; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/bibliographies"; \
 	done
-	@for f in $(srcdir)/dictionaries/*.rds; do \
+	@for f in $(srcdir)/dictionaries/*; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/dictionaries"; \
 	done
 	@for f in $(srcdir)/encodings/*; do \

@@ -836,6 +836,17 @@ function(dir) {
     saveRDS(bibentries, file.path(dir, "R.rds"))
 }
 
+### * .install_R_dictionaries_as_RDS
+
+.install_R_dictionaries_as_RDS <-
+function(dir) {
+    txtfiles <- Sys.glob(file.path(dir, "*.txt"))
+    for (file in txtfiles) {
+        rdsfile <- paste0(file_path_sans_ext(file), ".rds")
+        saveRDS(readLines(file, encoding = "UTF-8"), rdsfile)
+    }
+}
+
 ### * .install_package_Rd_objects
 
 ## called from src/library/Makefile and .install_packages

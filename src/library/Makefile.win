@@ -58,6 +58,9 @@ R:
 	@$(ECHO) "installing R bibliographies"
 	@$(ECHO) "tools:::.install_R_bibliographies_as_RDS(\"$(top_builddir)/share/bibliographies\")" | \
 	  R_DEFAULT_PACKAGES=tools,utils LC_ALL=C $(R_EXE) > /dev/null
+	@$(ECHO) "installing R dictionaries"
+	@$(ECHO) "tools:::.install_R_dictionaries_as_RDS(\"$(top_builddir)/share/dictionaries\")" | \
+	  R_DEFAULT_PACKAGES=tools LC_ALL=C $(R_EXE) > /dev/null
 
 ## do Rdobjects before metadata before help indices
 docs:
