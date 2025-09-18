@@ -140,15 +140,6 @@ options(od)
 ## Robust:
 (pc.rob <- princomp(stackloss, covmat = MASS::cov.rob(stackloss)))
 
-# termplot.R
-library(MASS)
-hills.lm <- lm(log(time) ~ log(climb)+log(dist), data = hills)
-termplot(hills.lm, partial.resid = TRUE, smooth = panel.smooth,
-        terms = "log(dist)", main = "Original")
-termplot(hills.lm, transform.x = TRUE,
-         partial.resid = TRUE, smooth = panel.smooth,
-	 terms = "log(dist)", main = "Transformed")
-
 # xtabs.Rd
 if(require("Matrix", .Library)) {
  ## similar to "nlme"s  'ergoStool' :
