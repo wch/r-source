@@ -155,8 +155,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     a logical value: should the \option{--libs-only} option be used to
     install only additional sub-architectures for source installs?  (See also
     \code{INSTALL_opts}.)  This can also be used on Windows to install
-    just the DLL(s) from a binary package, e.g.\sspace{}to add 64-bit
-    DLLs to a 32-bit install.
+    just the DLL(s) from a binary package.
+    %, e.g.\sspace{}to add 64-bit DLLs to a 32-bit install.
   }
   \item{INSTALL_opts}{
     an optional character vector of additional option(s) to be passed to
@@ -259,12 +259,12 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     \item{on Windows,}{you will need to have installed the \I{Rtools}
   collection from \url{https://CRAN.R-project.org/bin/windows/Rtools/}.
 
-  For a 32/64-bit installation of \R on Windows, a small minority of
-  packages with compiled code need either \code{INSTALL_opts =
-  "--force-biarch"} or \code{INSTALL_opts = "--merge-multiarch"} for a
-  source installation.  (It is safe to always set the latter when
-  installing from a repository or tarballs, although it will be a little
-  slower.)
+  %% For a 32/64-bit installation of \R on Windows, a small minority of
+  %% packages with compiled code need either \code{INSTALL_opts =
+  %% "--force-biarch"} or \code{INSTALL_opts = "--merge-multiarch"} for a
+  %% source installation.  (It is safe to always set the latter when
+  %% installing from a repository or tarballs, although it will be a little
+  %% slower.)
 
   When installing a package on Windows, \code{install.packages} will abort
   the install if it detects that the package is already installed and is
