@@ -79,7 +79,7 @@ static void RightMatrixColumnLabel(SEXP cl, int j, int w)
 		EncodeString(tmp, l, 0, Rprt_adj_right));
     }
     else {
-	Rprintf("%*s[,%ld]%*s", R_print.gap, "", (long)j+1, w-IndexWidth(j+1)-3, "");
+	Rprintf("%*s[,%ld]", R_print.gap+w-IndexWidth(j+1)-3, "", (long)j+1);
     }
 }
 
