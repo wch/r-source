@@ -311,6 +311,9 @@
 
       \item Plain-text help (\code{Rd2txt}) lacked markup for
       \samp{\cite}d titles, which are now wrapped in single quotes.
+
+      \item Default column labels are now correctly aligned when printing a
+      matrix with right alignment (\PR{18943}, thanks to \I{Mikael Jagan}).
     }
   }
 }
