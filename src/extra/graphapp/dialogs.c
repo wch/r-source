@@ -284,7 +284,7 @@ char *askfilenames(const char *title, const char *default_name, int multi,
 		   const char *dir)
 {
     int i, succeeded;
-    OPENFILENAME ofn;
+    OPENFILENAME ofn = { 0 };
     char *cwd;
     HWND prev = GetFocus();
 
@@ -353,7 +353,7 @@ wchar_t *askfilenamesW(const wchar_t *title, const wchar_t *default_name,
 		       const wchar_t *dir)
 {
     int i, succeeded;
-    OPENFILENAMEW ofn;
+    OPENFILENAMEW ofn = { 0 };
     char *cwd;
     wchar_t *wcod;
     HWND prev = GetFocus();
@@ -441,7 +441,7 @@ char *askfilesave(const char *title, const char *default_name)
 wchar_t *askfilesaveW(const char *title, const char *default_name) 
 {
     int i, succeeded;
-    OPENFILENAMEW ofn;
+    OPENFILENAMEW ofn = { 0 };
     wchar_t *cwd, *wdef_name, wtitle[1000];
 
     wdef_name = mbstowcs_malloc(default_name ? default_name : "");
@@ -493,7 +493,7 @@ char *askfilesavewithdir(const char *title, const char *default_name,
 			 const char *dir)
 {
     int i, succeeded;
-    OPENFILENAME ofn;
+    OPENFILENAME ofn = { 0 };
     char *cwd, *defext = NULL;
 
     if (!default_name) default_name = "";
@@ -944,7 +944,7 @@ static int richeditfind(HWND hwnd, char *what, int matchcase,
     long start, end;
     CHARRANGE sel;
     WPARAM w = 0;
-    FINDTEXTEXW ft;
+    FINDTEXTEXW ft = { 0 };
     sendmessage (hwnd, EM_EXGETSEL, 0, &sel) ;
     start = sel.cpMin;
     end = sel.cpMax;
