@@ -15948,8 +15948,8 @@ The header files @file{R_ext/BLAS.h}, @file{R_ext/Lapack.h} and
 LINPACK linear algebra functions included in @R{}.  These are expressed
 as calls to Fortran subroutines, and they will also be usable from
 users' Fortran code.  Although not part of the official @acronym{API},
-this set of subroutines is unlikely to change (but might be
-supplemented).
+this set of subroutines is unlikely to change (but routines have been
+added in th past, most recently in @R{} 4.5.0).
 @comment API: This is really confusing. What is the 'official API'? Are
 @comment things in these headers OK so use in packages or not?
 
