@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-24 The R Core Team.
+ *  Copyright (C) 2001-25 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -327,7 +327,7 @@ void GEaddDevice(pGEDevDesc);
 void GEaddDevice2(pGEDevDesc, const char *);
 void GEaddDevice2f(pGEDevDesc, const char *, const char *);
 void GEkillDevice(pGEDevDesc);
-pDevDesc GEcreateDD();
+pDevDesc GEcreateDD(void);
 void GEfreeDD(pDevDesc dd);
 pGEDevDesc GEcreateDevDesc(pDevDesc dev);
 
