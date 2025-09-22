@@ -71,6 +71,9 @@
       As suggested by \I{Thomas Soeiro}, such notes were also added to the
       \code{glm()}, \code{poly()} and \code{splines::bs()} and \code{ns()}
       pages.
+
+      \item The Cairo-based SVG device uses \code{pt} as the default
+      document unit also with cairo >= 1.17.8 (\PR{18912}).
     }
   }
 }
