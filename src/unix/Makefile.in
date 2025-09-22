@@ -80,6 +80,7 @@ install-Rscript:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(Rexecbindir)"
 	@$(INSTALL_PROGRAM) Rscript "$(DESTDIR)$(Rexecbindir)/Rscript"
 ## substitute at install time to allow 'prefix' to be overridden
+## note adding LDFLAGS is considered controversial by some (PR#17744)
 install-pc:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(libdir)/pkgconfig"
 	-@$(SED) -e "s:@rhome:$(rhome):" \
