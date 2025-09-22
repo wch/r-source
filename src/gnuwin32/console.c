@@ -3,7 +3,7 @@
  *  file console.c
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004-8      The R Foundation
- *  Copyright (C) 2004-2024   The R Core Team
+ *  Copyright (C) 2004-2025   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -538,13 +538,6 @@ static int writeline(control c, ConsoleData p, int i, int j)
 	if(l1 > l) l = l1;
 	s[l] = L'\0';
 	len = l; /* for redraw that uses len */
-	/* and reset cursor position */
-	{
-	    wchar_t *P = s;
-	    int w0;
-	    for (w0 = 0; *P; P++) w0 += wcwidth(*P);
-	    CURCOL = w0;
-	}
     }
     col1 = COLS - 1;
     insel = p->sel ? ((i - p->my0) * (i - p->my1)) : 1;
@@ -1824,7 +1817,10 @@ int consolereads0(control c, const char *prompt, char **buf, int len,
 	if(*P == L'\r') w0 = 0;
 	else w0 += mbcslocale ? Ri18n_wcwidth(*P) : 1;
     USER(NUMLINES - 1) = w0;
-    prompt_wid = wcswidth(aLine);
+    for(; *P; P++)
+	if(*P == L'\r') w0 = 0;
+	else w0 += mbcslocale ? Ri18n_wcwidth(*P) : 1;
+    prompt_wid = w0;
     if (NUMLINES > ROWS) {
 	CURROW = ROWS - 1;
 	NEWFV = NUMLINES - ROWS;
