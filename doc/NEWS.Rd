@@ -389,7 +389,7 @@
       for \code{complex}, fixing \PR{18946} from \I{Ben Bolker} and  \I{Kasper Kristensen}.
 
       \item The Cairo-based SVG device uses \code{pt} as the default
-      document unit also with cairo >= 1.17.8 (\PR{18912}).
+      document unit also with Cairo >= 1.17.8 (\PR{18912}).
     }
   }
 }
