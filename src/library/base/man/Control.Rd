@@ -1,6 +1,6 @@
 % File src/library/base/man/Control.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Control}
@@ -69,7 +69,11 @@ x \%||\% y
   variable \code{var} is assigned in turn the value of each element of
   \code{seq}. You can assign to \code{var} within the body of the loop,
   but this will not affect the next iteration.  When the loop terminates,
-  \code{var} remains as a variable containing its latest value.
+  \code{var} remains as a variable containing its latest value. The
+  \code{seq} is implicitly unclassed. For classed objects, one can use
+  \code{\link{as.list}} to prepare a list to iterate over or
+  \code{\link{seq_along}} to get an index vector and then  explicitly extract
+  individual elements (see also \code{\link{lapply}}).
 
   The null coalescing operator \code{\%||\%} is a simple 1-line function:
   \code{x \%||\% y} is an idiomatic way to call
