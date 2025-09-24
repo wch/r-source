@@ -5,7 +5,7 @@ The Fortran routines here were extracted from LAPACK 3.1.0, then
 (Sources from https://www.netlib.org/lapack and mirrors).
 
 NB: The NEWS for R 4.5.0 accnounced the intention never to update this
-collection: an external BKAS?LAPACK is preferred and is likely to be
+collection: an external BLAS/LAPACK is preferred and is likely to be
 required in the near future.
 
 dlapack.f contains support routines for `real' LAPACK calls.
