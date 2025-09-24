@@ -1,6 +1,6 @@
 % File src/library/base/man/chartr.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chartr}
@@ -36,7 +36,9 @@ casefold(x, upper = FALSE)
   Ranges are supported in the specifications, but character classes and
   repeated characters are not.  If \code{old} contains more characters
   than new, an error is signaled; if it contains fewer characters, the
-  extra characters at the end of \code{new} are ignored.
+  extra characters at the end of \code{new} are ignored. To include a literal
+  \code{-} that should not denote a range, make it the first or the last
+  character in the specification.
 
   \code{tolower} and \code{toupper} convert upper-case characters in a
   character vector to lower-case, or vice versa.  Non-alphabetic
