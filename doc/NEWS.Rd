@@ -178,6 +178,10 @@
       External \emph{on-screen} graphics devices should consider using
       this function to avoid crashes from the device being closed by the
       user (e.g., a mouse click) during drawing.
+
+      \item Declarations for non-API functions \code{LOGICAL0},
+      \code{INTEGER0}, \code{REAL0}, \code{COMPLEX0}, and \code{RAW0}
+      have been removed from installed header files.
     }
   }
 
