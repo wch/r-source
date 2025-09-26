@@ -49,7 +49,7 @@ mkR: mkR1
 
 ## avoid "$<" as that was empty when using bmake (tested 20200710 and 20241124)
 $(WRE_DATA): $(WRE_SRC)
-	@grep -E '^@(api|eapi|emb)(fun|var|hdr)' "$(WRE_SRC)" > "$@"
+	@grep -E '^@(api|eapi|emb|for)(fun|var|hdr)' "$(WRE_SRC)" > "$@"
 
 include $(top_srcdir)/share/make/basepkg.mk
 

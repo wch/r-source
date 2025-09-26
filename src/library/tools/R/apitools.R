@@ -74,7 +74,7 @@ getOneFunAPI <- function(apitype) {
 }
 
 getFunAPI <- function() {
-    apitypes <- c("api", "eapi", "emb")
+    apitypes <- c("api", "eapi", "emb", "for")
     val <- do.call(rbind, lapply(apitypes, getOneFunAPI))
     val <- unique(val)
     val <- by(val,
