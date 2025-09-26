@@ -316,6 +316,7 @@ unabbreviated
 unabsorbed
 unadjusted
 uncalibrated
+unclassed
 unclosed
 uncompiled
 underflows
