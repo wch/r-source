@@ -13,7 +13,7 @@ pretty(x, \dots)
 
 \method{pretty}{default}(x, n = 5, min.n = n \%/\% 3,  shrink.sml = 0.75,
        high.u.bias = 1.5, u5.bias = .5 + 1.5*high.u.bias,
-       eps.correct = 0, f.min = 2^-20, \dots)
+       eps.correct = 0, f.min = 2^-20, bounds = TRUE, \dots)
 
 .pretty(x, n = 5L, min.n = n \%/\% 3,  shrink.sml = 0.75,
        high.u.bias = 1.5, u5.bias = .5 + 1.5*high.u.bias,

@@ -14,10 +14,17 @@ getVaW <- function(expr) {
                             invokeRestart("muffleWarning") })
     structure(val, warning = W)
 }
+(sysinf <- Sys.info())
+Lnx   <- sysinf[["sysname"]] == "Linux"
+isMac <- sysinf[["sysname"]] == "Darwin"
+arch  <- sysinf[["machine"]]
+x86 <- arch == "x86_64"
 onWindows <- .Platform$OS.type == "windows"
-.M <- .Machine
-str(.M[grep("^sizeof", names(.M))]) ## also differentiate long-double..
-b64 <- .M$sizeof.pointer == 8
+str(.Machine[grep("^sizeof", names(.Machine))]) ## also differentiate long-double..
+(b64 <- .Machine$sizeof.pointer == 8L)
+(noLdbl  <- .Machine$sizeof.longdouble <= 8L) ## TRUE when --disable-long-double
+(longD16 <- .Machine$sizeof.longdouble >= 16L)
+
 options(nwarnings = 10000, # (rather than just 50)
         width = 99) # instead of 80
 
@@ -2772,7 +2779,6 @@ spois     <- summary( poisfit)
 sqpois    <- summary(qpoisfit)
 sqpois.d1 <- summary(qpoisfit, dispersion=1)
 SE1 <- sqrt(diag(V <- vcov(poisfit)))
-(noLdbl <- (.Machine$sizeof.longdouble <= 8)) ## TRUE when --disable-long-double
 stopifnot(exprs = { ## Same variances and same as V
     all.equal(vcov(spois), V)
     all.equal(vcov(qpoisfit, dispersion=1), V) ## << was wrong
@@ -4886,10 +4892,11 @@ for(i.n in seq_along(ns)) {
 stopifnot(abs(rr-1) < 3.3/ns)
 ## many of these pretty() calls errored (because internally gave Inf) in R <= 4.1.0
 ##
+
 ##---------------- very small ranges ------------------
 ## The really smallest positive number (unless subnormals do "not exist"):
 mm <- with(.Machine, double.xmin * double.eps)
-log2(mm) == -1074 # T
+log2(mm) == -1074 # TRUE (everywhere ??)
 ## "of course", this an extreme *sub normal* number, e.g.
 mm == c(0.50001, 1.49999) * mm # TRUE TRUE (!)
 (1.5*mm) / mm #  2  (!!)
@@ -4904,23 +4911,49 @@ fsS <- fs[fs <= 0.75]
 options(warn=0) # (collect warnings)
 psmm <- lapply(h.u, function(hu)
     lapply(fsS, function(f)
-        lapply(nns, pretty, x = c(0, mm/f), high.u=hu, eps.correction = 2)))
-summary(warnings())## many; mostly  "very small range 'cell'=0, corrected to 2.122e-314"
+        lapply(nns, pretty, x = c(0, mm/f), high.u.bias=hu)))
+summary(warnings())## many "very small range 'cell'=<nnn>e+32<n>, corrected to 2.122e-314"
 (T <- table(psA <- unlist(psmm))) # is this portable?
 (nT <- as.numeric(names(T)))
 range(rEd <- abs(2e-314/diff(nT) - 1))
-stopifnot(nT >= 0, length(nT) == 11,
-          rEd <= 2^-50) # only seen rEd == 0
-##
+stopifnot(exprs = {
+    nT >= 0
+    (nn <- length(nT)) <= 15 # always = 11 on  Lnx 64b
+    7 <= nn
+    rEd <= if(b64) 2^-50 else 0.9 # Lnx 64b: only seen rEd == 0;  32bit ppc : 0.8 (!)
+})
+## This used to be _very_ slow in R <= 4.5.1 because it produced _HUGE_ (non-pretty!) vectors;
+## On Linux, an OS daemon would typically kill the R process for using too much resources:
+psm2 <- lapply(h.u, function(hu) {
+    ## cat(sprintf("hu:%6g -- f =", hu)); on.exit(cat("\n"))
+    lapply(fsS, function(f) {
+       ## cat(sprintf(" %g", f))
+       lapply(nns, \(n) pretty(c(0, mm/f), n=n, high.u.bias=hu, eps.correct = 2))
+    })
+})
+apply(sapply(psmm, \(L) sapply(L,lengths)), 2L, quantile)
+apply(sapply(psm2, \(L) sapply(L,lengths)), 2L, quantile)
 psmm.o <- lapply(h.u, function(hu)
     lapply(fsS, function(f) # older R: f.min = 20 hardwired:
         lapply(nns, pretty, x = c(0, mm/f), high.u=hu, f.min = 20) ))
 summary(warnings())## many; mostly  "very small range 'cell'=0, corrected to 4.45015e-307"
 (To <- table(psAo <- signif(unlist(psmm.o), 13)))
 (nTo <- as.numeric(names(To)))
-range(rEdo <- abs(5e-307/diff(nTo) - 1))
-stopifnot(nTo >= 0, length(nTo) == 11,
-          rEdo <= 2^-44) # seen max of 2^-51 on Lnx_64; 2^-44.5 on Win64
+range(rEdo <- abs(5e-307/diff(nTo) - 1)) # 0 2.33e-15
+r1 <- apply(sapply(psmm,  \(L) sapply(L,lengths)), 2L, range)
+r2 <- apply(sapply(psm2,  \(L) sapply(L,lengths)), 2L, range)
+r3 <- apply(sapply(psmm.o,\(L) sapply(L,lengths)), 2L, range)
+stopifnot(exprs = {
+    nTo >= 0
+    (nn <- length(nTo)) <= 15 ## length(nTo) == 11
+    7 <= nn
+    rEdo <= if(b64) 2^-44 else 0.9 # Lnx 64b: seen max of 2^-48.608 (prev. 2^-51) Lnx_64; 2^-44.5 on Win64; ppc ??
+    if(b64 && x86) { ## platform ?
+        r1 == c(2, 11)
+        r2 == c(3, 11)
+        r3 == c(1, 11)
+    } else TRUE
+})
 
 
 ## graphics::axis(), but also *engine* GScale() / GPretty() etc

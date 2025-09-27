@@ -130,6 +130,11 @@
       replacement versions now accept \code{i2 = NULL} to mean \dQuote{to
       the end_of_string}, thus fulfilling \I{Kevin Ushey} (and others')
       suggestions in \PR{18851}.
+
+      \item The default method for \code{pretty()} gets a new switch \code{bounds} for
+      completeness, corresponding to \code{.pretty()}.  Also, it now
+      catches typos such as \code{eps.corrected = 2}, noted in \PR{18521}
+      by \I{Mikko Korpela}.
     }
   }
 

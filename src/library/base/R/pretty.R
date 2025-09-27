@@ -1,7 +1,7 @@
 #  File src/library/base/R/pretty.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,13 +30,16 @@ pretty <- function(x, ...) UseMethod("pretty")
 pretty.default <-
     function(x, n = 5L, min.n = n %/% 3L, shrink.sml = 0.75,
              high.u.bias = 1.5, u5.bias = .5 + 1.5*high.u.bias,
-             eps.correct = 0L, f.min = 2^-20, ...)
+             eps.correct = 0L, f.min = 2^-20, bounds = TRUE, ...)
 {
+    chkDots(...) # avoid typos
     x <- x[is.finite(x <- as.numeric(x))]
     if(!length(x)) return(x)
     z <- .Internal(pretty(min(x), max(x), n, min.n, shrink.sml,
-                          c(high.u.bias, u5.bias, f.min), eps.correct, TRUE))
+                          c(high.u.bias, u5.bias, f.min), eps.correct, bounds))
     n <- z$n
+    if(!bounds) z <- list(l = z$ns * z$unit,
+                          u = z$nu * z$unit)
     s <- seq.int(z$l, z$u, length.out = n + 1L)
     if(!eps.correct && n) { # maybe zap smalls from seq() rounding errors
         ## better than zapsmall(s, digits = 14) :
