@@ -75,7 +75,7 @@
 attribute_hidden
 double R_pretty(double *lo, double *up, int *ndiv, int min_n,
 		double shrink_sml,
-		const double high_u_fact[], // = (h, h5, f_min) below 
+		const double high_u_fact[], // = (h, h5, f_min) below
 		int eps_correction, int return_bounds)
 {
 /* From version 0.65 on, we had rounding_eps := 1e-5, before, r..eps = 0
@@ -110,7 +110,7 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
 #ifdef DEBUGpr
     REprintf("R_pretty(lo=%g,up=%g,ndiv=%d,min_n=%d,shrink=%g,high_u=(%g,%g,%g),eps=%d,bnds=%d)"
 	     "\n\t => dx=%g; i_small:%s. ==> first cell=%g\n",
-	     lo_, up_, *ndiv, min_n, shrink_sml, h, h5, min_f,
+	     lo_, up_, *ndiv, min_n, shrink_sml, h, h5, f_min,
 	     eps_correction, return_bounds,
 	     dx, i_small ? "TRUE" : "F", cell);
 #endif
@@ -142,11 +142,12 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
     if(subsmall == 0.) // subnormals underflowing to zero (not yet seen!)
 	subsmall = DBL_MIN;
     if(cell < subsmall) { // possibly subnormal
-	warning(_("R_pretty(): very small range 'cell'=%g, corrected to %g"),
+	if(cell > 0)
+	  warning(_("R_pretty(): very small range 'cell'=%.3g, increased to %g"),
 		cell, subsmall);
 	cell = subsmall;
     } else if(cell > DBL_MAX/MAX_F) {
-	warning(_("R_pretty(): very large range 'cell'=%g, corrected to %g"),
+	warning(_("R_pretty(): very large range 'cell'=%.3g, decreased to %g"),
 		cell, DBL_MAX/MAX_F);
 	cell = DBL_MAX/MAX_F;
     }
@@ -181,9 +182,18 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
 	     cell, base, unit, ns, nu);
 #endif
     if(eps_correction && (eps_correction > 1 || !i_small)) {
-	// FIXME?: assumes 0 <= lo <= up  (what if lo <= up < 0 ?)
-	if(lo_ != 0.) *lo *= (1- DBL_EPSILON); else *lo = -DBL_MIN;
-	if(up_ != 0.) *up *= (1+ DBL_EPSILON); else *up = +DBL_MIN;
+#define E_ DBL_EPSILON
+	const double D_max = DBL_MAX*(1. - ldexp(E_, -1));
+	/* move *lo  to the left, assuming <subnorm>*(1-E_) does not underflow to 0 : */
+	if(lo_ < 0.) *lo *= (1+E_); else if(lo_ > 0) *lo *= (1-E_);  else *lo = -fmin2(unit, DBL_MIN);
+	/* and  *up  to the right : */
+	if(up_ < 0.) *up *= (1-E_); else if(up_ > 0.) {
+				     if(up_ < D_max) *up *= (1+E_);} else *up = +fmin2(unit, DBL_MIN);
+#undef E_
+#ifdef DEBUGpr
+	REprintf("  eps_correction (assuming lo=%g <= %g=up): new *lo=%g, *up=%g\n",
+		 lo_, up_, *lo, *up);
+#endif
     }
 
 #ifdef DEBUGpr
@@ -194,7 +204,7 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
 
 #ifdef DEBUGpr
     if(!R_FINITE(ns*unit))
-	REprintf("\t infinite (ns=%.0f)*(unit=%g)  ==> ns++\n", ns, unit);
+	REprintf("\t while(!finite((ns=%.0f)*(unit=%g))) ns++\n", ns, unit);
 #endif
     while(!R_FINITE(ns*unit)) ns++;
 
@@ -207,7 +217,7 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
 
 #ifdef DEBUGpr
     if(!R_FINITE(nu*unit))
-	REprintf("\t infinite (nu=%.0f)*(unit=%g)  ==> nu--\n", nu, unit);
+	REprintf("\t while(!finite((nu=%.0f)*(unit=%g)) nu--\n", nu, unit);
 #endif
     while(!R_FINITE(nu*unit)) nu--;
 
@@ -246,7 +256,7 @@ double R_pretty(double *lo, double *up, int *ndiv, int min_n,
 	if(ns * unit < *lo) *lo = ns * unit;
 	if(nu * unit > *up) *up = nu * unit;
 #endif
-    } else { // used in graphics GEpretty(), hence grid::grid.pretty()
+    } else { // used in graphics GEPretty(), hence grid::grid.pretty()
 	*lo = ns;
 	*up = nu;
     }

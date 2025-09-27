@@ -16,7 +16,7 @@
 
   \subsection{NEW FEATURES}{
     \itemize{
-      \item The default \code{AIC} and \code{BIC} methods now check whether 
+      \item The default \code{AIC} and \code{BIC} methods now check whether
       the \pkg{methods} namespace is loaded rather than \pkg{stats4}. They
       still use \code{stats4::logLik} (and \code{stats4::nobs}), but packages
       no longer need to load \pkg{stats4} explicitly.
@@ -394,6 +394,9 @@
 
       \item The Cairo-based SVG device uses \code{pt} as the default
       document unit also with Cairo >= 1.17.8 (\PR{18912}).
+
+      \item \code{pretty(*, eps.correct = 2)} has been fixed, e.g., to
+      avoid over 1 mio length result for \code{pretty(c(0, 1e-322), eps.correct = 2)}.
     }
   }
 }

@@ -1,6 +1,6 @@
 % File src/library/base/man/pretty.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pretty}
@@ -35,10 +35,12 @@ pretty(x, \dots)
   \item{u5.bias}{non-negative numeric
     multiplier favoring factor 5 over 2.  Default and \sQuote{optimal}:
     \code{u5.bias = .5 + 1.5*high.u.bias}.}
-  \item{eps.correct}{integer code, one of \{0,1,2\}. If non-0, an
+  \item{eps.correct}{integer code, one of \{0,1,2\}.  If non-0, an
     \emph{epsilon correction} is made at the boundaries such that
     the result boundaries will be outside \code{range(x)}; in the
-    \emph{small} case, the correction is only done if \code{eps.correct >= 2}.}
+    \emph{small} case, this correction happens only if \code{eps.correct >= 2},
+    allowing \code{eps.correct = 2} to reproduce how \R's graphics engine
+    computes axis tick locations, see \sQuote{Details}.}
   \item{f.min}{positive factor multiplied by \code{\link{.Machine}$double.xmin}
     to get the smallest \dQuote{acceptable} \code{cell} \eqn{c_m} which
     determines the \code{unit} of the algorithm.  Smaller \code{cell}
@@ -46,12 +48,13 @@ pretty(x, \dots)
     being \dQuote{corrected}.
     New from \R 4.2.0,: previously \code{f.min = 20} was
     hardcoded in the algorithm.}
-  \item{bounds}{a \code{\link{logical}} indicating if the resulting vector
+  \item{bounds}{a \code{\link{logical}} indicating  if the resulting vector
     should \emph{cover} the full \code{range(x)}, i.e., strictly include
-    the bounds of \code{x}.  New from \R 4.2.0, allowing \code{bound=FALSE}
-    to reproduce how \R's graphics engine computes axis tick locations (in
-    \code{GEPretty()}).}
-  \item{\dots}{further arguments for methods.}
+    the bounds of \code{x}.  New from \R 4.2.0, allowing \code{bounds=FALSE}
+    to reproduce how \R's graphics engine computes axis extents and tick
+    locations, see \sQuote{Details}; also, for \code{.pretty()}, it determines
+    which parts of the C level computations should be returned.}
+  \item{\dots}{further arguments for methods; unused in default method.}
 }
 \description{
   Compute a  sequence of about \code{n+1} equally spaced \sQuote{round}
@@ -75,13 +78,22 @@ pretty(x, \dots)
   =}\code{high.u.bias} and \eqn{f =}\code{u5.bias}.
 
   \dots\dots\dots
+
+
+  \R's graphics engine \code{GEPretty()} C function calls % ../../../main/engine.c
+  \code{R_pretty()} and is used in both packages \pkg{graphics} and
+  \pkg{grid} (and hence \CRANpkg{lattice}, \CRANpkg{ggplot2}, etc.) for
+  axis range and tick computations.  For these, partly for back
+  compatibility reasons, the optional arguments are set, corresponding to
+\preformatted{
+  (min.n = 1, shrink.sml = 0.25, high.u.bias = 0.8, u5.bias = 1.7,
+   f.min = 1.125, eps.correct = 2, bounds = FALSE)}
 }
 \value{\code{pretty()} returns an numeric vector of \emph{approximately}
   \code{n} increasing numbers which are \dQuote{pretty} in decimal notation.
   (in extreme range cases, the numbers can no longer be \dQuote{pretty}
   given the other constraints; e.g., for \code{pretty(..)} %  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME
-
-  For ease of investigating the underlying C \code{R_pretty()}
+  For ease of investigating the underlying C \code{R_pretty()} % ../../../appl/pretty.c
   function, \code{.pretty()} returns a named \code{\link{list}}.  By
   default, when \code{bounds=TRUE}, the entries are \code{l}, \code{u},
   and \code{n}, whereas for \code{bounds=FALSE}, they are
