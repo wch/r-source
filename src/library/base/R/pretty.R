@@ -32,7 +32,8 @@ pretty.default <-
              high.u.bias = 1.5, u5.bias = .5 + 1.5*high.u.bias,
              eps.correct = 0L, f.min = 2^-20, bounds = TRUE, ...)
 {
-    chkDots(...) # avoid typos
+    chkDots(..., allowed = "nint") # avoid typos
+                         ## ^^^^^ workaround *some* package use
     x <- x[is.finite(x <- as.numeric(x))]
     if(!length(x)) return(x)
     z <- .Internal(pretty(min(x), max(x), n, min.n, shrink.sml,
