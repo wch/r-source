@@ -5251,7 +5251,7 @@ function(dir, doDelete = FALSE)
         all_files <- mydir(demo_dir)
         demo_files <- list_files_with_type(demo_dir, "demo",
                                            full.names = FALSE)
-	save_files <- paste0(sub("r$", "R", demo_files), "out.save")
+        save_files <- paste0(sub("r$", "R", demo_files), "out.save")
         wrong <- setdiff(all_files,
                          c("00Index", demo_files, save_files))
         if(length(wrong)) {
@@ -8094,7 +8094,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
 
     if(!is.na(size <- as.numeric(pkgSize)) &&
        size > as.numeric(Sys.getenv("_R_CHECK_CRAN_INCOMING_TARBALL_THRESHOLD_",
-                                    unset = "5e6")))
+                                    unset = "1e7")))
         out$size_of_tarball <- size
 
     ## Check URLs.
