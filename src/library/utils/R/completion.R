@@ -610,6 +610,8 @@ loadedPackageCompletions <- function(text, add = rc.getOption("package.suffix"))
     if (.CompletionEnv$settings[["ns"]])
     {
         s <- loadedNamespaces()
+        ## if rc.settings(ipck=TRUE), also do all installed packages
+        if (.CompletionEnv$settings[["ipck"]]) s <- unique(c(s, rownames(installed.packages())))
         comps <- findExactMatches(sprintf("^%s", makeRegexpSafe(text)), s)
         if (length(comps) && !is.null(add))
             sprintf("%s%s", comps, add)
