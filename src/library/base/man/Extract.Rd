@@ -326,13 +326,10 @@ x$name <- value
   behaviour when applied to data.frame and factors.
 
   \code{\link{Syntax}} for operator precedence, and the
-  \sQuote{R Language Definition} manual about indexing details.
-
+  Section \manual{R-lang}{Indexing}.
 
   \code{\link{NULL}} for details of indexing null objects.
 }
-%% Fixme: Link (to html in 'help.start()', pdf from 'ref manual',
-%% 'info' from ESS), see \url{https://CRAN.R-project.org/manuals.html}.
 
 \examples{
 x <- 1:12
