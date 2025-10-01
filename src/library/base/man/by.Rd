@@ -1,6 +1,6 @@
 % File src/library/base/man/by.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{by}
@@ -22,13 +22,13 @@ by(data, INDICES, FUN, \dots, simplify = TRUE)
    \code{nrow(data)}. For the data frame method, \code{INDICES} can also
    be a formula as in the \code{f} argument of the \code{\link{split}}
    method for data frames.}
- \item{FUN}{a function to be applied to (usually data-frame) subsets of
-   \code{data}.}
+ \item{FUN}{a \code{\link{function}} to be applied to (usually data-frame)
+   subsets of \code{data}.}
  \item{\dots}{further arguments to \code{FUN}.}
  \item{simplify}{logical: see \code{\link{tapply}}.}
 }
 \details{
-  A data frame is split by row into data frames
+  A data frame is split (calling \code{\link{split}()} by row into data frames
   subsetted by the values of one or more factors, and function
   \code{FUN} is applied to each subset in turn.
 
@@ -60,9 +60,8 @@ tmp1 <- with(warpbreaks,
 sapply(tmp1, coef)
 
 ## another way
-tmp2 <- by(warpbreaks, ~ tension,
-           with, coef(lm(breaks ~ wool)))
-array2DF(tmp2, simplify = TRUE)
+by(warpbreaks, ~ tension,
+   with, coef(lm(breaks ~ wool))) |> array2DF(simplify = TRUE)
 }
 \keyword{iteration}
 \keyword{category}
