@@ -57,6 +57,7 @@ airquality$avgOz <- rep(unlist(avgOz, use.names=FALSE), lengths(l))
 airquality$avgOz <- unsplit(avgOz, airquality$Month)
 
 ## should always be true, except when a length does not fit in 32 bits
+## or l has dimensions
 stopifnot(identical(lengths(l), vapply(l, length, integer(1L))))
 
 ## empty lists are not a problem
