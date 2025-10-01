@@ -89,7 +89,7 @@ getAllConnections()
 
   When \R is reading a script from a file, the \emph{file} is the
   \sQuote{console}: this is traditional usage to allow in-line data (see
-  \sQuote{An Introduction to R} for an example).
+  \manual{R-intro}{Scripting with R} for an example).
 }
 \value{
   \code{stdin()}, \code{stdout()} and \code{stderr()} return connection

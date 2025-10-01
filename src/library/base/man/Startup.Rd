@@ -220,9 +220,9 @@
   \code{\link{X11}} and \code{\link{quartz}}.
 #endif
 
-  \emph{An Introduction to R} for more command-line options: those
-  affecting memory management are covered in the help file for
-  \link{Memory}.
+  \manual{R-intro}{Invoking R from the command line}
+  for more command-line options: those affecting memory management are
+  covered in \code{?\link{Memory}}.
 
   \code{\link{readRenviron}} to read \file{.Renviron} files.
 

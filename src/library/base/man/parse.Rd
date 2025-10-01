@@ -83,7 +83,7 @@ str2expression(text)
   \code{n = 1}, and \code{n < 0} will read until an \abbr{EOF} character is
   read.  (The \abbr{EOF} character is \abbr{Ctrl}-Z for the Windows front-ends.)  The
   line-length limit is 4095 bytes when reading from the console (which
-  may impose a lower limit: see \sQuote{An Introduction to R}).
+  may impose a lower limit).% see \manual{R-intro}{}
 
   The default for \code{srcfile} is set as follows.  If
   \code{keep.source} is not \code{TRUE}, \code{srcfile}

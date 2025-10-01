@@ -232,8 +232,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
   blank lines.
 
   There is a line-length limit of 4095 bytes when reading from the
-  console (which may impose a lower limit: see \sQuote{An Introduction
-  to R}).
+  console (which may impose a lower limit).% see \manual{R-intro}{}
 
   There is a check for a user interrupt every 1000 lines if \code{what}
   is a list, otherwise every 10000 items.
