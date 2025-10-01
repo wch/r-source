@@ -135,6 +135,12 @@
       completeness, corresponding to \code{.pretty()}.  Also, it now
       catches typos such as \code{eps.corrected = 2}, noted in \PR{18521}
       by \I{Mikko Korpela}.
+
+      \item Plain-text help now renders Rd \verb{\describe} lists using
+      line breaks after item labels.  Set
+      \code{tools::Rd2txt_options(descStyle=NULL)} to get the old
+      behaviour with a simple space; a \code{"colon"} variant is also
+      available.
     }
   }
 

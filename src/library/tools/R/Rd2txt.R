@@ -37,7 +37,7 @@ Rd2txt_options <- local({
     	         sectionExtra = 2L,
     	         itemBullet = "* ",
     	         enumFormat = function(n) sprintf("%d. ", n),
-                 ## descStyle = "none",
+                 descStyle = "linebreak",
                  showURLs = FALSE,
                  code_quote = TRUE,
                  underline_titles = TRUE)

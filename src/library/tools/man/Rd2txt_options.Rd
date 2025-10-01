@@ -1,6 +1,6 @@
 % File src/library/tools/man/Rd2txt_options.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2010 R Core Team
+% Copyright 2010-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rd2txt_options}
@@ -20,24 +20,29 @@ Rd2txt_options(...)
 \details{
   This function persistently sets various formatting options for the
   \code{\link{Rd2txt}} function which is used in displaying text format
-  help.  Currently defined options are:
+  help.  Currently defined options (defaults) are:
   \describe{
-    \item{width}{(default 80):  The width of the output page.}
-    \item{minIndent}{(default 10):  The minimum indent to use in a list.}
-    \item{extraIndent}{(default 4):  The extra indent to use in each
+    \item{width (80)}{The width of the output page.}
+    \item{minIndent (10)}{The minimum indent to use in a list.}
+    \item{extraIndent (4)}{The extra indent to use in each
       level of nested lists.}
-    \item{sectionIndent}{(default 5):  The indent level for a section.}
-    \item{sectionExtra}{(default 2):  The extra indentation for each
+    \item{sectionIndent (5)}{The indent level for a section.}
+    \item{sectionExtra (2)}{The extra indentation for each
       nested section level.}
-    \item{itemBullet}{(default \code{"* "}, with the asterisk replaced by a
-      Unicode bullet in UTF-8 and most Windows locales):
-      The symbol to use as a bullet in itemized lists.}
-    \item{enumFormat}{:  A function to format item numbers in enumerated lists.}
-    \item{showURLs}{(default \code{FALSE}):  Whether to show URLs when
+    \item{itemBullet (\code{"* "}, but \code{"\\u2022 "} in UTF-8 locales)}{
+      The symbol to use as a bullet in \verb{\itemize} lists.}
+    \item{enumFormat (\code{function(n) sprintf("\%d. ", n)})}{
+      A function to format item numbers in \verb{\enumerate} lists.}
+    \item{descStyle (\code{"linebreak"})}{
+      How to separate the item label from the body in \verb{\describe}
+      lists.  The alternative \code{"colon"} inserts a colon if the label
+      does not already end with one.  Use \code{NULL} for a simple space
+      (as in \R < 4.6.0).}
+    \item{showURLs (\code{FALSE})}{Whether to show URLs when
       expanding \verb{\href} tags.}
-    \item{code_quote}{(default \code{TRUE}):  Whether to render
+    \item{code_quote (\code{TRUE})}{Whether to render
       \verb{\code} and similar with single quotes.}
-    \item{underline_titles}{(default \code{TRUE}):  Whether to render
+    \item{underline_titles (\code{TRUE})}{Whether to render
       section titles with underlines (via backspacing).}
   }
 }
@@ -47,7 +52,7 @@ Rd2txt_options(...)
   previous values.
 }
 \author{
-Duncan Murdoch
+Duncan Murdoch and the R Core Team
 }
 \seealso{
 \code{\link{Rd2txt}}
