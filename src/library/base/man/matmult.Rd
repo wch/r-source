@@ -28,7 +28,7 @@ x \%*\% y
   dimensions.
 
   This operator is a generic function: methods can be written for it
-  individually or via the \code{\link[=S3groupGeneric]{matOps}} group
+  individually or via the \code{\link[=S3groupGeneric]{matrixOps}} group
   generic function; it dispatches to S3 and S4 methods.  Methods need to be
   written for a function that takes two arguments named \code{x} and \code{y}.
 }
