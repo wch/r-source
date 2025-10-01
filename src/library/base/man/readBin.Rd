@@ -72,7 +72,7 @@ writeBin(object, con, size = NA_integer_,
   the string is valid in the current locale's encoding.
 
   Handling \R's missing and special (\code{Inf}, \code{-Inf} and
-  \code{NaN}) values is discussed in the \sQuote{R Data Import/Export} manual.
+  \code{NaN}) values is discussed in \manual{R-data}{Special values}.
 
   Only \eqn{2^{31}-1}{2^31 - 1} bytes can be written in a single
   call (and that is the maximum capacity of a raw vector on 32-bit
@@ -106,9 +106,9 @@ writeBin(object, con, size = NA_integer_,
   invisibly \code{NULL}.
 }
 \seealso{
-  The \sQuote{R Data Import/Export} manual.
+  \manual{R-data}{Binary connections}.
 
-  \code{readChar} to read/write fixed-length strings.
+  \code{\link{readChar}} to read/write fixed-length strings.
 
   \code{\link{connections}}, \code{\link{readLines}},
   \code{\link{writeLines}}.

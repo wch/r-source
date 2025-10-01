@@ -157,7 +157,7 @@ write.csv2(\dots)
 }
 
 \seealso{
-  The \sQuote{R Data Import/Export} manual.
+  The manual \manual{R-data}{}.
 
   \code{\link{read.table}}, \code{\link{write}}.
 

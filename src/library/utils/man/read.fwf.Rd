@@ -42,8 +42,7 @@ read.fwf(file, widths, header = FALSE, sep = "\t",
   \item{fileEncoding}{character string: if non-empty declares the
     encoding used on a file (not a connection) so the character data can
     be re-encoded.  See the \sQuote{Encoding} section of the help for
-    \code{\link{file}}, the \sQuote{R Data Import/Export} manual and
-    \sQuote{Note}.}
+    \code{\link{file}}, and \manual{R-data}{Variations on read.table}.}
   
   \item{\dots}{further arguments to be passed to
     \code{\link{read.table}}.  Useful such arguments include

@@ -190,7 +190,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
     encoding used on a file when given as a character string (not on an
     existing connection) so the character data can
     be re-encoded.  See the \sQuote{Encoding} section of the help for
-    \code{\link{file}}, the \sQuote{R Data Import/Export} manual and
+    \code{\link{file}}, \manual{R-data}{Variations on read.table}, and
     \sQuote{Note}.
   }
 
@@ -288,8 +288,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
 
 \section{Memory usage}{
   These functions can use a surprising amount of memory when reading
-  large files.  There is extensive discussion in the \sQuote{R Data
-  Import/Export} manual, supplementing the notes here.
+  large files.  There is extensive discussion in the manual \manual{R-data}{},
+  supplementing the notes here.
 
   Less memory will be used if \code{colClasses} is specified as one of
   the six \link{atomic} vector classes.  This can be particularly so when
@@ -323,7 +323,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote = "\"",
 }
 
 \seealso{
-  The \sQuote{R Data Import/Export} manual.
+  The manual \manual{R-data}{}.
 
   \code{\link{scan}}, \code{\link{type.convert}},
   \code{\link{read.fwf}} for reading \emph{f}ixed \emph{w}idth

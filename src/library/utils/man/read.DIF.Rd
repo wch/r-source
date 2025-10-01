@@ -122,8 +122,8 @@ read.DIF(file, header = FALSE,
   \item{fileEncoding}{character string: if non-empty declares the
     encoding used on a file (not a connection or clipboard) so the
     character data can be re-encoded.  See the \sQuote{Encoding} section
-    of the help for \code{\link{file}}, the \sQuote{R Data Import/Export}
-    manual and \sQuote{Note}.}
+    of the help for \code{\link{file}}, and
+    \manual{R-data}{Variations on read.table}.}
 }
 \value{
   A data frame (\code{\link{data.frame}}) containing a representation of
@@ -141,7 +141,7 @@ read.DIF(file, header = FALSE,
 }
 \author{R Core; \code{transpose} option by Christoph Buser, ETH Zurich}
 \seealso{
-  The \emph{R Data Import/Export} manual.
+  The manual \manual{R-data}{}.
 
   \code{\link{scan}}, \code{\link{type.convert}},
   \code{\link{read.fwf}} for reading \emph{f}ixed \emph{w}idth
