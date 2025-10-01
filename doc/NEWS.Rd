@@ -401,7 +401,7 @@
       document unit also with Cairo >= 1.17.8 (\PR{18912}).
 
       \item \code{pretty(*, eps.correct = 2)} has been fixed, e.g., to
-      avoid over 1 mio length result for \code{pretty(c(0, 1e-322), eps.correct = 2)}.
+      avoid over 1 million length result for \code{pretty(c(0, 1e-322), eps.correct = 2)}.
     }
   }
 }
