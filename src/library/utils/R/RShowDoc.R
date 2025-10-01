@@ -184,6 +184,6 @@ R_manuals <- matrix(c(
     "R-data",  "R Data Import/Export",
     "R-exts",  "Writing R Extensions",
     "R-ints",  "R Internals",
-    "R-lang",  "R Language Definition"
+    "R-lang",  "The R Language Definition"
 ), ncol = 2L, byrow = TRUE)
 dimnames(R_manuals) <- list(R_manuals[,1L], c("name", "title"))

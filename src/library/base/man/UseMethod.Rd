@@ -92,7 +92,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
   Now for some obscure details that need to appear somewhere.  These
   comments will be slightly different than those in
   \bibcitet{R:Chambers:1992:aa}.
-  (See also the draft \sQuote{R Language Definition}.)
+  (See also the draft of \manual{R-lang}{}.)
   \code{UseMethod} creates a new function call with
   arguments matched as they came in to the generic.  [Previously local
   variables defined before the call to \code{UseMethod} were retained;
@@ -117,8 +117,8 @@ NextMethod(generic = NULL, object = NULL, \dots)
   the promise that was supplied as an argument to the current
   environment.  (S does this differently!)  If they have been evaluated
   in the current (or a previous environment) they remain evaluated.
-  (This is a complex area, and subject to change: see the draft
-  \sQuote{R Language Definition}.)
+  (This is a complex area, and subject to change: see the draft of
+  \manual{R-lang}{}.)
 
   The search for methods for \code{NextMethod} is slightly different
   from that for \code{UseMethod}.   Finding no \code{fun.default} is not
@@ -175,7 +175,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
   provided in the \pkg{methods} package.
 }
 \seealso{
-  The draft \sQuote{R Language Definition}.
+  The draft of \manual{R-lang}{}.
 
   \code{\link{methods}}, \code{\link{class}} incl.\sspace\code{\link{.class2}};
   \code{\link{getS3method}}, \code{\link{is.object}}.

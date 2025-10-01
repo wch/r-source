@@ -1,7 +1,7 @@
 \input texinfo
 @c %**start of header
 @setfilename R-lang.info
-@settitle R Language Definition
+@settitle The R Language Definition
 @c %**end of header
 
 @syncodeindex fn vr
@@ -31,7 +31,7 @@ This manual is for R, version @value{VERSION}.
 @end copying
 
 @titlepage
-@title R Language Definition
+@title The R Language Definition
 @subtitle Version @value{VERSION} @b{DRAFT}
 @author R Core Team
 @page
@@ -49,7 +49,7 @@ This manual is for R, version @value{VERSION}.
 
 @ifnottex
 @node Top
-@top R Language Definition
+@top The R Language Definition
 
 This is an introduction to the @R{} language, explaining evaluation,
 parsing, object oriented programming, computing on the language, and so

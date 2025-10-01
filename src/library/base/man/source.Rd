@@ -176,7 +176,7 @@ withAutoprint(exprs, evaluated = FALSE, local = parent.frame(),
   \code{\link{sys.source}} which is a streamlined version to source a
   file into an environment.
 
-  \sQuote{The R Language Definition} for a discussion of source
+  Section \manual{R-lang}{Directives} for a discussion of source
   directives.
 }
 \examples{

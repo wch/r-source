@@ -46,9 +46,8 @@ get0(x, envir = pos.to.env(-1L), mode = "any", inherits = TRUE,
   it in the specified environment.  If \code{inherits} is \code{TRUE} and
   a value is not found for \code{x} in the specified environment, the
   enclosing frames of the environment are searched until the name \code{x}
-  is encountered.  See \code{\link{environment}} and the \sQuote{R
-  Language Definition} manual for details about the structure of
-  environments and their enclosures.
+  is encountered.  See \code{\link{environment}} and \manual{R-lang}{}
+  for details about the structure of environments and their enclosures.
 
   \bold{Warning:}
   \code{inherits = TRUE} is the default behaviour for \R but not for S.

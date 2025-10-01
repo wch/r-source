@@ -59,7 +59,7 @@
   \code{\link{NumericConstants}}, \code{\link{Paren}},
   \code{\link{Quotes}}, \code{\link{Reserved}}.
 
-  The \sQuote{R Language Definition} manual.
+  Section \manual{R-lang}{Expressions}.
 }
 \examples{
 ## Logical AND ("&&") has higher precedence than OR ("||"):

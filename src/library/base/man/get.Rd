@@ -57,7 +57,7 @@ dynGet(x, ifnotfound = , minframe = 1L, inherits = FALSE)
   \code{TRUE} and a value is not found for \code{x} in the specified
   environment, the enclosing frames of the environment are searched
   until the name \code{x} is encountered.  See \code{\link{environment}}
-  and the \sQuote{R Language Definition} manual for details about the
+  and \manual{R-lang}{} for details about the
   structure of environments and their enclosures.
 
   If \code{mode} is specified then only objects of that type are sought.
