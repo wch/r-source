@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-09-01 r88756) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-10-01 r88895) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -3218,12 +3218,12 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > plot(approxfun(x, y, rule = 2:1), 0, 11,
 +      col = "tomato", add = TRUE, lty = 3, lwd = 2)
 > 
-> ### Treatment of 'NA's -- are kept if  na.rm=FALSE :
+> ### Treatment of NAs -- kept if  na.rm=FALSE :
 > 
 > xn <- 1:4
 > yn <- c(1,NA,3:4)
 > xout <- (1:9)/2
-> ## Default behavior (na.rm = TRUE): NA's omitted; extrapolation gives NA
+> ## Default behavior (na.rm = TRUE): NAs omitted; extrapolation gives NA
 > data.frame(approx(xn,yn, xout))
     x   y
 1 0.5  NA
@@ -3246,7 +3246,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 7 3.5 3.5
 8 4.0 4.0
 9 4.5 4.0
-> ## New (2019-2020)  na.rm = FALSE: NA's are "kept"
+> ## New (2019-2020)  na.rm = FALSE: NAs are "kept"
 > data.frame(approx(xn,yn, xout, na.rm=FALSE, rule = 2))
     x   y
 1 0.5 1.0
@@ -3270,7 +3270,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 8 4.0  4
 9 4.5  4
 > 
-> ## NA's in x[] are not allowed:
+> ## NAs in x[] are not allowed:
 > stopifnot(inherits( try( approx(yn,yn, na.rm=FALSE) ), "try-error"))
 Error in approx(yn, yn, na.rm = FALSE) : 
   approx(x,y, .., na.rm=FALSE): NA values in x are not allowed
@@ -5124,7 +5124,7 @@ function (V)
         r[seq.int(from = 1L, by = p + 1L, length.out = p)] <- 1
     r
 }
-<bytecode: 0x5640aec7bad0>
+<bytecode: 0x5cee00b3ead0>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -5141,7 +5141,7 @@ function (V)
 > swM[1,2] <- swM[7,3] <- swM[25,5] <- NA # create 3 "missing"
 > 
 > ## Consider all 5 "use" cases :
-> (C. <- cov(swM)) # use="everything"  quite a few NA's in cov.matrix
+> (C. <- cov(swM)) # use="everything"  quite a few NAs in cov.matrix
           Frtlty Agrclt Exmntn     Eductn Cathlc    Infn.M
 Frtlty 156.04250     NA     NA -79.729510     NA 15.156193
 Agrclt        NA     NA     NA         NA     NA        NA
@@ -7772,7 +7772,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x5640ae173ae8>
+<environment: 0x5cee0449f108>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -10917,7 +10917,7 @@ attr(,"na.action")
 [1] 3
 attr(,"class")
 [1] "omit"
-> stopifnot(all(na.omit(1:3) == 1:3))  # does not affect objects with no NA's
+> stopifnot(na.omit(1:3) == 1:3)  # does not affect objects with no NAs
 > try(na.fail(DF))   #> Error: missing values in ...
 Error in na.fail.default(DF) : missing values in object
 > 
@@ -11934,10 +11934,10 @@ $objective
 +         main = "P-value adjustments")
 > legend(0.7, 0.6, p.adjust.M, col = 1:6, lty = 1:6)
 > 
-> ## Can work with NA's:
+> ## Can work with NAs:
 > pN <- p; iN <- c(46, 47); pN[iN] <- NA
 > pN.a <- sapply(p.adjust.M, function(meth) p.adjust(pN, meth))
-> ## The smallest 20 P-values all affected by the NA's :
+> ## The smallest 20 P-values all affected by the NAs :
 > round((pN.a / p.adj)[1:20, ] , 4)
         holm hochberg hommel bonferroni   BH     BY none
  [1,] 0.9600   0.9600 0.9600       0.96 0.96 0.9514    1
@@ -12673,14 +12673,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x5640abb39c20>
-<environment: 0x5640abaf9c48>
+<bytecode: 0x5cee025d1e20>
+<environment: 0x5cee03cba960>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x5640abb39d70>
-<environment: 0x5640abaf9c48>
+<bytecode: 0x5cee025d1cd0>
+<environment: 0x5cee03cba960>
 
 > 
 > 
@@ -15845,7 +15845,7 @@ nhtemp+   ylab = "Mean annual temperature in New Haven, CT (deg. F)")
 > legend(length(y),max(y), c("data", "lowess(y, f = 0.3)", "runmed(y, 7)"),
 +        xjust = 1, col = col, lty = c(0, 1, 1), pch = c(1,NA,NA))
 > 
-> ## An example with initial NA's - used to fail badly (notably for "Turlach"):
+> ## An example with initial NAs - used to fail badly (notably for "Turlach"):
 > x15 <- c(rep(NA, 4), c(9, 9, 4, 22, 6, 1, 7, 5, 2, 8, 3))
 > rS15 <- cbind(Sk.3 = runmed(x15, k = 3, algorithm="S"),
 +               Sk.7 = runmed(x15, k = 7, algorithm="S"),
@@ -16649,7 +16649,7 @@ GCV: 0.7155391
 +          col = adjustcolor(c("red", "orange4", "orange1"), 0.5))
 > yN[c(1, 20:21)] <- NA # additionally
 > rN. <- sapply(eRules, function(R) runmed(yN, 7, endrule=R))
-> head(rN., 4); tail(rN.) # more NA's too, still not *so* many:
+> head(rN., 4); tail(rN.) # more NAs too, still not *so* many:
      keep constant median
 [1,]   NA      256    392
 [2,]   NA      256    324
@@ -17039,8 +17039,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x5640aee9c0a8>
-<environment: 0x5640ade91680>
+<bytecode: 0x5cee03d172f8>
+<environment: 0x5cee02f70938>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17651,7 +17651,7 @@ attr(,"legend")
 attr(,"legend")
 [1] 0 ‘ ’ 0.3 ‘.’ 0.6 ‘,’ 0.8 ‘+’ 0.9 ‘*’ 0.95 ‘B’ 1
 > 
-> ## NA's:
+> ## NA coding:
 > Cm <- cor(matrix(rnorm(60),  10, 6)); Cm[c(3,6), 2] <- NA
 > symnum(Cm, show.max = NULL)
                
@@ -19455,7 +19455,7 @@ Number of factors: 3
 Test for independence of all factors:
 	Chisq = 2000.3, df = 16, p-value = 0
 > 
-> ## with NA's
+> ## with NAs
 > DN <- DF; DN[cbind(6:9, c(1:2,4,1))] <- NA
 > DN # 'Freq' is missing only for (Rejected, Female, B)
       Admit Gender Dept Freq
@@ -19488,7 +19488,7 @@ Test for independence of all factors:
 Gender   Admitted Rejected
   Male       1078     1286
   Female      540         
-> print(xtNA, na.print = "NA")                   # show NA's better
+> print(xtNA, na.print = "NA")                   # show NAs better
         Admit
 Gender   Admitted Rejected
   Male       1078     1286
@@ -19629,7 +19629,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.056 0.133 5.193 0 0 
+Time elapsed:  5.797 0.16 5.961 0 0 
 > grDevices::dev.off()
 null device 
           1 

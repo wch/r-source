@@ -160,7 +160,7 @@ lines(runmed(y, 7),      lwd = 2, col = col[3])
 legend(length(y),max(y), c("data", "lowess(y, f = 0.3)", "runmed(y, 7)"),
        xjust = 1, col = col, lty = c(0, 1, 1), pch = c(1,NA,NA))
 
-## An example with initial NA's - used to fail badly (notably for "Turlach"):
+## An example with initial NAs - used to fail badly (notably for "Turlach"):
 x15 <- c(rep(NA, 4), c(9, 9, 4, 22, 6, 1, 7, 5, 2, 8, 3))
 rS15 <- cbind(Sk.3 = runmed(x15, k = 3, algorithm="S"),
               Sk.7 = runmed(x15, k = 7, algorithm="S"),

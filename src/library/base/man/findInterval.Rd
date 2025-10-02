@@ -30,7 +30,7 @@ findInterval(x, vec, rightmost.closed = FALSE, all.inside = FALSE,
     nonsense results in case \code{vec} is not sorted.}
   \item{checkNA}{logical indicating if each \code{x[i]} should be checked
     as with \code{\link{is.na}(.)}.  Setting this to \code{FALSE} in case
-    of \code{NA}'s in \code{x[]} may result in platform dependent nonsense.}
+    of \code{NA}s in \code{x[]} may result in platform-dependent nonsense.}
 }
 \description{
   Given a vector of non-decreasing breakpoints in \code{vec}, find the
@@ -95,9 +95,12 @@ X <- sort(round(stats::rt(N, df = 2), 2))
 tt <- c(-100, seq(-2, 2, length.out = 201), +100)
 it <- findInterval(tt, X)
 tt[it < 1 | it >= N] # only first and last are outside range(X)
-stopifnot(identical(it, ## suppressing the checks is faster *BUT* dangerous, unless
-                    ##     you *know* that X is sorted   and   tt contains no NA's
-                    findInterval(tt, X, checkSorted=FALSE, checkNA=FALSE)))
+stopifnot(identical(it,
+    ## Suppressing the checks is faster *BUT* dangerous, unless
+    ## you *know* (like here) that the breakpoints are sorted
+    ## and the input contains no missing values, respectively.
+    findInterval(tt, X, checkSorted=FALSE, checkNA=FALSE)
+))
 
 ##  'left.open = TRUE' means  "mirroring" :
 N <- length(v)

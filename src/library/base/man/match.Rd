@@ -72,7 +72,7 @@ x \%in\% table
   For real and complex values, \code{NaN} values are regarded
   as matching any other \code{NaN} value, but not matching \code{NA},
   where for complex \code{x}, real and imaginary parts must match both
-  (unless containing at least one \code{NA}).
+  (unless containing at least one \code{NA}), see the examples.
 
   Character strings will be compared as byte sequences if any input is
   marked as \code{"bytes"}, and otherwise are regarded as equal if they are
@@ -117,17 +117,20 @@ sstr[sstr \%in\% c(letters, LETTERS)]
         c(1:6,7:2) \%w/o\% c(3,7,12)  # -> keeps duplicates
 setdiff(c(1:6,7:2),      c(3,7,12)) # -> unique values
 
-## Illuminating example about NA matching
+## Illuminating example about NA matching in complex values
 r <- c(1, NA, NaN)
-zN <- c(complex(real = NA , imaginary =  r ), complex(real =  r , imaginary = NA ),
-        complex(real =  r , imaginary = NaN), complex(real = NaN, imaginary =  r ))
+zN <- c(complex(real = NA , imaginary =  r ),
+        complex(real =  r , imaginary = NA ),
+        complex(real =  r , imaginary = NaN),
+        complex(real = NaN, imaginary =  r ))
 zM <- cbind(Re=Re(zN), Im=Im(zN), match = match(zN, zN))
 rownames(zM) <- format(zN)
-zM ##--> many "NA's" (= 1) and the four non-NA's (3 different ones, at 7,9,10)
+zM ##--> many "NA" matches (= 1) and four non-NAs (3 different ones: 7,9,10)
 
 length(zN) # 12
-unique(zN) # the "NA" and the 3 different non-NA NaN's
+unique(zN) # the "NA" and the 3 different NaN values
 stopifnot(identical(unique(zN), zN[c(1, 7,9,10)]))
+stopifnot(is.na(zN)) # all are regarded as missing
 
 ## very strict equality would have 4 duplicates (of 12):
 symnum(outer(zN, zN, Vectorize(identical,c("x","y")),

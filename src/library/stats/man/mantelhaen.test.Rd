@@ -68,9 +68,9 @@ mantelhaen.test(x, y = NULL, z = NULL,
 }
 \details{
   If \code{x} is an array, each dimension must be at least 2, and
-  the entries should be nonnegative integers.  \code{NA}'s are not
+  the entries should be nonnegative integers.  \code{NA}s are not
   allowed.  Otherwise, \code{x}, \code{y} and \code{z} must have the
-  same length.  Triples containing \code{NA}'s are removed.  All
+  same length.  Triples containing \code{NA}s are removed.  All
   variables must take at least two different values.
 }
 \note{

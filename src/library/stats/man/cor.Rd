@@ -173,7 +173,7 @@ colnames(swM) <- abbreviate(colnames(swiss), minlength=6)
 swM[1,2] <- swM[7,3] <- swM[25,5] <- NA # create 3 "missing"
 
 ## Consider all 5 "use" cases :
-(C. <- cov(swM)) # use="everything"  quite a few NA's in cov.matrix
+(C. <- cov(swM)) # use="everything"  quite a few NAs in cov.matrix
 try(cov(swM, use = "all")) # Error: missing obs...
 C2 <- cov(swM, use = "complete")
 stopifnot(identical(C2, cov(swM, use = "na.or.complete")))

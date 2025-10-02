@@ -60,7 +60,7 @@ heatmap(x, Rowv = NULL, Colv = if(symm)"Rowv" else NULL,
     false, and \code{"none"} otherwise. This scaling only affects the
     \emph{colour} scale; it does not scale the original data.  See the
     Examples.}
-  \item{na.rm}{logical indicating whether \code{NA}'s should be removed.}
+  \item{na.rm}{logical indicating whether \code{NA}s should be removed.}
   \item{margins}{numeric vector of length 2 containing the margins
     (see \code{\link{par}(mar = *)}) for column and row names, respectively.}
   \item{ColSideColors}{(optional) character vector of length \code{ncol(x)}

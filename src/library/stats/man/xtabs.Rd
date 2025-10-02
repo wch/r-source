@@ -122,11 +122,11 @@ xtabs(Freq ~ Gender + Admit, DF)
 ## And for testing independence ...
 summary(xtabs(Freq ~ ., DF))
 
-## with NA's
+## with NAs
 DN <- DF; DN[cbind(6:9, c(1:2,4,1))] <- NA
 DN # 'Freq' is missing only for (Rejected, Female, B)
 (xtNA <- xtabs(Freq ~ Gender + Admit, DN))     # NA prints 'invisibly'
-print(xtNA, na.print = "NA")                   # show NA's better
+print(xtNA, na.print = "NA")                   # show NAs better
 xtabs(Freq ~ Gender + Admit, DN, na.rm = TRUE) # ignore missing Freq
 ## Use addNA = TRUE to tabulate missing factor levels:
 xtabs(Freq ~ Gender + Admit, DN, addNA = TRUE)

@@ -54,10 +54,10 @@ approxfun(x, y = NULL,       method = "linear",
     taking a single vector argument and returning a single number
     or a \code{\link{list}} of both, e.g.,
     \code{list("ordered", mean)}, see \sQuote{Details}.}
-  \item{na.rm}{logical specifying how missing values (\code{\link{NA}}'s)
+  \item{na.rm}{logical specifying how missing values (\code{\link{NA}}s)
     should be handled.  Setting \code{na.rm=FALSE} will propagate
-    \code{NA}'s in \code{y} to the interpolated values, also depending on
-    the \code{rule} set.  Note that in this case, \code{NA}'s in \code{x}
+    \code{NA}s in \code{y} to the interpolated values, also depending on
+    the \code{rule} set.  Note that in this case, \code{NA}s in \code{x}
     are invalid, see also the examples.}
 }
 \details{
@@ -127,19 +127,19 @@ curve(fc(x), 0, 10, col = "darkblue", add = TRUE)
 plot(approxfun(x, y, rule = 2:1), 0, 11,
      col = "tomato", add = TRUE, lty = 3, lwd = 2)
 
-### Treatment of 'NA's -- are kept if  na.rm=FALSE :
+### Treatment of NAs -- kept if  na.rm=FALSE :
 
 xn <- 1:4
 yn <- c(1,NA,3:4)
 xout <- (1:9)/2
-## Default behavior (na.rm = TRUE): NA's omitted; extrapolation gives NA
+## Default behavior (na.rm = TRUE): NAs omitted; extrapolation gives NA
 data.frame(approx(xn,yn, xout))
 data.frame(approx(xn,yn, xout, rule = 2))# -> *constant* extrapolation
-## New (2019-2020)  na.rm = FALSE: NA's are "kept"
+## New (2019-2020)  na.rm = FALSE: NAs are "kept"
 data.frame(approx(xn,yn, xout, na.rm=FALSE, rule = 2))
 data.frame(approx(xn,yn, xout, na.rm=FALSE, rule = 2, method="constant"))
 
-## NA's in x[] are not allowed:
+## NAs in x[] are not allowed:
 stopifnot(inherits( try( approx(yn,yn, na.rm=FALSE) ), "try-error"))
 
 ## Give a nice overview of all possibilities  rule * method * na.rm :

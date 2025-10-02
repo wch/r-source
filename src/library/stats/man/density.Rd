@@ -59,7 +59,7 @@ density(x, \dots)
     hence of same length as \code{x}. The default \code{NULL} is
     equivalent to \code{weights = rep(1/nx, nx)} where \code{nx} is the
     length of (the finite entries of) \code{x[]}.  If \code{na.rm = TRUE}
-    and there are \code{NA}'s in \code{x}, they \emph{and} the
+    and there are \code{NA}s in \code{x}, they \emph{and} the
     corresponding weights are removed before computations.  In that case,
     when the original weights have summed to one, they are re-scaled to
     keep doing so.

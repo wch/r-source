@@ -109,10 +109,10 @@ matplot(p, p.adj, ylab="p.adjust(p, meth)", type = "l", asp = 1, lty = 1:6,
         main = "P-value adjustments")
 legend(0.7, 0.6, p.adjust.M, col = 1:6, lty = 1:6)
 
-## Can work with NA's:
+## Can work with NAs:
 pN <- p; iN <- c(46, 47); pN[iN] <- NA
 pN.a <- sapply(p.adjust.M, function(meth) p.adjust(pN, meth))
-## The smallest 20 P-values all affected by the NA's :
+## The smallest 20 P-values all affected by the NAs :
 round((pN.a / p.adj)[1:20, ] , 4)
 }
 \keyword{htest}

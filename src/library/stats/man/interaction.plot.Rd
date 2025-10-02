@@ -107,7 +107,7 @@ with(OrchardSprays, {
 %%   interaction.plot(agegp, alcgp, ncases/ncontrols, col = 2:5)
 %%                                 # doesn't show *last* group either
 %%   interaction.plot(agegp, alcgp, ncases/ncontrols, col = 2:5, type = "b")
-%%   ## alternative take non-NA's  {"cheating"}
+%%   ## alternative take non-NAs  {"cheating"}
 %%   interaction.plot(agegp, alcgp, ncases/ncontrols, col = 2:5,
 %%                    fun = function(x) mean(x, na.rm = TRUE),
 %%                    sub = "function(x) mean(x, na.rm=TRUE)")

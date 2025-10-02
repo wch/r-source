@@ -2169,7 +2169,7 @@ numbers.  This can be done using the @code{size} argument, which
 (usually) allows sizes 1, 2, 4, 8 for integers and logicals, and sizes
 4, 8 and perhaps 12 or 16 for reals.  Transferring at different sizes
 can lose precision, and should not be attempted for vectors containing
-@code{NA}'s.
+@code{NA}s.
 
 @findex readChar
 @findex writeChar

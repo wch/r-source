@@ -64,7 +64,7 @@ matlines(rN, type = "b", pch = 4, lwd = 3, lty=2,
          col = adjustcolor(c("red", "orange4", "orange1"), 0.5))
 yN[c(1, 20:21)] <- NA # additionally
 rN. <- sapply(eRules, function(R) runmed(yN, 7, endrule=R))
-head(rN., 4); tail(rN.) # more NA's too, still not *so* many:
+head(rN., 4); tail(rN.) # more NAs too, still not *so* many:
 stopifnot(exprs = {
    !anyNA(rN[,2:3])
    identical(which(is.na(rN[,"keep"])), c(2L, 40L))

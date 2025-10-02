@@ -137,15 +137,18 @@ is.table(x)
 }
 \examples{
 require(stats) # for rpois and xtabs
+
 ## Simple frequency distribution
 table(rpois(100, 5))
+
 ## Check the design:
 with(warpbreaks, table(wool, tension))
 table(state.division, state.region)
 
-# simple two-way contingency table
+## Simple two-way contingency table:
 with(airquality, table(cut(Temp, quantile(Temp)), Month))
 
+## Dimension names:
 a <- letters[1:3]
 table(a, sample(a))                    # dnn is c("a", "")
 table(a, sample(a), dnn = NULL)        # dimnames() have no names
@@ -160,9 +163,10 @@ class(tab <- xtabs(Freq ~ ., DF)) # xtabs & table
 all(tab == UCBAdmissions)
 all.equal(dimnames(tab), dimnames(UCBAdmissions))
 
+## Excluding levels:
 a <- rep(c(NA, 1/0:3), 10)
-table(a)                 # does not report NA's
-table(a, exclude = NULL) # reports NA's
+table(a)                 # does not report NAs
+table(a, exclude = NULL) # reports NAs
 b <- factor(rep(c("A","B","C"), 10))
 table(b)
 table(b, exclude = "B")
@@ -175,13 +179,13 @@ is.na(d) <- 3:4
 d. <- addNA(d)
 d.[1:7]
 table(d.) # ", exclude = NULL" is not needed
-## i.e., if you want to count the NA's of 'd', use
+## i.e., if you want to count the NAs of 'd', use
 table(d, useNA = "ifany")
 
 ## "pathological" case:
 d.patho <- addNA(c(1,NA,1:2,1:3))[-7]; is.na(d.patho) <- 3:4
 d.patho
-## just 3 consecutive NA's ? --- well, have *two* kinds of NAs here :
+## just 3 consecutive NAs ? --- well, have *two* kinds of NAs here :
 as.integer(d.patho) # 1 4 NA NA 1 2
 ##
 ## In R >= 3.4.0, table() allows to differentiate:

@@ -51,9 +51,9 @@ quade.test(y, \dots)
   \code{groups}.
 
   If \code{y} is a matrix, \code{groups} and \code{blocks} are obtained
-  from the column and row indices, respectively.  \code{NA}'s are not
+  from the column and row indices, respectively.  \code{NA}s are not
   allowed in \code{groups} or \code{blocks};  if \code{y} contains
-  \code{NA}'s, corresponding blocks are removed.
+  \code{NA}s, corresponding blocks are removed.
 }
 \value{
   A list with class \code{"htest"} containing the following components:

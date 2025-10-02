@@ -113,7 +113,7 @@ symnum(cm1, diag.lower.tri = FALSE)
 symnum(cm2 <- cor(matrix(rnorm(900), 50, 18))) # < White Noise "BIG" n
 symnum(cm2, lower.triangular = FALSE)
 
-## NA's:
+## NA coding:
 Cm <- cor(matrix(rnorm(60),  10, 6)); Cm[c(3,6), 2] <- NA
 symnum(Cm, show.max = NULL)
 

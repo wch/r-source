@@ -371,7 +371,7 @@ for(lpS in list(.leap.seconds, leapS)) {
       ## length(.) <- * is compatible to subsetting/indexing:
       identical(ls, lpS[seq_along(ls)])
       identical(l2, lpS[seq_along(l2)])
-      ## has filled with NA's
+      ## has filled with NAs
       is.na(l2[(length(lpS)+1):length(l2)])
     })
 }% for %

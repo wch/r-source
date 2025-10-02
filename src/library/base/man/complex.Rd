@@ -53,14 +53,14 @@ Conj(z)
   Since \R version 4.4.0, \code{as.complex(x)} for \dQuote{number-like}
   \code{x}, i.e., types \code{"logical"}, \code{"integer"}, and
   \code{"double"}, will always keep imaginary part zero, now also for
-  \code{NA}'s.
+  \code{NA}s.
     Up to \R versions 3.2.x, all forms of \code{NA} and \code{NaN}
   were coerced to a complex \code{NA}, i.e., the \code{\link{NA_complex_}}
   constant, for which both the real and imaginary parts are \code{NA}.
   Since \R 3.3.0, typically only objects which are \code{NA} in parts
   are coerced to complex \code{NA}, but others with \code{NaN} parts,
   are \emph{not}.  As a consequence, complex arithmetic where only
-  \code{NaN}'s (but no \code{NA}'s) are involved typically will
+  \code{NaN}s (but no \code{NA}s) are involved typically will
   \emph{not} give complex \code{NA} but complex numbers with real or
   imaginary parts of \code{NaN}.
   All of these many different complex numbers fulfill \code{is.na(.)} but

@@ -116,7 +116,7 @@ tapply(1:n, fac, sum, default = 0) # maybe more desirable
 tapply(1:n, fac, sum, simplify = FALSE)
 tapply(1:n, fac, range)
 tapply(1:n, fac, quantile)
-tapply(1:n, fac, length) ## NA's
+tapply(1:n, fac, length) ## NAs
 tapply(1:n, fac, length, default = 0) # == table(fac)
 \dontshow{stopifnot(all.equal(
   unname(unclass(table(fac))),

@@ -116,7 +116,7 @@ stopifnot(exprs = {
   ## length(.) <- * is compatible to subsetting/indexing:
   identical(ls, Dls[seq_along(ls)])
   identical(l2, Dls[seq_along(l2)])
-  ## has filled with NA's
+  ## has filled with NAs
   is.na(l2[(length(Dls)+1):length(l2)])
 })
 }

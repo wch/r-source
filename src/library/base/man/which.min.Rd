@@ -63,7 +63,7 @@ x <- c(1:4, 0:5, 11)
 which.min(x)
 which.max(x)
 
-## it *does* work with NA's present, by discarding them:
+## it *does* work with NAs present, by discarding them:
 presidents[1:30]
 range(presidents, na.rm = TRUE)
 which.min(presidents) # 28
