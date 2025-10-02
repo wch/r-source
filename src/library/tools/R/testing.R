@@ -1,7 +1,7 @@
 #  File src/library/tools/R/testing.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 # NB: also copyright date in Usage.
 #
@@ -405,6 +405,10 @@ testInstalledPackage <-
             if (res) {
                 message(gettextf("Error: running examples in %s failed", sQuote(Rfile)),
                         domain = NA)
+                if (file.exists(failfile)) {
+                    cat("==>", failfile, "<==\n")
+                    writeLines(utils::tail(readLines(failfile, warn = FALSE), 10L))
+                }
                 return(invisible(1L))
             } else
                 file.rename(failfile, outfile)
