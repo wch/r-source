@@ -1,7 +1,7 @@
 #  File src/library/stats/R/dist.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -53,8 +53,9 @@ as.matrix.dist <- function(x, ...)
     if (size > 1L) {
         n..1 <- (size - 1L):1L # n:1
         s.1 <- size + 1L
-        up <- sequence.default(n..1, from = seq.int(s.1, length(df),      s.1), by = size)
-        lo <- sequence.default(n..1, from = seq.int(2L , length(df) + 1L, s.1))
+        s2 <- size*size
+        up <- sequence.default(n..1, seq.int(s.1, s2, s.1), by = size)
+        lo <- sequence.default(n..1, seq.int( 2L, s2, s.1))
         df[up] <- df[lo] <- x ## preserving NAs in x
     }
     labels <- attr(x, "Labels") %||% seq_len(size)
