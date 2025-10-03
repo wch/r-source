@@ -1,7 +1,7 @@
 #  File src/library/tools/R/packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -451,12 +451,13 @@ function(packages = NULL, db = NULL, which = "strong",
     matchP <- match(rep.int(db$Package, lengths(depends)),
 		    all_packages)
     matchD <- match(unlist(depends), all_packages)
-    tab <- if(reverse)
+    tab <- unname(if(reverse)
 	split(matchP,
 	      factor(matchD, levels = seq_along(all_packages)))
     else
 	split(matchD,
 	      factor(matchP, levels = seq_along(all_packages)))
+    )
     if(is.null(packages)) {
         if(reverse) {
             packages1 <- all_packages
