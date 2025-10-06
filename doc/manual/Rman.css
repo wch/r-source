@@ -77,23 +77,25 @@ h4 { font-size: 1.2em;  }
 a:any-link {color: #3864BA; text-decoration: none;}
 a:any-link:hover {text-decoration: underline;}
 
-/* TOC/menus: bold chapters, hide subsections, increase spacing */
+/* TOC/menus: bold chapters, hide subsections */
 .contents ul { font-weight: bold; }
 .contents ul ul { font-weight: normal; }
 .contents ul ul ul { display: none; }
-li { margin: 0.25em 0; }
-.contents ul li { margin: 0.5em 0; }
-.contents ul ul li { margin: 0.25em 0; }
+
+/* increase list spacing and sync with embedded paras */
+ol li { margin: 1em 0; }
+ul li { margin: 0.5em 0; }
+ul ul li, ul.mini-toc li, ul li p, ol li p { margin: 0.3em 0; }
 
 
 /* Code ---------------------------------------------------- */
 
 /* code blocks: remove indentation, highlight instead */
 div.example {
-  margin-left: 0
+  margin-left: revert; /* revert Texinfo styling */
+  background-color: #f5f5f5;
 }
 pre {
-  background-color: #f5f5f5;
   padding: 0.5em;
   overflow: auto;
   line-height: 1.6; /* more spaced */
