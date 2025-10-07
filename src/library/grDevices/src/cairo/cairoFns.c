@@ -2360,6 +2360,7 @@ static void applyFontVar(cairo_font_face_t *cairo_face,
                          SEXP font, int numVar,
                          pX11Desc xd)
 {
+#if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 16, 0)
     int i;
     int success = 0;
     cairo_scaled_font_t *scaled_font;
@@ -2435,6 +2436,9 @@ static void applyFontVar(cairo_font_face_t *cairo_face,
     if (!success) {
         warning(_("Failed to apply font variations"));
     }
+#else
+    warning(_("Variable fonts not supported (requires Cairo >= 1.16.0)"));
+#endif
 }
 
 static void Cairo_Glyph(int n, int *glyphs, double *x, double *y, 
