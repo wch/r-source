@@ -6012,8 +6012,8 @@ else case e in #(
 esac
 fi
 
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether texi2any version is at least 6.1" >&5
-printf %s "checking whether texi2any version is at least 6.1... " >&6; }
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether texi2any version is at least 6.8" >&5
+printf %s "checking whether texi2any version is at least 6.8... " >&6; }
 if test ${r_cv_prog_texi2any_v6+y}
 then :
   printf %s "(cached) " >&6
@@ -6024,7 +6024,7 @@ else case e in #(
 elif test ${r_cv_prog_texi2any_version_maj} -gt 6; then
   r_cv_prog_texi2any_v6=yes
 elif test ${r_cv_prog_texi2any_version_maj} -lt 6 \
-     || test ${r_cv_prog_texi2any_version_min} -lt 1; then
+     || test ${r_cv_prog_texi2any_version_min} -lt 8; then
   r_cv_prog_texi2any_v6=no
 else
   r_cv_prog_texi2any_v6=yes
@@ -6033,22 +6033,6 @@ esac
 fi
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $r_cv_prog_texi2any_v6" >&5
 printf "%s\n" "$r_cv_prog_texi2any_v6" >&6; }
-  ## Also record whether texi2any is at least 7 to appropriately handle
-  ## HTML and EPUB output changes, see
-  ## <https://lists.gnu.org/archive/html/bug-texinfo/2022-11/msg00036.html>.
-if test ${r_cv_prog_texi2any_v7+y}
-then :
-  printf %s "(cached) " >&6
-else case e in #(
-  e) if test ${r_cv_prog_texi2any_v6} = yes \
-     && test ${r_cv_prog_texi2any_version_maj} -ge 7; then
-  r_cv_prog_texi2any_v7=yes
-else
-  r_cv_prog_texi2any_v7=no
-fi ;;
-esac
-fi
-
 
   for ac_prog in ${INSTALL_INFO} ginstall-info install-info
 do
@@ -27609,7 +27593,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27612: \"$ac_link\") >&5
+(eval echo $as_me:27596: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27687,7 +27671,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27690: \"$ac_link\") >&5
+(eval echo $as_me:27674: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
