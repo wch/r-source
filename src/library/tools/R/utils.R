@@ -2474,13 +2474,13 @@ function(x)
 function(x, re, style = "html") {
     char_to_hex_sub <-
         switch(style,
-               "html" = function(s) paste0("<", charToRaw(s), ">"),
-               "texinfo" = function(s) paste0("_00", charToRaw(s)))
+               "html" = function(s) paste0("<", charToRaw(s), ">", collapse = ""),
+               "texinfo" = function(s) sprintf("_%04x", utf8ToInt(s)))
     vapply(strsplit(x, ""),
            function(e) {
                pos <- grep(re, e, perl = TRUE)
                if(length(pos))
-                   e[pos] <- vapply(e[pos], char_to_hex_sub, "")
+                   e[pos] <- vapply(e[pos], char_to_hex_sub, "", USE.NAMES = FALSE)
                paste(e, collapse = "")
            },
            "")
@@ -2491,7 +2491,7 @@ function(x, re, style = "html") {
 .texinfo_node_to_id <-
 function(x)
 {
-    ## Convert a Texinfo node name to its XHTML identifier as described at
+    ## Convert an @-expanded Texinfo node name to its XHTML identifier as described at
     ## <https://www.gnu.org/software/texinfo/manual/texinfo/html_node/HTML-Xref-Node-Name-Expansion.html>
     res <- gsub("\\s+", " ", trimws(x))
     ASCII_letters_and_digits <-
