@@ -86,8 +86,8 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
 
 \note{
   %% configure just looks for a texi2dvi command and does not check its
-  %% version.  However, it is normally distributed with texinfo, and
-  %% that is checked to be >= 6.1.
+  %% version.  However, it is normally distributed with Texinfo, and
+  %% that is checked to be >= 6.8.
   %% The macOS distribution by default installs /usr/local/bin/texi2dvi,
   %% but that is optional and macOS has /usr/bin/texi2dvi stuck at 4.8.
   There are various versions of the \command{texi2dvi} script on
@@ -97,7 +97,7 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   One that was present with \command{texi2dvi} version \code{4.8} (as
   supplied by macOS) is that it will not work correctly for paths which
   contain spaces, nor if the absolute path to a file would contain
-  spaces.
+  spaces.% the latter was addressed in version 6.3
 
   The three possible approaches all have their quirks.  For example the
   Unix-alike \code{texi2dvi} script removes ancillary files that already

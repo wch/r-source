@@ -419,7 +419,7 @@
 ## Some claim Solaris needs -lsocket -lnsl
 ## INTERNET_LIBS=
 
-## Script from Texinfo 6.1 or later.
+## Script from Texinfo 6.8 or later.
 ## Usually the full path to texi2any.
 ## TEXI2ANY=
 

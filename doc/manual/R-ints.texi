@@ -4801,7 +4801,7 @@ Perl version 5 is needed for the maintainer-only script
 @findex Perl
 
 @item
-@command{texi2any} version 6.1 or later is needed to build the HTML
+@command{texi2any} version 6.8 or later is needed to build the HTML
 and Info files for the @R{} manuals written in the @acronym{GNU} @I{Texinfo}
 system.  And that requires Perl.
 @findex texi2any

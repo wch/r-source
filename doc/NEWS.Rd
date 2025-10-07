@@ -167,6 +167,9 @@
       \item Failures in building the documentation for the base packages,
       including from parsing their Rd files, are no longer ignored by
       \command{make docs}.
+
+      \item Building the \R manuals now requires \I{Texinfo} 6.8 or later.
+      % For the new Rman.css. Also features @example <lang> and @displaymath.
     }
   }
 
@@ -473,12 +476,6 @@
 }
 
 \section{\Rlogo CHANGES IN R 4.5.0}{
-  %% \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
-  %%   \itemize{
-  %%     \item .
-  %%   }
-  %% }
-
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{as.integer(rl)} and hence \code{as.raw(rl)} now work for
@@ -1135,7 +1132,7 @@
       (non integer) seconds.  Fixes \PR{17350}, thanks to new contributions
       by \I{LatinR}'s \sQuote{\I{R Dev Day}} participants, \I{Heather
       Turner} and \I{Dirk Eddelbuettel}; also fixes more cases, notably
-      when \code{format} contains "%OS<nodigit>".
+      when \code{format} contains \samp{\%OS<nodigit>}.
 
       \item \code{options(scipen = NULL)} and other invalid values now
       signal an error instead of invalidating ops relying on a finite

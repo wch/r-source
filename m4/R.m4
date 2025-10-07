@@ -209,11 +209,11 @@ AC_SUBST([TEXI2ANY_VERSION_MIN], [${r_cv_prog_texi2any_version_min}])
 
 ## _R_PROG_TEXI2ANY_VERSION
 ## ------------------------
-## Building the R manuals requires Texinfo v6.1 or later.
+## Building the R manuals requires Texinfo v6.8 or later.
 ## Set shell variable r_cv_prog_texi2any_v6 to 'yes' if a recent
 ## enough texi2any aka  makeinfo is found, and to 'no' otherwise.
 ## If you change the minimum version here, also change it in
-## doc/manual/Makefile.in and doc/manual/R-admin.texi.
+## doc/manual/Makefile.in and doc/manual/R-{admin,ints}.texi.
 AC_DEFUN([_R_PROG_TEXI2ANY_VERSION],
 [AC_CACHE_VAL([r_cv_prog_texi2any_version],
 [r_cv_prog_texi2any_version=`${TEXI2ANY} --version | \
@@ -224,7 +224,7 @@ AC_CACHE_VAL([r_cv_prog_texi2any_version_maj],
 AC_CACHE_VAL([r_cv_prog_texi2any_version_min],
 [r_cv_prog_texi2any_version_min=`echo ${r_cv_prog_texi2any_version} | \
   cut -f2 -d. | tr -dc '0123456789.'`])
-AC_CACHE_CHECK([whether texi2any version is at least 6.1],
+AC_CACHE_CHECK([whether texi2any version is at least 6.8],
                 [r_cv_prog_texi2any_v6],
 [if test -z "${r_cv_prog_texi2any_version_maj}" \
      || test -z "${r_cv_prog_texi2any_version_min}"; then
@@ -232,20 +232,10 @@ AC_CACHE_CHECK([whether texi2any version is at least 6.1],
 elif test ${r_cv_prog_texi2any_version_maj} -gt 6; then
   r_cv_prog_texi2any_v6=yes
 elif test ${r_cv_prog_texi2any_version_maj} -lt 6 \
-     || test ${r_cv_prog_texi2any_version_min} -lt 1; then
+     || test ${r_cv_prog_texi2any_version_min} -lt 8; then
   r_cv_prog_texi2any_v6=no
 else
   r_cv_prog_texi2any_v6=yes
-fi])
-  ## Also record whether texi2any is at least 7 to appropriately handle
-  ## HTML and EPUB output changes, see
-  ## <https://lists.gnu.org/archive/html/bug-texinfo/2022-11/msg00036.html>.
-AC_CACHE_VAL([r_cv_prog_texi2any_v7],
-[if test ${r_cv_prog_texi2any_v6} = yes \
-     && test ${r_cv_prog_texi2any_version_maj} -ge 7; then
-  r_cv_prog_texi2any_v7=yes
-else
-  r_cv_prog_texi2any_v7=no
 fi])
 ])# _R_PROG_TEXI2ANY_VERSION
 
@@ -263,7 +253,7 @@ else
   AC_MSG_RESULT([using default browser ... ${R_BROWSER}])
 fi
 AC_SUBST(R_BROWSER)
-])# R_BROWSER
+])# R_PROG_BROWSER
 
 ## R_PROG_PDFVIEWER
 ## ----------------
@@ -278,7 +268,7 @@ if test -z "${R_PDFVIEWER}"; then
   AC_MSG_WARN([${warn_pdfviewer}])
 fi
 AC_SUBST(R_PDFVIEWER)
-])# R_PDFVIEWER
+])# R_PROG_PDFVIEWER
 
 ### * C compiler and its characteristics.
 

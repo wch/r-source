@@ -144,7 +144,7 @@
 # with the currently recommended toolchain, Msys2 texi2dvi is used, but needs a workaround for a bug
 # TEXI2DVI = env COMSPEC= texi2dvi
 
-# For Texinfo >= 6.1. If the texinfo files are installed at /packages/texinfo,
+# For Texinfo >= 6.8. If the texinfo files are installed at /packages/texinfo,
 # TEXI2ANY = /path/to/perl -I/packages/texinfo /packages/texinfo/texi2any
 # if you do not have texinfo (default),
 # TEXI2ANY = missing
