@@ -26,7 +26,8 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
     the default \abbr{DVI} file (\code{texi2dvi} command line option \option{--pdf}).}
   \item{clean}{logical.  If \code{TRUE}, all auxiliary files created
     during the conversion are removed.}
-  \item{quiet}{logical.  No output unless an error occurs.}
+  \item{quiet}{logical.  No output unless an error occurs
+    (\code{texi2dvi} command-line option \option{--quiet}).}
   \item{texi2dvi}{character string (or \code{NULL}).  Script or program
     used to compile a TeX file to \abbr{DVI} or PDF. The default (selected
     by \code{""} or \code{"texi2dvi"} or \code{NULL}) is to look
@@ -54,29 +55,28 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   Analogous changes are made to \env{BIBINPUTS} and \env{BSTINPUTS}
   settings.
 
-#ifdef unix
-  The default option for \code{texi2dvi} is set from environment variable
+  On Unix-alikes,
+  the default option for \code{texi2dvi} is set from environment variable
   \env{R_TEXI2DVICMD}, and the default for that is set from environment
   variable \env{TEXI2DVI} or if that is unset, from a value chosen when
   \R is configured.
   
-  %% issues included not re-running latex in texinfo 6.1 and bashisms in
-  %% the /bin/sh script in <= 6.0.
-  A shell script \command{texi2dvi} is part of GNU \I{Texinfo}.
-  Several issues have been seen with released versions, so if yours does
-  not work correctly try \env{R_TEXI2DVICMD=emulation}.
-#endif
-
-#ifdef windows
-  On Windows the option \code{"texi2dvi"} is normally unset.  The \I{MiKTeX}
+  On Windows, the option \code{"texi2dvi"} is normally unset.  The \I{MiKTeX}
   command \command{texify.exe} is a suitable choice for \code{texi2dvi},
   and is tried as from \R 3.2.3 if the argument is blank or \code{NULL}
-  and a program or script \code{texi2dvi} is not found.
+  and a program or script \command{texi2dvi} is not found.
+  %% \I{MiKTeX} had a \code{texi2dvi} executable until Sept 2015, but no other
+  %% Windows TeX installation that we know of does, so emulation is used on
+  %% e.g.\sspace{}\I{TeXLive} installations on Windows.
+  %% Update: texi2dvi is now again available and used in the Msys2 toolchain.
 
-  \I{MiKTeX} had a \code{texi2dvi} executable until Sept 2015, but no other
-  Windows TeX installation that we know of does, so emulation is used on
-  e.g.\sspace{}\I{TeXLive} installations on Windows.
-#endif
+  A shell script \command{texi2dvi} is part of GNU \I{Texinfo}.
+  If another external script is used as the \code{texi2dvi} command
+  it should accept options \option{--pdf} (for \code{pdf = TRUE}) and
+  \option{--quiet} (for \code{quiet = TRUE}), but also \option{--help}
+  and \option{--version}.  This is true for the \command{latexmk} Perl
+  script available from \LaTeX package managers.
+  %% but seems to be slower than the other approaches.
 
   Occasionally indices contain special characters which cause indexing
   to fail (particularly when using the \samp{hyperref} LaTeX package)
@@ -92,23 +92,26 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   %% but that is optional and macOS has /usr/bin/texi2dvi stuck at 4.8.
   There are various versions of the \command{texi2dvi} script on
   Unix-alikes and quite a number of bugs have been seen, some of which
-  this \R wrapper works around.
+  this \R wrapper works around, but if yours does not work correctly
+  try \code{texi2dvi = "emulation"}.
+  %% issues included not re-running latex in texinfo 6.1 and bashisms in
+  %% the /bin/sh script in <= 6.0.
 
-  One that was present with \command{texi2dvi} version \code{4.8} (as
-  supplied by macOS) is that it will not work correctly for paths which
+  The historic \command{texi2dvi} version \code{4.8} (as
+  supplied by macOS)% FIXME: is this version still shipped?
+  will not work correctly for paths which
   contain spaces, nor if the absolute path to a file would contain
   spaces.% the latter was addressed in version 6.3
-
-  The three possible approaches all have their quirks.  For example the
-  Unix-alike \code{texi2dvi} script removes ancillary files that already
-  exist but the other two approaches do not (and may get confused by
+  It removes ancillary files that already exist, whereas later versions
+  and other compilation approaches do not (and may get confused by
   such files).
-  
-  Option \option{--max-iterations=20}
-  is used to avoid infinite retries.
-  
-  The emulation mode supports \code{quiet = TRUE} from \R 3.2.3 only.
-  Currently \code{clean = TRUE} only cleans up in this mode if the
+
+  The command-line option \option{--max-iterations=20} is no longer used:
+  all supported scripts nowadays avoid infinite retries by default.
+  %% texi2dvi >= 6.0 stops after 7, texify and latexmk after 5
+  %% iterations (but the latter uses a configuration variable).
+
+  In emulation mode, \code{clean = TRUE} only cleans up if the
   conversion was successful---this gives users a chance to examine log
   files in the event of error.
   
