@@ -160,8 +160,7 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   \code{\link{INSTALL}}, \code{\link{REMOVE}}, \code{\link{remove.packages}},
   \code{\link{library}}, \code{\link{.packages}}, \code{\link{read.dcf}}
 
-  The \sQuote{R Installation and Administration} manual for how to
-  set up a repository.
+  Section \manual{R-admin}{Setting up a package repository}.
 }
 
 \keyword{utilities}

@@ -148,7 +148,7 @@ isNamespaceLoaded(name)
   further \code{\link{environment}}.
 }
 \references{
-  The \sQuote{Writing R Extensions} manual, section \dQuote{Package namespaces}.
+  Section \manual{R-exts}{Package namespaces}.
 }
 \author{Luke Tierney and R-core}
 \examples{

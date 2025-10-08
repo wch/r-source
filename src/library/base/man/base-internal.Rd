@@ -243,7 +243,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   have had had they been closures.  All the primitives that are internal
   S3 generics have corresponding members of \code{.GenericArgsEnv} and
   the remaining non-language-element primitives correspond to
-  \code{.ArgsEnv}.  See the \sQuote{R Internals} manual for further
+  \code{.ArgsEnv}.  See the \manual{R-ints}{} manual for further
   details.  They are used by \code{\link{args}} and
   \code{\link{print.default}} and the QC functions \code{\link{codoc}}
   and \code{\link{checkS3methods}}.

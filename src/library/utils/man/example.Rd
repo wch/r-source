@@ -88,7 +88,7 @@ example(topic, package = NULL, lib.loc = NULL,
   other hand they cannot overwrite objects of the same name in the
   workspace.
 
-  As detailed in the \sQuote{Writing R Extensions} manual, the author of
+  As detailed in \manual{R-exts}{Documenting functions}, the author of
   the help page can tag parts of the examples with the following
   exception rules:
   \describe{

@@ -93,7 +93,7 @@ unserialize(connection, refhook = NULL)
   \code{\link{save}} and \code{\link{load}} to serialize and restore one
   or more named objects.
 
-  The \sQuote{R Internals} manual for details of the format used.
+  Section \manual{R-ints}{Serialization Formats} for details of the format used.
 }
 \examples{
 x <- serialize(list(1,2,3), NULL)

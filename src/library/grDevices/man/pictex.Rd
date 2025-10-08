@@ -55,7 +55,7 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
 }
 \section{Conventions}{
   This section describes the implementation of the conventions for
-  graphics devices set out in the \sQuote{R Internals} manual.
+  graphics devices set out in \manual{R-ints}{}.
 
   \itemize{
     \item The default device size is 5 inches by 4 inches.

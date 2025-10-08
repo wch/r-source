@@ -164,8 +164,7 @@ available.packages(contriburl = contrib.url(repos, type), method,
   \code{\link{install.packages}}, \code{\link{download.packages}},
   \code{\link{contrib.url}}.
 
-  The \sQuote{R Installation and Administration} manual for how to
-  set up a repository.
+  Section \manual{R-admin}{Setting up a package repository}.
 }
 \examples{\donttest{
 ## Count package licenses

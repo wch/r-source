@@ -68,9 +68,8 @@ is.loaded(symbol, PACKAGE = "", type = "")
   short.  (The POSIX standards use \sQuote{executable object file},
   but no one else does.)
 
-  See \sQuote{See Also} and the \sQuote{Writing R Extensions} and
-  \sQuote{R Installation and Administration} manuals for how to create
-  and install a suitable DLL.
+  See \sQuote{See Also} and \manual{R-exts}{} and
+  \manual{R-admin}{} for how to create and install a suitable DLL.
 
   Unfortunately some rare platforms (e.g., Compaq \I{Tru64}) do not handle
   the \code{PACKAGE} argument correctly, and may incorrectly find

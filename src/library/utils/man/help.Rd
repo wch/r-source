@@ -114,8 +114,7 @@ help(topic, package = NULL, lib.loc = NULL,
   input as a LaTeX style file after \code{Rd.sty}.  Some
   \link{environment variables} are consulted, notably \env{R_PAPERSIZE}
   (\emph{via} \code{getOption("papersize")}) and \env{R_RD4PDF} (see
-  \sQuote{Making manuals} in the
-  \sQuote{R Installation and Administration} manual).
+  \manual{R-admin}{Making manuals}.
 
   If there is a function \code{offline_help_helper} in the workspace or
   further down the search path it is used to do the typesetting,

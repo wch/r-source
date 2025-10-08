@@ -79,7 +79,7 @@ getDLLRegisteredRoutines(dll, addNames = TRUE)
   }
 }
 \references{
-  \sQuote{Writing R Extensions} manual for symbol registration.
+  \manual{R-exts}{Registering native routines} for symbol registration.
 
   \bibshow{R:Temple_Lang:2001a}
 }

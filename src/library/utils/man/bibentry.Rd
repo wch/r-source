@@ -126,8 +126,8 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
   of the \code{.bibstyle} argument: a style defined by the
   \code{\link{bibstyle}} function for rendering the \I{bibentry} into
   (intermediate) Rd format.
-  The Rd format uses markup commands documented in the \sQuote{Rd format}
-  section of the \sQuote{Writing R Extensions} manual, e.g. \verb{\bold}.
+  The Rd format uses markup commands documented in Section
+  \manual{R-exts}{Rd format}, e.g., \verb{\bold}.
   In addition, one can use the \code{macros} argument to
   provide additional (otherwise unknown, presumably LaTeX-style) Rd
   macros, either by giving the path to a file with Rd macros to be

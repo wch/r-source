@@ -175,6 +175,6 @@
 \seealso{
   \code{\link{dyn.load}}, \code{\link{.Call}}.
 
-  The \sQuote{Writing R Extensions} manual.
+  The \manual{R-exts}{} manual.
 }
 \keyword{programming}

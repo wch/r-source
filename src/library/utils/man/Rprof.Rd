@@ -91,7 +91,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02,
   Functions will only be recorded in the profile log if they put a
   context on the call stack (see \code{\link{sys.calls}}).  Some
   \link{primitive} functions do not do so: specifically those which are
-  of \link{type} \code{"special"} (see the \sQuote{R Internals} manual
+  of \link{type} \code{"special"} (see \manual{R-ints}{} 
   for more details).
 
   Individual statements will be recorded in the profile log if
@@ -206,9 +206,7 @@ line information for new files, and issue a warning when
 \code{Rprof(NULL)} is called to finish profiling.
 }
 \seealso{
-  The chapter on \dQuote{Tidying and profiling R code} in
-  \sQuote{Writing R Extensions}:
-  \code{\link{RShowDoc}("R-exts#Tidying-and-profiling-R-code")}.
+  The Chapter \manual{R-exts}{Tidying and profiling R code}.
 
   \code{\link{summaryRprof}} to analyse the output file.
 

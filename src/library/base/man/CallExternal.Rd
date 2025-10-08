@@ -42,10 +42,9 @@
   also be used for C++ code.
 
   For details about how to write code to use with these functions see
-  the chapter on \sQuote{System and foreign language interfaces} in
-  the \sQuote{Writing R Extensions} manual.  They differ in the way the
-  arguments are passed to the C code:  \code{.External} allows for a
-  variable or unlimited number of arguments.
+  the chapter \manual{R-exts}{System and foreign language interfaces}.
+  They differ in the way the arguments are passed to the C code:
+  \code{.External} allows for a variable or unlimited number of arguments.
 
   These functions are \link{primitive}, and \code{.NAME} is always
   matched to the first argument supplied (which should not be named).
@@ -83,6 +82,6 @@
 \seealso{
   \code{\link{dyn.load}}, \code{\link{.C}}, \code{\link{.Fortran}}.
 
-  The \sQuote{Writing R Extensions} manual.
+  The \manual{R-exts}{} manual.
 }
 \keyword{programming}

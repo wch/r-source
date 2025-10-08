@@ -81,8 +81,7 @@ download.packages(pkgs, destdir, available = NULL,
   See \code{\link{download.file}} for how to handle proxies and
   other options to monitor file transfers.
 
-  The \sQuote{R Installation and Administration} manual for how to
-  set up a repository.
+  Section \manual{R-admin}{Setting up a package repository}.
 }
 
 \keyword{utilities}

@@ -36,11 +36,10 @@
   utility \code{\var{foo}}, notably the possible \command{options}.
 
   The defaults for some of the options to \command{R CMD build} can be
-  set by environment variables \env{_R_BUILD_RESAVE_DATA_} and
-  \env{_R_BUILD_COMPACT_VIGNETTES_}: see \sQuote{Writing R Extensions}.
+  set by environment variables, e.g., \env{_R_BUILD_RESAVE_DATA_} and
+  \env{_R_BUILD_COMPACT_VIGNETTES_}: see \manual{R-exts}{Building package tarballs}.
   Many of the checks in \command{R CMD check} can be turned off or on by
-  environment variables: see Chapter \sQuote{Tools} of the
-  \sQuote{R Internals} manual.
+  environment variables: see Chapter \manual{R-ints}{Tools}.
 
   By default \command{R CMD build} uses the \code{"internal"} option to
   \code{\link{tar}} to prepare the tarball.  An external \command{tar}
@@ -67,8 +66,6 @@
   that if set forward slashes are used.
 }
 \seealso{
-  The sections on \sQuote{Checking and building packages} and
-  \sQuote{Processing documentation files} in \sQuote{Writing R Extensions}:
-  \code{\link{RShowDoc}("R-exts#Checking-and-building-packages")}.
+  Section \manual{R-exts}{Checking and building packages}.
 }
 \keyword{utilities}

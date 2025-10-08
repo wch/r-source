@@ -131,7 +131,7 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   the current evaluation environment by
   \code{data(\dots, envir = environment())}.
   However, two alternatives are usually preferable,
-  both described in the \sQuote{Writing R Extensions} manual.
+  both described in the \manual{R-exts}{} manual.
   \itemize{
     \item For sets of data, set up a package to use lazy-loading of data.
     \item For objects which are system data, for example lookup tables
@@ -175,7 +175,7 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   \code{\link{save}} for \emph{creating} the second (\file{.rda}) kind
   of data, typically the most efficient one.
 
-  The \sQuote{Writing R Extensions} manual for considerations in preparing the
+  Section \manual{R-exts}{Data in packages} for considerations in preparing the
   \file{data} directory of a package.
 }
 \examples{

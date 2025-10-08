@@ -275,8 +275,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     \item{On Unix-alikes,}{when the package contains C/C++/Fortran code
       that needs compilation, suitable compilers and related tools need
       to be installed.  On macOS you need to have installed the
-      \sQuote{Command-line tools for \I{Xcode}} (see the
-      \sQuote{R Installation and Administration} manual) and if needed
+      \sQuote{Command-line tools for \I{Xcode}} (see 
+      \manual{R-admin}{}) and if needed
       by the package a Fortran compiler, and have them in your path.
     }
   }
@@ -418,8 +418,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   \code{\link{INSTALL}}, \code{\link{REMOVE}}, \code{\link{remove.packages}},
   \code{\link{library}}, \code{\link{.packages}}, \code{\link{read.dcf}}
 
-  The \sQuote{R Installation and Administration} manual for how to
-  set up a repository.
+  Section \manual{R-admin}{Setting up a package repository}.
 }
 
 \examples{\dontrun{

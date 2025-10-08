@@ -83,7 +83,7 @@ package.skeleton(name = "anRpackage", list,
   Read the \manual{R-exts}{} manual for more details.
 
   Once you have created a \emph{source} package you need to install it:
-  see the \sQuote{R Installation and Administration} manual,
+  see Section \manual{R-admin}{Installing packages},
   \code{\link{INSTALL}} and \code{\link{install.packages}}.
 }
 

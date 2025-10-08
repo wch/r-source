@@ -21,13 +21,13 @@ RShowDoc(what, type = c("pdf", "html", "txt"), package)
 }
 \details{
   \code{what} can specify one of several different sources of documentation,
-  including the \R manuals (\code{R-admin}, \code{R-data}, \code{R-exts},
-  \code{R-intro}, \code{R-ints}, \code{R-lang}), \code{NEWS},
+  including the \R manuals (\code{"R-admin"}, \code{"R-data"}, \code{"R-exts"},
+  \code{"R-intro"}, \code{"R-ints"}, \code{"R-lang"}), \code{NEWS},
   \code{COPYING} (the GPL licence), any of the licenses in
   \file{share/licenses}, \code{FAQ} (also available as
-  \code{R-FAQ}), and the files in \file{\var{\link{R_HOME}}/doc}.
+  \code{"R-FAQ"}), and the files in \file{\var{\link{R_HOME}}/doc}.
 
-  Only on Windows, the \R for Windows FAQ is specified by \code{rw-FAQ}.
+  Only on Windows, the \R for Windows FAQ is specified by \code{"rw-FAQ"}.
 
   If \code{package} is supplied, documentation is looked for in the
   \file{doc} and top-level directories of an installed package of that name.

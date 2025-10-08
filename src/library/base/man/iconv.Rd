@@ -109,7 +109,7 @@ iconvlist()
 
   Most commercial Unixes contain an implementation of \code{iconv} but
   none we have encountered have supported the encoding names we need:
-  the \sQuote{R Installation and Administration} manual recommended
+  \manual{R-admin}{} recommended
   installing GNU \samp{libiconv} on Solaris and \I{AIX}.
 
   %% https://wiki.musl-libc.org/functional-differences-from-glibc.html
