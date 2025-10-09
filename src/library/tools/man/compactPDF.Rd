@@ -106,8 +106,7 @@ compactPDF(paths,
 \seealso{
   \code{\link{resaveRdaFiles}}.
 
-  For other tools to compact PDF files, see the \sQuote{Writing R
-    Extensions} manual.
+  For other tools to compact PDF files, see \manual{R-exts}{PDF size}.
 }
 
 \keyword{ utilities }

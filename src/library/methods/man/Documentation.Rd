@@ -97,8 +97,9 @@ the function used to find the appropriate method.
 \section{Writing Documentation for Methods}{
 The on-line documentation for methods and classes uses some extensions
 to the R documentation format to implement the requests for class and
-method documentation described above.  See the document \emph{Writing
-  R Extensions} for the available markup commands (you should
+method documentation described above.  See Section
+\manual{R-exts}{Documenting S4 classes and methods}
+for the available markup commands (you should
 have consulted this document already if you are at the stage of
 documenting your software).
 

@@ -32,7 +32,7 @@ numericDeriv(expr, theta, rho = parent.frame(), dir = 1,
 }
 \details{
   This is a front end to the C function \code{numeric_deriv}, which is
-  described in \emph{Writing R Extensions}.
+  described in Section \manual{R-exts}{Calculating numerical derivatives}.
 
   The numeric variables must be of type \code{double} and not \code{integer}.
   %% checked in C code .. why not just coerce them?   (TODO?)

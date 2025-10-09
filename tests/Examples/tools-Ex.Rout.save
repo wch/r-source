@@ -735,7 +735,7 @@ attr(,"match.length")
 > 
 > ### ** Examples
 > 
-> ## Examples from section 'Licenses' of 'Writing R Extensions':
+> ## Examples from section 'Licensing' of 'Writing R Extensions':
 > analyze_license("GPL-2")
 $is_empty
 [1] FALSE

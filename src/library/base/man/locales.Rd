@@ -159,7 +159,7 @@ Sys.setlocale (category = "LC_ALL", locale = "")
   \code{\link{l10n_info}} gives some summary facts about the locale and
   its encoding (including if it is UTF-8).
 
-  The \sQuote{R Installation and Administration} manual for background
+  Section \manual{R-admin}{Locales} for background
   on locales and how to find out locale names on your system.
 
   \code{\link{Sys.setLanguage}}

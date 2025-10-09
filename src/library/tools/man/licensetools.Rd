@@ -54,7 +54,7 @@ analyze_license(x)
   \item{spdx}{an \abbr{SPDX} license identifier for the license spec.}
 }
 \examples{
-## Examples from section 'Licenses' of 'Writing R Extensions':
+## Examples from section 'Licensing' of 'Writing R Extensions':
 analyze_license("GPL-2")
 analyze_license("LGPL (>= 2.0, < 3) | Mozilla Public License")
 analyze_license("GPL-2 | file LICENCE")
