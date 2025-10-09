@@ -74,6 +74,9 @@
 
       \item The Cairo-based SVG device uses \code{pt} as the default
       document unit also with cairo >= 1.17.8 (\PR{18912}).
+
+      \item \code{lbeta(1i, 1)} now signals an error, as \code{lbeta()} is not implemented
+      for \code{complex}, fixing \PR{18946} from \I{Ben Bolker} and  \I{Kasper Kristensen}.
     }
   }
 }
