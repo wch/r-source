@@ -2041,6 +2041,14 @@ stopifnot(identical(log10(1i), log(1i, 10)), log2(c(1,2,4) + 0i) == 0:2)
 ## (< 24h) lapsus "unimplemented complex fn."
 
 
+## pretty(<very small>, eps.correct=2) would produce huge vectors
+assertWarnV(pp <- .pretty(c(0, 1e-322), eps.correct = 2))
+str(pp)
+E <- 2e-314
+stopifnot(all.equal(list(l = -E, u = E, n = 2L), pp, tolerance = 1e-12))
+## n = 1112538 (Lnx 64b) in R <= 4.5.1  ^^^^^^
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -73,10 +73,13 @@
       pages.
 
       \item The Cairo-based SVG device uses \code{pt} as the default
-      document unit also with cairo >= 1.17.8 (\PR{18912}).
+      document unit also with Cairo >= 1.17.8 (\PR{18912}).
 
       \item \code{lbeta(1i, 1)} now signals an error, as \code{lbeta()} is not implemented
       for \code{complex}, fixing \PR{18946} from \I{Ben Bolker} and  \I{Kasper Kristensen}.
+
+      \item \code{pretty(*, eps.correct = 2)} has been fixed, e.g., to
+      avoid over 1 million length result for \code{pretty(c(0, 1e-322), eps.correct = 2)}.
     }
   }
 }
