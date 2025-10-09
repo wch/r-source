@@ -5293,7 +5293,9 @@ work as intended.  For alternatives, see @ref{Suggested packages} and
 @item
 Examples can be run interactively @emph{via} @code{example} as well as
 in batch mode when checking.  So they should behave appropriately in
-both scenarios, conditioning by @code{interactive()} the parts which
+both scenarios, conditioning by @code{interactive()} and since @R{} 4.6.0
+typically even by @code{interactive() && !getOption("quiet", FALSE)},
+the parts which
 need an operator or observer.  For instance, progress
 bars@footnote{except perhaps the simplest kind as used by
 @code{download.file()} in non-interactive use.} are only appropriate in
@@ -8690,7 +8692,7 @@ References (usually in the @code{\references} section) are obtained via
 @code{\bibshow}, which takes a comma-separated @var{keyspec} list as
 argument.  The special @I{keyspec} @samp{*} indicates the list of ``all
 references cited so far'', using an empty @I{keyspec} list clears that
-list. 
+list.
 
 Finally, @code{\bibinfo} allows to modify bibentries.  Using
 @example
@@ -8701,18 +8703,18 @@ will set the @var{field} of the bibentry corresponding to @var{keyspec}
 to @var{value}.  This can be used in particular to ``annotate'' the
 bibentry, by adding @samp{note}, @samp{footer} or @samp{header} fields.
 
-For example, 
+For example,
 @example
 \bibcitet@{R:Becker+Chambers+Wilks:1988@}
 @end example
 @noindent
-gives a textual citation of the ``@emph{Blue Book}'' 
-(`@I{Becker, Chambers, and Wilks (1988)}' when first encountered), 
+gives a textual citation of the ``@emph{Blue Book}''
+(`@I{Becker, Chambers, and Wilks (1988)}' when first encountered),
 @example
 \bibcitep@{e.g.\\\\\\,|R:Chambers+Hastie:1992|page 123@}
 @end example
 @noindent
-gives a parenthetical citation of a page in the ``@emph{White Book}'' 
+gives a parenthetical citation of a page in the ``@emph{White Book}''
 (`@I{(e.g., Chambers and Hastie 1992, page 123)}' when first encountered).
 An Rd file having cited the above two and also wanting to include the
 ``@emph{Green Book}'' in its references could use

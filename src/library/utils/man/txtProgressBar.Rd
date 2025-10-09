@@ -1,6 +1,6 @@
 % File src/library/utils/man/txtProgressBar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-21 R Core Team
+% Copyright 2008-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{txtProgressBar}
@@ -10,7 +10,8 @@
 \alias{close.txtProgressBar}
 \title{Text Progress Bar}
 \description{
-  Text progress bar in the \R console.
+  Create and show a text progress bar in the \R console, typically in
+  interactive use for potentially time consuming operations.
 }
 \usage{
 txtProgressBar(min = 0, max = 1, initial = 0, char = "=",
@@ -63,6 +64,14 @@ setTxtProgressBar(pb, value, title = NULL, label = NULL)
   \code{setTxtProgressBar}).
 }
 \note{
+  When such progress bars are used, e.g., from a function in a package,
+  the caller should typically ensure that the corresponding calls
+  (typically to \code{txtProgressBar()}, \code{setTxtProgressBar()} and
+  \code{close(<progBar>)}) should only happen as \code{if(prog) <FUN>(..)},
+  where, previously, \code{prog <- interactive() && !getOption("quiet", FALSE)},
+  see, e.g., functions \code{ginla} or \code{gam.mh} from recommended package
+  \CRANpkg{mgcv}.
+
   Using \code{style} 2 or 3 or reducing the value with \code{style = 1}
   uses \samp{\r} to return to the left margin -- the interpretation of
   carriage return is up to the terminal or console in which \R is
