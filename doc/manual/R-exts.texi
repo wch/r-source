@@ -2994,9 +2994,16 @@ The webpage @uref{https://en.cppreference.com/w/cpp/compiler_support.html}
 gives some information on which compiler versions are known to support
 recent C++ features.
 
-C++ standards have deprecated and later removed features.  Be aware that
-some current compilers still accept removed features in C++17 mode,
-such as @code{std::unary_function} (deprecated in C++11, removed in C++17).
+https://en.wikipedia.org/wiki/C%2B%2B17
+@c https://en.wikipedia.org/wiki/C%2B%2B20
+C++ standards have deprecated and later removed features (such as
+headers, types and functions).  Be aware that some current compilers
+still accept removed features in C++17 mode, such as
+@code{std::unary_function} (deprecated in C++11, removed in C++17) or
+removed in C++20 (such as @code{std::uncaught_exception}). And some
+compilers in use are far from current, notably those used for
+@acronym{CRAN} macOS builds.  The Wikipedia pages for the various
+standards list deprecated and removed (and undeprecated) features.
 
 For maximal portability a package should specify the standard it
 requires for code in its @file{src} directory by including something
@@ -3067,19 +3074,19 @@ that the script selects the correct C++ compiler and standard,
 @emph{via} something like
 
 @example
-CXX17=`"$@{R_HOME@}/bin/R" CMD config CXX17`
-if test -z "$CXX17"; then
-  AC_MSG_ERROR([No C++17 compiler is available])
+CXX20=`"$@{R_HOME@}/bin/R" CMD config CXX20`
+if test -z "$CXX20"; then
+  AC_MSG_ERROR([No C++20 compiler is available])
 fi
-CXX17STD=`"$@{R_HOME@}/bin/R" CMD config CXX17STD`
-CXX="$@{CXX17@} $@{CXX17STD@}"
-CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXX17FLAGS`
+CXX20STD=`"$@{R_HOME@}/bin/R" CMD config CXX20STD`
+CXX="$@{CXX20@} $@{CXX20STD@}"
+CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXX20FLAGS`
 ## for an configure.ac file
 AC_LANG(C++)
 @end example
 
 @noindent
-if C++17 was specified, but using
+if C++20 was specified, but using
 @example
 CXX=`"$@{R_HOME@}/bin/R" CMD config CXX`
 CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXXFLAGS`
@@ -3095,15 +3102,15 @@ down the macros to specify the appropriate compiler, e.g.@: in
 @example
 sublibs:
          @@(cd libs && $(MAKE) \
-            CXX="$(CXX17) $(CXX17STD)" CXXFLAGS="$(CXX17FLAGS) $(CXX17PICFLAGS)")
+            CXX="$(CXX20) $(CXX20STD)" CXXFLAGS="$(CXX20FLAGS) $(CXX20PICFLAGS)")
 @end example
 
 The discussion above is about the standard @R{} ways of compiling C++:
 it will not apply to packages using @file{src/Makefile} or building in a
 subdirectory that do not set the C++ standard.  Do not rely on the
 compilers' default C++ standard, which varies widely and gets changed
-frequently by vendors -- for example Apple clang up to at least 16
-defaults to C++98, @I{LLVM} clang 14--15 to C++14, @I{LLVM} clang 16--20
+frequently by vendors -- for example Apple clang up to at least 17
+defaults to C++98, @I{LLVM} clang 14--15 to C++14, @I{LLVM} clang 16--21
 and @command{g++} 11--15 to C++17.
 
 For a package with a @file{src/Makefile} (or a Windows analogue),
