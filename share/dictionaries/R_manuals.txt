@@ -180,6 +180,7 @@ unbundle
 uncomment
 uncompiled
 undefine
+undeprecated
 unescaped
 unevaluated
 unflagged
