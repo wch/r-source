@@ -756,6 +756,12 @@ void SET_SCALAR_LVAL(SEXP x, int v);
 void SET_SCALAR_IVAL(SEXP x, int v);
 void SET_SCALAR_CVAL(SEXP x, Rcomplex v);
 void SET_SCALAR_BVAL(SEXP x, Rbyte v);
+
+int *LOGICAL0(SEXP x);
+int *INTEGER0(SEXP x);
+double *REAL0(SEXP x);
+Rcomplex *COMPLEX0(SEXP x);
+Rbyte *RAW0(SEXP x);
 #endif
 
 #ifdef USE_RINTERNALS
