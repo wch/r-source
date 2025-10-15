@@ -15373,6 +15373,9 @@ subroutine rwarn(@var{message})
 
 Messages of more than 255 characters are truncated, with a warning.
 
+The subroutine @code{xerbla} is also available for compatibility with
+BLAS and LAPACK, but is not intended for use in packages.
+@forfun xerbla
 
 @node Random numbers
 @section Random number generation
