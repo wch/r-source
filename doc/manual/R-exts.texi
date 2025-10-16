@@ -16561,6 +16561,11 @@ be found from the help page for @code{optim}: see the source code
 @file{src/appl/lbfgsb.c} for the values of @code{nbd}, which
 specifies which bounds are to be used.
 
+The function @code{optif9} is included in the experimental API for use
+by the @pkg{nlme} package. It is subject to change and not intended for
+use by other packages.
+@eapifun optif9
+
 
 @node Integration
 @section Integration
