@@ -365,7 +365,7 @@ length.POSIXlt <- function(x) max(lengths(unclass(x)))
     r <- lapply(unclass(x), `length<-`, value)
     class(r) <- oldClass(x)
     attr(r, "tzone"      ) <- attr(x, "tzone")# "balanced" vs "filled" :
-    attr(r, "balanced") <- if(isTRUE(attr(x, "balanced"))) TRUE else NA
+    attr(r, "balanced") <- if(isTRUE(attr(x, "balanced")) && value <= length(x)) TRUE else NA
     r
 }
 
@@ -1302,7 +1302,7 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"))
         if(mj) # x[i]
             `attr<-`(.POSIXlt(lapply(unCfillPOSIXlt(x), `[`, i, drop = drop),
                               attr(x, "tzone"), oldClass(x)),
-                     "balanced", if(isTRUE(attr(x, "balanced"))) TRUE else NA)
+                     "balanced", if(isTRUE(attr(x, "balanced")) && !anyNA(seq_along(x)[i])) TRUE else NA)
         else # x[i,j]
             unCfillPOSIXlt(x)[[j]][i]
     }

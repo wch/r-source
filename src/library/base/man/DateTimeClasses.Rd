@@ -69,6 +69,8 @@
 \special{z + time}
 \special{time - z}
 \special{time1 lop time2}
+
+.leap.seconds
 }
 \arguments{
   \item{x, object}{an object to be printed or summarized from one of the
@@ -121,6 +123,13 @@
   Be aware that \code{"POSIXlt"} objects will be interpreted as being in
   the current time zone for these operations unless a time zone has been
   specified.
+
+  Further implemented methods comprise \code{\link{mean}},
+  \code{\link{summary}}, \code{\link{unique}}, \code{\link{is.finite}},
+  \code{\link{length<-}}, \code{\link{pretty}},\dots; also
+  \pkg{graphics} package's \code{\link{hist}} and \code{\link{Axis}};
+  use \code{\link{methods}(class = "POSIXt")}, \code{.. class = "POSIXlt"}
+  and \code{"POSIXct"} to see more.
 
   Both classes may have an attribute \code{"tzone"}, specifying the time
   zone.  Note however that their meaning differ, see the section
@@ -315,7 +324,8 @@
   \code{\link{round.POSIXt}} and \code{\link{trunc.POSIXt}} for methods
   for these classes.
 
-  \code{\link{weekdays}} for convenience extraction functions.
+  \code{\link{weekdays}}, for convenience extraction functions (also
+  including \code{months()}, \code{quarters()}, \code{julian()}).
 }
 \references{
   \bibshow{R:Ripley+Hornik:2001}
@@ -362,19 +372,6 @@ data.frame(unclass(leapS))
 ## Extracting *single* components of POSIXlt objects:
 leapS[1 : 5, "year"]
 leapS[17:22, "mon" ]
-
-##  length(.) <- n   now works for "POSIXct" and "POSIXlt" :
-for(lpS in list(.leap.seconds, leapS)) {
-    ls <- lpS; length(ls) <- 12
-    l2 <- lpS; length(l2) <- 5 + length(lpS)
-    stopifnot(exprs = {
-      ## length(.) <- * is compatible to subsetting/indexing:
-      identical(ls, lpS[seq_along(ls)])
-      identical(l2, lpS[seq_along(l2)])
-      ## has filled with NAs
-      is.na(l2[(length(lpS)+1):length(l2)])
-    })
-}% for %
 }
 \keyword{utilities}
 \keyword{chron}
