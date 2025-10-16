@@ -72,11 +72,11 @@
       \code{glm()}, \code{poly()} and \code{splines::bs()} and \code{ns()}
       pages.
 
-      \item The Cairo-based SVG device uses \code{pt} as the default
-      document unit also with Cairo >= 1.17.8 (\PR{18912}).
-
       \item \code{lbeta(1i, 1)} now signals an error, as \code{lbeta()} is not implemented
       for \code{complex}, fixing \PR{18946} from \I{Ben Bolker} and  \I{Kasper Kristensen}.
+
+      \item The Cairo-based SVG device uses \code{pt} as the default
+      document unit also with Cairo >= 1.17.8 (\PR{18912}).
 
       \item \code{pretty(*, eps.correct = 2)} has been fixed, e.g., to
       avoid over 1 million length result for \code{pretty(c(0, 1e-322), eps.correct = 2)}.
@@ -145,12 +145,6 @@
 }
 
 \section{\Rlogo CHANGES IN R 4.5.0}{
-  %% \subsection{SIGNIFICANT USER-VISIBLE CHANGES}{
-  %%   \itemize{
-  %%     \item .
-  %%   }
-  %% }
-
   \subsection{NEW FEATURES}{
     \itemize{
       \item \code{as.integer(rl)} and hence \code{as.raw(rl)} now work for
@@ -807,7 +801,7 @@
       (non integer) seconds.  Fixes \PR{17350}, thanks to new contributions
       by \I{LatinR}'s \sQuote{\I{R Dev Day}} participants, \I{Heather
       Turner} and \I{Dirk Eddelbuettel}; also fixes more cases, notably
-      when \code{format} contains "%OS<nodigit>".
+      when \code{format} contains \samp{\%OS<nodigit>}.
 
       \item \code{options(scipen = NULL)} and other invalid values now
       signal an error instead of invalidating ops relying on a finite

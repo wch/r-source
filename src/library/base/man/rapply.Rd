@@ -1,6 +1,6 @@
 % File src/library/base/man/rapply.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{rapply}
@@ -41,6 +41,10 @@ rapply(object, f, classes = "ANY", deflt = NULL,
 
   The semantics differ in detail from \code{\link{lapply}}: in
   particular the arguments are evaluated before calling the C code.
+
+  Note that \code{rapply()} being more recent than \code{lapply()} does
+  \emph{not} allow a string (with the name of a function) as argument
+  \code{f}, on purpose.
 
   In \R 3.5.x and earlier, \code{object} was required to be a list,
   which was \emph{not} the case for its list-like components.
