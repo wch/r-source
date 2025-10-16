@@ -15307,6 +15307,8 @@ void * Memzero(@var{p}, @var{n})
 for the @code{nul} terminator.  @code{Memcpy} and @code{Memzero} take
 @code{n} items from array @code{p} and copy them to array @code{q} or
 zero them respectively.
+@eapifun R_chk_memcpy
+@eapifun R_chk_memset
 
 
 @node Error signaling
