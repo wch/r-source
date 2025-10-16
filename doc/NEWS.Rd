@@ -196,6 +196,10 @@
       \item Declarations for non-API functions \code{LOGICAL0},
       \code{INTEGER0}, \code{REAL0}, \code{COMPLEX0}, and \code{RAW0}
       have been removed from installed header files.
+
+      \item Non-API entry points \code{Rf_acopy_string} and
+      \code{Rf_lazy_duplicate} have been added to those reported
+      by \command{R CMD check}.
     }
   }
 
