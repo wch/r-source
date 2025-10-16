@@ -821,8 +821,20 @@ Rboolean R_ToplevelExec(void (*fun)(void *), void *data)
 }
 
 /* Return the current environment. */
+/* The _current environment_ is taken to be the top closure call
+   environment on the context stack, or .GlobalEnv if there is none.
+   An alternative would be the environment in which a .Call or similar
+   expression is evaluated. This is currently not recorded; doing so
+   would incur some overhead that does not seem warranted.
+ */
 SEXP R_GetCurrentEnv(void) {
-    return R_GlobalContext->sysparent;
+    RCNTXT *cptr = R_GlobalContext;
+    while (cptr->nextcontext != NULL) {
+	if ((cptr->callflag & CTXT_FUNCTION) != 0)
+	    return cptr->cloenv;
+	else cptr = cptr->nextcontext;
+    }
+    return R_GlobalEnv;
 }
 
 

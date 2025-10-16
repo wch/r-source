@@ -14077,8 +14077,9 @@ Setting the type to @code{LANGSXP} makes this a call which can be evaluated.
 Customarily, the evaluation environment is passed from the calling
 @R{} code (see @code{rho} above). In special cases it is possible that
 the C code may need to obtain the current evaluation environment
-which can be done via @code{R_GetCurrentEnv()} function.
-@findex R_GetCurrentEnv
+which can be done via @code{R_GetCurrentEnv()} function. This function
+is experimental and may be changed or removed in the future.
+@eapifun R_GetCurrentEnv
 
 
 @node Zero-finding
