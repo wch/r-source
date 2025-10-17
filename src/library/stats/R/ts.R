@@ -826,8 +826,8 @@ arima.sim <- function(model, n, rand.gen = rnorm,
     }
     q <- length(model$ma)
     if(is.na(n.start)) n.start <- p + q +
-        ifelse(p > 0, ceiling(6/log(minroots)), 0)
-    if(n.start < p + q) stop("burn-in 'n.start' must be as long as 'ar + ma'")
+                           if(p > 0) ceiling(6/log(minroots)) else 0
+    else if(n.start < p + q) stop("burn-in 'n.start' must be as long as 'ar + ma'")
     d <- 0
     if(!is.null(ord <- model$order)) {
         if(length(ord) != 3L) stop("'model$order' must be of length 3")

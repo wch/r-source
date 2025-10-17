@@ -582,7 +582,7 @@ ar.burg.default <-
     res <- list(order = order, ar = ar, var.pred = var.pred, x.mean = x.mean,
                 aic = xaic, n.used = n.used, n.obs = n.used, order.max = order.max,
                 partialacf = partialacf, resid = resid,
-                method = ifelse(var.method==1L,"Burg","Burg2"),
+                method = if(var.method == 1L) "Burg" else "Burg2",
                 series = series, frequency = xfreq, call = match.call())
     if(order) {
         xacf <- acf(x, type = "covariance", lag.max = order, plot = FALSE)$acf
@@ -650,7 +650,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     res <- list(order = order, ar = ar, var.pred = var.pred, x.mean = x.mean,
                 aic = xaic, n.used = n.used, n.obs = n.used, order.max = order.max,
                 partialacf = partialacf, resid = resid,
-                method = ifelse(var.method == 1L, "Burg", "Burg2"),
+                method = if(var.method == 1L) "Burg" else "Burg2",
                 series = series, frequency = xfreq,
                 call = match.call())
     class(res) <- "ar"
