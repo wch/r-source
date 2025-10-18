@@ -361,6 +361,34 @@ createRedirects <- function(file, Rdobj)
 }
 
 
+
+### Helper function to find a suitable package logo (logo.png, logo.svg); otherwise return R logo
+
+## For an installed package, we can use system.file(). This is what is
+## needed for dynamic help. To interpret 'package' as a source
+## directory, specify 'dir = TRUE'
+
+
+staticLogoPath <- function(package, relative = FALSE, Rhome = "../../..", dir = FALSE) {
+    if (dir) {
+        file <- file.path(package, "man", "figures", "logo.png")
+        if (!file.exists(file)) file <- file.path(package, "man", "figures", "logo.svg")
+        if (!file.exists(file)) file <- R.home("doc/html/Rlogo.svg")
+    } else {
+        file <- system.file("help", "figures", "logo.png", package = package)
+        if (!nzchar(file)) file <- system.file("help", "figures", "logo.svg", package = package)
+        if (!nzchar(file)) file <- R.home("doc/html/Rlogo.svg")
+    }
+    if (relative) {
+        file <- if (endsWith(file, "/logo.png")) "figures/logo.png"
+                else if (endsWith(file, "/logo.svg")) "figures/logo.svg"
+                else file.path(Rhome, "doc/html/Rlogo.svg")
+    }
+    file
+}
+
+
+
 ## This gets used two ways:
 
 ## 1) With dynamic = TRUE from tools:::httpd()
@@ -1198,6 +1226,8 @@ Rd2HTML <-
 
         of0('<nav class="topic" aria-label="Section Navigation">\n',
             '<div class="dropdown-menu">\n',
+            if (dynamic) '<img class="toplogo" src="../logo" alt="[logo]">'
+            else sprintf('<img class="toplogo" src="%s" alt="[logo]">', staticLogoPath(package, relative = TRUE)),
             '<h1>Contents</h1>\n',
             '<ul class="menu">\n')
 
@@ -1294,10 +1324,11 @@ Rd2HTML <-
         ## Create HTML header and footer
         if (standalone) {
             hfcomps <- # should we be able to specify static URLs here?
-                HTMLcomponents(title = headtitle, logo = FALSE,
+                HTMLcomponents(title = "", logo = FALSE,
                                up = NULL,
                                top = NULL,
                                css = stylesheet,
+                               headerTitle = headtitle,
                                outputEncoding = outputEncoding,
                                dynamic = dynamic, prism = enhancedHTML,
                                doTexMath = doTexMath, texmath = texmath,

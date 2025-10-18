@@ -392,6 +392,7 @@ httpd <- function(path, query, ...)
     ExampleRegexp <- "^/library/([^/]*)/Example/([^/]*)$"
     newsRegexp <- "^/library/([^/]*)/NEWS([.](Rd|md))?$"
     figureRegexp <- "^/library/([^/]*)/(help|html)/figures/([^/]*)$"
+    logoRegexp <- "^/library/([^/]*)/logo$"
     sessionRegexp <- "^/session/"
     packageIndexRegexp <- "^/library/([^/]*)$"
     packageLicenseFileRegexp <- "^/library/([^/]*)/(LICEN[SC]E$)"
@@ -658,7 +659,11 @@ httpd <- function(path, query, ...)
         fig <- sub(figureRegexp, "\\3", path)
         file <- system.file("help", "figures", fig, package=pkg)
         return( list(file=file, "content-type" = mime_type(fig)) )
-    } else if (grepl(sessionRegexp, path)) {
+    } else if (grepl(logoRegexp, path)) {
+        pkg <- sub(logoRegexp, "\\1", path)
+        file <- staticLogoPath(pkg)
+        return( list(file=file, "content-type" = mime_type(basename(file))) )
+     } else if (grepl(sessionRegexp, path)) {
         tail <- sub(sessionRegexp, "", path)
     	file <- file.path(tempdir(), tail)
     	return( list(file=file, "content-type" = mime_type(tail)) )

@@ -48,6 +48,7 @@
     db <- 
         if (!missing(package) && isTRUE(isPkgTarball(package)))
         {
+            src.type <- "tarball"
             ## If URL, download first
             if (isURL(package)) {
                 destdir <- tempfile("dir")
@@ -71,7 +72,7 @@
             Rd_db(dir = pkgdir, stages = stages)
         }
         else {
-            ## FIXME: needs cleanup
+            src.type <- if (is.null(dir)) "installed" else "source"
             pkgdir <- if (is.null(dir)) find.package(package, lib.loc) else dir
             if (is.null(dir)) Rd_db(package, , lib.loc, stages = stages)
             else Rd_db(, dir, lib.loc, stages = stages)
@@ -96,6 +97,7 @@
         list(outlines = outlines, info = attr(h, "info"))
     }
     structure(lapply(db, rd2lines, standalone = FALSE, ...),
+              pkgdir = pkgdir, src.type = src.type,
               descfile = file.path(pkgdir, "DESCRIPTION"))
 
 }
@@ -121,6 +123,8 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                                          Rhtml = Rhtml, hooks = hooks,
                                          texmath = "katex", prism = prism, ...)
     descfile <- attr(hcontent, "descfile")
+    src.type <- attr(hcontent, "src.type")
+    pkgdir <- attr(hcontent, "pkgdir")
     descmeta <- .read_description(descfile)
     pkgname <- descmeta["Package"]
     if (is.null(out)) {
@@ -182,6 +186,9 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
     ##                   pkgname))
     writeHTML('<nav class="package" aria-label="Topic Navigation">',
               '<div class="dropdown-menu">',
+              sprintf('<img class="toplogo" src="%s" alt="[logo]">',
+                      if (src.type == "installed") staticLogoPath(pkgname, relative = FALSE)
+                      else staticLogoPath(pkgdir, relative = FALSE, dir = TRUE)),
               sprintf('<h1>Package {%s}</h1>', pkgname),
               '<h2>Contents</h2>',
               '<ul class="menu">',

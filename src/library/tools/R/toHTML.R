@@ -24,10 +24,11 @@ function(title="R", logo=TRUE,
           paste0('<link rel="stylesheet" type="text/css" href="', css, '">'),
           '</head><body><div class="container">',
           paste('<h1>', title))
-    if (logo)
+    if (!isFALSE(logo))
     	result <- c(result,
                     paste0('<img class="toplogo" src="',
-                           file.path(Rhome, 'doc/html/Rlogo.svg'),
+                           if (isTRUE(logo)) file.path(Rhome, 'doc/html/Rlogo.svg')
+                           else logo,
                            '" alt="[R logo]">'))
     result <- c(result, '</h1>', '<hr>')
     if (!is.null(up) || !is.null(top)) {
@@ -525,12 +526,13 @@ HTMLcomponents <- function(title = "R", logo = FALSE,
 
     ## Optional part of header (title + logo, up, top)
 
-    if (!nzchar(title)) {
+    if (nzchar(title)) {
         addh('<h1>', title)
-        if (logo)
+        if (!isFALSE(logo))
             addh(paste0('<img class="toplogo" src="',
-                        file.path(Rhome, 'doc/html/Rlogo.svg'),
-                        '" alt="[R logo]">'))
+                        if (isTRUE(logo)) file.path(Rhome, 'doc/html/Rlogo.svg')
+                        else logo,
+                        '" alt="[logo]">'))
         addh('</h1>', '<hr>')
     }
     if (!is.null(up) || !is.null(top)) {
