@@ -511,21 +511,6 @@ very large numerical matrices: see @code{scan} below.
 Some of the issues to consider are:
 
 @enumerate
-@item @strong{Encoding}
-
-If the file contains non-@acronym{ASCII} character fields, ensure that
-it is read in the correct encoding.  This is mainly an issue for reading
-Latin-1 files in a UTF-8 locale, which can be done by something like
-
-@example
-read.table("file.dat", fileEncoding="latin1")
-@end example
-
-@noindent
-Note that this will work in any locale which can represent Latin-1
-strings, but not many Greek/Russian/Chinese/Japanese @dots{} locales.
-
-
 @item @strong{Header line}
 
 We recommend that you specify the @code{header} argument explicitly,
@@ -664,7 +649,19 @@ that Unicode escapes such as @code{\u@var{xxxx}} are never interpreted.
 
 @item @strong{Encoding}
 
-This can be specified by the @code{fileEncoding} argument, for example
+If the file contains non-@acronym{ASCII} character fields, ensure that
+it is read in the correct encoding.  This is mainly an issue for reading
+legacy Latin-1 files in a UTF-8 locale, which can be done by something like
+
+@example
+read.table("file.dat", fileEncoding = "latin1")
+@end example
+
+@noindent
+Note that this will work in any locale which can represent Latin-1
+strings, but not many Greek/Russian/Chinese/Japanese @dots{} locales.
+
+Other examples for the @code{fileEncoding} argument include:
 
 @example
 fileEncoding = "UCS-2LE"    # Windows 'Unicode' files
@@ -928,7 +925,7 @@ X11        P 23646  50333  V2
 ...
 @end example
 
-@findex unstack.
+@findex unstack
 Function @code{unstack} goes in the opposite direction, and may be
 useful for exporting data.
 
