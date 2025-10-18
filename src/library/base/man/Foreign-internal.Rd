@@ -35,7 +35,7 @@
 
   \code{.Call.graphics} is used in package \pkg{grid} and
   \code{.External.graphics} and \code{.External2} are used in package
-  \code{graphics}.
+  \pkg{graphics}.
 
   These are primitive functions.
 }
