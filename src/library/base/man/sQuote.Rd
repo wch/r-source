@@ -49,7 +49,7 @@ dQuote(x, q = getOption("useFancyQuotes"))
   the \code{\link{options}} setting for \code{useFancyQuotes}.  If this
   is \code{FALSE} then the undirectional
   ASCII quotation style is used.  If this is \code{TRUE} (the default),
-  Unicode directional quotes are used are used where available
+  Unicode directional quotes are used where available
   (currently, UTF-8 locales on Unix-alikes and all Windows locales
   except \code{C}): if set to \code{"UTF-8"} UTF-8 markup is used
   (whatever the current locale). If set to \code{"TeX"}, TeX-style

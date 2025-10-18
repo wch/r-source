@@ -67,7 +67,7 @@ cor.test(x, \dots)
   A list with class \code{"htest"} containing the following components:
   \item{statistic}{the value of the test statistic.}
   \item{parameter}{the degrees of freedom of the test statistic in the
-    case that it follows a t distribution.}
+    case that it follows a \eqn{t} distribution.}
   \item{p.value}{the p-value of the test.}
   \item{estimate}{the estimated measure of association, with name
     \code{"cor"}, \code{"tau"}, or \code{"rho"} corresponding
@@ -93,7 +93,7 @@ cor.test(x, \dots)
 
   If \code{method} is \code{"pearson"}, the test statistic is based on
   Pearson's product moment correlation coefficient \code{cor(x, y)} and
-  follows a t distribution with \code{length(x)-2} degrees of freedom
+  follows a \eqn{t} distribution with \code{length(x)-2} degrees of freedom
   if the samples follow independent normal distributions.  If there are
   at least 4 complete pairs of observation, an asymptotic confidence
   interval is given based on Fisher's Z transform.

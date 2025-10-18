@@ -34,7 +34,7 @@ packageNotFoundError(package, lib.loc, call = NULL)
   \item{call}{call expression.}
 }
 \details{
-  \code{find.package} returns path to the locations where the
+  \code{find.package} returns the paths to the locations where the
   given packages are found.  If \code{lib.loc} is \code{NULL}, then
   loaded namespaces are searched before the libraries.  If a package is
   found more than once, the first match is used.  Unless \code{quiet =
@@ -56,7 +56,7 @@ packageNotFoundError(package, lib.loc, call = NULL)
   \code{path.package} returns the paths from which the named packages
   were loaded, or if none were named, for all currently attached packages.
   Unless \code{quiet = TRUE} it will warn if some of the packages named
-  are not attached, and given an error if none are.
+  are not attached, and give an error if none are.
 
   \code{packageNotFoundError} creates an error condition object of class
   \code{packageNotFoundError} for signaling errors. The condition object
