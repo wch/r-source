@@ -17,14 +17,14 @@
   non-generic function.
 
   Standard calls will be of the form:
-  
-  \code{setGeneric(name)}
-
+\preformatted{
+    setGeneric(name)
+}
   where \code{name} specifies an existing function, possibly in another
   package.  An alternative when creating a new generic function in this package is:
-
-  \code{setGeneric(name, def)}
-
+\preformatted{
+    setGeneric(name, def)
+}
   where the function definition \code{def} specifies the formal
   arguments and becomes the default method.
 
@@ -41,13 +41,13 @@ setGeneric(name, def= , group=list(), valueClass=character(),
       version, to become the default method.  This is equivalent in
       effect to assigning \code{def} as the function and then using
       the one-argument call to \code{setGeneric}.
+  }
 
       \emph{The following arguments are specialized, optionally used
         when creating a new generic function with non-standard
         features. They should not be used when the non-generic is in
         another package.}
 
-  }
   \item{group}{ The name of the group
     generic function to which this function belongs.  See
     \link{Methods_Details} for details of group generic functions in method
@@ -101,9 +101,10 @@ setGeneric(name, def= , group=list(), valueClass=character(),
     Override the usual default method mechanism.  Only relevant when
     defining a nonstandard generic function.
     See the section \sQuote{Specialized Local Generics}.
+  }
 
     \emph{The remaining arguments are obsolete for normal applications.}
-  }
+
   \item{package}{ The name of the package with which this function is
     associated.  Should be determined automatically from the
     non-generic version.
@@ -123,9 +124,9 @@ setGeneric(name, def= , group=list(), valueClass=character(),
   an existing function, usually in another package. You now want to
   define methods for this function.  In this case you should
   supply only \code{name}, for example:
-
-    \code{setGeneric("colSums")}
-
+\preformatted{
+    setGeneric("colSums")
+}
   There must be an existing function of this name (in this case in
   package \code{"base"}).  The non-generic function can be in the same
   package as the call, typically the case when you are creating a new

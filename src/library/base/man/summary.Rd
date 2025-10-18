@@ -22,15 +22,16 @@
 summary(object, \dots)
 
 \method{summary}{default}(object, \dots, digits, quantile.type = 7)
+
 \method{summary}{data.frame}(object, maxsum = 7,
-       digits = max(3, getOption("digits")-3), \dots)
+        digits = max(3, getOption("digits")-3), \dots)
 
 \method{summary}{factor}(object, maxsum = 100, \dots)
 
 \method{summary}{matrix}(object, \dots)
 
 \method{format}{summaryDefault}(x, digits = max(3L, getOption("digits") - 3L), zdigits = 4L, \dots)
- \method{print}{summaryDefault}(x, digits = max(3L, getOption("digits") - 3L), zdigits = 4L, \dots)
+\method{print}{summaryDefault} (x, digits = max(3L, getOption("digits") - 3L), zdigits = 4L, \dots)
 }
 \arguments{
   \item{object}{an object for which a summary is desired.}
@@ -54,7 +55,7 @@ summary(object, \dots)
 \details{
     For \code{\link{factor}}s, the frequency of the first \code{maxsum - 1}
     most frequent levels is shown, and the less frequent levels are
-    summarized in \code{"(Others)"} (resulting in at most \code{maxsum}
+    summarized in \code{"(Other)"} (resulting in at most \code{maxsum}
     frequencies).
 
     The \code{digits} argument may be \code{\link{NULL}} for some methods
