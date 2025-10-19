@@ -1,7 +1,5 @@
 #! /bin/sh
 
-LOCAL=/opt/R/x86_64
-
 ### This file is part of R.
 ###
 ### R is free software; you can redistribute it and/or modify it under
@@ -47,7 +45,7 @@ LOCAL=/opt/R/x86_64
 ## It is also necessary to set the architecture here, e.g. 'gcc -m32'.
 ## If this is a wrapper it should pass on --version to the real compiler.
 ## This will be replaced by CC23 (see below) if a C23 compiler is found.
-CC=clang
+## CC=
 
 ## Debugging and optimization options for the C compiler.
 ## Use this to specify CFLAGS for the version of the C compiler
@@ -113,12 +111,12 @@ CC=clang
 ## options (such as defines) for the C preprocessor and compiler.
 ## If unset defaults to '-I/usr/local/include', with '-I/sw/include'
 ## prepended on systems using Fink with root '/sw'.
-CPPFLAGS='-isystem $LOCAL/include'
+## CPPFLAGS=
 
 ## The command which runs the Fortran compiler.
 ## Used for both fixed-form and free-form Fortran
 ## If this is a wrapper it should pass on --version to the real compiler.
-FC="/opt/gfortran/bin/gfortran -mtune=native"
+## FC=
 
 ## Options for the Fortran compiler.
 ## Use this to specify comilation flags for fixed-form Fortran.
@@ -225,7 +223,7 @@ FC="/opt/gfortran/bin/gfortran -mtune=native"
 ## and then looks under the names 'c++', 'g++', 'CC' and more OS-specific
 ## names (from autoconf).
 ## If this is a wrapper it should pass on --version to the real compiler.
-CXX=clang++
+## CXX=
 
 ## Options for the C++ compiler.
 ## CXXFLAGS=
@@ -257,7 +255,7 @@ CXX=clang++
 
 ## Objective-C(++), mainly for macOS
 ## On macOS, Apple clang with additional gcc flag -fobjc-exceptions
-OBJC=$CC
+## OBJC=
 ## OBJCFLAGS=
 ## OBJC_LIBS-
 ## Objective-C compiler, usually the same as $CXX $CXXSTD
