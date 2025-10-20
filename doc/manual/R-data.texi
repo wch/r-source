@@ -2282,7 +2282,7 @@ possibility.
 
 If you do not have Excel, many other programs are able to read such
 spreadsheets and export in a text format on both Windows and Unix, for
-example @I{Gnumeric} (@uref{http://www.gnumeric.org}) and
+example @I{Gnumeric} (@uref{https://gnome.pages.gitlab.gnome.org/gnumeric-web/}) and
 OpenOffice (@uref{https://www.openoffice.org}).  You can also
 cut-and-paste between the display of a spreadsheet in such a program and
 R: @code{read.table} will read from the R console or, under Windows,

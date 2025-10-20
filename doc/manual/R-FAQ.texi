@@ -574,8 +574,8 @@ Books on R by R Core Team members include
 @I{Peter Dalgaard} (2008),
 ``Introductory Statistics with R'',
 @I{2nd} edition.
-@I{Springer}, ISBN 978-0-387-79053-4,
-@url{http://publicifsv.sund.ku.dk/~pd/ISwR.html}.
+@I{Springer}, ISBN 978-0-387-79054-1,
+@url{https://link.springer.com/book/10.1007/978-0-387-79054-1}.
 
 @I{Robert Gentleman} (2008),
 ``R Programming for @I{Bioinformatics}''.

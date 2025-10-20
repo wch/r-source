@@ -6446,7 +6446,7 @@ macro.  C23 allows zero arguments in a similar way.
 @end itemize
 
 Some additional information for C++ is available at
-@uref{https://journal.r-project.org/archive/2011-2/RJournal_2011-2_Plummer.pdf}
+@uref{https://journal.R-project.org/articles/RJ-2011-020/RJ-2011-020.pdf}
 by @I{Martyn Plummer}.
 
 Several OSes have or currently do provide multiple C++ runtimes ---

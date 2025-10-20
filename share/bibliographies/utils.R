@@ -23,7 +23,7 @@ bibentry(bibtype = "InProceedings",
                            family = "Rönz")),
          publisher = "Physica Verlag, Heidelberg",
          isbn = "3-7908-1517-9",
-         url = "https://epub.wu.ac.at/id/eprint/1788")
+         url = "https://doi.org/10.57938/9f6e8c91-0b5a-4353-9802-f20479f0f5e2")
 
 bibentry(bibtype = "Article",
          key = "R:Hornik+Murdoch:2011",

@@ -89,7 +89,7 @@ bibentry(bibtype = "InProceedings",
          month = "March",
          address = "Vienna, Austria",
          organization = "Technische Universität Wien",
-         url = "https://www.R-project.org/conferences/DSC-2003")
+         url = "https://www.R-project.org/conferences/DSC-2003/")
 
 bibentry(bibtype = "Book",
          key = "R:Knuth:1984",
@@ -166,7 +166,7 @@ bibentry(bibtype = "Misc",
                            comment = c(ORCID = "0000-0003-0174-9868"))),
          title = "Recording and Replaying the Graphics Engine Display List",
          year = "2015",
-         url = "https://stattech.wordpress.fos.auckland.ac.nz/2015/12/21/2015-07-recording-and-replaying-the-graphics-engine-display-list")
+         url = "https://stattech.wordpress.fos.auckland.ac.nz/2015/12/21/2015-07-recording-and-replaying-the-graphics-engine-display-list/")
 
 bibentry(bibtype = "Article",
          key = "R:Murrell+Ripley:2006",
