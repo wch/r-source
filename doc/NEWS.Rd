@@ -345,7 +345,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.5.1 patched}{
+\section{\Rlogo CHANGES IN R 4.5.2}{
 
   \subsection{UTILITIES}{
     \itemize{
