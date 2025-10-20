@@ -2390,7 +2390,7 @@ function(dfile, keep.white = .keep_white_description_fields)
 }
 
 .write_description <-
-function(x, dfile)
+function(x, dfile, keep.white = .keep_white_description_fields)
 {
     ## Invert how .read_description() handles package encodings.
     if(!is.na(encoding <- x["Encoding"])) {
@@ -2425,20 +2425,17 @@ function(x, dfile)
     ## Hence, when we have a declared non-UTF-8 encoding, we convert
     ## to UTF-8 before formatting, and convert back to the declared
     ## encoding when writing out.
+    keep.white <- unique(c(keep.white, "Maintainer", "BugReports"))
     if(!is.na(encoding) && (encoding != "UTF-8")) {
         x <- iconv(x, from = encoding, to = "UTF-8")
         tfile <- tempfile()
-        write.dcf(rbind(x), tfile,
-                  keep.white = c(.keep_white_description_fields,
-                                 "Maintainer", "BugReports"),
+        write.dcf(rbind(x), tfile, keep.white = keep.white,
                   useBytes = TRUE)
         writeLines(iconv(readLines(tfile),
                          from = "UTF-8", to = encoding),
                    dfile, useBytes = TRUE)
     } else {
-        write.dcf(rbind(x), dfile,
-                  keep.white = c(.keep_white_description_fields,
-                                 "Maintainer", "BugReports"),
+        write.dcf(rbind(x), dfile, keep.white = keep.white,
                   useBytes = TRUE)
     }
 }
