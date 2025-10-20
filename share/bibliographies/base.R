@@ -209,7 +209,7 @@ bibentry(bibtype = "Book",
          year = "2008",
          address = "New York",
          isbn = "978-0-387-75935-7",
-         url = "http://statweb.stanford.edu/~jmc4/Rbook/",
+         url = "https://johnmchambers.su.domains/Rbook/",
          publisherurl = "https://www.springer.com/book/978-0-387-75935-7")
 
 bibentry(bibtype = "Article",
