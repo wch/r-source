@@ -39,7 +39,7 @@ interaction <- function(..., drop = FALSE, sep = ".", lex.order = FALSE)
             nx <- length(lx)
             ny <- length(ly)
             if(lex.order) {
-                ay <- ay + ny * ax
+                ay <- ay + as.numeric(ny) * ax
                 if(drop) {
                     az <- sort(unique(ay))
                     ly <- paste(lx[az %/% ny + 1L], ly[az %% ny + 1L],
@@ -50,7 +50,7 @@ interaction <- function(..., drop = FALSE, sep = ".", lex.order = FALSE)
                                 sep = sep)
                 }
             } else {
-                ay <- ay * nx + ax
+                ay <- ay * as.numeric(nx) + ax
                 if(drop) {
                     az <- sort(unique(ay))
                     ly <- paste(lx[az %% nx + 1L], ly[az %/% nx + 1L],
