@@ -552,7 +552,11 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
                         ul)) ||
                  startsWith(ul, "http://cran.r-project.org") ||
                  any(startsWith(ul, mirrors) &
-                     (sub("/$", "", ul) != mirrors)))
+                     (sub("/$", "", ul) != mirrors) &
+                     ## Need to allow expanions of \manual:
+                     !startsWith(ul, "https://cloud.r-project.org/bin/windows/base/") &
+                     !startsWith(ul, "https://cloud.r-project.org/doc/manuals/")
+                     ))
         R <- grepl("^http://(www|bugs|journal).r-project.org", ul)
         spaces <- grepl(" ", u)
         c(if(cran) u else "", if(spaces) u else "", if(R) u else "")
