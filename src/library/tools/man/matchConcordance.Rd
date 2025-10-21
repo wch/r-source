@@ -113,6 +113,19 @@ Concordance strings are produced by the \code{"Rconcordance"} method of
 they are simply character vectors encoding the concordance data.
 The default method of the \code{as.concordance} generic function 
 converts them to \code{"Rconcordance"} objects.
+
+Concordance strings have three or four parts, separated by colons:
+\enumerate{
+  \item The target filename.
+  \item The source filename.
+  \item Optionally, the starting line number of the target coded as
+  \code{ofs \var{nn}} where \var{nn} is the offset to the first target
+  line.  This is omitted if \var{nn} is 0.
+  \item The source line numbers corresponding to each target line.
+  These are compressed using the following simple scheme: the first line
+  number, followed by a run-length encoded diff of the rest of the line 
+  numbers.
+}
 }
 \value{
 \code{matchConcordance} returns a character array with one row 

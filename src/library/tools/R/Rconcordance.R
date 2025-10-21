@@ -130,7 +130,7 @@ matchConcordance <- function(linenum, concordance) {
 ## 3.  Optionally, the starting line number of the output coded as "ofs nn",
 ##     where nn is the offset to the first output line.  This is omitted if nn is 0.
 ## 4.  The input line numbers corresponding to each output line.
-##     This are compressed using the following simple scheme:
+##     These are compressed using the following simple scheme:
 ##     The first line number, followed by
 ##     a run-length encoded diff of the rest of the line numbers.
 
