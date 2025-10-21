@@ -94,7 +94,8 @@
                                     Links = Links, Links2 = Links2,
                                     ...)
                    )
-        list(outlines = outlines, info = attr(h, "info"))
+        list(outlines = outlines, info = attr(h, "info"),
+             concordance = attr(h, "concordance"))
     }
     structure(lapply(db, rd2lines, standalone = FALSE, ...),
               pkgdir = pkgdir, src.type = src.type,
@@ -115,13 +116,14 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                      ...,
                      Rhtml = FALSE,
                      mathjax_config = file.path(R.home("doc"), "html", "mathjax-config.js"),
-                     include_description = TRUE)
+                     include_description = TRUE,
+		     concordance = FALSE)
 {
     toc_entry <- match.arg(toc_entry)
     hcontent <- .convert_package_rdfiles(package = package, dir = dir, lib.loc = lib.loc,
                                          outputEncoding = outputEncoding,
                                          Rhtml = Rhtml, hooks = hooks,
-                                         texmath = "katex", prism = prism, ...)
+                                         texmath = "katex", prism = prism, concordance = concordance, ...)
     descfile <- attr(hcontent, "descfile")
     src.type <- attr(hcontent, "src.type")
     pkgdir <- attr(hcontent, "pkgdir")
@@ -177,8 +179,19 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                        MATHJAX_CONFIG_STATIC = mathjax_config,
                        language = language)
 
-    writeHTML <- function(..., sep = "\n", append = TRUE)
+    linecount <- 0L
+    writeHTML <- function(..., sep = "\n", append = TRUE) {
         cat(..., file = out, sep = sep, append = append)
+	if (concordance) {
+	    if (!append)
+		linecount <<- 0L
+	    if (sep == "\n")
+		linecount <<- linecount + sum(lengths(list(...)))
+	    # Also add any embedded newlines...
+	    linecount <<- linecount + sum(sapply(list(...),
+			function(s) sum(unlist(gregexpr("\n", s, fixed = TRUE)) > 0)))
+	}
+    }
 
     ## cat(hfcomps$header, fill = TRUE) # debug
     writeHTML(hfcomps$header, sep = "", append = FALSE)
@@ -200,7 +213,17 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
               '<main>')
 
     if (include_description) writeHTML(.DESCRIPTION_to_HTML(descfile))
-    lapply(hcontent, function(h) writeHTML("<hr>", h$outlines))
+    lapply(hcontent, function(h) {
+    	if (concordance) {
+    	    conc <- h$concordance
+    	    if (inherits(conc, "Rconcordance")) {
+    	        conc$offset <- conc$offset + linecount + 1L
+    	        h$outlines[length(h$outlines)] <-
+    	            paste("<!--", as.character(conc), "-->")
+    	    }
+    	}
+    	writeHTML("<hr>", h$outlines)
+    })
     writeHTML('</main>')
     writeHTML(hfcomps$footer, sep = "")
     invisible(out)

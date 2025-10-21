@@ -256,7 +256,9 @@ stringToConcordance <- function(s) {
 addConcordance <- function(conc, s) {
     prev <- stringToConcordance(s)
     if (!is.null(prev)) {
-    	conc$srcFile <- rep_len(conc$srcFile, length(conc$srcLine))
+    	conc$srcFile <- c(rep_len(NA_character_, conc$offset),
+    		          rep_len(conc$srcFile, length(conc$srcLine)))
+    	conc$offset <- 0L
         i <- seq_along(prev$srcLine)
         conc$srcFile[prev$offset + i] <- prev$srcFile
         conc$srcLine[prev$offset + i] <- prev$srcLine
