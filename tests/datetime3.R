@@ -786,6 +786,31 @@ identicalPlt <- function(x, y, ...)
 stopifnot(identicalPlt(z1, z), identicalPlt(z2, z))
 ## failed previously, incl in rev 88441
 
+## extended & moved from ../src/library/base/man/DateTimeClasses.Rd
+##  length(.) <- n   now works for "POSIXct" and "POSIXlt" :
+for(lpS in list(.leap.seconds, as.POSIXlt(.leap.seconds))) {
+    l. <- lpS; length(l.) <- 12 # shortened
+    l2 <- lpS; length(l2) <- 5 + length(lpS) # pad w/ 5 NAs
+    print(tail(l2, 7))
+    stopifnot(exprs = {
+      ## length(.) <- * is compatible to subsetting/indexing:
+      identical(l., lpS[seq_along(l.)])
+      identical(l2, lpS[seq_along(l2)])
+      ## has filled with NAs
+      is.na(l2[(length(lpS)+1):length(l2)])
+    })
+    if(inherits(l2, "POSIXlt")) {
+        bl2 <- balancePOSIXlt(l2)
+        stopifnot(exprs = {
+          all.equal(bl2, l2)
+          is.na (attr( l2, "balanced"))
+          isTRUE(attr(bl2, "balanced"))
+          sum(is.na( l2$isdst)) == 5L # NAs from padding
+          sum(is.na(bl2$isdst)) == 0L
+        })
+    }
+}
+
 
 
 ## keep at end
