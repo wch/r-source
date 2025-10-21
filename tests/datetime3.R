@@ -772,9 +772,9 @@ if(!tz %in% OlsonNames()) {
     (y <- as.POSIXlt(.POSIXct(0, tz = tz)))
     x1[1L] <- x2[[1L]] <- y
     x1; x2
-    stopifnot(identical(x1, x), identical(x2, x))
+    stopifnot(identical(x1, x2))
+    ## but really differing from x  by 5 hours ==> *will* change after R 4.5.x
 })
-## x1, x2 were identical but differing from x
 n <- 4L # >= 3 for NA-filling in subassignment
 z1 <- z2 <- `attr<-`(z <- as.POSIXlt(.POSIXct(double(n), "UTC")),
                      "balanced", NULL)

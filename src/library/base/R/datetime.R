@@ -1327,10 +1327,7 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"))
         nms <- names(x$year)
         if(mj) {
             tz <- attr(x, "tzone")
-            value <- unCfillPOSIXlt(
-                if(inherits(value, "POSIXlt") && identical(tz, attr(value, "tzone")))
-                    value
-                else as.POSIXlt(as.POSIXct(value), tz = tz[1L]))
+            value <- unCfillPOSIXlt(as.POSIXlt(value))
             if(ici) {
                 for(n in names(x))
                     names(x[[n]]) <- nms
@@ -1574,10 +1571,7 @@ as.list.POSIXlt <- function(x, ...)
     }
 
     tz <- attr(x, "tzone")
-    value <- unCfillPOSIXlt(
-        if(inherits(value, "POSIXlt") && identical(tz, attr(value, "tzone")))
-            value
-        else as.POSIXlt(as.POSIXct(value), tz = tz[1L]))
+    value <- unCfillPOSIXlt(as.POSIXlt(value))
     for(n in names(x))
         x[[n]][[i]] <- value[[n]]
 
