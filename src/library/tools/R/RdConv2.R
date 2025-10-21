@@ -912,7 +912,17 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
                "\\deqn" =,
                "\\figure" = {
                    checkContent(block[[1L]], tag)
-                   if (length(block) > 1L) checkContent(block[[2L]], tag)
+                   if(length(block) > 1L) {
+                       checkContent(block[[2L]], tag)
+                       if(length(txt <- as.character(block[[2L]])) &&
+                          startsWith(txt[1L], "options: ")) {
+                           txt <- grepv("(height|width) *= *['\"]?[[:digit:]]+%",
+                                        paste(txt, collapse = "\n"))
+                           if(length(txt))
+                               warnRd(block, Rdfile, level = -1,
+                                      "height/width attributes should be in pixels")
+                       }
+                   }
                },
                "\\tabular" = checkTabular(block),
                "\\subsection" = {
