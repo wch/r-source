@@ -220,6 +220,32 @@ function(flavors = NULL)
     db
 }
 
+CRAN_check_results_diff <-
+function(f1, f2) 
+{
+    x <- CRAN_check_results()
+    s1 <- x[x$Flavor == f1, ]
+    s2 <- x[x$Flavor == f2, ]
+    s1 <- s1[c("Package", "Version", "Status")]
+    s2 <- s2[c("Package", "Version", "Status")]
+    db <- merge(s1, s2, by = 1, all = TRUE)
+    row.names(db) <- db$Package
+    db <- db[, c("Version.x", "Status.x", "Version.y", "Status.y")]
+    isc <- (is.na(db$Status.x) |
+            is.na(db$Status.y) |
+            (db$Status.x != db$Status.y)) # Status change.
+    ivc <- (is.na(db$Version.x) |
+            is.na(db$Version.y) |
+            (db$Version.x != db$Version.y)) # Version change.
+    names(db) <- c("V1", "S1", "V2", "S2")
+    db <- cbind("S" = ifelse(isc, "*", ""),
+                "V" = ifelse(ivc, "*", ""),
+                db)
+    db <- db[c(which(isc & !ivc), which(isc & ivc), which(!isc & ivc)),
+             c("S", "V", "S1", "S2", "V1", "V2")]
+    db
+}
+
 CRAN_check_details <-
 function(flavors = NULL)
 {
