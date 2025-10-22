@@ -1033,32 +1033,44 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
                    "Unrecognized \\tabular format: ", table[[1L]][[1L]])
         tags <- RdTags(content)
 
-        newrow <- TRUE
-        for (i in seq_along(tags)) {
-            if (newrow) {
-            	newrow <- FALSE
-            	col <- 0
-            	newcol <- TRUE
+        ## Remove trailing \cr as we do in Rd2HTML():
+        if(any(ind <- (tags == "\\cr"))) {
+            i <- max(which(ind))
+            j <- seq.int(i + 1L, length.out = length(content) - i)
+            if(all(grepl("^[[:space:]]*$",
+                         vapply(content[j], .Rd_deparse, "")))) {
+                content <- content[-i]
+                tags <- tags[-i]
             }
-            if (newcol) {
-                col <- col + 1
-                if (col > length(format))
-                    warnRd(table, Rdfile, level = 7,
-                           "Only ", length(format),
-                           if (length(format) == 1) " column " else " columns ",
-                           "allowed in this table")
-            	newcol <- FALSE
-            }
-            switch(tags[i],
-            "\\tab" = {
-            	newcol <- TRUE
-            },
-            "\\cr" = {
-            	newrow <- TRUE
-            },
-            checkBlock(content[[i]], tags[i], "\\tabular",
-                       content[seq_len(i-1L)]))
         }
+
+        len <- length(format)
+        chk <- function(col) {
+            if(col != len) {
+                warnRd(table, Rdfile,
+                       level = if(col > len) 7 else -1,
+                       "Only ", len,
+                       if(len == 1) " column " else " columns ",
+                       "allowed in this table",
+                       " (row ", row, " has ", col, ")")
+            }
+        }
+        col <- 1L
+        row <- 1L
+        for(i in seq_along(tags)) {
+            switch(tags[i],
+                   "\\cr" = {
+                       chk(col)
+                       row <- row + 1L
+                       col <- 1L
+                   },
+                   "\\tab" = {
+                       col <- col + 1L
+                   },
+                   checkBlock(content[[i]], tags[i], "\\tabular",
+                              content[seq_len(i-1L)]))
+        }
+        chk(col)
     }
 
     checkContent <- function(blocks, blocktag) {
