@@ -1464,6 +1464,51 @@ static SEXP Cairo_Cap(pDevDesc dd)
 }
 #endif
 
+#if defined(Win32) && defined(CAIRO_HAS_WIN32_FONT)
+# include <windows.h>
+# include <cairo-win32.h>
+
+/* Select font face using win32 cairo backend, which uses Win32 API
+   and finds fonts known to the OS.
+
+   This function has been added to overcome problems with
+   cairo_select_font_face() seen in cairo 1.18, where fonts installed
+   by user (to the private fonts directory or the system-wide directory)
+   were not found (PR#18955).
+
+   Inspired by _cairo_win32_font_face_create_for_toy from cairo.
+*/
+static void
+R_win32_cairo_select_font_face(cairo_t *cr,
+                               const char *family,
+                               cairo_font_slant_t slant,
+                               cairo_font_weight_t weight)
+{
+    LOGFONTW lf;
+    cairo_font_face_t *ff;
+
+    memset(&lf, 0, sizeof(LOGFONTW));
+    if (mbstowcs(lf.lfFaceName, family, 32) == (size_t)-1)
+	return;
+    lf.lfFaceName[32-1] = L'\0';
+
+    if (weight == CAIRO_FONT_WEIGHT_BOLD)
+	lf.lfWeight = FW_BOLD;
+    else
+	lf.lfWeight = FW_NORMAL;
+    if (slant == CAIRO_FONT_SLANT_ITALIC || slant == CAIRO_FONT_SLANT_OBLIQUE)
+	lf.lfItalic = TRUE;
+    lf.lfCharSet = DEFAULT_CHARSET;
+    lf.lfOutPrecision = OUT_DEFAULT_PRECIS;
+    lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
+    lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
+
+    ff = cairo_win32_font_face_create_for_logfontw(&lf);
+    if (ff && cairo_font_face_status(ff) == CAIRO_STATUS_SUCCESS)
+	cairo_set_font_face(cr, ff);
+}
+#endif
+
 #ifdef HAVE_PANGOCAIRO
 /* ------------- pangocairo section --------------- */
 
@@ -1906,8 +1951,11 @@ static void FT_getFont(pGEcontext gc, pDevDesc dd, double fs)
 	// none of the above, so ultimate fallback.
 	else family = hv;
     }
-
-    cairo_select_font_face (xd->cc, family, slant, wt);
+#if defined(Win32) && CAIRO_VERSION > CAIRO_VERSION_ENCODE(1, 16, 0) && defined(CAIRO_HAS_WIN32_FONT)
+    R_win32_cairo_select_font_face(xd->cc, family, slant, wt);
+#else
+    cairo_select_font_face(xd->cc, family, slant, wt);
+#endif
     /* FIXME: this should really use cairo_set_font_matrix
        if pixels are non-square on a screen device. */
     cairo_set_font_size (xd->cc, size);
@@ -2483,8 +2531,13 @@ static void Cairo_Glyph(int n, int *glyphs, double *x, double *y,
         cairo_set_font_face(xd->cc, cairo_face);
     } else {
         warning(_("Font file not found; matching font family and face"));
-        cairo_select_font_face(xd->cc, 
+    #if defined(Win32) && CAIRO_VERSION > CAIRO_VERSION_ENCODE(1, 16, 0) && defined(CAIRO_HAS_WIN32_FONT)
+	R_win32_cairo_select_font_face(xd->cc,
+                                       R_GE_glyphFontFamily(font), sl, wt);
+    #else
+	cairo_select_font_face(xd->cc,
                                R_GE_glyphFontFamily(font), sl, wt);
+    #endif
     }
     /* Text size (in "points") MUST match the scale of the glyph 
      * location (in "bigpts").  The latter depends on device dpi.
