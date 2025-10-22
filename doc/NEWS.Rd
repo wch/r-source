@@ -336,11 +336,6 @@
 
       \item Default column labels are now correctly aligned when printing a
       matrix with right alignment (\PR{18943}, thanks to \I{Mikael Jagan}).
-
-      \item When \code{"POSIXlt"} date-time objects are \code{NA}-padded
-      from subsetting or increasing \code{length} in the \code{`[`} or
-      \code{`length<-`} methods, the \code{"balanced"} attribute is set
-      to \code{NA}, now; noted in \PR{18681}, thanks to \I{Mikael Jagan}.
     }
   }
 }
@@ -420,6 +415,11 @@
 
       \item \code{pretty(*, eps.correct = 2)} has been fixed, e.g., to
       avoid over 1 million length result for \code{pretty(c(0, 1e-322), eps.correct = 2)}.
+
+      \item When \code{"POSIXlt"} date-time objects are \code{NA}-padded
+      from subsetting or increasing \code{length} in the \code{`[`} or
+      \code{`length<-`} methods, the \code{"balanced"} attribute is set
+      to \code{NA}, now; noted in \PR{18681}, thanks to \I{Mikael Jagan}.
     }
   }
 }
