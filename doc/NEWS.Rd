@@ -336,6 +336,10 @@
 
       \item Default column labels are now correctly aligned when printing a
       matrix with right alignment (\PR{18943}, thanks to \I{Mikael Jagan}).
+
+      \item \code{poly(fct, n)} signals an error again, for a
+      non-\code{ordered} factor \code{fct}, thanks to \I{Roland Fuss}'
+      notice on R-devel.
     }
   }
 }

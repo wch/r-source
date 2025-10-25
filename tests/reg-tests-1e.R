@@ -2294,6 +2294,20 @@ stopifnot(all.equal(list(l = -E, u = E, n = 2L), pp, tolerance = 1e-12))
 ## n = 1112538 (Lnx 64b) in R <= 4.5.1  ^^^^^^
 
 
+## poly(<factor>, .)
+hf <- c(-1, 1.2, -1.5, -0.75, -2)
+x <-  c("c", "b", "a",  "b", "a")
+xf <- as.factor(x)
+xo <- as.ordered(x)
+tools::assertError(verbose=TRUE, lm(hf ~ poly(x, 2)))
+tools::assertError(verbose=TRUE, lm(hf ~ poly(xf, 2)))
+coef(om <- lm(hf ~ poly(xo, 2)))
+stopifnot(
+    all.equal(coef(om), tolerance = 5e-5,
+              c("(Intercept)" = -0.81, "poly(xo, 2)1" = 1.01, "poly(xo, 2)2" = -1.7105)))
+## poly(xf, .) gave no error in R 4.1.1--4.5.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/contr.poly.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -79,7 +79,8 @@ poly <- function(x, ..., degree = 1, coefs = NULL, raw = FALSE, simple = FALSE)
     }
     if(degree < 1)
         stop("'degree' must be at least 1")
-    if(is.object(x) && mode(x) == "numeric") x <- as.numeric(x) # for POSIXct, Date,..
+    if(is.object(x) && mode(x) == "numeric" && !(is.factor(x) && !is.ordered(x)))
+        x <- as.numeric(x) # for POSIXct, Date, ordered, but *not* (ordinary) factor
     if(raw) {
         Z <- outer(x, 1L:degree, `^`)
         colnames(Z) <- 1L:degree
