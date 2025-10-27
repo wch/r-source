@@ -108,6 +108,9 @@
 /*
 
 There are two implementation paths here.
+Inspectable from R,  sessionInfo()$tzcode_type  is either
+  1) "system (<libc>)"  (with '<libc>' = 'glibc' usually)  or
+  2) "internal"
 
 1) Use the system functions for mktime, gmtime[_r], localtime[_r], strftime.
    Use the system time_t, struct tm and time-zone tables.
@@ -143,6 +146,7 @@ There are two implementation paths here.
 
 */
 
+// ---------------------------
 #ifdef USE_INTERNAL_MKTIME
 // PATH 2)
 # include "datetime.h"
@@ -170,6 +174,8 @@ typedef struct tm stm;
 extern char *tzname[2];
 
 #endif
+// ---------------------------
+
 
 #include <stdlib.h> /* for setenv or putenv */
 #define R_USE_SIGNALS 1
@@ -1466,7 +1472,7 @@ attribute_hidden SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     reset_tz(&tzsi);
     UNPROTECT(3);
     return ans;
-}
+} // do_formatPOSIXlt
 
 
 // .Internal(strptime(as.character(x), format, tz))
