@@ -376,6 +376,5 @@ data.frame(unclass(leapS))
 leapS[1 : 5, "year"]
 leapS[17:22, "mon" ]
 }
-}
 \keyword{utilities}
 \keyword{chron}
