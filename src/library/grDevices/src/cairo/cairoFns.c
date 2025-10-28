@@ -1488,9 +1488,9 @@ R_win32_cairo_select_font_face(cairo_t *cr,
     cairo_font_face_t *ff;
 
     memset(&lf, 0, sizeof(LOGFONTW));
-    if (mbstowcs(lf.lfFaceName, family, 32) == (size_t)-1)
+    if (mbstowcs(lf.lfFaceName, family, LF_FACESIZE - 1) == (size_t) -1)
 	return;
-    lf.lfFaceName[32-1] = L'\0';
+    lf.lfFaceName[LF_FACESIZE - 1] = L'\0';
 
     if (weight == CAIRO_FONT_WEIGHT_BOLD)
 	lf.lfWeight = FW_BOLD;
@@ -1506,6 +1506,9 @@ R_win32_cairo_select_font_face(cairo_t *cr,
     ff = cairo_win32_font_face_create_for_logfontw(&lf);
     if (ff && cairo_font_face_status(ff) == CAIRO_STATUS_SUCCESS)
 	cairo_set_font_face(cr, ff);
+    else /* fall back to the default handler if not found */
+	cairo_select_font_face(cr, family, slant, weight);
+    if (ff) cairo_font_face_destroy(ff);
 }
 #endif
 
