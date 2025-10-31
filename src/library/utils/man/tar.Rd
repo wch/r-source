@@ -54,7 +54,11 @@ tar(tarfile, files = NULL,
   (follow symbolic links, also \option{-L} on some platforms),
   \samp{--acls}, \option{--exclude-backups}, \option{--exclude-vcs} (and
   similar) and on Windows \option{--force-local} (so drives can be
-  included in filepaths: this used to be the default for \R on Windows).
+  included in filepaths: this used to be the default for \R on
+  Windows).  \command{bsdtar} from \code{libarchive} (the current
+  default \command{tar} on macOS) supports \option{--no-xattrs} to
+  exclude \sQuote{extended file attributes} (sometimes reported by GNU
+  \command{tar} as \sQuote{extended header keyword}).
 
   A convenient and robust way to set options for GNU \command{tar} is via
   environment variable \env{TAR_OPTIONS}.  Appending \option{--force-local}
