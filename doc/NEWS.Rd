@@ -200,6 +200,13 @@
       \item Non-API entry points \code{Rf_acopy_string} and
       \code{Rf_lazy_duplicate} have been added to those reported
       by \command{R CMD check}.
+
+      \item \command{R CMD check} \samp{NOTE}s on the use of these
+      non-API entry points have been upgraded to \samp{WARNING}s in
+      preparation for removing declarations and, where possible, hiding
+      these entry points:
+      \code{R_nchar}, \code{VECTOR_PTR}, \code{R_tryWrap},
+      \code{Rf_NonNullStringMatch}, \code{Rf_isValidString}.
     }
   }
 
