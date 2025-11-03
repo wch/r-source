@@ -191,7 +191,7 @@ dist-unix: distdir
             mv $(distdir) $${dirname}; \
           fi ; \
 	  rm -f $${distname}.tar.gz; \
-	  $(TAR) cf $${distname}.tar $${dirname} && $(R_GZIPCMD) $(GZIP) $${distname}.tar; \
+	  $(TAR) -cf $${distname}.tar $${dirname} && $(R_GZIPCMD) $(GZIP) $${distname}.tar; \
 	  rm -Rf $${dirname}
 dist-win:
 distdir: $(DISTFILES) docs vignettes
