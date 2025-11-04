@@ -347,6 +347,11 @@
       \item \code{poly(fct, n)} signals an error again, for a
       non-\code{ordered} factor \code{fct}, thanks to \I{Roland Fuss}'
       notice on R-devel.
+
+      \item \code{terms(<formula>, simplify=TRUE)} now works correctly also
+      in the cases where the formula has more than one term with NAs such
+      as \code{f(u, b=NA)} or \code{g(NA)}, finally fixing \PR{15275}
+      thanks to \I{Mikael Jagan}'s patch.
     }
   }
 }

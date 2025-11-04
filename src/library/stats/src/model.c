@@ -1064,12 +1064,14 @@ static int MatchVar(SEXP var1, SEXP var2)
     /* Symbols */
     if (isSymbol(var1) && isSymbol(var2))
 	return (var1 == var2);
-    /* Literal Numerics */
-    if (isNumeric(var1) && isNumeric(var2))
-	return (asReal(var1) == asReal(var2));
+    /* Literal Numerics (incl 'NA', 'NaN') */
+    if (isNumeric(var1) && isNumeric(var2)) {
+	double t1 = asReal(var1), t2 = asReal(var2);
+	return ISNAN(t1) ? ISNAN(t2) : (t1 == t2);
+    }
     /* Literal Strings */
     if (isString(var1) && isString(var2))
-	return Seql2(STRING_ELT(var1, 0), STRING_ELT(var2, 0));
+	return Seql2(asChar(var1), asChar(var2));
     /* Nothing else matches */
     return 0;
 }

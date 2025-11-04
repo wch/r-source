@@ -2308,6 +2308,41 @@ stopifnot(
 ## poly(xf, .) gave no error in R 4.1.1--4.5.x
 
 
+## PR#15275
+## terms.formula(x, ...) when RHS of 'x' has logical/numeric NA;
+## "equal" variables were not matched
+chkv <- function(formula, variables, do.eval = FALSE)
+    identical(attr(terms(formula), "variables") |> print(),  ## MM: print() just for testing with prev R
+              if(do.eval) variables else substitute(variables))
+stopifnot(exprs = { ## logical/numeric mixtures:
+    ## equal non-NA were matched, equal NA were not
+    chkv(~x + f(FALSE) + f(FALSE) + g(NA) + g(NA),
+     list(x,  f(FALSE),             g(NA)))
+    chkv(~x + f(FALSE) + f(FALSE) + g(NaN) + g(NaN),
+     list(x,  f(FALSE),             g(NaN)))
+    chkv(~x + f(FALSE) + f(0L) + g(NA) + g(NA_integer_),
+     list(x,  f(FALSE),          g(NA)))
+    chkv(~x + f(FALSE) + f(0) + g(NA) + g(NA_real_),
+      list(x, f(FALSE),         g(NA)))
+    ## complex: matching never supported; chkv() |-> TRUE
+    chkv(~x + f(0) + f(0i) + g(NA_real_) + g(NA_complex_),
+     list(x,  f(0),  f(0i),  g(NA_real_),  g(NA_complex_)))
+    chkv(~x + f(0i) + f(0i) + g(NA_complex_) + g(NA_complex_),
+     list(x,  f(0i),  f(0i),  g(NA_complex_),  g(NA_complex_)))
+    ## character: matching always supported (only w/o mixture)
+    chkv(~x + f(0) + f("0") + g(NA_real_) + g(NA_character_),
+     list(x,  f(0),  f("0"),  g(NA_real_),  g(NA_character_)))
+    chkv(~x + f("0") + f("0") + g(NA_character_) + g(NA_character_),
+     list(x,  f("0"),           g(NA_character_)))
+    ## "extra": it was possible to trigger STRING_ELT(<empty>, 0)
+    {
+        e <- list(. = character(0L))
+        chkv(as.formula(substitute(~x + f(.) + f(.), e)),
+             substitute(list(x, f(.)), e), do.eval = TRUE)
+    }
+})
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
