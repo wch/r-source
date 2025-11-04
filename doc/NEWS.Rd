@@ -206,7 +206,14 @@
       preparation for removing declarations and, where possible, hiding
       these entry points:
       \code{R_nchar}, \code{VECTOR_PTR}, \code{R_tryWrap},
-      \code{Rf_NonNullStringMatch}, \code{Rf_isValidString}.
+      \code{Rf_NonNullStringMatch}, \code{Rf_isValidString}
+      \code{Rf_GetOption}, \code{SET_FRAME}, \code{SET_HASHTAB},
+      \code{SET_ENCLOS}, \code{STDVEC_DATAPTR}, \code{SET_S4_OBJECT},
+      \code{UNSET_S4_OBJECT}, \code{SET_NAMED}, \code{R_lsInternal},
+      \code{Rf_lazy_duplicate}, \code{EXTPTR_PROT}, \code{EXTPTR_PTR},
+      \code{EXTPTR_TAG}, \code{NAMED}, \code{FRAME}, \code{HASHTAB},
+      \code{IS_S4_OBJECT}, \code{BODY}, \code{FORMALS}, \code{CLOENV},
+      \code{ENCLOS}, \code{Rf_isFrame}, \code{OBJECT}.
     }
   }
 
