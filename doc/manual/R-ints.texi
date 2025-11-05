@@ -3705,9 +3705,8 @@ and hence on @R{} having been built and installed as a Mac macOS
 @file{/Library/Frameworks/R.framework/R}.  This is a symbolic link, as
 frameworks can contain multiple versions of @R{}.  It eventually
 resolves to
-@file{/Library/Frameworks/R.framework/Versions/Current/Resources/lib/libR.dylib},
-which is (in the @acronym{CRAN} distribution) a `fat' binary containing
-multiple sub-architectures.
+@file{/Library/Frameworks/R.framework/Versions/Current/Resources/lib/libR.dylib}.
+
 
 macOS applications are directory trees: each @command{R.app} contains
 a front-end written in Objective-C for one sub-architecture: in the
@@ -4870,6 +4869,30 @@ list'' in @file{tests/no-segfault.Rin}.
 [To be revised: use @command{make check-devel}, check the write barrier
 if you change internal structures.]
 
+@node Building the source distribution
+@chapter Building the source distribution
+
+The primary distribtution of the @R{} sources is as a tarball of an SVN
+checkout of the source tree with some (text, HTML, PDF) documentation
+pre-built.
+
+This is prepared by running @command{make dist} at the top level of an
+@R{} build directory, after @command{make all} and appropriate checks
+have been run.  This creates a @command{gzip}-compressed tarball named
+something like
+@example
+R_2025-11-04_r88984.tar.gz
+@end example
+@noindent
+which can be re-named and re-compressed as desired.
+(@command{xz}-compressied tarballs are also offered for the release and
+snapshot distributions; they are around 25% smaller.)
+
+This can be done on macOS, but features of its file system can lead to
+unwanted files and headers being included.  So for safety use
+@example
+make dist TAR='/usr/bin/tar --no-xattrs --no-mac-metadata'
+@end example
 
 
 @node Use of TeX dialects
@@ -4913,7 +4936,7 @@ friends and if found records the absolute paths in the system
 @file{Renviron} file.  This used to record @samp{false} if no command
 was found, but it nowadays records the name for looking up on the path
 at run time.  The latter can be important for binary distributions: one
-does not want to be tied to, for example, TeX Live 2007.
+does not want to be tied to, for example, TeX Live 2024.
 
 
 
