@@ -4894,6 +4894,43 @@ unwanted files and headers being included.  So for safety use
 make dist TAR='/usr/bin/tar --no-xattrs --no-mac-metadata'
 @end example
 
+If adding files to the @R{} sources it is impoertant to check that they
+are included in the tarabll distoibution.  To do so use something like
+@example
+make dist
+tar -xf R-devel_*
+diff -r R-devel SVN_SRCDIR
+rm -rf R-devel
+@end example
+@noindent
+Some differences are to be expected such as
+@example
+Only in SVN_SRCDIR: .svn
+Only in R-devel: SVN-REVISION
+Only in R-devel/doc: FAQ
+Only in R-devel/doc: NEWS
+Only in R-devel/doc: NEWS.pdf
+Only in R-devel/doc: RESOURCES
+Only in R-devel/doc/html: NEWS.html
+Only in R-devel/doc/html: R-admin.html
+Only in R-devel/doc/html: resources.html
+Only in R-devel/src/library/grid/inst/doc: displaylist.pdf
+Only in R-devel/src/library/grid/inst/doc: frame.pdf
+Only in R-devel/src/library/grid/inst/doc: grid.pdf
+Only in R-devel/src/library/grid/inst/doc: grobs.pdf
+Only in R-devel/src/library/grid/inst/doc: interactive.pdf
+Only in R-devel/src/library/grid/inst/doc: locndimn.pdf
+Only in R-devel/src/library/grid/inst/doc: moveline.pdf
+Only in R-devel/src/library/grid/inst/doc: nonfinite.pdf
+Only in R-devel/src/library/grid/inst/doc: plotexample.pdf
+Only in R-devel/src/library/grid/inst/doc: rotated.pdf
+Only in R-devel/src/library/grid/inst/doc: saveload.pdf
+Only in R-devel/src/library/grid/inst/doc: sharing.pdf
+Only in R-devel/src/library/grid/inst/doc: viewports.pdf
+Only in R-devel/src/library/parallel: inst
+Only in R-devel/src/library/stats: inst
+Only in R-devel/src/library/utils/inst: doc
+@end example
 
 @node Use of TeX dialects
 @chapter Use of TeX dialects
