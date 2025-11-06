@@ -131,14 +131,15 @@ text(cbind(2.5, 2*c(1,3,5)-.4), lends, col= 1:3, cex = 1.5)
 table(iris$Species) # is data.frame with 'Species' factor
 iS <- iris$Species == "setosa"
 iV <- iris$Species == "versicolor"
+PS <- c("Petal", "Sepal") ; clr <- c(2,4)
+psL <- paste(PS, "Length",sep="."); Sps <- paste0("    Setosa ", PS, "s")
+psW <- paste(PS, "Width", sep="."); Vps <- paste0("Versicolor ", PS, "s")
 op <- par(bg = "bisque")
 matplot(c(1, 8), c(0, 4.5), type =  "n", xlab = "Length", ylab = "Width",
         main = "Petal and Sepal Dimensions in Iris Blossoms")
-matpoints(iris[iS,c(1,3)], iris[iS,c(2,4)], pch = "sS", col = c(2,4))
-matpoints(iris[iV,c(1,3)], iris[iV,c(2,4)], pch = "vV", col = c(2,4))
-legend(1, 4, c("    Setosa Petals", "    Setosa Sepals",
-               "Versicolor Petals", "Versicolor Sepals"),
-       pch = "sSvV", col = rep(c(2,4), 2))
+matpoints(iris[iS, psL], iris[iS, psW], pch = "sS", col = clr)
+matpoints(iris[iV, psL], iris[iV, psW], pch = "vV", col = clr)
+legend(1, 4,    c(Sps, Vps),          pch = "sSvV", col = clr)
 
 matplot(iris3[, "Petal L.",], iris3[, "Petal W.",], pch = "SCV",
         col = rainbow(3, start = 0.8, end = 0.1),

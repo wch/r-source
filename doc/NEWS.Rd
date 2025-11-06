@@ -359,6 +359,10 @@
       in the cases where the formula has more than one term with NAs such
       as \code{f(u, b=NA)} or \code{g(NA)}, finally fixing \PR{15275}
       thanks to \I{Mikael Jagan}'s patch.
+
+      \item The help page \code{example(matplot)} now correctly labels
+      Sepal vs Petal dimensions in its first iris data plot, thanks to
+      \I{Jeff Dick}'s post on R-devel.
     }
   }
 }
