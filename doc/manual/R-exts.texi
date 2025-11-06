@@ -14771,7 +14771,7 @@ memcpy(REAL(newx), REAL_RO(x), LENGTH(x) * sizeof(double));
 @end example
 @noindent
 are undefined behaviour without a prior check on the length of @code{x}.
-@c Returning 0x000000000001 was inroduced in R 4.5.0.
+@c Returning 0x000000000001 was introduced in R 4.5.0.
 
 Formerly it was possible for packages to obtain internal versions of
 some accessors by defining @samp{USE_RINTERNALS} before including
