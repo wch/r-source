@@ -4885,7 +4885,7 @@ R_2025-11-04_r88984.tar.gz
 @end example
 @noindent
 which can be re-named and re-compressed as desired.
-(@command{xz}-compressied tarballs are also offered for the release and
+(@command{xz}-compressed tarballs are also offered for the release and
 snapshot distributions; they are around 25% smaller.)
 
 This can be done on macOS, but features of its file system can lead to
@@ -4894,8 +4894,8 @@ unwanted files and headers being included.  So for safety use
 make dist TAR='/usr/bin/tar --no-xattrs --no-mac-metadata'
 @end example
 
-If adding files to the @R{} sources it is impoertant to check that they
-are included in the tarabll distoibution.  To do so use something like
+If adding files to the @R{} sources it is important to check that they
+are included in the tarball distoibution.  To do so use something like
 @example
 make dist
 tar -xf R-devel_*
