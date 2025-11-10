@@ -1234,25 +1234,21 @@ SEXP deriv(SEXP args)
 
     if (TYPEOF(funarg) == CLOSXP)
     {
-	s = allocSExp(CLOSXP);
-	SET_FORMALS(s, FORMALS(funarg));
-	SET_CLOENV(s, CLOENV(funarg));
-	funarg = s;
-	SET_BODY(funarg, exprlist);
+	SEXP formals = R_ClosureFormals(funarg);
+	SEXP rho = R_ClosureEnv(funarg);
+	    funarg = R_mkClosure(formals, exprlist, rho);
     }
     else if (isString(funarg)) {
 	PROTECT(names = duplicate(funarg));
-	PROTECT(funarg = allocSExp(CLOSXP));
 	PROTECT(ans = allocList(length(names)));
-	SET_FORMALS(funarg, ans);
+	SEXP a = ans;
 	for(i = 0; i < length(names); i++) {
-	    SET_TAG(ans, installTrChar(STRING_ELT(names, i)));
-	    SETCAR(ans, R_MissingArg);
-	    ans = CDR(ans);
+	    SET_TAG(a, installTrChar(STRING_ELT(names, i)));
+	    SETCAR(a, R_MissingArg);
+	    a = CDR(a);
 	}
-	UNPROTECT(3);
-	SET_BODY(funarg, exprlist);
-	SET_CLOENV(funarg, R_GlobalEnv);
+	funarg = R_mkClosure(ans, exprlist, R_GlobalEnv);
+	UNPROTECT(2);
     }
     else {
 	funarg = allocVector(EXPRSXP, 1);
