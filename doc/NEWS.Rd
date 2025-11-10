@@ -213,7 +213,9 @@
       \code{Rf_lazy_duplicate}, \code{EXTPTR_PROT}, \code{EXTPTR_PTR},
       \code{EXTPTR_TAG}, \code{NAMED}, \code{FRAME}, \code{HASHTAB},
       \code{IS_S4_OBJECT}, \code{BODY}, \code{FORMALS}, \code{CLOENV},
-      \code{ENCLOS}, \code{Rf_isFrame}, \code{OBJECT}, \code{SET_TYPEOF}.
+      \code{ENCLOS}, \code{Rf_isFrame}, \code{OBJECT},
+      \code{SET_TYPEOF}, \code{ENVFLAGS}, \code{SET_ENVFLAGS}.
+      
     }
   }
 

@@ -17531,6 +17531,9 @@ functions that should be used instead:
        copying attributes from one object to another. Use
        @code{CLEAR_ATTRIB} for removing all attributes, added in @R{}
        4.5.0.
+@item ENVFLAGS
+@itemx SET_ENVFLAGS
+       Use @code{R_EnvironmentIsLocked} and @code{R_LockEnvironment} instead.
 @item R_GetCurrentEnv
       Use @code{environment()} at the @R{} level and pass the result as
       an argument to your C function.
@@ -17684,7 +17687,7 @@ attribute is present.
 Some additional functions may be added for working with attributes.
 
 @node Working with variable bindings
-@subsection Working variable bindings
+@subsection Working with variable bindings
 
 The functions @code{Rf_findVar} and @code{Rf_findVarInFrame} have been used in
 a number of packages but are too low level to be part of the API. For
