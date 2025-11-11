@@ -738,6 +738,7 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
                 "^https?://pubs.acs.org/",
                 "^https?://journals.aom.org/",
                 "^https?://journals.sagepub.com/",
+                "^https?://epubs.siam.org/",
                 "^https?://www.pnas.org/")
             false_pos_db_404 <- c(                
                 "^https?://finance.yahoo.com/")

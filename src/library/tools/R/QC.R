@@ -8991,6 +8991,7 @@ function(x, ...)
                        (grepl(re_or(c("^https://pubmed.ncbi.nlm.nih.gov/[0-9]+",
                                       "^https://www.ncbi.nlm.nih.gov/pmc/articles/PMC[0-9]+/$",
                                       "^https://academic.oup.com/.*(/[0-9]*){4}$",
+                                      "^https://journals.plos.org/.*/article",
                                       "^https://www.sciencedirect.com/science/article")),
                               y$URL)))) {
                 ## <FIXME>
