@@ -1626,7 +1626,7 @@ attribute_hidden SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     search_cleanup(&pb);
     REPROTECT(ans = lengthgets(ans, count), idx);
     if (pattern) tre_regfree(&reg);
-    ssort(STRING_PTR(ans), count);
+    ssort(STRING_PTR(ans), count); /* STRING_PTR is safe here */
     UNPROTECT(1);
     return ans;
 }
@@ -1722,7 +1722,7 @@ attribute_hidden SEXP do_listdirs(SEXP call, SEXP op, SEXP args, SEXP rho)
     endcontext(&cntxt);
     search_cleanup(&pb);
     REPROTECT(ans = lengthgets(ans, count), idx);
-    ssort(STRING_PTR(ans), count);
+    ssort(STRING_PTR(ans), count); /* STRING_PTR is safe here */
     UNPROTECT(1);
     return ans;
 }

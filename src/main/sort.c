@@ -648,7 +648,7 @@ void sortVector(SEXP s, bool decreasing)
 	    R_csort2(COMPLEX(s), n, decreasing);
 	    break;
 	case STRSXP:
-	    ssort2(STRING_PTR(s), n, decreasing);
+	    ssort2(STRING_PTR(s), n, decreasing); /* STRING_PTR is safe here */
 	    break;
 	default:
 	    UNIMPLEMENTED_TYPE("sortVector", s);
@@ -747,7 +747,7 @@ static void Psort(SEXP x, R_xlen_t lo, R_xlen_t hi, R_xlen_t k)
 	cPsort2(COMPLEX(x), lo, hi, k);
 	break;
     case STRSXP:
-	sPsort2(STRING_PTR(x), lo, hi, k);
+	sPsort2(STRING_PTR(x), lo, hi, k); /* STRING_PTR is safe here */
 	break;
     default:
 	UNIMPLEMENTED_TYPE("Psort", x);
@@ -1156,7 +1156,7 @@ orderVector1(int *indx, int n, SEXP key, bool nalast, bool decreasing, SEXP rho)
     int *ix = NULL /* -Wall */;
     double *x = NULL /* -Wall */;
     Rcomplex *cx = NULL /* -Wall */;
-    SEXP *sx = NULL /* -Wall */;
+    const SEXP *sx = NULL /* -Wall */;
 
     if (n < 2) return;
     switch (TYPEOF(key)) {
@@ -1168,7 +1168,7 @@ orderVector1(int *indx, int n, SEXP key, bool nalast, bool decreasing, SEXP rho)
 	x = REAL(key);
 	break;
     case STRSXP:
-	sx = STRING_PTR(key);
+	sx = STRING_PTR_RO(key);
 	break;
     case CPLXSXP:
 	cx = COMPLEX(key);
@@ -1292,7 +1292,7 @@ orderVector1l(R_xlen_t *indx, R_xlen_t n, SEXP key, bool nalast,
     int *ix = NULL /* -Wall */;
     double *x = NULL /* -Wall */;
     Rcomplex *cx = NULL /* -Wall */;
-    SEXP *sx = NULL /* -Wall */;
+    const SEXP *sx = NULL /* -Wall */;
     R_xlen_t itmp;
 
     if (n < 2) return;
@@ -1305,7 +1305,7 @@ orderVector1l(R_xlen_t *indx, R_xlen_t n, SEXP key, bool nalast,
 	x = REAL(key);
 	break;
     case STRSXP:
-	sx = STRING_PTR(key);
+	sx = STRING_PTR_RO(key);
 	break;
     case CPLXSXP:
 	cx = COMPLEX(key);
