@@ -4872,7 +4872,7 @@ if you change internal structures.]
 @node Building the source distribution
 @chapter Building the source distribution
 
-The primary distribtution of the @R{} sources is as a tarball of an SVN
+The primary distribution of the @R{} sources is as a tarball of an SVN
 checkout of the source tree with some (text, HTML, PDF) documentation
 pre-built.
 
@@ -4895,7 +4895,7 @@ make dist TAR='/usr/bin/tar --no-xattrs --no-mac-metadata'
 @end example
 
 If adding files to the @R{} sources it is important to check that they
-are included in the tarball distoibution.  To do so use something like
+are included in the tarball distribution.  To do so use something like
 @example
 make dist
 tar -xf R-devel_*
