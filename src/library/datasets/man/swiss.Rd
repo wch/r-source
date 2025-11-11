@@ -60,9 +60,9 @@
 }
 \note{
   Files for all 182 districts in 1888 and other years are available via
-  \url{https://opr.princeton.edu/princeton-european-fertility-project},
+  \url{https://oprdata.princeton.edu/archive/pefp/},
   currently at
-  \url{https://opr.princeton.edu/switzerland-socio-economic-variables-1870-1930}.
+  \url{https://oprdata.princeton.edu/archive/pefp/switz.aspx}.
 
   They state that variables \code{Examination} and \code{Education}
   are averages for 1887, 1888 and 1889.

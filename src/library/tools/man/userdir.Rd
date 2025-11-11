@@ -22,7 +22,7 @@ R_user_dir(package, which = c("data", "config", "cache"))
   For desktop environments using X Windows, the \I{freedesktop.org} project
   (formerly X Desktop Group, \abbr{XDG}) developed the \abbr{XDG} Base Directory
   Specification
-  (\url{https://specifications.freedesktop.org/basedir-spec}) for
+  (\url{https://specifications.freedesktop.org/basedir/}) for
   standardizing the location where certain files should be placed.  CRAN
   package \CRANpkg{rappdirs} provides these general locations with
   appropriate values for all platforms for which \R is available.

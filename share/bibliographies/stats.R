@@ -1826,7 +1826,7 @@ bibentry(bibtype = "Misc",
          title = "Sample Quantiles: A Comparison of 9 Definitions",
          howpublished = "{SAS} Blog",
          year = "2017",
-         url = "https://blogs.sas.com/content/iml/2017/05/24/definitions-sample-quantiles.htm")
+         url = "https://blogs.sas.com/content/iml/2017/05/24/definitions-sample-quantiles.html")
 
 bibentry(bibtype = "Book",
          key = "R:Bloomfield:1976",
