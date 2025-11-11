@@ -215,7 +215,8 @@
       \code{IS_S4_OBJECT}, \code{BODY}, \code{FORMALS}, \code{CLOENV},
       \code{ENCLOS}, \code{Rf_isFrame}, \code{OBJECT},
       \code{SET_TYPEOF}, \code{ENVFLAGS}, \code{SET_ENVFLAGS},
-      \code{SET_FORMALS}, \code{SET_BODY}, \code{SET_CLOENV}.      
+      \code{SET_FORMALS}, \code{SET_BODY}, \code{SET_CLOENV},
+      \code{STRING_PTR}.
 
       \item The deprecated macros \code{CHARACTER_DATA} and
       \code{CHARACTER_POINTER} now return \code{const} pointers since using
