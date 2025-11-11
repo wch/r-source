@@ -1059,7 +1059,7 @@ static SEXP Prune(SEXP lst)
 SEXP deriv(SEXP args)
 {
 /* deriv(expr, namevec, function.arg, tag, hessian) */
-    SEXP ans, ans2, expr, funarg, names, s;
+    SEXP ans, ans2, expr, funarg, names;
     int f_index, *d_index, *d2_index;
     int i, j, k, nexpr, nderiv=0, hessian;
     SEXP exprlist, stag;
