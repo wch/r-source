@@ -93,7 +93,8 @@ and its contents are no longer documented.
 #define LOGICAL_POINTER(x)	LOGICAL(x)
 #define INTEGER_POINTER(x)	INTEGER(x)
 #define NUMERIC_POINTER(x)	REAL(x)
-#define CHARACTER_POINTER(x)	STRING_PTR(x)
+/* Writable pointers to string data ar not safe eo use in packages. */
+#define CHARACTER_POINTER(x)	STRING_PTR_RO(x)
 #define COMPLEX_POINTER(x)	COMPLEX(x)
 /* Use of VECTOR_PTR will fail; This is probably unused. */
 #define LIST_POINTER(x)		VECTOR_PTR(x)
@@ -111,7 +112,8 @@ and its contents are no longer documented.
 #define INTEGER_DATA(x)		(INTEGER(x))
 #define DOUBLE_DATA(x)		(REAL(x))
 #define NUMERIC_DATA(x)		(REAL(x))
-#define CHARACTER_DATA(x)	(STRING_PTR(x))
+/* Writable pointers to string data ar not safe eo use in packages. */
+#define CHARACTER_DATA(x)	(STRING_PTR_RO(x))
 #define COMPLEX_DATA(x)		(COMPLEX(x))
 /* Use of VECTOR_PTR will now always fail in packages.
    VECTOR_DATA seems unused, and RECURSIVE_DATA is used only in
