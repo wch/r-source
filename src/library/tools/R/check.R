@@ -3970,7 +3970,7 @@ add_dummies <- function(dir, Log)
             haveObjs <- any(grepl("^ *Object", out))
             pat <- paste("possibly from",
                          sQuote("(abort|assert|exit|_exit|_Exit|stop)"))
-            rempat <- paste(sprintf("\\b%s\\b", warnNonAPI), collapse = "|")            
+            rempat <- paste(sprintf("\\b%s\\b", warnNonAPI), collapse = "|")
             if(haveObjs && any(grepl(pat, out)) && pkgname %notin% "parallel")
                 ## need _exit in forked child
                 warningLog(Log)
@@ -6479,8 +6479,8 @@ add_dummies <- function(dir, Log)
                         noteLog(Log,
                                 sprintf("  Specified C++%d: please drop specification unless essential", std))
                     ## since R 4.4.0 C++17 support is required, but
-                    ## C++20/23} support is patchy
-                    } else if (std >= 20) {
+                    ## C++23/26} support is patchy
+                    } else if (std >= 23) {
                          resultLog(Log, "OK")
                          printLog(Log,
                                   sprintf("  Not all R platforms support C++%s\n", std))
