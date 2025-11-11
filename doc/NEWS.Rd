@@ -214,8 +214,8 @@
       \code{EXTPTR_TAG}, \code{NAMED}, \code{FRAME}, \code{HASHTAB},
       \code{IS_S4_OBJECT}, \code{BODY}, \code{FORMALS}, \code{CLOENV},
       \code{ENCLOS}, \code{Rf_isFrame}, \code{OBJECT},
-      \code{SET_TYPEOF}, \code{ENVFLAGS}, \code{SET_ENVFLAGS}.
-      
+      \code{SET_TYPEOF}, \code{ENVFLAGS}, \code{SET_ENVFLAGS},
+      \code{SET_FORMALS}, \code{SET_BODY}, \code{SET_CLOENV}.      
     }
   }
 
