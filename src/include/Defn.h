@@ -757,6 +757,7 @@ void SET_SCALAR_IVAL(SEXP x, int v);
 void SET_SCALAR_CVAL(SEXP x, Rcomplex v);
 void SET_SCALAR_BVAL(SEXP x, Rbyte v);
 
+//void *(DATAPTR)(SEXP x);
 int *LOGICAL0(SEXP x);
 int *INTEGER0(SEXP x);
 double *REAL0(SEXP x);
