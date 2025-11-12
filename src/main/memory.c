@@ -2338,7 +2338,7 @@ char *R_alloc(size_t nelem, int eltsize)
 #endif
 	ATTRIB(s) = R_VStack;
 	R_VStack = s;
-	return (char *) DATAPTR(s);
+	return (char *) STDVEC_DATAPTR(s);
     }
     /* One programmer has relied on this, but it is undocumented! */
     else return NULL;
