@@ -664,6 +664,7 @@ void (SET_HASHVALUE)(SEXP x, int v);
 
 /* Bytecode access macros */
 #define BCODE_CODE(x)	CAR(x)
+#define BCODE_PTR(x) ((BCODE *) DATAPTR(x))
 //#define BCODE_CONSTS(x) CDR(x)
 #define BCODE_EXPR(x)	TAG(x)
 #define isByteCode(x)	(TYPEOF(x)==BCODESXP)

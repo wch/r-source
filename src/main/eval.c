@@ -5606,7 +5606,7 @@ static struct { void *addr; int argc; char *instname; } opinfo[OPCOUNT];
 #define GETOP() (*pc++).i
 #define SKIP_OP() (pc++)
 
-#define BCCODE(e) (BCODE *) DATAPTR(BCODE_CODE(e))
+#define BCCODE(e) BCODE_PTR(BCODE_CODE(e))
 #else
 typedef int BCODE;
 
@@ -8718,7 +8718,7 @@ attribute_hidden SEXP R_bcEncode(SEXP bytes)
     v = ipc[0];
     if (v < R_bcMinVersion || v > R_bcVersion) {
 	code = allocVector(INTSXP, m * 2);
-	pc = (BCODE *) DATAPTR(code);
+	pc = BCODE_PTR(code);
 	pc[0].i = v;
 	pc[1].v = opinfo[BCMISMATCH_OP].addr;
 	return code;
@@ -8726,7 +8726,7 @@ attribute_hidden SEXP R_bcEncode(SEXP bytes)
     else {
 	code = allocVector(INTSXP, m * n);
 	memset(INTEGER(code), 0, m * n * sizeof(int));
-	pc = (BCODE *) DATAPTR(code);
+	pc = BCODE_PTR(code);
 
 	for (i = 0; i < n; i++) pc[i].i = ipc[i];
 
@@ -8771,7 +8771,7 @@ attribute_hidden SEXP R_bcDecode(SEXP code) {
     int m = (sizeof(BCODE) + sizeof(int) - 1) / sizeof(int);
 
     n = LENGTH(code) / m;
-    pc = (BCODE *) DATAPTR(code);
+    pc = BCODE_PTR(code);
 
     bytes = allocVector(INTSXP, n);
     ipc = INTEGER(bytes);
