@@ -173,7 +173,8 @@ static SEXP La_rs(SEXP x, SEXP only_values)
     double vl = 0.0, vu = 0.0, abstol = 0.0;
     /* valgrind seems to think vu should be set, but it is documented
        not to be used if range='a' */
-    int il, iu, *isuppz;
+    int il = 0, iu = 0, *isuppz;
+    /* il and iu are unused if range='a', but clang-21 warns */
 
     xdims = INTEGER(coerceVector(getAttrib(x, R_DimSymbol), INTSXP));
     n = xdims[0];
