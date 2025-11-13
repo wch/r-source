@@ -627,12 +627,8 @@ function(year)
 
 .R_top_srcdir_from_Rd <-
 function() {
-    filebase <-
-        file_path_sans_ext(system.file("help", "tools.rdb",
-                                       package = "tools"))
-    path <- attr(fetchRdDB(filebase, "QC"), "Rdfile")
-    ## We could use 5 dirname() calls, but perhaps more easily:
-    substr(path, 1L, nchar(path) - 28L)
+    attr(readRDS(system.file("help", "paths.rds", package = "tools")),
+         "top")
 }
 
 ## Unfortunately,

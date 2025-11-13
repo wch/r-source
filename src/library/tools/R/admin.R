@@ -871,12 +871,14 @@ function(dir, outDir, encoding = "unknown")
     }
     pathsFile <- file.path(manOutDir, "paths.rds")
     ## Avoid (costly) rebuilding if not needed.
-    ## 'make Rdobjects' now takes 13s compared to 0.5s if remaking skips the below.
-    ## This tests if the Rd DB from a previous 'make' can be fully kept or needs
-    ## updating, but ignores that a dynamic help page may need reprocessing even
-    ## without modifying the source Rd file. With the advent of \bibshow, many
-    ## help pages have become dynamic and always rebuilding these is tedious ...
-    ## So for now only do a full rebuild when the system macros were touched.
+    ## 'make Rdobjects' now takes 13s compared to 0.5s if remaking skips
+    ## the below.  This tests if the Rd DB from a previous 'make' can be
+    ## fully kept or needs updating, but ignores that a dynamic help
+    ## page may need reprocessing even without modifying the source Rd
+    ## file. With the advent of \bibshow, many help pages have become
+    ## dynamic and always rebuilding these is tedious ... 
+    ## So for now only do a full rebuild when the system macros were
+    ## touched. 
     system_file <- file.path(R.home("share"), "Rd", "macros", "system.Rd")
     if (!file.exists(db_file) || # first build, including from .install_packages
         file_test("-nt", system_file, db_file)) {
@@ -891,9 +893,13 @@ function(dir, outDir, encoding = "unknown")
         db <- .build_Rd_db(dir, manfiles, db_file = db_file,
                            encoding = encoding, built_file = built_file)
         nm <- as.character(names(db)) # Might be NULL
-        saveRDS(structure(nm,
-                          first = nchar(file.path(mandir)) + 2L),
-                pathsFile)
+        at <- c(list(first = nchar(file.path(mandir)) + 2L),
+                if(basename(dir) == "tools") {
+                    ## We could use 3 dirname() calls, but perhaps more
+                    ## easily:
+                    list(top = substr(dir, 1L, nchar(dir) - 18L))
+                })
+        saveRDS(`attributes<-`(nm, at), pathsFile)
         names(db) <- sub("\\.[Rr]d$", "", basename(nm))
         makeLazyLoadDB(db, file.path(manOutDir, packageName))
     }
