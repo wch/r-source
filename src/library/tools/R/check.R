@@ -3969,7 +3969,7 @@ add_dummies <- function(dir, Log)
             haveObjs <- any(grepl("^ *Object", out))
             pat <- paste("possibly from",
                          sQuote("(abort|assert|exit|_exit|_Exit|stop)"))
-            rempat <- paste(sprintf("\\b%s\\b", warnNonAPI), collapse = "|")
+            rempat <- "REAL0|COMPLEX0|ddfind|DDVAL|ENSURE_NAMEDMAX|INTERNAL|PRSEEN|SET_PRSEEN|SYMVALUE"
             if(haveObjs && any(grepl(pat, out)) && pkgname %notin% "parallel")
                 ## need _exit in forked child
                 warningLog(Log)
