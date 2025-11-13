@@ -695,7 +695,7 @@ do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	    cetype_t ienc = getCharCE(el);
 	    const char* ss = CHAR(el);
-	    int slen = strlen(ss);
+	    int slen = (int) strlen(ss);
 	    if (start < 1) start = 1;
 	    if (stop > (int) slen) stop = (int) slen; /* SBCS optimization */
 	    if (start > stop) {
@@ -710,7 +710,7 @@ do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 		cetype_t venc = getCharCE(v_el);
 		if (venc != ienc && !IS_ASCII(v_el)) {
 		    ss = translateChar(el);
-		    slen = strlen(ss);
+		    slen = (int) strlen(ss);
 		    v_ss = translateChar(v_el);
 		    ienc2 = CE_NATIVE;
 		}
