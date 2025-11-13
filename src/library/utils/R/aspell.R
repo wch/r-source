@@ -668,10 +668,11 @@ aspell_control_R_vignettes <-
          c("-t", "-d en_US,en_GB"))
 
 aspell_R_vignettes <-
-function(program = NULL,
+function(program = NULL, dir = NULL,
          dictionaries = c(aspell_dictionaries_R, "R_vignettes"))
 {
-    files <- Sys.glob(file.path(tools:::.R_top_srcdir_from_Rd(),
+    if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()    
+    files <- Sys.glob(file.path(dir,
                                 "src", "library", "*", "vignettes",
                                 "*.Rnw"))
 
