@@ -1048,7 +1048,7 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
         chk <- function(col) {
             if(col != len) {
                 warnRd(table, Rdfile,
-                       level = if(col > len) 7 else -1,
+                       level = if(col > len) 7 else -2,
                        "Only ", len,
                        if(len == 1) " column " else " columns ",
                        "allowed in this table",

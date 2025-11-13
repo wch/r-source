@@ -1001,19 +1001,21 @@ Rd2HTML <-
                 tags <- tags[-i]
             }
         }
+        len <- length(format)
+        col <- 0L        
         for (i in seq_along(tags)) {
             if (concordance)
                 conc$saveSrcref(content[[i]])
             if (newrow) {
             	of1("<tr>\n ")
             	newrow <- FALSE
-            	col <- 0
+            	col <- 0L
             }
             if (newcol) {
                 col <- col + 1L
-                if (col > length(format))
+                if (col > len)
                     stopRd(table, Rdfile,
-                           "Only ", length(format),
+                           "Only ", len,
                            " columns allowed in this table")
             	of0('<td style="text-align: ', format[col], ';">')
             	newcol <- FALSE
@@ -1024,14 +1026,16 @@ Rd2HTML <-
             	newcol <- TRUE
             },
             "\\cr" = {
-            	if (!newcol) of1('</td>')
+            	if (!newcol)
+                    of1(paste0("</td>", strrep("<td></td>", len - col)))
             	of1('\n</tr>\n')
             	newrow <- TRUE
             	newcol <- TRUE
             },
             writeBlock(content[[i]], tags[i], "\\tabular"))
         }
-        if (!newcol) of1('</td>')
+        if (!newcol)
+            of1(paste0("</td>", strrep("<td></td>", len - col)))
         if (!newrow) of1('\n</tr>\n')
         of1('\n</table>\n')
         inPara <<- FALSE
