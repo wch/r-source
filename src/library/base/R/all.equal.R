@@ -80,7 +80,11 @@ all.equal.default <- function(target, current, ..., check.class = TRUE)
 all.equal.function <- function(target, current, check.environment = TRUE, ...)
 {
     msg <- all.equal.language(target, current, ...)
-    if(check.environment) {
+    if (is.null(current))
+        ## need to handle separately since environment(NULL) is the
+        ## current evaluation environment
+        msg
+    else if(check.environment) {
         ## pre-check w/ identical(), for speed & against infinite recursion:
         ee <- identical(environment(target),
                         environment(current), ignore.environment=FALSE)
