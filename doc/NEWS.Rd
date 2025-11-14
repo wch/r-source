@@ -681,6 +681,14 @@
       full control over what gets added to the search path.  (Actually
       already available since \R 4.4.0.)
 
+      \item New connection type \code{zstdfile} for files compressed by
+      \command{zstd} if \R{} was built with such support.  \code{file()}
+      and \code{gafile()} can automagically read such files.
+
+      \item \code{memCompress()} and \code{memDecompress()} have optiosn
+      to use \command{zstd} compression if \R{} was built with support
+      for it.
+
       \item There is some support for \command{zstd} compression of
       tarballs in \code{tar()} and \code{untar()}.  (This depends on OS
       support of \code{libzstd} or by \command{tar}.)
