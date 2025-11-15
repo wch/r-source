@@ -183,13 +183,13 @@ static void *compact_intseq_Dataptr(SEXP x, Rboolean writeable)
 	SET_COMPACT_SEQ_EXPANDED(x, val);
 	UNPROTECT(1);
     }
-    return DATAPTR(COMPACT_SEQ_EXPANDED(x));
+    return DATAPTR_RW(COMPACT_SEQ_EXPANDED(x));
 }
 
 static const void *compact_intseq_Dataptr_or_null(SEXP x)
 {
     SEXP val = COMPACT_SEQ_EXPANDED(x);
-    return val == R_NilValue ? NULL : DATAPTR(val);
+    return val == R_NilValue ? NULL : DATAPTR_RO(val);
 }
 
 static int compact_intseq_Elt(SEXP x, R_xlen_t i)
@@ -428,13 +428,13 @@ static void *compact_realseq_Dataptr(SEXP x, Rboolean writeable)
 	SET_COMPACT_SEQ_EXPANDED(x, val);
 	UNPROTECT(1);
     }
-    return DATAPTR(COMPACT_SEQ_EXPANDED(x));
+    return DATAPTR_RW(COMPACT_SEQ_EXPANDED(x));
 }
 
 static const void *compact_realseq_Dataptr_or_null(SEXP x)
 {
     SEXP val = COMPACT_SEQ_EXPANDED(x);
-    return val == R_NilValue ? NULL : DATAPTR(val);
+    return val == R_NilValue ? NULL : DATAPTR_RO(val);
 }
 
 static double compact_realseq_Elt(SEXP x, R_xlen_t i)
@@ -759,13 +759,13 @@ static R_INLINE void expand_deferred_string(SEXP x)
 static void *deferred_string_Dataptr(SEXP x, Rboolean writeable)
 {
     expand_deferred_string(x);
-    return DATAPTR(DEFERRED_STRING_EXPANDED(x));
+    return DATAPTR_RW(DEFERRED_STRING_EXPANDED(x));
 }
 
 static const void *deferred_string_Dataptr_or_null(SEXP x)
 {
     SEXP state = DEFERRED_STRING_STATE(x);
-    return state != R_NilValue ? NULL : DATAPTR(DEFERRED_STRING_EXPANDED(x));
+    return state != R_NilValue ? NULL : DATAPTR_RO(DEFERRED_STRING_EXPANDED(x));
 }
 
 static SEXP deferred_string_Elt(SEXP x, R_xlen_t i)
@@ -1528,7 +1528,7 @@ static R_xlen_t wrapper_Length(SEXP x)
 static void *wrapper_Dataptr(SEXP x, Rboolean writeable)
 {
     if (writeable)
-	return DATAPTR(WRAPPER_WRAPPED_RW(x));
+	return DATAPTR_RW(WRAPPER_WRAPPED_RW(x));
     else
 	/**** could avoid the cast by having separate methods */
 	return (void *) DATAPTR_RO(WRAPPER_WRAPPED(x));

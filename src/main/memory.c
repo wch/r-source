@@ -4160,6 +4160,9 @@ void *(STDVEC_DATAPTR)(SEXP x)
     return STDVEC_DATAPTR(x);
 }
 
+/* nedded for implementing Dataptr ALTREP methods */
+void *DATAPTR_RW(SEXP x) { return DATAPTR(x); }
+
 int *(LOGICAL)(SEXP x) {
     if(TYPEOF(x) != LGLSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",

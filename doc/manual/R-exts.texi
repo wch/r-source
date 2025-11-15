@@ -14969,14 +14969,15 @@ iteration strategy.
 Some functions useful in implementing new alternate representation
 classes, beyond those defined in @file{R_ext/Altrep.h}, include
 @code{ALTREP}, @code{ALTREP_CLASS}, @code{R_altrep_data1},
-@code{R_set_altrep_data1}, @code{R_altrep_data2}, and
-@code{R_set_altrep_data2}.
+@code{R_set_altrep_data1}, @code{R_altrep_data2},
+@code{R_set_altrep_data2}, and @code{DATAPTR_RW}.
 @eapifun ALTREP
 @eapifun ALTREP_CLASS
 @eapifun R_altrep_data1
 @eapifun R_set_altrep_data1
 @eapifun R_set_altrep_data2
 @eapifun R_altrep_data2
+@eapifun DATAPTR_RW
 @eapihdr R_ext/Altrep.h
 
 For some objects it may be possible to very efficiently determine
@@ -17497,8 +17498,11 @@ functions that should be used instead:
 @itemx DATAPTR
 @itemx STDVEC_DATAPTR
        Use @code{STRING_PTR_RO} and @code{DATAPTR_RO}. Obtaining
-        writable pointers to these data can violate the memory manager's
-        integrity assumptions and is not supported.
+       writable pointers to these data can violate the memory manager's
+       integrity assumptions and is not supported.
+       One exception is that a writable pointer may need to be returned
+       by an @code{ALTREP} @code{Dataptr} method. The function
+       @code{DATAPTR_RW}  can use for this purpose.
 @item isFrame
       Use @code{Rf_isDataFrame}, added in @R{} 4.5.0.
 @item BODY
@@ -17741,6 +17745,10 @@ void CLEAR_ATTRIB(SEXP x)
     SET_OBJECT(x, 0);
     UNSET_S4_OBJECT(x);
 @}
+#endif
+
+#if R_VERSION < R_Version(4, 6, 0)
+# define DATAPTR_RW(x) DATAPTR(x)
 #endif
 @end example
 
