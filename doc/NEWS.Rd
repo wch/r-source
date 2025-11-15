@@ -221,6 +221,10 @@
       \item The deprecated macros \code{CHARACTER_DATA} and
       \code{CHARACTER_POINTER} now return \code{const} pointers since using
       writable pointers in packages is not safe.
+
+      \item New function \code{DATAPTR_RW} for use in implementing
+      \code{ALTREP} \code{Dataptr} methods. This function should not be
+      used in any other contexts.
     }
   }
 
