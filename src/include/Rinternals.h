@@ -1271,8 +1271,7 @@ void SET_PRCODE(SEXP x, SEXP v);
 
 void *(STDVEC_DATAPTR)(SEXP x); // used by stringfish vctrs vroom
 
-/* Growable vector support */ // formerly used by multbxxc
-int (IS_GROWABLE)(SEXP x);
+/* Growable vector support */ // still used by a few packages
 void (SET_GROWABLE_BIT)(SEXP x);
 
 // no longer used
