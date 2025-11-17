@@ -17,7 +17,7 @@ lazyLoadDBexec(filebase, fun, filter)
 \arguments{
   \item{filebase}{The file path to the database, with no extension.}
   \item{envir}{The environment into which objects are loaded.}
-  \item{filter}{An optional function which when called on a a character
+  \item{filter}{An optional function which when called on a character
     vector of object names returns a logical vector: only objects for
     which this is true will be loaded.}
   \item{fun}{Function of one argument, an environment.}
