@@ -156,7 +156,7 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
 	warning(_("assignment outside vector/list limits (extending from %lld to %lld)"),
 		(long long)len, (long long)newlen);
 
-    /* if the vector is not shared, is growable. and has room, then
+    /* if the vector is not shared, is growable, and has room, then
        increase its length */
     if (! MAYBE_SHARED(x) &&
 	IS_GROWABLE(x) &&
