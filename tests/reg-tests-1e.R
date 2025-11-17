@@ -2342,6 +2342,15 @@ stopifnot(exprs = { ## logical/numeric mixtures:
     }
 })
 
+## check that tim and dimnames are dropped when estending with GROWABLE
+x <- 1:49
+x[50] <- 50L
+dim(x) <- c(25, 2)
+dimnames(x) <- list(NULL, c("a", "b"))
+a <- .Internal(address(x))
+x[51] <- 51L
+stopifnot(identical(a, .Internal(address(x)))) ## reused x
+stopifnot(is.null(attributes(x))) ## dim and dimnames have been dropped
 
 
 ## keep at end
