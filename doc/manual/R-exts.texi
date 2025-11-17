@@ -2994,7 +2994,7 @@ The webpage @uref{https://en.cppreference.com/w/cpp/compiler_support.html}
 gives some information on which compiler versions are known to support
 recent C++ features.
 
-https://en.wikipedia.org/wiki/C%2B%2B17
+@c https://en.wikipedia.org/wiki/C%2B%2B17
 @c https://en.wikipedia.org/wiki/C%2B%2B20
 C++ standards have deprecated and later removed features (such as
 headers, types and functions).  Be aware that some current compilers
