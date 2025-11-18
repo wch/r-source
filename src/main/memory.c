@@ -5006,3 +5006,82 @@ NORET R_len_t R_BadLongVector(SEXP x, const char *file, int line)
     error(_("long vectors not supported yet: %s:%d"), file, line);
 }
 #endif
+
+/* Highly experimental resizable vector support */
+
+bool R_isResizable(SEXP x)
+{
+    return isVector(x) && ! ALTREP(x) && GROWABLE_BIT_SET(x) &&
+	XTRUELENGTH(x) != 0 && XLENGTH(x) <= XTRUELENGTH(x);
+}
+
+R_xlen_t R_maxLength(SEXP x)
+{
+    return GROWABLE_BIT_SET(x) ? XTRUELENGTH(x) : xlength(x);
+}
+
+SEXP R_allocResizableVector(SEXPTYPE type, R_xlen_t len, R_xlen_t maxlen)
+{
+    switch (type) {
+    case LGLSXP:
+    case INTSXP:
+    case REALSXP:
+    case CPLXSXP:
+    case STRSXP:
+    case EXPRSXP:
+    case VECSXP:
+    case RAWSXP:
+	break;
+    default:
+	error(_("cannot make a resizable vector of type '%s'"),
+	      sexptype2char(type));
+    }
+    if (len > maxlen)
+	error(_("len larger than maxlen"));
+    SEXP val = allocVector(type, maxlen);
+    SET_TRUELENGTH(val, maxlen);
+    SET_GROWABLE_BIT(val);
+    SETLENGTH(val, len);
+    return val;
+}
+
+static R_INLINE void clear_elements(SEXP x, R_xlen_t from, R_xlen_t to)
+{
+    switch(TYPEOF(x)) {
+    case STRSXP:
+	for (R_xlen_t i = from; i < to; i++)
+	    SET_STRING_ELT(x, i, R_BlankString);
+	break;
+    case EXPRSXP:
+    case VECSXP:
+	for (R_xlen_t i = from; i < to; i++)
+	    SET_VECTOR_ELT(x, i, R_NilValue);
+	break;
+    }
+}
+
+void R_resizeVector(SEXP x, R_xlen_t newlen)
+{
+    if (newlen < 0)
+	error(_("invalid negative 'newlen'"));
+    if (newlen != xlength(x)) {
+	if (! R_isResizable(x))
+	    error(_("not a resizable vector"));
+	if (newlen > XTRUELENGTH(x))
+	    error(_("'newlen' is too large"));
+	if (ATTRIB(x) != R_NilValue) {
+	    if (getAttrib(x, R_DimSymbol) != R_NilValue)
+		error(_("can't resize a vector with a 'dim' attribute"));
+	    if (getAttrib(x, R_DimNamesSymbol) != R_NilValue)
+		error(_("can't resize a vector with a 'dimnames' attribute"));
+	    SEXP names = getAttrib(x, R_NamesSymbol);
+	    R_resizeVector(names, newlen);
+	}
+	R_xlen_t len = XLENGTH(x);
+	if (newlen < len) // clear dropped elements to drop refcounts
+	    clear_elements(x, newlen, len);
+	SETLENGTH(x, newlen);
+	if (len < newlen) // initialize new elements
+	    clear_elements(x, len, newlen);
+    }
+}
