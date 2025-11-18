@@ -5075,7 +5075,11 @@ void R_resizeVector(SEXP x, R_xlen_t newlen)
 	    if (getAttrib(x, R_DimNamesSymbol) != R_NilValue)
 		error(_("can't resize a vector with a 'dimnames' attribute"));
 	    SEXP names = getAttrib(x, R_NamesSymbol);
-	    R_resizeVector(names, newlen);
+	    if (names != R_NilValue) {
+		if (MAYBE_SHARED(names))
+		    error(_("can't resize 'names' might be shared"));
+		R_resizeVector(names, newlen);
+	    }
 	}
 	R_xlen_t len = XLENGTH(x);
 	if (newlen < len) // clear dropped elements to drop refcounts
