@@ -5069,6 +5069,8 @@ void R_resizeVector(SEXP x, R_xlen_t newlen)
 	    error(_("not a resizable vector"));
 	if (newlen > XTRUELENGTH(x))
 	    error(_("'newlen' is too large"));
+	if (MAYBE_SHARED(x))
+	    error(_("can't resize a vector that might be shared"));
 	if (ATTRIB(x) != R_NilValue) {
 	    if (getAttrib(x, R_DimSymbol) != R_NilValue)
 		error(_("can't resize a vector with a 'dim' attribute"));
@@ -5077,7 +5079,7 @@ void R_resizeVector(SEXP x, R_xlen_t newlen)
 	    SEXP names = getAttrib(x, R_NamesSymbol);
 	    if (names != R_NilValue) {
 		if (MAYBE_SHARED(names))
-		    error(_("can't resize 'names' might be shared"));
+		    error(_("can't resize 'names' that might be shared"));
 		R_resizeVector(names, newlen);
 	    }
 	}
