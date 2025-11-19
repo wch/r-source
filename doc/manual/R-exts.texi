@@ -2951,8 +2951,7 @@ define a module of the same name in multiple source files.
 @subsection Using C++ code
 
 @R{} can be built without a C++ compiler although one is available (but
-not necessarily installed) on all known @R{} platforms.  As from @R{}
-4.0.0 a C++ compiler will be selected only if it conforms to the 2011
+not necessarily installed) on all known @R{} platforms. 
 standard (`C++11').  A minor update@footnote{Some changes are linked
 from
 @uref{https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations}:
@@ -2989,7 +2988,7 @@ for each of the standards: this relies heavily on the reported values of
 @c @I{LLVM} clang 14, 15 default to C++14, 16-20 to C++17
 @c g++ 11-15 default to C++17
 
-The webpage @uref{https://en.cppreference.com/w/cpp/compiler_support}
+The webpage @uref{https://en.cppreference.com/w/cpp/compiler_support.html}
 gives some information on which compiler versions are known to support
 recent C++ features.
 
@@ -3006,40 +3005,24 @@ standards list deprecated and removed (and undeprecated) features.
 
 For maximal portability a package should specify the standard it
 requires for code in its @file{src} directory by including something
-like @samp{C++14} in the @samp{SystemRequirements} field of the
+like @samp{C++23} in the @samp{SystemRequirements} field of the
 @file{DESCRIPTION} file, e.g.
 
 @example
-SystemRequirements: C++14
+SystemRequirements: C++23
 @end example
 @noindent
 If it has a @file{Makevars} file (or @file{Makevars.win} or
 @file{Makevars.ucrt} on Windows) this should include the line
 @example
-CXX_STD = CXX14
+CXX_STD = CXX23
 @end example
-@noindent
-On the other hand, specifying C++11@footnote{Often historically
-used to mean `not C++98'} when the code is valid under C++14 or C++17
-reduces future portability.
 
-Code needing C++14 or later features can check for their presence @emph{via}
+Code needing C++20 or later features can check for their presence @emph{via}
 `SD-6 feature tests'@footnote{See
 @uref{https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations}
 or
-@uref{https://en.cppreference.com/w/cpp/experimental/feature_test}.
-It seems a reasonable assumption that any compiler promising some C++14
-conformance will provide these---e.g.@: @command{g++} 4.9.x did but
-4.8.5 did not.}.  Such a check could be
-
-@example
-#include <memory> // header where this is defined
-#if defined(__cpp_lib_make_unique) && (__cpp_lib_make_unique >= 201304)
-using std::make_unique;
-#else
-// your emulation
-#endif
-@end example
+@uref{https://en.cppreference.com/w/cpp/experimental/feature_test.html}.}
 
 @c Ubuntu LTS releases now have 10 years of support even if announced
 @c with 8 years.
@@ -3054,12 +3037,13 @@ using std::make_unique;
 @c RHEL 8 (8.x, 9.x available. full support 2024-05 + 8 more years)
 @c RHEL 9 (11.x available, full support 2027-05 + 8 more years)
 
-C++17, C++20, C++23 and C++26 (from @R{} 4.5.0) can be specified in an
-analogous way.
+C++20, C++23 and C++26 (from @R{} 4.5.0) can be specified in an
+analogous way.  Currently so can C++11 and C++14, but support for those
+is likely to be removed in 2026.
 
 Note that C++17 or later `support' does not mean complete support: use
 feature tests as well as resources such as
-@uref{https://en.cppreference.com/w/cpp/compiler_support},
+@uref{https://en.cppreference.com/w/cpp/compiler_support.html},
 @uref{https://gcc.gnu.org/projects/cxx-status.html} and
 @uref{https://clang.llvm.org/cxx_status.html} to see if the features you
 want to use are widely implemented.
@@ -3115,25 +3099,25 @@ and @command{g++} 11--15 to C++17.
 For a package with a @file{src/Makefile} (or a Windows analogue),
 a non-default C++ compiler can be selected by including something like
 @example
-CXX14 = `"$@{R_HOME@}/bin/R" CMD config CXX14`
-CXX14STD = `"$@{R_HOME@}/bin/R" CMD config CXX14STD`
-CXX = $@{CXX14@} $@{CXX14STD@}
-CXXFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX14FLAGS`
-CXXPICFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX14PICFLAGS`
-SHLIB_LD = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX14LD`
-SHLIB_LDFLAGS = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX14LDFLAGS`
+CXX20 = `"$@{R_HOME@}/bin/R" CMD config CXX20`
+CXX20STD = `"$@{R_HOME@}/bin/R" CMD config CXX20STD`
+CXX = $@{CXX20@} $@{CXX20STD@}
+CXXFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX20FLAGS`
+CXXPICFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX20PICFLAGS`
+SHLIB_LD = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX20LD`
+SHLIB_LDFLAGS = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX20LDFLAGS`
 @end example
 @noindent
 and ensuring these values are used in relevant compilations, after
 checking they are non-empty.  A common use of @file{src/Makefile} is to
 compile an executable, when likely something like (for example for
-C++14)
+C++20)
 @example
-if test -z "$CXX14"; then
-  AC_MSG_ERROR([No C++14 compiler is available])
+if test -z "$CXX20"; then
+  AC_MSG_ERROR([No C++20 compiler is available])
 fi
-CXX = $@{CXX14@} $@{CXX14STD@}
-CXXFLAGS = $@{CXX14FLAGS@}
+CXX = $@{CXX20@} $@{CXX20STD@}
+CXXFLAGS = $@{CXX20FLAGS@}
 @end example
 @noindent
 suffices.
@@ -3161,7 +3145,7 @@ the formerly deprecated meaning of function declarations with an empty
 parameter list to now mean no parameters.@footnote{The latter has been
 implemented in @command{gcc} but not currently in @I{LLVM} nor Apple
 @command{clang}.}(There are many other additions: see for example
-@uref{https://en.cppreference.com/w/c/23}.)
+@uref{https://en.cppreference.com/w/c/23.html}.)
 
 As from @R{} 4.5.0, @R{}'s @command{configure} script chooses a compiler
 option which selects C23 if one is available.  Some compilers (including
@@ -4241,7 +4225,9 @@ non-standard names such as @code{[<-.fractions} must be.)
 
 For packages with many variables to export it may be more convenient to
 specify the names to export with a regular expression using
-@code{exportPattern}.  The directive
+@code{exportPattern}. This pattern should be POSIX 1003.2 extended regular
+expression (see the help for @code{regexp} in @R{} for the precise details).
+The directive
 
 @findex exportPattern
 @example
@@ -6441,7 +6427,7 @@ macro.  C23 allows zero arguments in a similar way.
 @end itemize
 
 Some additional information for C++ is available at
-@uref{https://journal.r-project.org/archive/2011-2/RJournal_2011-2_Plummer.pdf}
+@uref{https://journal.R-project.org/articles/RJ-2011-020/RJ-2011-020.pdf}
 by @I{Martyn Plummer}.
 
 Several OSes have or currently do provide multiple C++ runtimes ---
@@ -6569,8 +6555,8 @@ been widely implemented for a least a couple of years.  It will become
 the default of GCC 15, and @R{} will default to it if available from
 @R{} 4.5.0.
 
-Some of the more significant changes are
-@c https://en.cppreference.com/w/c/23
+@c Some of the more significant changes are
+@c https://en.cppreference.com/w/c/23.html
 
 @itemize
 
@@ -9442,7 +9428,8 @@ which does not help much, as there is no call to @code{as.environment}
 in @code{initialize} (and the note ``called from internal dispatch''
 tells us so).  In this case we searched the @R{} sources for the quoted
 call, which occurred in only one place,
-@code{methods:::.asEnvironmentPackage}.  So now we knew where the
+@c @code{methods:::.asEnvironmentPackage}  @c long removed (c76155)
+so now we knew where the
 error was occurring.  (This was an unusually opaque example.)
 
 The error message
@@ -9494,7 +9481,8 @@ Available environments had calls:
 1: glm(resp ~ 0 + predictor, family = binomial(link = "log"))
 2: glm.fit(x = X, y = Y, weights = weights, start = start, etastart = etastart, mus
 3: stop("no valid set of coefficients has been found: please supply starting values
-Enter an environment number, or 0 to exit  Selection:
+Enter an environment number, or 0 to exit
+Selection:
 @end smallexample
 
 @noindent
