@@ -675,7 +675,6 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 ## non-API, declared in Rinternals.h
             "SET_OBJECT", ## no longer used in an example in R-exts 
             "SET_S4_OBJECT", "UNSET_S4_OBJECT",
-            "R_curErrorBuf",
             "SETLENGTH", "SET_TRUELENGTH", "SETLEVELS",
             "SET_ENVFLAGS", "SET_FRAME", "SET_ENCLOS", "SET_HASHTAB",
             "SET_PRENV", "SET_PRVALUE", "SET_PRCODE", "STDVEC_DATAPTR",

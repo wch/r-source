@@ -13593,10 +13593,10 @@ is modified it may suffice to call @code{Rf_shallow_duplicate}.
 @comment FIXME need a separate section on attributes
 At times it may be necessary to copy attributes from one object to
 another.  This can be done using @code{DUPLICATE_ATTRIB} or
-@code{SHALLOW_DUPLICATE_ATTRIB}
+@code{SHALLOW_DUPLICATE_ATTRIB}. 
 @apifun DUPLICATE_ATTRIB
 @apifun SHALLOW_DUPLICATE_ATTRIB
-@code{ANY_ATTRIB} checks whether there are any attributes and
+@code{ANY_ATTRIB} checks whether there are any attributes, and
 @code{CLEAR_ATTRIB} removes all attributes.
 @apifun ANY_ATTRIB
 @apifun CLEAR_ATTRIB
@@ -17050,7 +17050,7 @@ functions built on @code{R_ToplevelExec} are @code{R_tryEval} and
 @code{R_tryEvalSilent}.
 @example
 SEXP R_tryEval(SEXP e, SEXP env, int *ErrorOccurred);
-SEXP R_tryEvalSilent(SEXP e, SEXP env, int *ErrorOccurred)
+SEXP R_tryEvalSilent(SEXP e, SEXP env, int *ErrorOccurred);
 @end example
 @apifun R_tryEvalSilent
 @apifun R_tryEval
@@ -17064,6 +17064,14 @@ option. For example, finalizers are run in a separate top level
 context. The other functions mentioned in this section will usually be
 more appropriate choices.
 
+Currently, if these evaluations produce an error that is handled by the
+default handler, then the error message will be stored in a buffer that
+can be accessed with @code{R_curErrorBuf}.
+@example
+const char *R_curErrorBuf(void);
+@end example
+@eapifun R_curErrorBuf
+This design could change in the future.
 
 @node Allowing interrupts
 @section Allowing interrupts
