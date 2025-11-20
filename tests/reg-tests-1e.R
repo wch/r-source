@@ -2342,7 +2342,7 @@ stopifnot(exprs = { ## logical/numeric mixtures:
     }
 })
 
-## check that tim and dimnames are dropped when estending with GROWABLE
+## check that dim and dimnames are dropped when extending with GROWABLE
 x <- 1:49
 x[50] <- 50L
 dim(x) <- c(25, 2)
