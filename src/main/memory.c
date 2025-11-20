@@ -5051,11 +5051,9 @@ SEXP R_duplicateAsResizable(SEXP x)
 	error(_("ALTREP objects cannot be made resizable"));
     if (! isVector(x))
 	error(_("cannot make non-vector objects resizable"));
-    if (! GROWABLE_BIT_SET(x) && XTRUELENGTH(x) != 0)
-	error("XTRUELENGTH has been hijacked");
     SEXP val = duplicate(x);
-    SET_TRUELENGTH(x, XLENGTH(x));
-    SET_GROWABLE_BIT(x);
+    SET_TRUELENGTH(val, XLENGTH(val));
+    SET_GROWABLE_BIT(val);
     return val;
 }
 
