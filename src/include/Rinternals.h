@@ -1237,6 +1237,7 @@ bool R_isResizable(SEXP x);
 R_xlen_t R_maxLength(SEXP x);
 void R_resizeVector(SEXP x, R_xlen_t newlen);
 SEXP R_allocResizableVector(SEXPTYPE type, R_xlen_t len, R_xlen_t maxlen);
+SEXP R_duplicateAsResizable(SEXP x);
 
 
 /* Rest of this file

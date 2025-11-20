@@ -5045,6 +5045,20 @@ SEXP R_allocResizableVector(SEXPTYPE type, R_xlen_t len, R_xlen_t maxlen)
     return val;
 }
 
+SEXP R_duplicateAsResizable(SEXP x)
+{
+    if (ALTREP(x))
+	error(_("ALTREP objects cannot be made resizable"));
+    if (! isVector(x))
+	error(_("cannot make non-vector objects resizable"));
+    if (! GROWABLE_BIT_SET(x) && XTRUELENGTH(x) != 0)
+	error("XTRUELENGTH has been hijacked");
+    SEXP val = duplicate(x);
+    SET_TRUELENGTH(x, XLENGTH(x));
+    SET_GROWABLE_BIT(x);
+    return val;
+}
+
 static R_INLINE void clear_elements(SEXP x, R_xlen_t from, R_xlen_t to)
 {
     switch(TYPEOF(x)) {
@@ -5086,7 +5100,7 @@ void R_resizeVector(SEXP x, R_xlen_t newlen)
 	R_xlen_t len = XLENGTH(x);
 	if (newlen < len) // clear dropped elements to drop refcounts
 	    clear_elements(x, newlen, len);
-	SETLENGTH(x, newlen);
+	SET_STDVEC_LENGTH(x, newlen);
 	if (len < newlen) // initialize new elements
 	    clear_elements(x, len, newlen);
     }
