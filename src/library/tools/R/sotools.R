@@ -704,6 +704,9 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "Rf_isFrame",
             "BODY", "FORMALS", "CLOENV", "ENCLOS",
             "IS_ASCII", "IS_UTF8",
+## experimental resizable vector entry points -- not yet in the API
+            "R_isResizable", "R_maxLength", "R_resizeVector",
+            "R_allocResizableVector", "R_duplicateAsResizable",
 ## in the experimental API header R_ext/Connections.h
 ##            "R_new_custom_connection", "R_ReadConnection",
 ##            "R_WriteConnection", "R_GetConnection",
