@@ -41,7 +41,7 @@
  *  the value duplicated.  */
 
 #define COPY_TRUELENGTH(to, from) do {			\
-	if (! IS_GROWABLE(from))			\
+	if (! GROWABLE_BIT_SET(from))			\
 	    SET_TRUELENGTH(to, XTRUELENGTH(from));	\
     } while (0)
 
