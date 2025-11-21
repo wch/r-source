@@ -1236,7 +1236,7 @@ void R_clrhash(R_hashtab_type h);
 bool R_isResizable(SEXP x);
 R_xlen_t R_maxLength(SEXP x);
 void R_resizeVector(SEXP x, R_xlen_t newlen);
-SEXP R_allocResizableVector(SEXPTYPE type, R_xlen_t len, R_xlen_t maxlen);
+SEXP R_allocResizableVector(SEXPTYPE type, R_xlen_t maxlen);
 SEXP R_duplicateAsResizable(SEXP x);
 
 

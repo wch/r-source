@@ -5020,7 +5020,7 @@ R_xlen_t R_maxLength(SEXP x)
     return GROWABLE_BIT_SET(x) ? XTRUELENGTH(x) : xlength(x);
 }
 
-SEXP R_allocResizableVector(SEXPTYPE type, R_xlen_t len, R_xlen_t maxlen)
+SEXP R_allocResizableVector(SEXPTYPE type, R_xlen_t maxlen)
 {
     switch (type) {
     case LGLSXP:
@@ -5036,12 +5036,9 @@ SEXP R_allocResizableVector(SEXPTYPE type, R_xlen_t len, R_xlen_t maxlen)
 	error(_("cannot make a resizable vector of type '%s'"),
 	      sexptype2char(type));
     }
-    if (len > maxlen)
-	error(_("len larger than maxlen"));
     SEXP val = allocVector(type, maxlen);
     SET_TRUELENGTH(val, maxlen);
     SET_GROWABLE_BIT(val);
-    SETLENGTH(val, len);
     return val;
 }
 
@@ -5081,19 +5078,14 @@ void R_resizeVector(SEXP x, R_xlen_t newlen)
 	    error(_("not a resizable vector"));
 	if (newlen > XTRUELENGTH(x))
 	    error(_("'newlen' is too large"));
-	if (MAYBE_SHARED(x))
-	    error(_("can't resize a vector that might be shared"));
 	if (ATTRIB(x) != R_NilValue) {
+	    // clear length-dependent attributes
 	    if (getAttrib(x, R_DimSymbol) != R_NilValue)
-		error(_("can't resize a vector with a 'dim' attribute"));
+		setAttrib(x, R_DimSymbol, R_NilValue);
 	    if (getAttrib(x, R_DimNamesSymbol) != R_NilValue)
-		error(_("can't resize a vector with a 'dimnames' attribute"));
-	    SEXP names = getAttrib(x, R_NamesSymbol);
-	    if (names != R_NilValue) {
-		if (MAYBE_SHARED(names))
-		    error(_("can't resize 'names' that might be shared"));
-		R_resizeVector(names, newlen);
-	    }
+		setAttrib(x, R_DimNamesSymbol, R_NilValue);
+	    if (getAttrib(x, R_NamesSymbol) != R_NilValue)
+		setAttrib(x, R_NamesSymbol, R_NilValue);
 	}
 	R_xlen_t len = XLENGTH(x);
 	if (newlen < len) // clear dropped elements to drop refcounts
