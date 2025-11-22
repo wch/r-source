@@ -16837,6 +16837,11 @@ it will usually be taken from the environment variable @env{HOME} if
 this is defined.
 @end deftypefun
 
+@eapifun acopy_string
+@deftypefun {const char *} acopy_string (const char *@var{in})
+Return a copy of a string using memory from @code{R_alloc}.
+@end deftypefun
+
 For historical reasons there are Fortran interfaces to functions
 @code{D1MACH} and @code{I1MACH}.  These can be called from C code as
 e.g.@: @code{F77_CALL(d1mach)(4)}.  Note that these are emulations of
