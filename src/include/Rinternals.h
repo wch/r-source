@@ -362,9 +362,9 @@ SEXP R_ClosureEnv(SEXP);
 
 /* Symbol Access Functions */
 SEXP (PRINTNAME)(SEXP x);
-SEXP (SYMVALUE)(SEXP x);
-SEXP (INTERNAL)(SEXP x);
-int  (DDVAL)(SEXP x);
+//SEXP (SYMVALUE)(SEXP x);
+//SEXP (INTERNAL)(SEXP x);
+//int  (DDVAL)(SEXP x);
 
 /* Environment Access Functions */
 SEXP (FRAME)(SEXP x);
@@ -377,7 +377,7 @@ SEXP R_ParentEnv(SEXP);
 SEXP (PRCODE)(SEXP x);
 SEXP (PRENV)(SEXP x);
 SEXP (PRVALUE)(SEXP x);
-int  (PRSEEN)(SEXP x);
+//int  (PRSEEN)(SEXP x);
 
 /* External pointer access macros */
 SEXP (EXTPTR_PROT)(SEXP);

@@ -638,6 +638,9 @@ void (SET_MISSING)(SEXP x, int v);
 SEXP CONS_NR(SEXP a, SEXP b);
 
 /* Symbol Access Functions */
+SEXP (SYMVALUE)(SEXP x);
+SEXP (INTERNAL)(SEXP x);
+int  (DDVAL)(SEXP x);
 void (SET_DDVAL)(SEXP x, int v);
 void SET_PRINTNAME(SEXP x, SEXP v);
 void SET_SYMVALUE(SEXP x, SEXP v);
@@ -650,6 +653,7 @@ void SET_ENCLOS(SEXP x, SEXP v);
 void SET_HASHTAB(SEXP x, SEXP v);
 
 /* Promise Access Functions */
+int  (PRSEEN)(SEXP x);
 void (SET_PRSEEN)(SEXP x, int v);
 void SET_PRENV(SEXP x, SEXP v);
 void SET_PRVALUE(SEXP x, SEXP v);
