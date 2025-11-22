@@ -217,7 +217,8 @@
       \code{SET_TYPEOF}, \code{ENVFLAGS}, \code{SET_ENVFLAGS},
       \code{SET_FORMALS}, \code{SET_BODY}, \code{SET_CLOENV},
       \code{STRING_PTR}, \code{DATAPTR}, \code{XTRUELENGTH},
-      \code{R_duplicate_attr}, \code{R_shallow_duplicate_attr}.
+      \code{R_duplicate_attr}, \code{R_shallow_duplicate_attr},
+      \code{getConnection}.
 
       \item The deprecated macros \code{CHARACTER_DATA} and
       \code{CHARACTER_POINTER} now return \code{const} pointers since using
