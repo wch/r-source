@@ -605,6 +605,7 @@ void (UNSET_MAYBEJIT)(SEXP x);
 
 /* Growable vector support */
 int (IS_GROWABLE)(SEXP x);
+int (GROWABLE_BIT_SET)(SEXP x);
 void (SET_GROWABLE_BIT)(SEXP x);
 
 /* Vector Access Functions */

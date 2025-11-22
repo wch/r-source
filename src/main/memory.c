@@ -4051,6 +4051,7 @@ attribute_hidden void (UNSET_MAYBEJIT)(SEXP x) { UNSET_MAYBEJIT(CHK(x)); }
 
 /* Growable vector support */
 int (IS_GROWABLE)(SEXP x) { return IS_GROWABLE(CHK(x)); }
+int (GROWABLE_BIT_SET)(SEXP x) { return GROWABLE_BIT_SET(CHK(x)); }
 void (SET_GROWABLE_BIT)(SEXP x) { SET_GROWABLE_BIT(CHK(x)); }
 
 static int nvec[32] = {
