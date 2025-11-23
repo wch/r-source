@@ -260,7 +260,7 @@ int (NO_REFERENCES)(SEXP x);
 /* General Cons Cell Attributes */
 SEXP (ATTRIB)(SEXP x);
 int  (OBJECT)(SEXP x);
-int  (MARK)(SEXP x);
+//int  (MARK)(SEXP x);
 int  (TYPEOF)(SEXP x);
 int  (NAMED)(SEXP x);
 int  (REFCNT)(SEXP x);
@@ -333,7 +333,7 @@ SEXP (CADDR)(SEXP e);
 SEXP (CADDDR)(SEXP e);
 SEXP (CAD4R)(SEXP e);
 SEXP (CAD5R)(SEXP e);
-int  (MISSING)(SEXP x);
+//int  (MISSING)(SEXP x);
 void SET_TAG(SEXP x, SEXP y);
 SEXP SETCAR(SEXP x, SEXP y);
 SEXP SETCDR(SEXP x, SEXP y);
@@ -347,11 +347,11 @@ SEXP (FORMALS)(SEXP x);
 SEXP (BODY)(SEXP x);
 SEXP (CLOENV)(SEXP x);
 int  (RDEBUG)(SEXP x);
-int  (RSTEP)(SEXP x);
-int  (RTRACE)(SEXP x);
+//int  (RSTEP)(SEXP x);
+//int  (RTRACE)(SEXP x);
 void (SET_RDEBUG)(SEXP x, int v);
-void (SET_RSTEP)(SEXP x, int v);
-void (SET_RTRACE)(SEXP x, int v);
+//void (SET_RSTEP)(SEXP x, int v);
+//void (SET_RTRACE)(SEXP x, int v);
 void SET_FORMALS(SEXP x, SEXP v);
 void SET_BODY(SEXP x, SEXP v);
 void SET_CLOENV(SEXP x, SEXP v);
@@ -543,13 +543,13 @@ SEXP Rf_GetColNames(SEXP);
 void Rf_GetMatrixDimnames(SEXP, SEXP*, SEXP*, const char**, const char**);
 SEXP Rf_GetOption(SEXP, SEXP); /* pre-2.13.0 compatibility */
 SEXP Rf_GetOption1(SEXP);
-int Rf_GetOptionDigits(void);
+//int Rf_GetOptionDigits(void);
 int Rf_GetOptionWidth(void);
 SEXP Rf_GetRowNames(SEXP);
 void Rf_gsetVar(SEXP, SEXP, SEXP);
 SEXP Rf_install(const char *);
 SEXP Rf_installChar(SEXP);
-SEXP Rf_installNoTrChar(SEXP);
+//SEXP Rf_installNoTrChar(SEXP);
 SEXP Rf_installTrChar(SEXP);
 Rboolean Rf_isOrdered(SEXP); // util.c
 Rboolean Rf_isUnordered(SEXP); // util.c
@@ -610,8 +610,8 @@ SEXP R_GetCurrentEnv(void);
 
 Rboolean Rf_isS4(SEXP); // objects.c
 SEXP Rf_asS4(SEXP, Rboolean, int); // objects.c
-SEXP Rf_S3Class(SEXP);
-int Rf_isBasicClass(const char *);
+//SEXP Rf_S3Class(SEXP);
+//int Rf_isBasicClass(const char *);
 
 /* cetype_t is an identifier reseved by POSIX, but it is
    well established as public.  Could remap by a #define though */
@@ -694,7 +694,7 @@ SEXP R_UnwindProtect(SEXP (*fun)(void *data), void *data,
 SEXP R_NewEnv(SEXP, int, int);
 Rboolean R_IsPackageEnv(SEXP rho); // envir.c
 SEXP R_PackageEnvName(SEXP rho);
-SEXP R_FindPackageEnv(SEXP info);
+//SEXP R_FindPackageEnv(SEXP info);
 Rboolean R_IsNamespaceEnv(SEXP rho); // envir.c
 SEXP R_NamespaceEnvSpec(SEXP rho);
 SEXP R_FindNamespace(SEXP info);
@@ -706,7 +706,7 @@ void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env);
 Rboolean R_BindingIsLocked(SEXP sym, SEXP env); // envir.c
 Rboolean R_BindingIsActive(SEXP sym, SEXP env); // envir.c
 SEXP R_ActiveBindingFunction(SEXP sym, SEXP env);
-Rboolean R_HasFancyBindings(SEXP rho); // envir.c
+//Rboolean R_HasFancyBindings(SEXP rho); // envir.c
 
 
 /* ../main/errors.c : */
@@ -719,10 +719,10 @@ void Rf_warningcall_immediate(SEXP, const char *, ...) R_PRINTF_FORMAT(2, 3);
 #define R_XDR_DOUBLE_SIZE 8
 #define R_XDR_INTEGER_SIZE 4
 
-void R_XDREncodeDouble(double d, void *buf);
-double R_XDRDecodeDouble(void *buf);
-void R_XDREncodeInteger(int i, void *buf);
-int R_XDRDecodeInteger(void *buf);
+//void R_XDREncodeDouble(double d, void *buf);
+//double R_XDRDecodeDouble(void *buf);
+//void R_XDREncodeInteger(int i, void *buf);
+//int R_XDRDecodeInteger(void *buf);
 
 typedef void *R_pstream_data_t;
 
@@ -810,18 +810,18 @@ SEXP R_do_slot(SEXP obj, SEXP name);
 SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value);
 int R_has_slot(SEXP obj, SEXP name);
 /* S3-S4 class (inheritance), attrib.c */
-SEXP R_S4_extends(SEXP klass, SEXP useTable);
+//SEXP R_S4_extends(SEXP klass, SEXP useTable);
 
 /* class definition, new objects (objects.c) */
 SEXP R_do_MAKE_CLASS(const char *what);
 SEXP R_getClassDef  (const char *what);
-SEXP R_getClassDef_R(SEXP what);
-Rboolean R_has_methods_attached(void);
-Rboolean R_isVirtualClass(SEXP class_def, SEXP env);
-Rboolean R_extends  (SEXP class1, SEXP class2, SEXP env);
+//SEXP R_getClassDef_R(SEXP what);
+//Rboolean R_has_methods_attached(void);
+//Rboolean R_isVirtualClass(SEXP class_def, SEXP env);
+//Rboolean R_extends  (SEXP class1, SEXP class2, SEXP env);
 SEXP R_do_new_object(SEXP class_def);
 /* supporting  a C-level version of  is(., .) : */
-int R_check_class_and_super(SEXP x, const char **valid, SEXP rho);
+//int R_check_class_and_super(SEXP x, const char **valid, SEXP rho);
 int R_check_class_etc      (SEXP x, const char **valid);
 
 /* preserve objects across GCs */
@@ -867,7 +867,7 @@ int R_system(const char *);
 #define IDENT_EXTPTR_AS_REF   64
 Rboolean R_compute_identical(SEXP, SEXP, int); // identical.c
 
-SEXP R_body_no_src(SEXP x); // body(x) without "srcref" etc, ../main/utils.c
+//SEXP R_body_no_src(SEXP x); // body(x) without "srcref" etc, ../main/utils.c
 
 /* C version of R's  indx <- order(..., na.last, decreasing) :
    e.g.  arglist = Rf_lang2(x,y)  or  Rf_lang3(x,y,z) 
@@ -1083,7 +1083,7 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
    other header file, with or without the Rf_ prefix.
 */
 SEXP     Rf_allocVector(SEXPTYPE, R_xlen_t);
-Rboolean Rf_conformable(SEXP, SEXP);
+//Rboolean Rf_conformable(SEXP, SEXP);
 SEXP	 Rf_elt(SEXP, int);
 Rboolean Rf_inherits(SEXP, const char *);
 Rboolean Rf_isArray(SEXP);
@@ -1101,7 +1101,7 @@ Rboolean Rf_isNumeric(SEXP);
 Rboolean Rf_isPairList(SEXP);
 Rboolean Rf_isPrimitive(SEXP);
 Rboolean Rf_isTs(SEXP);
-Rboolean Rf_isUserBinop(SEXP);
+//Rboolean Rf_isUserBinop(SEXP);
 Rboolean Rf_isValidString(SEXP);
 Rboolean Rf_isValidStringF(SEXP);
 Rboolean Rf_isVector(SEXP);
@@ -1127,7 +1127,7 @@ SEXP	 Rf_listAppend(SEXP, SEXP);
 SEXP	 Rf_mkNamed(SEXPTYPE, const char **);
 SEXP	 Rf_mkString(const char *);
 int	 Rf_nlevels(SEXP);
-int	 Rf_stringPositionTr(SEXP, const char *);
+//int	 Rf_stringPositionTr(SEXP, const char *);
 SEXP	 Rf_ScalarComplex(Rcomplex);
 SEXP	 Rf_ScalarInteger(int);
 SEXP	 Rf_ScalarLogical(int);

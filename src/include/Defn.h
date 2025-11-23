@@ -574,6 +574,7 @@ void R_check_thread(const char *s);
 */
 
 /* General Cons Cell Attributes */
+int  (MARK)(SEXP x);
 int  (TRACKREFS)(SEXP x);
 void (SET_OBJECT)(SEXP x, int v);
 void (SET_TYPEOF)(SEXP x, int v);
@@ -590,6 +591,15 @@ void (ENABLE_REFCNT)(SEXP x);
 /* S4 object setting */
 void (SET_S4_OBJECT)(SEXP x);
 void (UNSET_S4_OBJECT)(SEXP x);
+
+SEXP Rf_S3Class(SEXP);
+int Rf_isBasicClass(const char *);
+SEXP R_S4_extends(SEXP klass, SEXP useTable);
+SEXP R_getClassDef_R(SEXP what);
+Rboolean R_has_methods_attached(void);
+Rboolean R_isVirtualClass(SEXP class_def, SEXP env);
+Rboolean R_extends  (SEXP class1, SEXP class2, SEXP env);
+int R_check_class_and_super(SEXP x, const char **valid, SEXP rho);
 
 int (ASSIGNMENT_PENDING)(SEXP x);
 void (SET_ASSIGNMENT_PENDING)(SEXP x, int v);
@@ -632,10 +642,28 @@ void SET_BNDCELL(SEXP cell, SEXP val);
 int (PROMISE_TAG)(SEXP e);
 void (SET_PROMISE_TAG)(SEXP e, int v);
 
+/* metadata access */
+//int INTEGER_IS_SORTED(SEXP x);
+//int INTEGER_NO_NA(SEXP x);
+//int REAL_IS_SORTED(SEXP x);
+//int REAL_NO_NA(SEXP x);
+//int LOGICAL_IS_SORTED(SEXP x);
+//int LOGICAL_NO_NA(SEXP x);
+//int STRING_IS_SORTED(SEXP x);
+//int STRING_NO_NA(SEXP x);
+
 /* List Access Functions */
 SEXP (CAR0)(SEXP e);
 void (SET_MISSING)(SEXP x, int v);
 SEXP CONS_NR(SEXP a, SEXP b);
+int  (MISSING)(SEXP x);
+
+/* Closure Access Functions */
+int  (RSTEP)(SEXP x);
+int  (RTRACE)(SEXP x);
+void (SET_RSTEP)(SEXP x, int v);
+void (SET_RTRACE)(SEXP x, int v);
+SEXP R_body_no_src(SEXP x); // body(x) without "srcref" etc, ../main/utils.c
 
 /* Symbol Access Functions */
 SEXP (SYMVALUE)(SEXP x);
@@ -769,6 +797,10 @@ int *INTEGER0(SEXP x);
 double *REAL0(SEXP x);
 Rcomplex *COMPLEX0(SEXP x);
 Rbyte *RAW0(SEXP x);
+
+Rboolean Rf_conformable(SEXP, SEXP);
+Rboolean Rf_isUserBinop(SEXP);
+int	 Rf_stringPositionTr(SEXP, const char *);
 #endif
 
 #ifdef USE_RINTERNALS
@@ -1744,7 +1776,14 @@ Rboolean R_BCVersionOK(SEXP);
 int R_NaN_is_R_NA(double);
 
 /* Environment and Binding Features */
-void R_RestoreHashCount(SEXP rho);
+SEXP R_FindPackageEnv(SEXP info);
+Rboolean R_HasFancyBindings(SEXP rho); // envir.c
+void R_RestoreHashCount(SEXP rho); // envir.c
+
+void R_XDREncodeDouble(double d, void *buf);
+double R_XDRDecodeDouble(void *buf);
+void R_XDREncodeInteger(int i, void *buf);
+int R_XDRDecodeInteger(void *buf);
 
 # define allocCharsxp		Rf_allocCharsxp
 # define asBool2	       	Rf_asBool2
@@ -2061,6 +2100,7 @@ void FrameClassFix(SEXP);
 SEXP frameSubscript(int, SEXP, SEXP);
 R_xlen_t get1index(SEXP, SEXP, R_xlen_t, int, int, SEXP);
 int GetOptionCutoff(void);
+int Rf_GetOptionDigits(void);
 SEXP getVar(SEXP, SEXP);
 SEXP getVarInFrame(SEXP, SEXP);
 void InitArithmetic(void);
@@ -2073,6 +2113,7 @@ Rboolean R_current_trace_state(void);
 Rboolean R_current_debug_state(void);
 Rboolean R_has_methods(SEXP);
 void R_InitialData(void);
+SEXP Rf_installNoTrChar(SEXP);
 SEXP R_possible_dispatch(SEXP, SEXP, SEXP, SEXP, Rboolean);
 Rboolean inherits2(SEXP, const char *);
 void InitGraphics(void);
