@@ -13322,7 +13322,7 @@ C99/C23/C++ type @code{bool}.
 @apifun Rf_asComplex
 @apifun Rf_asChar
 @apifun Rf_asRboolean
-@apifun Rf_asBbool
+@apifun Rf_asBool
 The function @code{Rf_asCharacterFactor} converts a factor to a character
 vector.
 @apifun Rf_asCharacterFactor
