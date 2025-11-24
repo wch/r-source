@@ -93,7 +93,7 @@
  * "scrap"
 
  * R_NilValue is not a valid value for any option, but is used to signal a
- * missing option by FindTaggedItem/GetOption and higher-level functions.
+ * missing option by FindTaggedItem/GetOption1 and higher-level functions.
  */
 
 
@@ -124,12 +124,6 @@ static SEXP makeErrorCall(SEXP fun)
   UNPROTECT(1);
   return call;
 }
-
-SEXP GetOption(SEXP tag, SEXP rho)
-{
-    return GetOption1(tag);
-}
-
 
 SEXP GetOption1(SEXP tag)
 {
@@ -737,7 +731,7 @@ attribute_hidden SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    error(_("invalid value for '%s'"), CHAR(namei));
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
-/* handle this here to avoid GetOption during error handling */
+/* handle this here to avoid GetOption1 during error handling */
 	    else if ( streql(CHAR(namei), "show.error.messages") ) {
 		check_TRUE_FALSE(argi, CHAR(namei));
 		R_ShowErrorMessages = LOGICAL(argi)[0];
