@@ -13563,6 +13563,9 @@ to the @R{} functions @code{forceAndCall} and @code{is.unsorted}.
 @eapifun R_forceAndCall
 @eapifun Rf_isUnsorted
 
+The C function @code{R_isTRUE} corresponds to the @R{} function
+@code{isTRUE}.
+@eapifun R_isTRUE
 
 @node Named objects and copying
 @subsection Named objects and copying
