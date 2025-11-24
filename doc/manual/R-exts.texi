@@ -6596,7 +6596,7 @@ many code readers and supported by all C standards.  (Compilers may warn
 about an empty argument list in C23 mode.)
 
 @item
-@code{INIINITY} and @code{NAN} are available via
+@code{INFINITY} and @code{NAN} are available via
 header @file{float.h} and deprecated in @file{math.h}.
 
 @item
