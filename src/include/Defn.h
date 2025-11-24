@@ -575,6 +575,7 @@ void R_check_thread(const char *s);
 
 /* General Cons Cell Attributes */
 int  (MARK)(SEXP x);
+int  (REFCNT)(SEXP x);
 int  (TRACKREFS)(SEXP x);
 void (SET_OBJECT)(SEXP x, int v);
 void (SET_TYPEOF)(SEXP x, int v);
@@ -659,8 +660,10 @@ SEXP CONS_NR(SEXP a, SEXP b);
 int  (MISSING)(SEXP x);
 
 /* Closure Access Functions */
+int  (RDEBUG)(SEXP x);
 int  (RSTEP)(SEXP x);
 int  (RTRACE)(SEXP x);
+void (SET_RDEBUG)(SEXP x, int v);
 void (SET_RSTEP)(SEXP x, int v);
 void (SET_RTRACE)(SEXP x, int v);
 SEXP R_body_no_src(SEXP x); // body(x) without "srcref" etc, ../main/utils.c
@@ -768,6 +771,13 @@ Rboolean R_cycle_detected(SEXP s, SEXP child);
 void R_init_altrep(void);
 void R_reinit_altrep_classes(DllInfo *);
 
+
+SEXP Rf_allocVector3(SEXPTYPE, R_xlen_t, R_allocator_t*);
+const char * R_typeToChar(SEXP);
+#ifdef USE_TYPE2CHAR_2
+const char * R_typeToChar2(SEXP, SEXPTYPE);
+#endif
+
 /* Defining NO_RINLINEDFUNS disables use to simulate platforms where
    this is not available */
 #if !defined(__MAIN__) && (defined(COMPILING_R) || ( __GNUC__ && !defined(__INTEL_COMPILER) )) && (defined(COMPILING_R) || !defined(NO_RINLINEDFUNS))
@@ -801,6 +811,9 @@ Rbyte *RAW0(SEXP x);
 Rboolean Rf_conformable(SEXP, SEXP);
 Rboolean Rf_isUserBinop(SEXP);
 int	 Rf_stringPositionTr(SEXP, const char *);
+int LENGTH_EX(SEXP x, const char *file, int line);
+Rboolean Rf_isValidStringF(SEXP);
+//R_xlen_t XLENGTH_EX(SEXP x);
 #endif
 
 #ifdef USE_RINTERNALS
@@ -1758,6 +1771,7 @@ SEXP Rf_findFun3(SEXP, SEXP, SEXP);
 void Rf_findFunctionForBody(SEXP);
 int Rf_FixupDigits(SEXP, warn_type);
 int Rf_FixupWidth (SEXP, warn_type);
+void Rf_gsetVar(SEXP, SEXP, SEXP);
 SEXP Rf_installDDVAL(int i);
 SEXP Rf_installS3Signature(const char *, const char *);
 bool Rf_isFree(SEXP);
@@ -2181,6 +2195,8 @@ SEXP R_data_class(SEXP , Rboolean);
 SEXP R_data_class2(SEXP);
 char *R_LibraryFileName(const char *, char *, size_t);
 SEXP R_LoadFromFile(FILE*, int);
+int R_nchar(SEXP string, nchar_type type_,
+	    Rboolean allowNA, Rboolean keepNA, const char* msg_name);
 SEXP R_NewHashedEnv(SEXP, int);
 extern int R_Newhashpjw(const char *);
 FILE* R_OpenLibraryFile(const char *);
@@ -2195,6 +2211,7 @@ Rboolean R_seemsOldStyleS4Object(SEXP object);
 int R_SetOptionWarn(int);
 int R_SetOptionWidth(int);
 SEXP R_SetOption(SEXP, SEXP);
+SEXP Rf_substitute(SEXP,SEXP);
 void R_Suicide(const char *);
 SEXP R_flexiblas_info(void);
 void R_getProcTime(double *data);
@@ -2209,6 +2226,7 @@ SEXP strmat2intmat(SEXP, SEXP, SEXP, SEXP);
 SEXP substituteList(SEXP, SEXP);
 unsigned int TimeToSeed(void);
 SEXP tspgets(SEXP, SEXP);
+SEXP Rf_type2rstr(SEXPTYPE);
 SEXP type2symbol(SEXPTYPE);
 void unbindVar(SEXP, SEXP);
 #ifdef ALLOW_OLD_SAVE

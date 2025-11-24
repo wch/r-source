@@ -18,7 +18,12 @@
  *  https://www.R-project.org/Licenses/
  */
 
-#include <Rinternals.h>
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <Defn.h>
+
 #include "statsErr.h"
 
 #define R_MSG_type	_("invalid 'type' (%s) of argument")
