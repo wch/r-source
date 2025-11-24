@@ -16481,7 +16481,6 @@ The C code underlying @code{optim} can be accessed directly.  The user
 needs to supply a function to compute the function to be minimized, of
 the type
 
-@apifun optimfn
 @example
 typedef double optimfn(int n, double *par, void *ex);
 @end example
@@ -16493,7 +16492,6 @@ routine, normally used to carry auxiliary information.
 
 Some of the methods also require a gradient function
 
-@apifun optimgr
 @example
 typedef void optimgr(int n, double *par, double *gr, void *ex);
 @end example
@@ -16576,7 +16574,6 @@ The C code underlying @code{integrate} can be accessed directly.  The
 user needs to supply a @emph{vectorizing} C function to compute the
 function to be integrated, of the type
 
-@apifun integr_fn
 @example
 typedef void integr_fn(double *x, int n, void *ex);
 @end example
