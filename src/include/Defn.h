@@ -1789,6 +1789,16 @@ Rboolean R_checkConstants(Rboolean);
 Rboolean R_BCVersionOK(SEXP);
 int R_NaN_is_R_NA(double);
 
+/* Replacements for popen and system */
+#ifdef HAVE_POPEN
+# ifdef __cplusplus
+std::FILE *R_popen(const char *, const char *);
+# else
+FILE *R_popen(const char *, const char *);
+# endif
+#endif
+int R_system(const char *);
+
 /* Environment and Binding Features */
 SEXP R_FindPackageEnv(SEXP info);
 Rboolean R_HasFancyBindings(SEXP rho); // envir.c

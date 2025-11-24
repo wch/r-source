@@ -835,16 +835,6 @@ void R_ReleaseFromMSet(SEXP x, SEXP mset);
 void R_dot_Last(void);		/* in main.c */
 void R_RunExitFinalizers(void);	/* in memory.c */
 
-/* Replacements for popen and system */
-#ifdef HAVE_POPEN
-# ifdef __cplusplus
-std::FILE *R_popen(const char *, const char *);
-# else
-FILE *R_popen(const char *, const char *);
-# endif
-#endif
-int R_system(const char *);
-
 /* R_compute_identical:  C version of identical() function
    The third arg to R_compute_identical() consists of bitmapped flags for non-default options:
    currently the first 4 default to TRUE, so the flag is set for FALSE values:

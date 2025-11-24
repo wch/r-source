@@ -707,6 +707,11 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 ## experimental resizable vector entry points -- not yet in the API
             "R_isResizable", "R_maxLength", "R_resizeVector",
             "R_allocResizableVector", "R_duplicateAsResizable",
+## experimental hashtable support -- not yet in the API
+            "R_asHashtable", "R_HashtabSEXP", "R_isHashtable", "R_mkhashtab",
+            "R_gethash", "R_sethash", "R_remhash", "R_numhash", "R_typhash",
+            "R_maphash", "R_maphashC", "R_clrhash",
+
 ## in the experimental API header R_ext/Connections.h
 ##            "R_new_custom_connection", "R_ReadConnection",
 ##            "R_WriteConnection", "R_GetConnection",
