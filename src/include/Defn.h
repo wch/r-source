@@ -2113,6 +2113,7 @@ R_xlen_t dispatch_xlength(SEXP, SEXP, SEXP);
 R_len_t dispatch_length(SEXP, SEXP, SEXP);
 SEXP dispatch_subset2(SEXP, R_xlen_t, SEXP, SEXP);
 SEXP duplicated(SEXP, Rboolean);
+SEXP R_duplicate_attr(SEXP);
 R_xlen_t any_duplicated(SEXP, Rboolean);
 R_xlen_t any_duplicated3(SEXP, SEXP, Rboolean);
 SEXP evalList(SEXP, SEXP, SEXP, int);

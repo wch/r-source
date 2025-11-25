@@ -523,7 +523,7 @@ SEXP Rf_dimgets(SEXP, SEXP);
 SEXP Rf_dimnamesgets(SEXP, SEXP);
 SEXP Rf_duplicate(SEXP);
 SEXP Rf_shallow_duplicate(SEXP);
-SEXP R_duplicate_attr(SEXP);
+//SEXP R_duplicate_attr(SEXP);
 SEXP R_shallow_duplicate_attr(SEXP);
 SEXP Rf_lazy_duplicate(SEXP);
 /* the next really should not be here and is also in Defn.h */
