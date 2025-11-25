@@ -64,12 +64,13 @@ all.equal.default <- function(target, current, ..., check.class = TRUE)
     msg <- switch (mode(target),
                    integer   = ,
                    complex   = ,
-                   numeric   = all.equal.numeric  (target, current, ...),
-                   character = all.equal.character(target, current, ...),
+                   numeric   = all.equal.numeric  (target, current, check.class=check.class, ...),
+                   character = all.equal.character(target, current, check.class=check.class, ...),
                    logical   = ,
-                   raw       = all.equal.raw      (target, current, ...),
+                   raw       = all.equal.raw      (target, current, check.class=check.class, ...),
 		   ## assumes that slots are implemented as attributes :
 		   S4        = attr.all.equal(target, current, ...),
+                   ## otherwise :
                    if(check.class && data.class(target) != data.class(current)) {
                        gettextf("target is %s, current is %s",
                                 data.class(target), data.class(current))
@@ -179,12 +180,12 @@ all.equal.numeric <-
 }
 
 all.equal.character <-
-    function(target, current, ..., check.attributes = TRUE)
+    function(target, current, ..., check.attributes = TRUE, check.class = TRUE)
 {
     if (!is.logical(check.attributes))
         stop(gettextf("'%s' must be logical", "check.attributes"), domain = NA)
     msg <-  if(check.attributes) attr.all.equal(target, current, ...)
-    if(data.class(target) != data.class(current)) {
+    if(check.class && data.class(target) != data.class(current)) {
 	msg <- c(msg, paste0("target is ", data.class(target), ", current is ",
                              data.class(current)))
 	return(msg)
@@ -413,12 +414,12 @@ all.equal.list <- function(target, current, ...,
 
 ## also used for logical
 all.equal.raw <-
-    function(target, current, ..., check.attributes = TRUE)
+    function(target, current, ..., check.attributes = TRUE, check.class = TRUE)
 {
     if (!is.logical(check.attributes))
         stop(gettextf("'%s' must be logical", "check.attributes"), domain = NA)
     msg <-  if(check.attributes) attr.all.equal(target, current, ...)
-    if(data.class(target) != data.class(current)) {
+    if(check.class && data.class(target) != data.class(current)) {
 	msg <- c(msg, paste0("target is ", data.class(target), ", current is ",
                              data.class(current)))
 	return(msg)

@@ -2341,6 +2341,8 @@ stopifnot(exprs = { ## logical/numeric mixtures:
              substitute(list(x, f(.)), e), do.eval = TRUE)
     }
 })
+## now does match f(NA) etc correctly
+
 
 ## check that dim and dimnames are dropped when extending with GROWABLE
 x <- 1:49
@@ -2351,6 +2353,23 @@ a <- .Internal(address(x))
 x[51] <- 51L
 stopifnot(identical(a, .Internal(address(x)))) ## reused x
 stopifnot(is.null(attributes(x))) ## dim and dimnames have been dropped
+## dim and dimnames were kept in R <= 4.5.z
+
+
+## all.equal(*, check.class=FALSE)
+two <- structure(2, foo = 1, class = "bar")
+c2 <- `storage.mode<-`(two, "character")
+r2 <- `storage.mode<-`(two, "raw")
+stopifnot(exprs = {
+    is.character(ae <- all.equal(two^20, 2^20, check.attributes = FALSE))
+    grepl(" bar.* numeric", ae)
+    ## above were TRUE already, these did *still* check class:
+    all.equal(two^20,  2^20, check.attributes = FALSE, check.class = FALSE)
+    all.equal(c2,       "2", check.attributes = FALSE, check.class = FALSE)
+    all.equal(r2, as.raw(2), check.attributes = FALSE, check.class = FALSE)
+})
+## 'check.class' was not passed downstream in R <= 4.5.2
+
 
 
 ## keep at end

@@ -376,6 +376,10 @@
       \item The help page \code{example(matplot)} now correctly labels
       Sepal vs Petal dimensions in its first iris data plot, thanks to
       \I{Jeff Dick}'s post on R-devel.
+
+      \item \code{all.equal(obj, simple, check.class=FALSE)} now is true, also
+      when \code{simple} is a bare atomic vector and \code{obj} has a simple
+      class, fixing the first part of \PR{18971} thanks to \I{Jan Gorecki}.
     }
   }
 }
