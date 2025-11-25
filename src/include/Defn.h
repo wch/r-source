@@ -1902,6 +1902,7 @@ int R_XDRDecodeInteger(void *buf);
 # define Mbrtowc		Rf_mbrtowc
 # define mbtoucs		Rf_mbtoucs
 # define mbcsToUcs2		Rf_mbcsToUcs2
+# define mbcsValid		Rf_mbcsValid
 # define memtrace_report	Rf_memtrace_report
 # define mkCharWUTF8		Rf_mkCharWUTF8
 # define mkCLOSXP		Rf_mkCLOSXP
@@ -1957,8 +1958,10 @@ int R_XDRDecodeInteger(void *buf);
 # define usemethod		Rf_usemethod
 # define ucstomb		Rf_ucstomb
 # define ucstoutf8		Rf_ucstoutf8
+# define utf8clen		Rf_utf8clen
 # define utf8toucs		Rf_utf8toucs
 # define utf8towcs		Rf_utf8towcs
+# define utf8Valid		Rf_utf8Valid
 # define vectorIndex		Rf_vectorIndex
 # define warningcall		Rf_warningcall
 # define WarningMessage		Rf_WarningMessage
@@ -1969,7 +1972,7 @@ int R_XDRDecodeInteger(void *buf);
 # define yylval			Rf_yylval
 # define yynerrs		Rf_yynerrs
 # define yyparse		Rf_yyparse
-
+        
 /* Platform Dependent Gui Hooks */
 
 #define	R_CONSOLE	1
