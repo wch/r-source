@@ -672,6 +672,17 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "call_R",
 ## non-API, declared in Defn.h
             "Rf_setSVector",
+            "Rf_asRbool", "Rf_asBool2", "R_BadLongVector", "REFCNT",
+            "GROWABLE_BIT_SET", "ALTREP_LENGTH", "ALTVEC_DATAPTR",
+            "ALTVEC_DATAPTR_RO", "ALTSTRING_ELT", "R_signal_protect_error",
+            "R_signal_unprotect_error", "R_signal_reprotect_error",
+            "Rf_allocVector3", "R_typeToChar", "Rf_translateCharFP",
+            "Rstrdup", "Rf_matchE", "R_popen", "R_system", "R_findVarLoc",
+            "R_duplicate_attr", "Rf_substitute", "Rf_type2rstr",
+            "R_MissingArgError", "R_MissingArgError_c",
+            "R_makePartialMatchWarningCondition", "Rf_EncodeChar",
+            "Rf_utf8clen", "R_strtod5", "Rf_utf8toucs", "Rf_wtransChar",
+            "Rf_mbcsValid", "Rf_utf8Valid",
 ## non-API, declared in Rinternals.h
             "SET_OBJECT", ## no longer used in an example in R-exts 
             "SET_S4_OBJECT", "UNSET_S4_OBJECT",
