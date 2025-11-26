@@ -186,11 +186,11 @@ static char* unescape_arg(char *p, char* avp) {
 
 extern int R_isWriteableDir(char *path);
 
+#define MSGSIZE R_PATH_MAX + 128
 int Rf_initialize_R(int ac, char **av)
 {
     int i, ioff = 1, j;
     Rboolean useX11 = TRUE, useTk = FALSE;
-    const int MSGSIZE = R_PATH_MAX + 128;
     char *p, msg[MSGSIZE], cmdlines[10000], **avv;
     structRstart rstart;
     Rstart Rp = &rstart;
