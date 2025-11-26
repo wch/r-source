@@ -2894,8 +2894,7 @@ version 8) @option{-std=f2018} in @code{PKG_FFLAGS} or
 (but Fortran 95 prior to @command{gfortran}@tie{}8) with non-standard
 extensions.  The other compilers in current use (@I{LLVM}'s
 @command{flang} (called @command{flang-new} before version 20) and Intel's
-@command{ifx}) default to Fortran 2018@footnote{but was said to have
-complete support only from version 2023.0.0.}.
+@command{ifx}) default to Fortran 2018.
 
 It is good practice to describe a Fortran version requirement in
 @file{DESCRIPTION}'s @samp{SystemRequirements} field.  Note that this is
@@ -2952,8 +2951,7 @@ define a module of the same name in multiple source files.
 @subsection Using C++ code
 
 @R{} can be built without a C++ compiler although one is available (but
-not necessarily installed) on all known @R{} platforms.  As from @R{}
-4.0.0 a C++ compiler will be selected only if it conforms to the 2011
+not necessarily installed) on all known @R{} platforms. 
 standard (`C++11').  A minor update@footnote{Some changes are linked
 from
 @uref{https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations}:
@@ -3007,40 +3005,24 @@ standards list deprecated and removed (and undeprecated) features.
 
 For maximal portability a package should specify the standard it
 requires for code in its @file{src} directory by including something
-like @samp{C++14} in the @samp{SystemRequirements} field of the
+like @samp{C++23} in the @samp{SystemRequirements} field of the
 @file{DESCRIPTION} file, e.g.
 
 @example
-SystemRequirements: C++14
+SystemRequirements: C++23
 @end example
 @noindent
 If it has a @file{Makevars} file (or @file{Makevars.win} or
 @file{Makevars.ucrt} on Windows) this should include the line
 @example
-CXX_STD = CXX14
+CXX_STD = CXX23
 @end example
-@noindent
-On the other hand, specifying C++11@footnote{Often historically
-used to mean `not C++98'} when the code is valid under C++14 or C++17
-reduces future portability.
 
-Code needing C++14 or later features can check for their presence @emph{via}
+Code needing C++20 or later features can check for their presence @emph{via}
 `SD-6 feature tests'@footnote{See
 @uref{https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations}
 or
-@uref{https://en.cppreference.com/w/cpp/experimental/feature_test.html}.
-It seems a reasonable assumption that any compiler promising some C++14
-conformance will provide these---e.g.@: @command{g++} 4.9.x did but
-4.8.5 did not.}.  Such a check could be
-
-@example
-#include <memory> // header where this is defined
-#if defined(__cpp_lib_make_unique) && (__cpp_lib_make_unique >= 201304)
-using std::make_unique;
-#else
-// your emulation
-#endif
-@end example
+@uref{https://en.cppreference.com/w/cpp/experimental/feature_test.html}.}
 
 @c Ubuntu LTS releases now have 10 years of support even if announced
 @c with 8 years.
@@ -3055,7 +3037,7 @@ using std::make_unique;
 @c RHEL 8 (8.x, 9.x available. full support 2024-05 + 8 more years)
 @c RHEL 9 (11.x available, full support 2027-05 + 8 more years)
 
-C++17, C++20, C++23 and C++26 (from @R{} 4.5.0) can be specified in an
+C++20, C++23 and C++26 (from @R{} 4.5.0) can be specified in an
 analogous way.
 
 Note that C++17 or later `support' does not mean complete support: use
@@ -3116,25 +3098,25 @@ and @command{g++} 11--15 to C++17.
 For a package with a @file{src/Makefile} (or a Windows analogue),
 a non-default C++ compiler can be selected by including something like
 @example
-CXX14 = `"$@{R_HOME@}/bin/R" CMD config CXX14`
-CXX14STD = `"$@{R_HOME@}/bin/R" CMD config CXX14STD`
-CXX = $@{CXX14@} $@{CXX14STD@}
-CXXFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX14FLAGS`
-CXXPICFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX14PICFLAGS`
-SHLIB_LD = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX14LD`
-SHLIB_LDFLAGS = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX14LDFLAGS`
+CXX20 = `"$@{R_HOME@}/bin/R" CMD config CXX20`
+CXX20STD = `"$@{R_HOME@}/bin/R" CMD config CXX20STD`
+CXX = $@{CXX20@} $@{CXX20STD@}
+CXXFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX20FLAGS`
+CXXPICFLAGS = `"$@{R_HOME@}/bin/R" CMD config CXX20PICFLAGS`
+SHLIB_LD = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX20LD`
+SHLIB_LDFLAGS = "$@{R_HOME@}/bin/R" CMD config SHLIB_CXX20LDFLAGS`
 @end example
 @noindent
 and ensuring these values are used in relevant compilations, after
 checking they are non-empty.  A common use of @file{src/Makefile} is to
 compile an executable, when likely something like (for example for
-C++14)
+C++20)
 @example
-if test -z "$CXX14"; then
-  AC_MSG_ERROR([No C++14 compiler is available])
+if test -z "$CXX20"; then
+  AC_MSG_ERROR([No C++20 compiler is available])
 fi
-CXX = $@{CXX14@} $@{CXX14STD@}
-CXXFLAGS = $@{CXX14FLAGS@}
+CXX = $@{CXX20@} $@{CXX20STD@}
+CXXFLAGS = $@{CXX20FLAGS@}
 @end example
 @noindent
 suffices.

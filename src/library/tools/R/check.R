@@ -5598,7 +5598,7 @@ add_dummies <- function(dir, Log)
                     },
                     error = identity)
                 results1 <- c(results1a, list(results1b))
-                
+
                 ignore <-
                     Sys.getenv("_R_CHECK_RD_VALIDATE_RD2HTML_IGNORE_EMPTY_SPANS_",
                                "true")
@@ -6506,9 +6506,9 @@ add_dummies <- function(dir, Log)
                     std <- as.numeric(sub("using C[+][+]", "", line))
                     if (std < 17) {
                         noteLog(Log,
-                                sprintf("  Specified C++%d: please drop specification unless essential", std))
+                                sprintf("  Specified C++%d: support will be removed soon", std))
                     ## since R 4.4.0 C++17 support is required, but
-                    ## C++23/26} support is patchy
+                    ## C++23/26 support is patchy
                     } else if (std >= 23) {
                          resultLog(Log, "OK")
                          printLog(Log,
