@@ -146,7 +146,9 @@ int R_DefParamsEx(Rstart, int);
        only supports version 0 of the structure.
     */
 void R_SetParams(Rstart);
+#ifdef Win32
 void R_DefCallbacks(Rstart, int);
+#endif
 void R_SetWin32(Rstart);
 void R_SizeFromEnv(Rstart);
 void R_common_command_line(int *, char **, Rstart);
