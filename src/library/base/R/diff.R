@@ -1,7 +1,7 @@
 #  File src/library/base/R/diff.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ diff.default <- function(x, lag = 1L, differences = 1L, ...)
         lag < 1L || differences < 1L)
 	stop("'lag' and 'differences' must be integers >= 1")
     if (lag * differences >= xlen)
-	return(x[0L]) # empty, but of proper mode
+	return( if(ismat) x[0L, , drop = FALSE] else x[0L] ) # empty, but of proper mode
     r <- unclass(x)  # don't want class-specific subset methods
     i1 <- -seq_len(lag)
     if (ismat)

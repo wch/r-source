@@ -2371,6 +2371,23 @@ stopifnot(exprs = {
 ## 'check.class' was not passed downstream in R <= 4.5.2
 
 
+## diff(x=<m-by-n>, l, d) dropped dimensions when l*d >= m
+m <- provideDimnames(matrix(0, 10L, 1L))
+names(dimnames(m)) <- c("row", "col")
+.difftime1 <- .difftime # diff() shouldn't hard code units="days"
+formals(.difftime1)$units <- "secs"
+##' list_(a, b, cc)  creates a *named* list  using the actual arguments' names
+list_ <- function(...) `names<-`(list(...), vapply(sys.call()[-1L], as.character, ""))
+L <- lapply(list_(identity, ts, .Date, .POSIXct, .difftime1),
+            \(fn) { fnm0 <- (fnm <- fn(m))[0L, , drop = FALSE]
+                list(f0 = fnm0, f = diff(fnm, lag = 2L, differences = 5L)) })
+str(L, give.attr=FALSE) # now  0 x 1  matrices
+  vapply(L, \(.) identical(.$f0, .$f), NA) # where all FALSE; now not all TRUE
+stopifnot( print(
+  vapply(L, \(.) identical(.$f0 - .$f0, .$f), NA) ) )
+## where all FALSE : diff(fnm, 2,5) was not a matrix
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

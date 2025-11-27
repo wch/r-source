@@ -1382,7 +1382,10 @@ diff.POSIXt <- function (x, lag = 1L, differences = 1L, ...)
     xlen <- if (ismat) dim(x)[1L] else length(r)
     if (length(lag) != 1L || length(differences) > 1L || lag < 1L || differences < 1L)
         stop("'lag' and 'differences' must be integers >= 1")
-    if (lag * differences >= xlen) return(.difftime(numeric(), "secs"))
+    if (lag * differences >= xlen) {
+        x0 <- if(ismat) x[0L, , drop = FALSE] else x[0L]
+        return(x0 - x0) # '-' |->  "difftime"
+    }
     i1 <- -seq_len(lag)
     if (ismat)
         for (i in seq_len(differences))

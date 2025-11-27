@@ -274,7 +274,7 @@ seq.Date <- function(from, to, by, length.out = NULL, along.with = NULL, ...)
         if(nby2 > 2L || nby2 < 1L)
             stop("invalid 'by' string")
         bys <- c("days", "weeks", "months", "quarters", "years")
-        valid <- pmatch(by2[nby2], bys) 
+        valid <- pmatch(by2[nby2], bys)
         if(is.na(valid)) stop("invalid string for 'by'")
         by <- bys[valid] # had *partial* match
         if(valid > 2L) { # seq.POSIXt handles the logic for non-arithmetic cases
@@ -436,8 +436,10 @@ diff.Date <- function (x, lag = 1L, differences = 1L, ...)
     xlen <- if (ismat) dim(x)[1L] else length(x)
     if (length(lag) != 1L || length(differences) > 1L || lag < 1L || differences < 1L)
         stop("'lag' and 'differences' must be integers >= 1")
-    if (lag * differences >= xlen)
-        return(.difftime(numeric(), units="days"))
+    if (lag * differences >= xlen) {
+        x0 <- if(ismat) x[0L, , drop = FALSE] else x[0L]
+        return(x0 - x0) # '-' |->  "difftime"
+    }
     r <- x
     i1 <- -seq_len(lag)
     if (ismat)

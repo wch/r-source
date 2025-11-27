@@ -385,6 +385,10 @@
       \item \code{all.equal(obj, simple, check.class=FALSE)} now is true, also
       when \code{simple} is a bare atomic vector and \code{obj} has a simple
       class, fixing the first part of \PR{18971} thanks to \I{Jan Gorecki}.
+
+      \item \code{diff(m, lag, dif)} for matrix \code{m} now still returns
+      matrices, also when \code{lag * dif > nrow(m)} (\PR{18972}, thanks to
+      \I{Mikael Jagan}).
     }
   }
 }
