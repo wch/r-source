@@ -175,9 +175,10 @@
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
-      \item Specifying C++11 or C++14 has long given a note: in 98\% of
+      \item Specifying C++11 or C++14 has long given a note: in 99\% of
       CRAN packages the specification is unnecessary as the default
-      C++17 suffices.
+      C++17 suffices (in a few cases with a deprecation warning from
+      some compilers).
       The intention is that support for those standards will be withdrawn
       before release.
     }
