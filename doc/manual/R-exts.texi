@@ -18279,7 +18279,6 @@ system console.  @code{R_ClearerrConsole} clears any errors associated
 with reading from the console.
 @end deftypefun
 
-@embfun R_ShowFiles
 @deftypefun int R_ShowFiles (int @var{nfile}, const char **@var{file}, @
   const char **@var{headers}, const char *@var{wtitle}, Rboolean @var{del}, @
   const char *@var{pager})
@@ -18287,7 +18286,6 @@ with reading from the console.
 This function is used to display the contents of files.
 @end deftypefun
 
-@embfun R_ChooseFile
 @deftypefun int R_ChooseFile (int @var{new}, char *@var{buf}, @
   int @var{len})
 
@@ -18295,7 +18293,6 @@ Choose a file and return its name in @var{buf} of length @var{len}.
 Return value is 0 for success, > 0 otherwise.
 @end deftypefun
 
-@embfun R_EditFile
 @deftypefun int R_EditFile (const char *@var{buf})
 Send a file to an editor window.
 @end deftypefun
@@ -18306,9 +18303,6 @@ Send @var{nfile} files to an editor, with titles possibly to be used for
 the editor window(s).
 @end deftypefun
 
-@embfun R_loadhistory
-@embfun R_savehistory
-@embfun R_addhistory
 @deftypefun SEXP R_loadhistory (SEXP, SEXP, SEXP, SEXP);
 @deftypefunx SEXP R_savehistory (SEXP, SEXP, SEXP, SEXP);
 @deftypefunx SEXP R_addhistory (SEXP, SEXP, SEXP, SEXP);
