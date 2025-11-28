@@ -1752,7 +1752,7 @@ SEXP matchUnit(SEXP units, SEXP unit) {
 			count++;
 		}
 	}
-	SETLENGTH(matches, count);
+	matches = xlengthgets(matches, count);
 	UNPROTECT(1);
 	return matches;
 }
