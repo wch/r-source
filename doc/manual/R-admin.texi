@@ -997,16 +997,6 @@ CXXFLAGS
 CXXPICFLAGS
 CXXSTD
 
-CXX11
-CXX11STD
-CXX11FLAGS
-CXX11PICFLAGS
-
-CXX14
-CXX14STD
-CXX14FLAGS
-CXX14PICFLAGS
-
 CXX17
 CXX17STD
 CXX17FLAGS
@@ -1030,17 +1020,17 @@ CXX26PICFLAGS
 @noindent
 The macros @code{CXX} etc are those used by default for C++ code.
 @command{configure} will attempt to set the rest suitably, choosing for
-@code{CXXSTD} and @code{CXX11STD} a suitable flag such as
+@code{CXXSTD} and @code{CXX17STD} a suitable flag such as
 @option{-std=gnu++17} for C++17 support (which is required if C++ is to
 be supported by default).  Inferred values can be overridden in file
 @file{config.site} or on the @command{configure} command line:
 user-supplied values will be tested by compiling some
-C++11/14/17/20/23/26 code.
+C++17/20/23/26 code.
 
-It may be that there is no suitable flag for C++14/17/20/23/26 support
+It may be that there is no suitable flag for C++17/20/23/26 support
 with the default compiler, in which case a different compiler could be
 selected for
-@code{CXX14}/@code{CXX17}/@code{CXX20}/@code{CXX23}/@code{CXX236} with
+@code{CXX17}/@code{CXX20}/@code{CXX23}/@code{CXX236} with
 its corresponding flags.
 
 If no suitable compiler/flag is found for the default C++ compiler, one
@@ -1051,12 +1041,11 @@ C++17 tests, so do this at your own risk as some packages may not compile.
 The @option{-std} flag is supported by the GCC, @command{clang++} and
 Intel compilers.  Currently accepted values are (plus some synonyms)
 @example
-g++:     c++11 gnu+11 c++14 gnu++14 c++17 gnu++17 c++2a gnu++2a (from 8)
+g++:     c++17 gnu++17 c++2a gnu++2a (from 8)
          c++20 gnu++20 (from 10) c++23 gnu++23 c++2b gnu++2b (from 11)
          c++2c gnu++2c
-Intel:   c++11  gnu+11 c++14 gnu++14 c++17 gnu++17
-         c++20 gnu++20 (from 2021.1) c++2b gnu++2b (from 2022.2)
-         c++23 gnu++23 (at least from 2024.0)
+Intel:   c++17 gnu++17 c++20 gnu++20 (from 2021.1)
+         c++2b gnu++2b (from 2022.2) c++23 gnu++23 (at least from 2024.0)
 @end example
 @noindent
 (Those for @I{LLVM} @command{clang++} are documented at
@@ -1064,7 +1053,7 @@ Intel:   c++11  gnu+11 c++14 gnu++14 c++17 gnu++17
 @code{-std=c++20} is supported from Clang 10, @code{-std=c++2b} from
 Clang 13 and @code{-std=c++23} and @code{-std=c++2c} from Clang 17.
 Apple Clang supports @code{-std=c++2b} from 13.1.6 and @code{-std=c++23}
-and @code{-std=c++2c} from 16.0.0.)
+and @code{-std=c++2c} from 16.0.0, @code{-std=c++26} from 17.0.0.)
 
 @c c++1y does not pass the configure test in gcc 4.9.3
 @c , with @option{-std=c++1y} (introduced@footnote{See
