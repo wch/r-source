@@ -5010,6 +5010,10 @@ NORET R_len_t R_BadLongVector(SEXP x, const char *file, int line)
 
 /* Highly experimental resizable vector support */
 
+/* Serializing and unserializing preserves the GROWABLE bit, but
+   XTRUELENGTH is set to zero by unserialize. A vector with the
+   GROWABLE bit set but XTRUELENGTH zero is therefore considered not
+   resizeble. */ 
 bool R_isResizable(SEXP x)
 {
     return isVector(x) && ! ALTREP(x) && GROWABLE_BIT_SET(x) &&
