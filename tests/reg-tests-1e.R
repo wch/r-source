@@ -2385,7 +2385,15 @@ str(L, give.attr=FALSE) # now  0 x 1  matrices
   vapply(L, \(.) identical(.$f0, .$f), NA) # where all FALSE; now not all TRUE
 stopifnot( print(
   vapply(L, \(.) identical(.$f0 - .$f0, .$f), NA) ) )
-## where all FALSE : diff(fnm, 2,5) was not a matrix
+## were all FALSE : diff(fnm, 2,5) was not a matrix
+
+
+## str.{Date,POSIXt}(<length 0>, give.attr=FALSE) - now works
+chk0 <- function(x) identical(capture.output(str(x,  give.attr = FALSE)),
+                              capture.output(str(`attr<-`(x, "foobar", NULL))))
+stopifnot(chk0(structure(.Date   (numeric()), foobar = list(Dt = "A"))),
+          chk0(structure(.POSIXct(numeric()), foobar = list(ct = "C"))))
+## in R <= 4.5.2, give.attr=FALSE was not obeyed for 0-length "Date" / "POSIXt"
 
 
 

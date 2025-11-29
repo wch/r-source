@@ -48,7 +48,7 @@ str.Date <- str.POSIXt <- function(object, ...) {
     cl <- oldClass(object)
     ## be careful to be fast for large object:
     n <- length(object) # FIXME, could be NA
-    if(n == 0L) return(str.default(object))
+    if(n == 0L) return(str.default(object, ...))
     if(n > 1000L) object <- object[seq_len(1000L)]
 
     give.length <- TRUE ## default
@@ -555,9 +555,8 @@ str.default <-
 		format.fun <- deParse
 	    } else {
 		if(mod == "...") { # DOTSXP
-		    format.fun <- function(x) { # use le := length(x)
-			le <- length(x) ## for testing <<<<< FIXME DROP!! <<<<<<<<<<
-			hasNm <- nzchar(nm <- names(x) %||% rep.int("", le))
+		    format.fun <- function(x) {
+			hasNm <- nzchar(nm <- names(x) %||% rep.int("", length(x)))
 			nm[hasNm] <- paste0(nm[hasNm], "=")
 			paste0("(", paste(paste0(nm,"*"), collapse=", "),
 			       ")")

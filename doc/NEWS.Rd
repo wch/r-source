@@ -389,6 +389,18 @@
       \item \code{diff(m, lag, dif)} for matrix \code{m} now still returns
       matrices, also when \code{lag * dif > nrow(m)} (\PR{18972}, thanks to
       \I{Mikael Jagan}).
+
+      \item \code{str(x, give.attr=FALSE)} no longer shows attributes when
+      \code{x} is a zero length \code{"Date"} or \code{"POSIXt"} object.
+    }
+  }
+}
+
+\section{\Rlogo CHANGES IN R 4.5.2 patched}{
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item .
     }
   }
 }
