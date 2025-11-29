@@ -715,9 +715,9 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "Rf_isFrame",
             "BODY", "FORMALS", "CLOENV", "ENCLOS",
             "IS_ASCII", "IS_UTF8",
-## experimental resizable vector entry points -- not yet in the API
-            "R_isResizable", "R_maxLength", "R_resizeVector",
-            "R_allocResizableVector", "R_duplicateAsResizable",
+## experimental resizable vector entry points -- now in the experimental API
+            ## "R_isResizable", "R_maxLength", "R_resizeVector",
+            ## "R_allocResizableVector", "R_duplicateAsResizable",
 ## experimental hashtable support -- not yet in the API
             "R_asHashtable", "R_HashtabSEXP", "R_isHashtable", "R_mkhashtab",
             "R_gethash", "R_sethash", "R_remhash", "R_numhash", "R_typhash",

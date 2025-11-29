@@ -12721,15 +12721,6 @@ Other useful allocation functions are @code{Rf_alloc3DArray},
 @apifun Rf_allocArray
 @apifun Rf_allocMatrix
 
-At times it can be useful to allocate a larger initial result vector and
-resize it to a shorter length if that is sufficient. The functions
-@code{Rf_lengthgets} and @code{Rf_xlengthgets} accomplish this; they are
-analogous to using @code{length(x) <- n} in @R{}. Typically these
-functions return a freshly allocated object, but in some cases they may
-re-use the supplied object.
-@apifun Rf_lengthgets
-@apifun Rf_xlengthgets
-
 When creating new result objects it can be useful to fill them in with
 values from an existing object. The functions @code{Rf_copyVector} and
 @code{Rf_copyMatrix} can be used for this. @code{Rf_copyMostAttributes} can
@@ -13652,6 +13643,82 @@ support future changes, package code should use @code{NO_REFERENCES},
 @apifun NOT_SHARED
 @apifun MAYBE_SHARED
 @apifun MARK_NOT_MUTABLE
+
+@node Resizing vectors
+@subsection Resizing vectors
+@cindex Resizing vectors
+
+The functions @code{Rf_lengthgets} and @code{Rf_xlengthgets} are
+analogous to using @code{length(x) <- n} in @R{}. These functions
+typically allocate a fresh object. Elements from the original vector are
+copied into the result up to the specified new length.
+@apifun Rf_lengthgets
+@apifun Rf_xlengthgets
+
+On rare occasions it may be useful to allocate a longer vector and
+destructively set its length to a shorter value. This is possible if a
+vector has been marked as resizable at allocation. An experimental
+framework to support this has been added in @R 4.6.0.
+
+Resizable vectors can be created by an initial allocation or as a copy
+of an existing vector:
+
+@example
+SEXP R_allocResizableVector(SEXPTYPE type, R_xlen_t maxlen);
+SEXP R_duplicateAsResizable(SEXP x);
+@end example
+@eapifun R_allocResizableVector
+@eapifun R_duplicateAsResizable
+
+A resizable vector can then be resized with
+@example
+void R_resizeVector(SEXP x, R_xlen_t newlen);
+@end example
+@eapifun R_resizeVector
+
+It is an error to attempt to resize a vector that is not resizable, or
+to request a size greater than the initial allocated size. Resizing a
+vector will drop @code{dim}, @code{dimnames}, and @code{names}
+attributes; other attributes are retained.
+
+Whether a vector is resizable and the maximal available size of a
+resizable vector can be determined using
+
+@example
+bool R_isResizable(SEXP x);
+R_xlen_t R_maxLength(SEXP x);
+@end example
+@eapifun R_isResizable
+@eapifun R_maxLength
+
+Some considerations for using resizable vectors:
+
+@itemize
+
+@item Resizing a vector is a destructive modification. Like any destructive
+modification at the @code{C} level it has to be done with care to avoid
+violating the pass-by-value semantics of the @code{R}
+language. Ordinarily only objects with no references are safe to modify;
+if an object has references from other @R{} objects then these must be
+thoroughly understood before considering a destructive modification.
+
+@item If enabling package code to resize vectors that have references causes
+too many issues, then @code{R_resizeVector} may be modified to disallow
+this.
+
+@item Serializing and unserializing a resizable vector does not preserve the
+resizable property. The result is an ordinary non-resizable vector.
+
+@item The memory betweeen a shorter length and the initially allocated
+maximal length of a resizable vector is not accessible and cannot be
+reclaimed until the shorter vector is reclaimed by the garbage
+collector.
+
+@end itemize
+
+In most cases using @code{Rf_lengthgets} or @code{Rf_xlengthgets} is a
+better, safer, and more memory-efficient choice than using resizable
+vectors.
 
 
 @node Interface functions .Call and .External
@@ -17536,6 +17603,8 @@ functions that should be used instead:
 @item R_GetCurrentEnv
       Use @code{environment()} at the @R{} level and pass the result as
       an argument to your C function.
+@item SETLENGTH
+      See @ref{Resizing vectors}.
 @end table
 
 For recently added entry points packages that need to be compiled
@@ -17744,6 +17813,9 @@ void CLEAR_ATTRIB(SEXP x)
 
 #if R_VERSION < R_Version(4, 6, 0)
 # define DATAPTR_RW(x) DATAPTR(x)
+# define R_allocResizableVector(type, maxlen) Rf_allocVector(type, naxlen)
+# define R_duplicateAsResizable(x) duplicate(x)
+# define R_resizeVector(x, newlen) SETLENGTH(x, n)
 #endif
 @end example
 
