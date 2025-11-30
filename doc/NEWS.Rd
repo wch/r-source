@@ -181,6 +181,16 @@
       some compilers).
       The intention is that support for those standards will be withdrawn
       before release.
+
+      %% GCC 10 and Intel 2021.1 definitely support this: GCC 9 may
+      \item The default C++ standard will be changed to C++20
+      \sQuote{where available} (which it is on all known platforms from
+      2021): if not C++17 is used if available otherwise C++ is not
+      supported (as before).
+
+      Several CRAN packages already require C++20 and have hundreds of
+      others depending on them.  (Packages can request C++17 if
+      esssential.)
     }
   }
 
