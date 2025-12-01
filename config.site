@@ -307,42 +307,6 @@
 ## Allow user to override.
 ## R_LD_LIBRARY_PATH=
 
-## C++11 compiler, optional for use in packages.
-## Introduced in R 3.1.0
-## The command which runs the C++11 compiler: defaults to $(CXX), but
-## empty if that (plus standard) cannot compile the tested C++11 code.
-## CXX11=
-
-## The 'standard' for the C++11 compiler, which is invoked as
-## $(CXX11) $(CXX11STD) for both compiling and linking DSOs/DLLs.  
-## '-std=gnu++11' and '-std=gnu++0x' are tried in turn by configure.
-## followed by '-std=c++11' and '-std=c++0x'
-## CXX11STD=
-
-## Analogues for the C++11 compiler: default to the settings for C++
-## CXX11FLAGS=
-## CXX11PICFLAGS=
-## SHLIB_CXX11LD=
-## SHLIB_CXX11LDFLAGS=
-
-## C++14 compiler, optional for use in packages.
-## Introduced in R 3.4.0
-## The command which runs the C++14 compiler: defaults to $(CXX11), but
-## empty if that (plus standard) cannot compile the tested C++14 code.
-## CXX14=
-
-## The 'standard' for the C++14 compiler, which is invoked as
-## $(CXX14) $(CXX14STD) for both compiling and linking DSOs/DLLs.  
-## '-std=gnu++14' and '-std=gnu++1y" are tried by configure, also
-## '-std=c++14' and '-std=c++1y"
-## CXX14STD=
-
-## Analogues for the C++14 compiler: default to the settings for C++11
-## CXX14FLAGS=
-## CXX14PICFLAGS=
-## SHLIB_CXX14LD=
-## SHLIB_CXX14LDFLAGS=
-
 ## C++17 compiler, optional for use in packages.
 ## Introduced in R 3.4.0
 ## The command which runs the C++17 compiler: defaults to $(CXX14), but
@@ -355,7 +319,7 @@
 ## '-std=c++17' and '-std=c++1z"
 ## CXX17STD=
 
-## Analogues for the C++17 compiler: default to the settings for C++14
+## Analogues for the C++17 compiler.
 ## CXX17FLAGS=
 ## CXX17PICFLAGS=
 ## SHLIB_CXX17LD=
