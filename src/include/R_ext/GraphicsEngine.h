@@ -531,19 +531,6 @@ SEXP GEcontourLines(double *x, int nx, double *y, int ny,
  * (End from plot3d.c)
  */
 
-/*
- * From vfonts.c
- */
-double R_GE_VStrWidth(const char *s, cetype_t enc, const pGEcontext gc, pGEDevDesc dd);
-
-double R_GE_VStrHeight(const char *s, cetype_t enc, const pGEcontext gc, pGEDevDesc dd);
-void R_GE_VText(double x, double y, const char * const s, cetype_t enc,
-		double x_justify, double y_justify, double rotation,
-		const pGEcontext gc, pGEDevDesc dd);
-/*
- * (End from vfonts.c)
- */
-
 /* Also in Graphics.h */
 #define	DEG2RAD 0.01745329251994329576
 
@@ -559,7 +546,6 @@ void GEcopyDisplayList(int fromDevice);
 SEXP GEcreateSnapshot(pGEDevDesc dd);
 void GEplaySnapshot(SEXP snapshot, pGEDevDesc dd);
 void GEonExit(void);
-void GEnullDevice(void);
 
 
 /* From ../../main/plot.c, used by ../../library/grid/src/grid.c : */
