@@ -242,6 +242,10 @@
       \item New function \code{DATAPTR_RW} for use in implementing
       \code{ALTREP} \code{Dataptr} methods. This function should not be
       used in any other contexts.
+
+      \item The non-API header files \file{R_ext/Callbacks.h} and
+      \file{R_ext/PrtUtil.h} are no longer copied to the installed
+      includes directory.
     }
   }
 
