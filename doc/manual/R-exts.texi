@@ -6926,6 +6926,7 @@ C/C++) files containing messages that should be translated, declare
 #define _(String) (String)
 #endif
 @end example
+@eapihdr libintl.h
 
 @item
 For each message that should be translated, wrap it in @code{_(...)},
