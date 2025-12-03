@@ -72,15 +72,11 @@ typedef struct _InputHandler {
 } InputHandler;
 
 
-extern InputHandler *initStdinHandler(void);
-extern void consoleInputHandler(unsigned char *buf, int len);
-
 extern InputHandler *addInputHandler(InputHandler *handlers, int fd, InputHandlerProc handler, int activity);
 extern InputHandler *getInputHandler(InputHandler *handlers, int fd);
 extern int           removeInputHandler(InputHandler **handlers, InputHandler *it);
 extern InputHandler *getSelectedHandler(InputHandler *handlers, fd_set *mask);
 extern fd_set *R_checkActivity(int usec, int ignore_stdin);
-extern fd_set *R_checkActivityEx(int usec, int ignore_stdin, void (*intr)(void));
 extern void R_runHandlers(InputHandler *handlers, fd_set *mask);
 
 extern int R_SelectEx(int  n,  fd_set  *readfds,  fd_set  *writefds,
