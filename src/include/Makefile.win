@@ -15,9 +15,9 @@ SRC_HEADERS = R.h Rdefines.h Rembedded.h Rinternals.h
 OBJ_HEADERS = Rconfig.h Rmath.h Rversion.h
 GW32_HEADERS = iconv.h psignal.h
 
-## This omits GetX11Image.h QuartzDevice.h eventloop.h Callbacks.h PrtUtil.h
+## This omits GetX11Image.h QuartzDevice.h eventloop.h
 R_EXT_HEADERS = \
-  Altrep.h Applic.h Arith.h BLAS.h Boolean.h Complex.h \
+  Altrep.h Applic.h Arith.h BLAS.h Boolean.h Callbacks.h Complex.h \
   Connections.h Constants.h Error.h \
   GraphicsDevice.h GraphicsEngine.h Itermacros.h \
   Lapack.h Linpack.h MathThreads.h Memory.h \

@@ -24,7 +24,7 @@
 #define PRINT_H_
 
 #include "Defn.h"
-#include <R_ext/PrtUtil.h>
+#include <PrtUtil.h>
 #include <R_ext/Print.h>
 
 #define formatRaw           Rf_formatRaw

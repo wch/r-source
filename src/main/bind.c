@@ -26,7 +26,7 @@
 #endif
 #include <Defn.h>
 #include <Internal.h>
-#include <R_ext/PrtUtil.h> // for IndexWidth
+#include <PrtUtil.h> // for IndexWidth
 #include <R_ext/Itermacros.h>
 #define imax2(x, y) ((x < y) ? y : x)
 
