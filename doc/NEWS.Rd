@@ -233,15 +233,19 @@
       \code{SET_FORMALS}, \code{SET_BODY}, \code{SET_CLOENV},
       \code{STRING_PTR}, \code{DATAPTR}, \code{XTRUELENGTH},
       \code{R_duplicate_attr}, \code{R_shallow_duplicate_attr},
-      \code{getConnection}, \code{LEVELS}, \code{SETLEVELS}.
+      \code{getConnection}, \code{LEVELS}, \code{SETLEVELS},
+      \code{R_data_class}.
 
       \item The deprecated macros \code{CHARACTER_DATA} and
       \code{CHARACTER_POINTER} now return \code{const} pointers since using
       writable pointers in packages is not safe.
 
-      \item New function \code{DATAPTR_RW} for use in implementing
+      \item New function \code{DATAPTR_RW()} for use in implementing
       \code{ALTREP} \code{Dataptr} methods. This function should not be
       used in any other contexts.
+
+      \item New function \code{R_class()} as the \code{C} equivalent of
+      \code{class()} in \R.
 
       \item The non-API header files \file{R_ext/Callbacks.h} and
       \file{R_ext/PrtUtil.h} are no longer copied to the installed

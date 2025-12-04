@@ -908,6 +908,9 @@ attribute_hidden SEXP R_do_data_class(SEXP call, SEXP op, SEXP args, SEXP env)
   return R_data_class(CAR(args), FALSE);
 }
 
+// C version of class()
+SEXP R_class(SEXP x) { return R_data_class(x, FALSE); }
+
 /* names(object) <- name */
 attribute_hidden SEXP do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {

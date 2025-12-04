@@ -13022,6 +13022,11 @@ As the value is a character vector, we have to know how to create that
 from a C character array, which we do using the function
 @code{Rf_mkChar}.
 
+Objects without an explicit class can have an implicit class. In @R{}
+the function @code{class} returns the explicit or implicit class. The
+function @code{R_class} is the @code{C} equivalent.
+@apifun R_class
+
 @node S4 objects
 @subsection S4 objects
 @cindex S4 objects
@@ -17602,6 +17607,8 @@ functions that should be used instead:
       an argument to your C function.
 @item SETLENGTH
       See @ref{Resizing vectors}.
+@item R_data_class
+      Use @code{R_class} added in @R{} 4.6.0
 @end table
 
 For recently added entry points packages that need to be compiled
@@ -17810,6 +17817,7 @@ void CLEAR_ATTRIB(SEXP x)
 
 #if R_VERSION < R_Version(4, 6, 0)
 # define DATAPTR_RW(x) DATAPTR(x)
+# define R_class(x) R_data_class(x, FALSE)
 # define R_allocResizableVector(type, maxlen) Rf_allocVector(type, naxlen)
 # define R_duplicateAsResizable(x) duplicate(x)
 # define R_resizeVector(x, newlen) SETLENGTH(x, n)
