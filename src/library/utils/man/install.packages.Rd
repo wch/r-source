@@ -182,7 +182,8 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   }
   \item{\dots}{
     further arguments to be passed to \code{\link{download.file}},
-    \code{\link{available.packages}}, or to the functions for binary
+    \code{\link{available.packages}}, \code{\link{install.packages}}, or to
+    the functions for binary
     installs on macOS and Windows (which accept an argument \code{"lock"}:
     see the section on \sQuote{Locking}).
   }
@@ -275,7 +276,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
     \item{On Unix-alikes,}{when the package contains C/C++/Fortran code
       that needs compilation, suitable compilers and related tools need
       to be installed.  On macOS you need to have installed the
-      \sQuote{Command-line tools for \I{Xcode}} (see 
+      \sQuote{Command-line tools for \I{Xcode}} (see
       \manual{R-admin}{}) and if needed
       by the package a Fortran compiler, and have them in your path.
     }
