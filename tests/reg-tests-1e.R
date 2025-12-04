@@ -2387,7 +2387,7 @@ stopifnot( print(
   vapply(L, \(.) identical(.$f0 - .$f0, .$f), NA) ) )
 ## were all FALSE : diff(fnm, 2,5) was not a matrix
 m <- ts(matrix(1)) # ts-matrix boundary case
-d1 <- m - lag(m, -1) # warning: non-intersecting series
+assertWarnV(d1 <- m - lag(m, -1)) # "non-intersecting series"
 d2 <- diff(m)
 stopifnot(identical(d1,d2), identical(dim(d1), 0:1))
 ## both d1 & d2 were *not* matrix  in R <= 4.5.2
