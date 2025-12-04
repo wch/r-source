@@ -118,6 +118,7 @@ getFunsHdr <- function(fpath, lines) {
 
     ## these could be incorporated into the regex
     lines <- gsub(r"{\s*(const|extern|long|unsigned)\s*}", "", lines)
+    lines <- gsub(r"{\(\*\s*\w+\s*\)\s*\(}", "(*)(", lines)
     lines <- sub(r"{^\s*(\w*[(])}", "void \\1", lines)
     lines <- gsub(r"{\(\s*\*\s*(\w+)\s*\)}", "(\\1)", lines)
 
