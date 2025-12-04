@@ -141,6 +141,12 @@
       \code{tools::Rd2txt_options(descStyle=NULL)} to get the old
       behaviour with a simple space; a \code{"colon"} variant is also
       available.
+
+      \item \code{x \%notin\% table} newly in \pkg{base} is an idiom
+      for \code{!(x \%in\% table)} and provided almost entirely for
+      convenience and code readability, from an R-devel suggestion, after
+      many years of private definitions mostly hidden in packages,
+      including in \R's \pkg{tools} package.
     }
   }
 

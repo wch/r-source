@@ -593,18 +593,13 @@ filtergrep <-
 function(pattern, x, ...)
     grep(pattern, x, invert = TRUE, value = TRUE, ...)
 
-### ** %notin%
-
-`%notin%` <-
-function(x, y)
-    is.na(match(x, y))
 
 ### ** %w/o%
 
 ## x without y, as in the examples of ?match.
 `%w/o%` <-
 function(x, y)
-    x[is.na(match(x, y))]
+    x[x %notin% y]
 
 ### ** .OStype
 
@@ -903,7 +898,7 @@ function(funnames, pkgnames = character(), colons = c("::", ":::"))
     ## Use pkgnames = NA_character_ to match *any* PKG::FUN call with
     ## FUN in funnames.  Strange but why not?  Or better to use "*"?
     function(e) {
-        (is.call(e) &&        
+        (is.call(e) &&
          ((is.name(x <- e[[1L]]) &&
            as.character(x) %in% funnames)) ||
          ((is.call(x <- e[[1L]]) &&

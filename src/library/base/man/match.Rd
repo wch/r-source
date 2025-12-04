@@ -4,21 +4,23 @@
 % Distributed under GPL 2 or later
 
 \name{match}
+\title{Value Matching}
 \alias{match}
 \alias{\%in\%}
-\title{Value Matching}
+\alias{\%notin\%}
 \description{
   \code{match} returns a vector of the positions of (first) matches of
   its first argument in its second.
 
-  \code{\%in\%} is a more intuitive interface as a binary operator,
-  which returns a logical vector indicating if there is a match or not
+  \code{\%in\%} and \code{\%notin\%} are more intuitive interfaces as binary operators,
+  returning a logical vector indicating if there is a match or not
   for its left operand.
 }
 \usage{
 match(x, table, nomatch = NA_integer_, incomparables = NULL)
 
-x \%in\% table
+x  \%in\%   table
+x \%notin\% table
 }
 \arguments{
   \item{x}{vector or \code{NULL}: the values to be matched.
@@ -35,21 +37,30 @@ x \%in\% table
 \value{
   A vector of the same length as \code{x}.
 
-  \code{match}: An integer vector giving the position in \code{table} of
+ \describe{
+    \item{\code{match}:}{An integer vector giving the position in \code{table} of
   the first match if there is a match, otherwise \code{nomatch}.
 
   If \code{x[i]} is found to equal \code{table[j]} then the value
   returned in the \code{i}-th position of the return value is \code{j},
   for the smallest possible \code{j}.  If no match is found, the value
   is \code{nomatch}.
+  }
+  \item{\code{\%in\%}:}{A logical vector, indicating if a match was located for
+    each element of \code{x}: thus the values are \code{TRUE} or
+    \code{FALSE} and never \code{NA}.}
 
-  \code{\%in\%}: A logical vector, indicating if a match was located for
-  each element of \code{x}: thus the values are \code{TRUE} or
-  \code{FALSE} and never \code{NA}.
+  \item{\code{\%notin\%}:}{A logical vector, simply the negation of the
+    corresponding \code{\%in\%} call.}
+  }
 }
 \details{
   \code{\%in\%} is currently defined as \cr
-  \code{"\%in\%" <- function(x, table) match(x, table, nomatch = 0) > 0}
+  \code{`\%in\%` <- function(x, table) match(x, table, nomatch = 0L) > 0L}
+
+  \code{\%notin\%} could succinctly be defined as \code{\link{Negate}(`\%in\%`)},
+  but for symmetry and efficiency is \cr
+  \code{`\%notin\%` <- function(x, table) match(x, table, nomatch = 0L) == 0L}
 
   Factors, raw vectors and lists are converted to character vectors,
   internally classed objects are transformed via \code{\link{mtfrm}}, and
@@ -79,7 +90,8 @@ x \%in\% table
   in different encodings but would agree when translated to UTF-8 (see
   \code{\link{Encoding}}).
 
-  That \code{\%in\%} never returns \code{NA} makes it particularly
+  That \code{\%in\%} and \code{\%notin\%} never return \code{NA} makes them
+  particularly
   useful in \code{if} conditions.
 }
 \references{
@@ -107,16 +119,16 @@ x \%in\% table
 intersect # the R function in base is slightly more careful
 intersect(1:10, 7:20)
 
-1:10 \%in\% c(1,3,5,9)
+1:10 \%in\% c(1,3,5,9) %
 sstr <- c("c","ab","B","bba","c",NA,"@","bla","a","Ba","\%")
-sstr[sstr \%in\% c(letters, LETTERS)]
+sstr[sstr \%in\% c(letters, LETTERS)] %
 
-"\%w/o\%" <- function(x, y) x[!x \%in\% y] #--  x without y
-(1:10) \%w/o\% c(3,7,12)
+"\%w/o\%" <- function(x, y) x[x \%notin\% y] #--  x without y
+(1:10) \%w/o\% c(3,7,12) %
 ## Note that setdiff() is very similar and typically makes more sense:
         c(1:6,7:2) \%w/o\% c(3,7,12)  # -> keeps duplicates
 setdiff(c(1:6,7:2),      c(3,7,12)) # -> unique values
-
+%
 ## Illuminating example about NA matching in complex values
 r <- c(1, NA, NaN)
 zN <- c(complex(real = NA , imaginary =  r ),
