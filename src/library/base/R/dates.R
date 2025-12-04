@@ -433,23 +433,20 @@ rep.Date <- function(x, ...)
 diff.Date <- function (x, lag = 1L, differences = 1L, ...)
 {
     ismat <- is.matrix(x)
-    xlen <- if (ismat) dim(x)[1L] else length(x)
     if (length(lag) != 1L || length(differences) > 1L || lag < 1L || differences < 1L)
         stop("'lag' and 'differences' must be integers >= 1")
-    if (lag * differences >= xlen) {
-        x0 <- if(ismat) x[0L, , drop = FALSE] else x[0L]
-        return(x0 - x0) # '-' |->  "difftime"
-    }
-    r <- x
     i1 <- -seq_len(lag)
+    i0 <- integer()
     if (ismat)
-        for (i in seq_len(differences)) r <- r[i1, , drop = FALSE] -
-            r[-nrow(r):-(nrow(r) - lag + 1L), , drop = FALSE]
-    else for (i in seq_len(differences))
-        r <- r[i1] - r[-length(r):-(length(r) - lag + 1L)]
+        for (i in seq_len(differences))
+            x <- x[i1, , drop = FALSE] -
+                x[if(lag < (len <- nrow(x))) -len:-(len - lag + 1L) else i0, , drop = FALSE]
+    else
+        for(i in seq_len(differences))
+            x <- x[i1] - x[if(lag < (len <- length(x))) -len:-(len - lag + 1L) else i0]
     if("units" %in% ...names() && (dunits <- list(...)$units) != "auto")
-        units(r) <- match.arg(dunits, choices = setdiff(eval(formals(difftime)$units), "auto"))
-    r
+        units(x) <- match.arg(dunits, choices = setdiff(eval(formals(difftime)$units), "auto"))
+    x
 }
 
 ## ---- additions in 2.6.0 -----

@@ -406,7 +406,7 @@
 
       \item \code{diff(m, lag, dif)} for matrix \code{m} now still returns
       matrices, also when \code{lag * dif > nrow(m)} (\PR{18972}, thanks to
-      \I{Mikael Jagan}).
+      \I{Mikael Jagan} and \I{Suharto Anggono}).
       \code{diff(<ts-matrix>)} remains matrix, even when it has length zero.
 
       \item \code{str(x, give.attr=FALSE)} no longer shows attributes when
