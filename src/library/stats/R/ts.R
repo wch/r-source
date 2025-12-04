@@ -243,6 +243,11 @@ Ops.ts <- function(e1, e2)
                          c(deparse(substitute(e1))[1L],
                            deparse(substitute(e2))[1L]),
                          union = FALSE)
+        if(is.null(e12))# if e1 or e2 is matrix but e1 & e2 are not overlapping, e12 is NULL ..
+            return(if(is.matrix(e1)) e1[0, , drop=FALSE]
+              else if(is.matrix(e2)) e2[0, , drop=FALSE]
+                ## else NULL ( == e12 )
+              )
         e1 <- if(is.matrix(e1)) e12[,        1L:nc1 , drop = FALSE] else e12[, 1]
         e2 <- if(is.matrix(e2)) e12[, nc1 + (1L:nc2), drop = FALSE] else e12[, nc1 + 1]
         NextMethod(.Generic)
