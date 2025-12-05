@@ -259,8 +259,12 @@
       formally in \file{R_ext/Callbacks.h} are now available in the new
       header file \file{R_ext/ObjectTable.h}.  This new header file
       should be used in packages instead of \file{R_ext/Callbacks.h}. To
-      ease the transition a stub file \file{R_ext/Callbacks.h} has been
-      added that just includes \file{R_ext/ObjectTable.h}.	
+      ease the transition, stub files \file{R_ext/Callbacks.h} and
+      \code{R_ext/PrtUtil.h} have been added. These stub files contain
+      \code{#warning} directives to signal warnings that these files
+      should not be used. The stub \file{R_ext/Callbacks.h} also
+      includes \file{R_ext/ObjectTable.h}. Packages including these headers
+      will install successfully but with warnings for using these files.
     }
   }
 

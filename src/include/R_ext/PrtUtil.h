@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2025 The R Core Team.
+ *  Copyright (C) 1998-2023    The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,15 +21,12 @@
  *  https://www.R-project.org/Licenses/
  */
 
-/* 
+/*
    Not part of the API; this header file will be removed.
-*/
+ */
+#ifndef FAKE_PRTUTIL_H_
+#define FAKE_PRTUTIL_H_
 
-#ifndef R_FAKE_CALLBACKS_H
-#define R_FAKE_CALLBACKS_H
+#warning non-API header file R_ext/PrtUtil.h is obsolete and will be removed
 
-// new code should include R_ext/ObjectTable.h directly
-#warning include R_ext/ObjectTable.h for R_ObjectTable declarations
-#include <R_ext/ObjectTable.h>
-
-#endif /* R_FAKE_CALLBACKS_H */
+#endif /* FAKE_PRTUTIL_H_ */
