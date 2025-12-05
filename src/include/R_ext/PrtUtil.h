@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2023    The R Core Team
+ *  Copyright (C) 1998-2025    The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -27,7 +27,7 @@
 #ifndef PRTUTIL_H_
 #define PRTUTIL_H_
 
-#include <Rinternals.h> // for R_xlen_t
+#include <Rinternals.h> // for SEXP and R_xlen_t
 #include <R_ext/Complex.h>
 
 /* no longer in R >= 4.4.0:
