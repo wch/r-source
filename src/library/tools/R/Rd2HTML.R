@@ -611,7 +611,8 @@ Rd2HTML <-
                            list(argitem =
                                     list(id = item_id,
                                          value = sprintf("<code>%s</code>",
-                                                         item_value))))
+                                                         item_value),
+                                         sectionLevel = NULL)))
                  sprintf('<code id="%s">%s</code>', item_id, item_value)
              }
              else sprintf('<code>%s</code>', item_value)
@@ -1180,7 +1181,8 @@ Rd2HTML <-
                 sec_value <- paste0("<p>", sectionTitles[tag], "</p>")
                 sec_id <- tag2id(tag = tag, name = if (standalone) NULL else name)
             }
-            toc_entry <- list(id = trimws(sec_id), value = trimws(sec_value))
+            toc_entry <- list(id = trimws(sec_id), value = trimws(sec_value),
+                              sectionLevel = sectionLevel)
             toc_entries <<-
                 c(toc_entries,
                   if (tag == "\\subsection") list(subsection = toc_entry)
@@ -1236,19 +1238,40 @@ Rd2HTML <-
             '<h1>Contents</h1>\n',
             '<ul class="menu">\n')
 
-        currentLevel <- 1L # entry_types = argitem, subsection are level 2
-        ## toc_entries <- list( section|subsection|argitem = list(id, value) )
         entry_types <- names(toc_entries)
+
+        previous_level <- 1 # initial value, beginning of TOC
+        previous_entry <- NULL
+        last_section_level <- NULL
+        ## toc_entries <- list( section|subsection|argitem = list(id, value, sectionLevel) )
         for (i in seq_along(toc_entries)) {
-            newLevel <-
-                if (entry_types[[i]] %in% c("argitem", "subsection")) 2L
-                else 1L
-            if (newLevel > currentLevel) of1("  <ul>")
-            else if (newLevel < currentLevel) of1("  </ul>")
-            currentLevel <- newLevel
             e <- toc_entries[[i]] # id, value can be vectors
+            ## section-level is recorded in e$sectionLevel for
+            ## sections and subsections. argitems will have
+            ## sectionLevel = NULL, which need to be interpreted as
+            ## one level more than the section in which it is nested.
+            if (!is.null(e$sectionLevel)) { # section|subsection
+                current_level <- e$sectionLevel
+                last_section_level <- current_level
+            }
+            else if (!is.null(last_section_level)) { # argitem
+                current_level <- last_section_level + 1
+            }
+            else stop("Invalid value of 'toc_entries'")
+            jump_level <- current_level - previous_level
+            ## Positive jump values should be exactly 1
+            if (jump_level > 1) warning("Unexpected jump in section level")
+            if (jump_level > 0) replicate(jump_level, of1("<li><ul>\n")) # see NOTE below
+            else if (jump_level < 0) replicate(-jump_level, of1("</ul></li>\n"))
             of0(sprintf("<li><a href='#%s'>%s</a></li>\n", e$id, e$value))
+            previous_level <- current_level
         }
+        ## We may end up at currentLevel > 1. Add closing tags in that case.
+        if (current_level > 1) replicate(current_level - 1, of1("</ul></li>\n"))
+        ## NOTE: Ideally the nested second-level <ul>-s should start
+        ## _within_ the parent <li>, but that will require us to look
+        ## forward. We will not do this (to keep the code simple), but
+        ## this may be something to revisit at some point.
 
         of0('</ul>\n',
             '</div>\n',
