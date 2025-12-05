@@ -27,6 +27,8 @@
 #ifndef FAKE_PRTUTIL_H_
 #define FAKE_PRTUTIL_H_
 
+#if ! defined(COMPILING_RCPP) || RCPP_VERSION > Rcpp_Version(1,1,0)
 #warning non-API header file R_ext/PrtUtil.h is obsolete and will be removed
+#endif
 
 #endif /* FAKE_PRTUTIL_H_ */
