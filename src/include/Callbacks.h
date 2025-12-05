@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2020 The R Core Team.
+ *  Copyright (C) 2001-2025 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -67,50 +67,6 @@ Rboolean Rf_removeTaskCallbackByIndex(int id);
 Rboolean Rf_removeTaskCallbackByName(const char *name);
 SEXP R_removeTaskCallback(SEXP which);
 R_ToplevelCallbackEl* Rf_addTaskCallback(R_ToplevelCallback cb, void *data, void (*finalizer)(void *), const char *name, int *pos);
-
-
-
-/*
-  The following definitions are for callbacks to R functions and
-  methods related to user-level tables.  This was implemented in a
-  separate package formerly available from Omegahat and these
-  declarations allow the package to interface to the internal R code.
-  
-  See https://developer.r-project.org/RObjectTables.pdf.
-*/
-
-typedef struct  _R_ObjectTable R_ObjectTable;
-
-/* Do we actually need the exists() since it is never called but R
-   uses get to see if the symbol is bound to anything? */
-typedef Rboolean (*Rdb_exists)(const char * const name, Rboolean *canCache, R_ObjectTable *);
-typedef SEXP     (*Rdb_get)(const char * const name, Rboolean *canCache, R_ObjectTable *);
-typedef int      (*Rdb_remove)(const char * const name, R_ObjectTable *);
-typedef SEXP     (*Rdb_assign)(const char * const name, SEXP value, R_ObjectTable *);
-typedef SEXP     (*Rdb_objects)(R_ObjectTable *);
-typedef Rboolean (*Rdb_canCache)(const char * const name, R_ObjectTable *);
-
-typedef void     (*Rdb_onDetach)(R_ObjectTable *);
-typedef void     (*Rdb_onAttach)(R_ObjectTable *);
-
-struct  _R_ObjectTable{
-  int       type;
-  char    **cachedNames;
-  Rboolean  active;
-
-  Rdb_exists   exists;
-  Rdb_get      get;
-  Rdb_remove   remove;
-  Rdb_assign   assign;
-  Rdb_objects  objects;
-  Rdb_canCache canCache;
-
-  Rdb_onDetach onDetach;
-  Rdb_onAttach onAttach;
-  
-  void     *privateData;
-};
-
 
 #ifdef __cplusplus
 }

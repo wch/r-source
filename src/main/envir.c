@@ -94,7 +94,7 @@
 #define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Internal.h>
-#include <R_ext/Callbacks.h>
+#include <R_ext/ObjectTable.h>
 
 #define FAST_BASE_CACHE_LOOKUP  /* Define to enable fast lookups of symbols */
 				/*    in global cache from base environment */

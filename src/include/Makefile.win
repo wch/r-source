@@ -23,7 +23,7 @@ R_EXT_HEADERS = \
   Lapack.h Linpack.h MathThreads.h Memory.h \
   Parse.h Print.h RS.h Rallocators.h Random.h \
   Rdynload.h Riconv.h RStartup.h Utils.h libextern.h \
-  stats_package.h stats_stubs.h Visibility.h
+  stats_package.h stats_stubs.h Visibility.h ObjectTable.h
 
 all: fixh config.h trioremap.h
 	@echo 'installing C headers'

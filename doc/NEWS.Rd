@@ -255,7 +255,12 @@
 
       \item The non-API header files \file{R_ext/Callbacks.h} and
       \file{R_ext/PrtUtil.h} are no longer copied to the installed
-      includes directory.
+      includes directory. The \code{R_ObjectTable} type definitions
+      formally in \file{R_ext/Callbacks.h} are now available in the new
+      header file \file{R_ext/ObjectTable.h}.  This new header file
+      should be used in packages instead of \file{R_ext/Callbacks.h}. To
+      ease the transition a stub file \file{R_ext/Callbacks.h} has been
+      added that just includes \file{R_ext/ObjectTable.h}.	
     }
   }
 

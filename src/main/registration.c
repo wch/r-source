@@ -55,7 +55,7 @@
     a C++ compiler because the linkage changes as the declarations
     are (currently) within extern "C" blocks.
 */
-#include <R_ext/Callbacks.h>
+#include <Callbacks.h>
 #include <Rdynpriv.h>
 
 #include "basedecl.h"

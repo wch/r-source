@@ -1622,7 +1622,7 @@ attribute_hidden SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-#include <R_ext/Callbacks.h>
+#include <Callbacks.h>
 
 static R_ToplevelCallbackEl *Rf_ToplevelTaskHandlers = NULL;
 

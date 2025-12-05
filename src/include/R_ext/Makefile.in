@@ -22,7 +22,7 @@ R_EXT_HEADERS = \
   Lapack.h Linpack.h MathThreads.h Memory.h QuartzDevice.h \
   Parse.h Print.h RS.h Rallocators.h Random.h \
   Rdynload.h Riconv.h RStartup.h Utils.h eventloop.h libextern.h \
-  stats_package.h stats_stubs.h Visibility.h
+  stats_package.h stats_stubs.h Visibility.h ObjectTable.h
 
 DISTFILES = Makefile.in $(R_EXT_HEADERS)
 TIMESTAMPS = $(R_EXT_HEADERS:.h=.ts)
