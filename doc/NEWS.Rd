@@ -415,17 +415,10 @@
       Sepal vs Petal dimensions in its first iris data plot, thanks to
       \I{Jeff Dick}'s post on R-devel.
 
-      \item \code{all.equal(obj, simple, check.class=FALSE)} now is true, also
-      when \code{simple} is a bare atomic vector and \code{obj} has a simple
-      class, fixing the first part of \PR{18971} thanks to \I{Jan Gorecki}.
-
       \item \code{diff(m, lag, dif)} for matrix \code{m} now still returns
       matrices, also when \code{lag * dif > nrow(m)} (\PR{18972}, thanks to
       \I{Mikael Jagan} and \I{Suharto Anggono}).
       \code{diff(<ts-matrix>)} remains matrix, even when it has length zero.
-
-      \item \code{str(x, give.attr=FALSE)} no longer shows attributes when
-      \code{x} is a zero length \code{"Date"} or \code{"POSIXt"} object.
 
       \item \code{model.frame(~1, list(), na.action=na.pass)} and similar
       \dQuote{border-line} uses no longer produce invalid data frames,
@@ -438,7 +431,12 @@
 
   \subsection{BUG FIXES}{
     \itemize{
-      \item .
+      \item \code{all.equal(obj, simple, check.class=FALSE)} now is true, also
+      when \code{simple} is a bare atomic vector and \code{obj} has a simple
+      class, fixing the first part of \PR{18971} thanks to \I{Jan Gorecki}.
+
+      \item \code{str(x, give.attr=FALSE)} no longer shows attributes when
+      \code{x} is a zero length \code{"Date"} or \code{"POSIXt"} object.
     }
   }
 }
