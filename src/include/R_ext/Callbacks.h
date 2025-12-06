@@ -29,7 +29,7 @@
 #define R_FAKE_CALLBACKS_H
 
 // new code should include R_ext/ObjectTable.h directly
-#if ! defined(RcppCommon_h) || RCPP_VERSION > Rcpp_Version(1,1,0)
+#if ! defined(RcppCommon_h)
 #warning include R_ext/ObjectTable.h for R_ObjectTable declarations
 #endif
 
