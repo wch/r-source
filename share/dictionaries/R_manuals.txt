@@ -140,6 +140,7 @@ reparsing
 representable
 reproducibility
 resaved
+resizable
 RHEL
 RNGs
 roundoff
@@ -198,6 +199,7 @@ unscaled
 unserialization
 unserialized
 unserializes
+unserializing
 untar
 unterminated
 untrace

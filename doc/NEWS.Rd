@@ -196,7 +196,7 @@
 
       Several CRAN packages already require C++20 and have hundreds of
       others depending on them.  (Packages can request C++17 if
-      esssential.)
+      essential.)
     }
   }
 

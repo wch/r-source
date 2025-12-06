@@ -13711,7 +13711,7 @@ this.
 @item Serializing and unserializing a resizable vector does not preserve the
 resizable property. The result is an ordinary non-resizable vector.
 
-@item The memory betweeen a shorter length and the initially allocated
+@item The memory between a shorter length and the initially allocated
 maximal length of a resizable vector is not accessible and cannot be
 reclaimed until the shorter vector is reclaimed by the garbage
 collector.
