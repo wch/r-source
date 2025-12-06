@@ -21,7 +21,7 @@ stopifnot(names(which(!jj)) == "am1:mpg"
 )
 
 
-### predict.lm(<rank-deficient>,  newdata = *) -- PR#15072, PR#16158 --------------
+###-- predict.lm(<rank-deficient>,  newdata = *) -- PR#15072, PR#16158 --------------
 
 ## constructed "exactly" rank-deficient
 x1 <- -4:4
@@ -121,7 +121,7 @@ stopifnot(exprs = {
 })
 
 ## play with tol
-str(tls <- sort(outer(c(1,2,4), 10^-(9:5))))
+str(tls <- sort(outer(c(1,2,4), 10^-(9:5)))) # tolerances to try
 nT <- length(tls <- setNames(tls, formatC(tls)))
 pls <- t(sapply(tls, function(TL) predict(fm8. , newdata=nd, tol = TL, rankdeficient = "NA")))
 stopifnot(is.finite(plsLst <- pls[nT,])) # (no NA)
@@ -164,7 +164,7 @@ stopifnot(exprs = {
 ## predict(*, ... type="terms" .. ) does *not* obey   rankdeficient=".."
 
 
-##-------- dummy.coef() -- with "character"-factor ---------------------------------------
+###-------- dummy.coef() -- with "character"-factor ---------------------------------------
 ## [Bug 18635] New: dummy.coef could not deal with character variable  // 9 Dec 2023
 ##  ---------  https://bugs.r-project.org/show_bug.cgi?id=18635
 
@@ -243,3 +243,44 @@ stopifnot(exprs = {
     all.equal15(tail(dc2f, 7),
                 c(`x:chA` = 0, tail(cf2f, 6)))
 })
+
+
+###-------- model.frame() empty - NULL row.names ========================
+## [Bug 18977] -- model.frame(~1, list()) constructed invalid data frame with
+##		'row.names' attribute NULL rather than empty integer|character
+chk <- function(x, rn) stopifnot(exprs = {
+    is.data.frame(x)
+    identical(.row_names_info(x, 0L), rn)
+    identical(.row_names_info(x, 1L), 0L)
+    identical(.row_names_info(x, 2L), 0L)
+    identical(attr(x, "row.names"),
+              if (is.character(rn)) character(0L) else integer(0L))
+    identical(row.names(x), character(0L))
+})
+a0 <- .set_row_names(0L) # [a]utomatic
+i0 <- integer(0L)
+c0 <- character(0L)
+stopifnot(identical(a0, i0)) # currently, but not documented
+chk(da <- data.frame(row.names =   ), a0)
+chk(di <- data.frame(row.names = i0), i0)
+chk(dc <- data.frame(row.names = c0), c0)
+ona <- options(na.action = "na.pass") # => testing 'model.frame' proper
+chk(mfa <- model.frame(~1, da), a0)
+chk(mfi <- model.frame(~1, di), i0)
+chk(mfc <- model.frame(~1, dc), c0)
+chk(mfl <- model.frame(~1, list()), a0) # failed
+## Error .... : identical(.row_names_info(x, 0L), rn) is not TRUE
+.row_names_info(mfl, 0L) # was NULL, not a0
+options(ona)
+L <- list(da, di, dc, mfa, mfi, mfc, mfl)
+stopifnot(identical(lapply(L, complete.cases),
+                    rep(list(logical(0L)), length(L)))) # failed for mfl
+## Error .... : no input has determined the number of cases
+## stats:::na.fail.default calls 'complete.cases', hence:
+(mf0 <- model.frame(~1, list(), na.action = na.fail)) # failed similarly
+
+
+### Local variables:
+### mode: R
+### page-delimiter: "^###[#-]"
+### End:

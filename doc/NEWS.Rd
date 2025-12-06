@@ -426,6 +426,10 @@
 
       \item \code{str(x, give.attr=FALSE)} no longer shows attributes when
       \code{x} is a zero length \code{"Date"} or \code{"POSIXt"} object.
+
+      \item \code{model.frame(~1, list(), na.action=na.pass)} and similar
+      \dQuote{border-line} uses no longer produce invalid data frames,
+      fixing \PR{18977}, reported with patch by \I{Mikael Jagan}.
     }
   }
 }
