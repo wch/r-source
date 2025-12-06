@@ -5,6 +5,17 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo CHANGES IN R 4.5.2 patched}{
+
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{all.equal(obj, simple, check.class=FALSE)} now is true, also
+      when \code{simple} is a bare atomic vector and \code{obj} has a simple
+      class, fixing the first part of \PR{18971} thanks to \I{Jan Gorecki}.
+    }
+  }
+}
+
 \section{\Rlogo CHANGES IN R 4.5.2}{
 
   \subsection{UTILITIES}{
