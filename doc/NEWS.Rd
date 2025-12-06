@@ -12,6 +12,9 @@
       \item \code{all.equal(obj, simple, check.class=FALSE)} now is true, also
       when \code{simple} is a bare atomic vector and \code{obj} has a simple
       class, fixing the first part of \PR{18971} thanks to \I{Jan Gorecki}.
+
+      \item \code{str(x, give.attr=FALSE)} no longer shows attributes when
+      \code{x} is a zero length \code{"Date"} or \code{"POSIXt"} object.
     }
   }
 }
