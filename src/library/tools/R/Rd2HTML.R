@@ -270,8 +270,11 @@ topic2href <- function(x, destpkg = NULL, hooks = list())
 
 ## Note that tagid can be a vector (for comma-separated items)
 
-tag2id <- function(tag, name = NULL, tagid = section2id[tag])
+tag2id <- function(tag, name = NULL, tagid = section2id[tag], dedup = NULL)
 {
+    ## id-s must not be duplicated within a HTML file. If 'dedup' is
+    ## supplied, we ensure that the id returned is not in it, by
+    ## adding a random suffix
     section2id <- 
         c("\\description" = "_sec_description", "\\usage"    = "_sec_usage",
           "\\arguments"   = "_sec_arguments",   "\\format"   = "_sec_format",
@@ -283,7 +286,12 @@ tag2id <- function(tag, name = NULL, tagid = section2id[tag])
     if (anyNA(tagid)) return(NULL) # or "" ?
     id <- if (is.null(name)) tagid
           else paste(name2id(name), tagid, sep = "_:_")
-    string2id(gsub("[[:space:]]+", "-", id))
+    id <- trimws(string2id(gsub("[[:space:]]+", "-", id)))
+    ## make id unique: but note that id can be a vector (for argument items)
+    if (!is.null(dedup))
+        while (any(id %in% dedup))
+            id <- paste0(id, sample(100:999, 1))
+    id
 }
 
 rdfragment2text <- function(rd, html = TRUE)
@@ -485,6 +493,8 @@ Rd2HTML <-
         if (!standalone) toc <- FALSE
         else toc_entries <- list()
     }
+    ## keep global list of all HTML ids used to ensure no duplicates
+    id_list <- NULL
 
     skipNewline <- FALSE
     linestart <- TRUE
@@ -604,7 +614,8 @@ Rd2HTML <-
         s <- s[nzchar(s)] # unlikely to matter, but just to be safe
         item_value <- vhtmlify(s)
         s <- if (addID) {
-                 item_id <- tag2id(name = if (standalone) NULL else name, tagid = s)
+                 item_id <- tag2id(name = if (standalone) NULL else name, tagid = s, dedup = id_list)
+                 id_list <<- c(id_list, item_id)
                  if (toc)
                      toc_entries <<-
                          c(toc_entries,
@@ -1175,13 +1186,16 @@ Rd2HTML <-
                 sec_value <- rdfragment2text(section[[1L]])
                 sec_id <-
                     tag2id(name = if (standalone) NULL else name,
-                           tagid = rdfragment2text(section[[1L]], html = FALSE))
+                           tagid = rdfragment2text(section[[1L]], html = FALSE),
+                           dedup = id_list)
             }
             else {
                 sec_value <- paste0("<p>", sectionTitles[tag], "</p>")
-                sec_id <- tag2id(tag = tag, name = if (standalone) NULL else name)
+                sec_id <- tag2id(tag = tag, name = if (standalone) NULL else name,
+                                 dedup = id_list)
             }
-            toc_entry <- list(id = trimws(sec_id), value = trimws(sec_value),
+            id_list <<- c(id_list, sec_id)
+            toc_entry <- list(id = sec_id, value = trimws(sec_value),
                               sectionLevel = sectionLevel)
             toc_entries <<-
                 c(toc_entries,
