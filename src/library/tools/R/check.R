@@ -6222,6 +6222,10 @@ add_dummies <- function(dir, Log)
                 ex_re <- "BH/include/boost/.*\\[-Wdeprecated-literal-operator\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
+                ## Filter out GCC >= 12 C++23 warnings on #warning (clang does not warn)
+                ex_re <- "warning:.*\\[-Wc\\+\\+23-extensions\\]"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
                 ## "gcc (even 9) seems not to know the size of pointers, so skip
                 ## some from -Walloc-size-larger-than= and -Wstringop-overflow="
 ##                lines <- grep("exceeds maximum object size.*-W(alloc-size-larger-than|stringop-overflow)", lines,
