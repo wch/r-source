@@ -6085,7 +6085,7 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wdeprecated-non-prototype\\]",
                              ## gcc and clang reports on use of #warning
                              ## but not suppressing the warning itself.
-                             "\\[-Wcpp\\] ",
+                             "\\[-Wcpp\\]",
                              "\\[-W#warnings\\]",
                              "\\[-Wrange-loop-construct\\]",
                              "\\[-Warray-parameter=\\]",
