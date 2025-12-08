@@ -2400,6 +2400,13 @@ stopifnot(chk0(structure(.Date   (numeric()), foobar = list(Dt = "A"))),
           chk0(structure(.POSIXct(numeric()), foobar = list(ct = "C"))))
 ## in R <= 4.5.2, give.attr=FALSE was not obeyed for 0-length "Date" / "POSIXt"
 
+## guard against mutation through active bindings
+y <- 1 + 0
+if (exists("x")) rm(x)
+makeActiveBinding("x", function(v) y, .GlobalEnv)
+x[1] <- 2
+stopifnot(y == 1)
+rm(x)
 
 
 ## keep at end

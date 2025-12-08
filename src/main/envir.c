@@ -167,6 +167,8 @@ static SEXP getActiveValue(SEXP fun)
     PROTECT(expr);
     expr = eval(expr, R_GlobalEnv);
     UNPROTECT(1);
+    /* mark unmutable to prevent mutations in complex assignments */
+    MARK_NOT_MUTABLE(expr);
     return expr;
 }
 

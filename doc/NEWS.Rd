@@ -423,6 +423,10 @@
       \item \code{model.frame(~1, list(), na.action=na.pass)} and similar
       \dQuote{border-line} uses no longer produce invalid data frames,
       fixing \PR{18977}, reported with patch by \I{Mikael Jagan}.
+
+      \item Values returned by active binding functions are now marked as
+      not mutable to prevent unintended mutation in complex assignment
+      operations.
     }
   }
 }
