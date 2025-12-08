@@ -169,7 +169,9 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
     ## Now to make a file with header + DESCRIPTION + TOC + content + footer
 
     hfcomps <- # should we be able to specify static URLs here?
-        HTMLcomponents(title = paste0("Help for package ", pkgname), logo = FALSE,
+        HTMLcomponents(title = sprintf('Package {%s}', pkgname),
+                       headerTitle = paste0("Help for package ", pkgname),
+                       logo = FALSE,
                        up = NULL, top = NULL,
                        css = stylesheet,
                        outputEncoding = outputEncoding,
@@ -202,7 +204,6 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
               sprintf('<img class="toplogo" src="%s" alt="[logo]">',
                       if (src.type == "installed") staticLogoPath(pkgname, relative = FALSE)
                       else staticLogoPath(pkgdir, relative = FALSE, dir = TRUE)),
-              sprintf('<h1>Package {%s}</h1>', pkgname),
               '<h2>Contents</h2>',
               '<ul class="menu">',
               toclines,
