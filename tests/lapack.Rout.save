@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2023-10-11 r85316) -- "Unsuffered Consequences"
-Copyright (C) 2023 The R Foundation for Statistical Computing
+R Under development (unstable) (2025-12-07 r89119) -- "Unsuffered Consequences"
+Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -434,23 +434,28 @@ NaN NaN NaN
 > stopifnot(is.na(A_b))
 > ## IGNORE_RDIFF_BEGIN
 > A_b
-        11 12
-a NaN+NaNi NA
-b NaN+NaNi NA
-c NaN+NaNi NA
+        11       12
+a NaN+NaNi NaN+NaNi
+b NaN+NaNi NaN+NaNi
+c NaN+NaNi NaN+NaNi
 > rbind(re = Re(A_b[,2]), im = Im(A_b[,2])) # often was "all NA", now typically "re=NA, im=NaN"
      a   b   c
-re  NA  NA  NA
+re NaN NaN NaN
 im NaN NaN NaN
 > ## IGNORE_RDIFF_END
 > 
 > 
 > ## PR#18541 by Mikael Jagan -- chol()  error & warning message:
 > x <- diag(-1, 5L)
-> (chF <- tryCmsg(chol(x, pivot = FALSE))) # dpotrf
+> (chF <- tryCmsg(chol(x, pivot = FALSE))) # dpotrf - warning
 [1] "the leading minor of order 1 is not positive"
-> (chT <- withCallingHandlers(warning = function(w) ..W <<- conditionMessage(w),
-+                 chol(x, pivot = TRUE ))) # dpstrf
+> chT <- withCallingHandlers(warning = function(w) ..W <<- conditionMessage(w),
++                 chol(x, pivot = TRUE )) # dpstrf  - warning
+Warning message:
+In chol.default(x, pivot = TRUE) :
+  the matrix is either rank-deficient or not positive definite
+> ## IGNORE_RDIFF_BEGIN
+> chT  # matrix typically == x + pivot and rank (checked below)
      [,1] [,2] [,3] [,4] [,5]
 [1,]   -1    0    0    0    0
 [2,]    0   -1    0    0    0
@@ -461,13 +466,13 @@ attr(,"pivot")
 [1] 1 2 3 4 5
 attr(,"rank")
 [1] 0
-Warning message:
-In chol.default(x, pivot = TRUE) :
-  the matrix is either rank-deficient or not positive definite
+> ## IGNORE_RDIFF_END
 > stopifnot(exprs = {
 +     grepl(" minor .* not positive$", chF) # was "not positive *definite*
 +     grepl("rank-deficient or not positive definite$", ..W) # was "indefinite*
 +     ## platform dependent, Mac has several NaN's  chT == -diag(5)
++    identical(
++     attr(chT, "pivot"), 1:5)
 +     attr(chT, "rank") %in% 0:1
 + })
 > 

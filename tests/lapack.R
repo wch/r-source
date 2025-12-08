@@ -185,12 +185,17 @@ rbind(re = Re(A_b[,2]), im = Im(A_b[,2])) # often was "all NA", now typically "r
 
 ## PR#18541 by Mikael Jagan -- chol()  error & warning message:
 x <- diag(-1, 5L)
-(chF <- tryCmsg(chol(x, pivot = FALSE))) # dpotrf
-(chT <- withCallingHandlers(warning = function(w) ..W <<- conditionMessage(w),
-                chol(x, pivot = TRUE ))) # dpstrf
+(chF <- tryCmsg(chol(x, pivot = FALSE))) # dpotrf - warning
+chT <- withCallingHandlers(warning = function(w) ..W <<- conditionMessage(w),
+                chol(x, pivot = TRUE )) # dpstrf  - warning
+## IGNORE_RDIFF_BEGIN
+chT  # matrix typically == x + pivot and rank (checked below)
+## IGNORE_RDIFF_END
 stopifnot(exprs = {
     grepl(" minor .* not positive$", chF) # was "not positive *definite*
     grepl("rank-deficient or not positive definite$", ..W) # was "indefinite*
     ## platform dependent, Mac has several NaN's  chT == -diag(5)
+   identical(
+    attr(chT, "pivot"), 1:5)
     attr(chT, "rank") %in% 0:1
 })
