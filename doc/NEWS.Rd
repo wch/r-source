@@ -147,6 +147,11 @@
       convenience and code readability, from an R-devel suggestion, after
       many years of private definitions mostly hidden in packages,
       including in \R's \pkg{tools} package.
+
+      \item The default method of \code{sequence()} gets a new option
+      \code{recycle} to swap between current (not fully recycling) and
+      future behaviour where all three of \code{(nvec, from, by)} are
+      jointly recycled.
     }
   }
 
@@ -427,6 +432,13 @@
       \item Values returned by active binding functions are now marked as
       not mutable to prevent unintended mutation in complex assignment
       operations.
+
+      \item The default method of \code{sequence()} now allows to
+      fully recycle all three of \code{(nvec, from, by)} as always
+      documented; with thanks to \I{Mikael Jagan}'s report and patch in
+      \PR{18304}.  Its behaviour remains back compatible for now, but can
+      be switched to future behaviour via enviroment variable
+      \env{R_sequence_recycle}, or explicit \code{recycle = TRUE}.
     }
   }
 }

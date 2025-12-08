@@ -2408,6 +2408,47 @@ x[1] <- 2
 stopifnot(y == 1)
 rm(x)
 
+## PR#18304 -- recycling `nvec` argument of sequence.default()
+chkS <- function(n, nvec, recyc=FALSE) {
+    lxn <- rep.int(1L, n)
+    stopifnot(exprs = {
+	identical(sequence.default(from = lxn, by = 1L, nvec = nvec, recycle=recyc),
+		  sequence.default(from = 1L, by = lxn, nvec = nvec, recycle=recyc) -> s1)
+        is.integer(s2 <- unlist(mapply(seq, from = lxn, by = 1L,
+                                       length.out = rep_len(nvec, n),# <- to avoid warning: longer argument
+									# not a multiple of length of shorter
+				       SIMPLIFY=FALSE, USE.NAMES=FALSE)))
+        identical(s1, if(recyc || n <= length(nvec)) s2 else s2[seq_along(s1)])
+    })
+    s1
+}
+for(recycl in c(FALSE, TRUE)) withAutoprint({
+    cat("\n>>>> recycl: ", recycl, "-----\n",strrep("-", 25),"\n", sep="")
+    ## These all worked identically previously:
+    chkS(1, 1,   recyc = recycl) # 1
+    chkS(2, 1:2, recyc = recycl) # 1,  1 2
+    chkS(3, 1:3, recyc = recycl) # 1,  1 2,  1 2 3
+    chkS(3, 3:1, recyc = recycl) # 1 2 3,  1 2,  1
+    chkS(4, 1:4, recyc = recycl) # 1,  1 2,  1 2 3,  1 2 3 4
+    chkS(4, 4:1, recyc = recycl) # 1 2 3 4,  1 2 3,  1 2,  1
+    chkS(5, 1:5, recyc = recycl) # 1,   1 2,   1 2 3,   1 2 3 4,   1 2 3 4 5
+    ## These did not:  length(nvec) < n :
+    if(recycl)           chkS(3, 2:3, recyc = TRUE)
+    else { rF <- getVaW( chkS(3, 2:3, recyc = FALSE) )
+       ## the very first produces a  __once per R session__ warning:
+       if(!is.null(wrn <- attr(rF, "warning"))) {
+         cat("Caught warning: ")
+         writeLines(wrn) }       #          recycl: FALSE  ||  TRUE
+       as.vector(rF) }           # 1 2, 1 2 3              ||  1 2, 1 2 3, 1 2
+    chkS(5, 2:3, recyc = recycl) # 1 2, 1 2 3              ||  1 2, 1 2 3, 1 2, 1 2 3, 1 2
+    chkS(6, 2:3, recyc = recycl) # 1 2, 1 2 3              ||  1 2, 1 2 3, 1 2, 1 2 3, 1 2, 1 2 3
+    chkS(4, 2:1, recyc = recycl) # 1 2, 1                  ||  1 2, 1, 1 2, 1
+    chkS(4, 5:6, recyc = recycl) # 1 2 3 4 5, 1 2 3 4 5 6  ||  1 2 3 4 5, 1 2 3 4 5 6, 1 2 3 4 5, 1 2 3 4 5 6
+    chkS(5, 1:4, recyc = recycl) # 1, 1 2, 1 2 3, 1 2 3 4  ||  1, 1 2, 1 2 3, 1 2 3 4, 1
+    ## the last 6 cases all failed chkS() for recycle = TRUE
+})
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

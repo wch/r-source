@@ -1122,57 +1122,83 @@ attribute_hidden SEXP do_seq_len(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 attribute_hidden SEXP do_sequence(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    R_xlen_t lengths_len, from_len, by_len, ans_len, i, i2, i3;
-    int from_elt, by_elt, length, j, k, *ans_elt;
-    const int *lengths_elt;
-    SEXP ans, lengths, from, by;
-
     checkArity(op, args);
 
-    lengths = CAR(args);
+    SEXP lengths = CAR(args);
     if (!isInteger(lengths))
 	error(_("'nvec' is not of mode integer"));
-    from = CADR(args);
+    SEXP from = CADR(args);
     if (!isInteger(from))
 	error(_("'from' is not of mode integer"));
-    by = CADDR(args);
+    SEXP by = CADDR(args);
     if (!isInteger(by))
 	error(_("'by' is not of mode integer"));
+    SEXP recycle_1st_ = CADDDR(args);
+    bool maybe_warn = (bool) isInteger(recycle_1st_); // when missing(recycle) in R
+    bool recycle_1st  = asBool2(recycle_1st_, call);
+    R_xlen_t
+	lengths_len = xlength(lengths);
+    if(lengths_len == 0)
+	return allocVector(INTSXP, 0);
+    R_xlen_t
+	from_len    = xlength(from),
+	by_len      = xlength(by);
 
-    lengths_len = length(lengths);
-    from_len = length(from);
-    by_len = length(by);
-    if (lengths_len != 0) {
+    if (!recycle_1st && lengths_len != 0) {
 	if (from_len == 0)
-	    error(_("'from' has length 0, but not 'nvec'"));
+	    error(_("'%s' has length 0, but not 'nvec'; 'recycle = TRUE' returns empty here"), "from");
 	if (by_len == 0)
-	    error(_("'by' has length 0, but not 'nvec'"));
+	    error(_("'%s' has length 0, but not 'nvec'; 'recycle = TRUE' returns empty here"), "by");
+    } else { // recycle_1st
+	if(from_len == 0 || by_len == 0)
+	return allocVector(INTSXP, 0);
     }
-    ans_len = 0;
-    lengths_elt = INTEGER(lengths);
-    for (i = 0; i < lengths_len; i++, lengths_elt++) {
-	length = *lengths_elt;
-	if (length == NA_INTEGER || length < 0)
+    R_xlen_t ans_len,
+	max_len = ((lengths_len > from_len) ?
+		   (lengths_len > by_len ? lengths_len : by_len) :
+		   (from_len    > by_len ?    from_len : by_len)),
+	i, i1, i2, i3;
+    if(!recycle_1st && lengths_len < max_len) {
+	/* warn that this will change, if arg was missing, at most *once* per R session */
+	static bool warn_1st = true;
+	if(warn_1st && maybe_warn) {
+	    char msg[99];
+	    snprintf(msg, 99, "length(nvec) %ld < %ld = max(length(from), length(by))",
+		     lengths_len, max_len);
+	    warning(_("%s -- future R`s default 'recycle = TRUE' will recycle 'nvec'"), msg);
+	    warn_1st = false;
+	}
+	max_len = lengths_len;
+    }
+    const int *lengths_elt = INTEGER(lengths);
+    for (i = i1 = ans_len = 0; i < max_len; i++, i1++) {
+	if (i1 >= lengths_len)
+	    i1 = 0; /* recycle */
+	int len = lengths_elt[i1];
+	if (len == NA_INTEGER || len < 0)
 	    error(_("'nvec' must be a vector of non-negative integers"));
-	ans_len += length;
+	ans_len += len;
     }
-    ans = allocVector(INTSXP, ans_len);
-    ans_elt = INTEGER(ans);
-    lengths_elt = INTEGER(lengths);
-    for (i = i2 = i3 = 0; i < lengths_len; i++, i2++, i3++, lengths_elt++) {
+    SEXP ans = allocVector(INTSXP, ans_len);
+    int *ans_elt = INTEGER(ans),
+	*pfrom   = INTEGER(from),
+	*pby     = INTEGER(by);
+    for (i = i1 = i2 = i3 = 0; i < max_len; i++, i1++, i2++, i3++) {
+	if (recycle_1st && i1 >= lengths_len)
+	    i1 = 0; /* recycle */
 	if (i2 >= from_len)
 	    i2 = 0; /* recycle */
 	if (i3 >= by_len)
 	    i3 = 0; /* recycle */
-	length = *lengths_elt;
-	from_elt = INTEGER(from)[i2];
+	int length = lengths_elt[i1],
+	    from_elt = pfrom[i2];
 	if (length != 0 && from_elt == NA_INTEGER)
 	    error(_("'from' contains NAs"));
-	by_elt = INTEGER(by)[i3];
+	int by_elt = pby[i3];
 	if (length >= 2 && by_elt == NA_INTEGER)
 	    error(_("'by' contains NAs"));
 	// int to = from_elt + (length - 1) * by_elt;
-	for (k = 0, j = from_elt; k < length; j += by_elt, k++)
+	for (int k = 0, j = from_elt; k < length; j += by_elt, k++)
 	    *(ans_elt++) = j;
     }
     return ans;

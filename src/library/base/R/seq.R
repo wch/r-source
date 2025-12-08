@@ -172,6 +172,8 @@ seq.default <-
 ## In reverence to the very first versions of R which already had sequence():
 sequence <- function(nvec, ...) UseMethod("sequence")
 
-sequence.default <- function(nvec, from = 1L, by = 1L, ...) {
-    .Internal(sequence(as.integer(nvec), as.integer(from), as.integer(by)))
+sequence.default <- function(nvec, from = 1L, by = 1L,
+                             recycle = Sys.getenv("R_sequence_recycle", "false"), ...) {
+    .Internal(sequence(as.integer(nvec), as.integer(from), as.integer(by),
+                       if(missing(recycle)) 0L else as.logical(recycle)))
 }
