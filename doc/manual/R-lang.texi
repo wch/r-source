@@ -1797,14 +1797,14 @@ names(x)[3] <<- "Three"
 @end example
 is equivalent to 
 @example
-`*tmp*` <<- get(x, envir=parent.env(), inherits=TRUE)
+`*tmp*` <- get("x", envir=parent.env(), inherits=TRUE)
 names(`*tmp*`)[3] <- "Three"
 x <<- `*tmp*`
 rm(`*tmp*`)
 @end example
 and also to
 @example
-`*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
+`*tmp*` <- get("x", envir=parent.env(), inherits=TRUE)
 x <<- "names<-"(`*tmp*`, value="[<-"(names(`*tmp*`), 3, value="Three"))
 rm(`*tmp*`)
 @end example
@@ -1828,7 +1828,7 @@ value of @code{e} on the RHS of the @I{superassignment} statement.  It sets
 @end example
 That is, the @I{superassignment} is equivalent to the four lines
 @example
-`*tmp*` <- get(e, envir=parent.env(), inherits=TRUE)
+`*tmp*` <- get("e", envir=parent.env(), inherits=TRUE)
 `*tmp*`[i] <- e[i]+1
 e <<- `*tmp*`
 rm(`*tmp*`)
@@ -1840,14 +1840,14 @@ x[is.na(x)] <<- 0
 @end example
 is equivalent to 
 @example
-`*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
+`*tmp*` <- get("x", envir=parent.env(), inherits=TRUE)
 `*tmp*`[is.na(x)] <- 0
 x <<- `*tmp*`
 rm(`*tmp*`)
 @end example
 and not to
 @example
-`*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
+`*tmp*` <- get("x", envir=parent.env(), inherits=TRUE)
 `*tmp*`[is.na(`*tmp*`)] <- 0
 x <<- `*tmp*`
 rm(`*tmp*`)
