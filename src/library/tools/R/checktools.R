@@ -220,17 +220,27 @@ function(dir,
                           available[pos, "Version"])
 
         if(length(rfiles)) {
-            message("downloading reverse dependencies ...")
+            msg <- gettextf("downloading reverse dependencies %s",
+                            paste(sQuote(rnames), collapse = ", "))
+            msg <- paste(strwrap(msg, exdent = 2L), collapse = "\n")
+            message(msg, "\n", domain = NA)
             rfurls <- sprintf("%s/%s",
                               available[pos, "Repository"],
                               rfiles)
-            for(i in seq_along(rfiles)) {
-                message(sprintf("downloading %s ... ", rfiles[i]),
-                        appendLF = FALSE)
-                status <- if(!utils::download.file(rfurls[i], rfiles[i],
-                                                   quiet = TRUE))
-                    "ok" else "failed"
-                message(status)
+            status <- utils::download.file(rfurls, rfiles,
+                                           method = "libcurl",
+                                           mode = "wb")
+            if(status != 0L || any(rv <- attr(status, "retvals"))) {
+                fails <- if(status != 0L) rnames else rnames[rv != 0L]
+                n <- length(fails)
+                msg <-
+                if(n == 1L)
+                    gettextf("download of reverse dependency %s failed",
+                             sQuote(fails))
+                else
+                    gettextf("download of %d reverse dependencies failed:\n  %s",
+                             n, paste(sQuote(fails), collapse = ", "))
+                message(msg, domain = NA)
             }
             message("")
         }
