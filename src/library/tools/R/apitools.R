@@ -62,7 +62,10 @@ getOneFunAPI <- function(apitype) {
     hdrs <- sub(hpat, "", grep(hpat, wrelines, value = TRUE))
     wAPI <- data.frame(name = funs, loc = rep("WRE", length(names)))
     getHdrAPI <- function(hdr) {
-        hfuns <- getFunsHdr(file.path(R.home("include"), hdr))
+        fpath <- file.path(R.home("include"), hdr)
+        if (! file.exists(fpath))
+            return(NULL) ## some headers may not exist on all platforms
+        hfuns <- getFunsHdr(fpath)
         data.frame(name = hfuns, loc = rep(hdr, length(hfuns)))
     }
     hAPI <- lapply(hdrs, getHdrAPI)
