@@ -82,7 +82,7 @@ function(x, href = TRUE, ifdef = FALSE)
 .get_urls_from_HTML_file <-
 function(f)
 {
-    doc <- xml2::read_html(f)
+    doc <- tryCatch(xml2::read_html(f), error = identity)
     if(!inherits(doc, "xml_node")) return(character())
     nodes <- xml2::xml_find_all(doc, "//a")
     hrefs <- xml2::xml_attr(nodes, "href")
@@ -90,10 +90,13 @@ function(f)
 }
 
 .get_urls_from_PDF_file <-
-function(f)    
+function(f, exe = NULL)
 {
     ## Seems there is no straightforward way to extract hyperrefs from a
     ## PDF, hence first convert to HTML.
+    if(is.null(exe))
+        exe <- Sys.which("pdftohtml")
+    if(!nzchar(exe)) return(character())
     ## Note that pdftohtml always outputs in cwd ...
     owd <- getwd()
     dir.create(d <- tempfile())
@@ -101,7 +104,7 @@ function(f)
     file.copy(normalizePath(f), d)
     setwd(d)
     g <- tempfile(tmpdir = d, fileext = ".xml")
-    system2("pdftohtml",
+    system2(exe,
             c("-s -q -i -c -xml", shQuote(basename(f)), shQuote(basename(g))))
     ## Oh dear: seems that pdftohtml can fail without a non-zero exit
     ## status.
@@ -151,6 +154,9 @@ url_db_from_PDF_files <-
 function(dir, recursive = FALSE, files = NULL, verbose = FALSE)
 {
     urls <- parents <- character()
+    exe <- Sys.which("pdftohtml")
+    if(!nzchar(exe))
+        return(url_db(urls, parents))
     if(is.null(files))
         files <- list.files(dir, pattern = "[.]pdf$",
                             full.names = TRUE,
@@ -161,7 +167,7 @@ function(dir, recursive = FALSE, files = NULL, verbose = FALSE)
                    if(verbose)
                        message(sprintf("processing %s",
                                        .file_path_relative_to_dir(f, dir)))
-                   .get_urls_from_PDF_file(f)
+                   .get_urls_from_PDF_file(f, exe)
                })
     names(urls) <- files
     urls <- Filter(length, urls)
@@ -313,6 +319,14 @@ function(dir, installed = FALSE)
     url_db(urls, rep.int(path, length(urls)))
 }
 
+url_db_from_package_PDF_files <-
+function(dir, installed = FALSE)
+{
+    path <- if(installed) "doc" else file.path("inst", "doc")
+    files <- Sys.glob(file.path(dir, path, "*.pdf"))
+    url_db_from_PDF_files(dir, files = files)
+}
+
 url_db_from_package_sources <-
 function(dir, add = FALSE) {
     meta <- .get_package_metadata(dir, FALSE)
@@ -322,6 +336,7 @@ function(dir, add = FALSE) {
                 url_db_from_package_news(dir))
     if(requireNamespace("xml2", quietly = TRUE)) {
         db <- rbind(db,
+                    url_db_from_package_PDF_files(dir),
                     url_db_from_package_HTML_files(dir),
                     url_db_from_package_README_md(dir),
                     url_db_from_package_NEWS_md(dir)
@@ -350,6 +365,8 @@ function(packages, lib.loc = NULL, verbose = FALSE)
                     url_db_from_package_news(dir, installed = TRUE))
         if(requireNamespace("xml2", quietly = TRUE)) {
             db <- rbind(db,
+                        url_db_from_package_PDF_files(dir,
+                                                       installed = TRUE),
                         url_db_from_package_HTML_files(dir,
                                                        installed = TRUE),
                         url_db_from_package_README_md(dir,
