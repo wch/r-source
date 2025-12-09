@@ -15,7 +15,7 @@ DISTFILES = DESCRIPTION.in Makefile.in Makefile.win NAMESPACE
 
 pkg = tools
 
-WRE_DATA = $(top_builddir)/library/$(pkg)/wre.txt
+WRE_DATA = $(top_builddir)/library/$(pkg)/misc/wre.txt
 WRE_SRC = $(top_srcdir)/doc/manual/R-exts.texi
 
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
@@ -33,6 +33,7 @@ update:
 all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/misc
 	@$(MAKE) mkR1 mkdesc2  $(WRE_DATA)
 	@$(MAKE) mksrc
 	@if ! test -f $(top_builddir)/library/$(pkg)/R/$(pkg); then \

@@ -20,7 +20,8 @@
 ## Work out the function API from information in WRE
 ##
 
-## WRE data is now installed in system.file(package = "tools", "wre.txt")
+## WRE data is now installed in
+## system.file(package = "tools", "misc", "wre.txt")
 ## WRE(newpath) forces a new load with the new path.
 
 apidata <-
@@ -42,7 +43,8 @@ resetAPI <- function(newloc = "") {
 WRE <- function() {
     if (is.null(apidata$wrelines)) {
         if (is.null(apidata$wreloc)) {
-            apidata$wreloc <- system.file(package = "tools", "wre.txt")
+            apidata$wreloc <-
+                system.file(package = "tools", "misc", "wre.txt")
             if (apidata$wreloc == "")
                 apidata$wreloc <-
                     "https://svn.r-project.org/R/trunk/doc/manual/R-exts.texi"
