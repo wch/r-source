@@ -306,6 +306,11 @@
 
   \subsection{BUG FIXES}{
     \itemize{
+      \item \code{chol(x, pivot=TRUE)} now zeroes the trailing submatrix when
+      the algorithm stops early. Following the help page instructions on
+      how to reconstruct the matrix in postive semidefinite cases gave
+      incorrect results if the rank was 2 or more less than the dimension.
+
       \item Profiling \code{"mle"} objects (\pkg{stats4} package) could fail
       because profile MLE used starting value from full MLE. Now starts from profile MLE
       from previous step.

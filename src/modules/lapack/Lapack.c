@@ -1118,6 +1118,10 @@ static SEXP La_chol(SEXP A, SEXP pivot, SEXP stol)
 		error(_("argument %d of Lapack routine %s had invalid value"),
 		      -info, "dpstrf");
 	}
+ 	/* zero remaining upper triangle if rank < m */
+	for (int j = rank ; j < m ; j++)
+            for (int i = rank ; i <= j ; i++)
+                REAL(ans) [i + N * j] = 0. ;
 	setAttrib(ans, install("pivot"), piv);
 	SEXP s_rank = install("rank");
 	setAttrib(ans, s_rank, ScalarInteger(rank));
