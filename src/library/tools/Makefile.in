@@ -34,6 +34,8 @@ all: Makefile DESCRIPTION
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/misc
+	@$(ECHO) $(abs_top_srcdir) \
+	  > $(top_builddir)/library/$(pkg)/misc/top.txt
 	@$(MAKE) mkR1 mkdesc2  $(WRE_DATA)
 	@$(MAKE) mksrc
 	@if ! test -f $(top_builddir)/library/$(pkg)/R/$(pkg); then \

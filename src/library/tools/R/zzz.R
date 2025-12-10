@@ -61,3 +61,10 @@ rm(C_parseLatex)
     toset <- !(names(op.tools) %in% names(.Options))
     if(any(toset)) options(op.tools[toset])
 }
+
+.R_top_srcdir_file_path <-
+    system.file("misc", "top.txt", package = "tools")
+.R_top_srcdir <- if(nzchar(.R_top_srcdir_file_path)) {
+                     readLines(.R_top_srcdir_file_path)
+                 } else ""
+rm(.R_top_srcdir_file_path)
