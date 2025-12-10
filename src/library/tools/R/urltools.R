@@ -336,7 +336,7 @@ function(dir, add = FALSE) {
                 url_db_from_package_news(dir))
     if(requireNamespace("xml2", quietly = TRUE)) {
         db <- rbind(db,
-                    url_db_from_package_PDF_files(dir),
+                    ## url_db_from_package_PDF_files(dir),
                     url_db_from_package_HTML_files(dir),
                     url_db_from_package_README_md(dir),
                     url_db_from_package_NEWS_md(dir)
@@ -365,8 +365,8 @@ function(packages, lib.loc = NULL, verbose = FALSE)
                     url_db_from_package_news(dir, installed = TRUE))
         if(requireNamespace("xml2", quietly = TRUE)) {
             db <- rbind(db,
-                        url_db_from_package_PDF_files(dir,
-                                                       installed = TRUE),
+                        ## url_db_from_package_PDF_files(dir,
+                        ##                               installed = TRUE),
                         url_db_from_package_HTML_files(dir,
                                                        installed = TRUE),
                         url_db_from_package_README_md(dir,
