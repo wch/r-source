@@ -2449,6 +2449,19 @@ for(recycl in c(FALSE, TRUE)) withAutoprint({
 })
 
 
+## <1d-arrary>[<name>] <- <val>  -- dropped dim & dimnames in transforming to atomic vector -- PR#18973
+mk1d <- function(N) {
+    stopifnot(length(N) == 1, N >= 1, is.integer(n <- 1:N))
+    array(n, dimnames = list(letters[n]))
+}
+chk1d <- function(a)
+    stopifnot(is.array(a), length(d <- dim(a)) == 1L, is.list(dn <- dimnames(a)), length(dn) == 1L)
+str(x <- mk1d(3)); chk1d(x)
+x[1]   <- 99 ; chk1d(x)
+x["a"] <- 100; chk1d(x)
+## x["a"] <- .. did drop dim() & dimnames() {getting names() instead}.
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

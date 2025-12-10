@@ -444,6 +444,10 @@
       \PR{18304}.  Its behaviour remains back compatible for now, but can
       be switched to future behaviour via enviroment variable
       \env{R_sequence_recycle}, or explicit \code{recycle = TRUE}.
+
+      \item Subassignment, \code{x[ind] <- val}, to 1-dimensional
+      \code{array}s no longer \dQuote{drops} them to simple vectors when
+      \code{ind} is a name, fixing \PR{18973}, reported by \I{Thomas Soeiro}.
     }
   }
 }

@@ -192,7 +192,7 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
     }
 
     if (newlen > len) {
-	double expanded_nlen = newlen * expand;
+	double expanded_nlen = (double)newlen * expand;
 	if (expanded_nlen <= R_XLEN_T_MAX)
 	    newtruelen = (R_xlen_t) expanded_nlen;
 	else
@@ -322,8 +322,8 @@ static bool dispatch_asvector(SEXP *x, SEXP call, SEXP rho) {
    Level 2 is used in do_subassign2_dflt.
    This does not coerce when assigning into a list.
 */
-
-static int SubassignTypeFix(SEXP *x, SEXP *y, R_xlen_t stretch, int level,
+static int SubassignTypeFix(SEXP *x, SEXP *y, R_xlen_t stretch,
+			    int level,
 			    SEXP call, SEXP rho)
 {
     /* A rather pointless optimization, but level 2 used to be handled
@@ -494,11 +494,11 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, R_xlen_t stretch, int level,
     default:
 	error(_("incompatible types (from %s to %s) in subassignment type fix"),
 	      R_typeToChar(*x), R_typeToChar(*y));
-    }
+    } //--- end switch(which)
 
     if (stretch) {
 	PROTECT(*y);
-	*x = EnlargeVector(*x, stretch);
+	*x = EnlargeVector(*x, stretch); // FIXME: 1d-array w/ {dim,dimnames} |--> vector w/ names
 	UNPROTECT(1);
     }
     SET_OBJECT(*x, x_is_object);
@@ -507,7 +507,7 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, R_xlen_t stretch, int level,
 	return(100 * TYPEOF(*x) + TYPEOF(*y));
     else
 	return(which);
-}
+} // SubassignTypeFix
 
 #ifdef LONG_VECTOR_SUPPORT
 static R_INLINE R_xlen_t gi(SEXP indx, R_xlen_t i)
@@ -642,7 +642,6 @@ static SEXP VectorAssign(SEXP call, SEXP rho, SEXP x, SEXP s, SEXP y)
 
     /* Check to see if we have special matrix subscripting. */
     /* If so, we manufacture a real subscript vector. */
-
     PROTECT(s);
     if (ATTRIB(s) != R_NilValue) { /* pretest to speed up simple case */
 	SEXP dim = getAttrib(x, R_DimSymbol);
@@ -1612,13 +1611,11 @@ NORET static void errorMissingSubscript(SEXP x)
 
 attribute_hidden SEXP do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP subs, x, y;
-    int nsubs, oldtype;
-
     PROTECT(args);
 
-    nsubs = SubAssignArgs(args, &x, &subs, &y);
-    PROTECT(y); /* gets cut loose in SubAssignArs */
+    SEXP subs, x, y;
+    int nsubs = SubAssignArgs(args, &x, &subs, &y);
+    PROTECT(y); /* gets cut loose in SubAssignArgs */
 
     /* make sure the LHS is duplicated if it matches one of the indices */
     /* otherwise this gets the wrong answer:
@@ -1642,7 +1639,7 @@ attribute_hidden SEXP do_subassign_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	x = SETCAR(args, shallow_duplicate(CAR(args)));
 
     bool S4 = IS_S4_OBJECT(x); // {before it is changed}
-    oldtype = 0;
+    int oldtype = 0;
     if (TYPEOF(x) == LISTSXP || TYPEOF(x) == LANGSXP) {
 	oldtype = TYPEOF(x);
 	x = PairToVectorList(x);
@@ -1770,12 +1767,12 @@ attribute_hidden SEXP
 do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP dims, indx, names, newname, subs, x, xtop, xup, y, thesub = R_NilValue, xOrig = R_NilValue;
-    int i, ndims, nsubs, which, len = 0 /* -Wall */;
+    int i, ndims, which, len = 0 /* -Wall */;
     R_xlen_t  stretch, offset, off = -1; /* -Wall */
 
     PROTECT(args);
 
-    nsubs = SubAssignArgs(args, &x, &subs, &y);
+    int nsubs = SubAssignArgs(args, &x, &subs, &y);
     PROTECT(y); /* gets cut loose in SubAssignArgs */
 
     /* Handle NULL left-hand sides.  If the right-hand side */
