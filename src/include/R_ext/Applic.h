@@ -121,9 +121,11 @@ void F77_NAME(dqrls)(double *x, int *n, int *p, double *y, int *ny,
 /* appl/pretty.c: for use in engine.c and util.c
    FIXME: move out of this header
 */
+#ifdef USE_BASE_R_SUPPORT
 double R_pretty(double *lo, double *up, int *ndiv, int min_n,
 		double shrink_sml, const double high_u_fact[],
 		int eps_correction, int return_bounds);
+#endif
 
 /* For use in package stats */
 
@@ -135,9 +137,11 @@ typedef void (*fcn_p)(int, double *, double *, void *);
 /* type of pointer to the hessian functions */
 typedef void (*d2fcn_p)(int, int, double *, double *, void *);
 
+#ifdef USE_BASE_R_SUPPORT
 void fdhess(int n, double *x, double fval, fcn_p fun, void *state,
 	    double *h, int nfd, double *step, double *f, int ndigit,
 	    double *typx);
+#endif
 
 /* Also used in packages nlme, pcaPP */
 void optif9(int nr, int n, double *x,

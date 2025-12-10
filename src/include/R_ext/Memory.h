@@ -45,7 +45,9 @@ void*	vmaxget(void); // not remapped
 void	vmaxset(const void *); // not re-mapped
 
 void	R_gc(void);
+#ifdef USE_BASE_R_SUPPORT
 int	R_gc_running(void);
+#endif
 
 char*	R_alloc(R_SIZE_T, int);
 long double *R_allocLD(R_SIZE_T nelem);

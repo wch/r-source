@@ -58,12 +58,16 @@ extern "C" {
 [[noreturn]] void Rf_error(const char *, ...) R_PRINTF_FORMAT(1, 2);
 
 [[noreturn]] void UNIMPLEMENTED(const char *);
+#ifdef USE_BASE_R_SUPPORT
 [[noreturn]] void WrongArgCount(const char *);
+#endif
 #else
 NORET void Rf_error(const char *, ...) R_PRINTF_FORMAT(1, 2);
 
 NORET void UNIMPLEMENTED(const char *);
+#ifdef USE_BASE_R_SUPPORT
 NORET void WrongArgCount(const char *);
+#endif
 #endif
 
 void Rf_warning(const char *, ...) R_PRINTF_FORMAT(1,2);

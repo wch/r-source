@@ -23,6 +23,9 @@
 #ifndef DEFN_H_
 #define DEFN_H_
 
+// enable some non-API declarations in R_ext includes
+#define USE_BASE_R_SUPPORT
+
 /* seems unused */
 #define COUNTING
 

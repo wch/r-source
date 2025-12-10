@@ -75,6 +75,8 @@ typedef struct _InputHandler {
 extern InputHandler *addInputHandler(InputHandler *handlers, int fd, InputHandlerProc handler, int activity);
 extern InputHandler *getInputHandler(InputHandler *handlers, int fd);
 extern int           removeInputHandler(InputHandler **handlers, InputHandler *it);
+
+#ifdef USE_BASE_R_SUPPORT
 extern InputHandler *getSelectedHandler(InputHandler *handlers, fd_set *mask);
 extern fd_set *R_checkActivity(int usec, int ignore_stdin);
 extern void R_runHandlers(InputHandler *handlers, fd_set *mask);
@@ -82,6 +84,7 @@ extern void R_runHandlers(InputHandler *handlers, fd_set *mask);
 extern int R_SelectEx(int  n,  fd_set  *readfds,  fd_set  *writefds,
 		      fd_set *exceptfds, struct timeval *timeout,
 		      void (*intr)(void));
+#endif
 
 #ifdef __SYSTEM__
 #ifndef __cplusplus   /* Would get duplicate conflicting symbols*/

@@ -86,7 +86,9 @@ Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value);
 Rboolean R_forceSymbols(DllInfo *info, Rboolean value);
 
 /* Not API */
+#ifdef USE_BASE_R_SUPPORT
 DllInfo *R_getDllInfo(const char *name);
+#endif
 
 /* To be used by applications embedding R to register their symbols
    that are not related to any dynamic module/

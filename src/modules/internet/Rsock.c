@@ -184,6 +184,7 @@ void in_Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 struct hostent *R_gethostbyname(const char *name);
 
 #ifdef Unix
+#define USE_BASE_R_SUPPORT
 #include <R_ext/eventloop.h>
 
 /* modified from src/unix/sys-std.c  */

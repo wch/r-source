@@ -27,6 +27,7 @@
 
 /*--- The Dennis + Schnabel Minimizer -- used by R's  nlm() ---*/
 
+#define USE_BASE_R_SUPPORT
 #include <math.h>
 #include <float.h> /* DBL_MAX */
 #include <R_ext/Boolean.h>
