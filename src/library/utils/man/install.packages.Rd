@@ -182,7 +182,7 @@ install.packages(pkgs, lib, repos = getOption("repos"),
   }
   \item{\dots}{
     further arguments to be passed to \code{\link{download.file}},
-    \code{\link{available.packages}}, \code{\link{install.packages}}, or to
+    \code{\link{available.packages}}, or to
     the functions for binary
     installs on macOS and Windows (which accept an argument \code{"lock"}:
     see the section on \sQuote{Locking}).
