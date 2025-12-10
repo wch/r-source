@@ -88,7 +88,7 @@ function(x)
 }
 
 doi_db_from_package_sources <-
-function(dir, add = FALSE, Rd = FALSE)
+function(dir, add = FALSE, Rd = TRUE)
 {
     meta <- .get_package_metadata(dir, FALSE)
     db <- rbind(doi_db_from_package_metadata(meta),
