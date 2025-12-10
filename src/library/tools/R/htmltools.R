@@ -52,7 +52,7 @@ function(f, tidy = "tidy") {
     if (!is.null(concordance))
     	result <- cbind(result, matchConcordance(p, concordance = concordance))
     
-    result
+    as.data.frame(result)
 }
 
 tidy_validate_db <-
@@ -63,7 +63,7 @@ function(x, paths = NULL, ignore = character()) {
     e <- x[i]
     x <- Filter(length, x[!i])
     if(!length(x) && !length(e)) return(NULL)
-    y <- do.call(rbind, x)
+    y <- do.call(rbind, c(x, list(make.row.names = FALSE)))
     if(is.null(y)) {
         y <- list() # cannot set an attr on NULL
     } else {
@@ -128,15 +128,12 @@ function(package, dir, lib.loc = NULL, auto = NA, verbose = interactive())
                        tryCatch(tidy_validate_R_httpd_path(path),
                                 error = identity)
                    })
-        ## names(results) <- sprintf("%s/%s", p, files)
-        ## results <- Filter(length, results)
-        ## if(!length(results)) return(NULL)
-        ## cbind(file = rep.int(names(results), vapply(results, nrow, 0)),
-        ##       do.call(rbind, results))
         tidy_validate_db(results, sprintf("%s/%s", p, files))
     }
 
-    do.call(rbind, lapply(package, one))
+    do.call(rbind,
+            c(lapply(package, one),
+              list(make.row.names = FALSE)))
 }
 
 tidy_validate_package_Rd_files_from_dir <- function(dir, auto = NA, verbose) {
@@ -178,7 +175,9 @@ tidy_validate_package_Rd_files_from_dir <- function(dir, auto = NA, verbose) {
                          sprintf("%s::%s", basename(d), names(db)))
     }
 
-    do.call(rbind, lapply(dir, one))
+    do.call(rbind,
+            c(lapply(dir, one),
+              list(make.row.names = FALSE)))
 }
 
 
