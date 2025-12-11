@@ -11,6 +11,9 @@ include $(top_builddir)/Makeconf
 
 pkg = tools
 
+WRE_DATA = $(top_builddir)/library/$(pkg)/misc/wre.txt
+WRE_SRC = $(top_srcdir)/doc/manual/R-exts.texi
+
 RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
 
 ifdef USE_LLVM
@@ -23,13 +26,18 @@ endif
 all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
-	@$(MAKE) -f Makefile.win mkR1 mkdesc2 mksrc-win2
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/misc
+	@$(MAKE) -f Makefile.win mkR1 mkdesc2 mksrc-win2 $(WRE_DATA)
 	@if ! test $(top_builddir)/library/$(pkg)/R/$(pkg) -nt all.R; then \
 	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
 	fi
 	@$(MAKE) -f Makefile.win sysdata
 	@$(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null
+
+## avoid "$<" as that was empty when using bmake (tested 20200710 and 20241124)
+$(WRE_DATA): $(WRE_SRC)
+	@grep -E '^@(api|eapi|emb|for)(fun|var|hdr)' "$(WRE_SRC)" > "$@"
 
 include $(top_srcdir)/share/make/basepkg.mk
 
