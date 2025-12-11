@@ -108,11 +108,6 @@ test-out = $(test-out-strict) $(test-out-sloppy) $(test-out-demo) $(test-out-gct
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct .trin .tsin .log
 
-## This ensures "they" always re-run [a big WASTE for parallel make -j<n> !]
-$(test-out): FORCE
-
-FORCE:
-
 .Rin.R:
 	@$(ECHO) "creating '$@'"
 	@$(R) < $< > /dev/null
@@ -536,6 +531,10 @@ stamp-Packages2: $(PKG_ROBJECTS)
 	 _R_CHECK_FORCE_SUGGESTS_=FALSE $(RCHK) --install=skip \
 	    --library="$(top_builddir)/library" RecPackages/$${p}  > $@ 2>&1 || (cat $@ && exit 1)
 	@cat $@
+
+## This ensures that test scripts always re-run (at least in GNU make)
+$(test-out): FORCE
+FORCE:
 
 INSTFILES = README \
 	$(test-src-strict-1) $(test-src-strict-1:.R=.Rout.save) \
