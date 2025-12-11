@@ -540,13 +540,16 @@ double	rlogis(double, double);
 double	dnbeta(double, double, double, double, int);
 double	pnbeta(double, double, double, double, int, int);
 double	qnbeta(double, double, double, double, int, int);
-#ifdef COMPILING_RCPP
+#if defined(COMPILING_RCPP)
 # if RCPP_VERSION <= Rcpp_Version(1,1,0)
-// Rcpp 1.1.0 relies on this declaration existing
-double	rnbeta(double, double, double);
+    // Rcpp 1.1.0 relies on this declaration existing
+    double rnbeta(double, double, double);
 # endif
-#endif
-
+#elif defined(RcppCommon_h) || defined(Rcpp_Rmath_h)
+    // Rcpp revdeps may also need this declaration to exist for now
+    double rnbeta(double, double, double);
+# endif
+    
     /* Non-central F Distribution */
 
 double  dnf(double, double, double, double, int);
