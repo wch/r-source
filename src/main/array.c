@@ -2144,11 +2144,8 @@ attribute_hidden SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* array(data, dim, dimnames) */
 attribute_hidden SEXP do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP vals, ans, dims, dimnames;
-    R_xlen_t lendat, i, nans;
-
     checkArity(op, args);
-    vals = CAR(args); // = data
+    SEXP vals = CAR(args); // = data
     /* at least NULL can get here */
     switch(TYPEOF(vals)) {
 	case LGLSXP:
@@ -2164,12 +2161,12 @@ attribute_hidden SEXP do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error(_("'data' must be of a vector type, was '%s'"),
 		R_typeToChar(vals));
     }
-    lendat = XLENGTH(vals);
-    dims = CADR(args);
-    dimnames = CADDR(args);
+    SEXP ans,
+	dims     = CADR(args),
+	dimnames = CADDR(args);
     PROTECT(dims = coerceVector(dims, INTSXP));
     int nd = LENGTH(dims);
-    if (nd == 0) error(_("'dims' cannot be of length 0"));
+    if (nd == 0) error(_("'dim' cannot be of length 0"));
     double d = 1.0;
     for (int j = 0; j < nd; j++) d *= INTEGER(dims)[j];
 #ifdef LONG_VECTOR_SUPPORT
@@ -2177,7 +2174,8 @@ attribute_hidden SEXP do_array(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
     if (d > INT_MAX) error(_("too many elements specified"));
 #endif
-    nans = (R_xlen_t) d;
+    R_xlen_t lendat = XLENGTH(vals),
+	i, nans = (R_xlen_t) d;
 
     PROTECT(ans = allocVector(TYPEOF(vals), nans));
     switch(TYPEOF(vals)) {

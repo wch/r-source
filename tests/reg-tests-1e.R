@@ -2462,6 +2462,15 @@ x["a"] <- 100; chk1d(x)
 ## x["a"] <- .. did drop dim() & dimnames() {getting names() instead}.
 
 
+## error message when length(dim) == 0:
+(m1 <- tryCmsg(array(NULL )))
+(m2 <- tryCmsg(array(,NULL)))
+if(englishMsgs)
+  stopifnot(grepl(" was 'NULL'",   m1, fixed=TRUE),
+            grepl("'dim' cannot ", m2, fixed=TRUE))
+## had 'dims'
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

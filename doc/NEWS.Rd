@@ -452,6 +452,9 @@
       \item The implicitGeneric definition for \code{toeplitz()} produced a
       default method that failed when \code{toeplitz(x, r)} was called with
       more than the first argument.  Simple fix from \I{Mikael Jagan}.
+
+      \item The error message for \code{array(dim = c())} now uses
+      \code{"'dim'"}, thanks to \I{Hugo Gruson}.
     }
   }
 }
