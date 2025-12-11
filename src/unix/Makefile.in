@@ -54,9 +54,10 @@ R: Makedeps
 ## https://community.intel.com/t5/Intel-C-Compiler/Troubles-with-getrusage-when-using-icx/m-p/1509374#M41116
 INTEL_ICX_FIX = @INTEL_ICX_FIX@
 sys-unix.o: $(srcdir)/sys-unix.c
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) $(INTEL_ICX_FIX) -c $< -o $@
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) $(INTEL_ICX_FIX) -c $(srcdir)/sys-unix.c -o $@
+## note $< is unspecified for target rules: when rebuilding with pdpmake
+## it could evaluate to updated prerequisites such as ../include/Defn.h
 
-## is this portable?
 ../include/Rversion.h:
 	(cd ../include; $(MAKE) $(@F))
 
