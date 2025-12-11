@@ -1,8 +1,8 @@
 localtime.c is a stripped-down version of that from tzcode (from
-http://www.iana.org/time-zones), converted to use a 64-bit time_t and
-tm_zone/tm_offset on all platforms.  Apart from removing unused code
-and merging in the parts of private.h which are needed, the other main
-changes are
+http://www.iana.org/time-zones in 2007), converted to use a 64-bit
+time_t and tm_zone/tm_offset on all platforms.  Apart from removing
+unused code and merging in the parts of private.h which are needed,
+the other main changes are
 
 - to use environment variable TZDIR to point to the zoneinfo files, and
   failing that, R_HOME/share/zoneinfo.
@@ -25,18 +25,11 @@ R's implemntation (by default), where time_t is int_fast64_t, hence signed.)
 To remake it, download the current version of tzdataXXXXx.tar.gz from
 https://www.iana.org/time-zones to this directory and run
 
-make -f Make.zi VERSION=2025b
+make -f Make.zi VERSION=2025c
 
 for the appropriate version.  If zic is not on the path, use something like
 
-make -f Make.zi VERSION=2025b ZIC=/usr/sbin/zic
-
-NB: it seems that this needs to be done on a system with 64-bit time_t
-or the catalogs will be confined to 1902-2038.  (Even that did not
-suffice on earlier versions of macOS.)  As a sanity check, the size of
-zoneinfo.zip should be about 410KB if 64-bit: a 32-bit version will be
-about 280KB.  In 2021 it was possible to use macOS, whose zic gave
-many warnings and created a ca 475KB file.
+make -f Make.zi VERSION=2025c ZIC=/usr/sbin/zic
 
 Note that we include 'backward': vendor versions might not, or might
 use 'backzone'.
