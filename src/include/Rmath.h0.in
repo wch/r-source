@@ -545,7 +545,7 @@ double	qnbeta(double, double, double, double, int, int);
     // Rcpp 1.1.0 relies on this declaration existing
     double rnbeta(double, double, double);
 # endif
-#elif defined(RcppCommon_h) || defined(Rcpp_Rmath_h)
+#elif defined(RcppCommon_h) || defined(Rcpp_Rmath_h) || defined(__cplusplus)
     // Rcpp revdeps may also need this declaration to exist for now
     double rnbeta(double, double, double);
 # endif
