@@ -26,16 +26,15 @@ diffinv.vector <- function (x, lag = 1L, differences = 1L, xi, ...)
     if (!is.vector(x)) stop ("'x' is not a vector")
     lag <- as.integer(lag); differences <- as.integer(differences)
     if (lag < 1L || differences < 1L) stop ("bad value for 'lag' or 'differences'")
-    if(missing(xi)) xi <- rep(0., lag*differences)
-    if (length(xi) != lag*differences)
+    if(missing(xi))
+        xi <- rep(0., lag*differences)
+    else if (length(xi) != lag*differences)
         stop("'xi' does not have the right length")
     if (differences == 1L) {
         x <- as.double(x)
         xi <- as.double(xi)
         n <- as.integer(length(x))
         if(is.na(n)) stop(gettextf("invalid value of %s", "length(x)"), domain = NA)
-#        y <- c(xi[1L:lag], double(n))
-#        z <- .C(C_R_intgrt_vec, x, y = y, as.integer(lag), n)$y
         .Call(C_intgrt_vec, x, xi, lag)
     }
     else

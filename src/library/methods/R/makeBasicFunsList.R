@@ -1,7 +1,7 @@
 #  File src/library/methods/R/makeBasicFunsList.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -279,7 +279,7 @@ utils::globalVariables(".addBasicGeneric")
 
     ## our toeplitz() only has 'x'; want the generic "here" rather than "out there"
     setGeneric("toeplitz", function(x, ...) standardGeneric("toeplitz"),
-	       useAsDefault= function(x, ...) stats::toeplitz(x),
+	       useAsDefault = function(x, ...) stats::toeplitz(x, ...),
 	       signature = "x", where = where)
     setGenericImplicit("toeplitz", where, FALSE)
 

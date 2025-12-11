@@ -219,5 +219,16 @@ B <- as(new("A"), "B") ## gave  Error in asMethod@generic :  ... `@` applied to 
 stopifnot(identical(B, new("B")))
 
 
+## toeplitz() implicit generic
+x <- c(-1, 0,0)
+r <- c(-1,11,0)
+(T3 <- toeplitz(x, r))
+## dummy method triggering (implicit) creation of S4 generic and default
+setMethod("toeplitz", "A", function(x, ...) x)
+ (mm <- selectMethod(toeplitz, "numeric"))
+stopifnot(identical(T3, print(toeplitz(x, r))), removeGeneric("toeplitz"))
+## badly failed since r82364 when stats::toeplitz was generalized to 3 args
+
+
 
 cat('Time elapsed: ', proc.time(),'\n')
