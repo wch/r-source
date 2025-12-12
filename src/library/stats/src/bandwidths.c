@@ -131,11 +131,22 @@ SEXP bw_den(SEXP nbin, SEXP sx)
     double *cnt = REAL(sc);
     for (int i = 0; i < nb; i++) cnt[i] = 0.0;
 
-    for (int i = 1; i < n; i++) {
-	int ii = (int)(x[i] / dd);
-	for (int j = 0; j < i; j++) {
-	    int jj = (int)(x[j] / dd);
-	    cnt[abs(ii - jj)] += 1.0;
+    // Could have a small range very far from 0.
+    if (xmin/dd < INT_MIN || xmax/dd > INT_MAX) {
+	for (int i = 1; i < n; i++) {
+	    int ii = (int)((x[i]-xmin)/ dd);
+	    for (int j = 0; j < i; j++) {
+		int jj = (int)((x[j]-xmin) / dd);
+		cnt[abs(ii - jj)] += 1.0;
+	    }
+	}
+    } else { // preserve previous behaviour
+	for (int i = 1; i < n; i++) {
+	    int ii = (int)(x[i] / dd);
+	    for (int j = 0; j < i; j++) {
+		int jj = (int)(x[j] / dd);
+		cnt[abs(ii - jj)] += 1.0;
+	    }
 	}
     }
 
