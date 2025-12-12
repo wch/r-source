@@ -78,9 +78,11 @@ extern int           removeInputHandler(InputHandler **handlers, InputHandler *i
 
 #ifdef USE_BASE_R_SUPPORT
 extern InputHandler *getSelectedHandler(InputHandler *handlers, fd_set *mask);
+#endif
 extern fd_set *R_checkActivity(int usec, int ignore_stdin);
 extern void R_runHandlers(InputHandler *handlers, fd_set *mask);
 
+#ifdef USE_BASE_R_SUPPORT
 extern int R_SelectEx(int  n,  fd_set  *readfds,  fd_set  *writefds,
 		      fd_set *exceptfds, struct timeval *timeout,
 		      void (*intr)(void));

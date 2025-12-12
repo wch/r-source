@@ -18590,6 +18590,8 @@ used by the @pkg{tcltk} package. Input handlers are managed with
 @embfun getInputHandler
 @embfun removeInputHandler
 @embvar R_InputHandlers
+@embvar R_checkActivity
+@embvar R_runHandlers
 
 It is not intended that these facilities are used by packages, but if
 they are needed exceptionally, the package should ensure that it cleans
