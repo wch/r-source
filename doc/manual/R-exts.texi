@@ -17440,8 +17440,6 @@ above (no longer maintained)
 @item @file{Rembedded.h} @tab for add-on front-ends
 @item @file{R_ext/Applic.h} @tab optimization, integration and some LAPACK ones)
 @item @file{R_ext/BLAS.h} @tab C definitions for BLAS routines
-@item @file{R_ext/Callbacks.h} @tab C (and R function) top-level task
-handlers
 @item @file{R_ext/GetX11Image.h} @tab X11Image interface used by package
 @pkg{trkplot}
 @item @file{R_ext/Lapack.h} @tab C definitions for some LAPACK routines
