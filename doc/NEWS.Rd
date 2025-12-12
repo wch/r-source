@@ -455,6 +455,10 @@
 
       \item The error message for \code{array(dim = c())} now uses
       \code{"'dim'"}, thanks to \I{Hugo Gruson}.
+
+      \item Tweaks to binning for \code{bw.SJ()}, \code{bw.bcv()} and
+	\code{bw.bcv()} in the very rare case of data which have an
+	extremely small range of very large absolute values.
     }
   }
 }
