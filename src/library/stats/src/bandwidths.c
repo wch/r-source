@@ -140,7 +140,7 @@ SEXP bw_den(SEXP nbin, SEXP sx)
 		cnt[abs(ii - jj)] += 1.0;
 	    }
 	}
-    } else { // preeserve previous behaviour
+    } else { // preserve previous behaviour
 	for (int i = 1; i < n; i++) {
 	    int ii = (int)(x[i] / dd);
 	    for (int j = 0; j < i; j++) {
