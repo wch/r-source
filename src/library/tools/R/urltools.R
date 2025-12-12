@@ -86,7 +86,7 @@ function(f)
     if(!inherits(doc, "xml_node")) return(character())
     nodes <- xml2::xml_find_all(doc, "//a")
     hrefs <- xml2::xml_attr(nodes, "href")
-    unique(hrefs[!is.na(hrefs) & !startsWith(hrefs, "#")])
+    trimws(unique(hrefs[!is.na(hrefs) & !startsWith(hrefs, "#")]))
 }
 
 .get_urls_from_PDF_file <-
@@ -108,11 +108,27 @@ function(f, exe = NULL)
             c("-s -q -i -c -xml", shQuote(basename(f)), shQuote(basename(g))))
     ## Oh dear: seems that pdftohtml can fail without a non-zero exit
     ## status.
-    if(file.exists(g))
-        .get_urls_from_HTML_file(g)
-    else
+    if(file.exists(g)) {
+        urls <- .get_urls_from_HTML_file(g)
+        urls[!startsWith(urls, sub(".xml$", ".html#", basename(g)))]
+    } else
         character()
 }
+
+## Alternatively, we could use pdfinfo -url as below, but apparently
+## this extracts only "URLs" but not e.g. links provided as GoTo
+## actions, which pdftohtml also turns into hrefs.
+## .get_urls_from_PDF_file <-
+## function(f)
+## {    
+##     exe <- Sys.which("pdfinfo")
+##     if(!nzchar(exe)) return(character())
+##     txt <- system2(exe, c("-url", f), stdout = TRUE)
+##     tryCatch(read.table(text = txt, header = TRUE,
+##                         colClasses = "character",
+##                         comment.char = "")[[3L]],
+##              error = function(e) character())
+## }
 
 url_db <-
 function(urls, parents)
@@ -336,7 +352,7 @@ function(dir, add = FALSE) {
                 url_db_from_package_news(dir))
     if(requireNamespace("xml2", quietly = TRUE)) {
         db <- rbind(db,
-                    ## url_db_from_package_PDF_files(dir),
+                    url_db_from_package_PDF_files(dir),
                     url_db_from_package_HTML_files(dir),
                     url_db_from_package_README_md(dir),
                     url_db_from_package_NEWS_md(dir)
@@ -365,8 +381,8 @@ function(packages, lib.loc = NULL, verbose = FALSE)
                     url_db_from_package_news(dir, installed = TRUE))
         if(requireNamespace("xml2", quietly = TRUE)) {
             db <- rbind(db,
-                        ## url_db_from_package_PDF_files(dir,
-                        ##                               installed = TRUE),
+                        url_db_from_package_PDF_files(dir,
+                                                      installed = TRUE),
                         url_db_from_package_HTML_files(dir,
                                                        installed = TRUE),
                         url_db_from_package_README_md(dir,
