@@ -27,6 +27,8 @@ all:
 	@$(ECHO) "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/misc
+	@(cd "$(top_srcdir)" && pwd -W) \
+	  > $(top_builddir)/library/$(pkg)/misc/top.txt
 	@$(MAKE) -f Makefile.win mkR1 mkdesc2 mksrc-win2 $(WRE_DATA)
 	@if ! test $(top_builddir)/library/$(pkg)/R/$(pkg) -nt all.R; then \
 	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg); \
