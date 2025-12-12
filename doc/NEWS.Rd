@@ -455,10 +455,6 @@
 
       \item The error message for \code{array(dim = c())} now uses
       \code{"'dim'"}, thanks to \I{Hugo Gruson}.
-
-      \item Tweaks to binning for \code{bw.SJ()}, \code{bw.bcv()} and
-	\code{bw.bcv()} in the very rare case of data which have an
-	extremely small range of very large absolute values.
     }
   }
 }
@@ -473,6 +469,10 @@
 
       \item \code{str(x, give.attr=FALSE)} no longer shows attributes when
       \code{x} is a zero length \code{"Date"} or \code{"POSIXt"} object.
+
+      \item Tweaks to binning for \code{bw.SJ()}, \code{bw.bcv()} and
+	\code{bw.bcv()} in the very rare case of data which have an
+	extremely small range of very large absolute values.
     }
   }
 }
