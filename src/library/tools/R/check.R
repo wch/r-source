@@ -522,34 +522,43 @@ add_dummies <- function(dir, Log)
                 ## First check time on system running 'check',
                 ## by reading an external source in UTC
                 notOK <- function(t) !length(t) || is.na(t[1]) # seen length > 1
-                now <- tryCatch({
-                    foo <- suppressWarnings(readLines("https://worldtimeapi.org/api/timezone/etc/UTC",
-                                                      warn = FALSE))
-                    ## gives time in sub-secs
-                    as.POSIXct(gsub(".*\"datetime\":\"([^Z]*).*", "\\1", foo),
-                               "UTC", "%Y-%m-%dT%H:%M:%S")
-                }, error = function(e) NA)
-                if(notOK(now)) { # try http (no 's')
+                fetch_datetime_from_headers <- function(url) {
+                    ## HTTP date format: "Tue, 29 Feb 2000 10:03:25 GMT"
+                    ## (Note that some servers return cached values.)
+                    headers <- tryCatch(curlGetHeaders(url, verify = FALSE),
+                                        error = identity)
+                    if (identical(attr(headers, "status"), 200L)) {
+                        dt <- substr(grepv("^[Dd]ate: ", headers)[1L], 12, 31)
+                        prev <- Sys.getlocale("LC_TIME")
+                        on.exit(Sys.setlocale("LC_TIME", prev))
+                        Sys.setlocale("LC_TIME", "C")
+                        as.POSIXct(dt, "GMT", format = "%d %b %Y %H:%M:%S")
+                    } else .POSIXct(NA_real_, "GMT")
+                }
+                now <- fetch_datetime_from_headers("https://CRAN.R-project.org")
+                if(notOK(now)) { # try an external service
+                    now <- tryCatch({
+                        foo <- suppressWarnings(readLines("https://timeapi.io/api/time/current/zone?timeZone=UTC",
+                                                          warn = FALSE))
+                        ## gives time in sub-secs
+                        as.POSIXct(gsub('.*"dateTime":"([^"]*)".*', "\\1", foo),
+                                   "UTC", "%Y-%m-%dT%H:%M:%S")
+                    }, error = function(e) NA)
+                }
+                if(notOK(now)) { # try another service (often unreachable in 2025)
                     now <- tryCatch({
                         foo <- suppressWarnings(readLines("http://worldtimeapi.org/api/timezone/etc/UTC",
                                                           warn = FALSE))
-                        ## gives time in sub-secs
                         as.POSIXct(gsub(".*\"datetime\":\"([^Z]*).*", "\\1", foo),
                                    "UTC", "%Y-%m-%dT%H:%M:%S")
                     }, error = function(e) NA)
                 }
-                if(notOK(now)) { ## seemed permanently stopped, yet works 2025-02-08 and *-*-09
-                    now <- tryCatch({
-                        foo <- suppressWarnings(readLines("http://worldclockapi.com/api/json/utc/now",
-                                                          warn = FALSE))
-                        ## gives time in mins
-                        as.POSIXct(gsub(".*\"currentDateTime\":\"([^Z]*).*", "\\1", foo),
-                                   "UTC", "%Y-%m-%dT%H:%M")
-                    }, error = function(e) NA)
-                }
                 if(notOK(now)) {
                     any <- TRUE
-                    noteLog(Log, "unable to verify current time")
+                    noteLog(Log)
+                    wrapLog("Unable to verify current time.  ",
+                            "To disable remote verification,\nset environment",
+                            "variable _R_CHECK_SYSTEM_CLOCK_ to a false value.")
                 } else {
                     ## 5 mins leeway seems a reasonable compromise;
                     if (abs(unclass(now_local) - unclass(now)[1]) > 300) { # "[1]": seen 'length > 1'
