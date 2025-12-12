@@ -6508,7 +6508,11 @@ add_dummies <- function(dir, Log)
                 if (length(line)) {
                     checkingLog(Log, "C++ specification")
                     std <- as.numeric(sub("using C[+][+]", "", line))
-                    if (std < 17) {
+                    if (!(std %in% c("11", "14", "17", "20", "23", "26")))
+                         noteLog(Log,
+                                sprintf("  Unknown/obsolate C++%d standard request will be ignoredn", std))
+
+                    else if (std < 17) {
                         noteLog(Log,
                                 sprintf("  Specified C++%d: support will be removed soon", std))
                     ## since R 4.4.0 C++17 support is required, but

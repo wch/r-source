@@ -3042,9 +3042,9 @@ feature tests as well as resources such as
 want to use are widely implemented. (In particular, C++20 modules were
 not.)
 
-Attempts to specify an unknown C++ standard are silently ignored: recent
-versions of @R{} throw an error for C++98 and for known standards for
-which no compiler+flags has been detected.
+Attempts to specify an unknown or obsolete C++ standard are ignored:
+recent versions of @R{} throw an error for C++98 and for known standards
+for which no compiler+flags has been detected.
 
 If a package using C++ has a @command{configure} script it is essential
 that the script selects the correct C++ compiler and standard,
@@ -10099,6 +10099,8 @@ It can be helpful to install debug symbols (@command{INSTALL --dsym} for
 the package under test and particularly for reverse dependencies.
 @c https://stackoverflow.com/questions/64126942/malloc-nano-zone-abandoned-due-to-inability-to-preallocate-reserved-vm-space
 
+For more deatail on using sanitizers with macOS see
+@uref{https://www.stats.ox.ac.uk/pub/bdr/M1-SAN/README.txt}.
 
 @c 1-item menu: kept to avoid spurious warning from makeinfo 6.8/7.0
 @menu
@@ -10307,14 +10309,9 @@ or using  @env{LD_LIBRARY_PATH}). @strong{N.B.}: The details, especially
 the paths used, have changed several times recently.
 
 Apple provides a version of the undefined behaviour sanitizer in recent
-versions of its C/C++ compiler.  @R{} was built with Apple
-@command{clang} 16 with @file{config.site} containing
-@example
-CC="clang -fsanitize=address,undefined"
-CXX="clang++ -fsanitize=address,undefined"
-@end example
-@noindent
-and passed its checks.
+versions of its C/C++ compiler.  For more deatail on using sanitizers
+with macOS see
+@uref{https://www.stats.ox.ac.uk/pub/bdr/M1-SAN/README.txt}.
 
 @node Other analyses with `clang'
 @subsection Other analyses with `clang'
