@@ -308,7 +308,7 @@
     \itemize{
       \item \code{chol(x, pivot=TRUE)} now zeroes the trailing submatrix when
       the algorithm stops early. Following the help page instructions on
-      how to reconstruct the matrix in postive semidefinite cases gave
+      how to reconstruct the matrix in positive semidefinite cases gave
       incorrect results if the rank was 2 or more less than the dimension.
 
       \item Profiling \code{"mle"} objects (\pkg{stats4} package) could fail
@@ -442,14 +442,14 @@
       fully recycle all three of \code{(nvec, from, by)} as always
       documented; with thanks to \I{Mikael Jagan}'s report and patch in
       \PR{18304}.  Its behaviour remains back compatible for now, but can
-      be switched to future behaviour via enviroment variable
+      be switched to future behaviour via environment variable
       \env{R_sequence_recycle}, or explicit \code{recycle = TRUE}.
 
-      \item Subassignment, \code{x[ind] <- val}, to 1-dimensional
+      \item \I{Subassignment}, \code{x[ind] <- val}, to 1-dimensional
       \code{array}s no longer \dQuote{drops} them to simple vectors when
       \code{ind} is a name, fixing \PR{18973}, reported by \I{Thomas Soeiro}.
 
-      \item The implicitGeneric definition for \code{toeplitz()} produced a
+      \item The \code{implicitGeneric} definition for \code{toeplitz()} produced a
       default method that failed when \code{toeplitz(x, r)} was called with
       more than the first argument.  Simple fix from \I{Mikael Jagan}.
 
