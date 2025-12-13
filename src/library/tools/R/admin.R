@@ -893,12 +893,7 @@ function(dir, outDir, encoding = "unknown")
         db <- .build_Rd_db(dir, manfiles, db_file = db_file,
                            encoding = encoding, built_file = built_file)
         nm <- as.character(names(db)) # Might be NULL
-        at <- c(list(first = nchar(file.path(mandir)) + 2L),
-                if(basename(dir) == "tools") {
-                    ## We could use 3 dirname() calls, but perhaps more
-                    ## easily:
-                    list(top = substr(dir, 1L, nchar(dir) - 18L))
-                })
+        at <- list(first = nchar(file.path(mandir)) + 2L)
         saveRDS(`attributes<-`(nm, at), pathsFile)
         names(db) <- sub("\\.[Rr]d$", "", basename(nm))
         makeLazyLoadDB(db, file.path(manOutDir, packageName))

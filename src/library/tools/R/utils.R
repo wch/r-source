@@ -619,7 +619,6 @@ function(year)
 ## Find the root directory of the source tree used for building this
 ## version of R (corresponding to Unix configure @abs_top_srcdir@).
 
-
 .R_top_srcdir_file_path <-
     system.file("misc", "top.txt", package = "tools")
 
@@ -631,14 +630,6 @@ function(year)
 .R_top_srcdir <-
 function()
     Sys.getenv("_R_TOP_SRCDIR_", .R_top_srcdir_default)
-
-## .R_top_srcdir_from_Rd <-
-## function() {
-##     attr(readRDS(system.file("help", "paths.rds", package = "tools")),
-##          "top")
-## }
-
-.R_top_srcdir_from_Rd <- .R_top_srcdir
 
 ### ** config_val_to_logical
 
