@@ -1510,7 +1510,7 @@ function()
 function(texi = NULL)
 {
     if(is.null(texi))
-        texi <- file.path(.R_top_srcdir_from_Rd(),
+        texi <- file.path(.R_top_srcdir(),
                           "doc", "manual", "R-exts.texi")
     lines <- readLines(texi)
     re <- "^@c DESCRIPTION field "

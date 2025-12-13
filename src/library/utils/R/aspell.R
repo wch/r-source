@@ -498,7 +498,7 @@ aspell_R_manuals <-
 function(which = NULL, dir = NULL, program = NULL,
          dictionaries = c(aspell_dictionaries_R, "R_manuals"))
 {
-    if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
+    if(is.null(dir)) dir <- tools:::.R_top_srcdir()
     ## Allow specifying 'R-exts' and alikes, or full paths.
     files <- if(is.null(which)) {
         Sys.glob(file.path(dir, "doc", "manual", "*.texi"))
@@ -536,7 +536,7 @@ function(which = NULL, dir = NULL,
 {
     files <- character()
 
-    if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
+    if(is.null(dir)) dir <- tools:::.R_top_srcdir()
 
     if(is.null(which)) {
         which <- tools:::.get_standard_package_names()$base
@@ -671,7 +671,7 @@ aspell_R_vignettes <-
 function(program = NULL, dir = NULL,
          dictionaries = c(aspell_dictionaries_R, "R_vignettes"))
 {
-    if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()    
+    if(is.null(dir)) dir <- tools:::.R_top_srcdir()    
     files <- Sys.glob(file.path(dir,
                                 "src", "library", "*", "vignettes",
                                 "*.Rnw"))
@@ -944,7 +944,7 @@ function(which = NULL, dir = NULL,
                     "[ \t][[:alnum:]_.]*\\(\\)[ \t[:punct:]]"),
          program = NULL, dictionaries = aspell_dictionaries_R)
 {
-    if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
+    if(is.null(dir)) dir <- tools:::.R_top_srcdir()
     if(is.null(which))
         which <- tools:::.get_standard_package_names()$base
 
@@ -1083,7 +1083,7 @@ function(which = NULL, dir = NULL,
                     "[ \t][[:alnum:]_.]*\\(\\)[ \t[:punct:]]"),
          program = NULL, dictionaries = aspell_dictionaries_R)
 {
-    if(is.null(dir)) dir <- tools:::.R_top_srcdir_from_Rd()
+    if(is.null(dir)) dir <- tools:::.R_top_srcdir()
     if(is.null(which))
         which <- tools:::.get_standard_package_names()$base
     if(!is.na(pos <- match("base", which)))
@@ -1561,7 +1561,7 @@ function(dictionary, add = character())
     ## dictionary.
     if(!grepl(.Platform$file.sep, dictionary, fixed = TRUE)) {
         dictionary <-
-            file.path(tools:::.R_top_srcdir_from_Rd(),
+            file.path(tools:::.R_top_srcdir(),
                       "share", "dictionaries", dictionary)
     }
     txt <- paste0(dictionary, ".txt")
