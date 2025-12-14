@@ -4834,9 +4834,10 @@ specification is available at
 @uref{https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html};
 anything not documented there should be regarded as an extension to be
 avoided.  Further advice can be found at
-@uref{https://www.gnu.org/software/autoconf/manual/autoconf.html#Portable-Make}.                                )
+@uref{https://www.gnu.org/software/autoconf/manual/autoconf.html#Portable-Make}.
+)
 Commonly misused GNU extensions are conditional inclusions (@code{ifeq}
-and the like), @code{$@{shell ...@}}, @code{$@{wildcard ...@}} and
+and the like), @code{export} directives, @code{$@{shell ...@}}, @code{$@{wildcard ...@}} and
 similar, and the use of @code{+=}@footnote{This was apparently
 introduced in @I{SunOS} 4, and is available elsewhere @emph{provided} it is
 surrounded by spaces.} and @code{:=}.  Also, the use of @code{$<} other
