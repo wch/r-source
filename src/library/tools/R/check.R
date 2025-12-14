@@ -3472,7 +3472,7 @@ add_dummies <- function(dir, Log)
                 contents <- filtergrep("^ *#", contents)
                 ## Things like $(SUBDIRS:=.a)
                 contents <- filtergrep("[$][(].+:=.+[)]", contents)
-                if (any(grepl("([+]=|:=|[$][(]wildcard|[$][(]shell|[$][(]eval|[$][(]call|[$][(]patsubst|^ifeq|^ifneq|^ifdef|^ifndef|^endifi|^export |[.]NOTPARALLEL)",
+                if (any(grepl("([+]=|:=|[$][(]wildcard|[$][(]shell|[$][(]eval|[$][(]call|[$][(]patsubst|^ifeq|^ifneq|^ifdef|^ifndef|^endifi|[.]NOTPARALLEL)",
                               contents)))
                     bad_files <- c(bad_files, f)
             }
@@ -3495,7 +3495,7 @@ add_dummies <- function(dir, Log)
                     printLog0(Log, .format_lines_with_indent(bad_files), "\n")
                     wrapLog("Portable Makefiles do not use GNU extensions",
                             "such as +=, :=, $(shell), $(wildcard),",
-                            "ifeq ... endif, export, .NOTPARALLEL",
+                            "ifeq ... endif, .NOTPARALLEL",
                             "See section 'Writing portable packages'",
                             "in the 'Writing R Extensions' manual.\n")
                 }
