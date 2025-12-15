@@ -1760,7 +1760,7 @@ Packages @CRANpkg{h5}, @I{Bioconductor}'s @pkg{rhdf5}, @CRANpkg{RNetCDF} and
 @abbr{HDF5} (Hierarchical Data Format, see
 @uref{https://www.hdfgroup.org/wp-content/uploads/2017/07/HDF5.pdf}) and to @I{UCAR}'s @I{netCDF} data files
 (network Common Data Form, see
-@uref{https://www.unidata.ucar.edu/software/netcdf/}).
+@uref{https://www.unidata.ucar.edu/software/netcdf}).
 
 Both of these are systems to store scientific data in array-oriented
 ways, including descriptions, labels, formats, units, @dots{}.  @abbr{HDF5} also
