@@ -2779,8 +2779,12 @@ if(FALSE) {
         system(paste(cmd, "-n"))
         res <- 0
     } else {
+        ## first report versions of involved compilers
         lines <- system(paste(MAKE, p1(paste("-f", shQuote(makefiles))),
                               "compilers"), intern = TRUE)
+        ## (unless make fails anyway, such as from syntax errors in makefiles)
+        if (is.null(attr(lines, "status"))) {
+
         if (with_c) {
             cc <- lines[grep("^CC =", lines)]
             cc <- sub("CC = ", "", cc)
@@ -2814,6 +2818,8 @@ if(FALSE) {
                         message("using C++", use_cxxstd)
                 }
             }
+        }
+
         }
         if (Sys.info()["sysname"] == "Darwin" &&
             (with_c|| with_f77 || with_f9x || with_cxx)) {
