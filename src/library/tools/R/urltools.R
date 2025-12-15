@@ -741,11 +741,18 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
         status <- as.numeric(results[, 1L])
         ## 405 is HTTP not allowing HEAD requests
         ## maybe also skip 500, 503, 504 as likely to be temporary issues
-        ind <- is.na(match(status, c(200L, 405L, NA))) |
+        ## <FIXME>
+        ## Should we really always skip 405?  We re-check with GET when
+        ## using curl ...
+        ## </FIXME>
+        ind <- is.na(match(status, c(200L, 405L, NA_integer_))) |
             nzchar(results[, 3L]) |
             nzchar(results[, 4L]) |
             nzchar(results[, 5L]) |
             nzchar(results[, 6L])
+        if(nzchar(pat <-
+                      Sys.getenv("_R_CHECK_URLS_HTTP_STATUS_IGNORE_REGEXP_")))
+            ind <- ind & !grepl(pat, status)
         if(any(ind)) {
             pos <- pos[ind]
             s <- as.character(status[ind])
@@ -843,6 +850,23 @@ function(x, ...)
     y
 }
 
+.check_url_db_personal_access_tokens <-
+function()
+{
+    pats <- character()
+    file <- Sys.getenv("_R_CHECK_URLS_PAT_FILE_",
+                       file.path(normalizePath("~"), ".R", "pats.csv"))
+    if(file.exists(file)) {
+        elts <- utils::read.csv(file,
+                                colClasses = character(),
+                                comment.char = "")
+        pats <- `names<-`(elts[[2L]], elts[[1L]])
+    } else if(nzchar(s <- Sys.getenv("GITHUB_PAT", ""))) {
+        pats <- c(github = s)
+    }
+    pats
+}
+
 .fetch_headers_via_base <-
 function(urls, verbose = FALSE, ids = urls)
     Map(function(u, verbose, i) {
@@ -917,6 +941,8 @@ function(urls, nobody = FALSE, verbose = FALSE, pool = NULL,
     if(is.null(hdrs))
         hdrs <- .curl_handle_default_hdrs
 
+    pats <- .check_url_db_personal_access_tokens()
+
     bar <- .progress_bar(if (verbose) length(urls), msg = "fetching ")    
 
     out <- vector("list", length(urls))
@@ -929,8 +955,10 @@ function(urls, nobody = FALSE, verbose = FALSE, pool = NULL,
             curl::handle_setheaders(h, .list = hdrs)
         if((startsWith(u, "https://github.com/") ||
             (u == "https://github.com")) &&
-           nzchar(a <- Sys.getenv("GITHUB_PAT", ""))) {
-            curl::handle_setheaders(h, "Authorization" = paste("token", a))
+           nzchar(s <- pats["github"])) {
+            curl::handle_setheaders(h,
+                                    "Authorization" =
+                                        paste("token", s))
         }
         handle_result <- local({
             i <- i
