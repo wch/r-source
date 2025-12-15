@@ -8433,7 +8433,8 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         setdiff(unique(c(.extract_dependency_package_names(meta["Depends"]),
                          .extract_dependency_package_names(meta["Imports"]),
                          .extract_dependency_package_names(meta["LinkingTo"]))),
-                c(.get_standard_package_names()$base, db[, "Package"]))
+                c(.get_standard_package_names()$base,
+                  db[db[, "Repository"] %in% urls[1 : 2], "Package"]))
     if(length(strong_dependencies)) {
         out$strong_dependencies_not_in_mainstream_repositories <-
             strong_dependencies
@@ -8804,7 +8805,7 @@ function(x, ...)
                       collapse = "\n")
             })),
       fmt(c(if(length(y <- x$strong_dependencies_not_in_mainstream_repositories)) {
-                  paste(c("Strong dependencies not in mainstream repositories:",
+                  paste(c("Strong dependencies not in the CRAN or BioC software repositories:",
                           strwrap(paste(y, collapse = ", "),
                                   indent = 2L, exdent = 4L)),
                         collapse = "\n")
