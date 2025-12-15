@@ -570,9 +570,6 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
                 msg <- "OK"
             }
         }
-        ## A mis-configured site
-        if (s == "503" && any(grepl("www.sciencedirect.com", c(u, newLoc))))
-            s <- "405"
         c(s, msg, newLoc)
     }
 
@@ -739,13 +736,13 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
         }
         results <- do.call(rbind, Map(.check_http, urlspos, headers))
         status <- as.numeric(results[, 1L])
-        ## 405 is HTTP not allowing HEAD requests
+        ## 405 is HTTP not allowing HEAD requests: we re-check with GET
+        ## when using curl ...
         ## maybe also skip 500, 503, 504 as likely to be temporary issues
-        ## <FIXME>
-        ## Should we really always skip 405?  We re-check with GET when
-        ## using curl ...
-        ## </FIXME>
-        ind <- is.na(match(status, c(200L, 405L, NA_integer_))) |
+        ind <- is.na(match(status,
+                           c(200L,
+                             if(!parallel) 405L,
+                             NA_integer_))) |
             nzchar(results[, 3L]) |
             nzchar(results[, 4L]) |
             nzchar(results[, 5L]) |
@@ -765,27 +762,30 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
                                  results[ind, 4L],
                                  results[ind, 5L],
                                  results[ind, 6L])
-                                 
-            ## omit some typically false positives
-            ## for efficiency reasons two separate false positives tables for 403 and 404:
-            false_pos_db_403 <- c(
-                "^https?://twitter.com/", 
-                "^https?://www.jstor.org/",
-                "^https?://.+\\.wiley.com/", 
-                "^https?://www.science.org/",
-                "^https?://www.researchgate.net/",
-                "^https?://www.tandfonline.com/",
-                "^https?://pubs.acs.org/",
-                "^https?://journals.aom.org/",
-                "^https?://journals.sagepub.com/",
-                "^https?://epubs.siam.org/",
-                "^https?://www.pnas.org/")
-            false_pos_db_404 <- c(                
-                "^https?://finance.yahoo.com/")
-            bad_https <- bad_https[!((grepl(paste(false_pos_db_403, collapse="|"), bad_https$URL) & 
-                                        bad_https$Status == "403") |
-                                     (grepl(paste(false_pos_db_404, collapse="|"), bad_https$URL) & 
-                                        bad_https$Status == "404")), , drop=FALSE]
+
+            ## As of 2025-12, this no longer seems necessary.
+            ## ## omit some typically false positives
+            ## ## for efficiency reasons two separate false positives
+            ## ## tables for 403 and 404:
+            ## false_pos_db_403 <- c(
+            ##     "^https?://twitter.com/", 
+            ##     "^https?://www.jstor.org/",
+            ##     "^https?://.+\\.wiley.com/", 
+            ##     "^https?://www.science.org/",
+            ##     "^https?://www.researchgate.net/",
+            ##     "^https?://www.tandfonline.com/",
+            ##     "^https?://pubs.acs.org/",
+            ##     "^https?://journals.aom.org/",
+            ##     "^https?://journals.sagepub.com/",
+            ##     "^https?://epubs.siam.org/",
+            ##     "^https?://www.pnas.org/")
+            ## false_pos_db_404 <- c(                
+            ##     "^https?://finance.yahoo.com/")
+            ## bad_https <- bad_https[!((grepl(paste(false_pos_db_403, collapse="|"), bad_https$URL) & 
+            ##                             bad_https$Status == "403") |
+            ##                          (grepl(paste(false_pos_db_404, collapse="|"), bad_https$URL) & 
+            ##                             bad_https$Status == "404")), , drop=FALSE]
+
             bad <- rbind(bad, bad_https)
         }
     }
