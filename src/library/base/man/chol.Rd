@@ -54,10 +54,11 @@ chol(x, \dots)
     pivot]}. Notice also, that \code{Q[,oo]} is typically not triangular.
    See the examples.
 
-  NOTE: For versions of R up to 4.5.2, the above wasn't quite true.
-  You also needed \code{rank <- attr(Q, "rank")} and 
-  \code{t(Q[1:rank, oo, drop=FALSE]) \%*\% Q[1:rank, oo, drop=FALSE]} 
-  and similar for the alternative version.    
+  NOTE: For versions of R up to 4.5.x, the above wasn't quite true, 
+  since LAPACK does not zero out the rows of \code{Q} beyond the rank.
+  This is now done in R, but if you want code to be compatible with 
+  earlier versions of R, you may want to ensure that you only use 
+  the first \code{rank} rows.
   
   The value of \code{tol} is passed to LAPACK, with negative values
   selecting the default tolerance of (usually) \code{nrow(x) *
@@ -127,10 +128,19 @@ try(chol(m))  # fails
 crossprod(Q)  # not equal to m
 
 ## another example, this time with positive, negative, and zero eigenvalues
-## notice that this (and the previous example) gets the rank wrong
+## notice that this (and the previous example) gets the rank wrong - it
+## returns the rank of an approximating positive semidefinite matrix,
+## effectively discounting negative eigenvalues.
 (m <- matrix(c(1,1,2, 1,1,2, 2,2,1), 3, 3))
-chol(m, pivot=TRUE)
+(Q <- chol(m, pivot=TRUE))
 eigen(m)$values
+
+## conjecture: indefinite cases should be detectable by comparing the 
+## diagonal of the reconstructed matrix to the original
+piv <- attr(Q, "pivot")
+(D <- diag(crossprod(Q))) ## faster: colSums(Q^2)
+diag(m)[piv] - D
+
 }
 
 \keyword{algebra}
