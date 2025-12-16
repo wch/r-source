@@ -817,8 +817,6 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet", "
         fsv <- paste0(ff, ".save")
         if(srcDiffers) fsv <- file.path(testSrcdir, fsv)
         message("  comparing '",ff,"' to '",fsv,"' ...", appendLF = FALSE, domain = NA)
-        if (fnam == "reg-plot")
-            message("    expect minor platform-specific differences", domain=NA)
         res <- Rdiff(ff, fsv, TRUE)
         message(if(res != 0L) "DIFFERED" else "OK")
     }
