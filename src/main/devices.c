@@ -420,7 +420,7 @@ double defaultStrWidth(const char *str, const pGEcontext gc, pDevDesc dd)
 { return 0; }
 void noopText(double x, double y, const char *str, double rot,
               double hadj, const pGEcontext gc, pDevDesc dd) {}
-SEXP defaultGetEvent(SEXP, const char *)
+SEXP defaultGetEvent(SEXP eventRho, const char *prompt)
 { return R_NilValue; }
 void noopTextUTF8(double x, double y, const char *str, double rot,
                   double hadj, const pGEcontext gc, pDevDesc dd) {}
