@@ -190,8 +190,13 @@
       CRAN packages the specification is unnecessary as the default
       C++17 suffices (in a few cases with a deprecation warning from
       some compilers).
+
       The intention is that support for those standards will be withdrawn
       before release.
+
+      \command{R CMD config} will no longer support \code{CXX11},
+      \code{CXX14} nor their associated \code{FLAGS}, \code{STD} and
+      \code{LDFLAGS} values.
 
       %% GCC 10 and Intel 2021.1 definitely support this: GCC 9 may
       \item The default C++ standard will be changed to C++20
