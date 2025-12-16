@@ -2470,6 +2470,14 @@ if(englishMsgs)
             grepl("'dim' cannot ", m2, fixed=TRUE))
 ## had 'dims'
 
+## this legal, though strange, code fails used to fail with
+## Error: object '*tmp*' not found
+f <-function(x, y) x
+`f<-` <- function(x, y, value) { y; x}
+x <- 1
+y <- 2
+f(x, y[] <- 1) <- 3
+
 
 
 ## keep at end

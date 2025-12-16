@@ -3432,11 +3432,24 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("cannot do complex assignments in base namespace"));
     if (rho == R_BaseEnv)
 	errorcall(call, _("cannot do complex assignments in base environment"));
-    defineVar(R_TmpvalSymbol, R_NilValue, rho);
+
     tmploc = R_findVarLocInFrame(rho, R_TmpvalSymbol);
+    SEXP oldTmpval = NULL;
+    if (tmploc.cell == NULL) {
+	defineVar(R_TmpvalSymbol, R_NilValue, rho);
+	tmploc = R_findVarLocInFrame(rho, R_TmpvalSymbol);
+	DISABLE_REFCNT(tmploc.cell);
+	DECREMENT_REFCNT(CDR(tmploc.cell));
+    }
+    else {
+	oldTmpval = R_GetVarLocValue(tmploc);
+	if (BINDING_IS_LOCKED(tmploc.cell))
+	    error(_("existing `*tmp*` binding is locked"));
+	if (IS_ACTIVE_BINDING(tmploc.cell))
+	    error(_("existing `*tmp*` binding is an active binding"));
+	PROTECT(oldTmpval);
+    }
     PROTECT(tmploc.cell);
-    DISABLE_REFCNT(tmploc.cell);
-    DECREMENT_REFCNT(CDR(tmploc.cell));
 
     /* Now set up a context to remove it when we are done, even in the
      * case of an error.  This all helps error() provide a better call.
@@ -3486,6 +3499,8 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	expr = CADR(expr);
     }
     nprot = 6; /* the commont case */
+    if (oldTmpval != NULL) nprot++;
+
     if (TYPEOF(CAR(expr)) == SYMSXP)
 	afun = getAssignFcnSymbol(CAR(expr));
     else {
@@ -3524,8 +3539,11 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_Visible = FALSE;
 
     endcontext(&cntxt); /* which does not run the remove */
+    if (oldTmpval == NULL)
+	unbindVar(R_TmpvalSymbol, rho);
+    else
+	R_SetVarLocValue(tmploc, oldTmpval);
     UNPROTECT(nprot);
-    unbindVar(R_TmpvalSymbol, rho);
 #ifdef OLD_RHS_NAMED
     /* we do not duplicate the value, so to be conservative mark the
        value as NAMED = NAMEDMAX */

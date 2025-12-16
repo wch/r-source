@@ -461,6 +461,9 @@
 
       \item The error message for \code{array(dim = c())} now uses
       \code{"'dim'"}, thanks to \I{Hugo Gruson}.
+
+      \item Some legal but strange nested complex assignments are
+      handled a bit more robustly in interpreted code.
     }
   }
 }
