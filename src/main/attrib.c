@@ -1988,3 +1988,24 @@ R_getS4DataSlot(SEXP obj, SEXPTYPE type)
   else
      return R_NilValue;
 }
+
+/* map a function over an object's attributes */
+SEXP R_mapAttrib(SEXP x, SEXP (*FUN)(SEXP, SEXP, void *), void *data)
+{
+    PROTECT_INDEX api;
+    SEXP a = ATTRIB(x);
+    SEXP val = NULL;
+  
+    PROTECT_WITH_INDEX(a, &api);
+    while (a != R_NilValue) {
+	SEXP tag = PROTECT(TAG(a));
+	SEXP attr = PROTECT(CAR(a));
+	val = FUN(tag, attr, data);
+	UNPROTECT(2); /* tag, attr */
+	if (val != NULL)
+	    break;
+	REPROTECT(a = CDR(a), api);
+    }
+    UNPROTECT(1); /* a */
+    return val;
+}
