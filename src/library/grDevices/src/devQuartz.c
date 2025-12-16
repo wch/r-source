@@ -2285,22 +2285,23 @@ static void RQuartz_Raster(unsigned int *raster, int w, int h,
                         1,   /* interpolate (interpolation type below) */
                         kCGRenderingIntentDefault);
 
-    if (height < 0) {
-        y = y + height;
-        height = -height;
-    }
-
     bool grouping = QuartzBegin(&ctx, &layer, xd);
 
+    /* NB: in the "upright" case (0,0,1,1) the width is positive but the height is negative! */
+    /* scale by -1 direction in which the image is flipped (i.e. height and/or width < 0) */
+    double xscale =  (width < 0) ? -1.0 : 1.0;
+    double yscale = (height < 0) ? -1.0 : 1.0;
     CGContextSaveGState(ctx);
-    /* Translate by height of image */
-    CGContextTranslateCTM(ctx, 0.0, height);
-    /* Flip vertical */
-    CGContextScaleCTM(ctx, 1.0, -1.0);
-    /* Translate to position */
-    CGContextTranslateCTM(ctx, x, -y);
-    /* Rotate */
-    CGContextRotateCTM(ctx, rot*M_PI/180.0);
+
+    CGContextScaleCTM(ctx, xscale, yscale);
+    /* translate to position (but account for the scaling) */
+    CGContextTranslateCTM(ctx, x * xscale, y * yscale);
+    /* rotate - each flip inverts the direction */
+    CGContextRotateCTM(ctx, (-xscale * yscale) * rot * M_PI / 180.0);
+    /* the rotation anchor is always the bottom-left corner of the image which may need
+       translation if the image is flipped: by the width/height on the flipped axis */
+    CGContextTranslateCTM(ctx, (width < 0) ? -width : 0, (height < 0) ? -height : 0);
+
     /* Determine interpolation method */
     if (interpolate)
         CGContextSetInterpolationQuality(ctx, kCGInterpolationDefault);
