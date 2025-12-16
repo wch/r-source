@@ -1989,13 +1989,19 @@ R_getS4DataSlot(SEXP obj, SEXPTYPE type)
      return R_NilValue;
 }
 
-/* map a function over an object's attributes */
+/*
+  Map a function FUN over an object's attributes.
+  FUN should return NULL if it wants the iteration to continue.
+  A non-NULL return value from FUN terminates the iteration and is returned
+  as the value of the R_mapAttrib call.
+*/
 SEXP R_mapAttrib(SEXP x, SEXP (*FUN)(SEXP, SEXP, void *), void *data)
 {
     PROTECT_INDEX api;
     SEXP a = ATTRIB(x);
     SEXP val = NULL;
-  
+
+    /* no need to PROTECT x as it is no longer needed from this point on */
     PROTECT_WITH_INDEX(a, &api);
     while (a != R_NilValue) {
 	SEXP tag = PROTECT(TAG(a));
@@ -2004,6 +2010,8 @@ SEXP R_mapAttrib(SEXP x, SEXP (*FUN)(SEXP, SEXP, void *), void *data)
 	UNPROTECT(2); /* tag, attr */
 	if (val != NULL)
 	    break;
+	/* defer computing CDR(a) until after calling FUN since FUN
+	   might change it by calling setAttrib */
 	REPROTECT(a = CDR(a), api);
     }
     UNPROTECT(1); /* a */

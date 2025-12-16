@@ -723,7 +723,8 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "R_asHashtable", "R_HashtabSEXP", "R_isHashtable", "R_mkhashtab",
             "R_gethash", "R_sethash", "R_remhash", "R_numhash", "R_typhash",
             "R_maphash", "R_maphashC", "R_clrhash",
-
+## experimental attribures iterator -- not yet in the API
+            "R_mapAttrib",
 ## in the experimental API header R_ext/Connections.h
 ##            "R_new_custom_connection", "R_ReadConnection",
 ##            "R_WriteConnection", "R_GetConnection",
