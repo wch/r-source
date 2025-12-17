@@ -2630,10 +2630,17 @@ if(FALSE) {
         if (length(ll <- grep("^CXX_STD *=", lines, perl = TRUE,
                               value = TRUE, useBytes = TRUE)) == 1) {
             val <- gsub("^CXX_STD *= *CXX", "", ll)
+            val <- gsub("#.*$", "", val)
             val <- gsub(" +$", "", val)
             if (val %in% cxx_standards) {
                 use_cxxstd <- val
                 with_cxx <- TRUE
+            } else {
+                val <- gsub("^CXX_STD *= *", "", ll)
+                val <- gsub("#.*$", "", val)
+                val <- gsub(" +$", "", val)
+                msg <- sprintf("src/%s: Unknown C++%s standard was ignored", fn, val)
+                warning(msg, domain = NA, call. = FALSE)
             }
         }
         if (any(grepl("^USE_FC_TO_LINK", lines, perl=TRUE, useBytes = TRUE)))
@@ -2646,10 +2653,17 @@ if(FALSE) {
         if (length(ll <- grep("^CXX_STD *=", lines, perl = TRUE,
                               value = TRUE, useBytes = TRUE)) == 1) {
             val <- gsub("^CXX_STD *= *CXX", "", ll)
+            val <- gsub("#.*$", "", val)
             val <- gsub(" +$", "", val)
             if (val %in% cxx_standards) {
                 use_cxxstd <- val
                 with_cxx <- TRUE
+            } else {
+                val <- gsub("^CXX_STD *= *", "", ll)
+                val <- gsub("#.*$", "", val)
+                val <- gsub(" +$", "", val)
+                msg <- sprintf("src/Makevars: Unknown C++ standard %s was ignored", sQuote(val))
+                warning(msg, domain = NA, call. = FALSE)
             }
         }
         if (any(grepl("^USE_FC_TO_LINK", lines, perl=TRUE, useBytes = TRUE)))
