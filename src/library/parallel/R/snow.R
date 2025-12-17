@@ -162,6 +162,7 @@ makeCluster <-
            SOCK = snow::makeSOCKcluster(names = spec, ...),
            MPI = snow::makeMPIcluster(count = spec, ...),
            MIRAI = mirai::make_cluster(n = spec, ...),
+           RPSOCK = parallelly::makeClusterPSOCK(workers = spec, ...),
            ## NWS = snow::makeNWScluster(names = spec, ...),
            if (exists(type, clusterStarters))
                get(type, clusterStarters)(spec, ...)
