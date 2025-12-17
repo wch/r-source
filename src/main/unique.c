@@ -2602,23 +2602,29 @@ SEXP R_maphash(R_hashtab_type h, SEXP FUN)
     return R_NilValue;
 }
 
-void R_maphashC(R_hashtab_type h, void (*FUN)(SEXP, SEXP, void *), void *data)
+SEXP R_maphashC(R_hashtab_type h, SEXP (*FUN)(SEXP, SEXP, void *), void *data)
 {
     PROTECT(HT_SEXP(h));
     SEXP table = PROTECT(HT_TABLE(h)); // PROTECT in case FUN causes a rehash
     int size = LENGTH(table);
+    SEXP result = NULL;
     for (int i = 0; i < size; i++) {
 	SEXP cell = VECTOR_ELT(table, i);
 	while (cell != R_NilValue) {
 	    SEXP next = PROTECT(CDR(cell));
 	    SEXP key = PROTECT(TAG(cell));
 	    SEXP val = PROTECT(CAR(cell));
-	    FUN(key, val, data);
-	    cell = next;
+	    result = FUN(key, val, data);
 	    UNPROTECT(3); /* next, key, val */
+	    if (result != NULL)
+		break;
+	    cell = next;
 	}
+	if (result != NULL)
+	    break;
     }
     UNPROTECT(2); /* h, table */
+    result;
 }
 
 void R_clrhash(R_hashtab_type h)

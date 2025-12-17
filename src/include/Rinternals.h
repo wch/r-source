@@ -1220,7 +1220,7 @@ int R_remhash(R_hashtab_type h, SEXP key);
 int R_numhash(R_hashtab_type h);
 int R_typhash(R_hashtab_type h);
 SEXP R_maphash(R_hashtab_type h, SEXP FUN);
-void R_maphashC(R_hashtab_type h, void (*FUN)(SEXP, SEXP, void *), void *data);
+SEXP R_maphashC(R_hashtab_type h, SEXP (*FUN)(SEXP, SEXP, void *), void *data);
 void R_clrhash(R_hashtab_type h);
 
 /* Highly experimental resizable vector support */
