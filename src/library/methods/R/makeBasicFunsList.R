@@ -226,24 +226,24 @@ utils::globalVariables(".addBasicGeneric")
 	       signature = c("r", "x"), where = where)
     setGenericImplicit("backsolve", where, FALSE)
 
-    setGeneric("colMeans", function(x, na.rm = FALSE, dims = 1, ...)
+    setGeneric("colMeans", function(x, na.rm = FALSE, dims = 1L, ...)
 			standardGeneric("colMeans"),
-	       useAsDefault = function(x, na.rm = FALSE, dims = 1, ...)
+	       useAsDefault = function(x, na.rm = FALSE, dims = 1L, ...)
 			base::colMeans(x, na.rm=na.rm, dims=dims, ...),
 	       signature = "x", where = where)
-    setGeneric("colSums", function(x, na.rm = FALSE, dims = 1, ...)
+    setGeneric("colSums", function(x, na.rm = FALSE, dims = 1L, ...)
 			standardGeneric("colSums"),
-	       useAsDefault = function(x, na.rm = FALSE, dims = 1, ...)
+	       useAsDefault = function(x, na.rm = FALSE, dims = 1L, ...)
 			base::colSums(x, na.rm=na.rm, dims=dims, ...),
 	       signature = "x", where = where)
-    setGeneric("rowMeans", function(x, na.rm = FALSE, dims = 1, ...)
+    setGeneric("rowMeans", function(x, na.rm = FALSE, dims = 1L, ...)
 			standardGeneric("rowMeans"),
-	       useAsDefault = function(x, na.rm = FALSE, dims = 1, ...)
+	       useAsDefault = function(x, na.rm = FALSE, dims = 1L, ...)
 			base::rowMeans(x, na.rm=na.rm, dims=dims, ...),
 	       signature = "x", where = where)
-    setGeneric("rowSums", function(x, na.rm = FALSE, dims = 1, ...)
+    setGeneric("rowSums", function(x, na.rm = FALSE, dims = 1L, ...)
 			standardGeneric("rowSums"),
-	       useAsDefault = function(x, na.rm = FALSE, dims = 1, ...)
+	       useAsDefault = function(x, na.rm = FALSE, dims = 1L, ...)
 			base::rowSums(x, na.rm=na.rm, dims=dims, ...),
 	       signature = "x", where = where)
     setGenericImplicit("colMeans", where, FALSE)
