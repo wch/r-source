@@ -800,6 +800,11 @@ INLINE_FUN Rboolean inherits(SEXP s, const char *name)
     return FALSE;
 }
 
+INLINE_FUN Rboolean isScalarString(SEXP x)
+{
+    return TYPEOF(x) == STRSXP && XLENGTH(x) == 1;
+}
+
 INLINE_FUN Rboolean isValidString(SEXP x)
 {
     return TYPEOF(x) == STRSXP && LENGTH(x) > 0 && TYPEOF(STRING_ELT(x, 0)) != NILSXP;

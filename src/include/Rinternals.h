@@ -974,6 +974,7 @@ void R_orderVector1(int *indx, int n, SEXP x,       Rboolean nalast, Rboolean de
 #define isPrimitive		Rf_isPrimitive
 #define isReal			Rf_isReal
 #define isS4			Rf_isS4
+#define isScalarString		Rf_isScalarString
 #define isString		Rf_isString
 #define isTs			Rf_isTs
 #define isUnmodifiedSpecSym	Rf_isUnmodifiedSpecSym
@@ -1089,6 +1090,7 @@ Rboolean Rf_isNumber(SEXP);
 Rboolean Rf_isNumeric(SEXP);
 Rboolean Rf_isPairList(SEXP);
 Rboolean Rf_isPrimitive(SEXP);
+Rboolean Rf_isScalarString(SEXP);
 Rboolean Rf_isTs(SEXP);
 //Rboolean Rf_isUserBinop(SEXP);
 Rboolean Rf_isValidString(SEXP);

@@ -172,7 +172,7 @@ SEXP getAttrib(SEXP vec, SEXP name)
 	! (TYPEOF(vec) == LISTSXP || TYPEOF(vec) == LANGSXP|| TYPEOF(vec) == DOTSXP))
 	return R_NilValue;
 
-    if (isString(name)) name = installTrChar(STRING_ELT(name, 0));
+    if (isScalarString(name)) name = installTrChar(STRING_ELT(name, 0));
 
     /* special test for c(NA, n) rownames of data frames: */
     if (name == R_RowNamesSymbol) {
@@ -232,7 +232,7 @@ SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
     PROTECT(vec);
     PROTECT(name);
 
-    if (isString(name)) {
+    if (isScalarString(name)) {
 	PROTECT(val);
 	name = installTrChar(STRING_ELT(name, 0));
 	UNPROTECT(1);
@@ -1781,7 +1781,7 @@ attribute_hidden SEXP S3Class(SEXP obj)
 int R_has_slot(SEXP obj, SEXP name) {
 
 #define R_SLOT_INIT							\
-    if(!(isSymbol(name) || (isString(name) && LENGTH(name) == 1)))	\
+    if(!(isSymbol(name) || isScalarString(name)))			\
 	error(_("invalid type or length for slot name"));		\
     if(!s_dot_Data)							\
 	init_slot_handling();						\
@@ -1848,7 +1848,7 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value) {
 #endif
     PROTECT(obj); PROTECT(value);
     /* Ensure that name is a symbol */
-    if(isString(name) && LENGTH(name) == 1)
+    if(isScalarString(name))
 	name = installTrChar(STRING_ELT(name, 0));
     else if(TYPEOF(name) == CHARSXP)
 	name = installTrChar(name);
@@ -1904,7 +1904,7 @@ attribute_hidden SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
     nlist = CADR(args);
     /* Do some checks here -- repeated in R_do_slot, but on repeat the
      * test expression should kick out on the first element. */
-    if(!(isSymbol(nlist) || (isString(nlist) && LENGTH(nlist) == 1)))
+    if(!(isSymbol(nlist) || isScalarString(nlist)))
 	error(_("invalid type or length for slot name"));
     if(isString(nlist)) nlist = installTrChar(STRING_ELT(nlist, 0));
     if(!s_dot_Data) init_slot_handling();
