@@ -2980,7 +2980,7 @@ supported.  On a Unix-alike @R{}'s @command{configure} will try to
 identify a compiler and flags for each of the supported standards: this
 relies heavily on the reported values of @code{__cplusplus}.
 
-@c Apple clang 14 defaults to C++98 (even 16)
+@c Apple clang 14 defaults to C++98 (even 17)
 @c @I{LLVM} clang 14, 15 default to C++14, 16-20 to C++17
 @c g++ 11-15 default to C++17
 
@@ -3015,7 +3015,8 @@ CXX_STD = CXX23
 @end example
 
 C++20, C++23 and C++26 (from @R{} 4.5.0) can be specified in an
-analogous way.
+analogous way.  @strong{NB} this is not a @command{make} directive: the
+value should not be quoted, nor should there be a tralling comment.
 
 Code needing C++20 or later features can check for their presence @emph{via}
 `SD-6 feature tests'@footnote{See
@@ -3042,9 +3043,9 @@ feature tests as well as resources such as
 want to use are widely implemented. (In particular, C++20 modules were
 not.)
 
-Attempts to specify an unknown or obsolete C++ standard are ignored:
-recent versions of @R{} throw an error for C++98 and for known standards
-for which no compiler+flags has been detected.
+Attempts to specify an unknown or obsolete C++ standard are ignored with
+a warning: recent versions of @R{} throw an error for C++98 and for known
+standards for which no compiler+flags has been detected.
 
 If a package using C++ has a @command{configure} script it is essential
 that the script selects the correct C++ compiler and standard,
