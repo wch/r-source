@@ -722,6 +722,7 @@ void *ALTVEC_DATAPTR(SEXP x);
 const void *ALTVEC_DATAPTR_RO(SEXP x);
 const void *ALTVEC_DATAPTR_OR_NULL(SEXP x);
 SEXP ALTVEC_EXTRACT_SUBSET(SEXP x, SEXP indx, SEXP call);
+Rboolean R_is_compact_intseq(SEXP x);
 
 /* data access */
 int ALTINTEGER_ELT(SEXP x, R_xlen_t i);

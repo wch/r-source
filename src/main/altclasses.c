@@ -338,6 +338,11 @@ static SEXP new_compact_intseq(R_xlen_t n, int n1, int inc)
     return ans;
 }
 
+attribute_hidden Rboolean R_is_compact_intseq(SEXP x)
+{
+    return R_altrep_inherits(x, R_compact_intseq_class);
+}
+
 
 /**
  ** Compact Real Sequences

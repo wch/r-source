@@ -58,14 +58,19 @@ static SEXP row_names_gets(SEXP vec, SEXP val)
     if(isInteger(val)) {
 	bool OK_compact = TRUE;
 	int i, n = LENGTH(val);
-	if(n == 2 && INTEGER(val)[0] == NA_INTEGER) {
-	    n = INTEGER(val)[1];
+	if(n == 2 && INTEGER_ELT(val, 0) == NA_INTEGER) {
+	    n = INTEGER_ELT(val, 1);
 	} else if (n > 2) {
-	    for(i = 0; i < n; i++)
-		if(INTEGER(val)[i] != i+1) {
-		    OK_compact = false;
-		    break;
-		}
+	    // convert an ALTREP 1:n sequence to the traditional compact form
+	    // might make sense to just keep the ALTREP sequence
+	    if (! (R_is_compact_intseq(val) &&
+		   INTEGER_ELT(val, 0) == 1 &&
+		   INTEGER_ELT(val, n - 1) == n))
+		for(i = 0; i < n; i++)
+		    if(INTEGER_ELT(val, i) != i+1) {
+			OK_compact = false;
+			break;
+		    }
 	} else OK_compact = false;
 	if(OK_compact) {
 	    /* we hide the length in an impossible integer vector */
