@@ -17590,7 +17590,8 @@ functions that should be used instead:
 @item ATTRIB
       Use @code{Rf_getAttrib} for individual attributes. To test whether
       there are any attributes use @code{ANY_ATTRIB}, added in @R{}
-      4.5.0.
+      4.5.0. @code{R_mapAttrib} was added in @R{} 4.6.0 for iserating
+      over an object's attributes.
 @item SET_ATTRIB
 @itemx SET_OBJECT
        Use @code{Rf_setAttrib} for individual attributes,
@@ -17755,6 +17756,17 @@ functions ensure can that certain consistency requirements are
 maintained, such as setting the object bit according to whether a class
 attribute is present.
 
+The function @code{R_mapAttrib} can be used to iterate over the
+attributes on an object:
+@example
+SEXP R_mapAttrib(SEXP x, SEXP (*FUN)(SEXP, SEXP, void *), void *data);
+@end example
+@eapifun R_mapAttrib
+The function @code{FUN} should return a C @code{NULL} if it want the
+iteration to continue. If @code{FUN} returns a non-@code{NULL} value
+then the iteration stops and that value is returned as the result of the
+@code{R_mapAttrib} call.
+
 Some additional functions may be added for working with attributes.
 
 @node Working with variable bindings
@@ -17833,6 +17845,26 @@ SEXP R_duplicateAsResizable(SEXP x)
     SET_TRUELENGTH(ret, Rf_xlength(x));
     SET_GROWABLE_BIT(ret);
     return ret;
+@}
+
+SEXP R_mapAttrib(SEXP x, SEXP (*FUN)(SEXP, SEXP, void *), void *data)
+@{
+    PROTECT_INDEX api;
+    SEXP a = ATTRIB(x);
+    SEXP val = NULL;
+
+    PROTECT_WITH_INDEX(a, &api);
+    while (a != R_NilValue) @{
+	SEXP tag = PROTECT(TAG(a));
+	SEXP attr = PROTECT(CAR(a));
+	val = FUN(tag, attr, data);
+	UNPROTECT(2); /* tag, attr */
+	if (val != NULL)
+	    break;
+	REPROTECT(a = CDR(a), api);
+    @}
+    UNPROTECT(1); /* a */
+    return val;
 @}
 #endif
 @end example

@@ -281,6 +281,13 @@
       should not be used. The stub \file{R_ext/Callbacks.h} also
       includes \file{R_ext/ObjectTable.h}. Packages including these headers
       will install successfully but with warnings for using these files.
+
+      \item New function \code{R_mapAttrib} for iterating over the
+      attributes of an object.
+
+      \item Packages using the non-API functions \code{ATTRIB} and
+      \code{SET_ATTRIB} will now receive check \samp{NOTE}s.
+      See \sQuote{Writing R Extensions} for alternatives to use.
     }
   }
 
