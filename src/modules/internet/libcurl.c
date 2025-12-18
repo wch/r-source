@@ -124,6 +124,12 @@ attribute_hidden SEXP in_do_curlVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #ifdef HAVE_LIBCURL
+/* Per-URL context for storing custom error message from X-Error-Message header */
+typedef struct {
+    char custom_error[513];  /* 512 chars + null terminator */
+    int has_custom_error;    /* 0 = no custom error, 1 = has custom error */
+} url_error_context;
+
 static const char *http_errstr(const long status)
 {
     const char *str;
@@ -191,7 +197,7 @@ static const char *ftp_errstr(const long status)
 
 /* Report a download error based on libcurl message. Issue warnings and
    record a flag (see errs[] in in_do_curlDownload) when errs[] is used. */
-static void download_report_url_error(CURLMsg *msg)
+static void download_report_url_error(CURLMsg *msg, url_error_context *err_ctx)
 {
     const char *url, *strerr, *type;
     long status = 0;
@@ -202,7 +208,7 @@ static void download_report_url_error(CURLMsg *msg)
 		      &status);
     if (curl_easy_getinfo(msg->easy_handle, CURLINFO_PRIVATE, &url_errs)
 	== CURLE_OK && url_errs) (*url_errs)++;
-    
+
     // This reports the redirected URL
     if (status >= 400) {
 	if (url && url[0] == 'h') {
@@ -212,18 +218,26 @@ static void download_report_url_error(CURLMsg *msg)
 	    strerr = ftp_errstr(status);
 	    type = "FTP";
 	}
-	warning(_("cannot open URL '%s': %s status was '%ld %s'"),
-		url, type, status, strerr);
+	if (err_ctx && err_ctx->has_custom_error && err_ctx->custom_error[0]) {
+	    warning(_("cannot open URL '%s': %s status was '%ld %s'\n Error message: %s"),
+		    url, type, status, strerr, err_ctx->custom_error);
+	} else {
+	    warning(_("cannot open URL '%s': %s status was '%ld %s'"),
+		    url, type, status, strerr);
+	}
     } else {
 	strerr = curl_easy_strerror(msg->data.result);
 	timedout = msg->data.result == CURLE_OPERATION_TIMEDOUT
 	           || msg->data.result == CURLE_ABORTED_BY_CALLBACK
 	           || streql(strerr, "Timeout was reached");
-	             
+
 	if (timedout)
 	    warning(_("URL '%s': Timeout of %d seconds was reached"),
 		    url, current_timeout);
-	else
+	else if (err_ctx && err_ctx->has_custom_error && err_ctx->custom_error[0]) {
+	    warning(_("URL '%s': status was '%s'\n Error message: %s"),
+		    url, strerr, err_ctx->custom_error);
+	} else
 	    warning(_("URL '%s': status was '%s'"), url, strerr);
     }
 }
@@ -239,7 +253,7 @@ static int curlMultiCheckerrs(CURLM *mhnd)
     for(int n = 1; n > 0;) {
 	CURLMsg *msg = curl_multi_info_read(mhnd, &n);
 	if (msg && (msg->data.result != CURLE_OK)) {
-	    download_report_url_error(msg);
+	    download_report_url_error(msg, NULL);  /* No context in this caller */
 	    retval++;
 	}
     }
@@ -342,6 +356,69 @@ rcvHeaders(void *buffer, size_t size, size_t nmemb, void *userp)
     headers[used][res] = '\0';
     used++;
     return result;
+}
+
+/*
+ * Header callback for capturing X-Error-Message header.
+ * This callback is called once for each header line received.
+ */
+static size_t rcvErrorHeader(void *buffer, size_t size, size_t nmemb, void *userp)
+{
+    url_error_context *ctx = (url_error_context *)userp;
+    size_t total_size = size * nmemb;
+    char *header_line = (char *)buffer;
+
+    /* Header format: "X-Error-Message: <message>\r\n" */
+    const char *header_name = "x-error-message:";
+    const size_t header_name_len = 16;  /* strlen("x-error-message:") */
+
+    /* Only process if we haven't found the header yet */
+    if (ctx && !ctx->has_custom_error && total_size > header_name_len) {
+	/* Case-insensitive comparison of header name */
+	int matches = 1;
+	for (size_t i = 0; i < header_name_len && i < total_size; i++) {
+	    char c1 = header_line[i];
+	    char c2 = header_name[i];
+	    /* Convert to lowercase for comparison */
+	    if (c1 >= 'A' && c1 <= 'Z') c1 += 32;
+	    if (c1 != c2) {
+		matches = 0;
+		break;
+	    }
+	}
+
+	if (matches) {
+	    /* Found X-Error-Message header - extract value */
+	    const char *value_start = header_line + header_name_len;
+	    size_t value_len = total_size - header_name_len;
+
+	    /* Skip leading whitespace */
+	    while (value_len > 0 && (*value_start == ' ' || *value_start == '\t')) {
+		value_start++;
+		value_len--;
+	    }
+
+	    /* Trim trailing whitespace and line endings (\r\n) */
+	    while (value_len > 0) {
+		char c = value_start[value_len - 1];
+		if (c == '\r' || c == '\n' || c == ' ' || c == '\t')
+		    value_len--;
+		else
+		    break;
+	    }
+
+	    /* Copy to context (truncate if too long) */
+	    if (value_len > 0) {
+		size_t copy_len = value_len < 512 ? value_len : 512;
+		strncpy(ctx->custom_error, value_start, copy_len);
+		ctx->custom_error[copy_len] = '\0';
+		ctx->has_custom_error = 1;
+	    }
+	}
+    }
+
+    /* Always return total_size to indicate success */
+    return total_size;
 }
 
 static size_t
@@ -594,6 +671,7 @@ typedef struct {
     double *tstart;
     SEXP sfile;
     int *errs;
+    url_error_context **error_contexts;
 #ifdef Win32
     winprogressbar *pbar;
 #endif
@@ -628,6 +706,10 @@ static void download_cleanup_url(int i, download_cleanup_info *c)
     if (c->hnd && c->hnd[i]) {
 	curl_easy_cleanup(c->hnd[i]);
 	c->hnd[i] = NULL;
+    }
+    if (c->error_contexts && c->error_contexts[i]) {
+	free(c->error_contexts[i]);
+	c->error_contexts[i] = NULL;
     }
 }
 
@@ -715,6 +797,15 @@ static int download_add_url(int i, SEXP scmd, const char *mode,
     curl_multi_add_handle(c->mhnd, c->hnd[i]);
 
     curl_easy_setopt(c->hnd[i], CURLOPT_PRIVATE, c->errs+i);
+
+    /* Allocate and set up error context for X-Error-Message header */
+    c->error_contexts[i] = malloc(sizeof(url_error_context));
+    if (c->error_contexts[i]) {
+	c->error_contexts[i]->custom_error[0] = '\0';
+	c->error_contexts[i]->has_custom_error = 0;
+	curl_easy_setopt(c->hnd[i], CURLOPT_HEADERFUNCTION, rcvErrorHeader);
+	curl_easy_setopt(c->hnd[i], CURLOPT_HEADERDATA, c->error_contexts[i]);
+    }
 
     total = 0.;
     if (!quiet && single) {
@@ -849,8 +940,10 @@ static void download_close_finished(download_cleanup_info *c)
 	curl_easy_getinfo(msg->easy_handle, CURLINFO_PRIVATE, &url_errs);
 	int i = (int)(url_errs - c->errs);
 
-        if (msg->data.result != CURLE_OK)
-            download_report_url_error(msg);
+        if (msg->data.result != CURLE_OK) {
+	    url_error_context *err_ctx = (c->error_contexts && i >= 0 && i < c->nurls) ? c->error_contexts[i] : NULL;
+            download_report_url_error(msg, err_ctx);
+	}
 	download_cleanup_url(i, c);
     }
 }
@@ -912,6 +1005,7 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
     c.hnd = NULL;
     c.out = NULL;
     c.errs = NULL;
+    c.error_contexts = NULL;
     if (strchr(mode, 'w'))
 	c.sfile = sfile;
     else
@@ -957,22 +1051,25 @@ in_do_curlDownload(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     int still_running, repeats = 0, n_err = 0;
     R_CheckStack2((size_t)nurls
-                  * (sizeof(int) + sizeof(FILE *) + sizeof(CURL **)));
+                  * (sizeof(int) + sizeof(FILE *) + sizeof(CURL **) + sizeof(double) + sizeof(url_error_context *)));
     CURL **hnd[nurls];
     FILE *out[nurls];
     int errs[nurls];
     double tstart[nurls];
+    url_error_context *error_contexts[nurls];
 
     for(int i = 0; i < nurls; i++) {
 	hnd[i] = NULL;
 	out[i] = NULL;
 	errs[i] = 0;
 	tstart[i] = 0;
+	error_contexts[i] = NULL;
     }
     c.hnd = hnd;
     c.out = out;
     c.errs = errs;
     c.tstart = tstart;
+    c.error_contexts = error_contexts;
 
     int next_url = 0;
 

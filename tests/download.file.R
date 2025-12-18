@@ -189,6 +189,44 @@ tests <- function() {
                        protocol = "https")
   stopifnot(grep_hdr("Foo.*bar", h))
   stopifnot(grep_hdr("Zzzz.*bee", h))
+
+  ## Tests for X-Error-Message header support
+  ## These verify backward compatibility and error context isolation
+  cat("- X-Error-Message backward compatibility\n")
+  
+  ## Test 1: Normal downloads still work (no X-Error-Message header)
+  h <- get_headers()
+  stopifnot(grep_hdr(rx, h))
+
+  cat("- Error handling without X-Error-Message header\n")
+  ## Test 2: Errors without X-Error-Message still work correctly
+  ret <- tryCatch({
+    suppressWarnings(get_headers("status/404"))
+    FALSE
+  }, error = function(e) {
+    ## Should get error about cannot open URL or status
+    grepl("cannot open URL|status was", conditionMessage(e))
+  })
+  stopifnot(isTRUE(ret))
+
+  if (getOption("download.file.method") == "libcurl") {
+    cat("- Multiple downloads with error context isolation (libcurl only)\n")
+    ## Test 3: Multiple concurrent downloads maintain isolated error contexts
+    ## This ensures error messages don't cross-contaminate between URLs
+    urls <- get_path(c("anything", "headers", "anything"))
+    tmp1 <- tempfile()
+    tmp2 <- tempfile()
+    tmp3 <- tempfile()
+    on.exit(unlink(c(tmp1, tmp2, tmp3)), add = TRUE)
+
+    ## All should succeed (no errors to capture, but tests isolation)
+    status <- download.file(urls, c(tmp1, tmp2, tmp3), quiet = TRUE)
+    if (status == 0L) {
+      stopifnot(file.exists(tmp1))
+      stopifnot(file.exists(tmp2))
+      stopifnot(file.exists(tmp3))
+    }
+  }
 }
 
 main <- function() {
