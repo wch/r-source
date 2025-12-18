@@ -776,7 +776,7 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
                     (length(tags) == 1L && startsWith(tags, "\\") &&
                      separated) || # ignore ' {\code{...}}' but not ' code{\link{}}'
                     (length(tags) == 2L && tags[1L] == "USERMACRO") || # '{\sspace}'
-                    (inItemize && pretag == "\\item") || # '\item {}'
+                    (inItemize && pretag == "\\item") || # '\item {...}'
                     pretag == "\\tab" || # '\tab {}'
                     (!is.null(srcref <- attr(block, "srcref")) &&
                      srcref[1L] == srcref[3L] && srcref[5L] > srcref[6L]) || # kludge for Rdpack
@@ -785,14 +785,21 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
                     ))
                 if (!ignore) {
                     level <- -1
-                    ## extra message for frequent misuse of \item *{label} *{desc}
+                    ## extra message for \item{label}{desc} needing \describe
                     if (inItemize && npreNB > 1L && pretag == "LIST" &&
                         pretagsNB[npreNB - 1L] == "\\item") {
-                        msg2 <- paste0(" in ", blocktag, "; ",
-                                       if (sectiontag == "\\value")
-                                           "\\value handles \\item{}{} directly"
-                                       else "meant \\describe ?")
-                        showSource <- FALSE # misleading marker, often many \items
+                        ## \item *{...} *{we are here}
+                        preblocksNB <- preblocks[pretags != "BLANK"]
+                        label <- preblocksNB[[npreNB]]
+                        if (isBlankRd(label)) { # ignore \item{}{text}
+                            level <- -3
+                        } else {
+                            msg2 <- paste0(" in ", blocktag, "; ",
+                                           if (sectiontag == "\\value")
+                                               "\\value handles \\item{}{} directly"
+                                           else "meant \\describe ?")
+                            showSource <- FALSE # misleading marker, often many \items
+                        }
                     } else if (separated && identical(tags, "TEXT")) {
                         ## simple braced text: 'X_{i-1}' w/o \eqn, '{pkg}'
                         msg2 <- "; missing escapes or markup?"
