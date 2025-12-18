@@ -2624,7 +2624,7 @@ SEXP R_maphashC(R_hashtab_type h, SEXP (*FUN)(SEXP, SEXP, void *), void *data)
 	    break;
     }
     UNPROTECT(2); /* h, table */
-    result;
+    return result;
 }
 
 void R_clrhash(R_hashtab_type h)
