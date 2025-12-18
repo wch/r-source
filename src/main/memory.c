@@ -4108,6 +4108,9 @@ SEXP (STRING_ELT)(SEXP x, R_xlen_t i) {
     if(TYPEOF(x) != STRSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "STRING_ELT", "character vector", R_typeToChar(x));
+    if (i < 0 || i >= XLENGTH(x))
+	error(_("attempt access index %lld/%lld in STRING_ELT"),
+	      (long long)i, (long long)XLENGTH(x));
     if (ALTREP(x))
 	return CHK(ALTSTRING_ELT(CHK(x), i));
     else {
@@ -4123,6 +4126,9 @@ SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i) {
        TYPEOF(x) != WEAKREFSXP)
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "VECTOR_ELT", "list", R_typeToChar(x));
+    if (i < 0 || i >= XLENGTH(x))
+	error(_("attempt access index %lld/%lld in VECTOR_ELT"),
+	      (long long)i, (long long)XLENGTH(x));
     if (ALTREP(x)) {
 	SEXP ans = CHK(ALTLIST_ELT(CHK(x), i));
 	/* the element is marked as not mutable since complex
