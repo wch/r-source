@@ -1,7 +1,7 @@
 #  File src/library/methods/R/RMethodUtils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -882,7 +882,7 @@ cacheMetaData <-
                 if(exists(f, envir = env, inherits = FALSE)) {
                     def <- get(f, envir = env)
                     fdef <- .genericOrImplicit(f, fpkg, env)
-                    if(is.function(def)) {
+                    if(is.function(def) && !is.primitive(def)) {
                         ## exclude a non-function of the same name as a primitive with methods (!)
                         if(identical(environment(def), environment(fdef)))
                             next        # the methods are identical
