@@ -3016,7 +3016,7 @@ CXX_STD = CXX23
 
 C++20, C++23 and C++26 (from @R{} 4.5.0) can be specified in an
 analogous way.  @strong{NB} this is not a @command{make} directive: the
-value should not be quoted, nor should there be a tralling comment.
+value should not be quoted, nor should there be a trailing comment.
 
 Code needing C++20 or later features can check for their presence @emph{via}
 `SD-6 feature tests'@footnote{See
@@ -17590,7 +17590,7 @@ functions that should be used instead:
 @item ATTRIB
       Use @code{Rf_getAttrib} for individual attributes. To test whether
       there are any attributes use @code{ANY_ATTRIB}, added in @R{}
-      4.5.0. @code{R_mapAttrib} was added in @R{} 4.6.0 for iserating
+      4.5.0. @code{R_mapAttrib} was added in @R{} 4.6.0 for iterating
       over an object's attributes.
 @item SET_ATTRIB
 @itemx SET_OBJECT
