@@ -62,9 +62,9 @@ deparseLatex <- function(x, dropBraces = FALSE, math = c("$", "$"))
                      " ",
                  a),
         BLOCK = if (dropBraces && !expectArg)
-                    Recall(a)
+                    Recall(a, dropBraces = dropBraces, math = math)
                 else
-                    c("{", Recall(a), "}"),
+                    c("{", Recall(a, dropBraces = dropBraces, math = math), "}"),
         ENVIRONMENT = c(
         	"\\begin{", a[[1L]], "}",
         	Recall(a[[2L]]),
