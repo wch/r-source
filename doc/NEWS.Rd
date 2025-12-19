@@ -497,6 +497,9 @@
       \item Tweaks to binning for \code{bw.SJ()} and \code{bw.ucv()} in the
       very rare case of data which have an extremely small range compared to
       their absolute values, e.g., \code{x <- 6e9 + 6:9}.
+
+      \item Formatting book-type \code{bibentry} objects now converts
+      \LaTeX syntax also in the publisher and series fields.
     }
   }
 }

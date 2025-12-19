@@ -2479,6 +2479,15 @@ y <- 2
 f(x, y[] <- 1) <- 3
 
 
+## Conversion of LaTeX accents in more bibentry fields
+bib <- bibentry("book", author = person("Anonymous"), title = "Title", year = 1,
+                publisher = "Universidad de Ja{\\'e}n",
+                series = "Os {Economistas}")
+(rd <- tools::toRd(bib)) # formatBook() from the default "JSS" style
+stopifnot(endsWith(rd, "Ja\u00e9n."), grepl("Os Economistas", rd))
+## Publisher and Series were not subject to cleanupLatex() in R <= 4.5.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

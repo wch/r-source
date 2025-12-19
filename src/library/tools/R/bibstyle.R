@@ -185,7 +185,7 @@ make_bibstyle_JSS <- function() {
         if (length(book$number))
             result <- paste(result, "number", collapse(book$number))
         if (length(book$series))
-            result <- paste(result, "series", collapse(book$series))
+            result <- paste(result, "series", collapse(cleanupLatex(book$series)))
         if (nzchar(result)) result
     }
 
@@ -193,7 +193,7 @@ make_bibstyle_JSS <- function() {
         if(length(p <- book$publisher)) {
             if(inherits(p, "person"))
                 p <- p$given
-            result <- collapse(p)
+            result <- collapse(cleanupLatex(p))
             if(length(book$address))
                 result <- paste(result,
                                 collapse(book$address),
