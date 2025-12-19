@@ -2453,6 +2453,17 @@ function(x)
     y
 }
 
+### ** .remove_dot_segments
+
+## See RFC 3980 Section 5.2.4 "Remove Dot Segments"
+## <https://datatracker.ietf.org/doc/html/rfc3986#section-5.2.4>.
+## Based on C code in src/modules/internet/Rhttp.c, copied over to
+## tools.
+
+.remove_dot_segments <-
+function(x)
+    .Call(C_remove_dot_segments_wrapper, x)
+
 ### ** .replace_chars_by_hex_subs
 
 .replace_chars_by_hex_subs <-

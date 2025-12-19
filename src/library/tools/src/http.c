@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2092--2024     The R Core Team
+ *  Copyright (C) 2092--2025     The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 
 #include <Rinternals.h>
 #include "tools.h"
-
 
 extern int extR_HTTPDCreate(const char *ip, int port);
 extern void extR_HTTPDStop(void);
@@ -44,3 +43,119 @@ SEXP stopHTTPD(void)
     extR_HTTPDStop();
     return R_NilValue;
 }
+
+/* Copied from src/modules/internet/Rhttp.c, modulo changing
+   Rstrdup -> strdup, error("...") -> error(_("...")).
+*/
+/* Remove . and (most) .. from "p" following RFC 3986, 5.2.4.*/
+static char *remove_dot_segments(char *p) {
+
+    char *inbuf = strdup(p);
+    char *in = inbuf;   /* first byte of input buffer */
+
+    char *outbuf = malloc(strlen(inbuf) + 1);
+    if (!outbuf)
+	error(_("allocation error in remove_dot_segments"));
+    char *out = outbuf; /* last byte (terminator) of output buffer */
+    *out = '\0';
+    
+    while(*in) {
+/*
+       A.  If the input buffer begins with a prefix of "../" or "./",
+           then remove that prefix from the input buffer; otherwise,
+*/
+	if (in[0] == '.' && in[1] == '.' && in[2] == '/') {
+	    /* remove "../" */
+	    in += 3;
+	    continue;
+	}
+	if (in[0] == '.' && in[1] == '/') {
+	    /* remove "./" */
+	    in += 2;
+	    continue;
+	}
+/*
+       B.  if the input buffer begins with a prefix of "/./" or "/.",
+           where "." is a complete path segment, then replace that
+           prefix with "/" in the input buffer; otherwise,
+*/
+	if (in[0] == '/' && in[1] == '.' && in[2] == '/') {
+	    /* replace "/./" by "/"  */
+	    in += 2;
+	    continue;
+	}
+	if (in[0] == '/' && in[1] == '.' && in[2] == '\0') {
+	    /* replace trailing "/." by "/"  */
+	    in[1] = '\0';
+	    continue;
+	}
+/*
+       C.  if the input buffer begins with a prefix of "/../" or "/..",
+           where ".." is a complete path segment, then replace that
+           prefix with "/" in the input buffer and remove the last
+           segment and its preceding "/" (if any) from the output
+           buffer; otherwise,
+*/
+	if (in[0] == '/' && in[1] == '.' && in[2] == '.' && in[3] == '/') {
+	    /* replace "/../" by "/" */
+	    in += 3;
+	    /* remove trailing "/segment" from output */
+	    while(out > outbuf && *out != '/') out--;
+	    *out = '\0';
+	    continue;
+	}
+	if (in[0] == '/' && in[1] == '.' && in[2] == '.' && in[3] == '\0') {
+	    /* replace trailing "/.." by "/" */
+	    in[1] = '\0';
+	    /* remove trailing "/segment" from output */
+	    while(out > outbuf && *out != '/') out--;
+	    *out = '\0';
+	    continue;
+	}
+/*
+       D.  if the input buffer consists only of "." or "..", then remove
+           that from the input buffer; otherwise,
+*/
+	if ( (in[0] == '.' && in[1] == '\0') ||
+	     (in[0] == '.' && in[1] == '.' && in[2] == '\0') ) {
+	    /* remove input */
+	    in[0] = '\0';
+	    continue;
+	}
+/*
+       E.  move the first path segment in the input buffer to the end of
+           the output buffer, including the initial "/" character (if
+           any) and any subsequent characters up to, but not including,
+           the next "/" character or the end of the input buffer.
+*/
+	if (in[0] == '/') {
+	    *out++ = '/';
+	    in++;
+	}
+	for(; *in && *in != '/'; in++) *out++ = *in;
+	*out = '\0';
+    }
+
+    free(inbuf);
+    return outbuf;
+}
+
+SEXP remove_dot_segments_wrapper(SEXP x) {
+    R_xlen_t i, n = XLENGTH(x);
+    SEXP s, y;
+
+    if(TYPEOF(x) != STRSXP)
+	error(_("non-character argument"));
+    PROTECT(y = allocVector(STRSXP, n));
+    for(i = 0; i < n; i++) {
+	s = STRING_ELT(x, i);
+	if(s == NA_STRING) {
+	    SET_STRING_ELT(y, i, NA_STRING);
+	    continue;
+	}
+	SET_STRING_ELT(y, i, mkChar(remove_dot_segments(CHAR(s))));
+    }
+    UNPROTECT(1);
+    return y;
+}
+

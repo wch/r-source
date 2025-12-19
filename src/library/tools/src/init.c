@@ -55,6 +55,7 @@ static const R_CallMethodDef CallEntries[] = {
     CALLDEF(splitString, 2),
     CALLDEF(package_dependencies_scan, 1),
     CALLDEF(nonASCII, 1),
+    CALLDEF(remove_dot_segments_wrapper, 1),
 
     {NULL, NULL, 0}
 };
