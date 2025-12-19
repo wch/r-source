@@ -178,6 +178,8 @@ SEXP getAttrib(SEXP vec, SEXP name)
 	return R_NilValue;
 
     if (isScalarString(name)) name = installTrChar(STRING_ELT(name, 0));
+    if (! isSymbol(name))
+	error(_("'name' is not a symbol or a scalar string"));
 
     /* special test for c(NA, n) rownames of data frames: */
     if (name == R_RowNamesSymbol) {
@@ -252,6 +254,8 @@ SEXP setAttrib(SEXP vec, SEXP name, SEXP val)
 	UNPROTECT(2);
 	return removeAttrib(vec, name);
     }
+    if (! isSymbol(name))
+	error(_("'name' is not a symbol or a scalar string"));
 
     /* We allow attempting to remove names from NULL */
     if (vec == R_NilValue)
@@ -1662,6 +1666,9 @@ attribute_hidden SEXP do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	SEXP val = CADDR(argList);
 	if (!isValidString(name) || STRING_ELT(name, 0) == NA_STRING)
 	    error(_("'name' must be non-null character string"));
+	if (XLENGTH(name) > 1)
+	    error(_("'name' must be a scalar string"));
+
 	/* TODO?  if (isFactor(obj) && !strcmp(asChar(name), "levels"))
 	 * ---         if(any_duplicated(val))
 	 *                  error(.....)
