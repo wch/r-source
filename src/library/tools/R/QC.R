@@ -8262,8 +8262,10 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     ## checks we need to drop the parts which are really specific for
     ## submission checks.  (Of course, ideally we would have skipped
     ## them above.)
-    if(config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_DROP_SUBMISSION_ONLY_",
-                                        "FALSE"))) {
+    drop_submission_only <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_CRAN_INCOMING_DROP_SUBMISSION_ONLY_",
+                                         "FALSE"))
+    if(drop_submission_only) {
         out[c("descr_bad_initial",
               "descr_bad_start",
               "title_includes_name",
@@ -8281,14 +8283,50 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     if (localOnly)
         return(out)
 
-    urls <- .get_standard_repository_URLs()
+    urls <- utils::contrib.url(.get_standard_repository_URLs(),
+                               "source")
+
+    db <- tryCatch(utils::available.packages(urls,
+                                             filters = list(),
+                                             fields = c("File", "Path")),
+                   error = identity)
+    if(inherits(db, "error")) {
+        message("NB: need Internet access to use CRAN incoming checks")
+        ## Actually, all repositories could be local file:// mirrors.
+        return(out)
+    }
+
+    ## Does this have strong dependencies not in mainstream
+    ## repositories?  This should not happen, and hence is not compared
+    ## against possibly given additional repositories.
+    repository <- db[, "Repository"]
+    strong_dependencies <-
+        setdiff(unique(c(.extract_dependency_package_names(meta["Depends"]),
+                         .extract_dependency_package_names(meta["Imports"]),
+                         .extract_dependency_package_names(meta["LinkingTo"]))),
+                c(.get_standard_package_names()$base,
+                  db[(startsWith(repository, urls[1L]) |
+                      startsWith(repository, urls[2L])),
+                     "Package"]))
+    if(length(strong_dependencies)) {
+        out$strong_dependencies_not_in_mainstream_repositories <-
+            strong_dependencies
+    }
+
+    if(drop_submission_only)
+        return(out)
 
     ## If a package has a FOSS license, check whether any of its strong
     ## recursive dependencies restricts use.
     if(foss) {
         available <-
-            utils::available.packages(utils::contrib.url(urls, "source"),
-                                      filters = c("R_version", "duplicates"))
+            utils:::available_packages_filters_db$R_version(db)
+        available <- 
+            utils:::available_packages_filters_db$duplicates(available)
+        ## Modulo the additional Path field, same as
+        ##   utils::available.packages(utils::contrib.url(urls, "source"),
+        ##                             filters = c("R_version", "duplicates"))
+        ## but faster.
         ## We need the current dependencies of the package (so batch
         ## upload checks will not necessarily do "the right thing").
         package <- meta["Package"]
@@ -8318,33 +8356,11 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         if (!bv) out$foss_with_BuildVignettes <- TRUE
     }
 
-    ## We do not want to use utils::available.packages() for now, as
-    ## this unconditionally filters according to R version and OS type.
-    ## <FIXME>
-    ## This is no longer true ...
-    ## </FIXME>
-    .repository_db <- function(u) {
-        con <- gzcon(url(sprintf("%s/src/contrib/PACKAGES.gz", u), "rb"))
-        on.exit(close(con))
-        ## hopefully all these fields are ASCII, or we need to re-encode.
-        cbind(read.dcf(con,
-                       c(.get_standard_repository_db_fields(), "Path")),
-              Repository = u)
-
-    }
-    db <- tryCatch(lapply(urls, .repository_db), error = identity)
-    if(inherits(db, "error")) {
-        message("NB: need Internet access to use CRAN incoming checks")
-        ## Actually, all repositories could be local file:// mirrors.
-        return(out)
-    }
-    db <- do.call(rbind, db)
-
     ## Note that .get_standard_repository_URLs() puts the CRAN master first.
     CRAN <- urls[1L]
 
     ## Check for CRAN repository db overrides and possible conflicts.
-    con <- url(sprintf("%s/src/contrib/PACKAGES.in", CRAN))
+    con <- url(sprintf("%s/PACKAGES.in", CRAN))
     odb <- read.dcf(con)
     close(con)
     ## For now (2022-09-22), PACKAGES.in is all ASCII, so there is no
@@ -8421,24 +8437,10 @@ function(dir, localOnly = FALSE, pkgSize = NA)
 
     ## Is this duplicated from another repository?
     repositories <- db[(packages == package) &
-                       (db[, "Repository"] != CRAN),
+                       !startsWith(db[, "Repository"], CRAN),
                        "Repository"]
     if(length(repositories))
         out$repositories <- repositories
-
-    ## Does this have strong dependencies not in mainstream
-    ## repositories?  This should not happen, and hence is not compared
-    ## against possibly given additional repositories.
-    strong_dependencies <-
-        setdiff(unique(c(.extract_dependency_package_names(meta["Depends"]),
-                         .extract_dependency_package_names(meta["Imports"]),
-                         .extract_dependency_package_names(meta["LinkingTo"]))),
-                c(.get_standard_package_names()$base,
-                  db[db[, "Repository"] %in% urls[1 : 2], "Package"]))
-    if(length(strong_dependencies)) {
-        out$strong_dependencies_not_in_mainstream_repositories <-
-            strong_dependencies
-    }
 
     ## Does this have Suggests or Enhances not in mainstream
     ## repositories?
