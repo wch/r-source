@@ -45,10 +45,12 @@ SEXP stopHTTPD(void)
 }
 
 /* Copied from src/modules/internet/Rhttp.c, modulo changing
-   Rstrdup -> strdup, error("...") -> error(_("...")).
+   char *p -> const char *p
+   Rstrdup -> strdup
+   error("...") -> error(_("..."))
 */
 /* Remove . and (most) .. from "p" following RFC 3986, 5.2.4.*/
-static char *remove_dot_segments(char *p) {
+static char *remove_dot_segments(const char *p) {
 
     char *inbuf = strdup(p);
     char *in = inbuf;   /* first byte of input buffer */
