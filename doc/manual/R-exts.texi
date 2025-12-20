@@ -17762,10 +17762,12 @@ attributes on an object:
 SEXP R_mapAttrib(SEXP x, SEXP (*FUN)(SEXP, SEXP, void *), void *data);
 @end example
 @eapifun R_mapAttrib
-The function @code{FUN} should return a C @code{NULL} if it want the
-iteration to continue. If @code{FUN} returns a non-@code{NULL} value
+The function @code{FUN} should return a C @code{NULL} if it wants the
+iteration to continue. If @code{FUN} returns a non-@code{NULL} value,
 then the iteration stops and that value is returned as the result of the
-@code{R_mapAttrib} call.
+@code{R_mapAttrib} call. @code{R_withAttrib} is highly experimental. It
+should only be used if absolutely necessary as both the interface and
+the semantics may change at short notice.
 
 Some additional functions may be added for working with attributes.
 
