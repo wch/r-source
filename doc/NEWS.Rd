@@ -499,7 +499,7 @@
       their absolute values, e.g., \code{x <- 6e9 + 6:9}.
 
       \item Formatting book-type \code{bibentry} objects now converts
-      \LaTeX syntax also in the publisher and series fields.
+      \LaTeX accents also in the publisher and series fields.
     }
   }
 }
