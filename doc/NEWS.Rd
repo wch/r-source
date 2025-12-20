@@ -19,6 +19,9 @@
       \item Tweaks to binning for \code{bw.SJ()}, \code{bw.bcv()} and
 	\code{bw.bcv()} in the very rare case of data which have an
 	extremely small range of very large absolute values.
+
+      \item Formatting book-type \code{bibentry} objects now converts
+      \LaTeX accents also in the publisher and series fields.
     }
   }
 }

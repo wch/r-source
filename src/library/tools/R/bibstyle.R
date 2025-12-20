@@ -178,13 +178,13 @@ makeJSS <- function() {
         if (length(book$number))
             result <- paste(result, "number", collapse(book$number))
         if (length(book$series))
-            result <- paste(result, "series", collapse(book$series))
+            result <- paste(result, "series", collapse(cleanupLatex(book$series)))
         if (nzchar(result)) result
     }
 
     bookPublisher <- function(book) {
         if (length(book$publisher)) {
-            result <- collapse(book$publisher)
+            result <- collapse(cleanupLatex(book$publisher))
             if (length(book$address))
                 result <- paste(result, collapse(book$address), sep = ", ")
             result
