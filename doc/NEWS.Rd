@@ -268,7 +268,7 @@
       \code{class()} in \R.
 
       \item New function \code{Rf_isScalarString}.
-      
+
       \item The non-API header files \file{R_ext/Callbacks.h} and
       \file{R_ext/PrtUtil.h} are no longer copied to the installed
       includes directory. The \code{R_ObjectTable} type definitions
@@ -327,7 +327,7 @@
       \item \code{chol(x, pivot=TRUE)} now zeroes the trailing submatrix when
       the algorithm stops early. Following the help page instructions on
       how to reconstruct the matrix in positive semidefinite cases gave
-      incorrect results if the rank was 2 or more less than the dimension. 
+      incorrect results if the rank was 2 or more less than the dimension.
       (\PR{15853}).
 
       \item Profiling \code{"mle"} objects (\pkg{stats4} package) could fail
@@ -479,6 +479,11 @@
       handled a bit more robustly in interpreted code.
 
       \item \code{cacheMetaData()} does not to mangle primitive generics.
+
+      \item The S4 method \code{norm(<ANY>, type = <missing>)} for the implicit
+	generic \code{norm()} now uses \code{type = "O"} as has been the
+	intention for more than ten years, fixing \PR{18979} thanks to
+	\I{Mikael Jagan}.
     }
   }
 }

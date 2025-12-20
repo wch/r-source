@@ -214,7 +214,7 @@ utils::globalVariables(".addBasicGeneric")
 	       signature = c("x", "type"), where = where)
     ## this method *belong*s to the generic:
     setMethod("norm", signature(x = "ANY", type = "missing"),
-              function (x, type, ...) norm(x, type = "O", ...))
+              function (x, type, ...) .implicitTable$norm(x, type = "O", ...))
     setGenericImplicit("norm", where, FALSE)
 
     setGeneric("backsolve", function(r, x, k = ncol(r), upper.tri = TRUE, transpose = FALSE, ...)

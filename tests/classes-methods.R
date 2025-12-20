@@ -3,6 +3,22 @@
 ###	all "Matrix" + "late_and_no-relevant-print" now here
 #### - No *.Rout.save <==> use stopifnot() etc for testing
 #### - Recommended packages allowed, e.g., "Matrix"
+
+## Method for implicit generic 'norm' (x="ANY", type="missing") -- test *before* Matrix is loaded
+setClass("zzz", slots = c(x = "NULL"))
+setMethod("norm", c(x = "zzz", type = "character"), function (x, type, ...) "ok")
+m1 <- getMethod("norm", c(x = "ANY", type = "missing"))
+m2 <- selectMethod("norm", c(x = "zzz", type = "missing"))
+x <- new("zzz")
+stopifnot(is(m1, "MethodDefinition"),
+          is(m2, "MethodDefinition"),
+          identical(getDataPart(m1), getDataPart(m2)),
+          identical(norm(x, "O"), "ok"),
+          identical(norm(x     ), "ok"), # was Error .... : invalid 'x': type "S4"
+          removeGeneric("norm"),
+          removeClass("zzz"))
+
+
 if(require("Matrix", lib.loc = .Library, quietly = TRUE)) {
     D5. <- Diagonal(x = 5:1)
     D5N <- D5.; D5N[5,5] <- NA
@@ -228,7 +244,6 @@ setMethod("toeplitz", "A", function(x, ...) x)
  (mm <- selectMethod(toeplitz, "numeric"))
 stopifnot(identical(T3, print(toeplitz(x, r))), removeGeneric("toeplitz"))
 ## badly failed since r82364 when stats::toeplitz was generalized to 3 args
-
 
 
 cat('Time elapsed: ', proc.time(),'\n')
