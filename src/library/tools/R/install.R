@@ -391,14 +391,35 @@ if(FALSE) {
             sys_requires <- desc["SystemRequirements"]
             if (!is.na(sys_requires)) {
                 sys_requires <- unlist(strsplit(sys_requires, ","))
+                found <- NA
                 for (i in cxx_standards) {
-                    pattern <- paste0("^[[:space:]]*C[+][+]",i,"[[:space:]]*$")
-                    if(any(grepl(pattern, sys_requires, ignore.case=TRUE))) {
+##                    pattern <- paste0("^[[:space:]]*C[+][+]",i,"[[:space:]]*$")
+                    pattern <- paste0("(^| )C[+][+]",i,"([ ,;]|$)")
+                    if(any(grepl(pattern, sys_requires))) {
                         Sys.setenv("R_PKG_CXX_STD"=i)
                         on.exit(Sys.unsetenv("R_PKG_CXX_STD"))
+                        found <- i
                         break
                     }
                 }
+                if (is.na(found)) {
+                    pattern <- paste0("^[[:space:]]*C[+][+]")
+                    val <- grep(pattern, sys_requires, value = TRUE)
+                    if(length(val)) {
+                        val <- sub(pattern, "",  val)
+                        val <- sub("[,;].*$", "", val)
+                        val <- sub(" *$", "", val)
+                        val <- paste0("C++", val)
+                        msg <- sprintf("SystemRequirements: invalid C++ specification %s", sQuote(val))
+                        warning(msg, domain = NA, call. = FALSE)
+                    }
+                }
+                else if(found %in% c("11", "14")) {
+                    msg <-
+                        sprintf("SystemRequirements specified C++%s: support will be removed soon", found)
+                    warning(msg, domain = NA, call. = FALSE)
+                }
+
                 if(is.na(use_C)) {
                     if(any(grepl("USE_C17", sys_requires))) use_C <<- 17
                     if(any(grepl("USE_C23", sys_requires))) use_C <<- 23
@@ -2681,6 +2702,7 @@ if(FALSE) {
         val <- Sys.getenv("R_PKG_CXX_STD")
         if (val %in% cxx_standards) {
             use_cxxstd <- val
+            ## could warn here on C++98,11,14
         }
     }
 

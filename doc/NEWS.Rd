@@ -211,6 +211,10 @@
       \item A C++ standard specification (\code{CXX_STD =}) in
       \file{src/Makevars*} is now checked more thoroughly.  Invalid
       values are still ignored but now give a warning.
+
+      C++ standadd specifications in the \code{SystemRequirements} field
+      of the \file{DESCrIPTON} file are checked more thoroughly.
+      Unknown values are still ignored but now give a warning.
     }
   }
 

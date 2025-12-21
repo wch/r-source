@@ -6479,6 +6479,14 @@ add_dummies <- function(dir, Log)
                 if (any(grepl("using non-staged installation", lines0,
                                useBytes = TRUE)))
                     notes <- c("Non-staged installation was used", notes)
+
+                ## temporrily demote warning:
+                ll <- grep("^Warning: SystemRequirements specified", lines, useBytes = TRUE)
+                if(length(ll)) {
+                    notes <- c(notes, sub("^Warning: ", "", lines[ll]))
+                    lines <- lines[-ll]
+                }
+
                 if (length(lines)) {
                     warningLog(Log, "Found the following significant warnings:")
                     printLog0(Log, .format_lines_with_indent(lines), "\n")
@@ -6519,7 +6527,7 @@ add_dummies <- function(dir, Log)
                     std <- as.numeric(sub("using C[+][+]", "", line))
                     if (!(std %in% c("11", "14", "17", "20", "23", "26")))
                          noteLog(Log,
-                                sprintf("  Unknown/obsolate C++%d standard request will be ignoredn", std))
+                                sprintf("  Unknown/obsolate C++%d standard request will be ignored", std))
 
                     else if (std < 17) {
                         noteLog(Log,
