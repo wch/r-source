@@ -397,6 +397,16 @@ httpd <- function(path, query, ...)
     packageIndexRegexp <- "^/library/([^/]*)$"
     packageLicenseFileRegexp <- "^/library/([^/]*)/(LICEN[SC]E$)"
 
+    ## support pkgdown-style links like:
+    ## * pkg/reference/file.html -> pkg/html/file.html
+    ## * pkg/articles/file -> pkg/doc/file
+    referenceRegexp <- "^/library/+([^/]*)/reference/([^/]*)\\.html$"
+    articleRegexp <- "^/library/([^/]*)/articles/([^/]*)$"
+    if (grepl(referenceRegexp, path))
+        path <- gsub("/reference/", "/html/", path, fixed = TRUE)
+    else if (grepl(articleRegexp, path))
+        path <- gsub("/articles/", "/doc/", path, fixed = TRUE)
+
     file <- NULL
     if (grepl(topicRegexp, path)) {
         ## ----------------------- package help by topic ---------------------
