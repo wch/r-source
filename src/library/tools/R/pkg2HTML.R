@@ -214,16 +214,24 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
               '<main>')
 
     if (include_description) writeHTML(.DESCRIPTION_to_HTML(descfile))
-    lapply(hcontent, function(h) {
+    lapply(names(hcontent), function(rdfile) {
+        h <- hcontent[[rdfile]]
     	if (concordance) {
     	    conc <- h$concordance
     	    if (inherits(conc, "Rconcordance")) {
     	        conc$offset <- conc$offset + linecount + 1L
     	        h$outlines[length(h$outlines)] <-
-    	            paste("<!--", as.character(conc), "-->")
+    	            paste0(h$outlines[length(h$outlines)],
+                           "<!-- ", as.character(conc), " -->")
     	    }
     	}
-    	writeHTML("<hr>", h$outlines)
+        if (startsWith(rdfile, "unix/"))
+            rdfile <- sub("unix/", "", rdfile, fixed = TRUE)
+        else if (startsWith(rdfile, "windows/"))
+            rdfile <- sub("windows/", "", rdfile, fixed = TRUE)
+    	file_id <- string2id(gsub("[.][Rr]d$", "", rdfile))
+    	writeHTML(sprintf("<hr><span id='rdfile+%s'></span>", file_id),
+                  h$outlines)
     })
     writeHTML('</main>')
     writeHTML(hfcomps$footer, sep = "")
