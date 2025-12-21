@@ -391,8 +391,9 @@ if(FALSE) {
             if (!is.na(sys_requires)) {
                 sys_requires <- unlist(strsplit(sys_requires, ","))
                 for (i in cxx_standards) {
-                    pattern <- paste0("^[[:space:]]*C[+][+]",i,"[[:space:]]*$")
-                    if(any(grepl(pattern, sys_requires, ignore.case=TRUE))) {
+##                    pattern <- paste0("^[[:space:]]*C[+][+]",i,"[[:space:]]*$")
+                    pattern <- paste0("(^| )C[+][+]",i,"([ ,;]|$)")
+                    if(any(grepl(pattern, sys_requires))) {
                         Sys.setenv("R_PKG_CXX_STD"=i)
                         on.exit(Sys.unsetenv("R_PKG_CXX_STD"))
                         break
@@ -1526,7 +1527,7 @@ if(FALSE) {
 		    ## Tweak fake installation to provide an 'empty'
 		    ## useDynLib() for the time being.  Completely
 		    ## removing the directive results in checkFF()
-		    ## being too aggresive in the case where the
+		    ## being too aggressive in the case where the
 		    ## presence of the directive enables unambiguous
 		    ## symbol resolution w/out 'PACKAGE' arguments.
 		    ## However, empty directives are not really meant
