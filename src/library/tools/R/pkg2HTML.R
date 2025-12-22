@@ -220,9 +220,9 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
     	    conc <- h$concordance
     	    if (inherits(conc, "Rconcordance")) {
     	        conc$offset <- conc$offset + linecount + 1L
+                ## replace single-file concordance info
     	        h$outlines[length(h$outlines)] <-
-    	            paste0(h$outlines[length(h$outlines)],
-                           "<!-- ", as.character(conc), " -->")
+    	            paste("<!--", as.character(conc), "-->")
     	    }
     	}
         if (startsWith(rdfile, "unix/"))
