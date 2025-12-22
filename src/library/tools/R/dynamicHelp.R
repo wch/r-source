@@ -339,7 +339,10 @@ httpd <- function(path, query, ...)
             message(sprintf("HTTPD-ERROR %s %s", path, paste(msg, collapse = " ")))
         }
         list(payload =
-             paste(c(HTMLheader("httpd error"), msg, "\n</div></body></html>"), collapse = "\n"))
+                 structure(paste(c(HTMLheader("httpd error"), msg,
+                                   "\n</div></body></html>"),
+                                 collapse = "\n"),
+                           message = paste("httpd error", msg)))
     }
         
     cssRegexp <- "^/library/([^/]*)/html/R.css$"
