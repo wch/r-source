@@ -146,11 +146,24 @@ setDefaultClusterOptions <- function(...) {
 
 clusterStarters <- new.env()
 registerClusterType <- function(type, starter, make.default = FALSE) {
+    if (missing(type))
+        return(c("PSOCK", "FORK", names(clusterStarters)))
     if (exists(type, clusterStarters))
         warning(sprintf("replacing registration for cluster type '%s'", type))
     assign(type, starter, clusterStarters)
     if (make.default)
         setDefaultClusterOptions(type = type)
+}
+
+initRegisterClusterTypes <- function() {
+    registerClusterType("SOCK", function(spec, ...)
+        snow::makeSOCKcluster(names = spec, ...))
+    registerClusterType("MPI", function(spec, ...)
+        snow::makeMPIcluster(count = spec, ...))
+    registerClusterType("MIRAI", function(spec, ...)
+        mirai::make_cluster(n = spec, ...))
+    registerClusterType("RPSOCK", function(spec, ...)
+        parallelly::makeClusterPSOCK(workers = spec, ...))
 }
 
 makeCluster <-
@@ -159,11 +172,6 @@ makeCluster <-
     switch(type,
            PSOCK = makePSOCKcluster(names = spec, ...),
            FORK = makeForkCluster(nnodes = spec, ...),
-           SOCK = snow::makeSOCKcluster(names = spec, ...),
-           MPI = snow::makeMPIcluster(count = spec, ...),
-           MIRAI = mirai::make_cluster(n = spec, ...),
-           RPSOCK = parallelly::makeClusterPSOCK(workers = spec, ...),
-           ## NWS = snow::makeNWScluster(names = spec, ...),
            if (exists(type, clusterStarters))
                get(type, clusterStarters)(spec, ...)
            else stop(sprintf("unknown cluster type: '%s'", type)))

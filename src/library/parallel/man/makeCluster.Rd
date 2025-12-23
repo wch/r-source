@@ -52,10 +52,15 @@ registerClusterType(type, starter, make.default = FALSE)
     type remains unchanged.}
 }
 \details{
-  \code{makeCluster} creates a cluster of one of the supported types.
+  \code{makeCluster} creates a cluster of one of the registered types.
   The default type, \code{"PSOCK"}, calls \code{makePSOCKcluster}.  Type
-  \code{"FORK"} calls \code{makeForkCluster}.  Other types are passed to
-  package \CRANpkg{snow}.
+  \code{"FORK"} calls \code{makeForkCluster}.  Other pre-registered
+  types are \code{"SOCK"} for \code{makeSOCKcluster} in package
+  \CRANpkg{snow}, \code{"MPI"} for \code{makeMPIcluster} in
+  \CRANpkg{snow}, \code{"MIRAI"} for \code{make_cluster} in package
+  \CRANpkg{mirai}, and \code{"RPSOCK"} for \code{makeClusterPSOCK} in
+  package \CRANpkg{parallelly}. Calling \code{registerClusterType} with
+  no arguments returns a list of currently registered types.
 
   \code{makePSOCKcluster} is an enhanced version of
   \code{makeSOCKcluster} in package \CRANpkg{snow}.  It runs
@@ -145,10 +150,10 @@ registerClusterType(type, starter, make.default = FALSE)
   for the current session.  Using \code{setDefaultCluster(NULL)} removes
   the registered cluster, as does stopping that cluster.
 
-  Function \code{registerClusterType} registers a new type of parallel cluster
-  in the current session. When \code{makeCluster} is called with the
-  newly-registered \code{type}, a cluster of that type is created using the
-  \code{starter} function.
+  Function \code{registerClusterType} registers a new type of parallel
+  cluster in the current session, or lists the registered types. When
+  \code{makeCluster} is called with the newly-registered \code{type}, a
+  cluster of that type is created using the \code{starter} function.
 }
 
 \value{
@@ -158,9 +163,10 @@ registerClusterType(type, starter, make.default = FALSE)
   For the default cluster setter and getter, the registered default
   cluster or \code{NULL} if there is no such cluster.
 
-  \code{registerClusterType} is invoked for its side effect which is to define
-  a mechanism for creating a parallel socket cluster of a given named
-  \code{type}.
+  \code{registerClusterType} is invoked for its side effect which is to
+  define a mechanism for creating a parallel socket cluster of a given
+  named \code{type}. If called without arguments, a character vector of
+  registered cluster types.
 }
 
 \note{
