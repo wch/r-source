@@ -1042,3 +1042,68 @@ function(dir, verbose = FALSE)
     db <- url_db_from_package_sources(dir)
     check_url_db(db, verbose = verbose, parallel = TRUE)
 }
+
+
+.check_package_urls_relative_paths_from_Rd <-
+function(package, lib.loc = NULL)
+{
+    y <- NULL
+    x <- url_db_from_package_Rd_db(Rd_db(package, lib.loc = lib.loc))
+    x <- cbind(x, parse_URI_reference(x$URL))
+    x <- x[!nzchar(x$scheme) & startsWith(x$path, "."), ]
+    p <- file.path("/library", package, "html", x$path)
+    m <- vapply(.remove_dot_segments(p), .check_R_httpd_path, "")
+    i <- which(nzchar(m))
+    if(length(i))
+        y <- cbind(x[i, 1L : 2L], message = m[i])
+    y
+}
+                
+.check_package_urls_relative_paths_from_vignettes <-
+function(package, lib.loc = NULL)
+{
+    v <- pkgVignettes(package, lib.loc = lib.loc, output = TRUE)
+    p <- v$outputs
+    if(!length(p)) return()
+    p <- p[endsWith(p, ".html")]
+    if(!length(p)) return()
+    y <- NULL
+    x <- url_db_from_HTML_files(v$pkgdir, files = p)
+    x <- cbind(x, parse_URI_reference(x$URL))    
+    x <- x[!nzchar(x$scheme) & startsWith(x$path, "."), ]
+    p <- file.path("/library", package, "doc", x$path)
+    m <- vapply(.remove_dot_segments(p), .check_R_httpd_path, "")
+    i <- which(nzchar(m))
+    if(length(i)) {
+        y <- cbind(x[i, 1L : 2L], message = m[i])
+        ## Add inst to the Parent to refer to the location in the
+        ## package source.
+        y[[2L]] <- file.path("inst", y[[2L]])
+    }
+    y
+}
+
+.check_package_urls_relative_paths <-
+function(package, lib.loc = NULL)
+{
+    ## Currently, only URLs from Rd files and vignettes.
+    ## Could add more ...
+    rbind(.check_package_urls_relative_paths_from_Rd(package,
+                                                     lib.loc),
+          .check_package_urls_relative_paths_from_vignettes(package,
+                                                            lib.loc))
+}   
+
+.check_R_httpd_path <-
+function(x)
+{
+    y <- tryCatch(httpd(x, query = NULL), error = identity)
+    if(inherits(y, "error"))
+        return("")
+    if(is.list(y) &&
+       !is.null(m <- attr(y[[1L]], "message")) &&
+       startsWith(m, "httpd error"))
+        substring(m, 12L)
+    else
+        ""
+}
