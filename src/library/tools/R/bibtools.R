@@ -148,3 +148,67 @@ function(bib)
                         len[ind]))
     do.call(c, c(aut, edi))
 }
+
+.check_Rd_bibentries_cited_not_shown <-
+function(package, dir, lib.loc = NULL)
+{
+    db <- if(!missing(package))
+              Rd_db(package, lib.loc)
+          else
+              Rd_db(dir = dir)
+    x <- lapply(db, .bibentries_cited_or_shown)
+    f <- function(e) {
+        cites <- unlist(lapply(e[e[, 1L] != "\\bibshow", 2L],
+                               .bibkeys_from_cite),
+                        use.names = FALSE)
+        shows <- unlist(lapply(e[e[, 1L] == "\\bibshow", 2L],
+                               .bibkeys_from_show),
+                        use.names = FALSE)
+        if("*" %in% shows)
+            NULL
+        else
+            setdiff(cites, shows)
+    }
+    Filter(length, lapply(x, f))    
+}
+
+.bibentries_cited_or_shown <-
+function(x) {
+    tab <- NULL
+    recurse <- function(e) {
+        if(identical(attr(e, "Rd_tag"), "USERMACRO") &&
+           ((m <- attr(e, "macro")) %in%
+            c("\\bibcitep", "\\bibcitet", "\\bibshow")))
+            tab <<- rbind(tab, c(m, e[[2L]]))
+        else if(is.list(e))
+            lapply(e, recurse)
+    }
+    if(tools:::getDynamicFlags(x)["\\Sexpr"])
+        lapply(x, recurse)
+    tab
+}
+
+## This somewhat duplicates the code in the helpers: ideally we could
+## have the same code for extracting the keys ...
+.bibkeys_from_cite <- 
+function(x)
+{
+    x <- trimws(x)
+    given <- strsplit(x, "(?<!\\\\),[[:space:]]*", perl = TRUE)[[1L]]
+    parts <- regmatches(given, gregexpr("|", given, fixed = TRUE), 
+        invert = TRUE)
+    keys <- rep_len("", length(parts))
+    if (any(ind <- (lengths(parts) == 1L))) {
+        keys[ind] <- unlist(parts[ind], use.names = FALSE)
+    }
+    if (any(ind <- (lengths(parts) == 3L))) {
+        keys[ind] <- vapply(parts[ind], `[`, "", 2L)
+    }
+    keys
+}
+
+.bibkeys_from_show <- function(x)
+{
+    x <- trimws(x)
+    strsplit(x, ",[[:space:]]*")[[1L]]
+}
