@@ -183,7 +183,7 @@ function(x) {
         else if(is.list(e))
             lapply(e, recurse)
     }
-    if(tools:::getDynamicFlags(x)["\\Sexpr"])
+    if(getDynamicFlags(x)["\\Sexpr"])
         lapply(x, recurse)
     tab
 }
