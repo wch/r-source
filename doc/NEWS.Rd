@@ -186,21 +186,23 @@
 
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
-      \item Specifying C++11 or C++14 has long given a note: in 99\% of
-      CRAN packages the specification is unnecessary as the default
-      C++17 suffices (in a few cases with a deprecation warning from
-      some compilers).
+      \item Specifying C++11 or C++14 in \file{src/Makevars} has long
+      given a note: in 99\% of CRAN packages the specification was
+      unnecessary as the default C++17 suffices (in a few cases with a
+      deprecation warning from some compilers).
 
       The intention is that support for those standards will be withdrawn
       before release.
 
-      \command{R CMD config} will no longer support \code{CXX11},
-      \code{CXX14} nor their associated \code{FLAGS}, \code{STD} and
-      \code{LDFLAGS} values.
+      \command{R CMD config} variables \code{CXX11}, \code{CXX14} and
+      their associated \code{CXXxxFLAGS}, \code{CXXxxPICFLAGS}
+      \code{CXXxxSTD}, \code{SHLIBCXXxxLD} and \code{SHLIBCXXxxLDFLAGS}
+      variables are no longer supported and reported as
+      \sQuote{defunct}.
 
       %% GCC 10 and Intel 2021.1 definitely support this: GCC 9 may
       \item The default C++ standard will be changed to C++20
-      \sQuote{where available} (which it is on all known platforms from
+      \sQuote{where available} (which it is on all known platforms since
       2021): if not C++17 is used if available otherwise C++ is not
       supported (as before).
 
@@ -208,13 +210,10 @@
       others depending on them.  (Packages can request C++17 if
       essential.)
 
-      \item A C++ standard specification (\code{CXX_STD =}) in
-      \file{src/Makevars*} is now checked more thoroughly.  Invalid
-      values are still ignored but now give a warning.
-
-      C++ standard specifications in the \code{SystemRequirements} field
-      of the \file{DESCRIIPTON} file are checked more thoroughly.
-      Unknown values are still ignored but now give a warning.
+      \item C++ standard specifications (\code{CXX_STD =} in
+      \file{src/Makevars*} and in the \code{SystemRequirements} field of
+      the \file{DESCRIPTION} file) are now checked more thoroughly.
+      Invalid values are still ignored but now give a warning.
     }
   }
 
