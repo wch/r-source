@@ -1032,6 +1032,10 @@ attribute_hidden SEXP do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_xlen_t i, n, indx = -1;
 
     checkArity(op, args);
+    if (OBJECT(sx)) {
+	SEXP call = PROTECT(lang2(install("xtfrm"), sx)); nprot++;
+	PROTECT(sx = eval(call, rho)); nprot++;
+    } else
     if (!isNumeric(sx)) {
 	PROTECT(sx = coerceVector(CAR(args), REALSXP)); nprot++;
     }

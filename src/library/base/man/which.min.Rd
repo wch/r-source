@@ -23,8 +23,10 @@ which.max(x)
 }
 \arguments{
   \item{x}{numeric (logical, integer or double) vector or an \R object
-    for which the internal coercion to \code{\link{double}} works whose
-    \code{\link{min}} or \code{\link{max}} is searched for.}
+    for which \code{\link{xtfrm}} or the internal coercion to
+    \code{\link{double}} (the former if \code{x} has a class attribute)
+    works, whose \code{\link{min}} or \code{\link{max}} is searched
+    for.}
 }
 \section{Logical \code{x} -- First \code{TRUE} or \code{FALSE}}{
   For a \code{\link{logical}} vector \code{x} with both \code{FALSE} and
@@ -77,5 +79,11 @@ which.max(x >= 20)
 ## Also works for lists (which can be coerced to numeric vectors):
 which.min(list(A = 7, pi = pi)) ##  ->  c(pi = 2L)
 \dontshow{stopifnot(identical(which.min(list(A = 7, pi = pi)), c(pi = 2L)))}
+
+## Supports classes with methods for xtfrm() since R 4.6 (PR#18983):
+(vv <- numeric_version(c("1.1.1", "1.1.1", "1.1", "1", "1")))
+xtfrm(vv) # 4 4 3 1 1
+stopifnot(identical(which.min(vv), 4L),
+          identical(which.max(vv), 1L))
 }
 \keyword{utilities}
