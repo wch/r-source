@@ -8186,13 +8186,8 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                 ##   /library/<pkg>/doc
                 ## Help pages have
                 ##   /library/<pkg>/html
-                foo <- rep.int("/library/<pkg>/<sub>", sum(ind))
-                bar <- fpaths0[ind]
-                while(length(pos <- which(startsWith(bar, "../")))) {
-                    foo[pos] <- dirname(foo[pos])
-                    bar[pos] <- substring(bar[pos], 4L)
-                }
-                fpaths1[ind] <- foo
+                foo <- file.path("/library/<pkg>/<sub>", fpaths0[ind])
+                fpaths1[ind] <- .remove_dot_segments(foo)
             }
             fpaths1[grepl("^(/doc/html|/demo|/library)", fpaths1)] <- ""
             fpaths1[(fpaths1 == "index.html") &
