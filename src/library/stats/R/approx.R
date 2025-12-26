@@ -1,7 +1,7 @@
 #  File src/library/stats/R/approx.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,24 +22,20 @@
 ## to massage the input (x,y) pairs into standard form:
 ## x values unique and increasing, y values collapsed to match
 ## (except if ties=="ordered", then not unique)
+
 regularize.values <- function(x, y, ties, warn.collapsing = TRUE, na.rm = TRUE) {
     x <- xy.coords(x, y, setLab = FALSE) # -> (x,y) numeric of same length
     y <- x$y
     x <- x$x
     keptNA <- FALSE
-    nx <-
     if(any(na <- is.na(x) | is.na(y))) {
 	ok <- !na
       if(na.rm) {
 	x <- x[ok]
 	y <- y[ok]
-        length(x)
       } else { ## na.rm is FALSE
           keptNA <- TRUE
-          sum(ok)
       }
-    } else {
-        length(x)
     }
     if (!identical(ties, "ordered")) {
 	ordered <-
@@ -56,7 +52,7 @@ regularize.values <- function(x, y, ties, warn.collapsing = TRUE, na.rm = TRUE) 
 	    x <- x[o]
 	    y <- y[o]
 	}
-	if (length(ux <- unique(x)) < nx) {
+	if (length(ux <- unique(x)) < length(x)) {
 	    if (warn.collapsing)
 		warning("collapsing to unique 'x' values")
 	    # tapply bases its uniqueness judgement on character representations;

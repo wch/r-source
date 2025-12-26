@@ -158,6 +158,10 @@
       compatible default.  The \code{as.table()} method also gets a
       \code{named.dim = FALSE} switch, no longer creating a named
       \code{dim(<result>)} by default.
+
+      \item \code{approx(<x_with_ties>, <y_with_NA>, na.rm = FALSE)} now
+      should always call the \code{ties()} function, fixing \PR{17604}
+      reported by \I{Bill Dunlap}.
     }
   }
 

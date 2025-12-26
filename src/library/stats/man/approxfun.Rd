@@ -1,6 +1,6 @@
 % File src/library/stats/man/approxfun.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{approxfun}
@@ -144,23 +144,28 @@ stopifnot(inherits( try( approx(yn,yn, na.rm=FALSE) ), "try-error"))
 
 ## Give a nice overview of all possibilities  rule * method * na.rm :
 ##             -----------------------------  ====   ======   =====
-## extrapolations "N":= NA;   "C":= Constant :
-rules <- list(N=1, C=2, NC=1:2, CN=2:1)
-methods <- c("constant","linear")
-ry <- sapply(rules, function(R) {
-       sapply(methods, function(M)
-        sapply(setNames(,c(TRUE,FALSE)), function(na.)
-                 approx(xn, yn, xout=xout, method=M, rule=R, na.rm=na.)$y),
-        simplify="array")
+## extrapolation 'rule's "N":= NA;   "C":= Constant :
+allapprox <- function(x, y, xout = NULL, ...) {
+  if(is.null(xout)) { rx <- range(x, na.rm=TRUE); xout <- seq(rx[1], rx[2], length.out = 25) }
+  rules <- list(N=1, C=2, NC=1:2, CN=2:1)
+  methods <- c("constant", "linear")
+  ry <- sapply(rules, function(R) {
+         sapply(methods, function(M)
+          sapply(setNames(, c(TRUE,FALSE)), function(na.)
+                 approx(x, y, xout=xout, method=M, rule=R, na.rm=na., ...)$y),
+                simplify="array")
    }, simplify="array")
-names(dimnames(ry)) <- c("x = ", "na.rm", "method", "rule")
-dimnames(ry)[[1]] <- format(xout)
-ftable(aperm(ry, 4:1)) # --> (4 * 2 * 2) x length(xout)  =  16 x 9 matrix
-\dontshow{% functionality and consistency tests:
+  names(dimnames(ry)) <- c("x = ", "na.rm", "method", "rule")
+  dimnames(ry)[[1]] <- format(xout)
+  ftable(aperm(ry, 4:1)) # --> (4 * 2 * 2) x length(xout)  =  16 x 9 matrix
+}
+
+(ry <- allapprox(xn, yn, xout)) # nice ftable
+\dontshow{% functionality and consistency tests:%
 ryna <- ry
 ryna[is.na(ryna)] <- NA ## approx may turn NAs into NaNs
 stopifnot(exprs = {
- identical(unname(ryna),
+ identical(unname(unclass(aperm(as.table(ryna), 4:1))),
    array(c(NA, 1, 1,   1, 1, 3, 3, 4, NA,      NA, 1,  1, NA, NA, 3, 3, 4, NA,
            NA, 1, 1.5, 2, 2.5, 3, 3.5, 4, NA,  NA, 1, NA, NA, NA, 3, 3.5, 4, NA,
             1, 1, 1,   1, 1, 3, 3, 4, 4,        1, 1,  1, NA, NA, 3, 3, 4, 4,
@@ -171,16 +176,16 @@ stopifnot(exprs = {
             1, 1, 1.5, 2, 2.5, 3, 3.5, 4, NA,   1, 1, NA, NA, NA, 3, 3.5, 4, NA),
          dim = c(9L, 2L, 2L, 4L)))
  identical(approxfun(xn,yn, method="constant", rule=2, na.rm=FALSE)(xout),
-            as.vector(ry[,"FALSE", "constant","C"]))
+           unname(as.matrix(ry)["C_constant_FALSE", ]))
  identical(approxfun(xn,yn, method="linear", rule=2:1, na.rm=FALSE)(xout),
-            as.vector(ry[,"FALSE", "linear", "CN"]))
+           unname(as.matrix(ry)["CN_linear_FALSE", ]))
 })
-}
+}%% not showing check
 
 ## Show treatment of 'ties' :
 
 x <- c(2,2:4,4,4,5,5,7,7,7)
-y <- c(1:6, 5:4, 3:1)
+y <- c(   1:6,   5:4, 3:1)
 (amy <- approx(x, y, xout = x)$y) # warning, can be avoided by specifying 'ties=':
 op <- options(warn=2) # warnings would be error
 stopifnot(identical(amy, approx(x, y, xout = x, ties=mean)$y))
@@ -189,7 +194,31 @@ stopifnot(amy == c(1.5,1.5, 3, 5,5,5, 4.5,4.5, 2,2,2),
           ay  == c(2, 2,    3, 6,6,6, 4, 4,    1,1,1))
 approx(x, y, xout = x, ties = min)$y
 approx(x, y, xout = x, ties = max)$y
+
+## 'ties' + NAs -- notably NAs for tied x[], situation as PR#17604
+
+x <- c(2:3, 3:5, 5:7)
+y <- c(1,NA,2:4,NA,1,0)
+## allapprox() [defined above] for all variants :
+(ryN <- allapprox(x, y, xout = seq(2, 7.5, by = 1/2), ties = mean))
+str(tbN <- as.table(ryN)) # 4 x 2 x 2 x 12 array
+stopifnot(is.na( tbN[,, na.rm="FALSE", format(c(3, 3.5, 5, 5.5))] ))
+## 3 and 3.5 gave values in {2, 2.5} instead of NA, in R <= 4.5.2
+\dontshow{
+maN <- as.matrix(ryN); maN[is.na(maN)] <- NA # replace possible `NaN`s
+stopifnot(exprs = {
+    is.function(x16 <- function(...) rep_len(c(...), 16L))
+    identical(unname(maN),
+      cbind(deparse.level=0,
+            x16(1),     x16(1, 1,  1.5, NA),
+            x16(2, NA), x16(2, NA, 2.5, NA),
+            x16(3),     x16(3, 3,  3.5, NA),
+            x16(4, NA), x16(4, NA, 2.5, NA),
+            x16(1),     x16(1, 1,  0.5, 0.5),
+            x16(0),     rep(c(NA, 0, 0, NA), each = 4)))
+})
 options(op) # revert 'warn'ing level
+}
 }%% MM has nice utility plotting in MISC/approx-ex.R -- do in demo ?
 \keyword{arith}
 \keyword{dplot}
