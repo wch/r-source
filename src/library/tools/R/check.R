@@ -6521,20 +6521,16 @@ add_dummies <- function(dir, Log)
                     ll <- sub("using", "used", lines00)
                     for (l in ll)  messageLog(Log, l)
                 }
-                line <- unique(grep("^using C[+][+][12]", lines0, value = TRUE))
+                line <- unique(grep("^specified C[+][+][12]", lines0, value = TRUE))
                 if (length(line)) {
                     checkingLog(Log, "C++ specification")
-                    std <- as.numeric(sub("using C[+][+]", "", line))
-                    if (!(std %in% c("11", "14", "17", "20", "23", "26")))
+                    std <- as.numeric(sub("specified C[+][+]", "", line))
+                    if (!(std %in% c("17", "20", "23", "26")))
                          noteLog(Log,
                                 sprintf("  Unknown/obsolate C++%d standard request will be ignored", std))
-
-                    else if (std < 17) {
-                        noteLog(Log,
-                                sprintf("  Specified C++%d: support will be removed soon", std))
                     ## since R 4.4.0 C++17 support is required, but
                     ## C++23/26 support is patchy
-                    } else if (std >= 23) {
+                    else if (std >= 23) {
                          resultLog(Log, "OK")
                          printLog(Log,
                                   sprintf("  Not all R platforms support C++%s\n", std))
