@@ -447,11 +447,6 @@
       Sepal vs Petal dimensions in its first iris data plot, thanks to
       \I{Jeff Dick}'s post on R-devel.
 
-      \item \code{diff(m, lag, dif)} for matrix \code{m} now still returns
-      matrices, also when \code{lag * dif > nrow(m)} (\PR{18972}, thanks to
-      \I{Mikael Jagan} and \I{Suharto Anggono}).
-      \code{diff(<ts-matrix>)} remains matrix, even when it has length zero.
-
       \item \code{model.frame(~1, list(), na.action=na.pass)} and similar
       \dQuote{border-line} uses no longer produce invalid data frames,
       fixing \PR{18977}, reported with patch by \I{Mikael Jagan}.
@@ -512,6 +507,11 @@
 
       \item Formatting book-type \code{bibentry} objects now converts
       \LaTeX accents also in the publisher and series fields.
+
+      \item \code{diff(m, lag, dif)} for matrix \code{m} now still returns
+      matrices, also when \code{lag * dif > nrow(m)} (\PR{18972}, thanks to
+      \I{Mikael Jagan} and \I{Suharto Anggono}).
+      \code{diff(<ts-matrix>)} remains matrix, even when it has length zero.
     }
   }
 }
