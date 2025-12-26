@@ -484,9 +484,13 @@
       \item \code{cacheMetaData()} does not to mangle primitive generics.
 
       \item The S4 method \code{norm(<ANY>, type = <missing>)} for the implicit
-	generic \code{norm()} now uses \code{type = "O"} as has been the
-	intention for more than ten years, fixing \PR{18979} thanks to
-	\I{Mikael Jagan}.
+      generic \code{norm()} now uses \code{type = "O"} as has been the
+      intention for more than ten years, fixing \PR{18979} thanks to
+      \I{Mikael Jagan}.
+
+      \item \code{length(<POSIXlt>) <- v} is more careful about balancing,
+      notably when \code{v} is not integer, thanks to \I{Suharto Anggono}'s
+      remarks on the mailing list R-devel.
     }
   }
 }

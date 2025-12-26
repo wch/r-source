@@ -362,10 +362,10 @@ as.double.POSIXlt <- function(x, ...) as.double(as.POSIXct(x))
 length.POSIXlt <- function(x) max(lengths(unclass(x)))
 ## keep somewhat in sync with rep.POSIXlt  (further down)
 `length<-.POSIXlt` <- function(x, value) {
-    r <- lapply(unclass(x), `length<-`, value)
+    r <- lapply(unCfillPOSIXlt(x), `length<-`, value)
     class(r) <- oldClass(x)
-    attr(r, "tzone"      ) <- attr(x, "tzone")# "balanced" vs "filled" :
-    attr(r, "balanced") <- if(isTRUE(attr(x, "balanced")) && value <= length(x)) TRUE else NA
+    attr(r, "tzone"   ) <- attr(x, "tzone")# "balanced" vs "filled" :
+    attr(r, "balanced") <- if(isTRUE(attr(x, "balanced")) && trunc(value) <= length(x)) TRUE else NA
     r
 }
 
@@ -1465,6 +1465,8 @@ is.numeric.difftime <- function(x) FALSE
 ## ---- additions in 2.13.0 -----
 
 names.POSIXlt <- function(x) names(x$year)
+## TODO _recycle_ ??  not when  as.POSIXct(.) and hence print()  fills with  <NA> <NA>
+##       if(length(nm <- names(x$year)) < (n <- length(x))) rep_len(nm, n) else nm
 
 `names<-.POSIXlt` <-
 function(x, value)
