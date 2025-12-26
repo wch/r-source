@@ -152,6 +152,12 @@
       \code{recycle} to swap between current (not fully recycling) and
       future behaviour where all three of \code{(nvec, from, by)} are
       jointly recycled.
+
+      \item \code{ftable()}s default method and the \code{as.table()}
+      method for \code{"ftable"}s get a \code{perm} argument with back
+      compatible default.  The \code{as.table()} method also gets a
+      \code{named.dim = FALSE} switch, no longer creating a named
+      \code{dim(<result>)} by default.
     }
   }
 

@@ -1,18 +1,24 @@
 % File src/library/stats/man/ftable.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{ftable}
 \title{Flat Contingency Tables}
+\description{Create \sQuote{flat} contingency tables: Conceptually, from 3
+  or higher rank arrays, create equivalent matrix-alikes with
+  \dQuote{fancy} row and/or column names.
+}
 \alias{ftable}
 \alias{ftable.default}
-\description{Create \sQuote{flat} contingency tables.}
+\alias{as.table.ftable}
 \usage{
 ftable(x, \dots)
 
-\method{ftable}{default}(\dots, exclude = c(NA, NaN), row.vars = NULL,
-       col.vars = NULL)
+\method{ftable}{default}(\dots, exclude = c(NA, NaN),
+       row.vars = NULL, col.vars = NULL, perm = c(rev(row.vars), rev(col.vars)))
+\method{as.table}{ftable}(x, named.dim = FALSE,
+         perm = c(rev(seq_len(nrv)), rev(seq_len(ncv) + nrv)), \dots)
 }
 \arguments{
   \item{x, \dots}{\R objects which can be interpreted as factors (including
@@ -27,6 +33,13 @@ ftable(x, \dots)
   \item{col.vars}{a vector of integers giving the numbers of the
     variables, or a character vector giving the names of the variables
     to be used for the columns of the flat contingency table.}
+  \item{perm}{a permutation of \code{1:nvar} defining the permutation of
+    the result which is \code{\link{aperm}(*, perm)}.}
+  \item{named.dim}{a \code{\link{logical}} indicating if \code{as.table(x)}
+    should return a result with \emph{named} \code{\link{dim}(<result>)};
+    while this was happening in \R versions up to \code{4.5.z} this seems
+    superfluous as the \code{\link{dimnames}(*)} are already named, as for
+    most \code{\link{table}}s.}
 }
 \value{
   \code{ftable} returns an object of class \code{"ftable"}, which is a

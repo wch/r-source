@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2025-10-01 r88895) -- "Unsuffered Consequences"
+R Under development (unstable) (2025-12-26 r89234) -- "Unsuffered Consequences"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -7900,7 +7900,7 @@ Friedman chi-squared = 0.33333, df = 1, p-value = 0.5637
 > 
 > ### Name: ftable
 > ### Title: Flat Contingency Tables
-> ### Aliases: ftable ftable.default
+> ### Aliases: ftable ftable.default as.table.ftable
 > ### Keywords: category
 > 
 > ### ** Examples

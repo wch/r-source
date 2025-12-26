@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ftable.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2025 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,7 +19,9 @@
 ftable <- function(x, ...) UseMethod("ftable")
 
 ftable.default <- function(..., exclude = c(NA, NaN),
-			   row.vars = NULL, col.vars = NULL) {
+			   row.vars = NULL, col.vars = NULL,
+                           perm = c(rev(row.vars), rev(col.vars)))
+{
     args <- list(...)
     if (length(args) == 0L)
 	stop("nothing to tabulate")
@@ -74,7 +76,7 @@ ftable.default <- function(..., exclude = c(NA, NaN),
 	col.vars <- n
     }
 
-    if(length(perm <- c(rev(row.vars), rev(col.vars))) > 1)
+    if(length(perm) > 1)
 	x <- aperm(x, perm)
     dim(x) <- c(prod(dx[row.vars]), prod(dx[col.vars]))
     attr(x, "row.vars") <- dn[row.vars]
@@ -153,19 +155,22 @@ ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
     }
 }
 
-as.table.ftable <- function(x, ...)
+as.table.ftable <- function(x, named.dim = FALSE,
+                            perm = c(rev(seq_len(nrv)), rev(seq_len(ncv) + nrv)), ...)
 {
     if(!inherits(x, "ftable"))
         stop("'x' must be an \"ftable\" object")
     xrv <- rev(attr(x, "row.vars"))
     xcv <- rev(attr(x, "col.vars"))
     x <- array(data = c(x),
-               dim = c(lengths(xrv),
-                       lengths(xcv)),
+               dim = c(lengths(xrv, use.names = named.dim),
+                       lengths(xcv, use.names = named.dim)),
                dimnames = c(xrv, xcv))
-    nrv <- length(xrv)
-    ncv <- length(xcv)
-    x <- aperm(x, c(rev(seq_len(nrv)), rev(seq_len(ncv) + nrv)))
+    if(missing(perm)) { # for perm's default:
+        nrv <- length(xrv)
+        ncv <- length(xcv)
+    }
+    x <- aperm(x, perm)
     class(x) <- "table"
     x
 }
