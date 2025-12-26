@@ -16,12 +16,17 @@
       \item \code{str(x, give.attr=FALSE)} no longer shows attributes when
       \code{x} is a zero length \code{"Date"} or \code{"POSIXt"} object.
 
-      \item Tweaks to binning for \code{bw.SJ()}, \code{bw.bcv()} and
-	\code{bw.bcv()} in the very rare case of data which have an
-	extremely small range of very large absolute values.
+      \item Tweaks to binning for \code{bw.SJ()} and \code{bw.ucv()} in the
+      very rare case of data which have an extremely small range compared to
+      their absolute values, e.g., \code{x <- 6e9 + 6:9}.
 
       \item Formatting book-type \code{bibentry} objects now converts
       \LaTeX accents also in the publisher and series fields.
+
+      \item \code{diff(m, lag, dif)} for matrix \code{m} now still returns
+      matrices, also when \code{lag * dif > nrow(m)} (\PR{18972}, thanks to
+      \I{Mikael Jagan}).
+      \code{diff(<ts-matrix>)} remains matrix, even when it has length zero.
     }
   }
 }
