@@ -1,6 +1,6 @@
 % File src/library/graphics/man/mtext.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mtext}
@@ -19,7 +19,7 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
   \item{text}{a character or \link{expression} vector specifying
     the \emph{text} to be written.  Other objects are coerced by
     \code{\link{as.graphicsAnnot}}.}
-  \item{side}{on which side of the plot (1=bottom, 2=left, 3=top, 4=right).}
+  \item{side}{on which side of the plot (1=below, 2=left, 3=above, 4=right).}
   \item{line}{on which \I{MARgin} line, starting at 0 counting outwards.}
   \item{outer}{use outer margins if available.}
   \item{at}{give location of each string in user coordinates.  If the
@@ -37,7 +37,7 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
     direction (which is controlled by \code{adj}).  For strings parallel
     to the axes, \code{padj = 0} means bottom alignment,
     and \code{padj = 1} means top alignment (relative to the axis line).
-    
+
     If \code{padj} is not a finite value (the default), the value of
     \code{par("las")} determines the adjustment.  For strings plotted
     perpendicular to the axis the default is to centre the string.}
