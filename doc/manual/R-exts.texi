@@ -1904,9 +1904,11 @@ The latter is important, as for example C headers may not be available
 to C++ programs or may not be written to avoid C++ name-mangling.  Note
 that an @R{} installation is not required to have a C++ compiler so
 @samp{CXX} may be empty.  If the package specifies a non-default C++
-standard, use the @command{config} variable names (such as @code{CXX17})
+standard, use the @command{config} variable names (such as @code{CXX23})
 appropriate to the standard, but still set @code{CXX} and
-@code{CXXFLAGS}.
+@code{CXXFLAGS}.  Defunct support for older stanaards means that
+variables such as @code{CXX11} are no longer avaialble (but
+@command{config} will give a message that theey are defunct).
 
 @findex R CMD config
 You can use @code{R CMD config} to get the value of the basic
@@ -2969,16 +2971,17 @@ to @R{} 4.6.0.
 
 What standard a C++ compiler aims to support can be hard to determine:
 the value@footnote{Values @code{201103L}, @code{201402L}, @code{201703L}
-and @code{202002L} are most commonly used for C++11, C++14, C++17 and
-C++20 respectively, but some compilers set @code{1L}. For C++23 all that
-can currently be assumed is a value greater than that for C++20: for
-example @command{g++} 12 uses @code{202100L} and @command{clang++}
-(@I{LLVM} 15, Apple 14) uses @code{202101L}.}  of @code{__cplusplus} may
-help but some compilers use it to denote a standard which is partially
-supported and some the latest standard which is (almost) fully
-supported.  On a Unix-alike @R{}'s @command{configure} will try to
-identify a compiler and flags for each of the supported standards: this
-relies heavily on the reported values of @code{__cplusplus}.
+and @code{202002L} and @code{202302L} are most commonly used for C++11,
+C++14, C++17, C++20 and C++23 respectively, but some compilers have
+reported @code{1L}. For C++23 all that can currently be assumed is a
+value greater than that for C++20: for example @command{g++} 12 used
+@code{202100L} and @command{clang++} (@I{LLVM} 15, Apple 14) used
+@code{202101L}.} of @code{__cplusplus} may help but some compilers use
+it to denote a standard which is partially supported and some the latest
+standard which is (almost) fully supported.  On a Unix-alike @R{}'s
+@command{configure} will try to identify a compiler and flags for each
+of the supported standards: this relies heavily on the reported values
+of @code{__cplusplus}.
 
 @c Apple clang 14 defaults to C++98 (even 17)
 @c @I{LLVM} clang 14, 15 default to C++14, 16-20 to C++17
@@ -3177,10 +3180,9 @@ will give an empty value if no C23 compiler was found.
 The (claimed) C standard in use can be checked by the macro
 @code{__STDC_VERSION__}. This is undefined in C89/C90 and should have
 values @code{199901L}, @code{201112L} and @code{201710L} for C99, C11
-and C17.  The definitive value for C23 is @code{202311L} but some
+and C17.  The definitive value for C23 is @code{202311L} but some recent
 compilers@footnote{for example @command{gcc} 14 and Apple
-@command{clang} 16, but not @command{gcc} 15, @I{LLVM} @command{clang 18} and
-later.} are currently using @code{202000L} and requiring the standard to
+@command{clang} 16.} used @code{202000L} and required the standard to
 be specified as @code{c2x}.
 @c https://gustedt.gitlabpages.inria.fr/c23-library/
 C23 has macros similar to C++ `feature tests' for many of its changes,

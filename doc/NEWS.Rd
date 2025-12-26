@@ -191,8 +191,8 @@
       unnecessary as the default C++17 suffices (in a few cases with a
       deprecation warning from some compilers).
 
-      The intention is that support for those standards will be withdrawn
-      before release.
+      Supoport for these standards has been removed: the default C++
+      standard (currently C++17) will be used.
 
       \command{R CMD config} variables \code{CXX11}, \code{CXX14} and
       their associated \code{CXXxxFLAGS}, \code{CXXxxPICFLAGS}
