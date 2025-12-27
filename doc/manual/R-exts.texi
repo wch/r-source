@@ -3070,13 +3070,15 @@ AC_LANG(C++)
 if C++20 was specified, but using
 @example
 CXX=`"$@{R_HOME@}/bin/R" CMD config CXX`
+if test -z "$CXX"; then
+  AC_MSG_ERROR([No C++ compiler is available])
+fi
 CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXXFLAGS`
 ## for an configure.ac file
 AC_LANG(C++)
 @end example
 @noindent
-if no standard was specified. The script needs to check that @code{CXX}
-is not empty.
+if no standard was specified.
 
 If you want to compile C++ code in a subdirectory, make sure you pass
 down the macros to specify the appropriate compiler, e.g.@: in
