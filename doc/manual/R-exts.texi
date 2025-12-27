@@ -1906,9 +1906,9 @@ that an @R{} installation is not required to have a C++ compiler so
 @samp{CXX} may be empty.  If the package specifies a non-default C++
 standard, use the @command{config} variable names (such as @code{CXX23})
 appropriate to the standard, but still set @code{CXX} and
-@code{CXXFLAGS}.  Defunct support for older stanaards means that
-variables such as @code{CXX11} are no longer avaialble (but
-@command{config} will give a message that theey are defunct).
+@code{CXXFLAGS}.  Defunct support for older standards means that
+variables such as @code{CXX11} are no longer available (but
+@command{config} will give a message that they are defunct).
 
 @findex R CMD config
 You can use @code{R CMD config} to get the value of the basic
@@ -1921,7 +1921,7 @@ linked into a shared library) @samp{CPICFLAGS}.  For Fortran, be careful
 to use @samp{FC FFLAGS FPICFLAGS} for fixed-form Fortran and
 @samp{FC FCFLAGS FPICFLAGS} for free-form Fortran.
 
-As from @R{} 4.3.0, variables
+Variables
 @example
 CC CFLAGS CXX CXXFLAGS CPPFLAGS LDFLAGS FC FCFLAGS
 @end example
