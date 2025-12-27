@@ -2487,6 +2487,9 @@ bib <- bibentry("book", author = person("Anonymous"), title = "Title", year = 1,
 stopifnot(endsWith(rd, "Ja\u00e9n."), grepl("Os Economistas", rd))
 ## Publisher and Series were not subject to cleanupLatex() in R <= 4.5.2
 
+## After adding bounds checking in STRING_ELT this use to signal an
+## error in a barrier build.
+order(NA_character_, 'c', method = 'radix', na.last = NA)
 
 
 ## keep at end

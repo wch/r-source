@@ -1766,7 +1766,9 @@ attribute_hidden SEXP do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    // this edge case had to be taken care of
 		    // here.. (see the bottom of this file for
 		    // more explanation)
-		    switch (TYPEOF(x)) {
+                   if (o[i] == 0) { // already sorted as NA
+                       isSorted = false;
+                   } else switch (TYPEOF(x)) {
 		    case INTSXP:
 			if (INTEGER(x)[o[i] - 1] == NA_INTEGER) {
 			    isSorted = false;
