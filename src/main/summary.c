@@ -1032,7 +1032,7 @@ attribute_hidden SEXP do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_xlen_t i, n, indx = -1;
 
     checkArity(op, args);
-    if (OBJECT(sx)) {
+    if (OBJECT(sx) && !isDataFrame(sx)) {
 	SEXP call = PROTECT(lang2(install("xtfrm"), sx)); nprot++;
 	PROTECT(sx = eval(call, rho)); nprot++;
     } else

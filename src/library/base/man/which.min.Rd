@@ -28,6 +28,10 @@ which.max(x)
     works, whose \code{\link{min}} or \code{\link{max}} is searched
     for.}
 }
+\details{
+  For compatibility with \R{} < 4.6, \link[=data.frame]{data frames}
+  \code{x} are handled as if without a class attribute.
+}
 \section{Logical \code{x} -- First \code{TRUE} or \code{FALSE}}{
   For a \code{\link{logical}} vector \code{x} with both \code{FALSE} and
   \code{TRUE} values, \code{which.min(x)} and \code{which.max(x)} return
