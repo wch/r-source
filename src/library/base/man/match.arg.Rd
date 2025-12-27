@@ -1,6 +1,6 @@
 % File src/library/base/man/match.arg.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{match.arg}
@@ -18,8 +18,10 @@ match.arg(arg, choices, several.ok = FALSE)
     is \code{TRUE}) or \code{NULL} which means to take \code{choices[1]}.}
   \item{choices}{a character vector of candidate values, often missing, see
     \sQuote{Details}.}
-  \item{several.ok}{logical specifying if \code{arg} should be allowed
-    to have more than one element.}
+  \item{several.ok}{either a \code{\link{logical}} specifying if \code{arg}
+    should be allowed to have more than one element or a string, starting
+    with \code{"all"} meaning that \code{arg} may have more than one
+    element \emph{all} of which must match \code{choices}.}
 }
 \details{
   In the one-argument form \code{match.arg(arg)}, the choices are
@@ -73,5 +75,18 @@ match.arg(c("gauss", "rect", "ep"),
           c("gaussian", "epanechnikov", "rectangular", "triangular"),
           several.ok = TRUE)
 match.arg(c("a", ""),  c("", NA, "bb", "abc"), several.ok=TRUE) # |-->  "abc"
+
+## New (2025-'26) option several.ok = "all" (or "all.match", "all_must_match", "all*" ..):
+## --> Error if *some* of the several do not match:
+abcd <- c("a","b","c","d")
+try(match.arg(abcd, c("b", "c"), several.ok = FALSE)) # Error: ... 'arg' must be of length 1
+    match.arg(abcd, c("b", "c"), several.ok = TRUE) # "b" "c"
+try(match.arg(abcd, c("b", "c"), several.ok = "all")) # Error: ... should be one of "b", "c"
+## i.e. _all_ of 'arg' must match the choices:
+(m1 <- match.arg(abcd, letters, several.ok = TRUE       )) # "a" "b" "c" "d"
+(m2 <- match.arg(abcd, letters, several.ok = "all.match")) #    ditto
+stopifnot(identical(m1, abcd), identical(m1, m2),
+          identical(abcd, match.arg(abcd, abcd, several.ok = TRUE)),
+          identical(abcd, match.arg(abcd, abcd, several.ok = "all_must_match")))
 }
 \keyword{programming}

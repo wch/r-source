@@ -49,7 +49,13 @@ match.arg <- function (arg, choices, several.ok = FALSE)
     if (is.null(arg)) return(choices[1L])
     else if(!is.character(arg))
 	stop("'arg' must be NULL or a character vector")
-    if (!several.ok) { # most important (default) case:
+    all.match <- FALSE
+    if(!is.logical(several.ok)) {
+        if(is.character(several.ok) && startsWith(several.ok, "all"))
+            several.ok <- all.match <- TRUE
+        else stop("'several.ok' must be logical or a string starting with \"all\"")
+    }
+    else if (!several.ok) { # most important (default) case:
         ## the arg can be the whole of choices as a default argument.
         if(identical(arg, choices)) return(arg[1L])
         if(length(arg) != 1L) stop(gettextf("'%s' must be of length 1", "arg"), domain=NA)
@@ -57,13 +63,13 @@ match.arg <- function (arg, choices, several.ok = FALSE)
 
     ## handle each element of arg separately
     i <- pmatch(arg, choices, nomatch = 0L, duplicates.ok = TRUE)
-    if (all(i == 0L))
+    if(all(i0 <- i == 0L) || (all.match && any(i0)))
         stop(sprintf(ngettext(length(chs <- unique(choices[nzchar(choices)])),
                               "'arg' should be %s",
                               "'arg' should be one of %s"),
                      paste(dQuote(chs), collapse=", ")),
              domain = NA)
-    
+
     choices[i[i > 0L]]
 }
 

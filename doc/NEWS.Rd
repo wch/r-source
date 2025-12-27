@@ -162,6 +162,9 @@
       \item \code{approx(<x_with_ties>, <y_with_NA>, na.rm = FALSE)} now
       should always call the \code{ties()} function, fixing \PR{17604}
       reported by \I{Bill Dunlap}.
+
+      \item \code{match.arg()} gets a new option \code{several.ok = "all"},
+      fulfilling the wish of \I{Jim Hester} in \PR{16659}.
     }
   }
 
