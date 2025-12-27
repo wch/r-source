@@ -1945,9 +1945,7 @@ AC_SUBST(R_DYLIB_EXT)
 ## AC_PROG_CXX might have added -std=gnu++11 or similar
 save_CXX=${CXX}
 CXX=`echo "${CXX}" | sed -e 's/ *-std=[[^ ]]*//'`
-R_STDCXX([11], [CXX11], [CXX])
-R_STDCXX([14], [CXX14], [CXX11])
-R_STDCXX([17], [CXX17], [CXX14])
+R_STDCXX([17], [CXX17], [CXX])
 R_STDCXX([20], [CXX20], [CXX17])
 R_STDCXX([23], [CXX23], [CXX20])
 R_STDCXX([26], [CXX26], [CXX23])
