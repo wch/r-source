@@ -249,6 +249,30 @@
 ## addition unless SHLIB_CXXLD is given.
 ## SHLIB_CXXLDFLAGS=
 
+## It might be neccessry to use a different compiler (maybe somthing
+## like g++-15) for more recent C++ standards.  Default to the values
+## chosen for C++17.
+## CXX20=
+## CXX20STD=
+## CXX20FLAGS=
+## CXX20PICFLAGS=
+## SHLIB_CXX20LD=
+## SHLIB_CXX20LDFLAGS=
+## 
+## CXX23=
+## CXX23STD=
+## CXX23FLAGS=
+## CXX23PICFLAGS=
+## SHLIB_CXX23LD=
+## SHLIB_CXX23LDFLAGS=
+## 
+## CXX26=
+## CXX26STD=
+## CXX26FLAGS=
+## CXX26PICFLAGS=
+## SHLIB_CXX26LD=
+## SHLIB_CXX26LDFLAGS=
+
 ## Not used by R but configure can fail to find it, so set to
 ## "$CXX -E" if it does.
 ## CXXCPP=
