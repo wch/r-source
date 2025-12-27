@@ -1,6 +1,6 @@
 % File src/library/base/man/rev.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{rev}
@@ -18,9 +18,8 @@ rev(x)
   function with a default method for vectors and one for
   \code{\link{dendrogram}}s.
 
-  Note that this is no longer needed (nor efficient) for obtaining
-  vectors sorted into descending order, since that is now rather more
-  directly achievable by \code{\link{sort}(x, decreasing = TRUE)}.
+  To obtain a vector sorted in decreasing order efficiently, use
+  \code{\link{sort}(x, decreasing = TRUE)}, not \code{rev(sort(x))}.
 }
 \references{
   \bibshow{R:Becker+Chambers+Wilks:1988}
