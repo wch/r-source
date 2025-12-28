@@ -193,7 +193,16 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
               '<main>')
 
     if (include_description) writeHTML(.DESCRIPTION_to_HTML(descfile))
-    lapply(hcontent, function(h) writeHTML("<hr>", h$outlines))
+    lapply(names(hcontent), function(rdfile) {
+        h <- hcontent[[rdfile]]
+        if (startsWith(rdfile, "unix/"))
+            rdfile <- sub("unix/", "", rdfile, fixed = TRUE)
+        else if (startsWith(rdfile, "windows/"))
+            rdfile <- sub("windows/", "", rdfile, fixed = TRUE)
+    	file_id <- string2id(gsub("[.][Rr]d$", "", rdfile))
+    	writeHTML(sprintf("<hr><span id='rdfile+%s'></span>", file_id),
+                  h$outlines)
+    })
     writeHTML('</main>')
     writeHTML(hfcomps$footer, sep = "")
     invisible(out)
