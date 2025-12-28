@@ -3017,7 +3017,7 @@ If it has a @file{Makevars} file (or @file{Makevars.win} or
 CXX_STD = CXX23
 @end example
 
-C++20, C++23 and C++26 (from @R{} 4.5.0) can be specified in an
+C++17, C++20, C++23 and C++26 (from @R{} 4.5.0) can be specified in an
 analogous way.  @strong{NB} this is not a @command{make} directive: the
 value should not be quoted, nor should there be a trailing comment.
 
@@ -3038,11 +3038,7 @@ or
 @c RHEL 8 (8.x, 9.x available. full support 2024-05 + 8 more years)
 @c RHEL 9 (11.x available, full support 2027-05 + 8 more years)
 
-C++20, C++23 and C++26 (from @R{} 4.5.0) can be specified in an
-analogous way.  Currently so can C++11 and C++14, but support for those
-will be removed in @R{} 4.6.0.
-
-Note that C++17 or later `support' does not mean complete support: use
+Note that `support' for a standard does not mean complete support: use
 feature tests as well as resources such as
 @uref{https://en.cppreference.com/w/cpp/compiler_support.html},
 @uref{https://gcc.gnu.org/projects/cxx-status.html} and
@@ -3074,13 +3070,15 @@ AC_LANG(C++)
 if C++20 was specified, but using
 @example
 CXX=`"$@{R_HOME@}/bin/R" CMD config CXX`
+if test -z "$CXX"; then
+  AC_MSG_ERROR([No C++ compiler is available])
+fi
 CXXFLAGS=`"$@{R_HOME@}/bin/R" CMD config CXXFLAGS`
 ## for an configure.ac file
 AC_LANG(C++)
 @end example
 @noindent
-if no standard was specified. The script needs to check that @code{CXX}
-is not empty.
+if no standard was specified.
 
 If you want to compile C++ code in a subdirectory, make sure you pass
 down the macros to specify the appropriate compiler, e.g.@: in
@@ -3124,6 +3122,25 @@ CXXFLAGS = $@{CXX20FLAGS@}
 @end example
 @noindent
 suffices.
+
+Specifying the C++ standard as in this section applies only to compiling
+C++ code as part of installation of that package.  Where headers are
+installed for use by @code{LinkingTo}, any standard requirement for those
+headers will need to be known to all users.  Good practice is to
+
+@itemize @bullet
+@item Explain the requirement as part of the @code{Description} in the
+@file{DESCRIPTION} file (and not in @code{SystemRequirements}) and
+
+@item Test @code{__cplusplus} in the headers which have such a
+requirement, for example
+
+@example
+#if __cplusplus > 201703L
+#error C++17 or earlier is required for this header.
+#endif
+@end example
+@end itemize
 
 The @file{.so}/@file{.dll} in a package may need to be linked by the
 C++ compiler if it or any library it links to contains compiled C++
