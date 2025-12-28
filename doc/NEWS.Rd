@@ -201,11 +201,11 @@
     \itemize{
       \item Specifying C++11 or C++14 in \file{src/Makevars} has long
       given a note: in 99\% of CRAN packages the specification was
-      unnecessary as the default C++17 suffices (in a few cases with a
+      unnecessary as the default C++17 sufficed (in a few cases with a
       deprecation warning from some compilers).
 
       Supoport for these standards has been removed: the default C++
-      standard (currently C++17) will be used.
+      standard will be used.
 
       \command{R CMD config} variables \code{CXX11}, \code{CXX14} and
       their associated \code{CXXxxFLAGS}, \code{CXXxxPICFLAGS}
@@ -222,6 +222,10 @@
       Several CRAN packages already require C++20 and have hundreds of
       others depending on them.  (Packages can request C++17 if
       essential.)
+
+      For now this can be selected by configuring \R{} with
+      \option{--with-CXX20}: it is planned that this will become the
+      default before release.
 
       \item C++ standard specifications (\code{CXX_STD =} in
       \file{src/Makevars*} and in the \code{SystemRequirements} field of

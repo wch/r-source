@@ -1077,6 +1077,7 @@ enable_R_framework
 enable_R_shlib
 enable_R_static_lib
 with_C23
+with_CXX20
 enable_BLAS_shlib
 enable_maintainer_mode
 enable_strict_barrier
@@ -1881,6 +1882,8 @@ Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-C23              use C23 if available [yes]
+  --with-CXX20            make C++20 the default C++ standard if available
+                          [no]
   --with-blas             use system BLAS library (if available), or specify
                           it [unset]
   --with-lapack           use system LAPACK library (if available), or specify
@@ -4595,6 +4598,24 @@ else case e in #(
 esac
 fi
 
+
+
+# Check whether --with-CXX20 was given.
+if test ${with_CXX20+y}
+then :
+  withval=$with_CXX20; if test "${withval}" = no; then
+  use_CXX20=no
+else
+  use_CXX20=yes
+fi
+
+else case e in #(
+  e) use_CXX20=no ;;
+esac
+fi
+
+
+echo "========= c++20 ${use_CXX20}"
 
 ## Build separate shared/dynamic library containing R's BLAS if desired
 # Check whether --enable-BLAS-shlib was given.
@@ -27543,7 +27564,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27546: \"$ac_link\") >&5
+(eval echo $as_me:27567: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27621,7 +27642,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27624: \"$ac_link\") >&5
+(eval echo $as_me:27645: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -43345,9 +43366,16 @@ fi
 
 CXX=${save_CXX}
 
-## Set default C++ compiler to C++17 if available, otherwise unset
+if test -z "${CXX20}"; then
+  use_CXX20=no
+fi
 if test -n "${CXX}" && test -z "${CXXSTD}"; then
-  if test -n "${CXX17}"; then
+  if test "$use_CXX20" == "yes"; then
+    CXX=${CXX20}
+    CXXSTD=${CXX20STD}
+    CXXFLAGS=${CXX20FLAGS}
+    CXXPICFLAGS=${CXX20PICFLAGS}
+  elif test -n "${CXX17}"; then
     CXX=${CXX17}
     CXXSTD=${CXX17STD}
     CXXFLAGS=${CXX17FLAGS}

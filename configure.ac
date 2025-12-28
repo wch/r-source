@@ -313,6 +313,11 @@ AC_ARG_WITH([C23],
 [R_ARG_USE(C23)],
 [use_C23=yes])
 
+AC_ARG_WITH([CXX20],
+[AS_HELP_STRING([--with-CXX20],[make C++20 the default C++ standard if available @<:@no@:>@])],
+[R_ARG_USE(CXX20)],
+[use_CXX20=no])
+
 ## Build separate shared/dynamic library containing R's BLAS if desired 
 AC_ARG_ENABLE([BLAS-shlib],
 [AS_HELP_STRING([--enable-BLAS-shlib],[build BLAS into a shared/dynamic library @<:@perhaps@:>@])],
@@ -1951,9 +1956,18 @@ R_STDCXX([23], [CXX23], [CXX20])
 R_STDCXX([26], [CXX26], [CXX23])
 CXX=${save_CXX}
 
-## Set default C++ compiler to C++17 if available, otherwise unset
+if test -z "${CXX20}"; then
+  use_CXX20=no
+fi
 if test -n "${CXX}" && test -z "${CXXSTD}"; then
-  if test -n "${CXX17}"; then
+  if test "$use_CXX20" == "yes"; then
+dnl Set default C++ compiler to C++20 as available
+    CXX=${CXX20}
+    CXXSTD=${CXX20STD}
+    CXXFLAGS=${CXX20FLAGS}
+    CXXPICFLAGS=${CXX20PICFLAGS}
+  elif test -n "${CXX17}"; then
+dnl Set default C++ compiler to C++17 as available
     CXX=${CXX17}
     CXXSTD=${CXX17STD}
     CXXFLAGS=${CXX17FLAGS}
