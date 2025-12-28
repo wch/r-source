@@ -3125,7 +3125,7 @@ CXXFLAGS = $@{CXX20FLAGS@}
 @noindent
 suffices.
 
-Spscifying the C++ standard as in this section applies only to compiling
+Specifying the C++ standard as in this section applies only to compiling
 C++ code as part of installation of that package.  Where headers are
 installed for use by @code{LinkingTo}, any standard requirement for those
 headers will need to be known to all users.  Good practice is to
