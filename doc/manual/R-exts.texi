@@ -2961,7 +2961,9 @@ The default standard for compiling @R{} packages was changed to C++17 in
 compiler.  Such a compiler is available (but not necessarily installed)
 on all known @R{} platforms.  It is intended that C++20 will become the
 default (`where available') in @R{} 4.6.0: it has been supported on all
-known platforms since at least 2021.
+known platforms since at least 2021. Since the default changes with @R{}
+version, packages which only compile with C++17 or C++20 should specify
+that (see below).
 @c The last was Intel compilers.
 
 @R{} has long allowed packages to request a C++ standard: recent
@@ -3017,7 +3019,7 @@ If it has a @file{Makevars} file (or @file{Makevars.win} or
 CXX_STD = CXX23
 @end example
 
-C++20, C++23 and C++26 (from @R{} 4.5.0) can be specified in an
+C++17, C++20, C++23 and C++26 (from @R{} 4.5.0) can be specified in an
 analogous way.  @strong{NB} this is not a @command{make} directive: the
 value should not be quoted, nor should there be a trailing comment.
 
@@ -3122,6 +3124,25 @@ CXXFLAGS = $@{CXX20FLAGS@}
 @end example
 @noindent
 suffices.
+
+Spscifying the C++ standard as in this section applies only to compiling
+C++ code as part of installation of that package.  Where headers are
+installed for use by @code{LinkingTo}, any standard requirement for those
+headers will need to be known to all users.  Good practice is to
+
+@itemize @bullet
+@item Explain the requirement as part of the @code{Description} in the
+@file{DESCRIPTION} file (and not in @code{SystemRequirements}) and
+
+@item Test @code{__cplusplus} in the headers which have such a
+requirement, for example
+
+@example
+#if __cplusplus > 201703L
+#error C++17 or earlier is required for this header.
+#endif
+@end example
+@end itemize
 
 The @file{.so}/@file{.dll} in a package may need to be linked by the
 C++ compiler if it or any library it links to contains compiled C++
