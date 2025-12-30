@@ -204,7 +204,7 @@
       unnecessary as the default C++17 sufficed (in a few cases with a
       deprecation warning from some compilers).
 
-      Supoport for these standards has been removed: the default C++
+      Support for these standards has been removed: the default C++
       standard will be used.
 
       \command{R CMD config} variables \code{CXX11}, \code{CXX14} and
