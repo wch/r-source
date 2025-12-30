@@ -1274,18 +1274,15 @@ SEXP dimgets(SEXP vec, SEXP val)
     return vec;
 }
 
-attribute_hidden SEXP do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP R_getAttributes(SEXP x)
 {
-    checkArity(op, args);
-    check1arg(args, call, "x");
-
-    if (TYPEOF(CAR(args)) == ENVSXP)
+    if (TYPEOF(x) == ENVSXP)
 	R_CheckStack(); /* in case attributes might lead to a cycle */
 
-    SEXP attrs = ATTRIB(CAR(args)), namesattr;
+    SEXP attrs = ATTRIB(x), namesattr;
     int nvalues = length(attrs);
-    if (isList(CAR(args))) {
-	namesattr = getAttrib(CAR(args), R_NamesSymbol);
+    if (isList(x)) {
+	namesattr = getAttrib(x, R_NamesSymbol);
 	if (namesattr != R_NilValue)
 	    nvalues++;
     } else
@@ -1307,7 +1304,7 @@ attribute_hidden SEXP do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
     while (attrs != R_NilValue) {
 	SEXP tag = TAG(attrs);
 	if (TYPEOF(tag) == SYMSXP) {
-	    SET_VECTOR_ELT(value, nvalues, getAttrib(CAR(args), tag));
+	    SET_VECTOR_ELT(value, nvalues, getAttrib(x, tag));
 	    SET_STRING_ELT(names, nvalues, PRINTNAME(tag));
 	}
 	else { // empty tag, hence name = ""
@@ -1321,6 +1318,13 @@ attribute_hidden SEXP do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
     setAttrib(value, R_NamesSymbol, names);
     UNPROTECT(3);
     return value;
+}
+
+attribute_hidden SEXP do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    check1arg(args, call, "x");
+    return R_getAttributes(CAR(args));
 }
 
 //  levels(.) <- newlevs :

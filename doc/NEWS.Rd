@@ -313,6 +313,9 @@
       \code{R_altrep_class_package} for retrieving the class name symbol
       and package name symbol of an \I{ALTREP} object. These should be
       used instead of \code{ALTREP_CLASS}.
+
+      \item New function \code{R_getAttributes} returns the same result
+      as the \R function \code{attributes}.
     }
   }
 

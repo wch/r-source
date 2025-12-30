@@ -17788,8 +17788,12 @@ functions ensure can that certain consistency requirements are
 maintained, such as setting the object bit according to whether a class
 attribute is present.
 
+The function @code{R_getAttributes} returns the same result as the @R{}
+function @code{attributes}.
+@eapifun R_getAttributes
+
 The function @code{R_mapAttrib} can be used to iterate over the
-attributes on an object:
+attributes of an object:
 @example
 SEXP R_mapAttrib(SEXP x, SEXP (*FUN)(SEXP, SEXP, void *), void *data);
 @end example
