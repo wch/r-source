@@ -93,7 +93,7 @@ function(keys)
     y
 }
 
-.bibentries_from_bibtex_file <-
+.bibentries_from_bibtex <-
 function(file, text)
 {
     if(missing(file)) {
