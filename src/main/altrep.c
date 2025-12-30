@@ -1163,6 +1163,16 @@ Rboolean R_altrep_inherits(SEXP x, R_altrep_class_t class)
     return ALTREP(x) && ALTREP_CLASS(x) == R_SEXP(class);
 }
 
+SEXP R_altrep_class_name(SEXP x)
+{
+    return ALTREP(x) ? CAR(ATTRIB(ALTREP_CLASS(x))) : R_NilValue;
+}
+
+SEXP R_altrep_class_package(SEXP x)
+{
+    return ALTREP(x) ? CADR(ATTRIB(ALTREP_CLASS(x))) : R_NilValue;
+}
+
 attribute_hidden SEXP do_altrep_class(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);

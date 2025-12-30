@@ -1163,6 +1163,8 @@ SEXP R_altrep_data1(SEXP x);
 SEXP R_altrep_data2(SEXP x);
 void R_set_altrep_data1(SEXP x, SEXP v);
 void R_set_altrep_data2(SEXP x, SEXP v);
+SEXP R_altrep_class_name(SEXP x);     // CAR(ATTRIB(ALTREP_CLASS(x)))
+SEXP R_altrep_class_package(SEXP x);  // CADR(ATTRIB(ALTREP_CLASS(x)))
 #endif
 
 int (ALTREP)(SEXP x);

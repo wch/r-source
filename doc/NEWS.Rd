@@ -281,7 +281,7 @@
       writable pointers in packages is not safe.
 
       \item New function \code{DATAPTR_RW()} for use in implementing
-      \code{ALTREP} \code{Dataptr} methods. This function should not be
+      \I{ALTREP} \code{Dataptr} methods. This function should not be
       used in any other contexts.
 
       \item New function \code{R_class()} as the \code{C} equivalent of
@@ -308,6 +308,11 @@
       \item Packages using the non-API functions \code{ATTRIB} and
       \code{SET_ATTRIB} will now receive check \samp{NOTE}s.
       See \sQuote{Writing R Extensions} for alternatives to use.
+
+      \item New functions \code{R_altrep_class_name} and
+      \code{R_altrep_class_package} for retrieving the class name symbol
+      and package name symbol of an \I{ALTREP} object. These should be
+      used instead of \code{ALTREP_CLASS}.
     }
   }
 

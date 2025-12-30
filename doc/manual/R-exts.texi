@@ -15047,18 +15047,25 @@ Macros in @file{R_ext/Itermacros.h} may help in implementing an
 iteration strategy.
 
 Some functions useful in implementing new alternate representation
-classes, beyond those defined in @file{R_ext/Altrep.h}, include
-@code{ALTREP}, @code{ALTREP_CLASS}, @code{R_altrep_data1},
-@code{R_set_altrep_data1}, @code{R_altrep_data2},
-@code{R_set_altrep_data2}, and @code{DATAPTR_RW}.
+(ALTREP) classes, beyond those defined in @file{R_ext/Altrep.h}, include
+@code{ALTREP}, @code{R_altrep_data1}, @code{R_set_altrep_data1},
+@code{R_altrep_data2}, @code{R_set_altrep_data2}, and @code{DATAPTR_RW}.
 @eapifun ALTREP
-@eapifun ALTREP_CLASS
 @eapifun R_altrep_data1
 @eapifun R_set_altrep_data1
 @eapifun R_set_altrep_data2
 @eapifun R_altrep_data2
 @eapifun DATAPTR_RW
 @eapihdr R_ext/Altrep.h
+The class of an ALTREP object is identified by a class name symbol and a
+package name symbol; these can be retrieved using
+@code{R_altrep_class_name} and @code{R_altrep_class_package},
+@eapifun R_altrep_class_name
+@eapifun R_altrep_class_package
+The function @code{ALTREP_CLASS} is also available but is not likely to
+be needed and may be removed.  The type and contents of the value
+returned by @code{ALTREP_CLASS} are subject to change.
+@eapifun ALTREP_CLASS
 
 For some objects it may be possible to very efficiently determine
 whether the object is sorted or contains no @code{NA} values. These
