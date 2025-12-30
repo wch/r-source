@@ -728,6 +728,9 @@ add_dummies <- function(dir, Log)
         ##     }
         ## }
 
+        if(do_install && R_check_urls_relative_paths)
+            check_pkg_urls_relative_paths()
+
         setwd(pkgoutdir)
 
         ## Run the examples: this will be skipped if installation was
@@ -4337,6 +4340,35 @@ add_dummies <- function(dir, Log)
         }
     }
 
+    check_pkg_urls_relative_paths <- function() {
+        fun <- function(p, l) {
+            ## Using .check_package_urls_relative_paths(p, l) is not
+            ## good enough for pkgVignettes() or httpd() ...
+            .libPaths(l)
+            .check_package_urls_relative_paths(p)
+        }
+        bad <- tryCatch(R(fun,
+                          list(pkgname,
+                               c(if(is_base_pkg) .Library else libdir,
+                                 .libPaths()))),
+                        error = identity)
+        if(length(bad)) {
+            checkingLog(Log, "relative paths in package URLs")
+            noteLog(Log)
+            msg <- if(inherits(bad, "error"))
+                       c("Checking relative paths failed with message:",
+                         paste0("  ", conditionMessage(bad)))
+                   else
+                       c(if(NROW(bad) > 1L)
+                             "Found the following (possibly) invalid URLs:"
+                         else
+                             "Found the following (possibly) invalid URL:",
+                         sprintf("  URL: %s\n    From: %s",
+                                 bad[, 1L], bad[, 2L]))
+            printLog0(Log, paste(msg, collapse = "\n"), "\n")
+        }
+    }
+
     run_examples <- function()
     {
         run_one_arch <- function(exfile, exout, arch = "", do_diff = TRUE)
@@ -7438,6 +7470,9 @@ add_dummies <- function(dir, Log)
     R_check_use_log_info <-
         config_val_to_logical(Sys.getenv("_R_CHECK_LOG_USE_INFO_",
                                          "TRUE"))
+    R_check_urls_relative_paths <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_URLS_RELATIVE_PATHS_",
+                                         "FALSE"))
 
     if (as_cran) {
         if (extra_arch) {
@@ -7491,7 +7526,7 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_CHECK_RD_NOTE_LOST_BRACES_" = "TRUE")
         Sys.setenv("_R_CHECK_MBCS_CONVERSION_FAILURE_" = "TRUE")
         Sys.setenv("_R_CHECK_VALIDATE_UTF8_" = "TRUE")
-## next two are the defailt as from R 4.5.0
+## next two are the default as from R 4.5.0
 ##        Sys.setenv("_R_CXX_USE_NO_REMAP_" = "TRUE")
 ##        Sys.setenv("_R_USE_STRICT_R_HEADERS_" = "TRUE")
         Sys.setenv("_R_CHECK_S3_METHODS_SHOW_POSSIBLE_ISSUES_" = "TRUE")
@@ -7520,7 +7555,7 @@ add_dummies <- function(dir, Log)
             R_check_Rd_validate_Rd2HTML <- TRUE
         R_check_Rd_math_rendering <- TRUE
         R_check_use_log_info <- TRUE
-
+        R_check_urls_relative_paths <- TRUE
     } else {
         ## do it this way so that INSTALL produces symbols.rds
         ## when called from check but not in general.
