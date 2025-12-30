@@ -315,7 +315,9 @@
       used instead of \code{ALTREP_CLASS}.
 
       \item New function \code{R_getAttributes} returns the same result
-      as the \R function \code{attributes}.
+      as the \R function \code{attributes}. New functions
+      \code{R_getAttribCount}, \code{R_getAttribNames},
+      \code{R_hasAttrib}, \code{R_nrow}, and \code{R_ncol}.
     }
   }
 

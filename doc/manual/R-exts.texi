@@ -17791,6 +17791,17 @@ attribute is present.
 The function @code{R_getAttributes} returns the same result as the @R{}
 function @code{attributes}.
 @eapifun R_getAttributes
+@code{R_getAttribCount} returns the number of attributes and
+@code{R_getAttribNames} returns the names of an object's attributes.
+@code{R_hasAttrib} can be used to query whether an attribute is present.
+@eapifun R_getAttribCount
+@eapifun R_getAttribNames
+@eapifun R_hasAttrib
+The functions @code{R_nrow} and @code{R_ncol} return the number of rows
+or columns in a standard matrix or data frame. They may be extended to
+handle non-standard cases by dispatching to @code{dim}.
+@eapifun R_nrow
+@eapifun R_ncol
 
 The function @code{R_mapAttrib} can be used to iterate over the
 attributes of an object:

@@ -2033,3 +2033,85 @@ SEXP R_mapAttrib(SEXP x, SEXP (*FUN)(SEXP, SEXP, void *), void *data)
     UNPROTECT(1); /* a */
     return val;
 }
+
+static bool isListWithNames(SEXP x)
+{
+    switch(TYPEOF(x)) {
+    case LISTSXP:
+    case LANGSXP:
+    case DOTSXP:
+	while (x != R_NilValue) {
+	    if (TAG(x) != R_NilValue)
+		return true;
+	    x = CDR(x);
+	}
+	return false;
+    default: return false;
+    }
+}
+
+R_xlen_t R_getAttribCount(SEXP x)
+{
+    R_xlen_t n = xlength(ATTRIB(x));
+    return isListWithNames(x) ? n + 1 : n;
+}
+
+SEXP R_getAttribNames(SEXP x)
+{
+    SEXP attr = ATTRIB(x);
+    R_xlen_t n = xlength(attr);
+    bool list_with_names = isListWithNames(x);
+    R_xlen_t nval = list_with_names ? n + 1 : n;
+    SEXP val = PROTECT(allocVector(STRSXP, nval)); // may not need PROTECT
+    for (R_xlen_t i = 0; i < n; i++) {
+	SEXP tag = TAG(attr);
+	if (TYPEOF(tag) != SYMSXP)
+	    error(_("bad attribute tag")); // should not happen ...
+	SET_STRING_ELT(val, i, PRINTNAME(tag));
+	attr = CDR(attr);
+    }
+    if (list_with_names)
+	SET_STRING_ELT(val, n, PRINTNAME(R_NamesSymbol));
+    UNPROTECT(1); /* val */
+    return val;
+}
+
+bool R_hasAttrib(SEXP x, SEXP name)
+{
+    if (isScalarString(name)) name = installTrChar(STRING_ELT(name, 0));
+    if (! isSymbol(name))
+	error(_("'name' is not a symbol or a scalar string"));
+    if (name == R_NamesSymbol && isListWithNames(x))
+	return true;
+    SEXP attr = ATTRIB(x);
+    while (attr != R_NilValue) {
+	if (TAG(attr) == name)
+	    return true;
+	attr = CDR(attr);
+    }
+    return false;
+}
+
+int R_nrow(SEXP x)
+{
+    if (isDataFrame(x)) {
+	// this assumes every data frame has a row.names attribute
+	// should eventually dispatch to dim()
+	SEXP s = getAttrib0(x, R_RowNamesSymbol), ans = s;
+	if (isInteger(s) && LENGTH(s) == 2 && INTEGER(s)[0] == NA_INTEGER)
+	    return abs(INTEGER(s)[1]);
+	else
+	    return length(s);
+    }
+    else return nrows(x);
+}
+
+int R_ncol(SEXP x)
+{
+    if (isDataFrame(x))
+	// this assumes every data frame is a VECSXP
+	// should eventually dispatch to dim()
+	return length(x);
+    else
+	return ncols(x);
+}
