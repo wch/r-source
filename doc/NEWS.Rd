@@ -23,6 +23,10 @@
 
       \item \code{confint.default()} now also works on S4 objects, as long as
       suitable \code{coef()} and \code{vcov()} methods exist.
+      \preformatted{
+      obj <- new("MyS4Class")
+      confint(obj)
+      }
 
       \item \code{binomial(identity)} and \code{quasibinomial(identity)} now work
       without having to quote the argument.
@@ -48,6 +52,10 @@
       \samp{R >= 4.6.0}.
 
       \item \code{tools::analyze_license()} now also computes
+      \abbr{SPDX} license identifiers. Example usage:
+      \preformatted{
+      tools::analyze_license("DESCRIPTION")
+      }
       \href{https://spdx.dev/learn/handling-license-info/}{\abbr{SPDX}
 	license identifiers},
       thanks to \I{Thierry Onkelinx} and \I{LLuís Revilla}.
@@ -126,10 +134,12 @@
       to allow literal pattern matching.  Suggested and implemented
       by \I{Duncan Murdoch} in \PR{18925}.
 
-      \item \code{substring(txt, i1, i2)}, \code{substr(..)} and their
-      replacement versions now accept \code{i2 = NULL} to mean \dQuote{to
-      the end_of_string}, thus fulfilling \I{Kevin Ushey} (and others')
-      suggestions in \PR{18851}.
+      \item \code{substring(txt, i1, i2)} now accepts \code{i2 = NULL} 
+      to mean "to the end of string". Example:
+      \preformatted{
+      substring("Hello World", 7)      # returns "World"
+      substring("Hello World", 7, NULL) # same result
+      }
 
       \item The default method for \code{pretty()} gets a new switch \code{bounds} for
       completeness, corresponding to \code{.pretty()}.  Also, it now
@@ -6679,5 +6689,5 @@
     \ifelse{html}{\url{NEWS.3.html}}{\file{doc/html/NEWS.3.html}}
     and
     \ifelse{html}{\url{NEWS.2.html}}{\file{doc/html/NEWS.2.html}}.
-  }
+  } 
 }
