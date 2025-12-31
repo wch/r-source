@@ -1238,8 +1238,8 @@ SEXP R_getAttributes(SEXP x);
 R_xlen_t R_getAttribCount(SEXP x);
 SEXP R_getAttribNames(SEXP x);
 bool R_hasAttrib(SEXP x, SEXP name);
-int R_nrow(SEXP x); 
-int R_ncol(SEXP x);
+R_xlen_t R_nrow(SEXP x); 
+R_xlen_t R_ncol(SEXP x);
 
 /* Rest of this file
    Stuff that is not API and probably should not be but is getting used.

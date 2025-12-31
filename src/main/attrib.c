@@ -2092,7 +2092,7 @@ bool R_hasAttrib(SEXP x, SEXP name)
     return false;
 }
 
-int R_nrow(SEXP x)
+R_xlen_t R_nrow(SEXP x)
 {
     if (isDataFrame(x)) {
 	// this assumes every data frame has a row.names attribute
@@ -2106,7 +2106,7 @@ int R_nrow(SEXP x)
     else return nrows(x);
 }
 
-int R_ncol(SEXP x)
+R_xlen_t R_ncol(SEXP x)
 {
     if (isDataFrame(x))
 	// this assumes every data frame is a VECSXP
