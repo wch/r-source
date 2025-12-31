@@ -21,9 +21,10 @@ paste0(\dots,            collapse = NULL, recycle0 = FALSE)
     the result is always a string (\code{\link{character}} of length 1).}
   \item{recycle0}{\code{\link{logical}} indicating if zero-length
     character arguments should result in the zero-length
-    \code{\link{character}(0)}.  Note that when \code{collapse} is
+    \code{\link{character}(0)}. Note that when \code{collapse} is
     a string, \code{recycle0} does \emph{not} recycle to zero-length, but
-    to \code{""}.}% <== basic semantic of {collapse} mentioned above
+    to \code{""}.  This ensures that a single character string is always
+    returned when \code{collapse} is specified.}% <== basic semantic of {collapse} mentioned above
 }
 \description{
   Concatenate vectors after converting to character.
