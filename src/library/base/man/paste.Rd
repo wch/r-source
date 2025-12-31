@@ -47,7 +47,8 @@ paste0(\dots,            collapse = NULL, recycle0 = FALSE)
   desirable, e.g.\sspace{}in \code{paste("the value of p is ", p)}.
 
   \code{paste0(\dots, collapse)} is equivalent to
-  \code{paste(\dots, sep = "", collapse)}, slightly more efficiently.
+  \code{paste(\dots, sep = "", collapse)}, slightly more efficiently
+  as it avoids handling a separator.
 
   If a value is specified for \code{collapse}, the values in the result
   are then concatenated into a single string, with the elements being
