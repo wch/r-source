@@ -2097,7 +2097,7 @@ R_xlen_t R_nrow(SEXP x)
     if (isDataFrame(x)) {
 	// this assumes every data frame has a row.names attribute
 	// should eventually dispatch to dim()
-	SEXP s = getAttrib0(x, R_RowNamesSymbol), ans = s;
+	SEXP s = getAttrib0(x, R_RowNamesSymbol);
 	if (isInteger(s) && LENGTH(s) == 2 && INTEGER(s)[0] == NA_INTEGER)
 	    return abs(INTEGER(s)[1]);
 	else
