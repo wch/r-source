@@ -4524,6 +4524,11 @@ If set to a true value, check whether Rd cross-references to targets not
 in the package itself or the base packages have package anchors.
 Default: false (but true for CRAN submission checks).
 
+@item _R_CHECK_URLS_RELATIVE_PATHS_
+If set to a true value, check whether URLs using relative paths (and no
+scheme) in Rd files or HTML vignette outputs work in dynamic help.
+Default: false (but true for CRAN submission checks).
+
 @item _R_CHECK_PACKAGE_DATASETS_SUPPRESS_NOTES_
 If false report the use of non-ASCII
 strings marked as UTF-8, Latin-1 or @code{"bytes"} as part of
@@ -4643,6 +4648,7 @@ _R_CHECK_S3_METHODS_SHOW_POSSIBLE_ISSUES_=true
 _R_CHECK_RD_NOTE_LOST_BRACES_=true
 _R_CHECK_XREFS_NOTE_MISSING_PACKAGE_ANCHORS_=true
 _R_CHECK_PACKAGES_USED_IN_DEMO_=true
+_R_CHECK_URLS_RELATIVE_PATHS_=true
 @end example
 
 @noindent
