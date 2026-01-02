@@ -1,7 +1,7 @@
 #  File src/library/tools/R/check.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -6563,10 +6563,11 @@ add_dummies <- function(dir, Log)
                     ## since R 4.4.0 C++17 support is required, but
                     ## C++23/26 support is patchy
                     else if (std >= 23) {
-                         resultLog(Log, "OK")
-                         printLog(Log,
-                                  sprintf("  Not all R platforms support C++%s\n", std))
-                    } else resultLog(Log, "OK")
+                        resultLog(Log, "OK")
+                        printLog(Log,
+                                 sprintf("  Not all R platforms support C++%s\n", std))
+                    } else
+                        infoLog(Log, paste0("  ", line))
                 }
             }   ## end of case B
         }
