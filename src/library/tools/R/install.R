@@ -2700,10 +2700,8 @@ if(FALSE) {
     }
     val <- Sys.getenv("R_PKG_CXX_STD")
     if (is.null(use_cxxstd)) {
-        val <- Sys.getenv("R_PKG_CXX_STD")
         if (val %in% cxx_standards) {
             use_cxxstd <- val
-            ## could warn here on C++98,11,14
         }
     } else if (nzchar(val) && (val != use_cxxstd)) {
         warning("SystemRequirements and Makevars* specified different C++ standards", domain = NA, call. = FALSE)

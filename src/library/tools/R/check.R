@@ -6512,7 +6512,7 @@ add_dummies <- function(dir, Log)
                                useBytes = TRUE)))
                     notes <- c("Non-staged installation was used", notes)
 
-                ## temporrily demote warning:
+                ## temporarily demote warning:
                 ll <- grep("^Warning: SystemRequirements specified", lines, useBytes = TRUE)
                 if(length(ll)) {
                     notes <- c(notes, sub("^Warning: ", "", lines[ll]))
