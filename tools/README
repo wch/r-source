@@ -66,6 +66,9 @@ The files are as follows.
 	obtain sources for the recommended packages using rsync, and then
 	create links with simplified names to these.
 
+  fetch-recommended
+	as above, but using curl in cases where rsync is blocked
+
   updatefat
 	updates a fat file by adding a new architecture (macOS only)
 	it is essentially a smart wrapper for "lipo".  (No longer used.)
