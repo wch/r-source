@@ -554,6 +554,11 @@
       \item \command{R CMD check} now handles archives with extension
       \file{.tar} or \file{.tar.zstd} (where \command{zstd} compression
       is supported by the \R build).
+
+      \item \command{tools/fetch-recommended} can be used instead of
+      \command{tools/rsync-recommended} to fetch recommended packages
+      into R sources using \code{curl} on systems without \code{rsync}
+      or behind firewalls.
     }
   }
 
