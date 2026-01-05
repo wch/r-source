@@ -226,11 +226,6 @@
       For now this can be selected by configuring \R{} with
       \option{--with-CXX20}: it is planned that this will become the
       default before release.
-
-      \item C++ standard specifications (\code{CXX_STD =} in
-      \file{src/Makevars*} and in the \code{SystemRequirements} field of
-      the \file{DESCRIPTION} file) are now checked more thoroughly.
-      Invalid values are still ignored but now give a warning.
     }
   }
 
@@ -518,6 +513,15 @@
 }
 
 \section{\Rlogo CHANGES IN R 4.5.2 patched}{
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item C++ standard specifications (\code{CXX_STD =} in
+      \file{src/Makevars*} and in the \code{SystemRequirements} field of
+      the \file{DESCRIPTION} file) are now checked more thoroughly.
+      Invalid values are still ignored but now give a warning, as do
+      contradicting specifications.
+    }
+  }
 
   \subsection{BUG FIXES}{
     \itemize{

@@ -3025,8 +3025,7 @@ value should not be quoted, nor should there be a trailing comment.
 
 If you specify the C++ standard in both a @file{Makevars} file and
 @samp{SystemRequirements} do ensure that they are the same standard: the
-latter has precedence.  (From @R{} 4.6.0 this will be checked by
-@command{R CMD check}.)
+latter has precedence.  (This is checked by @command{R CMD check}.)
 
 Code needing C++20 or later features can check for their presence @emph{via}
 `SD-6 feature tests'@footnote{See
