@@ -1905,9 +1905,9 @@ that an @R{} installation is not required to have a C++ compiler so
 @samp{CXX} may be empty.  If the package specifies a non-default C++
 standard, use the @command{config} variable names (such as @code{CXX23})
 appropriate to the standard, but still set @code{CXX} and
-@code{CXXFLAGS}.  Defunct support for older stanaards means that
-variables such as @code{CXX11} are no longer avaialble (but
-@command{config} will give a message that theey are defunct).
+@code{CXXFLAGS}.  Defunct support for older standards means that
+variables such as @code{CXX11} are no longer available (but
+@command{config} will give a message that they are defunct).
 
 @findex R CMD config
 You can use @code{R CMD config} to get the value of the basic
@@ -1920,7 +1920,7 @@ linked into a shared library) @samp{CPICFLAGS}.  For Fortran, be careful
 to use @samp{FC FFLAGS FPICFLAGS} for fixed-form Fortran and
 @samp{FC FCFLAGS FPICFLAGS} for free-form Fortran.
 
-As from @R{} 4.3.0, variables
+Variables
 @example
 CC CFLAGS CXX CXXFLAGS CPPFLAGS LDFLAGS FC FCFLAGS
 @end example
@@ -2895,8 +2895,7 @@ version 8) @option{-std=f2018} in @code{PKG_FFLAGS} or
 (but Fortran 95 prior to @command{gfortran}@tie{}8) with non-standard
 extensions.  The other compilers in current use (@I{LLVM}'s
 @command{flang} (called @command{flang-new} before version 20) and Intel's
-@command{ifx}) default to Fortran 2018@footnote{but was said to have
-complete support only from version 2023.0.0.}.
+@command{ifx}) default to Fortran 2018.
 
 It is good practice to describe a Fortran version requirement in
 @file{DESCRIPTION}'s @samp{SystemRequirements} field.  Note that this is
@@ -2983,7 +2982,7 @@ Unix-alike @command{configure} will try to identify a compiler and flags
 for each of the standards: this relies heavily on the reported values of
 @code{__cplusplus}.
 
-@c Apple clang 14 defaults to C++98 (even 16)
+@c Apple clang 14 defaults to C++98 (even 17)
 @c @I{LLVM} clang 14, 15 default to C++14, 16-20 to C++17
 @c g++ 11-15 default to C++17
 
@@ -3023,8 +3022,7 @@ value should not be quoted, nor should there be a trailing comment.
 
 If you specify the C++ standard in both a @file{Makevars} file and
 @samp{SystemRequirements} do ensure that they are the same standard: the
-latter has precedence.  (From @R{} 4.6.0 this will be checked by
-@command{R CMD check}.)
+latter has precedence.  (This is checked by @command{R CMD check}.)
 
 Code needing C++20 or later features can check for their presence @emph{via}
 `SD-6 feature tests'@footnote{See
@@ -3051,7 +3049,7 @@ feature tests as well as resources such as
 want to use are widely implemented. (In particular, C++20 modules were
 not.)
 
-Attempts to specify an unknown C++ standard are silently ignored: recent
+Attempts to specify an unknown C++ standard are ignored with a warning: recent
 versions of @R{} throw an error for C++98 and for known standards for
 which no compiler+flags has been detected.
 
@@ -9474,13 +9472,13 @@ options(expressions=500)
 @noindent
 and re-run the example showing the error.
 
-Sometimes there is warning that clearly is the precursor to some later
+Sometimes there is a warning that clearly is the precursor to some later
 error, but it is not obvious where it is coming from.  Setting
 @command{options(warn = 2)} (which turns warnings into errors) can help here.
 
 Once we have located the error, we have some choices.  One way to proceed
 is to find out more about what was happening at the time of the crash by
-looking a @emph{@I{post-mortem}} dump.  To do so, set
+looking at a @emph{@I{post-mortem}} dump.  To do so, set
 @findex dump.frames
 @command{options(error=dump.frames)} and run the code again.  Then invoke
 @command{debugger()} and explore the dump.  Continuing our example:
@@ -14672,7 +14670,7 @@ memcpy(REAL(newx), REAL_RO(x), LENGTH(x) * sizeof(double));
 @end example
 @noindent
 are undefined behaviour without a prior check on the length of @code{x}.
-@c Returning 0x000000000001 was inroduced in R 4.5.0.
+@c Returning 0x000000000001 was introduced in R 4.5.0.
 
 Formerly it was possible for packages to obtain internal versions of
 some accessors by defining @samp{USE_RINTERNALS} before including
@@ -15861,7 +15859,7 @@ LINPACK linear algebra functions included in @R{}.  These are expressed
 as calls to Fortran subroutines, and they will also be usable from
 users' Fortran code.  Although not part of the official @acronym{API},
 this set of subroutines is unlikely to change (but routines have been
-added in th past, most recently in @R{} 4.5.0).
+added in the past, most recently in @R{} 4.5.0).
 @comment API: This is really confusing. What is the 'official API'? Are
 @comment things in these headers OK so use in packages or not?
 

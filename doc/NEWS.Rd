@@ -6,6 +6,15 @@
 \encoding{UTF-8}
 
 \section{\Rlogo CHANGES IN R 4.5.2 patched}{
+  \subsection{PACKAGE INSTALLATION}{
+    \itemize{
+      \item C++ standard specifications (\code{CXX_STD =} in
+      \file{src/Makevars*} and in the \code{SystemRequirements} field of
+      the \file{DESCRIPTION} file) are now checked more thoroughly.
+      Invalid values are still ignored but now give a warning, as do
+      contradictory specifications.
+    }
+  }
 
   \subsection{BUG FIXES}{
     \itemize{

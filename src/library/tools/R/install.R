@@ -1,7 +1,7 @@
 #  File src/library/tools/R/install.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 # NB: also copyright dates in Usages.
 #
@@ -390,13 +390,27 @@ if(FALSE) {
             sys_requires <- desc["SystemRequirements"]
             if (!is.na(sys_requires)) {
                 sys_requires <- unlist(strsplit(sys_requires, ","))
+                found <- NA
                 for (i in cxx_standards) {
 ##                    pattern <- paste0("^[[:space:]]*C[+][+]",i,"[[:space:]]*$")
                     pattern <- paste0("(^| )C[+][+]",i,"([ ,;]|$)")
                     if(any(grepl(pattern, sys_requires))) {
                         Sys.setenv("R_PKG_CXX_STD"=i)
                         on.exit(Sys.unsetenv("R_PKG_CXX_STD"))
+                        found <- i
                         break
+                    }
+                }
+                if (is.na(found)) {
+                    pattern <- paste0("^[[:space:]]*C[+][+]")
+                    val <- grep(pattern, sys_requires, value = TRUE)
+                    if(length(val)) {
+                        val <- sub(pattern, "",  val)
+                        val <- sub("[,;].*$", "", val)
+                        val <- sub(" *$", "", val)
+                        val <- paste0("C++", val)
+                        msg <- sprintf("SystemRequirements: invalid C++ specification %s", sQuote(val))
+                        warning(msg, domain = NA, call. = FALSE)
                     }
                 }
                 if(is.na(use_C)) {
@@ -2627,10 +2641,17 @@ if(FALSE) {
         if (length(ll <- grep("^CXX_STD *=", lines, perl = TRUE,
                               value = TRUE, useBytes = TRUE)) == 1) {
             val <- gsub("^CXX_STD *= *CXX", "", ll)
+            val <- gsub("#.*$", "", val)
             val <- gsub(" +$", "", val)
             if (val %in% cxx_standards) {
                 use_cxxstd <- val
                 with_cxx <- TRUE
+            } else {
+                val <- gsub("^CXX_STD *= *", "", ll)
+                val <- gsub("#.*$", "", val)
+                val <- gsub(" +$", "", val)
+                msg <- sprintf("src/%s: Unknown C++ standard %s was ignored", fn,  sQuote(val))
+                warning(msg, domain = NA, call. = FALSE)
             }
         }
         if (any(grepl("^USE_FC_TO_LINK", lines, perl=TRUE, useBytes = TRUE)))
@@ -2643,10 +2664,17 @@ if(FALSE) {
         if (length(ll <- grep("^CXX_STD *=", lines, perl = TRUE,
                               value = TRUE, useBytes = TRUE)) == 1) {
             val <- gsub("^CXX_STD *= *CXX", "", ll)
+            val <- gsub("#.*$", "", val)
             val <- gsub(" +$", "", val)
             if (val %in% cxx_standards) {
                 use_cxxstd <- val
                 with_cxx <- TRUE
+            } else {
+                val <- gsub("^CXX_STD *= *", "", ll)
+                val <- gsub("#.*$", "", val)
+                val <- gsub(" +$", "", val)
+                msg <- sprintf("src/Makevars: Unknown C++ standard %s was ignored", sQuote(val))
+                warning(msg, domain = NA, call. = FALSE)
             }
         }
         if (any(grepl("^USE_FC_TO_LINK", lines, perl=TRUE, useBytes = TRUE)))
@@ -2660,11 +2688,13 @@ if(FALSE) {
             }
         }
     }
+    val <- Sys.getenv("R_PKG_CXX_STD")
     if (is.null(use_cxxstd)) {
-        val <- Sys.getenv("R_PKG_CXX_STD")
         if (val %in% cxx_standards) {
             use_cxxstd <- val
         }
+    } else if (nzchar(val) && (val != use_cxxstd)) {
+        warning("SystemRequirements and Makevars* specified different C++ standards", domain = NA, call. = FALSE)
     }
 
     if (with_cxx) {

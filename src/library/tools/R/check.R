@@ -1,7 +1,7 @@
 #  File src/library/tools/R/check.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -3901,7 +3901,7 @@ add_dummies <- function(dir, Log)
                 ## -Werror is not compiler independent
                 ##   (as what is a warning is not)
                 ## -Wno-dev is from qt, not a compiler flag.
-                ## -Wstrict-prototypea is long supported by gcc and LLVM/Apple clang.
+                ## -Wstrict-prototypes is long supported by gcc and LLVM/Apple clang.
                 except <- Sys.getenv("_R_CHECK_COMPILATION_FLAGS_KNOWN_", "")
                 except <- unlist(strsplit(except, "\\s", perl = TRUE))
                 warns <- setdiff(warns,
@@ -4044,7 +4044,7 @@ add_dummies <- function(dir, Log)
 
     check_rust <- function()
     {
-        ## It is impossible to tell definiitively if a package
+        ## It is impossible to tell definitively if a package
         ## compiles rust code.  SystemRequirements in DESCRIPTION is
         ## fres-format, and only advisory.  So we look at the
         ## installation log, which we found in check_src()
@@ -5674,7 +5674,7 @@ add_dummies <- function(dir, Log)
             ## <https://bugs.astron.com/view.php?id=316>
             pretest <- function(f)
             {
-                ## The format is (in bytes) the version mumber,
+                ## The format is (in bytes) the version number,
                 ## year-1900 of last change, month#, day, ...
                 z <-  readBin(f, raw(), 2L)
                 identical(z, as.raw(c(3, 122)))
@@ -6045,7 +6045,7 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wdeprecated-non-prototype\\]",
                              ## gcc and clang reports on use of #warning
                              ## but not suppressing the warning itself.
-                             "\\[-Wcpp\\] ",
+                             "\\[-Wcpp\\]",
                              "\\[-W#warnings\\]",
                              "\\[-Wrange-loop-construct\\]",
                              "\\[-Warray-parameter=\\]",
@@ -6162,6 +6162,10 @@ add_dummies <- function(dir, Log)
 
                 ## Filter out BH header warnings
                 ex_re <- "BH/include/boost/.*\\[-Wdeprecated-literal-operator\\]"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
+                ## Filter out GCC >= 12 C++23 warnings on #warning (clang does not warn)
+                ex_re <- "warning:.*\\[-Wc\\+\\+23-extensions\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## "gcc (even 9) seems not to know the size of pointers, so skip
@@ -6384,7 +6388,7 @@ add_dummies <- function(dir, Log)
                                         lines, useBytes = TRUE)
                 }
                 ## </FIXME>
-                
+
                 lines <- unique(lines)
 
                 ## Can get reports like
@@ -6408,6 +6412,7 @@ add_dummies <- function(dir, Log)
                 if (any(grepl("using non-staged installation", lines0,
                                useBytes = TRUE)))
                     notes <- c("Non-staged installation was used", notes)
+
                 if (length(lines)) {
                     warningLog(Log, "Found the following significant warnings:")
                     printLog0(Log, .format_lines_with_indent(lines), "\n")
@@ -6450,7 +6455,7 @@ add_dummies <- function(dir, Log)
                         noteLog(Log,
                                 sprintf("  Specified C++%d: please drop specification unless essential", std))
                     ## since R 4.4.0 C++17 support is required, but
-                    ## C++23/26} support is patchy
+                    ## C++23/26 support is patchy
                     } else if (std >= 23) {
                          resultLog(Log, "OK")
                          printLog(Log,
@@ -7197,7 +7202,7 @@ add_dummies <- function(dir, Log)
         if (WINDOWS) {
             ## always has sub-archs as from R 2.12.0.
             ## usually if two are installed, it was done on a 64-bit OS,
-            ## but the filesystem might be shared betweeen OSes.
+            ## but the filesystem might be shared between OSes.
             f <- dir(file.path(R.home(), "bin"))
             archs <- f[f %in% c("i386", "x64")]
             ## if we have x64, can only run it on a 64-bit OS
@@ -7413,7 +7418,7 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_CHECK_RD_NOTE_LOST_BRACES_" = "TRUE")
         Sys.setenv("_R_CHECK_MBCS_CONVERSION_FAILURE_" = "TRUE")
         Sys.setenv("_R_CHECK_VALIDATE_UTF8_" = "TRUE")
-## next two are the defailt as from R 4.5.0
+## next two are the default as from R 4.5.0
 ##        Sys.setenv("_R_CXX_USE_NO_REMAP_" = "TRUE")
 ##        Sys.setenv("_R_USE_STRICT_R_HEADERS_" = "TRUE")
         Sys.setenv("_R_CHECK_S3_METHODS_SHOW_POSSIBLE_ISSUES_" = "TRUE")
@@ -7673,7 +7678,7 @@ add_dummies <- function(dir, Log)
         ## have a 'DESCRIPTION.in' file (instead of 'DESCRIPTION'),
         ## with Version and License fields containing '@VERSION@' for
         ## substitution by configure.  Earlier bundles had packages
-        ## containing DESCRIPTIION.in, hence the extra check for
+        ## containing DESCRIPTION.in, hence the extra check for
         ## Makefile.in.
 
         is_base_pkg <- is_rec_pkg <- FALSE
