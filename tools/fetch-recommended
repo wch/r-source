@@ -1,0 +1,58 @@
+#! /bin/sh
+#
+# ${R_HOME}/tools/fetch-recommended
+#
+# like rsync-recommended, but uses curl since rsync is often blocked nowadays
+# (it is based on rsync-recommended with changes)
+# The following envs vars can be used to change the mirror host and the curl invocation/path
+: ${CRAN_MIRROR='cran.r-project.org'}
+: ${CURL=curl}
+
+## The intention here is to infer TOOLS_DIR from an explicit path.
+## but the user might have called it from tools, so test that case
+## separately.
+TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
+if test ${TOOLS_DIR} = ${0} ; then
+  TOOLS_DIR="."
+fi
+(cd "${TOOLS_DIR}"/..
+  version=`cut -f1 -d' ' VERSION`
+  if test "`cut -f2 -d' ' VERSION`" = "Patched"; then
+    version=`echo ${version} | sed 's/\.[0-9]*$//'`
+    version="${version}-patched"
+  fi
+  PKGS=`grep '^R_PKGS_RECOMMENDED *=' share/make/vars.mk | \
+    sed 's/.*=//'`
+  cd src/library/Recommended
+  ## This is not perfect, but as good as it gets - just fetch the index and parse the
+  ## current versions from the URLs there
+  $CURL -sSfL -o index.html https://${CRAN_MIRROR}/src/contrib/${version}/Recommended/ || \
+      { echo "*** failed to fetch https://${CRAN_MIRROR}/src/contrib/${version}/Recommended/ index ***" && exit 1; }
+
+  for i in ${PKGS} ; do
+      ## find out the version from the index file
+      fn=$(sed -nE 's,.*"('$i'[^"]+[.]tar[.]gz)".*,\1,p' index.html| sed -n 1p)
+      test -n "$fn" || { echo "*** failed to find $i in the index ***" && exit 1; }
+      echo $fn
+      if test -e "$fn"; then ## like rsync only fetch if newer (that's what the -z $fn does)
+	  $CURL -sSfLOR -z "$fn" https://${CRAN_MIRROR}/src/contrib/${version}/Recommended/$fn || \
+	      { echo "*** failed to fetch https://${CRAN_MIRROR}/src/contrib/${version}/Recommended/$fn ***" && exit 1; }
+      else ## otherwise remove old and full fetch
+	  rm -f ${i}_*.tar.gz
+	  $CURL -sSfLOR https://${CRAN_MIRROR}/src/contrib/${version}/Recommended/$fn || \
+	      { echo "*** failed to fetch https://${CRAN_MIRROR}/src/contrib/${version}/Recommended/$fn ***" && exit 1; }
+      fi
+  done
+  rm -f index.html
+
+  ## Link each package to a simplified name so that Make has an easier
+  ## time.  Notice that as far as Make is concerned, the symlinks have
+  ## the same timestamp as the file they point to.  Don't remove the 
+  ## existing links until now in case fetch fails.
+
+  echo "Creating links"
+  rm -f *.tgz
+  for i in ${PKGS} ; do
+    ln -s $i*.tar.gz ${i}.tgz
+  done
+)
