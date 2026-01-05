@@ -180,7 +180,8 @@ recommended packages, which can be obtained by @command{rsync} or
 downloaded from @acronym{CRAN}.  To use @code{rsync} to install the
 appropriate sources for the recommended packages, run
 @code{./tools/rsync-recommended} from the top-level directory of the
-@R{} sources.
+@R{} sources. Alternatively, run @code{./tools/fetch-recommended}
+to use @code{curl} if @code{rsync} is unavailable or behind firewalls.
 
 If downloading manually from @acronym{CRAN}, do ensure that you have the
 correct versions of the recommended packages: if the number in the file
