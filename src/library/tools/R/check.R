@@ -2506,6 +2506,7 @@ add_dummies <- function(dir, Log)
                 as.numeric(Sys.getenv("_R_CHECK_RD_CHECKRD_MINLEVEL_", "-1"))
             Rcmd <- paste(opWarn_string, "\n",
                           sprintf("tools:::.check_package_parseRd('.', minlevel=%s)\n", minlevel))
+            any <- FALSE
             ## This now evaluates \Sexpr, so run with usual packages.
             out <- R_runR0(Rcmd, R_opts2,
                            c(if(R_cdo) elibs_cdo else elibs,
@@ -2513,6 +2514,7 @@ add_dummies <- function(dir, Log)
             t2 <- proc.time()
             print_time(t1, t2, Log)
             if (length(out)) {
+                any <- TRUE
                 if(length(grep(paste("^prepare.*Dropping empty section",
                                      "^checkRd: \\(-",
                                      "^  ", # continuation lines
@@ -2522,7 +2524,30 @@ add_dummies <- function(dir, Log)
                     warningLog(Log)
                 else noteLog(Log)
                 printLog0(Log, paste(c(out, ""), collapse = "\n"))
-            } else resultLog(Log, "OK")
+            }
+
+            if(R_check_Rd_bibentries_cited_not_shown) {
+                bad <- tryCatch(R(.check_Rd_bibentries_cited_not_shown,
+                                  list(dir = pkgdir)),
+                                error = identity)
+                if(!inherits(bad, "error") && length(bad)) {
+                    if(!any) {
+                        noteLog(Log)
+                        any <- TRUE
+                    }
+                    fmt <- function(u, v) {
+                        c(sprintf("Bibentries cited but not shown in Rd file %s:",
+                                  sQuote(u)),
+                          .strwrap22(sQuote(v), ", "))
+                    }
+                    msg <- unlist(Map(fmt, names(bad), bad),
+                                  use.names = FALSE)
+                    printLog0(Log, paste(msg, collapse = "\n"), "\n")
+                }
+            }
+
+            if(!any)
+                resultLog(Log, "OK")
 
             checkingLog(Log, "Rd metadata")
             Rcmd <- paste(opWarn_string, "\n",
@@ -7479,6 +7504,10 @@ add_dummies <- function(dir, Log)
         config_val_to_logical(Sys.getenv("_R_CHECK_URLS_RELATIVE_PATHS_",
                                          "FALSE"))
 
+    R_check_Rd_bibentries_cited_not_shown <-
+        config_val_to_logical(Sys.getenv("_R_CHECK_RD_BIBENTRIES_CITED_NOT_SHOWN_",
+                                         "FALSE"))
+
     if (as_cran) {
         if (extra_arch) {
             message("'--as-cran' turns off '--extra-arch'")
@@ -7561,6 +7590,7 @@ add_dummies <- function(dir, Log)
         R_check_Rd_math_rendering <- TRUE
         R_check_use_log_info <- TRUE
         R_check_urls_relative_paths <- TRUE
+        R_check_Rd_bibentries_cited_not_shown <- TRUE
     } else {
         ## do it this way so that INSTALL produces symbols.rds
         ## when called from check but not in general.
