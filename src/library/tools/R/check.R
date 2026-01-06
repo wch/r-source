@@ -6557,9 +6557,13 @@ add_dummies <- function(dir, Log)
                 if (length(line)) {
                     checkingLog(Log, "C++ specification")
                     std <- as.numeric(sub("specified C[+][+]", "", line))
-                    if (!(std %in% c("17", "20", "23", "26")))
+                    if ((std %in% c("98", "11", "14")))
                          noteLog(Log,
-                                sprintf("  Unknown/obsolate C++%d standard request will be ignored", std))
+                                 sprintf("  Obsolete C++%d standard request will be ignored", std))
+                    ## cxx_standards is set in install.R
+                    else if (!(std %in% cxx_standards))
+                         noteLog(Log,
+                                sprintf("  Unknown C++%d standard request will be ignored", std))
                     ## since R 4.4.0 C++17 support is required, but
                     ## C++23/26 support is patchy
                     else if (std >= 23) {

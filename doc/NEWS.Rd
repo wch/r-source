@@ -519,7 +519,7 @@
       \file{src/Makevars*} and in the \code{SystemRequirements} field of
       the \file{DESCRIPTION} file) are now checked more thoroughly.
       Invalid values are still ignored but now give a warning, as do
-      contradicting specifications.
+      contradictory specifications.
     }
   }
 
