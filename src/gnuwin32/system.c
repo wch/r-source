@@ -255,7 +255,10 @@ R_ReadConsole(const char *prompt, unsigned char *buf, int len,
 	      int addtohistory)
 {
     R_ProcessEvents();
-    return ptr_ReadConsole(prompt, buf, len, addtohistory);
+    int res = ptr_ReadConsole(prompt, buf, len, addtohistory);
+    if (R_interrupts_pending)
+        onintrNoResume();
+    return res;
 }
 
 	/* Write a text buffer to the console. */
@@ -411,6 +414,12 @@ CharReadConsole(const char *prompt, unsigned char *buf, int len,
 
     if (!line) {
 	res = getline2(prompt, &line);
+	if (res < 0) { // ^C
+	    R_interrupts_pending = TRUE;
+	    gl_free(line);
+	    line = NULL;
+	    return 0;
+	}
 	if (addtohistory) gl_histadd(line);
 	offset = 0;
 	remaining = strlen(line); /* may be zero */
