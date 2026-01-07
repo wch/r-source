@@ -516,6 +516,16 @@
 }
 
 \section{\Rlogo CHANGES IN R 4.5.2 patched}{
+
+  \subsection{UTILITIES}{
+    \itemize{
+      \item \command{tools/fetch-recommended} can be used instead of
+      \command{tools/rsync-recommended} to fetch recommended packages
+      into \R sources using \command{curl} on systems without
+      \command{rsync} or behind firewalls.
+    }
+  }
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item C++ standard specifications (\code{CXX_STD =} in
@@ -557,11 +567,6 @@
       \item \command{R CMD check} now handles archives with extension
       \file{.tar} or \file{.tar.zstd} (where \command{zstd} compression
       is supported by the \R build).
-
-      \item \command{tools/fetch-recommended} can be used instead of
-      \command{tools/rsync-recommended} to fetch recommended packages
-      into R sources using \code{curl} on systems without \code{rsync}
-      or behind firewalls.
     }
   }
 
