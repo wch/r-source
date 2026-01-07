@@ -15051,7 +15051,7 @@ Macros in @file{R_ext/Itermacros.h} may help in implementing an
 iteration strategy.
 
 Some functions useful in implementing new alternate representation
-(ALTREP) classes, beyond those defined in @file{R_ext/Altrep.h}, include
+(@I{ALTREP}) classes, beyond those defined in @file{R_ext/Altrep.h}, include
 @code{ALTREP}, @code{R_altrep_data1}, @code{R_set_altrep_data1},
 @code{R_altrep_data2}, @code{R_set_altrep_data2}, and @code{DATAPTR_RW}.
 @eapifun ALTREP
@@ -15061,7 +15061,7 @@ Some functions useful in implementing new alternate representation
 @eapifun R_altrep_data2
 @eapifun DATAPTR_RW
 @eapihdr R_ext/Altrep.h
-The class of an ALTREP object is identified by a class name symbol and a
+The class of an @I{ALTREP} object is identified by a class name symbol and a
 package name symbol; these can be retrieved using
 @code{R_altrep_class_name} and @code{R_altrep_class_package},
 @eapifun R_altrep_class_name
