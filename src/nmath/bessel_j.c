@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2015 Ross Ihaka and the R Core team.
+ *  Copyright (C) 1998-2026 Ross Ihaka and the R Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,19 +31,17 @@
 #include <R_ext/Memory.h>
 #endif
 
+
 #define min0(x, y) (((x) <= (y)) ? (x) : (y))
 
 static void J_bessel(double *x, double *alpha, int *nb,
 		     double *b, int *ncalc);
 
-// unused now from R
+// unused now from R  -- rather R's besselJ() calls  bessel_j_ex()  below
 double bessel_j(double x, double alpha)
 {
     int nb, ncalc;
     double na, *bj;
-#ifndef MATHLIB_STANDALONE
-    const void *vmax;
-#endif
 
 #ifdef IEEE_754
     /* NaNs propagated correctly */
@@ -53,6 +51,7 @@ double bessel_j(double x, double alpha)
 	ML_WARNING(ME_RANGE, "bessel_j");
 	return ML_NAN;
     }
+    // ==> x >= 0  from now on
     na = floor(alpha);
     if (alpha < 0) {
 	/* Using Abramowitz & Stegun  9.1.2
@@ -67,10 +66,12 @@ double bessel_j(double x, double alpha)
     }
     nb = 1 + (int)na; /* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1); // ==> alpha' in [0, 1)
+
 #ifdef MATHLIB_STANDALONE
     bj = (double *) calloc(nb, sizeof(double));
     if (!bj) MATHLIB_ERROR("%s", _("bessel_j allocation error"));
 #else
+    const void *vmax;
     vmax = vmaxget();
     bj = (double *) R_alloc((size_t) nb, sizeof(double));
 #endif
@@ -92,13 +93,10 @@ double bessel_j(double x, double alpha)
     return x;
 }
 
-/* Called from R: modified version of bessel_j(), accepting a work array
- * instead of allocating one. */
+/* Called from R via math_2b() in ../main/arithmetic.c:
+ * modified version of bessel_j(), accepting a work array instead of allocating one.*/
 double bessel_j_ex(double x, double alpha, double *bj)
 {
-    int nb, ncalc;
-    double na;
-
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
@@ -107,19 +105,21 @@ double bessel_j_ex(double x, double alpha, double *bj)
 	ML_WARNING(ME_RANGE, "bessel_j");
 	return ML_NAN;
     }
-    na = floor(alpha);
+    // ==> x >= 0.  from now on
+    double na = floor(alpha);
     if (alpha < 0) {
 	/* Using Abramowitz & Stegun  9.1.2
 	 * this may not be quite optimal (CPU and accuracy wise) */
 	return(((alpha - na == 0.5) ? 0 : bessel_j_ex(x, -alpha, bj) * cospi(alpha)) +
 	       ((alpha      == na ) ? 0 : bessel_y_ex(x, -alpha, bj) * sinpi(alpha)));
     }
-    else if (alpha > 1e7) {
-	MATHLIB_WARNING(_("besselJ(x, nu): nu=%g too large for bessel_j() algorithm"),
+    else if (alpha > 1e7) { // NB: same bound 'besselJY_max_nu' in math_2b() and ./bessel_y.c
+	// FIXME: do better e.g., Bessel::BesselJ()
+	MATHLIB_WARNING(_("besselJ(x, nu): nu=%g > 1e7; too large for bessel_j() algorithm"),
 			alpha);
 	return ML_NAN;
     }
-    nb = 1 + (int)na; /* nb-1 <= alpha < nb */
+    int ncalc, nb = 1 + (int)na; /* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1); // ==> alpha' in [0, 1)
     J_bessel(&x, &alpha, &nb, bj, &ncalc);
     if(ncalc != nb) {/* error input */
@@ -209,76 +209,55 @@ static void J_bessel(double *x, double *alpha, int *nb,
  */
 
 /* ---------------------------------------------------------------------
-  Mathematical constants
+   Mathematical constants */
 
-   PI2	  = 2 / PI
-   TWOPI1 = first few significant digits of 2 * PI
-   TWOPI2 = (2*PI - TWOPI1) to working precision, i.e.,
-	    TWOPI1 + TWOPI2 = 2 * PI to extra precision.
+    const static double pi2 = .636619772367581343075535;           // pi2 = 2 / \pi
+
+    const static double twopi1 = 6.28125;			// twopi1 = first few significant digits of 2\pi
+    const static double twopi2 =  .001935307179586476925286767; /* twopi2 = (2*\pi - twopi1) to working precision, i.e.,
+								 * twopi1 + twopi2 = 2 \pi to extra precision.
  --------------------------------------------------------------------- */
-    const static double pi2 = .636619772367581343075535;
-    const static double twopi1 = 6.28125;
-    const static double twopi2 =  .001935307179586476925286767;
 
-/*---------------------------------------------------------------------
- *  Factorial(N)
- *--------------------------------------------------------------------- */
-    const static double fact[25] = { 1.,1.,2.,6.,24.,120.,720.,5040.,40320.,
-	    362880.,3628800.,39916800.,479001600.,6227020800.,87178291200.,
-	    1.307674368e12,2.0922789888e13,3.55687428096e14,6.402373705728e15,
-	    1.21645100408832e17,2.43290200817664e18,5.109094217170944e19,
-	    1.12400072777760768e21,2.585201673888497664e22,
-	    6.2044840173323943936e23 };
+    --b; /* so, we use  b[1] .. b[nb]  in the code below */
 
-    /* Local variables */
-    int nend, intx, nbmx, i, j, k, l, m, n, nstart;
-
-    double nu, twonu, capp, capq, pold, vcos, test, vsin;
-    double p, s, t, z, alpem, halfx, aa, bb, cc, psave, plast;
-    double tover, t1, alp2em, em, en, xc, xk, xm, psavel, gnu, xin, sum;
-
-
-    /* Parameter adjustment */
-    --b;
-
-    nu = *alpha;
-    twonu = nu + nu;
+    double nu = *alpha, // in [0, 1)   {ensured by caller bessel_j*()}
+	twonu = ldexp(nu,1); // = 2 nu = nu+nu
 
     /*-------------------------------------------------------------------
       Check for out of range arguments.
       -------------------------------------------------------------------*/
     if (*nb > 0 && *x >= 0. && 0. <= nu && nu < 1.) {
 
+	int i, m, n;
 	*ncalc = *nb;
-	if(*x > xlrg_BESS_IJ) {
-	    ML_WARNING(ME_RANGE, "J_bessel");
-	    /* indeed, the limit is 0,
-	     * but the cutoff happens too early */
-	    for(i=1; i <= *nb; i++)
-		b[i] = 0.; /*was ML_POSINF (really nonsense) */
-	    return;
-	}
-	intx = (int) (*x);
 	/* Initialize result array to zero. */
 	for (i = 1; i <= *nb; ++i)
 	    b[i] = 0.;
+	if(*x > xlrg_BESS_IJ) {
+	    ML_WARNING(ME_RANGE, "J_bessel");
+	    /* indeed, the limit is 0; but cutoff may happen too early */
+	    return;
+	}
+	int intx = (int) (*x);
 
 	/*===================================================================
 	  Branch into  3 cases :
 	  1) use 2-term ascending series for small X
 	  2) use asymptotic form for large X when NB is not too large
-	  3) use recursion otherwise
+	  3) use recursion otherwise;
 	  ===================================================================*/
 
-	if (*x < rtnsig_BESS) {
-	  /* ---------------------------------------------------------------
+	double alpem, alp2em, aa, bb, cc, p, s, en, sum, tover;
+
+	if (*x < rtnsig_BESS) { // x < 1e-4  here
+	  /* --------------------------------------------------------------- ============= branch 1)
 	     Two-term ascending series for small X.
 	     --------------------------------------------------------------- */
-	    alpem = 1. + nu;
 
-	    halfx = (*x > enmten_BESS) ? .5 * *x :  0.;
-	    aa	  = (nu != 0.)	  ? pow(halfx, nu) / (nu * Rf_gamma_cody(nu)) : 1.;
-	    bb	  = (*x + 1. > 1.)? -halfx * halfx : 0.;
+	    alpem = 1. + nu;
+	    double halfx = (*x > enmten_BESS) ? .5 * *x :  0.;
+	    aa	  = (nu != 0.) ? pow(halfx, nu) / (nu * Rf_gamma_cody(nu)) : 1.;
+	    bb	  = (*x + 1. > 1.) ? -halfx * halfx : 0.;  // manual underflow (FIXME: unneeded for IEEE?)
 	    b[1] = aa + aa * bb / alpem;
 	    if (*x != 0. && b[1] == 0.)
 		*ncalc = 0;
@@ -311,81 +290,93 @@ static void J_bessel(double *x, double *alpha, int *nb,
 		}
 	    }
 	} else if (*x > 25. && *nb <= intx + 1) {
-	    /* ------------------------------------------------------------
-	       Asymptotic series for X > 25 (and not too large nb)
+	    /* ------------------------------------------------------------ ============= branch 2)
+	       Asymptotic series for X > 25 (and not much larger nb)
 	       ------------------------------------------------------------ */
-	    xc = sqrt(pi2 / *x);
-	    xin = 1 / (64 * *x * *x);
+	    // m := #{terms in asymptotic series} to be used
 	    if (*x >= 130.)	m = 4;
 	    else if (*x >= 35.) m = 8;
-	    else		m = 11;
-	    xm = 4. * (double) m;
+	    else		m = 11; // ==> k := 2m <= 22  <==> length(fact[]) >= 23
+
+	    /*---------------------------------------------------------------------
+	     *  Factorial(N)
+	     *--------------------------------------------------------------------- */
+	    const static double fact[25] =
+		{ 1.,1.,2.,6.,24.,120.,720.,5040.,40320.,
+		  362880.,3628800.,39916800.,479001600.,6227020800.,87178291200.,
+		  1.307674368e12,2.0922789888e13,3.55687428096e14,6.402373705728e15,
+		  1.21645100408832e17,2.43290200817664e18,5.109094217170944e19,
+		  1.12400072777760768e21,2.585201673888497664e22,
+		  6.2044840173323943936e23 };
+	    double xc = sqrt(pi2 / *x),
+		xin = 1 / (64 * *x * *x),
+		xm = 4. * (double) m,
 	    /* ------------------------------------------------
 	       Argument reduction for SIN and COS routines.
 	       ------------------------------------------------ */
-	    t = trunc(*x / (twopi1 + twopi2) + .5);
-	    z = (*x - t * twopi1) - t * twopi2 - (nu + .5) / pi2;
-	    vsin = sin(z);
-	    vcos = cos(z);
-	    gnu = twonu;
+		t = trunc(*x / (twopi1 + twopi2) + .5),
+		z = (*x - t * twopi1) - t * twopi2 - (nu + .5) / pi2,
+		vsin = sin(z),
+		vcos = cos(z),
+		gnu = twonu;
 	    for (i = 1; i <= 2; ++i) {
 		s = (xm - 1. - gnu) * (xm - 1. + gnu) * xin * .5;
 		t = (gnu - (xm - 3.)) * (gnu + (xm - 3.));
-		t1= (gnu - (xm + 1.)) * (gnu + (xm + 1.));
-		k = m + m;
-		capp = s * t / fact[k];
-		capq = s * t1/ fact[k + 1];
-		xk = xm;
-		for (; k >= 4; k -= 2) {/* k + 2(j-2) == 2m */
+		int k = m + m;
+		double t1 = (gnu - (xm + 1.)) * (gnu + (xm + 1.)),
+		    capp = s * t / fact[k],
+		    capq = s * t1/ fact[k + 1],
+		    xk = xm;
+		for (; k >= 4; k -= 2) {/* k + 2(j-2) == 2m,  for j = 1,..,  */
 		    xk -= 4.;
 		    s = (xk - 1. - gnu) * (xk - 1. + gnu);
 		    t1 = t;
 		    t = (gnu - (xk - 3.)) * (gnu + (xk - 3.));
 		    capp = (capp + 1. / fact[k - 2]) * s * t  * xin;
 		    capq = (capq + 1. / fact[k - 1]) * s * t1 * xin;
-
 		}
 		capp += 1.;
 		capq = (capq + 1.) * (gnu * gnu - 1.) * (.125 / *x);
 		b[i] = xc * (capp * vcos - capq * vsin);
 		if (*nb == 1)
-		    return;
+		    return; // result:  b[i] = b[1]
 
 		/* vsin <--> vcos */ t = vsin; vsin = -vcos; vcos = t;
 		gnu += 2.;
-	    }
+	    } // end  for i = 1,2
 	    /* -----------------------------------------------
-	       If  NB > 2, compute J(X,ORDER+I)	for I = 2, NB-1
+	       If  NB > 2, compute J(X,ORDER+I)	for I = 2,.., NB-1
 	       ----------------------------------------------- */
 	    if (*nb > 2)
-		for (gnu = twonu + 2., j = 3; j <= *nb; j++, gnu += 2.)
-		    b[j] = gnu * b[j - 1] / *x - b[j - 2];
+		for (gnu = twonu + 2., i = 3; i <= *nb; i++, gnu += 2.)
+		    b[i] = gnu * b[i - 1] / *x - b[i - 2];
 	}
 	else {
 	    /* rtnsig_BESS <= x && ( x <= 25 || intx+1 < *nb ) :
-	       --------------------------------------------------------
+	       -------------------------------------------------------- ============= branch 3)
 	       Use recurrence to generate results.
 	       First initialize the calculation of P*S.
 	       -------------------------------------------------------- */
-	    nbmx = *nb - intx;
+
+	    int nbmx = *nb - intx; // = nb - floor(x)
 	    n = intx + 1;
 	    en = (double)(n + n) + twonu;
-	    plast = 1.;
 	    p = en / *x;
 	    /* ---------------------------------------------------
 	       Calculate general significance test.
 	       --------------------------------------------------- */
-	    test = ensig_BESS + ensig_BESS;
+	    double plast = 1., pold,
+		test = ensig_BESS + ensig_BESS;
 	    if (nbmx >= 3) {
 		/* ------------------------------------------------------------
 		   Calculate P*S until N = NB-1.  Check for possible overflow.
 		   ---------------------------------------------------------- */
 		tover = enten_BESS / ensig_BESS;
-		nstart = intx + 2;
-		nend = *nb - 1;
+		int nstart = intx + 2,
+		    nend = *nb - 1;
 		en = (double) (nstart + nstart) - 2. + twonu;
-		for (k = nstart; k <= nend; ++k) {
-		    n = k;
+		for (int k = nstart; k <= nend; ++k) {
+		    int n = k;
 		    en += 2.;
 		    pold = plast;
 		    plast = p;
@@ -398,8 +389,8 @@ static void J_bessel(double *x, double *alpha, int *nb,
 			tover = enten_BESS;
 			p /= tover;
 			plast /= tover;
-			psave = p;
-			psavel = plast;
+			double psave = p,
+			    psavel = plast;
 			nstart = n + 1;
 			do {
 			    ++n;
@@ -420,26 +411,27 @@ static void J_bessel(double *x, double *alpha, int *nb,
 			--n;
 			en -= 2.;
 			nend = min0(*nb,n);
-			for (l = nstart; l <= nend; ++l) {
+			for (int i = nstart; i <= nend; ++i) {
 			    pold = psavel;
 			    psavel = psave;
 			    psave = en * psavel / *x - pold;
 			    if (psave * psavel > test) {
-				*ncalc = l - 1;
+				*ncalc = i - 1;
 				goto L190;
 			    }
 			}
 			*ncalc = nend;
 			goto L190;
-		    }
-		}
+		    } // p > tover
+		} // for(k ..)
+		/* get here only if *never* (p > tover) above */
 		n = nend;
 		en = (double) (n + n) + twonu;
 		/* -----------------------------------------------------
 		   Calculate special significance test for NBMX > 2.
 		   -----------------------------------------------------*/
 		test = fmax2(test, sqrt(plast * ensig_BESS) * sqrt(p + p));
-	    }
+	    } // end if{ nbmx >= 3 }
 	    /* ------------------------------------------------
 	       Calculate P*S until significance test passes. */
 	    do {
@@ -459,7 +451,7 @@ L190:
 	    bb = 0.;
 	    aa = 1. / p;
 	    m = n / 2;
-	    em = (double)m;
+	    double em = (double)m;
 	    m = (n << 1) - (m << 2);/* = 2 n - 4 (n/2)
 				       = 0 for even, 2 for odd n */
 	    if (m == 0)
@@ -469,13 +461,13 @@ L190:
 		alp2em = em + em + nu;
 		sum = aa * alpem * alp2em / em;
 	    }
-	    nend = n - *nb;
+	    int nend = n - *nb;
 	    /* if (nend > 0) */
 	    /* --------------------------------------------------------
 	       Recur backward via difference equation, calculating
 	       (but not storing) b[N], until N = NB.
 	       -------------------------------------------------------- */
-	    for (l = 1; l <= nend; ++l) {
+	    for (int i = 0; i < nend; ++i) {
 		--n;
 		en -= 2.;
 		cc = bb;
@@ -493,24 +485,20 @@ L190:
 			alpem = 1.;
 		    sum = (sum + aa * alp2em) * alpem / em;
 		}
-	    }
+	    } //-> new n := n - (n - nb) = nb
 	    /*--------------------------------------------------
 	      Store b[NB].
 	      --------------------------------------------------*/
 	    b[n] = aa;
 	    if (nend >= 0) {
-		if (*nb <= 1) {
-		    if (nu + 1. == 1.)
-			alp2em = 1.;
-		    else
-			alp2em = nu;
-		    sum += b[1] * alp2em;
+		if (n <= 1) {
+		    sum += b[1] * ((nu + 1. == 1.) ? 1. : nu);
 		    goto L250;
 		}
 		else {/*-- nb >= 2 : ---------------------------
 			Calculate and store b[NB-1].
 			----------------------------------------*/
-		    --n;
+		    --n; // => n = nb-1
 		    en -= 2.;
 		    b[n] = en * aa / *x - bb;
 		    if (n == 1)
@@ -566,7 +554,7 @@ L250:
 	    if(fabs(nu) > 1e-15)
 		sum *= (Rf_gamma_cody(nu) * pow(.5* *x, -nu));
 
-	    aa = enmten_BESS;
+	    aa = enmten_BESS; // 8.9e-308 (for R in ./bessel.h)
 	    if (sum > 1.)
 		aa *= sum;
 	    for (n = 1; n <= *nb; ++n) {
@@ -579,8 +567,9 @@ L250:
 
     }
     else {
-      /* Error return -- X, NB, or ALPHA is out of range : */
+      /* Error return -- X = *x, NB = *nb, or ALPHA = nu is out of range
+	 -- should never happen when called from bessel_j_ex() above, called from R: */
 	b[1] = 0.;
-	*ncalc = min0(*nb,0) - 1;
+	*ncalc = min0(*nb,0) - 1; //  <=  -1
     }
 }
