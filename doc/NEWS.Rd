@@ -559,6 +559,9 @@
       matrices, also when \code{lag * dif > nrow(m)} (\PR{18972}, thanks to
       \I{Mikael Jagan} and \I{Suharto Anggono}).
       \code{diff(<ts-matrix>)} remains matrix, even when it has length zero.
+
+      \item \code{besselJ(1, 1e-15)} and similar now give correct results,
+      thanks to \I{Leo Mada} and other \dQuote{R-help}ers.
     }
   }
 }

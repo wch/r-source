@@ -217,6 +217,7 @@ static void J_bessel(double *x, double *alpha, int *nb,
     const static double twopi2 =  .001935307179586476925286767; /* twopi2 = (2*\pi - twopi1) to working precision, i.e.,
 								 * twopi1 + twopi2 = 2 \pi to extra precision.
  --------------------------------------------------------------------- */
+#define very_small_nu  0x1p-800 // 2^-800 = 1.4996968....e-241
 
     --b; /* so, we use  b[1] .. b[nb]  in the code below */
 
@@ -245,6 +246,7 @@ static void J_bessel(double *x, double *alpha, int *nb,
 	  1) use 2-term ascending series for small X
 	  2) use asymptotic form for large X when NB is not too large
 	  3) use recursion otherwise;
+	   3b:  if 0 < |nu| = |alpha| < very_small_nu, use nu = very_small_nu
 	  ===================================================================*/
 
 	double alpem, alp2em, aa, bb, cc, p, s, en, sum, tover;
@@ -357,6 +359,11 @@ static void J_bessel(double *x, double *alpha, int *nb,
 	       Use recurrence to generate results.
 	       First initialize the calculation of P*S.
 	       -------------------------------------------------------- */
+
+	    if(nu != 0. && fabs(nu) < very_small_nu) {
+		nu = (nu < 0.) ? -very_small_nu : very_small_nu; // in R <= 4.5.2  besselJ(2, 2e-16) gave 1.119e+15
+		twonu = ldexp(nu, 1);
+	    }
 
 	    int nbmx = *nb - intx; // = nb - floor(x)
 	    n = intx + 1;
@@ -492,7 +499,7 @@ L190:
 	    b[n] = aa;
 	    if (nend >= 0) {
 		if (n <= 1) {
-		    sum += b[1] * ((nu + 1. == 1.) ? 1. : nu);
+		    sum += b[1] * ((nu == 0.) ? 1. : nu); // as |nu| >=  very_small_nu
 		    goto L250;
 		}
 		else {/*-- nb >= 2 : ---------------------------
@@ -550,17 +557,22 @@ L250:
 	    /* ---------------------------------------------------
 	       Normalize.  Divide all b[N] by sum.
 	       ---------------------------------------------------*/
-/*	    if (nu + 1. != 1.) poor test */
-	    if(fabs(nu) > 1e-15)
+	    // NB. ensured above that |nu| >= very_small_nu
+	    if(nu != 0.) { /* was if(fabs(nu) > very_small_nu) , was if(nu + 1. != 1.); then '> 1e-15' .. */
 		sum *= (Rf_gamma_cody(nu) * pow(.5* *x, -nu));
+	    }
 
+#ifdef UNDERFLOW_NOT_GOOD_ENOUGH
 	    aa = enmten_BESS; // 8.9e-308 (for R in ./bessel.h)
 	    if (sum > 1.)
 		aa *= sum;
+#endif
 	    for (n = 1; n <= *nb; ++n) {
+#ifdef UNDERFLOW_NOT_GOOD_ENOUGH
 		if (fabs(b[n]) < aa)
 		    b[n] = 0.;
 		else
+#endif
 		    b[n] /= sum;
 	    }
 	}
