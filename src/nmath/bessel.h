@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2014  R Core Team
+ *  Copyright (C) 2001-2026  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@
 	    ENTEN is machine-representable in working precision
    ENSIG  = 10 ^ NSIG
    RTNSIG = 10 ^ (-K) for the smallest int K such that K >= NSIG/4
-   ENMTEN = Smallest ABS(X) such that X/4 does not underflow
+   ENMTEN = Smallest ABS(X) such that X/4 does not underflow  [ ~= 4 * DBL_MIN ]
    XINF	  = Largest positive machine number; approximately beta ^ maxexp
 	    == DBL_MAX (defined in  #include <float.h>)
    SQXMIN = Square root of beta ^ minexp = sqrt(DBL_MIN)
@@ -48,25 +48,27 @@
 	  = beta ^ (-p)	 == DBL_EPSILON
 
 
-  For I :
+ For I :
 
    EXPARG = Largest working precision argument that the library
 	    EXP routine can handle and upper limit on the
 	    magnitude of X when IZE=1; approximately LOG(beta ^ maxexp)
 
-  For I and J :
+ For I and J :
 
-   xlrg_IJ = xlrg_BESS_IJ (was = XLARGE). Upper limit on the magnitude of X
-	    (when IZE=2 for I()).  Bear in mind that if floor(abs(x)) =: N, then
+   xlrg_BESS_IJ (was = XLARGE) = xlrg_IJ  in table below.
+            Upper limit on the magnitude of X (when IZE=2 for I()).
+	    Bear in mind that if floor(abs(x)) =: N, then
 	    at least N iterations of the backward recursion will be executed.
 	    The value of 10 ^ 4 was used till Feb.2009, when it was increased
 	    to 10 ^ 5 (= 1e5).
 
-  For j :
+ For J :
+
    XMIN_J  = Smallest acceptable argument for RBESY; approximately
 	    max(2*beta ^ minexp, 2/XINF), rounded up
 
-  For Y :
+ For Y :
 
    xlrg_Y =  (was = XLARGE). Upper bound on X;
 	    approximately 1/DEL, because the sine and cosine functions
@@ -77,7 +79,7 @@
 	    approximately AINT(-LOG10(EPS/2.0))+1.0
 
 
-  For K :
+ For K :
 
    xmax_k =  (was = XMAX). Upper limit on the magnitude of X when ize = 1;
 	    i.e. maximal x for UNscaled answer.
@@ -136,7 +138,8 @@ And routine specific :
 #define sqxmin_BESS_K	1.49e-154
 
 /* x < eps_sinc	 <==>  sin(x)/x == 1 (particularly "==>");
-  Linux (around 2001-02) gives 2.14946906753213e-08
+  Linux (around 2001-02) gives 2.14946906753213e-08; 2026-01: 2.14911933289082e-8  ("=" Solaris 2.5.1 below !)
   Solaris 2.5.1		 gives 2.14911933289084e-08
 */
-#define M_eps_sinc	2.149e-8
+#define M_eps_sinc	2.149119e-8
+

@@ -245,7 +245,7 @@ static void I_bessel(double *x, double *alpha, int *nb,
 	(1 <= *ize && *ize <= 2) ) {
 
 	*ncalc = *nb;
-	if(*ize == 1 && *x > exparg_BESS) {
+	if(*ize == 1 && *x > exparg_BESS) { // x > 709
 	    for(k=1; k <= *nb; k++)
 		bi[k]=ML_POSINF; /* the limit *is* = Inf */
 	    return;

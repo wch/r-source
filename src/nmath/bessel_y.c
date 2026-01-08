@@ -59,7 +59,7 @@ double bessel_y(double x, double alpha)
 	return(((alpha - na == 0.5) ? 0 : bessel_y(x, -alpha) * cospi(alpha)) -
 	       ((alpha      == na ) ? 0 : bessel_j(x, -alpha) * sinpi(alpha)));
     }
-    else if (alpha > 1e7) {
+    else if (alpha > 1e7) { // NB: same bound 'besselJY_max_nu' in math_2b() and ./bessel_j.c
 	MATHLIB_WARNING(_("besselY(x, nu): nu=%g too large for bessel_y() algorithm"),
 			alpha);
 	return ML_NAN;
@@ -99,8 +99,8 @@ double bessel_y(double x, double alpha)
     return x;
 }
 
-/* Called from R: modified version of bessel_y(), accepting a work array
- * instead of allocating one. */
+/* Called from R via math_2b() in ../main/arithmetic.c:
+ * modified version of bessel_y(), accepting a work array instead of allocating one. */
 double bessel_y_ex(double x, double alpha, double *by)
 {
     int nb, ncalc;
@@ -121,7 +121,7 @@ double bessel_y_ex(double x, double alpha, double *by)
 	return(((alpha - na == 0.5) ? 0 : bessel_y_ex(x, -alpha, by) * cospi(alpha)) -
 	       ((alpha      == na ) ? 0 : bessel_j_ex(x, -alpha, by) * sinpi(alpha)));
     }
-    else if (alpha > 1e7) {
+    else if (alpha > 1e7) { // NB: same bound 'besselJY_max_nu' in math_2b() and ./bessel_j.c
 	MATHLIB_WARNING(_("besselY(x, nu): nu=%g too large for bessel_y() algorithm"),
 			alpha);
 	return ML_NAN;
