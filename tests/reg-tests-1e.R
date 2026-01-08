@@ -2491,6 +2491,35 @@ stopifnot(endsWith(rd, "Ja\u00e9n."), grepl("Os Economistas", rd))
 ## error in a barrier build.
 order(NA_character_, 'c', method = 'radix', na.last = NA)
 
+## provideDimnames(use.names=) for names(dimnames(.))
+pDF <- provideDimnames
+formals(pDF)$base <- quote(list("uu" = "a", "vv" = "b"))
+pDT <- pDF
+formals(pDT)$use.names <- TRUE
+dn <- function(x, dn = dimnames(x))
+    if(!is.null(dn)) list(names(dn), `names<-`(dn, NULL))
+dnF <- function(...) dn(pDF(...))
+dnT <- function(...) dn(pDT(...))
+(N4 <- N4. <- array(0, rep(1L, 4L)))
+dimnames(N4.) <- `names<-`(vector("list", 4L), c("ww", "", "", ""))
+N4.
+L4 <- L4. <- list(NULL, list("a", "b", "a", "b"))
+L4.[[1L]] <- names(dimnames(N4.))
+stopifnot(identical(dnF(N4 ), L4 ),
+          identical(dnF(N4.), L4.),
+          identical(dnT(N4 , sep = "~"),
+                    `[[<-`(L4 , 1L, c("uu", "vv", "uu~1", "vv~1"))),
+          identical(dnT(N4., unique = FALSE),
+                    `[[<-`(L4., 1L, c("ww", "vv", "uu"  , "vv"  ))),
+          ## now composition ('T' always wins):
+          vapply(list(N4, N4.),
+                 function(.) identical(pDF(pDF(.)), pDF(.)) &&
+                             identical(pDF(pDT(.)), pDT(.)) &&
+                             identical(pDT(pDF(.)), pDT(.)) &&
+                             identical(pDT(pDT(.)), pDT(.)),
+                 FALSE))
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

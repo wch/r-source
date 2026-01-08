@@ -165,6 +165,9 @@
 
       \item \code{match.arg()} gets a new option \code{several.ok = "all"},
       fulfilling the wish of \I{Jim Hester} in \PR{16659}.
+
+      \item \code{provideDimnames()} gets new switch \code{use.names}, as
+      proposed including patch by \I{Mikael Jagan}, in \PR{18975}.
     }
   }
 
