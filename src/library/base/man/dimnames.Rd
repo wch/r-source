@@ -1,6 +1,6 @@
 % File src/library/base/man/dimnames.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dimnames}
@@ -32,7 +32,7 @@ provideDimnames(x, sep = "", base = list(. = LETTERS), unique = TRUE,
     examples.}
   \item{unique}{logical indicating that the dimnames constructed are
     unique within each dimension in the sense of \code{\link{make.unique}}.}
-  \item{use.names}{a logical indicating if \code{names(dimnames(base))}
+  \item{use.names}{a logical indicating if \code{names(base)}
     is used to replace empty elements of \code{names(dimnames(x))}.  If
     \code{TRUE}, then \code{unique} and \code{sep} apply to the
     constructed names, as well.}
