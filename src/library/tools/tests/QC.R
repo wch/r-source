@@ -32,3 +32,23 @@ tryCatch(
   error = function(e) err <<- e
 )
 stopifnot(!is.null(err))
+
+
+## Rdiff(nullPointers=TRUE) did not convert glibc's (nil) and so
+## reported false positive differences if <pointer: (nil)> was not
+## a leading substring
+RdiffLines <- function(txt0, txt1) {
+    con0 <- textConnection(txt0)
+    con1 <- textConnection(txt1)
+    on.exit({ close(con0); close(con1) })
+    Rdiff(con0, con1, Log = TRUE)
+}
+txt0 <- c(LETTERS, "<pointer: (nil)>", "... <pointer: (nil)>", letters)
+txt1 <- c(LETTERS, "<pointer: 0xfff>", "... <pointer: 0xfff>", letters)
+L <- RdiffLines(txt0, txt1) # previous output:
+## 
+## 27c27
+## < ... <pointer: (nil)>
+## ---
+## > ... <pointer: 0>
+stopifnot(identical(L, list(status = 0L, out = character(0L))))

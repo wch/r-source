@@ -180,7 +180,7 @@ Rdiff <- function(from, to, useDiff = FALSE, forEx = FALSE,
         if (nullPointers) {
             ## remove pointer addresses from listings
             ## useBytes=TRUE as some tests intentionally use invalid strings
-            txt <- gsub("<(environment|bytecode|pointer|promise): [x[:xdigit:]]+>", "<\\1: 0>", txt,
+            txt <- gsub("<(environment|bytecode|pointer|promise): ([x[:xdigit:]]+|[(]nil[)])>", "<\\1: 0>", txt,
                         useBytes = TRUE)
             ## standardize hashtable, pro tem
             ## useBytes=TRUE as some tests intentionally use invalid strings
