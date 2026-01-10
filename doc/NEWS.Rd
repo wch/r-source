@@ -272,7 +272,9 @@
       \code{STRING_PTR}, \code{DATAPTR}, \code{XTRUELENGTH},
       \code{R_duplicate_attr}, \code{R_shallow_duplicate_attr},
       \code{getConnection}, \code{LEVELS}, \code{SETLEVELS},
-      \code{R_data_class}.
+      \code{R_data_class},
+      \code{SET_GROWABLE_BIT}, \code{TRUELENGTH}, \code{SET_TRUELENGTH},
+      \code{SETLENGTH}.
 
       \item The deprecated macros \code{CHARACTER_DATA} and
       \code{CHARACTER_POINTER} now return \code{const} pointers since using
