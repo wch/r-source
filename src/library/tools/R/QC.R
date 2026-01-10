@@ -4596,7 +4596,8 @@ function(package, lib.loc = NULL)
                    config_val_to_logical)
     }
     if(check_without_loading)
-        env <- suppressWarnings(suppressMessages(getNamespace(package)))
+        env <- suppressWarnings(suppressMessages(loadNamespace(package,
+                                                               lib.loc)))
     ## look for globalVariables declaration in package
     ## (This loads the namespace if not already loaded.)
     .glbs <- suppressMessages(utils::globalVariables(, package))
