@@ -561,7 +561,7 @@
       \code{diff(<ts-matrix>)} remains matrix, even when it has length zero.
 
       \item \code{besselJ(1, 1e-15)} and similar now give correct results,
-      thanks to \I{Leo Mada} and other \dQuote{R-help}ers.
+      thanks to \I{Leo Mada} and other \I{\dQuote{R-help}ers}.
     }
   }
 }
