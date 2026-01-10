@@ -125,7 +125,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                             v2 / (9 * n * (n - 1) * (n - 2))
 
                     if(exact && TIES)
-                        warning("Cannot compute exact p-value with ties")
+                        warning("cannot compute exact p-value with ties")
                     if (continuity) S <- sign(S) * (abs(S) - 1)
                     STATISTIC <- c(z = S / sqrt(var_S))
 		    PVAL <- switch(alternative,
@@ -168,7 +168,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 STATISTIC <- c(S = q)
                 if(TIES && exact){
                     exact <- FALSE
-                    warning("Cannot compute exact p-value with ties")
+                    warning("cannot compute exact p-value with ties")
                 }
                 PVAL <-
                     switch(alternative,

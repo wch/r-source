@@ -212,7 +212,7 @@ msgid "cannot compute estimate, returning NA"
 msgstr "kann keinen Schätzer berechnen, gebe NA zurück"
 
 msgid "cannot compute exact p-value with ties"
-msgstr "kann bei Bindungen keinen exakten p-Wert Berechnen"
+msgstr "kann bei Bindungen keinen exakten p-Wert berechnen"
 
 msgid "cannot compute exact confidence intervals with ties"
 msgstr "Kann kein exaktes Konfidenzintervall bei Bindungen berechnen"

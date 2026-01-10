@@ -222,7 +222,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
         if(exact && TIES) {
             warning("cannot compute exact p-value with ties")
             if(conf.int)
-                warning("cannot compute exact confidence intervals with ties")
+                warning("cannot compute exact confidence interval with ties")
         }
     }
 
