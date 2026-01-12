@@ -1224,7 +1224,7 @@ msgid "file %s is not a macOS binary package"
 msgstr "le fichier %s n'est pas un package binaire macOS"
 
 msgid "package %s successfully unpacked and MD5 sums checked"
-msgstr "le package %s a été décompressé et les sommes MD5 ont été vérifiées avec succés"
+msgstr "le package %s a été décompressé et les sommes MD5 ont été vérifiées avec succès"
 
 msgid ""
 "ERROR: failed to lock directory %s for modifying\n"
