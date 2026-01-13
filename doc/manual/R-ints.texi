@@ -3050,6 +3050,13 @@ this component should be set to 1.
 If the device does not provide support, this component should
 be set to 0.
 
+@item The @code{variableFonts} component reports whether variable fonts
+(when rendering glyphs, e.g., via @code{grDevices::glyphFont()}) are supported.
+If the device supports variable fonts
+this component should be set to 1.
+If the device does not provide support, this component should
+be set to 0.
+
 @end itemize
 
 The graphics engine provides constants like 
