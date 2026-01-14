@@ -514,8 +514,11 @@
       notably when \code{v} is not integer, thanks to \I{Suharto Anggono}'s
       remarks on the mailing list R-devel.
 
-      On Windows terminals \kbd{Ctrl-C} now breaks out of waiting for
+      \item On Windows terminals \kbd{Ctrl-C} now breaks out of waiting for
       keyboard input, fixing \PR{18982}.
+
+      \item \code{pretty(ch)} again correctly works with \code{ch} a
+      character vector of numbers.
     }
   }
 }

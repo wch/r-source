@@ -1,7 +1,7 @@
 #  File src/library/base/R/pretty.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,8 @@ pretty <- function(x, ...) UseMethod("pretty")
 .pretty <- function(x, n = 5L, min.n = n %/% 3L, shrink.sml = 0.75,
                     high.u.bias = 1.5, u5.bias = .5 + 1.5*high.u.bias,
                     eps.correct = 0L, f.min = 2^-20, bounds = TRUE) {
-    x <- x[is.finite(x <- as.numeric(x))]
+    x <- as.numeric(x)
+    x <- x[is.finite(x)]
     if(length(x)) # return  list(l=, u=, n=) or list(ns=, nu=, n=, unit=)
         .Internal(pretty(min(x), max(x), n, min.n, shrink.sml,
                          c(high.u.bias, u5.bias, f.min), eps.correct, bounds))
@@ -34,7 +35,8 @@ pretty.default <-
 {
     chkDots(..., allowed = "nint") # avoid typos
                          ## ^^^^^ workaround *some* package use
-    x <- x[is.finite(x <- as.numeric(x))]
+    x <- as.numeric(x)
+    x <- x[is.finite(x)]
     if(!length(x)) return(x)
     z <- .Internal(pretty(min(x), max(x), n, min.n, shrink.sml,
                           c(high.u.bias, u5.bias, f.min), eps.correct, bounds))
