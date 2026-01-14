@@ -65,7 +65,7 @@ pretty(x, \dots)
   \code{pretty} ignores non-finite values in \code{x}.
 
   Let \code{d <- max(x) - min(x)} \eqn{\ge 0}.
-  If \code{d} is not (very close) to 0, we let \code{c <- d/n},
+  If \code{d} is not (very close to) 0, we let \code{c <- d/n},
   otherwise more or less \code{c <- max(abs(range(x)))*shrink.sml / min.n}.
   Then, the \emph{10 base} \code{b} is
   \eqn{10^{\lfloor{\log_{10}(c)}\rfloor}}{10^(floor(log10(c)))} such
@@ -89,7 +89,8 @@ pretty(x, \dots)
   (min.n = 1, shrink.sml = 0.25, high.u.bias = 0.8, u5.bias = 1.7,
    f.min = 1.125, eps.correct = 2, bounds = FALSE)}
 }
-\value{\code{pretty()} returns an numeric vector of \emph{approximately}
+\value{
+  \code{pretty()} returns a numeric vector of \emph{approximately}
   \code{n} increasing numbers which are \dQuote{pretty} in decimal notation.
   (in extreme range cases, the numbers can no longer be \dQuote{pretty}
   given the other constraints; e.g., for \code{pretty(..)} %  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< FIXME

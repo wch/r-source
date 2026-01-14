@@ -55,13 +55,15 @@ x \%notin\% table
   }
 }
 \details{
-  \code{\%in\%} is currently defined as \cr
-  \code{`\%in\%` <- function(x, table) match(x, table, nomatch = 0L) > 0L}
-
+  \code{\%in\%} is currently defined as
+\preformatted{
+  `\%in\%` <- function(x, table) match(x, table, nomatch = 0L) > 0L
+}
   \code{\%notin\%} could succinctly be defined as \code{\link{Negate}(`\%in\%`)},
-  but for symmetry and efficiency is \cr
-  \code{`\%notin\%` <- function(x, table) match(x, table, nomatch = 0L) == 0L}
-
+  but for symmetry and efficiency is
+\preformatted{
+  `\%notin\%` <- function(x, table) match(x, table, nomatch = 0L) == 0L
+}
   Factors, raw vectors and lists are converted to character vectors,
   internally classed objects are transformed via \code{\link{mtfrm}}, and
   then \code{x} and \code{table} are coerced to a common type (the later

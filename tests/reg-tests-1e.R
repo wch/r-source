@@ -2532,7 +2532,7 @@ stopifnot(all.equal(bJ16xct, bJ[1:16]),
 ## besselJ(x, nu)'s C code now works for very small nu
 
 
-## pretty(<char>) bug introduced > 25 yrs ago
+## pretty(<char>) bug introduced > 15 yrs ago
 stopifnot(identical(20 * 0:5, pretty(c("1", "9", "100"))))
 ## wrongly gave  0 2 4 6 8 10
 

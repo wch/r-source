@@ -16,7 +16,7 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-R_bibliographies_dir <- 
+R_bibliographies_dir <-
 function()
     file.path(R.home("share"), "bibliographies")
 
@@ -28,9 +28,9 @@ function()
 
 ## utils:::.bibentry_get_key
 .bibentry_get_key <-
-function (x) 
+function (x)
 {
-    if(!length(x)) 
+    if(!length(x))
         return(character())
     keys <- lapply(unclass(x), attr, "key")
     keys[!lengths(keys)] <- ""
@@ -85,7 +85,7 @@ function(keys)
         y <- y[pos]
     }
     if(length(bad)) {
-        msg <- paste(c("Could not find bibentries for the following keys:\n", 
+        msg <- paste(c("Could not find bibentries for the following keys:",
                        .strwrap22(sQuote(bad))),
                      collapse = "\n")
         warning(msg, call. = FALSE)
@@ -169,7 +169,7 @@ function(package, dir, lib.loc = NULL)
         else
             setdiff(cites, shows)
     }
-    Filter(length, lapply(x, f))    
+    Filter(length, lapply(x, f))
 }
 
 .bibentries_cited_or_shown <-
@@ -190,12 +190,12 @@ function(x) {
 
 ## This somewhat duplicates the code in the helpers: ideally we could
 ## have the same code for extracting the keys ...
-.bibkeys_from_cite <- 
+.bibkeys_from_cite <-
 function(x)
 {
     x <- trimws(x)
     given <- strsplit(x, "(?<!\\\\),[[:space:]]*", perl = TRUE)[[1L]]
-    parts <- regmatches(given, gregexpr("|", given, fixed = TRUE), 
+    parts <- regmatches(given, gregexpr("|", given, fixed = TRUE),
         invert = TRUE)
     keys <- rep_len("", length(parts))
     if (any(ind <- (lengths(parts) == 1L))) {

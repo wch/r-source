@@ -74,7 +74,7 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   %% bsdtar had lzma/xz support before April 2009 when it added
   %% support for command-line unxz etc, not just libraries.
   \item{support_old_tars}{logical.  If false (the default), the external
-    \command{tar} command is assumed to be able handle compressed
+    \command{tar} command is assumed to be able to handle compressed
     tarfiles and if \code{compressed} does not specify it, to
     automagically detect the type of compression.  (The major
     implementations have done so since 2009; for GNU \command{tar} since
