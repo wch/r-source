@@ -226,9 +226,10 @@
       others depending on them.  (Packages can request C++17 if
       essential.)
 
-      For now this can be selected by configuring \R{} with
-      \option{--with-CXX20}: it is planned that this will become the
-      default before release.
+      For now this default can be selected by configuring \R{} with
+      \option{--with-CXX20}: the changeover is scheduled for
+      2026-02-08.  For ways to test a package with C++20, see
+      \url{https://www.stats.ox.ac.uk/pub/bdr/C++20/README.txt}.
     }
   }
 
