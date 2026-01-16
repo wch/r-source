@@ -5,11 +5,11 @@ bibentry(bibtype = "Book",
                     person(given = c("Irene", "A."),
                            family = "Stegun")),
          title = "Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables",
-         publisher = "Dover",
+         publisher = "Dover Publications",
          year = "1972",
          address = "New York",
-         isbn = "0471800074",
-         pointers = "https://permalink.obvsg.at/AC05624541")
+         isbn = "0486612724",
+         pointers = "https://permalink.obvsg.at/AC00256630")
 
 bibentry(bibtype = "Article",
          key = "R:Ahrens+Dieter:1973",
