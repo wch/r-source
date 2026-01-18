@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2025-02-20 r87768) -- "Unsuffered Consequences"
-Copyright (C) 2025 The R Foundation for Statistical Computing
+R Under development (unstable) (2026-01-16 r89305) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -451,7 +451,7 @@ b 1.2+11i 2.4+23.141593i
  Mean   :14.74   Mean   :6.084   112    :  3   Mean   : 45.60   Mean   :0.15422  
  3rd Qu.:20.00   3rd Qu.:6.600   135    :  3   3rd Qu.: 47.55   3rd Qu.:0.21925  
  Max.   :23.00   Max.   :7.700   (Other):147   Max.   :370.00   Max.   :0.81000  
-                                 NA's   : 16                                     
+                                 NAs    : 16                                     
 > lst <- levels(attenu$station)
 > levels(attenu$station)[lst == "117"] <- paste(rep(letters,3),collapse="")
 > summary(attenu) # {2 + one long + 2 } variables
@@ -470,7 +470,7 @@ b 1.2+11i 2.4+23.141593i
  112                                                                           :  3  
  135                                                                           :  3  
  (Other)                                                                       :147  
- NA's                                                                          : 16  
+ NAs                                                                           : 16  
       dist            accel        
  Min.   :  0.50   Min.   :0.00300  
  1st Qu.: 11.32   1st Qu.:0.04425  

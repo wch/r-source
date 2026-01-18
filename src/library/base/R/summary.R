@@ -1,7 +1,7 @@
 #  File src/library/base/R/summary.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,14 +29,12 @@ summary.default <- function(object, ..., digits, quantile.type = 7)
 	    return(summary.matrix(object, digits = digits, quantile.type=quantile.type, ...))
     }
 
-    value <- if(is.logical(object)) # scalar or array!
-	c(Mode = "logical",
-          {tb <- table(object, exclude = NULL, useNA = "ifany") # incl. NA s
-           if(!is.null(n <- dimnames(tb)[[1L]]) && any(iN <- is.na(n)))
-               dimnames(tb)[[1L]][iN] <- "NA's"
-           tb
-           })
-    else if(is.numeric(object)) {
+    value <- if(is.logical(object)) { # scalar or array!
+        tb <- table(object, exclude = NULL, useNA = "ifany") # incl. NAs
+        if(!is.null(n <- dimnames(tb)[[1L]]) && any(iN <- is.na(n)))
+            dimnames(tb)[[1L]][iN] <- "NAs"
+        c(Mode = "logical", tb)
+    } else if(is.numeric(object)) {
 	nas <- is.na(object)
 	object <- object[!nas]
 	qq <- stats::quantile(object, names = FALSE, type = quantile.type)
@@ -44,7 +42,7 @@ summary.default <- function(object, ..., digits, quantile.type = 7)
 	if(!missing(digits)) qq <- signif(qq, digits)
 	names(qq) <- c("Min.", "1st Qu.", "Median", "Mean", "3rd Qu.", "Max.")
 	if(any(nas))
-	    c(qq, "NA's" = sum(nas))
+	    c(qq, "NAs" = sum(nas))
 	else qq
     } else if(is.recursive(object) && !is.language(object) &&
 	      (n <- length(object))) { # do not allow long dims
@@ -75,12 +73,12 @@ format.summaryDefault <- function(x, digits = max(3L, getOption("digits") - 3L),
       xx[finite] <- zapsmall(x[finite], digits = digs + zdigits)
     }
     class(xx) <- class(x)[-1]
-    m <- match("NA's", names(x), 0)
+    m <- match("NAs", names(x), 0)
     if((iD <- inherits(x, "Date")) | (iP <- inherits(x, "POSIXct")) || inherits(x, "difftime")) {
         c(format(xx, digits = if(iP) 0L else digits),
-          "NA's" = if(length(a <- attr(x, "NAs"))) as.character(a))
+          "NAs" = if(length(a <- attr(x, "NAs"))) as.character(a))
     } else if(m && !is.character(x))
-        c(format(xx[-m], digits=digits, ...), "NA's" = as.character(xx[m]))
+        c(format(xx[-m], digits=digits, ...), "NAs" = as.character(xx[m]))
     else  format(xx,     digits=digits, ...)
 }
 
@@ -102,11 +100,11 @@ print.summaryDefault <- function(x, digits = max(3L, getOption("digits") - 3L), 
             if(no.q) quote <- FALSE
         }
         xx <- c(format(xx, digits = digits, with.units = FALSE),
-                "NA's" = if(length(a <- attr(x, "NAs"))) as.character(a))
+                "NAs" = if(length(a <- attr(x, "NAs"))) as.character(a))
         print(xx, quote = quote, ...)
         return(invisible(x))
-    } else if((m <- match("NA's", names(xx), 0L)) && !is.character(x))
-        xx <- c(format(xx[-m], digits=digits), "NA's" = as.character(xx[m]))
+    } else if((m <- match("NAs", names(xx), 0L)) && !is.character(x))
+        xx <- c(format(xx[-m], digits=digits), "NAs" = as.character(xx[m]))
     print.table(xx, digits=digits, ...)
     invisible(x)
 }
@@ -124,7 +122,7 @@ summary.factor <- function(object, maxsum = 100L, ...)
 	o <- sort.list(tt, decreasing = TRUE)
 	tt <- c(tt[o[ - drop]], "(Other)" = sum(tt[o[drop]]))
     }
-    if(ana) c(tt, "NA's" = sum(nas)) else tt
+    if(ana) c(tt, "NAs" = sum(nas)) else tt
 }
 
 summary.matrix <- function(object, ...) {

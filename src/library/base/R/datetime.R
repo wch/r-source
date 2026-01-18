@@ -459,7 +459,7 @@ print.POSIXlt <- function(x, tz = "", usetz = TRUE, max = NULL,
 summary.POSIXct <- function(object, digits = 15L, ...)
 {
     x <- summary.default(unclass(object), digits = digits, ...)
-    if(m <- match("NA's", names(x), 0L)) {
+    if(m <- match("NAs", names(x), 0L)) {
         NAs <- as.integer(x[m])
         x <- x[-m]
         attr(x, "NAs") <- NAs
@@ -950,7 +950,7 @@ summary.difftime <-
 function(object, digits = getOption("digits"), ...)
 {
     x <- summary.default(unclass(object), digits = digits, ...)
-    if(m <- match("NA's", names(x), 0L)) {
+    if(m <- match("NAs", names(x), 0L)) {
         NAs <- as.integer(x[m])
         x <- x[-m]
         attr(x, "NAs") <- NAs

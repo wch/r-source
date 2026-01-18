@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2025-08-11 r88568) -- "Unsuffered Consequences"
-Copyright (C) 2025 The R Foundation for Statistical Computing
+R Under development (unstable) (2026-01-16 r89305) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -1808,7 +1808,7 @@ x4          0.4999091  0.1178189 4.243028 0.002164602
  Mean   :14.74   Mean   :6.084   112    :  3   Mean   : 45.60  
  3rd Qu.:20.00   3rd Qu.:6.600   135    :  3   3rd Qu.: 47.55  
  Max.   :23.00   Max.   :7.700   (Other):147   Max.   :370.00  
-                                 NA's   : 16                   
+                                 NAs    : 16                   
      accel        
  Min.   :0.00300  
  1st Qu.:0.04425  
@@ -2994,15 +2994,15 @@ Warning: not plotting observations with leverage one:
                                  Mean   :43.92   Mean   :17.15  
                                  3rd Qu.:48.50   3rd Qu.:18.70  
                                  Max.   :59.60   Max.   :21.50  
-                                 NA's   :2       NA's   :2      
+                                 NAs    :2       NAs    :2      
   flipper_len      body_mass        sex           year     
  Min.   :172.0   Min.   :2700   female:165   Min.   :2007  
  1st Qu.:190.0   1st Qu.:3550   male  :168   1st Qu.:2007  
- Median :197.0   Median :4050   NA's  : 11   Median :2008  
+ Median :197.0   Median :4050   NAs   : 11   Median :2008  
  Mean   :200.9   Mean   :4202                Mean   :2008  
  3rd Qu.:213.0   3rd Qu.:4750                3rd Qu.:2009  
  Max.   :231.0   Max.   :6300                Max.   :2009  
- NA's   :2       NA's   :2                                 
+ NAs    :2       NAs    :2                                 
 > summary(penguins_raw) # not useful for character vectors
   studyName         Sample Number      Species             Region         
  Length:344         Min.   :  1.00   Length:344         Length:344        
@@ -3027,7 +3027,7 @@ Warning: not plotting observations with leverage one:
  Mean   :2008-11-27   Mean   :43.92      Mean   :17.15     Mean   :200.9      
  3rd Qu.:2009-11-16   3rd Qu.:48.50      3rd Qu.:18.70     3rd Qu.:213.0      
  Max.   :2009-12-01   Max.   :59.60      Max.   :21.50     Max.   :231.0      
-                      NA's   :2          NA's   :2         NA's   :2          
+                      NAs    :2          NAs    :2         NAs    :2          
  Body Mass (g)      Sex            Delta 15 N (o/oo) Delta 13 C (o/oo)
  Min.   :2700   Length:344         Min.   : 7.632    Min.   :-27.02   
  1st Qu.:3550   Class :character   1st Qu.: 8.300    1st Qu.:-26.32   
@@ -3035,7 +3035,7 @@ Warning: not plotting observations with leverage one:
  Mean   :4202                      Mean   : 8.733    Mean   :-25.69   
  3rd Qu.:4750                      3rd Qu.: 9.172    3rd Qu.:-25.06   
  Max.   :6300                      Max.   :10.025    Max.   :-23.79   
- NA's   :2                         NA's   :14        NA's   :13       
+ NAs    :2                         NAs    :14        NAs    :13       
    Comments        
  Length:344        
  Class :character  
@@ -3073,15 +3073,15 @@ Warning: not plotting observations with leverage one:
                    Mean   :2008-11-27   Mean   :43.92      Mean   :17.15    
                    3rd Qu.:2009-11-16   3rd Qu.:48.50      3rd Qu.:18.70    
                    Max.   :2009-12-01   Max.   :59.60      Max.   :21.50    
-                                        NA's   :2          NA's   :2        
+                                        NAs    :2          NAs    :2        
  Flipper Length (mm) Body Mass (g)      Sex      Delta 15 N (o/oo)
  Min.   :172.0       Min.   :2700   FEMALE:165   Min.   : 7.632   
  1st Qu.:190.0       1st Qu.:3550   MALE  :168   1st Qu.: 8.300   
- Median :197.0       Median :4050   NA's  : 11   Median : 8.652   
+ Median :197.0       Median :4050   NAs   : 11   Median : 8.652   
  Mean   :200.9       Mean   :4202                Mean   : 8.733   
  3rd Qu.:213.0       3rd Qu.:4750                3rd Qu.: 9.172   
  Max.   :231.0       Max.   :6300                Max.   :10.025   
- NA's   :2           NA's   :2                   NA's   :14       
+ NAs    :2           NAs    :2                   NAs    :14       
  Delta 13 C (o/oo)                                  Comments  
  Min.   :-27.02    Nest never observed with full clutch.: 34  
  1st Qu.:-26.32    Not enough blood for isotopes.       :  7  
@@ -3089,7 +3089,7 @@ Warning: not plotting observations with leverage one:
  Mean   :-25.69    No blood sample obtained for sexing. :  2  
  3rd Qu.:-25.06    No blood sample obtained.            :  2  
  Max.   :-23.79    (Other)                              :  5  
- NA's   :13        NA's                                 :290  
+ NAs    :13        NAs                                  :290  
 > 
 > ## visualise distribution across factors
 > plot(island ~ species, data = penguins)

@@ -520,6 +520,11 @@
 
       \item \code{pretty(ch)} again correctly works with \code{ch} a
       character vector of numbers.
+
+      \item The default \code{summary()} and its factor method now
+      label missing values \samp{NAs} rather than \samp{NA's},
+      fixing a decades-old grammatical faux pas inherited from S
+      (\PR{16348} and \PR{18948}).
     }
   }
 }
