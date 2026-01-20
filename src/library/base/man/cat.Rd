@@ -26,7 +26,9 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
     by \file{cmd}, by opening a pipe connection.
 #endif
   }
-  \item{sep}{a character vector of strings to append after each element.}
+  \item{sep}{a character vector of strings to append after each element,
+    except the last. Elements of \code{sep} are used in turn and recycled 
+    as needed.}
   \item{fill}{a logical or (positive) numeric controlling how the output is
     broken into successive lines.  If \code{FALSE} (default), only newlines
     created explicitly by \samp{"\\n"} are printed.  Otherwise, the
@@ -48,7 +50,7 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
   \code{cat} is useful for producing output in user-defined functions.
   It converts its arguments to character vectors, concatenates
   them to a single character vector, appends the given \code{sep = }
-  string(s) to each element and then outputs them.
+  string(s) to each element, except the last, and then outputs them.
 
   No line feeds (aka \dQuote{newline}s) are output unless explicitly
   requested by \samp{"\\n"}
@@ -77,9 +79,9 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
   same field width for all elements.
 }
 \note{
-  If any element of \code{sep} contains a newline character, it is
-  treated as a vector of terminators rather than separators, an element
-  being output after every vector element \emph{and} a newline after the
+  If any element of \code{sep} contains a newline character,
+  an element is
+  output after every vector element, and only a newline after the
   last.  Entries are recycled as needed.
 }
 \value{
