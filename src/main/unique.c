@@ -1526,8 +1526,8 @@ attribute_hidden SEXP do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
 
-    if ((!isVector(CAR (args)) && !isNull(CAR (args))) ||
-	(!isVector(CADR(args)) && !isNull(CADR(args))))
+    if ((!OBJECT(CAR (args)) && !isVector(CAR (args)) && !isNull(CAR (args))) ||
+	(!OBJECT(CADR(args)) && !isVector(CADR(args)) && !isNull(CADR(args))))
 	error(_("'match' requires vector arguments"));
 
     int nomatch = asInteger(CADDR(args));
