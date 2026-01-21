@@ -358,7 +358,7 @@
       \item \code{chol(x, pivot=TRUE)} now zeroes the trailing submatrix when
       the algorithm stops early. Following the help page instructions on
       how to reconstruct the matrix in positive semidefinite cases gave
-      incorrect results if the rank was 2 or more less than the dimension.
+      incorrect results if the rank was 2 or more less than the dimension
       (\PR{15853}).
 
       \item Profiling \code{"mle"} objects (\pkg{stats4} package) could fail
@@ -2233,7 +2233,7 @@
 
       \item \code{pairwise.t.test()} misbehaved when subgroups had 0 \abbr{DF}
       for variance, even with \code{pool.sd = TRUE}.  (\PR{18594} by
-      Jack Berry).
+      Jack Berry.)
 
       \item Probability distribution functions \code{[dpq]<distrib>(x, *)},
       but also \code{bessel[IKJY](x, .)} now consistently preserve
@@ -3667,7 +3667,7 @@
 
       \item (macOS) The run-time check for libraries from \I{XQuartz} for
       X11 and Tcl/Tk no longer uses \code{otool} from the Apple
-      Developer Tools (PR#18400).
+      Developer Tools (\PR{18400}).
 
       \item The \LaTeX style for producing the PDF manuals, \file{Rd.sty},
       now loads the standard \samp{amsmath}, \samp{amsfonts} and
@@ -3766,7 +3766,7 @@
 
       \item \command{Rterm} support for \code{Alt+xxx} sequences has been
       fixed to produce the corresponding character (only) once. This fixes
-      pasting text with tilde on Italian keyboard (PR#18391).
+      pasting text with tilde on Italian keyboard (\PR{18391}).
     }
   }
 }
@@ -4523,8 +4523,8 @@
       explicit \code{domain = *} specification in such cases.
 
       \item \code{identical(attrib.as.set=FALSE)} now works correctly with
-      data frames with default row names (Thanks to \I{Charlie Gao}'s
-      \PR{18179}).
+      data frames with default row names.  (Thanks to \I{Charlie Gao}'s
+      \PR{18179}.)
 
       \item \code{txtProgressBar()} now enforces a non-zero width for
       argument \code{char}, without which no progress can be visible.
