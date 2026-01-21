@@ -55,16 +55,16 @@ p.adjust.methods
 
   The \code{"BH"} (aka \code{"fdr"}) and \code{"BY"} methods of
   \I{Benjamini}, \I{Hochberg}, and \I{Yekutieli} control the false discovery rate,
-  \I{FDR}, the expected proportion of false discoveries amongst the
+  \acronym{FDR}, the expected proportion of false discoveries amongst the
   rejected hypotheses.
 
-  The \code{"BY"} correction modifies the \I{BH} procedure by replacing the
+  The \code{"BY"} correction modifies the \acronym{BH} procedure by replacing the
   target level \eqn{q} with \eqn{q / \sum_{i=1}^{m} 1/i}, where \eqn{m} is
   the number of tests (Theorem 1.3 in the reference), which controls the
-  \I{FDR} under the most general form of dependence structure.  This will
+  \acronym{FDR} under the most general form of dependence structure.  This will
   be more conservative than \code{"BH"}, for small \code{p} even more than
   \I{Bonferroni}, see the example.
-  The \I{FDR} as implemented by the \code{"BH"} method is a less stringent
+  The \acronym{FDR} as implemented by the \code{"BH"} method is a less stringent
   condition than the family-wise error rate, so it is typically more
   powerful than the others.
 
