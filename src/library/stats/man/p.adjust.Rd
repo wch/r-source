@@ -1,6 +1,6 @@
 % File src/library/stats/man/p.adjust.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{p.adjust}
@@ -55,10 +55,18 @@ p.adjust.methods
 
   The \code{"BH"} (aka \code{"fdr"}) and \code{"BY"} methods of
   \I{Benjamini}, \I{Hochberg}, and \I{Yekutieli} control the false discovery rate,
-  the expected proportion of false discoveries amongst the rejected
-  hypotheses.  The false discovery rate is a less stringent condition
-  than the family-wise error rate, so these methods are more powerful
-  than the others.
+  \I{FDR}, the expected proportion of false discoveries amongst the
+  rejected hypotheses.
+
+  The \code{"BY"} correction modifies the \I{BH} procedure by replacing the
+  target level \eqn{q} with \eqn{q / \sum_{i=1}^{m} 1/i}, where \eqn{m} is
+  the number of tests (Theorem 1.3 in the reference), which controls the
+  \I{FDR} under the most general form of dependence structure.  This will
+  be more conservative than \code{"BH"}, for small \code{p} even more than
+  \I{Bonferroni}, see the example.
+  The \I{FDR} as implemented by the \code{"BH"} method is a less stringent
+  condition than the family-wise error rate, so it is typically more
+  powerful than the others.
 
   Note that you can set \code{n} larger than \code{length(p)} which
   means the unobserved p-values are assumed to be greater than all the
@@ -99,15 +107,44 @@ p.adjust.M <- p.adjust.methods[p.adjust.methods != "fdr"]
 p.adj    <- sapply(p.adjust.M, function(meth) p.adjust(p, meth))
 p.adj.60 <- sapply(p.adjust.M, function(meth) p.adjust(p, meth, n = 60))
 stopifnot(identical(p.adj[,"none"], p), p.adj <= p.adj.60)
+
 round(p.adj, 3)
 ## or a bit nicer:
-noquote(apply(p.adj, 2, format.pval, digits = 3))
+head(round(100 * p.adj[,c(7,1:6)], 2), n=21) # in [percent]:
+##       none  holm hochberg hommel bonferroni   BH    BY
+##  [1,] 0.00  0.00     0.00   0.00       0.00 0.00  0.01 *)
+##  [2,] 0.00  0.10     0.10   0.10       0.11 0.04  0.19 *)
+##  [3,] 0.00  0.12     0.12   0.12       0.13 0.04  0.19 *)
+##  [4,] 0.01  0.46     0.46   0.42       0.49 0.09  0.43
+##  [5,] 0.01  0.48     0.48   0.45       0.53 0.09  0.43
+##  .... ..........    ............       ...............
+##  .... ..........    ............      ................
+## [18,] 0.88 29.06    29.06  27.30      44.03 2.45 11.00
+## [19,] 0.94 30.08    30.08  29.14      47.01 2.47 11.13
+## [20,] 1.13 35.02    35.02  33.89      56.49 2.82 12.71
+## [21,] 2.12 63.45    63.45  57.11     100.00 5.04 22.66
+##
+## *) The smallest 3 Bonferroni values are smaller than the "BY" ones,
+##    (John Maindonald, PR#17136)
 
+## number of rejected H0 ("P" < 0.05):
+colSums(p.adj < 0.05)
+## holm   hochberg     hommel bonferroni         BH         BY       none 
+##   11         11         11         11         20         12         22 
 
-## and a graphic:
+## visual comparison
 matplot(p, p.adj, ylab="p.adjust(p, meth)", type = "l", asp = 1, lty = 1:6,
-        main = "P-value adjustments")
-legend(0.7, 0.6, p.adjust.M, col = 1:6, lty = 1:6)
+        col = 1:7, main = "P-value adjustments")
+legR <- function() {
+  legend("bottomright", p.adjust.M, col = 1:7, lty = 1:6, bty = "n", inset = 0.05)
+  rug(p) }
+legR()
+
+## zoom in & log scale
+lim <- c(7e-7, .20)
+matplot(p, p.adj, ylab="p.adjust(p, meth)", type = "l", asp = 1, lty = 1:6, col = 1:7,
+        main = "P-value adjustments [log-log]", log = "xy", xlim=lim, ylim=lim, las=1)
+legR()
 
 ## Can work with NAs:
 pN <- p; iN <- c(46, 47); pN[iN] <- NA
