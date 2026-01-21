@@ -1263,7 +1263,8 @@ if(FALSE) {
 
 
         if (more_than_libs) {
-            for (f in c("NAMESPACE", "LICENSE", "LICENCE", "NEWS", "NEWS.md"))
+            for (f in c("NAMESPACE", "LICENSE", "LICENCE",
+                        "NEWS", "NEWS.md", "README.md"))
                 if (file.exists(f)) {
                     file.copy(f, instdir, TRUE)
 		    Sys.chmod(file.path(instdir, f), fmode)
@@ -2907,8 +2908,8 @@ if(FALSE) {
     {
         cat(paste(HTMLheader(title,
                              logo = staticLogoPath(dir, relative = TRUE, Rhome = "../../..", dir = TRUE),
-                             Rhome="../../..",
-                             up="../../../doc/html/packages.html",
+                             Rhome = "../../..",
+                             up = "../../../doc/html/packages.html",
                              css = "R.css"),
                   collapse = "\n"),
            '<h2>Documentation for package &lsquo;', pkg, '&rsquo; version ',
@@ -2918,21 +2919,27 @@ if(FALSE) {
             ## These days we should really always have UTF-8 ...
             if(!is.na(encoding) && (encoding == "UTF-8"))
                 "; charset=utf-8",
-            '">DESCRIPTION file</a>.</li>\n',
-            sep = "", file=conn)
+            '">DESCRIPTION file</a></li>\n',
+            sep = "", file = conn)
 	if (file.exists(file.path(outDir, "doc")))
-	    cat('<li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>\n',
-                file=conn)
+	    cat('<li><a href="../doc/index.html">User guides, package vignettes and other documentation</a></li>\n',
+                file = conn)
 	if (file.exists(file.path(outDir, "demo")))
 	    cat('<li><a href="../demo">Code demos</a>.  Use <a href="../../utils/help/demo">demo()</a> to run them.</li>\n',
-                sep = "", file=conn)
+                sep = "", file = conn)
         for(nfile in c("NEWS", "NEWS.Rd", "NEWS.md")) {
             if(file.exists(file.path(outDir, nfile))) {
-                cat('<li><a href="../', nfile, '">Package NEWS</a>.</li>\n',
-                    sep = "", file=conn)
+                cat('<li><a href="../', nfile, '">Package NEWS</a></li>\n',
+                    sep = "", file = conn)
                 break
             }
         }
+        ## <FIXME>
+        ## NOTYET: uncomment when dynamic help supports README.md.
+        ## if(file.exists(file.path(outDir, "README.md")))
+        ##     cat('<li><a href="../README.md">Package README</a></li>\n',
+        ##         sep = "", file = conn)
+        ## </FIXME>
 
         cat('</ul>\n\n<h2>Help Pages</h2>\n\n\n',
             sep ="", file = conn)
