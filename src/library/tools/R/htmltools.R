@@ -193,3 +193,33 @@ function(urls, verbose = interactive(), Ncpus = .Ncpus_default()) {
                                      verbose = verbose, Ncpus = Ncpus)
     tidy_validate_db(results, urls)
 }
+
+.get_local_img_src_paths_in_HTML_file <-
+function(f)
+{
+    doc <- xml2::read_html(f)
+    if(!inherits(doc, "xml_node"))
+        return(character())
+    nodes <- xml2::xml_find_all(doc, "(//img | //embed)")
+    paths <- unique(xml2::xml_attr(nodes, "src"))
+    paths <- paths[!grepl("^https?://|^data:", paths)]
+    paths <- sub("[?]raw=true$", "", paths)
+    paths
+}
+
+.README_md_to_HTML <-
+function(rfile)
+{
+    if(!nzchar(Sys.which("pandoc")) ||
+       !requireNamespace("xml2", quietly = TRUE))
+        return(NULL)
+    tfile <- tempfile("README", fileext = ".html")
+    on.exit(unlink(tfile))
+    out <- .pandoc_md_for_CRAN(rfile, tfile)
+    if(out$status)
+        return(NULL)
+    paths <- dirname(.get_local_img_src_paths_in_HTML_file(tfile))
+    if(!all(paths %in% c("man/figures", "./man/figures")))
+        return(NULL)
+    readLines(tfile, encoding = "UTF-8")
+}

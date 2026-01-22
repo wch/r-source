@@ -670,8 +670,13 @@ httpd <- function(path, query, ...)
     	                 "content-type" = paste0("text/plain",
                                                  charsetSetting(pkg) ) ) )
     } else if (grepl(readmeRegexp, path)) {
-    	pkg <- sub(readmeRegexp, "\\1", path)        
-    	    return( list(file = system.file("README.md", package = pkg),
+    	pkg <- sub(readmeRegexp, "\\1", path)
+        rfile <- system.file("README.md", package = pkg)
+        formatted <- .README_md_to_HTML(rfile)
+        if(length(formatted))
+            return( list(payload = paste(formatted, collapse="\n")) )
+        else
+    	    return( list(file = rfile,
     	                 "content-type" = paste0("text/plain",
                                                  charsetSetting(pkg) ) ) )
     } else if (grepl(figureRegexp, path)) {
