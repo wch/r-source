@@ -4615,14 +4615,14 @@ add_dummies <- function(dir, Log)
             exsave <- file.path(pkgdir, test_dir, "Examples",
                                 paste0(pkgname, "-Ex.Rout.save"))
             if (do_diff && file.exists(exsave)) {
-                checkingLog(Log, "differences from ",
-                            sQuote(basename(exout)),
-                            " to ", sQuote(basename(exsave)))
+                checkingLog(Log, "for differences from example reference output")
                 cmd <- paste0("invisible(tools::Rdiff('",
                               exout, "', '", exsave, "',TRUE,TRUE))")
                 out <- R_runR0(cmd, R_opts2)
                 if(length(out)) {
                     noteLog(Log)
+                    printLog0(Log, "Comparing ", sQuote(basename(exout)),
+                              " to ", sQuote(basename(exsave)), ":\n")
                     printLog0(Log, paste(out, collapse = "\n"), "\n")
                 }
                 else
