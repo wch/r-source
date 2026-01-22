@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2025 The R Core Team.
+ *  Copyright (C) 1998--2026 The R Core Team.
  *  Copyright (C) 2003--2023 The R Foundation
  *  Copyright (C) 1995--1997 Robert Gentleman and Ross Ihaka
  *
@@ -656,6 +656,10 @@ attribute_hidden SEXP R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     SEXP val;
     /* need to preserve object here, as *_binary copies class attributes */
     if (TYPEOF(x) == CPLXSXP || TYPEOF(y) == CPLXSXP) {
+/* TODO: if not both are CPLX, work with "coordinate-wise   scalar o <2D-vector> "
+   1) can be *faster* for all ops
+   2) for '*' and '/' (with  y  DBL/INT/LGL ) really different use C standard <real> o <cmplx>
+*/
 	COERCE_IF_NEEDED(x, CPLXSXP, xpi);
 	COERCE_IF_NEEDED(y, CPLXSXP, ypi);
 	val = complex_binary(oper, x, y);
@@ -1373,14 +1377,14 @@ attribute_hidden SEXP do_abs(SEXP call, SEXP op, SEXP args, SEXP env)
 static SEXP math2(SEXP sa, SEXP sb, double (*f)(double, double),
 		  SEXP lcall)
 {
-    SEXP sy;
-    R_xlen_t i, ia, ib, n, na, nb;
-    double ai, bi, *y;
-    const double *a, *b;
-
     /* for 0-length a we want the attributes of a,
        as no recycling will occur */
 #define SETUP_Math2					\
+    SEXP sy;						\
+    R_xlen_t i, ia, ib, n, na, nb;			\
+    double ai, bi, *y;					\
+    const double *a, *b;				\
+							\
     if (!isNumeric(sa) || !isNumeric(sb))		\
 	errorcall(lcall, R_MSG_NONNUM_MATH);		\
 							\
@@ -1428,11 +1432,6 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)(double, double),
 static SEXP math2_1(SEXP sa, SEXP sb, SEXP sI,
 		    double (*f)(double, double, int), SEXP lcall)
 {
-    SEXP sy;
-    R_xlen_t i, ia, ib, n, na, nb;
-    double ai, bi, *y;
-    const double *a, *b;
-
     SETUP_Math2;
     int m_opt = asInteger(sI);
 
@@ -1453,11 +1452,6 @@ static SEXP math2_1(SEXP sa, SEXP sb, SEXP sI,
 static SEXP math2_2(SEXP sa, SEXP sb, SEXP sI1, SEXP sI2,
 		    double (*f)(double, double, int, int), SEXP lcall)
 {
-    SEXP sy;
-    R_xlen_t i, ia, ib, n, na, nb;
-    double ai, bi, *y;
-    const double *a, *b;
-
     SETUP_Math2;
     int i_1 = asInteger(sI1),
 	i_2 = asInteger(sI2);
@@ -1481,20 +1475,13 @@ static SEXP math2_2(SEXP sa, SEXP sb, SEXP sI1, SEXP sI2,
 static SEXP math2B(SEXP sa, SEXP sb, double (*f)(double, double, double *),
 		   SEXP lcall)
 {
-    SEXP sy;
-    R_xlen_t i, ia, ib, n, na, nb;
-    double ai, bi, *y;
-    const double *a, *b;
-    double amax, *work;
-    size_t nw;
-
 #define besselJY_max_nu 1e7
 
     SETUP_Math2;
 
     /* allocate work array for BesselJ, BesselY large enough for all
        arguments */
-    amax = 0.0;
+    double amax = 0.0;
     for (i = 0; i < nb; i++) {
 	double av = b[i] < 0 ? -b[i] : b[i];
 	if (amax < av)
@@ -1503,8 +1490,8 @@ static SEXP math2B(SEXP sa, SEXP sb, double (*f)(double, double, double *),
     if (amax > besselJY_max_nu)
 	amax = besselJY_max_nu; // and warning will happen in ../nmath/bessel_[jy].c
     const void *vmax = vmaxget();
-    nw = 1 + (size_t)floor(amax);
-    work = (double *) R_alloc(nw, sizeof(double));
+    size_t nw = 1 + (size_t)floor(amax);
+    double *work = (double *) R_alloc(nw, sizeof(double));
 
     MOD_ITERATE2(n, na, nb, i, ia, ib, {
 //	if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
