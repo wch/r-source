@@ -2934,12 +2934,9 @@ if(FALSE) {
                 break
             }
         }
-        ## <FIXME>
-        ## NOTYET: uncomment when dynamic help supports README.md.
-        ## if(file.exists(file.path(outDir, "README.md")))
-        ##     cat('<li><a href="../README.md">Package README</a></li>\n',
-        ##         sep = "", file = conn)
-        ## </FIXME>
+        if(file.exists(file.path(outDir, "README.md")))
+            cat('<li><a href="../README.md">Package README</a></li>\n',
+                sep = "", file = conn)
 
         cat('</ul>\n\n<h2>Help Pages</h2>\n\n\n',
             sep ="", file = conn)

@@ -394,6 +394,7 @@ httpd <- function(path, query, ...)
     DemoRegexp <- "^/library/([^/]*)/Demo/([^/]*)$"
     ExampleRegexp <- "^/library/([^/]*)/Example/([^/]*)$"
     newsRegexp <- "^/library/([^/]*)/NEWS([.](Rd|md))?$"
+    readmeRegexp <- "^/library/([^/]*)/README[.]md$"    
     figureRegexp <- "^/library/([^/]*)/(help|html)/figures/([^/]*)$"
     logoRegexp <- "^/library/([^/]*)/logo$"
     sessionRegexp <- "^/session/"
@@ -666,7 +667,13 @@ httpd <- function(path, query, ...)
     	    return( list(payload = paste(formatted, collapse="\n")) )
     	else
     	    return( list(file = system.file("NEWS", package = pkg),
-    	                 "content-type" = paste0("text/plain", charsetSetting(pkg) ) ) )
+    	                 "content-type" = paste0("text/plain",
+                                                 charsetSetting(pkg) ) ) )
+    } else if (grepl(readmeRegexp, path)) {
+    	pkg <- sub(readmeRegexp, "\\1", path)        
+    	    return( list(file = system.file("README.md", package = pkg),
+    	                 "content-type" = paste0("text/plain",
+                                                 charsetSetting(pkg) ) ) )
     } else if (grepl(figureRegexp, path)) {
         pkg <- sub(figureRegexp, "\\1", path)
         fig <- sub(figureRegexp, "\\3", path)
