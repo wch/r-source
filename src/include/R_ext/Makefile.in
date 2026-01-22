@@ -16,11 +16,11 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 ## API per se. 
 R_EXT_HEADERS = \
   Altrep.h \
-  Applic.h Arith.h BLAS.h Boolean.h Callbacks.h Complex.h Connections.h \
+  Applic.h Arith.h BLAS.h Boolean.h Complex.h Connections.h \
   Constants.h Error.h GetX11Image.h \
   GraphicsDevice.h GraphicsEngine.h Itermacros.h \
   Lapack.h Linpack.h MathThreads.h Memory.h QuartzDevice.h \
-  Parse.h Print.h PrtUtil.h RS.h Rallocators.h Random.h \
+  Parse.h Print.h RS.h Rallocators.h Random.h \
   Rdynload.h Riconv.h RStartup.h Utils.h eventloop.h libextern.h \
   stats_package.h stats_stubs.h Visibility.h ObjectTable.h
 

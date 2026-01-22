@@ -1930,7 +1930,7 @@ The @command{Rgui.exe} console is a Windows application: writing to
 @code{stdout} or @code{stderr} will not produce output in the
 console.  (This will work with @command{Rterm.exe}.)  Use @code{Rprintf} or
 @code{REprintf} instead.  These are declared in header file
-@file{R_ext/PrtUtil.h}.
+@file{R_ext/Print.h}.
 
 Note that output from the console is delayed (@pxref{The output to the
 console seems to be delayed}), so that you will not normally see any
