@@ -2530,18 +2530,25 @@ add_dummies <- function(dir, Log)
                 bad <- tryCatch(R(.check_Rd_bibentries_cited_not_shown,
                                   list(dir = pkgdir)),
                                 error = identity)
-                if(!inherits(bad, "error") && length(bad)) {
+                ume <- isTRUE(attr(bad, "unexpected_macro_expansion"))
+                if(!inherits(bad, "error") && (ume || length(bad))) {
                     if(!any) {
                         noteLog(Log)
                         any <- TRUE
                     }
+                    msg <- if(ume)
+                               "Found bibentries with unexpected macro expansions.  Rebuild with R >= 4.6.0?"
+                           else
+                               character()
                     fmt <- function(u, v) {
                         c(sprintf("Bibentries cited but not shown in Rd file %s:",
                                   sQuote(u)),
                           .strwrap22(sQuote(v), ", "))
                     }
-                    msg <- unlist(Map(fmt, names(bad), bad),
-                                  use.names = FALSE)
+                    if(length(bad))
+                        msg <- c(msg,
+                                 unlist(Map(fmt, names(bad), bad),
+                                        use.names = FALSE))
                     printLog0(Log, paste(msg, collapse = "\n"), "\n")
                 }
             }
