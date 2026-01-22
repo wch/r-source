@@ -13,7 +13,14 @@ exp(c(-745:-740, -730, -720, -710:-705))
 
 # IEC60559 mandates this, but C99/C11 do not.
 # Mingw-w64 did not do so in v 2.0.1
-x <- 0*(-1) # negative zero
-sqrt(x)
+(x <- 0*(-1)) # negative zero (prints as '0' in R on purpose!)
+rt_0 <- sqrt(x) # ditto  -- but sprintf() shows "-0" :
 sprintf("%g, rt = %g, .^2 = %g", x, sqrt(x), x^2)
-identical(x, sqrt(x))
+stopifnot(exprs = {
+    identical(1/ x, -Inf)
+    identical(1/-x, +Inf)
+    identical(x, -x,) # default num.eq=TRUE  ==> -0 "identical" 0
+    ! identical(x, -x,    num.eq=FALSE) # but not bitwise identical
+    identical(x, sqrt(x), num.eq=FALSE) # sqrt(-0) == -0
+    identical(-x, x^2,    num.eq=FALSE) # (-0)^2   == +0 = --0
+})

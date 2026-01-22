@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2026-01-21 r89314) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -52,11 +52,17 @@ Type 'q()' to quit R.
 > 
 > # IEC60559 mandates this, but C99/C11 do not.
 > # Mingw-w64 did not do so in v 2.0.1
-> x <- 0*(-1) # negative zero
-> sqrt(x)
+> (x <- 0*(-1)) # negative zero (prints as '0' in R on purpose!)
 [1] 0
+> rt_0 <- sqrt(x) # ditto  -- but sprintf() shows "-0" :
 > sprintf("%g, rt = %g, .^2 = %g", x, sqrt(x), x^2)
 [1] "-0, rt = -0, .^2 = 0"
-> identical(x, sqrt(x))
-[1] TRUE
-> 
+> stopifnot(exprs = {
++    identical(1/ x, -Inf)
++    identical(1/-x, +Inf)
++    identical(x, -x,) # default num.eq=TRUE  ==> -0 "identical" 0
++    ! identical(x, -x,    num.eq=FALSE) # but not bitwise identical
++    identical(x, sqrt(x), num.eq=FALSE) # sqrt(-0) == -0
++    identical(-x, x^2,    num.eq=FALSE) # (-0)^2   == +0 = --0
++ })
+>
