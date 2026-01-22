@@ -3617,7 +3617,7 @@ R-admin, R Installation and Administration}
 for further details.
 
 @item
-Optionally (including by @command{R CMD check --as-cran}) the HTML
+Optionally (including by @command{R CMD check --as-cran}) the @HTML{}
 version of the manual is created and checked for compliance with the
 HTML5 standard.  This requires a recent version@footnote{for the most
 comprehensive checking this should be 5.8.0 or later: any for which
@@ -3912,7 +3912,8 @@ the contents will be copied to subdirectory @file{doc} when the package
 is installed.  Pointers from package help indices to the installed
 documents are automatically created.  Documents in @file{inst/doc} can
 be in arbitrary format, however we strongly recommend providing them in
-PDF format, so users on almost all platforms can easily read them.  To
+@HTML{} or PDF formats, so users on almost all platforms can easily read
+them.  To 
 ensure that they can be accessed from a browser (as an @HTML{} index is
 provided), the file names should start with an @acronym{ASCII} letter
 and be comprised entirely of @acronym{ASCII} letters or digits or hyphen
@@ -4031,9 +4032,10 @@ unless a file @file{index.html} exists in directory
 the package.  If you do supply a @file{inst/doc/index.html} file it
 should contain relative links only to files under the installed
 @file{doc} directory, or perhaps (not really an index) to @HTML{} help
-files or to the @file{DESCRIPTION} file, and be valid @HTML{} as
-confirmed @emph{via} the @uref{https://validator.w3.org, W3C Markup
-Validation Service} or @uref{https://validator.nu/, Validator.nu}.
+files (see below) or to the @file{DESCRIPTION} file (using hyperlinks
+with relative paths of the form @code{../DESCRIPTION}), and be valid
+@HTML{} as confirmed @emph{via} the @uref{https://validator.w3.org, W3C
+Markup Validation Service} or @uref{https://validator.nu/, Validator.nu}.
 
 Sweave/@I{Stangle} allows the document to specify the @code{split=TRUE}
 option to create a single @R{} file for each code chunk: this will not
@@ -4055,6 +4057,14 @@ a file @file{vignettes/.install_extras} which specifies these as
 Perl-like regular expressions on one or more lines.  (See the
 description of the @file{.Rinstignore} file for full details.)
 
+Packages can hyperlink from their vignette outputs to their help topics
+or files using relative paths of the form @code{../help/@var{topic}} or
+@code{../html/@var{file}.html}, respectively.  Using relative paths of
+the form @code{../../@var{pkg}/help/@var{topic}} or
+@code{../../@var{pkg}/html/@var{file}.html}, one can hyperlink to the
+help topics or files of package @var{pkg}.  These hyperlinks will work
+in dynamic @HTML{} help (and also for the @abbr{CRAN} package web
+pages).
 
 @node Encodings and vignettes
 @subsection Encodings and vignettes
@@ -8151,6 +8161,12 @@ Packages referred to by these `other forms' should be declared in the
 @file{DESCRIPTION} file, in the @samp{Depends}, @samp{Imports},
 @samp{Suggests} or @samp{Enhances} fields.
 
+Packages can hyperlink from their help pages to their vignette outputs
+using @code{\url@{@}} or @code{\href@{@}@{@}} with relative paths of the
+form @code{../doc/@var{file.ext}} as URLs.  Using relative paths of the
+form @code{../../@var{pkg}/doc/@var{file.ext}}, one can hyperlink to the
+vignette outputs of package @var{pkg}.  These hyperlinks will work in
+dynamic @HTML{} help (and also for the @abbr{CRAN} package web pages).
 
 @node Mathematics
 @section Mathematics
