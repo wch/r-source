@@ -18,7 +18,8 @@
 
 summary <- function (object, ...) UseMethod("summary")
 
-summary.default <- function(object, ..., digits, quantile.type = 7)
+summary.default <- function(object, ..., digits, quantile.type = 7,
+                            character.method = c("default", "factor"))
 {
     if(is.factor(object))
 	return(summary.factor(object, ...))
@@ -44,6 +45,20 @@ summary.default <- function(object, ..., digits, quantile.type = 7)
 	if(any(nas))
 	    c(qq, "NAs" = sum(nas))
 	else qq
+    } else if(is.character(object) && !is.null(character.method)) {
+        character.method <- match.arg(character.method)
+        if(character.method == "factor")
+            return(summary.factor(factor(object), ...))
+        nas <- is.na(object)
+        object <- object[!nas]
+        ncs <- nchar(object, allowNA = TRUE) # NA if "bytes"-encoded
+        nna <- sum(nas)
+        c(Length    = length(nas),
+          N.unique  = length(unique(object)), # NA excluded
+          N.blank   = length(grep("^[ \t\r\n]*$", object, perl = TRUE)), # trimws()
+          Min.nchar = min(ncs),
+          Max.nchar = max(ncs),
+          NAs       = if(nna > 0) nna)
     } else if(is.recursive(object) && !is.language(object) &&
 	      (n <- length(object))) { # do not allow long dims
 	sumry <- array("", c(n, 3L), list(names(object),
@@ -67,6 +82,7 @@ summary.default <- function(object, ..., digits, quantile.type = 7)
 format.summaryDefault <- function(x, digits = max(3L, getOption("digits") - 3L), zdigits = 4L, ...)
 {
     xx <- x
+    ## FIXME: zapsmall should happen without the "NAs" count
     if(is.numeric(x) || is.complex(x)) {
       finite <- is.finite(x)
       digs <- digits %||% eval(formals()$digits) # use <default> if NULL
@@ -77,11 +93,12 @@ format.summaryDefault <- function(x, digits = max(3L, getOption("digits") - 3L),
     if((iD <- inherits(x, "Date")) | (iP <- inherits(x, "POSIXct")) || inherits(x, "difftime")) {
         c(format(xx, digits = if(iP) 0L else digits),
           "NAs" = if(length(a <- attr(x, "NAs"))) as.character(a))
-    } else if(m && !is.character(x))
+    } else if(m && !is.character(x) && !is.integer(x))
         c(format(xx[-m], digits=digits, ...), "NAs" = as.character(xx[m]))
     else  format(xx,     digits=digits, ...)
 }
 
+## to be consolidated
 print.summaryDefault <- function(x, digits = max(3L, getOption("digits") - 3L), zdigits = 4, ...)
 {
     xx <- x
@@ -103,7 +120,7 @@ print.summaryDefault <- function(x, digits = max(3L, getOption("digits") - 3L), 
                 "NAs" = if(length(a <- attr(x, "NAs"))) as.character(a))
         print(xx, quote = quote, ...)
         return(invisible(x))
-    } else if((m <- match("NAs", names(xx), 0L)) && !is.character(x))
+    } else if((m <- match("NAs", names(xx), 0L)) && !is.character(x) && !is.integer(x))
         xx <- c(format(xx[-m], digits=digits), "NAs" = as.character(xx[m]))
     print.table(xx, digits=digits, ...)
     invisible(x)

@@ -168,6 +168,11 @@
 
       \item \code{provideDimnames()} gets new switch \code{use.names}, as
       proposed including patch by \I{Mikael Jagan}, in \PR{18975}.
+
+      \item The default \code{summary()} is more informative for
+      character vectors, optionally resorting to the factor method
+      via the new argument \code{character.method = "factor"}, e.g.,
+      when summarizing a data frame (\PR{16750}).
     }
   }
 

@@ -103,13 +103,9 @@ penguins_raw
 \examples{
 ## view summaries
 summary(penguins)
-summary(penguins_raw) # not useful for character vectors
-## convert character vectors to factors first
-dFactor <- function(dat) {
-  dat[] <- lapply(dat, \(.) if (is.character(.)) as.factor(.) else .)
-  dat
-}
-summary(dFactor(penguins_raw))
+summary(penguins_raw)  # categorical variables are (still) character vectors
+## summarize character vectors as factors:
+summary(penguins_raw, character.method = "factor")
 
 ## visualise distribution across factors
 plot(island ~ species, data = penguins)

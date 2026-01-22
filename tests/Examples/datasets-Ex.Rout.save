@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-01-16 r89305) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-01-21 r89314) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -3003,23 +3003,23 @@ Warning: not plotting observations with leverage one:
  3rd Qu.:213.0   3rd Qu.:4750                3rd Qu.:2009  
  Max.   :231.0   Max.   :6300                Max.   :2009  
  NAs    :2       NAs    :2                                 
-> summary(penguins_raw) # not useful for character vectors
-  studyName         Sample Number      Species             Region         
- Length:344         Min.   :  1.00   Length:344         Length:344        
- Class :character   1st Qu.: 29.00   Class :character   Class :character  
- Mode  :character   Median : 58.00   Mode  :character   Mode  :character  
-                    Mean   : 63.15                                        
-                    3rd Qu.: 95.25                                        
-                    Max.   :152.00                                        
-                                                                          
-    Island             Stage           Individual ID      Clutch Completion 
- Length:344         Length:344         Length:344         Length:344        
- Class :character   Class :character   Class :character   Class :character  
- Mode  :character   Mode  :character   Mode  :character   Mode  :character  
-                                                                            
-                                                                            
-                                                                            
-                                                                            
+> summary(penguins_raw)  # categorical variables are (still) character vectors
+     studyName   Sample Number         Species          Region   
+ Length   :344   Min.   :  1.00   Length   :344   Length   :344  
+ N.unique :  3   1st Qu.: 29.00   N.unique :  3   N.unique :  1  
+ N.blank  :  0   Median : 58.00   N.blank  :  0   N.blank  :  0  
+ Min.nchar:  7   Mean   : 63.15   Min.nchar: 33   Min.nchar:  6  
+ Max.nchar:  7   3rd Qu.: 95.25   Max.nchar: 41   Max.nchar:  6  
+                 Max.   :152.00                                  
+                                                                 
+       Island          Stage       Individual ID Clutch Completion
+ Length   :344   Length   :344   Length   :344   Length   :344    
+ N.unique :  3   N.unique :  1   N.unique :190   N.unique :  2    
+ N.blank  :  0   N.blank  :  0   N.blank  :  0   N.blank  :  0    
+ Min.nchar:  5   Min.nchar: 18   Min.nchar:  4   Min.nchar:  2    
+ Max.nchar:  9   Max.nchar: 18   Max.nchar:  6   Max.nchar:  3    
+                                                                  
+                                                                  
     Date Egg          Culmen Length (mm) Culmen Depth (mm) Flipper Length (mm)
  Min.   :2007-11-09   Min.   :32.10      Min.   :13.10     Min.   :172.0      
  1st Qu.:2007-11-28   1st Qu.:39.23      1st Qu.:15.60     1st Qu.:190.0      
@@ -3028,28 +3028,24 @@ Warning: not plotting observations with leverage one:
  3rd Qu.:2009-11-16   3rd Qu.:48.50      3rd Qu.:18.70     3rd Qu.:213.0      
  Max.   :2009-12-01   Max.   :59.60      Max.   :21.50     Max.   :231.0      
                       NAs    :2          NAs    :2         NAs    :2          
- Body Mass (g)      Sex            Delta 15 N (o/oo) Delta 13 C (o/oo)
- Min.   :2700   Length:344         Min.   : 7.632    Min.   :-27.02   
- 1st Qu.:3550   Class :character   1st Qu.: 8.300    1st Qu.:-26.32   
- Median :4050   Mode  :character   Median : 8.652    Median :-25.83   
- Mean   :4202                      Mean   : 8.733    Mean   :-25.69   
- 3rd Qu.:4750                      3rd Qu.: 9.172    3rd Qu.:-25.06   
- Max.   :6300                      Max.   :10.025    Max.   :-23.79   
- NAs    :2                         NAs    :14        NAs    :13       
-   Comments        
- Length:344        
- Class :character  
- Mode  :character  
-                   
-                   
-                   
-                   
-> ## convert character vectors to factors first
-> dFactor <- function(dat) {
-+   dat[] <- lapply(dat, \(.) if (is.character(.)) as.factor(.) else .)
-+   dat
-+ }
-> summary(dFactor(penguins_raw))
+ Body Mass (g)         Sex      Delta 15 N (o/oo) Delta 13 C (o/oo)
+ Min.   :2700   Length   :344   Min.   : 7.632    Min.   :-27.02   
+ 1st Qu.:3550   N.unique :  2   1st Qu.: 8.300    1st Qu.:-26.32   
+ Median :4050   N.blank  :  0   Median : 8.652    Median :-25.83   
+ Mean   :4202   Min.nchar:  4   Mean   : 8.733    Mean   :-25.69   
+ 3rd Qu.:4750   Max.nchar:  6   3rd Qu.: 9.172    3rd Qu.:-25.06   
+ Max.   :6300   NAs      : 11   Max.   :10.025    Max.   :-23.79   
+ NAs    :2                      NAs    :14        NAs    :13       
+      Comments  
+ Length   :344  
+ N.unique : 10  
+ N.blank  :  0  
+ Min.nchar: 18  
+ Max.nchar: 68  
+ NAs      :290  
+                
+> ## summarize character vectors as factors:
+> summary(penguins_raw, character.method = "factor")
    studyName   Sample Number                                         Species   
  PAL0708:110   Min.   :  1.00   Adelie Penguin (Pygoscelis adeliae)      :152  
  PAL0809:114   1st Qu.: 29.00   Chinstrap penguin (Pygoscelis antarctica): 68  
@@ -4009,7 +4005,7 @@ c0   -5.14
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  2.575 0.072 2.649 0 0 
+Time elapsed:  1.734 0.076 1.809 0 0 
 > grDevices::dev.off()
 null device 
           1 
