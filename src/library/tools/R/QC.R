@@ -8309,6 +8309,35 @@ function(dir, localOnly = FALSE, pkgSize = NA)
             strong_dependencies
     }
 
+    adb <- NULL
+    if(!is.na(aurls <- meta["Additional_repositories"])) {
+        aurls <- .read_additional_repositories_field(aurls)
+        ## Get available packages separately for each given URL, so that
+        ## we can spot the ones which do not provide any packages.
+        adb <-
+            tryCatch(lapply(aurls,
+                            function(u) {
+                                utils::available.packages(utils::contrib.url(u,
+                                                                             "source"),
+                                                          filters =
+                                                              c("R_version",
+                                                                "duplicates"))
+                            }),
+                     error = identity)
+        if(inherits(adb, "error")) {
+            out$additional_repositories_analysis_failed_with <-
+                conditionMessage(adb)
+        } else {
+            ## Check for additional repositories with no packages.
+            ind <- vapply(adb, NROW, 0L) == 0L
+            if(any(ind))
+                out$additional_repositories_with_no_packages <-
+                    aurls[ind]
+        }
+    } else {
+        aurls <- NULL
+    }
+
     if(drop_submission_only)
         return(out)
 
@@ -8448,29 +8477,8 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         out$suggests_or_enhances_not_in_mainstream_repositories <-
             suggests_or_enhances
     }
-    if(!is.na(aurls <- meta["Additional_repositories"])) {
-        aurls <- .read_additional_repositories_field(aurls)
-        ## Get available packages separately for each given URL, so that
-        ## we can spot the ones which do not provide any packages.
-        adb <-
-            tryCatch(lapply(aurls,
-                            function(u) {
-                                utils::available.packages(utils::contrib.url(u,
-                                                                             "source"),
-                                                          filters =
-                                                              c("R_version",
-                                                                "duplicates"))
-                            }),
-                     error = identity)
-        if(inherits(adb, "error")) {
-            out$additional_repositories_analysis_failed_with <-
-                conditionMessage(adb)
-        } else {
-            ## Check for additional repositories with no packages.
-            ind <- vapply(adb, NROW, 0L) == 0L
-            if(any(ind))
-                out$additional_repositories_with_no_packages <-
-                    aurls[ind]
+    if(!is.null(aurls)) {
+        if(!inherits(adb, "error")) {
             ## Merge available packages dbs and remove duplicates.
             adb <- do.call(rbind, adb)
             adb <- utils:::available_packages_filters_db$duplicates(adb)
