@@ -1,7 +1,7 @@
 #  File src/library/tools/R/testing.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 # NB: also copyright date in Usage.
 #
@@ -536,7 +536,7 @@ testInstalledPackage <-
             Sys.getenv("_R_CHECK_TESTS_ELAPSED_TIMEOUT_",
             Sys.getenv("_R_CHECK_ELAPSED_TIMEOUT_")))
     tlim <- get_timeout(tlim)
-    if (!is.null(Log)) Log <- file(Log, "wt")
+    Log <- newLog(Log %||% "")
     WINDOWS <- .Platform$OS.type == "windows"
     td0 <- as.numeric(Sys.getenv("_R_CHECK_TIMINGS_"))
     theta <-
@@ -557,15 +557,11 @@ testInstalledPackage <-
                 else sprintf(" [%ds/%ds]", round(sum(td[-3L])), round(td[3L]))
             }
         }
-        message(td2, domain = NA)
-        if (!is.null(Log)) cat(td2, "\n", sep = "",  file = Log)
+        printLog0(Log, td2, "\n")
     }
     runone <- function(f)
     {
-        message(gettextf("  Running %s", sQuote(f)),
-                appendLF = FALSE, domain = NA)
-        if(!is.null(Log))
-            cat("  Running ", sQuote(f), sep = "", file = Log)
+        printLog0(Log, "  Running ", sQuote(f))
         outfile <- sub("rout$", "Rout", paste0(f, "out"))
         cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                      "CMD BATCH --vanilla",
@@ -587,8 +583,7 @@ testInstalledPackage <-
                 ratio <- round(cpu/td[3L], 1L)
                 msg <- sprintf("Running R code in %s had CPU time %g times elapsed time\n",
                                sQuote(f), ratio)
-                cat(msg)
-                if (!is.null(Log)) cat(msg, file = Log)
+                printLog0(Log, msg)
             }
         }
         if (res) {
@@ -598,22 +593,12 @@ testInstalledPackage <-
         }
         savefile <- paste0(outfile, ".save")
         if (file.exists(savefile)) {
-            message(gettextf("  Comparing %s to %s ...",
-                             sQuote(outfile), sQuote(savefile)),
-                    appendLF = FALSE, domain = NA)
-            if(!is.null(Log))
-                cat("  Comparing ", sQuote(outfile), " to ",
-                    sQuote(savefile), " ...", sep = "", file = Log)
-            if(!is.null(Log)) {
-                ans <- Rdiff(outfile, savefile, TRUE, Log = TRUE)
-                writeLines(ans$out)
-                writeLines(ans$out, Log)
-                res <- ans$status
-            } else res <- Rdiff(outfile, savefile, TRUE)
-            if (!res) {
-                message(" OK")
-                if(!is.null(Log)) cat(" OK\n", file = Log)
-            }
+            printLog0(Log, "  Comparing ", sQuote(outfile), " to ",
+                      sQuote(savefile), " ...")
+            ans <- Rdiff(outfile, savefile, TRUE, Log = TRUE)
+            if (ans$status) {
+                printLog0(Log, "\n", paste(ans$out, collapse = "\n"), "\n")
+            } else printLog0(Log, " OK\n")
         }
         0L
     }
@@ -623,9 +608,7 @@ testInstalledPackage <-
     nfail <- 0L ## allow for later running all tests even if some fail.
     Rinfiles <- dir(".", pattern="\\.Rin$")
     for(f in Rinfiles) {
-        message("  Processing ", sQuote(f), domain = NA)
-        if (!is.null(Log))
-            cat("  Processing ", sQuote(f), "\n", sep = "", file = Log)
+        printLog0(Log, "  Processing ", sQuote(f), "\n")
         cmd <- paste(shQuote(file.path(R.home("bin"), "R")),
                      "CMD BATCH --no-timing --vanilla --no-echo", shQuote(f))
         if (system(cmd)) {
@@ -640,7 +623,7 @@ testInstalledPackage <-
         nfail <- nfail + runone(f)
         if (nfail > 0 && stop_on_error) return(nfail)
     }
-    if (!is.null(Log)) close(Log)
+    closeLog(Log)
     return(nfail)
 }
 
