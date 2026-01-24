@@ -6097,9 +6097,10 @@ and often @acronym{CRAN} submissions attempt to use @file{endian.h}.
 The latter is a @code{glibc} extension: some OSes have
 @file{machine/endian.h} or @file{sys/endian.h} but some have neither.
 @c macOS has machine/endian.h.  Solaris had none.
-Header @file{execinfo.h} is only available on a few OSes: formerly nor
-in MacOS nor Solaris, and currently not on Linux systems (such as Alpine
-Linux) using @code{musl}.  Nor is header @file{fpu_control.h} available
+Header @file{execinfo.h} is only available on a few OSes: formerly neither
+on macOS nor Solaris, currently not on Linux systems using @code{musl}
+(such as Alpine Linux), and on FreeBSD it requires linking with
+@code{-lexecinfo}.  Header @file{fpu_control.h} is not available
 on macOS nor @code{musl}.
 
 @item
