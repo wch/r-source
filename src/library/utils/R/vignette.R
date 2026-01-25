@@ -1,7 +1,7 @@
 #  File src/library/utils/R/vignette.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,16 +19,15 @@
 vignette <-
     function(topic, package = NULL, lib.loc = NULL, all = TRUE)
 {
-    vinfo <- tools::getVignetteInfo(package, lib.loc, all)
-
     if(!missing(topic)) {
         stopic <- substitute(topic)
-        if(is.call(stopic) &&
-           (deparse1(stopic[[1L]]) == "::")) {
+        if(is.call(stopic) && (stopic[[1L]] == quote(`::`))) {
             package <- as.character(stopic[[2L]])
             topic <- as.character(stopic[[3L]])
         } else
             topic <- topic[1L] # Just making sure ...
+
+        vinfo <- tools::getVignetteInfo(package, lib.loc, all)
         vinfo <- vinfo[vinfo[, "Topic"] == topic, , drop = FALSE]
         if(length(vinfo)) {
             pos <- which(file_test("-f",
@@ -56,11 +55,11 @@ vignette <-
             class(z) <- "vignette"
             return(z)
         }
-        else
+        else # FIXME: should return NULL or list(), not the warning message
             warning(gettextf("vignette %s not found", sQuote(topic)),
                     call. = FALSE, domain = NA)
-
     } else { ## missing(topic)) -- List all possible vignettes.
+        vinfo <- tools::getVignetteInfo(package, lib.loc, all)
         title <- if(nrow(vinfo)) {
             paste(vinfo[, "Title"],
                   paste0(rep.int("(source", nrow(vinfo)),

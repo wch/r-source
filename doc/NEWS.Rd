@@ -575,6 +575,9 @@
 
       \item \code{besselJ(1, 1e-15)} and similar now give correct results,
       thanks to \I{Leo Mada} and other \I{\dQuote{R-help}ers}.
+
+      \item \code{vignette(\var{pkg}::\var{topic})} is now a documented
+      usage variant and confines vignette retrieval to the specified package. 
     }
   }
 }

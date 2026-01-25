@@ -1,10 +1,10 @@
 % File src/library/utils/man/vignette.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{vignette}
-\title{View, List or Get R Source of Package Vignettes}
+\title{View or List Package Vignettes or Edit their R Code Files}
 \alias{vignette}
 \alias{edit.vignette}
 \alias{print.vignette}
@@ -12,8 +12,8 @@
 %% \alias{getRcode}
 %% \alias{getRcode.vignette}%hidden
 \description{
-  View a specified package vignette, or list the available ones;
-  display it rendered in a viewer, and get or edit its \R source file.
+  View a specific package vignette or its \R code file,
+  or list the available ones.
 }
 \usage{
 vignette(topic, package = NULL, lib.loc = NULL, all = TRUE)
@@ -24,10 +24,10 @@ vignette(topic, package = NULL, lib.loc = NULL, all = TRUE)
 }
 \arguments{
   \item{topic}{a character string giving the (base) name of the vignette
-    to view.  If omitted, all vignettes from all installed packages are
-    listed.}
+    to view, or an (unevaluated) expression of the form \code{package::topic}.
+    If omitted, all vignettes from all installed packages are listed.}
   \item{package}{a character vector with the names of packages to
-    search through, or \code{NULL} in which \sQuote{all} packages (as
+    search through, or \code{NULL} in which case \sQuote{all} packages (as
     defined by argument \code{all}) are searched.}
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
@@ -70,29 +70,32 @@ vignette(topic, package = NULL, lib.loc = NULL, all = TRUE)
 ## List vignettes from all *attached* packages
 vignette(all = FALSE)
 
-## List vignettes from all *installed* packages (can take a long time!):
+## List vignettes from all *installed* packages (can take a long time!)
 vignette(all = TRUE)
 
-## The grid intro vignette -- open it
-\dontrun{vignette("grid") # calling print()}
-## The same (conditional on existence of the vignette).
-## Note that 'package = *' is much faster in the case of many installed packages:
-if(!is.null(v1 <- vignette("grid", package="grid"))) {
-\dontrun{v1 # calling print(.)}
-  str(v1)
-  ## Now let us have a closer look at the code
-  %% print(utils:::getRcode(v1)) # the R file name
-  %% if(interactive()) # "display" it
-  %%   file.show(utils:::getRcode(v1))
-  %% ## or even more interactively:
-\dontrun{edit(v1) # e.g., to send lines ...}
-}# if( has vignette "installed")
-## A package can have more than one vignette (package grid has several):
+## List all vignettes of a specific package (package 'grid' has several)
 vignette(package = "grid")
+
+## Open one of the 'grid' vignettes
 if(interactive()) {
-   ## vignette("rotated")
-   ## The same, but without searching for it:
-   vignette("rotated", package = "grid")
+  ## vignette("rotated", package = "grid")
+  ## Or, the same:
+  vignette(grid::rotated) # calling the print() method
+}
+
+## Now open the 'grid' intro vignette -- without specifying the package
+\dontrun{vignette("grid")}
+## OK, but warns as this topic is ambiguous: both {grid} and {lattice} have it.
+## => Specify the 'package' argument or use the <package>::<topic> syntax
+##    (also accelerates vignette retrieval, esp. with many installed packages):
+v1 <- vignette("grid", package = "grid") # not "printed" (opened) yet
+if(inherits(v1, "vignette")) { # it was found installed
+  \dontrun{print(v1) # open it}
+  str(v1)
+  ## To open the associated R code in an editor:
+  \dontrun{edit(v1) # e.g., to send lines ...}
+%% print(rfilepath <- utils:::getRcode(v1))
+%% if(interactive()) file.show(rfilepath)
 }
 }
 \keyword{documentation}
