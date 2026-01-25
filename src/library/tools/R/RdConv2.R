@@ -1,7 +1,7 @@
 #  File src/library/tools/R/RdConv2.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -284,7 +284,9 @@ processRdChunk <- function(code, stage, options, env, macros)
 	    if(length(output) == 1L && output[1L] == "") output <- NULL
 
 	    if (inherits(err, "error"))
-	    	stopRd(code, Rdfile, conditionMessage(err))
+	    	stopRd(code, Rdfile, "processing ", stage,
+                       "-stage \\Sexpr code failed:\n",
+                       paste(as.character(err), collapse = "\n"))
 
 	    if(length(output) && (options$results != "hide")) {
 		output <- paste(output, collapse="\n")

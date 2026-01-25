@@ -1,7 +1,7 @@
 #  File src/library/tools/R/RdHelpers.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2019-2025 The R Core Team
+#  Copyright (C) 2019-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -42,9 +42,9 @@ Rd_package_title <-
 function(pkg, dir = Rd_macros_package_dir())
 {
     desc <- .read_description(file.path(dir, "DESCRIPTION"))
-    
     if (pkg != desc["Package"])
-    	stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
+        stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg),
+             call. = FALSE, domain = NA)
     Rd_escape_specials(desc["Title"])
 }
 
@@ -53,7 +53,8 @@ function(pkg, dir = Rd_macros_package_dir())
 {
     desc <- .read_description(file.path(dir, "DESCRIPTION"))
     if (pkg != desc["Package"])
-    	stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
+        stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg),
+             call. = FALSE, domain = NA)
     Rd_escape_specials(desc["Description"])
 }
 
@@ -62,7 +63,8 @@ function(pkg, dir = Rd_macros_package_dir())
 {
     desc <- .read_description(file.path(dir, "DESCRIPTION"))
     if (pkg != desc["Package"])
-    	stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
+        stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg),
+             call. = FALSE, domain = NA)
     desc <- c(desc, .expand_package_description_db_R_fields(desc))
     Rd_escape_specials(desc["Author"])
 }
@@ -72,7 +74,8 @@ function(pkg, dir = Rd_macros_package_dir())
 {
     desc <- .read_description(file.path(dir, "DESCRIPTION"))
     if (pkg != desc["Package"])
-    	stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
+        stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg),
+             call. = FALSE, domain = NA)
     desc <- c(desc, .expand_package_description_db_R_fields(desc))
     Rd_escape_specials(desc["Maintainer"])
 }
@@ -88,7 +91,8 @@ function(pkg, lib.loc = Sys.getenv("R_BUILD_TEMPLIB"))
 
 	desc <- utils::packageDescription(pkg, lib.loc = lib.loc)
 	if (pkg != desc[["Package"]])
-	    stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg))
+	    stop(gettextf("DESCRIPTION file is for package '%s', not '%s'", desc["Package"], pkg),
+	         call. = FALSE, domain = NA)
 	desc <- desc[names(desc) != "Built"] # Probably a stale value
 	tabular(paste0(names(desc), ":"), Rd_escape_specials(unlist(desc)))
     }
@@ -149,8 +153,9 @@ Rd_expr_manual <-
 function(name = "R-exts", node = "Top")
 {
     if (name %notin% rownames(utils:::R_manuals))
-        stop(sprintf("\\manual must refer to one of %s",
-                     paste(sQuote(rownames(utils:::R_manuals)), collapse = ", ")))
+        stop(sprintf("\\manual must refer to one of:\n  %s",
+                     paste(sQuote(rownames(utils:::R_manuals)), collapse = " ")),
+             call. = FALSE, domain = NA)
     baseurl <- switch(name,
                       "rw-FAQ" = "https://cloud.R-project.org/bin/windows/base/",
                       "https://cloud.R-project.org/doc/manuals/")

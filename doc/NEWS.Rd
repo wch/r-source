@@ -173,6 +173,9 @@
       character vectors, optionally resorting to the factor method
       via the new argument \code{character.method = "factor"}, e.g.,
       when summarizing a data frame (\PR{16750}).
+
+      \item Error messages from failed Rd \verb{\Sexpr} code now include
+      the call from the original condition (if available).
     }
   }
 
