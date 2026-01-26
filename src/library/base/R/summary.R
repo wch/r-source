@@ -73,56 +73,47 @@ summary.default <- function(object, ..., digits, quantile.type = 7,
 	}
 	sumry[, 1L] <- format(as.integer(ll))
 	sumry
-    }
-    else c(Length = length(object), Class = class(object), Mode = mode(object))
+    } else # very basic/all-purpose summary
+        c(Length = length(object), Class = class(object), Mode = mode(object))
     class(value) <- c("summaryDefault", "table")
     value
 }
 
-format.summaryDefault <- function(x, digits = max(3L, getOption("digits") - 3L), zdigits = 4L, ...)
+format.summaryDefault <-
+function(x, digits = max(3L, getOption("digits") - 3L), zdigits = 4L, ...)
 {
-    xx <- x
-    ## FIXME: zapsmall should happen without the "NAs" count
-    if(is.numeric(x) || is.complex(x)) {
-      finite <- is.finite(x)
-      digs <- digits %||% eval(formals()$digits) # use <default> if NULL
-      xx[finite] <- zapsmall(x[finite], digits = digs + zdigits)
-    }
-    class(xx) <- class(x)[-1]
-    m <- match("NAs", names(x), 0)
-    if((iD <- inherits(x, "Date")) | (iP <- inherits(x, "POSIXct")) || inherits(x, "difftime")) {
-        c(format(xx, digits = if(iP) 0L else digits),
+    if(is.character(x) || is.integer(x)) { # logical/basic || character summary
+        NextMethod("format")
+    } else if((iP <- inherits(x, "POSIXct")) || inherits(x, c("Date", "difftime"))) {
+        c(NextMethod("format", digits = if(iP) 0L else digits),
           "NAs" = if(length(a <- attr(x, "NAs"))) as.character(a))
-    } else if(m && !is.character(x) && !is.integer(x))
-        c(format(xx[-m], digits=digits, ...), "NAs" = as.character(xx[m]))
-    else  format(xx,     digits=digits, ...)
+    } else { # currently always numeric -> zapsmall
+        m <- match("NAs", names(x), 0L)
+        nna <- x[m]
+        if(m) x <- x[-m]
+        finite <- is.finite(x)
+        digs <- digits %||% eval(formals()$digits) # use <default> if NULL
+        x[finite] <- zapsmall(x[finite], digits = digs + zdigits)
+        c(NextMethod("format", digits = digits),
+          "NAs" = as.character(nna))
+    }
 }
 
-## to be consolidated
-print.summaryDefault <- function(x, digits = max(3L, getOption("digits") - 3L), zdigits = 4, ...)
+print.summaryDefault <-
+function(x, digits = max(3L, getOption("digits") - 3L), zdigits = 4L, ...)
 {
-    xx <- x
-    if(is.numeric(x) || is.complex(x)) {
-      finite <- is.finite(x)
-      xx[finite] <- zapsmall(x[finite], digits = digits + zdigits)
-    }
-    class(xx) <- class(x)[-1] # for format
-    if((iD <- inherits(x, "Date")) | (iP <- inherits(x, "POSIXct")) || inherits(x, "difftime")) {
-        no.q <- is.na(match("quote", ...names())) # no 'quote = *' in  `...`
-        if(no.q) quote <- TRUE
-        if(iP)
-            digits <- 0L
-        else if(!iD) { # have difftime
-            cat("Time differences in ", attr(x, "units"), "\n", sep = "")
-            if(no.q) quote <- FALSE
-        }
-        xx <- c(format(xx, digits = digits, with.units = FALSE),
-                "NAs" = if(length(a <- attr(x, "NAs"))) as.character(a))
-        print(xx, quote = quote, ...)
-        return(invisible(x))
-    } else if((m <- match("NAs", names(xx), 0L)) && !is.character(x) && !is.integer(x))
-        xx <- c(format(xx[-m], digits=digits), "NAs" = as.character(xx[m]))
-    print.table(xx, digits=digits, ...)
+    if(is.character(x) || is.integer(x))
+        return(NextMethod("print"))
+
+    xx <- if(inherits(x, "difftime")) {
+        cat("Time differences in ", attr(x, "units"), "\n", sep = "")
+        format(x, digits = digits, with.units = FALSE)
+    } else
+        format(x, digits = digits, zdigits = zdigits)
+    if(inherits(x, c("Date", "POSIXct")))
+        print(xx, ...)
+    else
+        print.noquote(xx, ...)
     invisible(x)
 }
 
