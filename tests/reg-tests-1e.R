@@ -2049,6 +2049,18 @@ stopifnot(all.equal(list(l = -E, u = E, n = 2L), pp, tolerance = 1e-12))
 ## n = 1112538 (Lnx 64b) in R <= 4.5.1  ^^^^^^
 
 
+## besselJ(pi/22, 1e-15) anomaly, R-help, 28 Dec 2025, Leo Mada
+x <- 0:41; bJ <- besselJ(0:41, 1e-15)
+bJ16xct <-
+    c(0, 0.76519769, 0.22389078, -0.26005195, -0.39714981, -0.17759677,
+      0.15064526, 0.30007927, 0.17165081, -0.090333611, -0.24593576,
+      -0.1711903, 0.047689311, 0.2069261, 0.17107348, -0.014224473)
+all.equal(bJ16xct, bJ[1:16], tolerance=0) # 8.3888e-9 [was +1e15 since r32446, 2005-01-03]
+stopifnot(all.equal(bJ16xct, bJ[1:16]),
+          max(abs(bJ[17:42])) < 0.175)
+## besselJ(x, nu)'s C code now works for very small nu
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
