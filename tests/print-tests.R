@@ -328,6 +328,9 @@ print(d, digits = 4, other = TRUE)
 ## Deparsing should not reset parameters
 print(list(a, expression(foo), b, quote(foo), c, base::list, d),
       digits = 4, other = TRUE)
+## Cleanup
+rm(print.foo, obj, a, b, c, d)
+
 
 ## max.print fully obeyed by print and format
 ## These failed briefly due to bug in r76734
@@ -338,6 +341,7 @@ as.character(1:10)
 as.complex(1:10)
 as.raw(1:10)
 options(o)
+
 
 ## print() max.print and max for matrices (w/ many columns)  --  PR#15027
 ## whenever the columns are larger than max.print, no values inside the matrix are displayed
@@ -357,6 +361,8 @@ print(array(dim = c(2, 2, 1)), max = 2) # omit 1 row
 print(array(dim = c(2, 2, 1)), max = 1) # omit 1 row + 1 column
 
 
-
-## Cleanup
-rm(print.foo, obj, a, b, c, d, o)
+## alignment of counts from print/format(<summaryDefault>)
+summary(TRUE)
+data.frame(character = c(rep("true", 100), NA)) |>
+    transform(factor = as.factor(character), logical = as.logical(character)) |>
+    summary() # column-wise format()

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-01-16 r89305) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-01-25 r89331) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -920,6 +920,9 @@ NULL
 
 
 
+> ## Cleanup
+> rm(print.foo, obj, a, b, c, d)
+> 
 > 
 > ## max.print fully obeyed by print and format
 > ## These failed briefly due to bug in r76734
@@ -940,6 +943,7 @@ NULL
 [1] 01 02 03 04 05
  [ reached 'max' / getOption("max.print") -- omitted 5 entries ]
 > options(o)
+> 
 > 
 > ## print() max.print and max for matrices (w/ many columns)  --  PR#15027
 > ## whenever the columns are larger than max.print, no values inside the matrix are displayed
@@ -1038,7 +1042,18 @@ NULL
  [ reached 'max' / getOption("max.print") -- omitted 1 row 1 column ] 
 > 
 > 
-> 
-> ## Cleanup
-> rm(print.foo, obj, a, b, c, d, o)
+> ## alignment of counts from print/format(<summaryDefault>)
+> summary(TRUE)
+   Mode    TRUE 
+logical       1 
+> data.frame(character = c(rep("true", 100), NA)) |>
++     transform(factor = as.factor(character), logical = as.logical(character)) |>
++     summary() # column-wise format()
+     character    factor    logical       
+ Length   :101   true:100   Mode:logical  
+ N.unique :  1   NAs :  1   TRUE:100      
+ N.blank  :  0              NAs :1        
+ Min.nchar:  4                            
+ Max.nchar:  4                            
+ NAs      :  1                            
 > 
