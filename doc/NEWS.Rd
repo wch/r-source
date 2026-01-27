@@ -51,7 +51,10 @@
       thanks to \I{Leo Mada} and other \I{\dQuote{R-help}ers}.
 
       \item \code{vignette(\var{pkg}::\var{topic})} is now a documented
-      usage variant and confines vignette retrieval to the specified package. 
+      usage variant and confines vignette retrieval to the specified package.
+
+      \item \code{pretty(ch)} again correctly works with \code{ch} a
+      character vector of numbers.
     }
   }
 }
