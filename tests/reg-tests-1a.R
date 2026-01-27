@@ -292,7 +292,7 @@ stopifnot(abs(sm %*% V2 - V2 %*% diag(lam2))		< 60*Meps,
 ## Re-ordered as with symmetric:
 sV <- V2[,i]
 slam <- lam2[i]
-stopifnot(abs(sm %*% sV -  sV %*% diag(slam))		  < 60*Meps)
+stopifnot(abs(sm %*% sV -  sV %*% diag(slam))		< 60*Meps)
 stopifnot(abs(sm	-  sV %*% diag(slam) %*% t(sV)) < 60*Meps)
 ## sV  *is* now equal to V  -- up to sign (+-) and rounding errors
 stopifnot(abs(c(1 - abs(sV / V)))	<     1000*Meps)
@@ -515,7 +515,7 @@ stopifnot(identical(exp(-Inf), 0))
 stopifnot(identical(log(0), -Inf))
 stopifnot(identical((-1)/0, -Inf))
 pm <- c(-1,1) # 'pm' = plus/minus
-stopifnot(atan(Inf*pm) == pm*pi/2)
+stopifnot(abs(print(atan(Inf*pm) - pm*pi/2)) < 1e-15)# typically 0
 ## end of moved from is.finite.Rd
 
 
@@ -741,22 +741,28 @@ stopifnot(abs(D - t(s$u) %*% X %*% s$v) < Eps)#	 D = U' X V
 
 ## Trig
 ## many of these tested for machine accuracy, which seems a bit extreme
-set.seed(123)
 stopifnot(cos(0) == 1)
 stopifnot(sin(3*pi/2) == cos(pi))
+set.seed(123)
 x <- rnorm(99)
-stopifnot(all.equal( sin(-x), - sin(x)))
-stopifnot(all.equal( cos(-x), cos(x)))
+## IGNORE_RDIFF_BEGIN
+table(sinSym <- abs(sin(-x) + sin(x)) /Meps) # = 0 mathematically, 99 x for glibc
+table(cosSym <- abs(cos(-x) - cos(x)) /Meps) #   (ditto)
 x <- abs(x); y <- abs(rnorm(x))
-stopifnot(abs(atan2(y, x) - atan(y/x)) < 10 * Meps)
-stopifnot(abs(atan2(y, x) - atan(y/x)) < 10 * Meps)
+table(atan2D <- abs(atan2(y, x) - atan(y/x)) / Meps)
+## for glibc: 90 x 0, 1 x 1/64,  1 x 1/8,  5 x 1/4,  2 x 1/2   i.e. in [0, 1/2]
+## IGNORE_RDIFF_END
+stopifnot(sinSym <= 2, cosSym <= 2, atan2D <= 4)
 
 x <- 1:99/100
-stopifnot(Mod(1 - (cos(x) + 1i*sin(x)) / exp(1i*x)) < 10 * Meps)
-## error is about 650* at x=0.01:
-stopifnot(abs(1 - x / acos(cos(x))) < 1000 * Meps)
-stopifnot(abs(1 - x / asin(sin(x))) <= 10 * Meps)
-stopifnot(abs(1 - x / atan(tan(x))) <= 10 *Meps)
+summary(e.ixDef <- Mod(1 - (cos(x) + 1i*sin(x)) / exp(1i*x)) / Meps) # glibc: mostly 0; all <= 0.2229
+stopifnot(e.ixDef <= 2)
+## IGNORE_RDIFF_BEGIN
+summary(invCos <- abs(1 - x / acos(cos(x))) / Meps) # 0..649;  649 at x = 0.01
+  table(invSin <- abs(1 - x / asin(sin(x))) / Meps) # 88 x 0, 2 x 0.5, 9 x 1 for glibc
+  table(invTan <- abs(1 - x / atan(tan(x))) / Meps) # 97 x 0, 1 x 0.5, 1 x 1 for glibc
+## IGNORE_RDIFF_END
+stopifnot(invCos < 1000, invSin <= 4, invTan <= 4)
 ## end of moved from Trig.Rd
 
 ## Uniform
@@ -924,14 +930,14 @@ read.table(tf)
 unlink(tf)
 
 
-## PR 870 (as.numeric and NAs)	Harald Fekjær, 2001-03-08,
+## PR 870 (as.numeric and NAs)	Harald FekjÃ¦r, 2001-03-08,
 is.na(as.numeric(" "))
 is.na(as.integer(" "))
 is.na(as.complex(" "))
 ## all false in 1.2.2
 
 
-## PR 871 (deparsing of attribute names) Harald Fekjær, 2001-03-08,
+## PR 871 (deparsing of attribute names) Harald FekjÃ¦r, 2001-03-08,
 midl <- 4
 attr(midl,"Object created") <- date()
 deparse(midl)
@@ -1538,7 +1544,7 @@ poly(x, degree=2)
 ## failed in 1.5.1
 
 
-## PR#1694 cut with infinite values -> NA (Markus Jäntti)
+## PR#1694 cut with infinite values -> NA (Markus JÃ¤ntti)
 cut.off <- c(-Inf, 0, Inf)
 x <- c(-Inf, -10, 0, 10, Inf)
 (res <- cut(x, cut.off, include.lowest=TRUE))
@@ -2915,7 +2921,7 @@ try(approx(list(x=rep(NaN, 9), y=1:9), xout=NaN))
 
 
 ## aggregate.data.frame failed if result would have one row
-## Philippe Hupé, R-help, 2004-05-14
+## Philippe HupÃ©, R-help, 2004-05-14
 dat <- data.frame(a=rep(2,10),b=rep("a",10))
 aggregate(dat$a, by=list(a1=dat$a, b1=dat$b), NROW)
 ## failed due to missing drop = FALSE

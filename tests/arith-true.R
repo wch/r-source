@@ -83,13 +83,14 @@ all(is.nan(rn ^ .5))# in some C's : (-Inf) ^ .5 gives Inf, instead of NaN
 ## Real Trig.:
 cos(0) == 1
 sin(3*pi/2) == cos(pi)
-x <- rnorm(99)
-all( sin(-x) == - sin(x))
-all( cos(-x) == cos(x))
 
 x <- 1:99/100
-all(abs(1 - x / asin(sin(x))) <= 2*Meps)# "== 2*" for HP-UX
-all(abs(1 - x / atan(tan(x))) <  2*Meps)
+## IGNORE_RDIFF_BEGIN
+table(Isin <- abs(1 - x / asin(sin(x)))/Meps)# mostly 0, often <= 1
+table(Itan <- abs(1 - x / atan(tan(x)))/Meps)#  (ditto)
+## IGNORE_RDIFF_END
+all(Isin <= 4) # typically <= 1, 3 needed for [mingw-w64 v12 on Win]
+all(Itan <= 4)
 
 ## Sun has asin(.) = acos(.) = 0 for these:
 ##	is.nan(acos(1.1)) && is.nan(asin(-2)) [!]
@@ -134,13 +135,19 @@ x <- c(-100,-3:2, -99.9, -7.7, seq(-3,3, length=61), 5.1, 77)
 ## Intel icc showed a < 1ulp difference in the second.
 stopifnot(all.equal( digamma(x), psigamma(x,0), tolerance = 2*Meps),
           all.equal(trigamma(x), psigamma(x,1), tolerance = 2*Meps))# TRUE (+ NaN warnings)
-## very large x:
+## very large x,  compare with asymptotic approximation:
 x <- 1e30 ^ (1:10)
-a.relE <- function(appr, true) abs(1 - appr/true)
-stopifnot(a.relE(digamma(x),   log(x)) < 1e-13,
-          a.relE(trigamma(x),     1/x) < 1e-13)
-x <- sqrt(x[2:6]); stopifnot(a.relE(psigamma(x,2), - 1/x^2) < 1e-13)
-x <- 10^(10*(2:6));stopifnot(a.relE(psigamma(x,5), +24/x^5) < 1e-13)
+arelEps <- function(appr, true) abs(1 - appr/true) / Meps
+## IGNORE_RDIFF_BEGIN
+sort( digamE <- arelEps( digamma(x), log(x))) # all 0 for glibc
+sort(trigamE <- arelEps(trigamma(x),  1/x  )) # 11 22 ... 108 159 for glibc
+x <- sqrt(x[2:6]); sort(psiga2E <- arelEps(psigamma(x,2), - 1/x^2)) # 22 33 43 55 65
+x <- 10^(10*(2:6));sort(psiga5E <- arelEps(psigamma(x,5), +24/x^5)) #  5 50.5 .. 106
+## IGNORE_RDIFF_END
+stopifnot(digamE  <   64, # seen '0'
+          trigamE < 1300, # mfuzz: upto 671
+          psiga2E <  430, # mfuzz: upto 212
+          psiga5E < 1010) # mfuzz: upto 505.5
 
 ## fft():
 ok <- TRUE
@@ -161,8 +168,9 @@ ok
 ## var():
 for(n in 2:10)
     print(all.equal(n*(n-1)*var(diag(n)),
-		    matrix(c(rep(c(n-1,rep(-1,n)),n-1), n-1), nr=n, nc=n),
-		    tolerance = 20*Meps)) # use tolerance = 0 to see rel.error
+		    matrix(c(rep(c(n-1,rep(-1,n)),n-1), n-1), nrow=n, ncol=n),
+                                ##----- use 0*Meps to see non-0 rel.error ==> all TRUE for glibc
+		    tolerance = 20*Meps))
 
 ## pmin() & pmax() -- "attributes" !
 v1 <- c(a=2)
