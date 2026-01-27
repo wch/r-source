@@ -176,6 +176,10 @@
 
       \item Error messages from failed Rd \verb{\Sexpr} code now include
       the call from the original condition (if available).
+
+      \item When the environment variable \env{R_WARN_BOUNDS_OPT} is set to
+      \code{"yes"}, \code{options(warn = val)} will check if \code{val} is
+      inside \code{-1:2}; this may happen unconditionally in the future.
     }
   }
 
@@ -520,9 +524,6 @@
       \item On Windows terminals \kbd{Ctrl-C} now breaks out of waiting for
       keyboard input, fixing \PR{18982}.
 
-      \item \code{pretty(ch)} again correctly works with \code{ch} a
-      character vector of numbers.
-
       \item The default \code{summary()} and its factor method now
       label missing values \samp{NAs} rather than \samp{NA's},
       fixing a decades-old grammatical faux pas inherited from S
@@ -577,7 +578,10 @@
       thanks to \I{Leo Mada} and other \I{\dQuote{R-help}ers}.
 
       \item \code{vignette(\var{pkg}::\var{topic})} is now a documented
-      usage variant and confines vignette retrieval to the specified package. 
+      usage variant and confines vignette retrieval to the specified package.
+
+      \item \code{pretty(ch)} again correctly works with \code{ch} a
+      character vector of numbers.
     }
   }
 }

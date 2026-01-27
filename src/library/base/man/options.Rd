@@ -1,6 +1,6 @@
 % File src/library/base/man/options.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{options}
@@ -456,8 +456,11 @@ getOption(x, default = NULL)
       \option{--verbose}.}
 
     \item{\code{warn}:}{integer value to set the handling of warning
-      messages by the default warning handler.  If
-      \code{warn} is negative all warnings are ignored.  If \code{warn}
+      messages by the default warning handler.  In the future, this value
+      is checked to be one of \code{-1, 0, 1, 2}.  For now, setting
+      environment variable \env{R_WARN_BOUNDS_OPT} to \code{"yes"}
+      activates that check.
+      If \code{warn} is negative all warnings are ignored.  If \code{warn}
       is zero (the default) warnings are stored until the top--level
       function returns.  If 10 or fewer warnings were signalled they
       will be printed otherwise a message saying how many were
@@ -465,7 +468,7 @@ getOption(x, default = NULL)
       created and can be printed through the function
       \code{\link{warnings}}.  If \code{warn} is one, warnings are
       printed as they occur.  If \code{warn} is two (or larger, coercible
-      to integer), all warnings are turned into errors. While sometimes
+      to integer), all warnings are turned into errors.  While sometimes
       useful for debugging, turning warnings into errors may trigger
       bugs and resource leaks that would not have been triggered otherwise.}
 
