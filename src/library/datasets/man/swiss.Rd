@@ -60,7 +60,7 @@
 }
 \note{
   Files for all 182 districts in 1888 and other years have been available
-  at \verb|https://oprdata.princeton.edu/archive/pefp/switz.aspx|.
+  at \verb{https://oprdata.princeton.edu/archive/pefp/switz.aspx}.
   While the OPR (Office of Population Research at Princeton University)
   does not seem to provide these anymore,
   a html-simplified copy of the information page is at
