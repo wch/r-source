@@ -2537,6 +2537,13 @@ stopifnot(identical(20 * 0:5, pretty(c("1", "9", "100"))))
 ## wrongly gave  0 2 4 6 8 10
 
 
+## summary() of an empty character vector (after PR#16750)
+stopifnot(all.equal(summary(nchar(character()))[c("Min.", "Max.")] |> print(),
+                    summary(character())[c("Min.nchar", "Max.nchar")],
+                    check.names = FALSE))
+## gave +-Inf (with warnings) rather than NA, for a few days in the trunk
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

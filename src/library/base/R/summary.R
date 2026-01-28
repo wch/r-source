@@ -56,8 +56,8 @@ summary.default <- function(object, ..., digits, quantile.type = 7,
         c(Length    = length(nas),
           N.unique  = length(unique(object)), # NA excluded
           N.blank   = length(grep("^[ \t\r\n]*$", object, perl = TRUE)), # trimws()
-          Min.nchar = min(ncs),
-          Max.nchar = max(ncs),
+          Min.nchar = if(length(ncs)) min(ncs) else NA_integer_,
+          Max.nchar = if(length(ncs)) max(ncs) else NA_integer_,
           NAs       = if(nna > 0) nna)
     } else if(is.recursive(object) && !is.language(object) &&
 	      (n <- length(object))) { # do not allow long dims
