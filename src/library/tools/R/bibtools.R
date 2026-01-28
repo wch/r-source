@@ -171,6 +171,7 @@ function(package, dir, lib.loc = NULL)
         ## Cannot simply use identical() as entries in the partial Rd db
         ## are subject to section re-ordering.
         g <- function(u, v) {
+            is.null(v) || # built with \bib stubs/unknowns in R < 4.6.0
             length(setdiff(split(u, row(u)), split(v, row(v))) > 0L)
         }
         if(any(unlist(Map(g, x, y), use.names = FALSE)))
