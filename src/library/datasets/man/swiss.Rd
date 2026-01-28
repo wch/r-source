@@ -1,6 +1,6 @@
 % File src/library/datasets/man/swiss.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{swiss}
@@ -59,10 +59,12 @@
   \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \note{
-  Files for all 182 districts in 1888 and other years are available via
-  \url{https://oprdata.princeton.edu/archive/pefp/},
-  currently at
-  \url{https://oprdata.princeton.edu/archive/pefp/switz.aspx}.
+  Files for all 182 districts in 1888 and other years have been available
+  at \verb|https://oprdata.princeton.edu/archive/pefp/switz.aspx|.
+  While the OPR (Office of Population Research at Princeton University)
+  does not seem to provide these anymore,
+  a html-simplified copy of the information page is at
+  \url{https://www.r-project.org/doc/reports/OPR_DataArchive_switz.html}.
 
   They state that variables \code{Examination} and \code{Education}
   are averages for 1887, 1888 and 1889.
