@@ -180,6 +180,15 @@
       \item When the environment variable \env{R_WARN_BOUNDS_OPT} is set to
       \code{"yes"}, \code{options(warn = val)} will check if \code{val} is
       inside \code{-1:2}; this may happen unconditionally in the future.
+
+      \item \code{weighted.residuals()} now returns weighted working
+      residuals for \code{"glm"} objects. It used to return deviance
+      residuals, but these do not give the one-step approximated
+      \code{dfbeta} values, as pointed out by \I{Ravi
+      Varadhan}. \code{influence.glm()} has been amended so that it now
+      returns an object with both a \code{"wt.res"} and a
+      \code{"dev.res"} element.
+      
     }
   }
 

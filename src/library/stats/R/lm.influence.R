@@ -31,10 +31,14 @@ hat <- function(x, intercept = TRUE)
 }
 
 ## see PR#7961, https://stat.ethz.ch/pipermail/r-devel/2011-January/059642.html
+## (Note, Jan 2026: PR# 7961 suggested use of deviance residuals but then dfbeta et al. are
+## not one-step approximations to leave-one-out coeff.)
 weighted.residuals <- function(obj, drop0 = TRUE)
 {
-    w <- weights(obj)
-    r <- residuals(obj, type="deviance")
+    w <- weights(obj, "working")
+    r <- residuals(obj, type="working")
+    if (!is.null(w)) r <- r * sqrt(w)
+    if (inherits(obj, "glm")) w <- weights(obj, "prior")
     if(drop0 && !is.null(w)) {
         if(is.matrix(r)) r[w != 0, , drop = FALSE] # e.g. mlm fit
         else r[w != 0]
@@ -141,8 +145,9 @@ influence.glm <- function(model, do.coef = TRUE, ...) {
     res <- lm.influence(model, do.coef = do.coef, ...)
     pRes <- na.omit(residuals(model, type = "pearson"))[model$prior.weights != 0]
     pRes <- naresid(model$na.action, pRes)
-    names(res)[names(res) == "wt.res"] <- "dev.res"
-    c(res, list(pear.res = pRes))
+    dRes <- na.omit(residuals(model, type = "deviance"))[model$prior.weights != 0]
+    dRes <- naresid(model$na.action, dRes)
+    c(res, list(pear.res = pRes, dev.res = dRes))
 }
 
 hatvalues <- function(model, ...) UseMethod("hatvalues")
