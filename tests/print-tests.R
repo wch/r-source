@@ -366,3 +366,5 @@ summary(TRUE)
 data.frame(character = c(rep("true", 100), NA)) |>
     transform(factor = as.factor(character), logical = as.logical(character)) |>
     summary() # column-wise format()
+
+summary(numeric())  # suffered from print.table's na.print="" in R < 4.6.0

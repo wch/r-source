@@ -1057,3 +1057,7 @@ logical       1
  Max.nchar:  4                            
  NAs      :  1                            
 > 
+> summary(numeric())  # suffered from print.table's na.print="" in R < 4.6.0
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     NA      NA      NA     NaN      NA      NA 
+> 
