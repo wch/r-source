@@ -4363,7 +4363,7 @@ Check and report at the end of the check run if new files or directories
 are created in a selected set of directories during the check run.
 (This is confined to files owned by the user running the check process.)
 Currently the directories monitored are the home directory, @file{/tmp}
-(excluding @file{RtmpXXXXXX} directories), @file{/dav/shm}, @file{~/.cache}
+(excluding @file{RtmpXXXXXX} directories), @file{/dev/shm}, @file{~/.cache}
 (recursively) and @file{~/.local/share} (recursively) or their
 equivalents on Windows and macOS (the directories in which the default
 settings for @code{tools::R_user_dir()} use a @file{R} subdirectory).
