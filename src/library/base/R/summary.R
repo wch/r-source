@@ -94,8 +94,9 @@ function(x, digits = max(3L, getOption("digits") - 3L), zdigits = 4L, ...)
         finite <- is.finite(x)
         digs <- digits %||% eval(formals()$digits) # use <default> if NULL
         x[finite] <- zapsmall(x[finite], digits = digs + zdigits)
-        c(NextMethod("format", digits = digits),
-          "NAs" = as.character(nna))
+        xx <- NextMethod("format", digits = digits)
+        if(m) c(xx, "NAs" = as.character(nna))
+        else xx
     }
 }
 
