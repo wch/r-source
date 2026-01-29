@@ -22,7 +22,8 @@
 summary(object, \dots)
 
 \method{summary}{default}(object, \dots, digits, quantile.type = 7,
-        character.method = c("default", "factor"))
+        character.method = c("default", "factor"),
+        polar = TRUE)
 
 \method{summary}{data.frame}(object, maxsum = 7,
         digits = max(3, getOption("digits")-3), \dots)
@@ -58,6 +59,9 @@ summary(object, \dots)
     \code{"factor"} to summarize \code{\link{factor}(object)}, resorting
     to the factor method.  Set to \code{NULL} to fall back to the
     generic summary as in \R < 4.6.0.}
+  \item{polar}{logical, indicating if polar coordinates (modulus and
+    argument) of \code{\link{complex}} numbers should be summarized rather than
+    Cartesian ones (real and imaginary parts).}
   \item{\dots}{additional arguments affecting the summary produced.}
 }
 \details{
@@ -124,5 +128,20 @@ set.seed(17); x <- rlnorm(100, sdlog=2)
 dput(sx <- summary(x))
 sx # exponential format for this data
 print(sx, zdigits = 3) # fixed point: "more readable"
+
+## componentwise treatment of complex data (since R 4.6.0):
+z <- c(1, 1+1i, 1i, -1+1i, -1, -1-1i, -1i, 1-1i,
+       NA_real_, NA_complex_)
+(szp <- summary(z))         # using Mod(.) and Arg(.)
+(szc <- summary(z, polar = FALSE)) # Re(.) and  Im(.)
+\dontshow{
+stopifnot(all.equal(as.vector(szp), c( 1, (1+sqrt(2))/2, sqrt(2), pi*c(-3/4, 1/8, 1),  2)),
+          all.equal(as.vector(szc), c(-1,       0,         1,           -1,   0,  1,   2)))
+}
+## treatment of raw -- as <integer>  (since R 4.6.0):
+summary(rx <- as.raw(1.5*x))
+## more useful for data than R <= 4.5.x 's
+## Length  Class   Mode 
+##    100    raw    raw 
 }
 \keyword{methods}

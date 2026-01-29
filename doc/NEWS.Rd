@@ -174,6 +174,11 @@
       via the new argument \code{character.method = "factor"}, e.g.,
       when summarizing a data frame (\PR{16750}).
 
+      It also provides more useful summaries for complex and raw vectors,
+      for the former with \code{polar} determining if polar or cartesian
+      coordinates are more relevant; mostly based on a proposal by
+      \I{Mikael Jagan}.
+
       \item Error messages from failed Rd \verb{\Sexpr} code now include
       the call from the original condition (if available).
 
@@ -188,7 +193,6 @@
       Varadhan}. \code{influence.glm()} has been amended so that it now
       returns an object with both a \code{"wt.res"} and a
       \code{"dev.res"} element.
-      
     }
   }
 
