@@ -368,3 +368,4 @@ data.frame(character = c(rep("true", 100), NA)) |>
     summary() # column-wise format()
 
 summary(numeric())  # suffered from print.table's na.print="" in R < 4.6.0
+unname(summary(pi)) # printed with empty names for a few days in R-devel
