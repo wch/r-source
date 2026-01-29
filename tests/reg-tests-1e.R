@@ -2544,6 +2544,20 @@ stopifnot(all.equal(summary(nchar(character()))[c("Min.", "Max.")] |> print(),
 ## gave +-Inf (with warnings) rather than NA, for a few days in the trunk
 
 
+## asymmetric  toeplitz(x, r), when length(r) < 2 and {x, r} differ by type -- PR#18996
+chkToep <- function(tx, lx, tr, lr) {
+    x <- vector(tx, lx)
+    r <- vector(tr, lr)
+    identical(toeplitz(x, r), matrix(c(FALSE, x[0L], r[0L]), lx, lr))
+}
+t3 <- c("integer", "double", "complex")
+i02 <- 0L:2L
+tail(L <- expand.grid(tx=t3, lx=i02, tr=t3, lr=i02,
+                      KEEP.OUT.ATTRS = FALSE, stringsAsFactors=FALSE))
+stopifnot(unlist(.mapply(chkToep, L, NULL)))
+## had 18 (out of 81) FALSE in R <= 4.5.z
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

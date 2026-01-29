@@ -14,7 +14,7 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 ## Copyright    1997-1999  Adrian Trapletti
 ## This version distributed under GPL (version 2 or later)
 
@@ -86,7 +86,7 @@ toeplitz <- function (x, r = NULL, symmetric = is.null(r))
             warning("x[1] != r[1]; using x[1] for diagonal")
         ## toeplitz2(c(if(nc >= 2L) r[nc:2L], x), n, nc) :
         d <- c(n, nc)
-        array(c(if(nc >= 2L) r[nc:2L], x)[nc - .col(d) + .row(d)], d)
+        array(c(r[if(nc >= 2L) nc:2L else 0L], x)[nc - .col(d) + .row(d)], d)
     }
 }
 

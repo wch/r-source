@@ -544,6 +544,10 @@
       label missing values \samp{NAs} rather than \samp{NA's},
       fixing a decades-old grammatical faux pas inherited from S
       (\PR{16348} and \PR{18948}).
+
+      \item Asymmetric toeplitz, \code{toeplitz(x, r)}, is type consistent
+      now, even when \code{r} of length 0 or 1 is not used directly.  Fixes
+      \PR{18996}, thanks to \I{Mikael Jagan}'s patch and test.
     }
   }
 }
