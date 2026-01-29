@@ -357,6 +357,9 @@
       \item \command{R CMD check} when passed a tarball looks at its contents
       and so no longer derives the package name from the tarball name
       (which can now be arbitrary).
+
+      \item Package \file{README.md} files are now installed and
+      featured in HTML help.
     }
   }
 
