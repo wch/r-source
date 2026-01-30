@@ -1,7 +1,4 @@
-@ifnottex
-@c work around incomplete texinfo.tex packaging without txi-en.tex
 @documentlanguage en
-@end ifnottex
 @documentencoding UTF-8
 
 @macro R{}
