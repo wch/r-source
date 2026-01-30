@@ -187,7 +187,7 @@ function(package, dir, lib.loc = NULL)
             if(e[1L] != "\\bibshow") {
                 cited <- c(cited, .bibkeys_from_cite(e[2L]))
             } else {
-                given <- c(cited, .bibkeys_from_show(e[2L]))
+                given <- .bibkeys_from_show(e[2L])
                 if(!length(given)) {
                     delta <- c(delta, cited)
                     cited <- character()
