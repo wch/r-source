@@ -519,7 +519,8 @@ simulate.lm <- function(object, nsim = 1, seed = NULL, ...)
 }
 
 deviance.lm <- function(object, ...)
-    sum(weighted.residuals(object)^2, na.rm=TRUE)
+#    sum(weighted.residuals(object)^2, na.rm=TRUE)
+    sum(residuals(object, type="deviance")^2, na.rm=TRUE)
 
 formula.lm <- function(x, ...)
 {
