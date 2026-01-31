@@ -150,19 +150,16 @@ function(bib)
 }
 
 .check_Rd_bibentries_cited_not_shown <-
-function(package, dir, lib.loc = NULL)
+function(dir)
 {
-    db <- if(!missing(package))
-              Rd_db(package, lib.loc)
-          else
-              Rd_db(dir = dir)
-    x <- Filter(length, lapply(db, .bibentries_cited_or_shown))
+    ## We really need build/partial.rdb for this, which we only have for
+    ## the package sources.
+    x <- Filter(length,
+                lapply(Rd_db(dir = dir), .bibentries_cited_or_shown))
     if(!length(x))
         return(NULL)
     u <- FALSE
     ## Check whether we got everything from the build stage expansions.
-    if(!missing(package))
-        dir <- system.file(package = package, lib.loc = lib.loc)
     f <- file.path(dir, "build", "partial.rdb")
     if(!file.exists(f)) {
         u <- TRUE
