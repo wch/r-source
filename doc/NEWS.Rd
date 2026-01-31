@@ -223,6 +223,12 @@
 
       \item Building the \R manuals now requires \I{Texinfo} 6.8 or later.
       % For the new Rman.css. Also features @example <lang> and @displaymath.
+
+      \item A new \env{LIBR_LDFLAGS} defaulting to \env{LDFLAGS} allows more
+      flexibility, e.g., for distributions such as Gentoo, Debian or
+      Ubuntu, fixing \PR{18992}; additionally a \code{make} failure to
+      create \file{libR.pc} should no longer be ignored, fixing \PR{18993};
+      both thanks to \I{Benjamin Drung}.
     }
   }
 

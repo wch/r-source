@@ -13,6 +13,7 @@ include $(top_builddir)/Makeconf
 LIBINTL= @BUILD_LIBINTL_FALSE@ @LIBINTL@
 R_HOME=$(rhome)
 STATIC_LIBR_PC = @WANT_R_STATIC_TRUE@ $(BLAS_LIBS) $(FLIBS) @R_XTRA_LIBS@ $(LIBINTL) @READLINE_LIBS@ $(LIBS)
+LIBR_LDFLAGS = $(LDFLAGS)
 
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
 
@@ -84,11 +85,11 @@ install-Rscript:
 ## note adding LDFLAGS is considered controversial by some (PR#17744)
 install-pc:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(libdir)/pkgconfig"
-	-@$(SED) -e "s:@rhome:$(rhome):" \
+	@$(SED) -e "s:@rhome:$(rhome):" \
 	  -e "s:@rincludedir:$(rincludedir):" \
 	  -e "s:@rarch:$(R_ARCH):" \
 	  -e 's:@libsprivate:$(STATIC_LIBR_PC):' \
-	  -e 's:@others:$(MAIN_LDFLAGS) $(LDFLAGS):' \
+	  -e 's:@others:$(MAIN_LDFLAGS) $(LIBR_LDFLAGS):' \
 	  -e 's/@VERSION/$(VERSION)/' $(srcdir)/libR.pc.in \
 	  > "$(DESTDIR)$(libdir)/pkgconfig/libR.pc"
 
