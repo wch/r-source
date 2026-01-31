@@ -2687,9 +2687,8 @@ The class attribute of an object can have several elements.  When a
 @cindex function, generic
 generic function is called the first inheritance is mainly handled
 through @code{NextMethod}.  @code{NextMethod} determines the method
-currently being evaluated, finds the next class from the
-
-FIXME: something is missing here
+currently being evaluated, finds the next class from the class
+attribute, and proceeds, see @code{?NextMethod}. 
 
 @node Method dispatching
 @section Method dispatching
