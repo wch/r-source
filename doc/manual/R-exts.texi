@@ -8785,6 +8785,11 @@ disambiguate by manually adding the suffixes to the year fields, e.g.
 @noindent
 (see file @file{src/library/grDevices/man/chull.Rd} in the R sources).
 
+As these macros are evaluated at build stage, packages using these and
+built with R >= 4.6.0 can be used without problems for R < 4.6.0.
+(However, checking such packages with R < 4.6.0 will warn that these
+macros are unknown.)
+
 @node Processing documentation files
 @section Processing documentation files
 @cindex Processing Rd format
