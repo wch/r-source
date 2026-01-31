@@ -626,9 +626,9 @@ Vectors can be used in arithmetic expressions, in which case the
 operations are performed element by element.  Vectors occurring in the
 same expression need not all be of the same length.  If they are not,
 the value of the expression is a vector with the same length as the
-longest vector which occurs in the expression.  Shorter vectors in the
-expression are @emph{recycled} as often as need be (perhaps
-fractionally) until they match the length of the longest vector.  In
+longest vector which occurs in the expression.  @emph{Recycling} occurs in each
+binary operation: the shorter vector is recycled as often as need be (perhaps
+fractionally) until it matches the length of the longer vector.  In
 particular a constant is simply repeated.  So with the above assignments
 the command
 @cindex Recycling rule
