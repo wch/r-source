@@ -138,7 +138,7 @@ z <- c(1, 1+1i, 1i, -1+1i, -1, -1-1i, -1i, 1-1i,
 stopifnot(all.equal(as.vector(szp), c( 1, (1+sqrt(2))/2, sqrt(2), pi*c(-3/4, 1/8, 1),  2)),
           all.equal(as.vector(szc), c(-1,       0,         1,           -1,   0,  1,   2)))
 }
-## treatment of raw -- as <integer>  (since R 4.6.0):
+## treatment of raw -- experimental, via <integer> (since R 4.6.0):
 summary(rx <- as.raw(1.5*x))
 ## more useful for data than R <= 4.5.x 's
 ## Length  Class   Mode 

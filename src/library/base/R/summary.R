@@ -37,19 +37,27 @@ summary.default <- function(object, ..., digits, quantile.type = 7,
             dimnames(tb)[[1L]][iN] <- "NAs"
         c(Mode = "logical", tb)
     } else if(is.numeric(object) || is.raw(object)) {
-       if (is.raw(object)) { # no NAs, no arithmetic -> as.int
+        if(isRaw <- is.raw(object)) { # no NAs, no arithmetic -> as.int
             nas <- FALSE
             object <- as.integer(object)
+            if(missing(quantile.type)) quantile.type <- 1L
+            else if(!(quantile.type %in% c(1L, 3L)))
+                warning("quantile.type not in {1, 3} for <raw>")
        } else {
 	nas <- is.na(object)
 	object <- object[!nas]
        }
 	qq <- stats::quantile(object, names = FALSE, type = quantile.type)
-        qq <- c(qq[1L:3L], mean(object), qq[4L:5L])
-	if(!missing(digits)) qq <- signif(qq, digits)
-	names(qq) <- c("Min.", "1st Qu.", "Median", "Mean", "3rd Qu.", "Max.")
+        if(isRaw) {
+            qq <- as.raw(qq)
+        } else {
+            qq <- c(qq[1L:3L], mean(object), qq[4L:5L])
+            if(!missing(digits)) qq <- signif(qq, digits)
+        }
+	names(qq) <- c("Min.", "1st Qu.", "Median", if(!isRaw) "Mean", "3rd Qu.", "Max.")
 	if(any(nas))
 	    c(qq, "NAs" = sum(nas))
+        else if(isRaw) c(Mode = "raw", qq)
 	else qq
     } else if(is.character(object) && !is.null(character.method)) {
         character.method <- match.arg(character.method)
