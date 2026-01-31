@@ -1,7 +1,7 @@
 #  File src/library/base/R/format.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ format.default <-
 	       },
 	       call =, expression =, "function" =, "(" = deparse(x, backtick=TRUE),
 	       name = deparse(x, backtick=FALSE),
-	       raw = as.character(x),
+	       raw = `storage.mode<-`(x, "character"),
 	       S4 = {
 		   cld <- methods::getClassDef(cl <- class(x))
 		   pkg <- attr(cl, "package")

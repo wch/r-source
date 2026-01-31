@@ -548,6 +548,9 @@
       \item Asymmetric toeplitz, \code{toeplitz(x, r)}, is type consistent
       now, even when \code{r} of length 0 or 1 is not used directly.  Fixes
       \PR{18996}, thanks to \I{Mikael Jagan}'s patch and test.
+
+      \item \code{format(r)} now keeps \code{names(r)} also for raw
+      objects \code{r}.
     }
   }
 }

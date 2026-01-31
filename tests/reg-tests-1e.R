@@ -2558,6 +2558,14 @@ stopifnot(unlist(.mapply(chkToep, L, NULL)))
 ## had 18 (out of 81) FALSE in R <= 4.5.z
 
 
+## format(<named raw>):
+rr <- as.raw(seq(0, 255, by = 7))
+names(rr) <- nn <- outer(c(LETTERS, letters), c("","_"), paste0)[seq_along(rr)]
+head(fr <- format(rr))
+stopifnot(identical(names(fr), nn))
+## lost names() in R <= 4.5.z
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
