@@ -828,3 +828,36 @@ BioC_rdxrefs_db <-
 function()
     read_CRAN_object(.get_BioC_repository_URL(),
                      "src/contrib/Meta/rdxrefs.rds")
+
+CRAN_package_actions <-
+function()
+{
+    src <- file.path(Sys.getenv("R_CRAN_PACKAGE_ACTIONS_URL",
+                                "rsync://CRAN.R-project.org/CRAN-actions"),
+                     "actions.rds")
+    if(startsWith(src, "file://"))
+        readRDS(substring(src, 8L))
+    else {
+        dst <- tempfile()
+        system2("rsync", c(src, dst))
+        readRDS(dst)
+    }
+}
+
+CRAN_package_issues <-
+function(full = TRUE)
+{
+    src <- file.path(Sys.getenv("R_CRAN_PACKAGE_ISSUES_URL",
+                                "rsync://CRAN.R-project.org/CRAN-issues"),
+                     if(full)
+                         "CRAN_issue_full.rds"
+                     else
+                         "CRAN_issue_open.rds")
+    if(startsWith(src, "file://"))
+        readRDS(substring(src, 8L))
+    else {
+        dst <- tempfile()
+        system2("rsync", c(src, dst))
+        readRDS(dst)
+    }
+}
