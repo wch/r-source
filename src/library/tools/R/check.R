@@ -7754,6 +7754,7 @@ add_dummies <- function(dir, Log)
             if (l10n_info()[["UTF-8"]]) "UTF-8" else utils::localeToCharset()
         messageLog(Log, "using session charset: ", charset)
         is_ascii <- charset == "ASCII"
+        messageLog(Log, "current time: ", format(as.POSIXct(Sys.time(), "GMT")), "Z")
 
         if(config_val_to_logical(Sys.getenv("_R_CHECK_R_ON_PATH_", "FALSE")))
             add_dummies(file_path_as_absolute(pkgoutdir), Log)
