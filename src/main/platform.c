@@ -89,6 +89,7 @@ static const char  * const R_FileSep = FILESEP;
 static void Init_R_Platform(SEXP rho)
 {
     SEXP value, names;
+    char *pkgType;
 
     PROTECT(value = allocVector(VECSXP, 8));
     PROTECT(names = allocVector(STRSXP, 8));
@@ -112,6 +113,12 @@ static void Init_R_Platform(SEXP rho)
 /* pkgType should be "mac.binary" for CRAN build *only*, not for all
    AQUA builds. Also we want to be able to use "mac.binary.mavericks",
    "mac.binary.el-capitan" and similar. */
+/* since R 4.6.0 we extend the support to other platforms, so we allow
+   R_PLATFORM_PKGTYPE env var to override this such that other builds can
+   set this in their Renviron */
+    if ((pkgType = getenv("R_PLATFORM_PKGTYPE")) && *pkgType)
+	SET_VECTOR_ELT(value, 5, mkString(pkgType));
+    else
 #ifdef PLATFORM_PKGTYPE
     SET_VECTOR_ELT(value, 5, mkString(PLATFORM_PKGTYPE));
 #else /* unix default */
