@@ -94,7 +94,6 @@ else
 endif
 
 BUILD_HTML ?= NO
-MIKTEX ?= TRUE
 TEXI2ANY ?= texi2any
 TEXI2DVI = env COMSPEC= texi2dvi
 MAKEINFO = texi2any

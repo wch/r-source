@@ -6,13 +6,7 @@ ECHO = echo
 
 include ../../src/gnuwin32/MkRules
 
-ifeq "$(MIKTEX)" "TRUE"
-R_TEXOPTS = --include-directory=../../share/texmf/tex/latex
-# TEXI2DVI = texi2dvi
-else
 R_TEXOPTS =
-# TEXI2DVI =
-endif
 
 R_EXE = ../../$(BINDIR)/Rterm
 
@@ -29,7 +23,6 @@ OBJECTS_HTML = $(SOURCES_TEXI:.texi=.html)
 OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
 OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
 
-## Now set in MkRules
 PDFLATEX = pdflatex $(R_TEXOPTS)
 PDFTEX = pdftex $(R_TEXOPTS)
 BATCHPDFLATEX = $(PDFLATEX) -interaction=nonstopmode
@@ -238,7 +231,6 @@ endif
 
 rw-FAQ.pdf: rw-FAQ.texi $(top_srcdir)/VERSION $(srcdir)/R-defs.texi
 	@$(SED) $(SEDVER) $< > tmp_pdf.texi
-	@$(TEXI2DVI) --pdf tmp_pdf.texi
 	@$(TEXI2DVI) --pdf tmp_pdf.texi
 	@mv tmp_pdf.pdf $@
 	@rm tmp_pdf.*

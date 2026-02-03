@@ -136,8 +136,6 @@
 # set this to YES to build static HTML help
 # BUILD_HTML = NO
 
-# set to use MiKTeX (and unset otherwise)
-# MIKTEX = TRUE
 # TEXI2DVI = texi2dvi
 # MiKTEX no longer provides texi2dvi and needs something like (previous toolchains)
 # TEXI2DVI = TEXINDEX=/Rtools/bin/texindex.exe texify
