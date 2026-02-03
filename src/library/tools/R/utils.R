@@ -1414,7 +1414,7 @@ function(type = c("source", "mac.binary", "win.binary", "other.binary")) {
       "Depends", "Imports", "LinkingTo", "Suggests", "Enhances",
       "License", "License_is_FOSS", "License_restricts_use",
       "OS_type", "Archs", "MD5sum",
-      if(type == "source") "NeedsCompilation"
+      if(type == "source") "NeedsCompilation" else "Built"
       )
 }
 
