@@ -928,18 +928,28 @@ contrib.url <- function(repos, type = getOption("pkgType"))
 
     ver <- paste(R.version$major,
                  strsplit(R.version$minor, ".", fixed=TRUE)[[1L]][1L], sep = ".")
-    mac.path <- "macosx"
-    if (substr(type, 1L, 11L) == "mac.binary.") {
-        mac.path <- paste(mac.path, substring(type, 12L), sep = "/")
-        type <- "mac.binary"
+    .contrib.path <- function(type, ver) {
+        ## <os>.binary[.<build>]  where build has to match [[:alnum:]_-]+
+        m <- regexec("^([[:lower:]]+)[.]binary(|[.]([[:alnum:]_-]+))$", type)
+
+        if (length(m) && length(m[[1]]) == 4) {  ## binary spec?
+            m <- m[[1]]
+            l <- attr(m, "match.length")
+            os <- substr(type, m[2], m[2] + l[2] - 1L)
+            ## for historical reasons mac/win have different directory names
+            os <- switch(os, mac = "macosx", win = "windows", os)
+
+            if (l[3] > 0) ## have build name ?
+                paste("bin", os, substr(type, m[4], m[4] + l[4] - 1L), "contrib", ver, sep = "/")
+            else
+                paste("bin", os, "contrib", ver, sep = "/")
+        } else if (isTRUE(type == "source"))
+            "src/contrib"
+        else
+            stop("invalid 'type'")
     }
-    res <- switch(type,
-		"source" = paste(gsub("/$", "", repos), "src", "contrib", sep = "/"),
-                "mac.binary" = paste(gsub("/$", "", repos), "bin", mac.path, "contrib", ver, sep = "/"),
-                "win.binary" = paste(gsub("/$", "", repos), "bin", "windows", "contrib", ver, sep = "/"),
-                stop("invalid 'type'")
-               )
-    res
+
+    paste(gsub("/$", "", repos), .contrib.path(type, ver), sep = "/")
 }
 
 .getMirrors <- function(url, local.file, all, local.only)
