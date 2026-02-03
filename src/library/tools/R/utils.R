@@ -1408,7 +1408,7 @@ function()
 ### ** .get_standard_repository_db_fields
 
 .get_standard_repository_db_fields <-
-function(type = c("source", "mac.binary", "win.binary")) {
+function(type = c("source", "mac.binary", "win.binary", "other.binary")) {
     type <- match.arg(type)
     c("Package", "Version", "Priority",
       "Depends", "Imports", "LinkingTo", "Suggests", "Enhances",

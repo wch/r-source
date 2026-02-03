@@ -11,11 +11,10 @@
   files for a repository of source or Mac/Windows binary packages.
 }
 \usage{
-write_PACKAGES(dir = ".", fields = NULL,
-               type = c("source", "mac.binary", "win.binary"),
+write_PACKAGES(dir = ".", fields = NULL, type,
                verbose = FALSE, unpacked = FALSE, subdirs = FALSE,
-               latestOnly = TRUE, addFiles = FALSE, rds_compress = "xz",
-               validate = FALSE)
+               latestOnly = TRUE, addFiles = grepl("binary", type),
+               rds_compress = "xz", validate = FALSE)
 }
 \arguments{
   \item{dir}{Character vector describing the location of the repository
@@ -40,9 +39,18 @@ write_PACKAGES(dir = ".", fields = NULL,
     are used.
   }
   \item{type}{
-    Type of packages: currently source \file{.tar.\{gz,bz2,xz,zstd\}} archives,
-    and macOS or Windows binary (\file{.tgz} or \file{.zip},
-    respectively) packages are supported.  Defaults to
+    Type of packages. It can be either \code{"source"} or the name of
+    the binary type (e.g., \code{"win.binary"} or
+    \code{"mac.binary.big-sur-x86_64"}). In addition, the value
+    \code{"binary"} corresponds to default binary type for this R build
+    (see \code{.Platform$pkgType}).
+    In R versions before 4.6.0 this argument was partially matched to
+    the choices \code{"source"}, \code{"mac.binary"} and \code{"win.binary"}
+    which is still honored, but the partial matching is now deprecated
+    to better support other binary types.
+    Currently, source and custom binary \file{.tar.\{gz,bz2,xz,zstd\}}
+    archives, legacy macOS or Windows binary (\file{.tgz} or
+    \file{.zip}, respectively) packages are supported. Defaults to
     \code{"win.binary"} on Windows and to \code{"source"} otherwise.
   }
   \item{verbose}{logical.  Should packages be listed as they are

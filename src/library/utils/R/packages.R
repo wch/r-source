@@ -819,15 +819,18 @@ download.packages <- function(pkgs, destdir, available = NULL,
                 keep[duplicated(keep)] <- FALSE
                 ok[ok][!keep] <- FALSE
             }
-            if (startsWith(type, "mac.binary")) type <- "mac.binary"
             ## in Oct 2009 we introduced file names in PACKAGES files
             File <- available[ok, "File"]
+            ## strip build name for ext detection
+            type <- gsub("^([[:lower:]]+[.]binary)[.].*", "\\1", type)
+            ## this is just a fall-back if there is no File: so hopefully
+            ## no longer used
             fn <- paste0(p, "_", available[ok, "Version"],
                          switch(type,
                                 "source" = ".tar.gz",
                                 "mac.binary" = ".tgz",
                                 "win.binary" = ".zip",
-                                stop("invalid 'type'")))
+                                ".tar.xz")) ## for any other binaries, but they should use File:
             have_fn <- !is.na(File)
             fn[have_fn] <- File[have_fn]
             repos <- available[ok, "Repository"]
@@ -1050,7 +1053,8 @@ setRepositories <-
         stop("invalid options(\"pkgType\"); must be a character string")
     if (pkgType == "both") pkgType <- "source" #.Platform$pkgType
     if (pkgType == "binary") pkgType <- .Platform$pkgType
-    if(startsWith(pkgType, "mac.binary")) pkgType <- "mac.binary"
+    ## strip build names (until we need them and start recording them)
+    pkgType <- gsub("^([[:lower:]]+[.]binary)[.].*", "\\1", pkgType)
     thisType <- a[[pkgType]]
     a <- a[thisType, 1L:3L]
     repos <- getOption("repos")

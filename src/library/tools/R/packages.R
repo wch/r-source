@@ -17,16 +17,33 @@
 #  https://www.R-project.org/Licenses/
 
 write_PACKAGES <-
-function(dir = ".", fields = NULL,
-         type = c("source", "mac.binary", "win.binary"),
+function(dir = ".", fields = NULL, type,
          verbose = FALSE, unpacked = FALSE, subdirs = FALSE,
-         latestOnly = TRUE, addFiles = FALSE, rds_compress = "xz",
+         latestOnly = TRUE, addFiles = grepl("binary", type), rds_compress = "xz",
          validate = FALSE)
 {
-    if(missing(type) && .Platform$OS.type == "windows")
-        type <- "win.binary"
-    type <- match.arg(type)
-
+    ## FIXME: IMHO this should be either .Platform$pkgType or "source"
+    ## I don't like the Windows-only exception, but is it too late to change it?
+    if(missing(type))
+        type <- if (.Platform$OS.type == "windows") "win.binary" else "source"
+    if (type == "binary") {
+        if (.Platform$pkgType == "source")
+            stop("There is no binary type for this build of R.")
+        type <- .Platform$pkgType
+    }
+    if (grepl(".binary", type, fixed=TRUE)) {
+        ## strip build name
+        type <- gsub("^([[:lower:]]+[.]binary)[.].*", "\\1", type)
+        ## at this point we only care about win, mac or other
+        if (! type %in% c("win.binary", "mac.binary"))
+            type <- "other.binary"
+    } else {
+        ## for compatibility with R < 4.6.0 we handle partial matching
+        ## of c("source", "win.binary", "mac.binary") as it was using match.arg
+        choices <- c("source", "win.binary", "mac.binary")
+        type <- choices[pmatch(type, choices)]
+        if (any(is.na(type))) stop("invalid 'type'")
+    }
     paths <- ""
     if(is.logical(subdirs) && subdirs) {
         owd <- setwd(dir)
@@ -113,7 +130,7 @@ function(desc, path, addFiles, addPaths, latestOnly)
 
 ## factored out so it can be used in multiple
 ## places without threat of divergence
-.get_pkg_file_pattern = function(type = c("source", "mac.binary", "win.binary"),
+.get_pkg_file_pattern = function(type = c("source", "mac.binary", "win.binary", "other.binary"),
                                  ext.only = FALSE)
 {
 
@@ -124,7 +141,9 @@ function(desc, path, addFiles, addPaths, latestOnly)
     ret = switch(type,
                  "source" = "_.*\\.tar\\.[^_]*$",
                  "mac.binary" = "_.*\\.tgz$",
-                 "win.binary" = "_.*\\.zip$")
+                 "win.binary" = "_.*\\.zip$",
+                 "other.binary" = "_.*\\.tar\\.[^_]*$" ##  we assume any custom binaries are still tar balls
+                 )
     if(ext.only)
         ret = gsub("_.*", "", fixed = TRUE, ret)
     ret
@@ -133,7 +152,7 @@ function(desc, path, addFiles, addPaths, latestOnly)
 ## what you add.
 .build_repository_package_db <-
 function(dir, fields = NULL,
-         type = c("source", "mac.binary", "win.binary"),
+         type = c("source", "mac.binary", "win.binary", "other.binary"),
          verbose = getOption("verbose"),
          unpacked = FALSE, validate = FALSE)
 {
