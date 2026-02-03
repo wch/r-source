@@ -1,6 +1,6 @@
 % File src/library/stats/man/influence.measures.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{influence.measures}
@@ -147,7 +147,9 @@ hat(x, intercept = TRUE)
 }
 \note{
   For \code{hatvalues}, \code{dfbeta}, and \code{dfbetas}, the method
-  for linear models also works for generalized linear models.
+  for linear models also works for generalized linear models. These were
+  updated for R 4.6 to use working residuals and weights, it is
+  assumed that the model has methods suitable for \code{\link{weighted.residuals}()}
 }
 \author{
   Several R core team members and John Fox, originally in his \file{car}

@@ -1,6 +1,6 @@
 % File src/library/stats/man/weighted.residuals.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{weighted.residuals}
@@ -16,13 +16,19 @@ weighted.residuals(obj, drop0 = TRUE)
     \code{\link{weights} == 0}.}
 }
 \description{
-  Computed weighted residuals from a linear model fit.
+  Computed weighted residuals from a model fit.
 }
 \details{
-  Weighted residuals are based on the deviance residuals, which for
+  Weighted residuals are based on the working residuals and working weights, which for
   a \code{\link{lm}} fit are the raw residuals \eqn{R_i}{Ri}
   multiplied by \eqn{\sqrt{w_i}}{wi^0.5}, where \eqn{w_i}{wi} are the
   \code{weights} as specified in \code{\link{lm}}'s call.
+
+  For other models, including \code{\link{glm}} fits, weights and
+  residuals are taken from the last iteration of the approximating
+  weighted linear model fit. Notice that it is assumed that
+  \code{residuals()} and \code{weight()} methods for \code{obj} accept
+  \code{type="working"}. 
 
   Dropping cases with weights zero is compatible with
   \code{\link{influence}} and related functions.
@@ -33,6 +39,9 @@ weighted.residuals(obj, drop0 = TRUE)
   observations, otherwise.
 }
 \seealso{\code{\link{residuals}}, \code{\link{lm.influence}}, etc.}
+\note{Until R version 4.5, this returned deviance residuals, which are
+  identical for \code{lm} models, but differs for other models and are
+  not well suited for influence measures.}
 \examples{
 ## following on from example(lm)
 \dontshow{utils::example("lm", echo = FALSE)}
