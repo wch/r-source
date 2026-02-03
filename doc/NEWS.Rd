@@ -194,6 +194,26 @@
       Varadhan}. \code{influence.glm()} has been amended so that it now
       returns an object with both a \code{"wt.res"} and a
       \code{"dev.res"} element.
+
+      \item \R now supports custom binary types which are of the form
+      \code{"<system>.binary.<build>"} where \code{<system>} is
+      lower-case name (letters only) of the system and \code{<build>} is
+      the name of the build (alphanumeric and dashes). The corresponding
+      paths returned by \code{contrib.url} (which govern repository
+      layout) with the above \code{type=} have the form
+      \code{bin/<system>/<build>/contrib/<x.y>} where \code{<x.y>}
+      is the \R version without patch level. This is a generalisation of
+      the binary types previously supported on macOS. In additon, binary
+      packages can have the extensions \code{.tar.bz2}, \code{.tar.xz},
+      \code{.tar.zst} and \code{.tar.zstd} with the corresponding
+      compression support.
+
+      \item The value of \code{.Platform$pkgType} which defines the
+      native binary type for the current build of \R can be overridden
+      with \env{R_PLATFORM_PKGTYPE} environment variable (previously
+      this was only set by the macOS builds of \R). This should be
+      typically only done by the author of a binary \R distribution to
+      define the type of binaries supported by that build of \R.
     }
   }
 
@@ -262,6 +282,11 @@
       \option{--with-CXX20}: the changeover is scheduled for
       2026-02-08.  For ways to test a package with C++20, see
       \url{https://www.stats.ox.ac.uk/pub/bdr/C++20/README.txt}.
+
+      \item When installing binary packages the time stamp in the
+      \code{"Built"} field is considered even if the package version is
+      identical to allow binary package repositories to update binaries
+      without the need to increase the package version.
     }
   }
 
