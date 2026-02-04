@@ -214,6 +214,15 @@
       this was only set by the macOS builds of \R). This should be
       typically only done by the author of a binary \R distribution to
       define the type of binaries supported by that build of \R.
+
+      \item Experimentally, several math library (\file{math.h}) functions,
+      such as \code{exp(.)}, \code{log1p()}, \code{sin()}, \code{atanh()},
+      when called from \R, are now ensured to give fully accurate results
+      in a small neighbourhood of special values, such as \code{exp(0) == 1},
+      \code{log1p(0) == 0}, etc.
+      This makes \R slightly less platform dependent for these functions,
+      notably on platforms with less accurate system math libraries, see also
+      \url{https://blog.r-project.org/2026/01/30/debugging-sensitivity-to-c-math-library-on-linux/}.
     }
   }
 
