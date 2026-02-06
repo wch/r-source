@@ -203,7 +203,7 @@
       layout) with the above \code{type=} have the form
       \code{bin/<system>/<build>/contrib/<x.y>} where \code{<x.y>}
       is the \R version without patch level. This is a generalisation of
-      the binary types previously supported on macOS. In additon, binary
+      the binary types previously supported on macOS. In addition, binary
       packages can have the extensions \code{.tar.bz2}, \code{.tar.xz},
       \code{.tar.zst} and \code{.tar.zstd} with the corresponding
       compression support.
@@ -586,7 +586,7 @@
       fixing a decades-old grammatical faux pas inherited from S
       (\PR{16348} and \PR{18948}).
 
-      \item Asymmetric toeplitz, \code{toeplitz(x, r)}, is type consistent
+      \item Asymmetric \code{toeplitz(x, r)} is type consistent
       now, even when \code{r} of length 0 or 1 is not used directly.  Fixes
       \PR{18996}, thanks to \I{Mikael Jagan}'s patch and test.
 
