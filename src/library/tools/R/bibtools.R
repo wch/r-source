@@ -152,30 +152,50 @@ function(bib)
 .check_Rd_bibentries_cited_not_shown <-
 function(dir)
 {
-    ## We really need build/partial.rdb for this, which we only have for
-    ## the package sources.
-    x <- Filter(length,
-                lapply(Rd_db(dir = dir), .bibentries_cited_or_shown))
+    dir <- file_path_as_absolute(dir)
+    
+    ## Base packages are special as they have no partial Rd db, and
+    ## Rd_db() re-orders sections after processing Sexprs, so we need to 
+    ## go via .build_Rd_db() which allows step control.
+    ## For non-base packages, we really need build/partial.rdb (which we
+    ## only have for the package sources) to check that all bibentry
+    ## macros were properly expanded.
+    db <- .build_Rd_db(dir, step = 1L)
+    if(length(db)) {
+        first <- nchar(file.path(dir, "man")) + 2L
+        names(db) <- substring(names(db), first)
+    }
+
+    x <- Filter(length, lapply(db, .bibentries_cited_or_shown))
     if(!length(x))
         return(NULL)
+    
     u <- FALSE
-    ## Check whether we got everything from the build stage expansions.
-    f <- file.path(dir, "build", "partial.rdb")
-    if(!file.exists(f)) {
-        u <- TRUE
-    } else {
-        y <- lapply(readRDS(f)[names(x)], .bibentries_cited_or_shown)
-        ## Cannot simply use identical() as entries in the partial Rd db
-        ## are subject to section re-ordering.
-        g <- function(u, v) {
-            is.null(v) || # built with \bib stubs/unknowns in R < 4.6.0
-            length(setdiff(split(u, row(u)), split(v, row(v))) > 0L)
-        }
-        if(any(unlist(Map(g, x, y), use.names = FALSE)))
+    
+    if(basename(dir) %notin% .get_standard_package_names()$base) {
+        ## Check whether we got everything from the build stage
+        ## expansions.
+        f <- file.path(dir, "build", "partial.rdb")
+        if(!file.exists(f)) {
             u <- TRUE
-        else
-            x <- y
+        } else {
+            y <- lapply(readRDS(f)[names(x)], .bibentries_cited_or_shown)
+            ## Cannot simply use identical() as entries in the partial
+            ## Rd db are subject to section re-ordering.
+            ## <FIXME>
+            ## Is this still true now that we go via .build_Rd_db()?
+            ## </FIXME>
+            g <- function(u, v) {
+                is.null(v) || # built with \bib stubs/unknowns in R < 4.6.0
+                    length(setdiff(split(u, row(u)), split(v, row(v))) > 0L)
+            }
+            if(any(unlist(Map(g, x, y), use.names = FALSE)))
+                u <- TRUE
+            else
+                x <- y
+        }
     }
+    
     f <- function(x) {
         if(!length(x))
             return(NULL)
@@ -197,8 +217,10 @@ function(dir)
         }
         c(delta, cited)
     }
+
     y <- Filter(length, lapply(x, f))
     if(u) attr(y, "unexpected_macro_expansion") <- TRUE
+
     y
 }
 
