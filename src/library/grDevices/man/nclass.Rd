@@ -46,7 +46,7 @@ nclass.FD(x, digits = 5)
   \bibcitet{R:Wand:1997}.
 }
 \references{
-  \bibinfo{R:Venables+Ripley:2002}{note}{Page 112}.
+  \bibinfo{R:Venables+Ripley:2002}{note}{Page 112}
   \bibshow{R:Venables+Ripley:2002,
     R:Freedman+Diaconis:1981,
     R:Scott:1979,

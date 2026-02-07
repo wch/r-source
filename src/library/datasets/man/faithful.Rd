@@ -20,9 +20,6 @@
   }
 }
 \source{W. Härdle.}
-\references{
-  \bibshow{*, R:Haerdle:1991}
-}
 \details{
   A closer look at \code{faithful$eruptions} reveals that these are
   heavily rounded times originally in seconds, where multiples of 5 are
@@ -34,6 +31,9 @@
 }
 \seealso{
   \code{geyser} in package \CRANpkg{MASS} for the \I{Azzalini}--\I{Bowman} version.
+}
+\references{
+  \bibshow{*, R:Haerdle:1991}
 }
 \examples{
 require(stats); require(graphics)
