@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2025 R Core Team
+### Copyright (C) 1998-2026 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -313,10 +313,11 @@ AC_ARG_WITH([C23],
 [R_ARG_USE(C23)],
 [use_C23=yes])
 
+dnl Made the default in R 4.6.0.
 AC_ARG_WITH([CXX20],
-[AS_HELP_STRING([--with-CXX20],[make C++20 the default C++ standard if available @<:@no@:>@])],
+[AS_HELP_STRING([--with-CXX20],[make C++20 the default C++ standard if available @<:@yes@:>@])],
 [R_ARG_USE(CXX20)],
-[use_CXX20=no])
+[use_CXX20=yes])
 
 ## Build separate shared/dynamic library containing R's BLAS if desired 
 AC_ARG_ENABLE([BLAS-shlib],

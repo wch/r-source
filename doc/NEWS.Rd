@@ -278,19 +278,14 @@
       \sQuote{defunct}.
 
       %% GCC 10 and Intel 2021.1 definitely support this: GCC 9 may
-      \item The default C++ standard will be changed to C++20
+      \item The default C++ standard has been changed to C++20
       \sQuote{where available} (which it is on all known platforms since
       2021): if not C++17 is used if available otherwise C++ is not
       supported (as before).
 
-      Several CRAN packages already require C++20 and have hundreds of
+      Several CRAN packages already required C++20 and have hundreds of
       others depending on them.  (Packages can request C++17 if
       essential.)
-
-      For now this default can be selected by configuring \R{} with
-      \option{--with-CXX20}: the changeover is scheduled for
-      2026-02-08.  For ways to test a package with C++20, see
-      \url{https://www.stats.ox.ac.uk/pub/bdr/C++20/README.txt}.
 
       \item When installing binary packages the time stamp in the
       \code{"Built"} field is considered even if the package version is
