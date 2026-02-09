@@ -115,10 +115,11 @@ CC90 = $(BINPREF)$(CCBASE) $(M_ARCH)
 C90FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu90 @EOPTS@ @SANOPTS@ $(LTO)
 CC99 = $(BINPREF)$(CCBASE) $(M_ARCH)
 C99FLAGS = -O3 -Wall $(DEBUGFLAG) -std=gnu99 @EOPTS@ @SANOPTS@ $(LTO)
-CXX = $(BINPREF)$(if $(USE_LLVM),clang++,g++) -std=gnu++17 $(M_ARCH)
+CXX = $(BINPREF)$(if $(USE_LLVM),clang++,g++) -std=gnu++20 $(M_ARCH)
 CXXCPP = $(CXX) -E
 CXXFLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@ @SANOPTS@ $(LTO)
 CXXPICFLAGS =
+## FIXME remove C++11,C++14
 CXX11 = $(BINPREF)$(if $(USE_LLVM),clang++,g++) $(M_ARCH)
 CXX11FLAGS = -O2 -Wall $(DEBUGFLAG) @EOPTS@ @SANOPTS@ $(LTO)
 CXX11PICFLAGS =
@@ -141,7 +142,8 @@ CXX23 = $(CXX11)
 CXX23FLAGS = $(CXX11FLAGS)
 CXX23PICFLAGS =
 ## g++ >= 11 allow 23
-CXX23STD = -std=gnu++2b
+CXX23STD = -std=gnu++23
+## FIXMWE add 26: gcc 14 supports -std=gnu++26
 DYLIB_EXT = .dll
 DYLIB_LD = $(DLL)
 DYLIB_LDFLAGS = -shared
