@@ -53,10 +53,10 @@ rstudent(model, \dots)
 \method{rstudent}{glm}(model, infl = influence(model, do.coef = FALSE), \dots)
 
 dffits(model, \dots)
-\method{dffits}{lm}(fmodel, infl = lm.influence(model, do.coef = FALSE),
-		   res = weighted.residuals(model)))
-\method{dffits}{glm}(fmodel, infl = lm.influence(model, do.coef = FALSE),
-		   res = weighted.residuals(model)))
+\method{dffits}{lm}(model, infl = lm.influence(model, do.coef = FALSE),
+		   res = weighted.residuals(model), \dots)
+\method{dffits}{glm}(model, infl = lm.influence(model, do.coef = FALSE),
+		   res = weighted.residuals(model), \dots)
 
 dfbeta(model, \dots)
 \method{dfbeta}{lm}(model, infl = lm.influence(model, do.coef = TRUE), \dots)
