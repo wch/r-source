@@ -490,10 +490,6 @@ prepare_Rd <-
     srcref <- attr(Rd, "srcref")
     if (is.null(Rdfile) && !is.null(srcref))
     	Rdfile <- attr(srcref, "srcfile")$filename
-    ## prepare_Rd_data_store(list(Rdfile = Rdfile))
-    ## prepare_Rd_data_store(Rdfile)
-    ## saveRDS(prepare_Rd_data_store(), file = "~/tmp/yyy2.rds")
-    ## on.exit(prepare_Rd_data_store(NULL))
     if (fragment) meta <- NULL
     else {
 	pratt <- attr(Rd, "prepared")
