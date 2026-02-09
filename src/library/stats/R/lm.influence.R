@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lm.influence.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -47,6 +47,16 @@ weighted.residuals <- function(obj, drop0 = TRUE)
     } else r
 }
 
+## (pd, feb 2026) Function to check whether GLM family has fixed or estimated dispersion
+## paraphrased from summary.glm()
+## (Recent versions of binomial(), poisson() sets $dispersion==1 so the explicit check
+## is a relic. Change was in r84026 (Martyn, 2023) so probably too soon to remove.)
+
+estDisp <- function(fam)
+    (is.null(fam$dispersion) || is.na(fam$dispersion)) &&
+    !(fam$family %in% c("poisson", "binomial"))
+    
+
 qr.influence <- function(qr, res, tol = 10 * .Machine$double.eps)
     .Call(C_influence, qr, res, tol)
 
@@ -57,7 +67,8 @@ lm.influence <- function (model, do.coef = TRUE)
     is.mlm <- is.matrix(e) # n x q  matrix in the multivariate lm case
     if (model$rank == 0) {
         n <- length(wt.res) # drops 0 wt, may drop NAs
-        sigma <- sqrt(deviance(model)/df.residual(model))
+        ## (pd feb 2026, avoid deviance() here)
+        sigma <- sqrt(sum(e^2)/df.residual(model))
         res <- list(hat = rep(0, n), coefficients = matrix(0, n, 0),
                     sigma = rep(sigma, n))
     } else {
@@ -116,7 +127,8 @@ lm.influence <- function (model, do.coef = TRUE)
                 res$coefficients <- if(is.mlm) coefficients else drop1d(coefficients)
             }
             sigma <- naresid(model$na.action, res$sigma)
-            sigma[is.na(sigma)] <- sqrt(deviance(model)/df.residual(model))
+            ## (pd, feb 2026)  avoid deviance()
+            sigma[is.na(sigma)] <- sqrt(sum(e^2)/df.residual(model))
             res$sigma <- if(is.mlm) sigma else drop(sigma)
         }
     }
@@ -152,12 +164,19 @@ influence.glm <- function(model, do.coef = TRUE, ...) {
     c(res, list(pear.res = pRes, dev.res = dRes))
 }
 
+
+## FIXME (pd feb 2026): This is clumsy. lm.influence() calls weighted.residuals() because
+##   it needs it for the leave-one-out sigma estimates, but hatvalues do not require residuals.
+##   The two things are computed together in subroutine lminfl (../src/lminfl.f) but it literally
+##   does it in two steps, first hat, then sigma. So we could easily separate out the hat computation
+##   and have lm.influence() call hatvalues() rather than the other way around.
+
 hatvalues <- function(model, ...) UseMethod("hatvalues")
 hatvalues.lm <- function(model, infl = lm.influence(model, do.coef=FALSE), ...) infl$hat
 
 rstandard <- function(model, ...) UseMethod("rstandard")
 rstandard.lm <- function(model, infl = lm.influence(model, do.coef=FALSE),
-                         sd = sqrt(deviance(model)/df.residual(model)),
+                         sd = sigma(model)/sqrt(df.residual(model)),
                          type = c("sd.1", "predictive"), ...)
 {
     type <- match.arg(type)
@@ -170,14 +189,16 @@ rstandard.lm <- function(model, infl = lm.influence(model, do.coef=FALSE),
 
 ### New version from Brett Presnell, March 2011
 ### Slightly modified (dispersion bit) by pd
+### (feb 2026, pd) switch default to pearson. Not obvious that it even works to standardize
+### deviance residuals by hatvalues
 rstandard.glm <-
  function(model,
           infl=influence(model, do.coef=FALSE),
-          type=c("deviance","pearson"), ...)
+          type=c("pearson","deviance"), ...)
 {
  type <- match.arg(type)
  res <- switch(type, pearson = infl$pear.res, infl$dev.res)
- res <- res/sqrt(summary(model)$dispersion * (1 - infl$hat))
+ res <- res/(sigma(model) * (1 - infl$hat))
  res[is.infinite(res)] <- NaN
  res
 }
@@ -193,19 +214,38 @@ rstudent.lm <- function(model, infl = lm.influence(model, do.coef=FALSE),
 }
 
 rstudent.glm <- function(model, infl = influence(model, do.coef=FALSE), ...)
+## {
+##     r <- infl$dev.res
+##     r <- sign(r) * sqrt(r^2 + (infl$hat * infl$pear.res^2)/(1 - infl$hat))
+##     r[is.infinite(r)] <- NaN
+##     if (any(family(model)$family == c("binomial", "poisson")))
+## 	r else r/infl$sigma
+## }
 {
-    r <- infl$dev.res
-    r <- sign(r) * sqrt(r^2 + (infl$hat * infl$pear.res^2)/(1 - infl$hat))
-    r[is.infinite(r)] <- NaN
-    if (any(family(model)$family == c("binomial", "poisson")))
-	r else r/infl$sigma
+    if(!estDisp(model$family))
+        rstandard(model, infl, type="pearson")
+    else
+        infl$pear.res/(infl$sigma*sqrt(1 - infl$hat))
 }
+    
 
-### FIXME for glm (see above) ?!?
-dffits <- function(model, infl = lm.influence(model, do.coef=FALSE),
+dffits <- function(model, ...) UseMethod("dffits")
+
+dffits.lm <- function(model, infl = lm.influence(model, do.coef=FALSE),
 		   res = weighted.residuals(model))
 {
     res <- res * sqrt(infl$hat)/(infl$sigma*(1-infl$hat))
+    res[is.infinite(res)] <- NaN
+    res
+}
+
+dffits.glm <- function(model, infl = lm.influence(model, do.coef=FALSE),
+		   res = weighted.residuals(model))
+{
+    if (estDisp(model$fam))
+        res <- res * sqrt(infl$hat)/(infl$sigma*(1-infl$hat))
+    else
+        res <- res * sqrt(infl$hat)/(sigma(model)*(1-infl$hat))
     res[is.infinite(res)] <- NaN
     res
 }
@@ -233,6 +273,21 @@ dfbetas.lm <- function (model, infl = lm.influence(model, do.coef=TRUE), ...)
     db <- dfbeta(model, infl)
     if(length(dim(db)) == 3L) db <- aperm(db, c(1L,3:2))
     db / outer(infl$sigma, sqrt(diag(xxi)))
+}
+
+## (pd, feb 2026) The lm method should work for glm with estimated dispersion, but
+## for fixed dispersion, we should not use leave-one-out est.
+dfbetas.glm <- function (model, infl = lm.influence(model, do.coef=TRUE), ...)
+{
+    ## for lm & glm
+    qrm <- qr(model)
+    xxi <- chol2inv(qrm$qr, qrm$rank)
+    db <- dfbeta(model, infl)
+    if(length(dim(db)) == 3L) db <- aperm(db, c(1L,3:2))
+    if (estDisp(model$family))
+        db / outer(infl$sigma, sqrt(diag(xxi)))
+    else
+        sweep(db, 2, sqrt(sigma(model) * diag(xxi)), "/")
 }
 
 covratio <- function(model, infl = lm.influence(model, do.coef=FALSE),

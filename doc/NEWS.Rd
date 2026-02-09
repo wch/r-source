@@ -203,6 +203,12 @@
       returns an object with both a \code{"wt.res"} and a
       \code{"dev.res"} element.
 
+      \item Several influence measures for \code{"glm"} objects have
+      been updated to use Pearson residuals rather than deviance
+      residuals (the latter are not unbiased) and to not use
+      leave-one-out estimates of dispersion in models with fixed
+      dispersion.
+
       \item \R now supports custom binary types which are of the form
       \code{"<system>.binary.<build>"} where \code{<system>} is
       lower-case name (letters only) of the system and \code{<build>} is
