@@ -199,23 +199,24 @@ function(dir)
     f <- function(x) {
         if(!length(x))
             return(NULL)
-        delta <- cited <- character()
+        cache <- cited <- shown <- character()
         for(e in split(x, row(x))) {
             if(e[1L] != "\\bibshow") {
-                cited <- c(cited, .bibkeys_from_cite(e[2L]))
+                given <- .bibkeys_from_cite(e[2L])
+                cited <- unique(c(cited, given))
+                cache <- unique(c(cache, given))
             } else {
                 given <- .bibkeys_from_show(e[2L])
-                if(!length(given)) {
-                    delta <- c(delta, cited)
+                if(!length(given))
                     cited <- character()
-                } else {
+                else {
                     if(any(given == "*"))
-                        given <- c(given[given != "*"], cited)
-                    cited <- setdiff(cited, given)
+                        given <- c(given[given != "*"], cache)
+                    shown <- unique(c(shown, given))
                 }
             }
         }
-        c(delta, cited)
+        setdiff(cited, shown)
     }
 
     y <- Filter(length, lapply(x, f))
