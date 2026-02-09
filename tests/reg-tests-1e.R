@@ -2566,6 +2566,14 @@ stopifnot(identical(names(fr), nn))
 ## lost names() in R <= 4.5.z
 
 
+## rep.int() and rep_len() on factor had names, not as documented -- PR#18999
+## From example in ?rep
+x <- factor(LETTERS[1:4]); names(x) <- letters[1:4]
+stopifnot(is.null(names(rep.int(x, 2))),
+          is.null(names(rep_len(x, 10))))
+## had names in 4.0.0 <= R <= 4.5.z because of dispatch to rep() method
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

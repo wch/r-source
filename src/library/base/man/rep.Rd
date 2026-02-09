@@ -1,6 +1,6 @@
 % File src/library/base/man/rep.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015, 2017 R Core Team
+% Copyright 1995-2015, 2017, 2019, 2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{rep}
@@ -12,7 +12,7 @@
 \alias{rep.Date}
 \alias{rep_len}
 
-\title{Replicate Elements of Vectors and Lists}
+\title{Replicate Elements of Vectors and Vector-Like Objects}
 \description{
   \code{rep} replicates the values in \code{x}.  It is a generic
   function, and the (internal) default method is described here.
@@ -20,6 +20,9 @@
   \code{rep.int} and \code{rep_len} are faster simplified versions for
   two common cases.  Internally, they are generic, so methods can be
   defined for them (see \link{InternalMethods}).
+  Except if \code{x} is a factor,
+  when internal dispatch for \code{rep.int} and \code{rep_len} fails,
+  there is an attempt to dispatch on the equivalent call to \code{rep}.
 }
 \usage{
 rep(x, \dots)
@@ -86,7 +89,7 @@ rep_len(x, length.out)
   An object of the same type as \code{x}.
 
   \code{rep.int} and \code{rep_len} return no attributes (except the
-  class if returning a factor).
+  class and levels if returning a factor).
 
   The default method of \code{rep} gives the result names (which will
   almost always contain duplicates) if \code{x} had names, but retains

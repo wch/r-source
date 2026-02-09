@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2025  The R Core Team.
+ *  Copyright (C) 1998-2026  The R Core Team.
  *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -347,6 +347,7 @@ attribute_hidden SEXP do_rep_int(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (DispatchOrEval(call, op, "rep.int", args, rho, &a, 0, 0))
       return(a);
 
+    if (!inherits(s, "factor"))
     if (DispatchOrEval(call, op, "rep", args, rho, &a, 0, 0))
       return(a);
 
@@ -413,7 +414,7 @@ attribute_hidden SEXP do_rep_len(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     s = CAR(args);
 
-    if (isObject(s)) {
+    if (isObject(s) && !inherits(s, "factor")) {
 	SEXP rep_call;
 	PROTECT(rep_call = shallow_duplicate(call));
 	SETCAR(rep_call, install("rep"));
