@@ -42,9 +42,23 @@ function(keys)
 {
     keys <- keys[nzchar(keys)]
     bad <- character()
-    if(!any(ind <- grepl("::", keys, fixed = TRUE))) {
+    ind <- grepl("::", keys, fixed = TRUE)
+    brp <- if(!all(ind)) {
+               ## Bibentries for base R and current package maybe.
+               rdfile <- processRdChunk_data_store()$Rdfile
+               dir <- dirname(normalizePath(rdfile, mustWork = FALSE))
+               if(basename(dir) %in% c("unix", "windows"))
+                   dir <- dirname(dir)
+               dir <- if(basename(dir) == "man") {
+                          dir <- dirname(dir)
+                          c(dir, file.path(dir, "inst"))
+                      } else character()
+               c(R_bibentries(),
+                 .bibentries_from_REFERENCES(dir))
+           } else NULL
+    if(!any(ind)) {
         ## Special-case for efficiency.
-        bib <- R_bibentries()
+        bib <- brp
         pos <- match(keys, .bibentry_get_key(bib),
                      nomatch = 0L)
         bad <- keys[pos == 0L]
@@ -58,19 +72,11 @@ function(keys)
         for(j in seq_along(i)) {
             pj <- names(i)[j]
             bib <- if(!nzchar(pj))
-                       R_bibentries()
-                   else if(nzchar(path <- system.file("REFERENCES.rds",
-                                                      package = pj)))
-                       readRDS(path)
-                   else if(nzchar(path <- system.file("REFERENCES.R",
-                                                      package = pj)))
-                       utils::readCitationFile(path,
-                                               list(Encoding = "UTF-8"))
-                   else if(nzchar(path <- system.file("REFERENCES.bib",
-                                                      package = pj)))
-                       `names<-`(bibtex::read.bib(path), NULL)
-                   else
-                       utils::bibentry()
+                       brp
+                   else {
+                       dir <- system.file(package = pj)
+                       .bibentries_from_REFERENCES(dir)
+                   }
             kj <- keys[i[[j]]]
             pos <- match(sub(".*::", "", kj),
                          .bibentry_get_key(bib),
@@ -91,6 +97,21 @@ function(keys)
         warning(msg, call. = FALSE)
     }
     y
+}
+
+.bibentries_from_REFERENCES <-
+function(dir)
+{
+    for(d in dir[nzchar(dir)]) {
+        if(file.exists(path <- file.path(d, "REFERENCES.rds")))
+            return(readRDS(path))
+        else if(file.exists(path <- file.path(d, "REFERENCES.R")))
+            return(utils::readCitationFile(path,
+                                           list(Encoding = "UTF-8")))
+        else if(file.exists(path <- file.path(d, "REFERENCES.bib")))
+            return(`names<-`(bibtex::read.bib(path), NULL))
+    }
+    utils::bibentry()        
 }
 
 .bibentries_from_bibtex <-
