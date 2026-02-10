@@ -744,8 +744,11 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
 
     checkLIST <- function(block, tag, blocktag, preblocks = NULL)
     {
-        ## skip empty block or wrapped \Sexpr Rd result
-        if (!length(block) || inherits(block, "Rd"))
+        npre <- length(preblocks)
+        preblock <- if (npre) preblocks[[npre]]
+        ## skip empty block, wrapped \Sexpr Rd result, \<unknown>{...}
+        if (!length(block) || inherits(block, "Rd") ||
+            identical(attr(preblock, "Rd_tag"), "UNKNOWN"))
             return()
         if (!listOK)
             stopRd(block, Rdfile, "Lost braces", showSource = TRUE)
@@ -755,7 +758,6 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
         if (note_lost_braces) {
             ## try to raise real issues like "code{.}" or "{1,2}",
             ## ignoring bib-braces, \tab *{}, \itemize{\item *{}}, {\sspace}
-            npre <- length(preblocks)
             pretags <- vapply(preblocks, function (block) {
                 tag <- attr(block, "Rd_tag")
                 if (tag == "TEXT" && grepl("^[[:space:]]*$", block)) "BLANK"
@@ -769,7 +771,7 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
                 separated <- npre == 0L || pretags[npre] == "BLANK" ||
                     (pretags[npre] == "TEXT" && # catch 'emph{Journal}', '\"{o}',
                      ## '"[...]{...}', but ignore {P}oisson-{G}amma or ({EM})
-                     !grepl("([[:alnum:]]|\\\\[[:punct:]]|[])])$", preblocks[[npre]]))
+                     !grepl("([[:alnum:]]|\\\\[[:punct:]]|[])])$", preblock))
                 ignore <-
                     (length(tags) == 1L && startsWith(tags, "\\") &&
                      separated) || # ignore ' {\code{...}}' but not ' code{\link{}}'
