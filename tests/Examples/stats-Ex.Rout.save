@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-02-09 r89383) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-02-09 r89387) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin24.6.0
 
@@ -5177,7 +5177,7 @@ function (V)
         r[seq.int(from = 1L, by = p + 1L, length.out = p)] <- 1
     r
 }
-<bytecode: 0x107b92898>
+<bytecode: 0x1092b4898>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7825,7 +7825,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x109677550>
+<environment: 0x11c51e630>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -8593,8 +8593,8 @@ FAMI   -3   87   84   84   96   94   94   94   98   99   99  100
 > ### Title: Regression Deletion Diagnostics
 > ### Aliases: influence.measures hat hatvalues hatvalues.lm rstandard
 > ###   rstandard.lm rstandard.glm rstudent rstudent.lm rstudent.glm dfbeta
-> ###   dfbeta.lm dfbetas dfbetas.lm dffits dffits.lm dffits.glm covratio
-> ###   cooks.distance cooks.distance.lm cooks.distance.glm
+> ###   dfbeta.lm dfbetas dfbetas.lm dfbetas.glm dffits dffits.lm dffits.glm
+> ###   covratio cooks.distance cooks.distance.lm cooks.distance.glm
 > ### Keywords: regression
 > 
 > ### ** Examples
@@ -12729,14 +12729,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x118f26b60>
-<environment: 0x118f2d388>
+<bytecode: 0x11af92b70>
+<environment: 0x11af9d3c0>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x118f26a10>
-<environment: 0x118f2d388>
+<bytecode: 0x11af92a20>
+<environment: 0x11af9d3c0>
 
 > 
 > 
@@ -17095,8 +17095,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x107cb8988>
-<environment: 0x1094bf368>
+<bytecode: 0x1093e2988>
+<environment: 0x11cb59160>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -19685,7 +19685,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.954 0.151 2.315 0 0 
+Time elapsed:  1.979 0.15 2.296 0 0 
 > grDevices::dev.off()
 null device 
           1 

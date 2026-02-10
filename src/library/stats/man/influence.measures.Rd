@@ -30,6 +30,7 @@
 \alias{dfbeta.lm}
 \alias{dfbetas}
 \alias{dfbetas.lm}
+\alias{dfbetas.glm}
 \alias{dffits}
 \alias{dffits.lm}
 \alias{dffits.glm}
@@ -63,6 +64,7 @@ dfbeta(model, \dots)
 
 dfbetas(model, \dots)
 \method{dfbetas}{lm}(model, infl = lm.influence(model, do.coef = TRUE), \dots)
+\method{dfbetas}{glm}(model, infl = lm.influence(model, do.coef = TRUE), \dots)
 
 covratio(model, infl = lm.influence(model, do.coef = FALSE),
          res = weighted.residuals(model))
