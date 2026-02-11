@@ -2959,7 +2959,7 @@ in late 2026.
 The default standard for compiling @R{} packages was changed to C++17 in
 @R{} 4.4.0: only a C++17 compiler will be selected as the default C++
 compiler.  Such a compiler is available (but not necessarily installed)
-on all known @R{} platforms.  It is intended that C++20 will become the
+on all known @R{} platforms.  C++20 will become the
 default (`where available') in @R{} 4.6.0: it has been supported on all
 known platforms since at least 2021. Since the default changes with @R{}
 version, packages which only compile with C++17 or C++20 should specify
@@ -3019,9 +3019,10 @@ If it has a @file{Makevars} file (or @file{Makevars.win} or
 CXX_STD = CXX23
 @end example
 
-C++17, C++20, C++23 and C++26 (from @R{} 4.5.0) can be specified in an
-analogous way.  @strong{NB} this is not a @command{make} directive: the
-value should not be quoted, nor should there be a trailing comment.
+C++17, C++20, C++23 and C++26 (from @R{} 4.5.0, 4.5.3 on Windows) can be
+specified in an analogous way.  @strong{NB} this is not a @command{make}
+directive: the value should not be quoted, nor should there be a
+trailing comment.
 
 If you specify the C++ standard in both a @file{Makevars} file and
 @samp{SystemRequirements} do ensure that they are the same standard: the
