@@ -23,6 +23,8 @@
       the \file{DESCRIPTION} file) are now checked more thoroughly.
       Invalid values are still ignored but now give a warning, as do
       contradictory specifications.
+
+      \item (Preliminary) support for C++26 has been extended to Windows. 
     }
   }
 
