@@ -1,0 +1,6 @@
+Package: testCXX26
+Title: Test Package for C++26
+Description: Test Package for C++26
+Version: 1.0.0
+SystemRequiremnts: C++26
+NeedsCompilation: yes

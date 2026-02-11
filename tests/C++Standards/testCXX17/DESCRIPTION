@@ -1,0 +1,5 @@
+Package: testCXX17
+Title: Test Package for C++17
+Description: Test Package for C++17
+Version: 1.0.0
+SystemRequiremnts: C++17

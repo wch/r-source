@@ -1,0 +1,6 @@
+Package: testCXX20
+Title: Test Package for C++20
+Description: Test Package for C++20
+Version: 1.0.0
+SystemRequiremnts: C++20
+NeedsCompilation: yes

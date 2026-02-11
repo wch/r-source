@@ -36,7 +36,7 @@ DISTFILES = Makefile.in Makefile.win Makefile.install Makefile.install.win Makef
 	reg-large.R utf8.R
 
 SUBDIRS = Embedding Examples
-SUBDIRS_WITH_NO_BUILD = Pkgs
+SUBDIRS_WITH_NO_BUILD = Pkgs C++Standards
 
 ## SRCDIR is used by reg-tests-1a.R, reg-IO2.R and reg-packages.R
 ## NB: SRCDIR is not available on windows so make any new tests robust to this

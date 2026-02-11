@@ -1,0 +1,19 @@
+Tests of support fo C++ Standards
+=================================
+
+R itself does not use C++, put provides suppoert for packages to do so
+via etc/Makeconf, used by R CMD INSTALL.  The 'configure' script finds
+suitable settings for the CXX* macros, but it is not used on Windows.
+The test packages in this directory are to allow the settings to be
+tested, especially on Windows.
+
+For each standard to be tested, do something like
+
+mkdir Libs
+R CMD build testCXX17
+R CMD INSTALL testCXX17_1.0.0.tar.gz -l Libs
+rm -r Libs testCXX17_1.0.0.tar.gz
+
+C++11 and C++14 are only supported in R < 4.6.0 so their test packages
+should fail to install on R >= 4.6.0.  The other standards are
+supported in recent versions of R (C++26 for R >= 4.5.3 on Windowss).
