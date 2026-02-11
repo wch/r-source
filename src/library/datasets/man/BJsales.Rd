@@ -18,7 +18,7 @@ BJsales
 BJsales.lead
 }
 \source{
-  The data are given in \bibcitet{|R:Box+Jenkins:1976|p.\\\\\\sspace{}537}.
+  The data are given in \bibcitet{|R:Box+Jenkins:1976|p.\sspace{}537}.
   Obtained from the Time Series Data Library at
   \url{https://robjhyndman.com/TSDL/}
 }

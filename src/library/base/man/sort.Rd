@@ -149,7 +149,7 @@ sort.int(x, partial = NULL, na.last = NA, decreasing = FALSE,
   \code{\link{order}} if you want the original element numbers.
 
   All attributes are removed from the return value
-  \bibcitep{|R:Becker+Chambers+Wilks:1988|p.\\\\\\sspace{}146}
+  \bibcitep{|R:Becker+Chambers+Wilks:1988|p.\sspace{}146}
   except names, which are sorted.  (If
   \code{partial} is specified even the names are removed.)  Note that
   this means that the returned value has no class, except for factors

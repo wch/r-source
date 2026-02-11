@@ -35,7 +35,7 @@ atanh(x)
 
    Branch cuts are consistent with the inverse trigonometric functions
    \code{asin} \emph{et seq}, and agree with those defined in
-   \bibcitet{|R:Abramowitz+Stegun:1972|figure 4.7\\\\\\, page 86}.
+   \bibcitet{|R:Abramowitz+Stegun:1972|figure 4.7\, page 86}.
    The behaviour actually on the cuts
    follows the C99 standard which requires continuity coming round the
    endpoint in a counter-clockwise direction.

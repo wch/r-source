@@ -57,7 +57,7 @@ rapply(object, f, classes = "ANY", deflt = NULL,
   \code{\link{lapply}}, \code{\link{dendrapply}}.
 }
 \references{
-  \bibinfo{R:Chambers:1998}{footer}{(\\\\\\code{rapply} is only
+  \bibinfo{R:Chambers:1998}{footer}{(\code{rapply} is only
     described briefly there.)}
   \bibshow{R:Chambers:1998}
 }

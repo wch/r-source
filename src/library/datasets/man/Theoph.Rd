@@ -53,7 +53,7 @@
 }
 \source{
   \bibinfo{R:Davidian+Giltinan:1995}{footer}{
-    (section 5.5, p.\\\\\\sspace{}145 and section 6.6, p.\\\\\\sspace{}176)}
+    (section 5.5, p.\sspace{}145 and section 6.6, p.\sspace{}176)}
   \bibinfo{R:Pinheiro+Bates:2000}{footer}{(Appendix A.29)}
   \bibshow{*}
 }

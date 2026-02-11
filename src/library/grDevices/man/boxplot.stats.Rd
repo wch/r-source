@@ -57,8 +57,8 @@ boxplot.stats(x, coef = 1.5, do.conf = TRUE, do.out = TRUE)
 
   The notches (if requested) extend to \code{+/-1.58 IQR/sqrt(n)}.
   This seems to be based on the same calculations as the formula with 1.57 in
-  \bibcitet{|R:Chambers+Cleveland+Kleiner:1983|p.\\\\\\sspace{}62)}, given in
-  \bibcitet{|R:Mcgill+Tukey+Larsen:1978|p.\\\\\\sspace{}16)}.
+  \bibcitet{|R:Chambers+Cleveland+Kleiner:1983|p.\sspace{}62)}, given in
+  \bibcitet{|R:Mcgill+Tukey+Larsen:1978|p.\sspace{}16)}.
   They are based on asymptotic normality of the median
   and roughly equal sample sizes for the two medians being compared, and
   are said to be rather insensitive to the underlying distributions of

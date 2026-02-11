@@ -174,7 +174,7 @@ x \%/\% y
 }
 \references{
   \bibinfo{R:Goldberg:1991}{footer}{Also available at
-    \\\\\\url{https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html}.}
+    \url{https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html}.}
   
   \bibshow{R:Becker+Chambers+Wilks:1988,
     R:Goldberg:1991}

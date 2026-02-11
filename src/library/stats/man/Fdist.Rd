@@ -63,7 +63,7 @@ rf(n, df1, df2, ncp)
 
   The F distribution's cumulative distribution function (\abbr{cdf}),
   \eqn{F_{\nu_1,\nu_2}}{F_{n1,n2}} fulfills
-  \bibcitep{|R:Abramowitz+Stegun:1972|section 26.6.2\\\\\\, page 946}
+  \bibcitep{|R:Abramowitz+Stegun:1972|section 26.6.2\, page 946}
   \eqn{F_{\nu_1,\nu_2}(qF) = 1 - I_x(\nu_2/2, \nu_1/2) = I_{1-x}(\nu_1/2, \nu_2/2),}{%
        F_{n1,n2}(qF)   = 1 - I_x(n2/2, n1/2)   = I_{1-x}(n1/2, n2/2),}  where
   \eqn{x := \frac{\nu_2}{\nu_2 + \nu_1*qF}}{x := n2/(n2 + n1*qF)},  and

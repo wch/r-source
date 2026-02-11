@@ -72,7 +72,7 @@ tanpi(x)
 
 \section{Complex values}{
    For the inverse trigonometric functions, branch cuts are defined as in
-   \bibcitet{|R:Abramowitz+Stegun:1972|figure 4.4\\\\\\, page 79}.
+   \bibcitet{|R:Abramowitz+Stegun:1972|figure 4.4\, page 79}.
 
    For \code{asin} and \code{acos}, there are two cuts, both along
    the real axis: \eqn{\left(-\infty, -1\right]}{(-Inf, -1]} and

@@ -32,7 +32,7 @@
     I had endeavoured to do so empirically.  The material used was a
     correlation table containing the height and left middle finger
     measurements of 3000 criminals, from a paper by
-    \bibcitet{|R:MacDonell:1902|p.\\\\\\sspace{}219)}.
+    \bibcitet{|R:MacDonell:1902|p.\sspace{}219)}.
     The
     measurements were written 
     out on 3000 pieces of cardboard, which were then very thoroughly

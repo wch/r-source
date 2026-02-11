@@ -256,19 +256,19 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
 }
 \references{
   \bibinfo{R:Becker+Chambers+Wilks:1988}{footer}{
-    (\\\\\\code{set.seed}, storing in \\\\\\code{.Random.seed}.)}
+    (\code{set.seed}, storing in \code{.Random.seed}.)}
   \bibinfo{R:Knuth:1997:v2}{footer}{
-    Source code at \\\\\\url{https://www-cs-faculty.stanford.edu/~knuth/taocp.html}.}
+    Source code at \url{https://www-cs-faculty.stanford.edu/~knuth/taocp.html}.}
   \bibinfo{R:L_Ecuyer+Simard:2007}{footer}{
-    The \\\\\\I{TestU01} C library is available from
-    \\\\\\url{https://simul.iro.umontreal.ca/testu01/tu01.html} or also
-    \\\\\\url{https://github.com/umontreal-simul/TestU01-2009}.
+    The \I{TestU01} C library is available from
+    \url{https://simul.iro.umontreal.ca/testu01/tu01.html} or also
+    \url{https://github.com/umontreal-simul/TestU01-2009}.
   }
   \bibinfo{R:Matsumoto+Nishimura:1998}{footer}{
-    Source code formerly at \\\\\\code{http://www.math.keio.ac.jp/~matumoto/emt.html}.
-    Now see \\\\\\url{https://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/VERSIONS/C-LANG/c-lang.html}.}
+    Source code formerly at \code{http://www.math.keio.ac.jp/~matumoto/emt.html}.
+    Now see \url{https://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/VERSIONS/C-LANG/c-lang.html}.}
   \bibinfo{R:Wichmann+Hill:1982}{note}{Remarks:
-    \\\\\\bold{34}, 198 and \\\\\\bold{35}, 89.}
+    \bold{34}, 198 and \bold{35}, 89.}
 
   \bibshow{*,
     R:Ahrens+Dieter:1973,

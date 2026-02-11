@@ -36,7 +36,7 @@ iris3
   The data were collected by \bibcitet{R:Anderson:1935}.
 }
 \references{
-  \bibinfo{R:Becker+Chambers+Wilks}{footer}{(Has \\\\\\code{iris3} as \\\\\\code{iris}.)}
+  \bibinfo{R:Becker+Chambers+Wilks}{footer}{(Has \code{iris3} as \code{iris}.)}
   \bibshow{*,
     R:Becker+Chambers+Wilks:1988}
 }

@@ -63,7 +63,7 @@ spectrum(x, \dots, method = c("pgram", "ar"))
   \code{(-frequency(x)/2, +frequency(x)/2]},
   whereas a more common scaling is \eqn{2\pi}{2pi} and range
   \eqn{(-0.5, 0.5]}
-  \bibcitep{e.g.\\\\\\,|R:Bloomfield:1976|} or 1 and range
+  \bibcitep{e.g.\,|R:Bloomfield:1976|} or 1 and range
   \eqn{(-\pi, \pi]}{(-pi, pi]}.
 
   If available, a confidence interval will be plotted by

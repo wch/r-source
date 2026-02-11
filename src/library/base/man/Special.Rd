@@ -52,7 +52,7 @@ lfactorial(x)
   \deqn{B(a,b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}.}{B(a,b) = \Gamma(a)\Gamma(b)/\Gamma(a+b).}
   The formal definition is
   \deqn{B(a, b) = \int_0^1 t^{a-1} (1-t)^{b-1} dt}{integral_0^1 t^(a-1) (1-t)^(b-1) dt}
-  \bibcitep{|R:Abramowitz+Stegun:1972|section 6.2.1\\\\\\, page 258}.
+  \bibcitep{|R:Abramowitz+Stegun:1972|section 6.2.1\, page 258}.
   Note that it is only
   defined in \R for non-negative \code{a} and \code{b}, and is infinite
   if either is zero.
@@ -60,7 +60,7 @@ lfactorial(x)
   The functions \code{gamma} and \code{lgamma} return the gamma function
   \eqn{\Gamma(x)} and the natural logarithm of \emph{the absolute value of} the
   gamma function.  The gamma function is defined by
-  \bibcitep{|R:Abramowitz+Stegun:1972|section 6.1.1\\\\\\, page 255}
+  \bibcitep{|R:Abramowitz+Stegun:1972|section 6.1.1\, page 255}
   \deqn{\Gamma(x) = \int_0^\infty t^{x-1} e^{-t} dt}{\Gamma(x) = integral_0^Inf t^(x-1) exp(-t) dt}
   for all \eqn{x > 0}, from which the recursions \eqn{\Gamma(x+1) =
   x\Gamma(x)} and then \eqn{\Gamma(x+n) = (x+n-1)(x+n-2)\cdots x \Gamma(x)}
@@ -68,7 +68,7 @@ lfactorial(x)
   analytic continuation leads to the expression for non-integer negative real numbers,
   \deqn{\Gamma(x) = \frac{\Gamma(x + n)}{(x + n -1) \cdots (x + 1)x}, \ n \in \mathbb{Z}^{+}, -n < x < 0,%
   }{\Gamma(x) = \Gamma(x + n)/((x + n -1) ... (x + 1)x), n in N, -n < x < 0,}
-  see \bibcitet{|R:Abramowitz+Stegun:1972|6.1.16 or 6.1.22\\\\\\, page 256}.
+  see \bibcitet{|R:Abramowitz+Stegun:1972|6.1.16 or 6.1.22\, page 256}.
   %
   The gamma function is not defined for zero and negative integers (when
   \code{NaN} is returned).  There will be a warning on possible loss of
@@ -87,7 +87,7 @@ lfactorial(x)
     \frac{\Gamma'(x)}{\Gamma(x)}}{digamma(x) = \psi(x) = d/dx{ln \Gamma(x)} = \Gamma'(x) / \Gamma(x)}
   \eqn{\psi} and its derivatives, the \code{psigamma()} functions, are
   often called the \sQuote{\I{polygamma}} functions, e.g.\sspace{}in
-  \bibcitet{|R:Abramowitz+Stegun:1972|section 6.4.1\\\\\\, page 260}; and higher
+  \bibcitet{|R:Abramowitz+Stegun:1972|section 6.4.1\, page 260}; and higher
   derivatives (\code{deriv = 2:4}) have occasionally been called
   \sQuote{\I{tetragamma}}, \sQuote{\I{pentagamma}}, and \sQuote{\I{hexagamma}}.
 
@@ -120,10 +120,10 @@ lfactorial(x)
 }
 \references{
   \bibinfo{R:Abramowitz+Stegun:1972}{footer}{
-    \\\\\\url{https://en.wikipedia.org/wiki/Abramowitz_and_Stegun} provides
-    links to the full text which is in public domain.\\\\\\cr
+    \url{https://en.wikipedia.org/wiki/Abramowitz_and_Stegun} provides
+    links to the full text which is in public domain.\cr
     Chapter 6: Gamma and Related Functions.}
-  \bibinfo{R:Becker+Chambers+Wilks:1988}{footer}{(For \\\\\\code{gamma} and \\\\\\code{lgamma}.)}
+  \bibinfo{R:Becker+Chambers+Wilks:1988}{footer}{(For \code{gamma} and \code{lgamma}.)}
   \bibshow{*, R:Becker+Chambers+Wilks:1988}
 }
 \seealso{

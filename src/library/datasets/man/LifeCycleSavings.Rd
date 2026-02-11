@@ -24,7 +24,7 @@
 }
 \source{
   The data were obtained from
-  \bibcitet{|R:Belsley+Kuh+Welsch:1980|pp.\\\\\\sspace{}41--42}.
+  \bibcitet{|R:Belsley+Kuh+Welsch:1980|pp.\sspace{}41--42}.
   They in turn obtained the data from \bibcitet{R:Sterling:1977}.
 }
 \details{

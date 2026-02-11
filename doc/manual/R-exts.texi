@@ -8708,9 +8708,7 @@ argument, where a @var{citespec} can be a @var{keyspec} or of the form
 @code{@var{before}|@var{keyspec}|@var{after}} with both @samp{|}
 mandatory and @var{before} and @var{after} possibly empty text to be
 inserted before and after the citation if not empty.  If these texts
-contain commas, these can be backslash-escaped: due to the way Rd macros
-are processed, this needs 6 (!) backslashes, see the examples below.
-(This is clearly inconvenient, but most likely too late to change.)
+contain commas, these can be backslash-escaped: see the examples below.
 
 A @var{keyspec} is either a simple @var{key} or of the form
 @code{@var{pkg}::@var{key}}.  In the former case, @var{key} is taken as
@@ -8747,7 +8745,7 @@ For example,
 gives a textual citation of the ``@emph{Blue Book}''
 (`@I{Becker, Chambers, and Wilks (1988)}' when first encountered),
 @example
-\bibcitep@{e.g.\\\\\\,|R:Chambers+Hastie:1992|page 123@}
+\bibcitep@{e.g.\,|R:Chambers+Hastie:1992|page 123@}
 @end example
 @noindent
 gives a parenthetical citation of a page in the ``@emph{White Book}''
