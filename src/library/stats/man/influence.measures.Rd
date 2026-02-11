@@ -43,7 +43,7 @@ influence.measures(model, infl = influence(model))
 
 rstandard(model, \dots)
 \method{rstandard}{lm}(model, infl = lm.influence(model, do.coef = FALSE),
-          sd = sigma(model)/sqrt(df.residual(model)),
+          sd = sigma(model),
           type = c("sd.1", "predictive"), \dots)
 \method{rstandard}{glm}(model, infl = influence(model, do.coef = FALSE),
           type = c("pearson", "deviance"), \dots)
