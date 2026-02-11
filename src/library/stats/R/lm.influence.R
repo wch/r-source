@@ -176,7 +176,7 @@ hatvalues.lm <- function(model, infl = lm.influence(model, do.coef=FALSE), ...) 
 
 rstandard <- function(model, ...) UseMethod("rstandard")
 rstandard.lm <- function(model, infl = lm.influence(model, do.coef=FALSE),
-                         sd = sigma(model)/sqrt(df.residual(model)),
+                         sd = sigma(model),
                          type = c("sd.1", "predictive"), ...)
 {
     type <- match.arg(type)
