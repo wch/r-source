@@ -142,6 +142,10 @@ CXX23FLAGS = $(CXX11FLAGS)
 CXX23PICFLAGS =
 ## g++ >= 11 allow 23
 CXX23STD = -std=gnu++2b
+CXX26 = $(CXX17)
+CXX26FLAGS = $(CXX17FLAGS)
+CXX26PICFLAGS =
+CXX26STD = -std=gnu++26
 DYLIB_EXT = .dll
 DYLIB_LD = $(DLL)
 DYLIB_LDFLAGS = -shared
@@ -228,6 +232,8 @@ SHLIB_CXX20LD = $(CXX20)
 SHLIB_CXX20LDFLAGS = -shared
 SHLIB_CXX23LD = $(CXX23)
 SHLIB_CXX23LDFLAGS = -shared
+SHLIB_CXX26LD = $(CXX26)
+SHLIB_CXX26LDFLAGS = -shared
 SHLIB_EXT = .dll
 SHLIB_FCLD = $(FC)
 ## ideally -shared -static-libgfortran, but not for gcc 4.2.1
