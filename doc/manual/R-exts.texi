@@ -2953,7 +2953,7 @@ define a module of the same name in multiple source files.
 
 @R{} can be built without a C++ compiler although one is available (but
 not necessarily installed) on all known @R{} platforms. 
-The current defailt is `C++17' (from December 2017), `C++20' (with many new
+The current default is `C++17' (from December 2017), `C++20' (with many new
 features in December 2020) and `C++23' (in October 2024) have been
 published since.  The next revision, `C++26', is expected in 2026/7 and
 several compilers already have considerable support for the current
@@ -2965,7 +2965,8 @@ of earlier versions, see the corresponding section in their manuals.
 
 The default standard for compiling @R{} packages was changed to C++17 in
 @R{} 4.3.0 if supported, and from @R{} 4.4.0 only a C++17 compiler will
-be selected as the default C++ compiler.
+be selected as the default C++ compiler.  (The default will change to
+C++20 in @R{} 4.6.0.)
 
 Support for C++11 and C++14 will be removed in @R{} 4.6.0.
 
