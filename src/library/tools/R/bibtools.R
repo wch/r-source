@@ -197,21 +197,17 @@ function(dir)
 
     if(basename(dir) %notin% .get_standard_package_names()$base) {
         ## Check whether we got everything from the build stage
-        ## expansions.
+        ## expansions.  Catch if built with \bib* stubs/unknowns.
         built_file <- file.path(dir, "build", "partial.rdb")
         if(!file.exists(built_file)) {
             u <- TRUE
         } else {
             y <- lapply(readRDS(built_file)[names(x)],
                         .bibentries_cited_or_shown)
-            ## Cannot simply use identical() as entries in the partial
-            ## Rd db are subject to section re-ordering.
-            ## <FIXME>
-            ## Is this still true now that we go via .build_Rd_db()?
-            ## </FIXME>
             g <- function(u, v) {
-                is.null(v) || # built with \bib stubs/unknowns in R < 4.6.0
-                    length(setdiff(split(u, row(u)), split(v, row(v)))) > 0L
+                is.null(v) || # page not in partial.rdb (no build-stage macros)
+                              # or built with undefined macros
+                    sum(startsWith(v[,3L], "\\Sexpr")) != nrow(u)
             }
             if(any(unlist(Map(g, x, y), use.names = FALSE)))
                 u <- TRUE
