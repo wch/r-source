@@ -58,4 +58,7 @@
 
 % Experimental:
 \newcommand{\bibcite}{#1}
+\newcommand{\bibcitep}{#1}
+\newcommand{\bibcitet}{#1}
 \newcommand{\bibshow}{#1}
+\newcommand{\bibinfo}{(#1, #2, #3)}
