@@ -27,7 +27,7 @@ weighted.residuals(obj, drop0 = TRUE)
   For other models, including \code{\link{glm}} fits, weights and
   residuals are taken from the last iteration of the approximating
   weighted linear model fit. Notice that it is assumed that
-  \code{residuals()} and \code{weight()} methods for \code{obj} accept
+  \code{residuals()} and \code{weights()} methods for \code{obj} accept
   \code{type="working"}. 
 
   Dropping cases with weights zero is compatible with
@@ -40,7 +40,7 @@ weighted.residuals(obj, drop0 = TRUE)
 }
 \seealso{\code{\link{residuals}}, \code{\link{lm.influence}}, etc.}
 \note{Until R version 4.5, this returned deviance residuals, which are
-  identical for \code{lm} models, but differs for other models and are
+  identical for \code{lm} fits, but differ for other models and are
   not well suited for influence measures.}
 \examples{
 ## following on from example(lm)

@@ -156,11 +156,12 @@ hat(x, intercept = TRUE)
 \note{
   For \code{hatvalues}, \code{dfbeta}, and \code{dfbetas}, the method
   for linear models also works for generalized linear models. These were
-  updated for R 4.6 to use working residuals and weights, it is
-  assumed that the model has methods suitable for \code{\link{weighted.residuals}()}
+  updated for R 4.6 to use \emph{working} residuals and weights; it is
+  assumed that the model has methods suitable for
+  \code{\link{weighted.residuals}()}.
 }
 \author{
-  Several R core team members and John Fox, originally in his \file{car}
+  Several R Core Team members and John Fox, originally in his \CRANpkg{car}
   package.
 }
 \references{

@@ -594,7 +594,7 @@
 
       \item \code{rep.int()} and \code{rep_len()} again drop names also
       for factors, fixing a regression in \R 4.0.0.  (Thanks to a report
-      by Rui Barradas and \PR{18999} by Suharto Anggono.)
+      by \I{Rui Barradas} and \PR{18999} by \I{Suharto Anggono}.)
     }
   }
 }
