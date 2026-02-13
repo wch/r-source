@@ -1,7 +1,7 @@
 #  File src/library/tools/R/utils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -2125,13 +2125,7 @@ function(dir)
     files <- list_files_with_type(file.path(dir, "R"), "code",
                                   full.names = FALSE,
                                   OS_subdirs = c("unix", "windows"))
-    ## As of 2025-03, packages
-    ##   gmailr httr2 purrr
-    ## use configure code to drop the pipe using examples for R < 4.1.
-    db <- if(basename(dir) %in% c("gmailr", "httr2", "purrr"))
-              list()
-          else
-              Rd_db(dir = dir)
+    db <- Rd_db(dir = dir, stages = NULL)
 
     do.call(rbind,
             c(Map(function(u, v) {
