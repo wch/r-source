@@ -242,7 +242,7 @@ dffits.lm <- function(model, infl = lm.influence(model, do.coef=FALSE),
 dffits.glm <- function(model, infl = lm.influence(model, do.coef=FALSE),
 		   res = weighted.residuals(model), ...)
 {
-    if (estDisp(model$fam))
+    if (estDisp(model$family))
         res <- res * sqrt(infl$hat)/(infl$sigma*(1-infl$hat))
     else
         res <- res * sqrt(infl$hat)/(sigma(model)*(1-infl$hat))
