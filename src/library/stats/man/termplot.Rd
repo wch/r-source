@@ -5,6 +5,7 @@
 
 \name{termplot}
 \alias{termplot}
+\encoding{UTF-8}
 \title{Plot Regression Terms}
 \description{
   Plots regression terms against their predictors, optionally with
