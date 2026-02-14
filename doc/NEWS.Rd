@@ -275,6 +275,18 @@
     }
   }
 
+
+  \subsection{CHECKING AN INSTALLATION}{
+    \itemize{
+      \item There is a new directiory \file{tests/C++Standards} which
+      contains small packages which can be test-installed to check
+      support for various C++ standards.  This is principally for use on
+      Windows as on a Unix-alike this partially duplicates tests done by
+      \command{configure} --- although it can also be used to test the
+      behaaviour of \command{R CMD INSTALL} on unsupported standards.
+    }
+  }
+
   \subsection{PACKAGE INSTALLATION}{
     \itemize{
       \item Specifying C++11 or C++14 in \file{src/Makevars} has long
