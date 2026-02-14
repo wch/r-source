@@ -68,3 +68,4 @@ par(opar)
 \keyword{nonlinear}
 \keyword{regression}
 \keyword{models}
+\keyword{hplot}

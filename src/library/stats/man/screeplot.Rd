@@ -45,3 +45,4 @@ screeplot(fit)
 screeplot(fit, npcs = 24, type = "lines")
 }
 \keyword{multivariate}
+\keyword{hplot}

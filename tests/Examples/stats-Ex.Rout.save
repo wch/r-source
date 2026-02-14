@@ -12430,7 +12430,7 @@ Warning in xy.coords(x, y, xlabel, ylabel, log) :
 > ### Name: plot.profile.nls
 > ### Title: Plot a 'profile.nls' Object
 > ### Aliases: plot.profile.nls
-> ### Keywords: nonlinear regression models
+> ### Keywords: nonlinear regression models hplot
 > 
 > ### ** Examples
 > 
@@ -16001,7 +16001,7 @@ R_heapsort(1, 11,..): l=6:
 > ### Name: screeplot
 > ### Title: Scree Plots
 > ### Aliases: screeplot screeplot.default
-> ### Keywords: multivariate
+> ### Keywords: multivariate hplot
 > 
 > ### ** Examples
 > 
