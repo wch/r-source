@@ -723,7 +723,7 @@ temperature no yes
 > ### Name: clip
 > ### Title: Set Clipping Region
 > ### Aliases: clip
-> ### Keywords: dplot
+> ### Keywords: dplot iplot
 > 
 > ### ** Examples
 > 
