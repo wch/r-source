@@ -1183,7 +1183,9 @@ Rd2HTML <-
         ## compute id and toc entries if required
         if (toc) {
             if (tag %in% c("\\section", "\\subsection")) {
-                sec_value <- rdfragment2text(section[[1L]])
+                sec_value <- paste0("<p>",
+                                    rdfragment2text(section[[1L]], html = FALSE),
+                                    "</p>")
                 sec_id <-
                     tag2id(name = if (standalone) NULL else name,
                            tagid = rdfragment2text(section[[1L]], html = FALSE),
@@ -1194,6 +1196,7 @@ Rd2HTML <-
                 sec_id <- tag2id(tag = tag, name = if (standalone) NULL else name,
                                  dedup = id_list)
             }
+
             id_list <<- c(id_list, sec_id)
             toc_entry <- list(id = sec_id, value = trimws(sec_value),
                               sectionLevel = sectionLevel)
