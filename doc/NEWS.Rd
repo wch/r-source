@@ -207,7 +207,8 @@
       been updated to use Pearson residuals rather than deviance
       residuals (the latter are not unbiased) and to not use
       leave-one-out estimates of dispersion in models with fixed
-      dispersion.
+      dispersion. Thanks to \I{Ravi Varadhan} for discussions and
+      testing of these updates.
 
       \item \R now supports custom binary types which are of the form
       \code{"<system>.binary.<build>"} where \code{<system>} is

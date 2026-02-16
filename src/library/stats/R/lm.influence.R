@@ -48,9 +48,9 @@ weighted.residuals <- function(obj, drop0 = TRUE)
 }
 
 ## (pd, feb 2026) Function to check whether GLM family has fixed or estimated dispersion
-## paraphrased from summary.glm()
+## paraphrased from summary.glm(). Internal function, not intended for export.
 ## (Recent versions of binomial(), poisson() sets $dispersion==1 so the explicit check
-## is a relic. Change was in r84026 (Martyn, 2023) so probably too soon to remove.)
+## is a relic. This comes via r84026 (Martyn, 2023) so probably too soon to remove.)
 
 estDisp <- function(fam)
     (is.null(fam$dispersion) || is.na(fam$dispersion)) &&
@@ -296,7 +296,11 @@ covratio <- function(model, infl = lm.influence(model, do.coef=FALSE),
     n <- nrow(qr.lm(model)$qr)
     p <- model$rank
     omh <- 1-infl$hat
-    e.star <- res/(infl$sigma*sqrt(omh))
+    ## (pd, feb 2026) Avoid leave-one-out sigma if fixed dispersion
+    e. star <- if (inherits(model, "glm") && !estDisp(model$family) )
+                   res/(sigma(model)*sqrt(omh))
+               else
+                   res/(infl$sigma*sqrt(omh))
     e.star[is.infinite(e.star)] <- NaN
     1/(omh*(((n - p - 1)+e.star^2)/(n - p))^p)
 }
