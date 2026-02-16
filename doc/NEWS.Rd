@@ -278,12 +278,12 @@
 
   \subsection{CHECKING AN INSTALLATION}{
     \itemize{
-      \item There is a new directiory \file{tests/C++Standards} which
+      \item There is a new direction's \file{tests/C++Standards} which
       contains small packages which can be test-installed to check
       support for various C++ standards.  This is principally for use on
       Windows as on a Unix-alike this partially duplicates tests done by
       \command{configure} --- although it can also be used to test the
-      behaaiour of \command{R CMD INSTALL} on unsupported standards.
+      behavior of \command{R CMD INSTALL} on unsupported standards.
     }
   }
 
