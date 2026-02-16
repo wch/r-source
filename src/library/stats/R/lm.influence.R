@@ -297,10 +297,10 @@ covratio <- function(model, infl = lm.influence(model, do.coef=FALSE),
     p <- model$rank
     omh <- 1-infl$hat
     ## (pd, feb 2026) Avoid leave-one-out sigma if fixed dispersion
-    e. star <- if (inherits(model, "glm") && !estDisp(model$family) )
-                   res/(sigma(model)*sqrt(omh))
-               else
-                   res/(infl$sigma*sqrt(omh))
+    e.star <- if (inherits(model, "glm") && !estDisp(model$family) )
+                  res/(sigma(model)*sqrt(omh))
+              else
+                  res/(infl$sigma*sqrt(omh))
     e.star[is.infinite(e.star)] <- NaN
     1/(omh*(((n - p - 1)+e.star^2)/(n - p))^p)
 }
