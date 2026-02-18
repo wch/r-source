@@ -2978,6 +2978,23 @@ function(f, verbose = FALSE)
     R(fun, list(f))
 }
 
+### ** rsync
+
+rsync <-
+function(src, dst, ...){
+    ## needs rsync. On Wndows, the RTools version of rsync needs 
+    ## special path treatment as in an msys shell,
+    ## i.e. write /c/to/path rather than c:\to\path
+    if(grepl("^([A-Za-z]):", src))
+        src <- gsub("^([A-Za-z]):", "/\\1", 
+                normalizePath(src, winslash="/", mustWork=FALSE))
+    if(grepl("^([A-Za-z]):", dst))
+        dst <- gsub("^([A-Za-z]):", "/\\1", 
+                normalizePath(dst, winslash="/", mustWork=FALSE))
+    system2("rsync", c(src, dst, ...))
+}
+
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***
