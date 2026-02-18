@@ -12833,8 +12833,8 @@ and @code{Rf_isString} to do type checking.
 @apifun Rf_isInteger
 @apifun Rf_isString
 Other such functions declared in the header file @file{Rinternals.h}
-include @code{Rf_iisNull}, @code{Rf_iisSymbol}, @code{Rf_iisLogical},
-@code{Rf_iisComplex}, @code{Rf_iisExpression}, and @code{Rf_iisEnvironment}.
+include @code{Rf_isNull}, @code{Rf_isSymbol}, @code{Rf_isLogical},
+@code{Rf_isComplex}, @code{Rf_isExpression}, and @code{Rf_isEnvironment}.
 @apifun Rf_isNull
 @apifun Rf_isSymbol
 @apifun Rf_isLogical
