@@ -5520,6 +5520,10 @@ imported or suggested package but needed for examples, tests or
 vignettes in the package itself.  Such usages should always be declared
 and conditional.
 
+The same considerations apply to optional features in external
+libraries. For example, @acronym{GDAL} can read hundreds of data formats
+but support for most of them is optional when it is built.
+
 Interpreters for scripting languages such as Perl, Python and Ruby need
 to be declared as system requirements and used conditionally: for
 example macOS 10.16 was announced not to have them (but released as
