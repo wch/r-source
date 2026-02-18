@@ -6111,7 +6111,13 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wclass-memaccess\\]", # gcc8
                              ## used for things deprecated in C++11, for example
                              ": warning: .* \\[-Wdeprecated\\]",
-                             ": warning: .* \\[-Waligned-new",
+                             ## C++20 deprecation in GCC and clang (not Apple clang 17)
+                             ": warning: .* \\[-Wdeprecated-enum-float-conversion\\]",
+                             ## Deprecated in C++20, removed in C++23
+                             ": warning: .* \\[-Wdeprecated-comma-subscript\\]",
+                             ## C++20 deprecation seen in LLVM and Apple clang
+                             ": warning: .* \\[-Wdeprecated-anon-enum-enum-conversion\\]",
+                            ": warning: .* \\[-Waligned-new",
                              ## new in gcc 8
                              ": warning: .* \\[-Wcatch-value=\\]",
                              ## removed 2020-05, nowadays clang only
