@@ -1184,11 +1184,11 @@ Rd2HTML <-
         if (toc) {
             if (tag %in% c("\\section", "\\subsection")) {
                 sec_value <- paste0("<p>",
-                                    rdfragment2text(section[[1L]], html = FALSE),
+                                    rdfragment2text(section[[1L]], html = FALSE) |> shtmlify(),
                                     "</p>")
                 sec_id <-
                     tag2id(name = if (standalone) NULL else name,
-                           tagid = rdfragment2text(section[[1L]], html = FALSE),
+                           tagid = rdfragment2text(section[[1L]], html = FALSE) |> shtmlify(),
                            dedup = id_list)
             }
             else {
