@@ -829,35 +829,26 @@ function()
     read_CRAN_object(.get_BioC_repository_URL(),
                      "src/contrib/Meta/rdxrefs.rds")
 
+CRAN_baseurl_for_package_actions <-
+function()
+    Sys.getenv("R_CRAN_PACKAGE_ACTIONS_URL",
+               "https://www.R-project.org/nosvn/actions")
+    
+
 CRAN_package_actions <-
 function()
-{
-    src <- file.path(Sys.getenv("R_CRAN_PACKAGE_ACTIONS_URL",
-                                "rsync://CRAN.R-project.org/CRAN-actions"),
+    read_CRAN_object(CRAN_baseurl_for_package_actions(),
                      "actions.rds")
-    if(startsWith(src, "file://"))
-        readRDS(substring(src, 8L))
-    else {
-        dst <- tempfile()
-        system2("rsync", c(src, dst))
-        readRDS(dst)
-    }
-}
+
+CRAN_baseurl_for_package_issues <- 
+function()
+    Sys.getenv("R_CRAN_PACKAGE_ISSUES_URL",
+               "https://www.R-project.org/nosvn/issues")
 
 CRAN_package_issues <-
 function(full = TRUE)
-{
-    src <- file.path(Sys.getenv("R_CRAN_PACKAGE_ISSUES_URL",
-                                "rsync://CRAN.R-project.org/CRAN-issues"),
+    read_CRAN_object(CRAN_baseurl_for_package_issues(),
                      if(full)
                          "CRAN_issue_full.rds"
                      else
                          "CRAN_issue_open.rds")
-    if(startsWith(src, "file://"))
-        readRDS(substring(src, 8L))
-    else {
-        dst <- tempfile()
-        system2("rsync", c(src, dst))
-        readRDS(dst)
-    }
-}
