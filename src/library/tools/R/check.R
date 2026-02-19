@@ -6557,6 +6557,12 @@ add_dummies <- function(dir, Log)
                     lines <- lines[-ll]
                 }
 
+                if(config_val_to_logical(Sys.getenv("_R_CHECK_RCPP_NOT_NEEDED_", "FALSE"))) {
+                ## from Rcpp
+                    lines1 <- grep("LdFlags.* has not been needed since 2013",
+                                          lines0, value = TRUE, useBytes = TRUE)
+                    lines <- c(lines, unique(lines1))
+                }
                 if (length(lines)) {
                     warningLog(Log, "Found the following significant warnings:")
                     printLog0(Log, .format_lines_with_indent(lines), "\n")
@@ -7579,6 +7585,7 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_CHECK_S3_METHODS_SHOW_POSSIBLE_ISSUES_" = "TRUE")
         Sys.setenv("_R_CHECK_XREFS_NOTE_MISSING_PACKAGE_ANCHORS_" = "TRUE")
         Sys.setenv("_R_CHECK_PACKAGES_USED_IN_DEMO_" = "TRUE")
+        Sys.setenv("_R_CHECK_RCPP_NOT_NEEDED_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
