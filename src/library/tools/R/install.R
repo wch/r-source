@@ -554,10 +554,14 @@ if(FALSE) {
         }
         if (WINDOWS) {
             if (file.exists("cleanup.ucrt"))
-                system("sh ./cleanup.ucrt")
+                if (system("sh ./cleanup.ucrt"))
+                    warning("running 'cleanup.ucrt' failed", call. = FALSE, domain = NA)
             else if (file.exists("cleanup.win"))
-                system("sh ./cleanup.win")
-        } else if (file_test("-x", "cleanup")) system("./cleanup")
+                if (system("sh ./cleanup.win"))
+                    warning("running 'cleanup.win' failed", call. = FALSE, domain = NA)
+        } else if (file_test("-x", "cleanup"))
+            if (system("./cleanup"))
+                warning("running 'cleanup' failed", call. = FALSE, domain = NA)
         else if (file.exists("cleanup"))
             warning("'cleanup' exists but is not executable -- see the 'R Installation and Administration Manual'", call. = FALSE)
         revert_install_time_patches()
