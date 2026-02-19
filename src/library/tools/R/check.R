@@ -6117,6 +6117,8 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wdeprecated-comma-subscript\\]",
                              ## C++20 deprecation seen in LLVM and Apple clang
                              ": warning: .* \\[-Wdeprecated-anon-enum-enum-conversion\\]",
+                             ## GCC >= 14 version
+                             ": warning: .* \\[-Wdeprecated-enum-enum-conversion\\]",
                             ": warning: .* \\[-Waligned-new",
                              ## new in gcc 8
                              ": warning: .* \\[-Wcatch-value=\\]",
