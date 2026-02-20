@@ -6567,6 +6567,11 @@ add_dummies <- function(dir, Log)
                                           lines0, value = TRUE, useBytes = TRUE)
                     lines <- c(lines, unique(lines1))
                 }
+                ## Misuse of /usr/lib (32-bit on RH systems)
+                lines1 <- grep("/usr/bin/ld: skipping incompatible /usr/lib/",
+                               lines0, value = TRUE, useBytes = TRUE)
+                lines <- c(lines, unique(lines1))
+
                 if (length(lines)) {
                     warningLog(Log, "Found the following significant warnings:")
                     printLog0(Log, .format_lines_with_indent(lines), "\n")
