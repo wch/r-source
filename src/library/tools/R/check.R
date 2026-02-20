@@ -6115,6 +6115,8 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wdeprecated-enum-float-conversion\\]",
                              ## Deprecated in C++20, removed in C++23
                              ": warning: .* \\[-Wdeprecated-comma-subscript\\]",
+                             ## GCC version has 'deprecated' only in C++23.
+                             ": warning: .* \\[-Wcomma-subscript\\]",
                              ## C++20 deprecation seen in LLVM and Apple clang
                              ": warning: .* \\[-Wdeprecated-anon-enum-enum-conversion\\]",
                              ## GCC >= 14 version
