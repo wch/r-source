@@ -4883,8 +4883,9 @@ and the like), @code{export} directives, @code{$@{shell ...@}}, @code{$@{wildcar
 similar, and the use of @code{+=}@footnote{This was apparently
 introduced in @I{SunOS} 4, and is available elsewhere @emph{provided} it is
 surrounded by spaces.} and @code{:=}.  Also, the use of @code{$<} other
-than in implicit rules is a GNU extension, as is the @code{$^} macro.
-As is the use of  @code{.PHONY} (some other makes ignore it).
+than in implicit rules is a GNU extension.  The @code{$^} macro and
+the @code{.PHONY} target are only standardized since POSIX 2024 and
+unsupported by some older @command{make}s.
 Unfortunately makefiles which use GNU extensions often run on other
 platforms but do not have the intended results.
 
