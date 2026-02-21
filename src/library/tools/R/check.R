@@ -6284,6 +6284,12 @@ add_dummies <- function(dir, Log)
                              ## LLVM >= 18 clang++
                              ": warning: .* \\[-Wdeprecated-literal-operator\\]"
                              )
+                ## macOS ld warnings
+                warn_re <- c(warn_re,
+                             "^ld: warning: search path .* not found",
+                             "^ld: warning: -single_module is obsolete",
+                             "^ld: warning: .*was built for newer"
+                             )
 
                 ## <FIXME>
                 ## Support for RcppArmadillo 15 transition.
