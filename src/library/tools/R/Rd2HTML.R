@@ -317,6 +317,33 @@ rdfragment2text <- function(rd, html = TRUE)
 }
 
 
+## rdfragment2toc() is a special case: When including a TOC, arguments
+## and sections get a menu item. These are (internal) links which have
+## a link text; this link text can in principle be arbitrary HTML,
+## _except_ that it cannot have another <a> tag inside.
+## rdfragment2toc() will try to drop \href{}s and convert to
+## HTML. Just in case this does not work and <a>-s remain, the
+## fragment will be converted to text.
+
+rdfragment2toc <- function(rd)
+{
+    rm_href <- function(e) {
+        if(any(attr(e, "Rd_tag") == "\\href")) e[[2L]]
+        else e
+    }
+    x <- .Rd_apply(rd, rm_href)
+    ans <- try(rdfragment2text(x, html = TRUE), silent = TRUE)
+    if (inherits(ans, "try-error") || isTRUE(grepl("</a>", ans, fixed = TRUE))) {
+        ## print(ans)
+        paste0("<p>",
+               rdfragment2text(rd, html = FALSE) |> shtmlify(),
+               "</p>")
+    }
+    else
+        ans
+}
+
+
 ## Create HTTP redirect files for aliases; called only during package
 ## installation if static help files are enabled. Files are named
 ## after aliases, which may contain 'undesirable' characters. These
@@ -1183,9 +1210,7 @@ Rd2HTML <-
         ## compute id and toc entries if required
         if (toc) {
             if (tag %in% c("\\section", "\\subsection")) {
-                sec_value <- paste0("<p>",
-                                    rdfragment2text(section[[1L]], html = FALSE) |> shtmlify(),
-                                    "</p>")
+                sec_value <- rdfragment2toc(section[[1L]])
                 sec_id <-
                     tag2id(name = if (standalone) NULL else name,
                            tagid = rdfragment2text(section[[1L]], html = FALSE) |> shtmlify(),
