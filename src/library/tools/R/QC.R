@@ -7995,10 +7995,16 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     ## Check Date
     date <- trimws(as.vector(meta["Date"]))
     if(!is.na(date)) {
-        dd <- strptime(date, "%Y-%m-%d", tz = "GMT")
-        if (is.na(dd)) out$bad_date <- TRUE
-        else if(!skip_dates && (as.Date(dd) < Sys.Date() - 31))
-            out$old_date <- TRUE
+        dd <- as.Date(date, "%Y-%m-%d")
+        out$date_msg <- if(is.na(dd))
+            "The Date field is not in ISO 8601 yyyy-mm-dd format."
+        else if(!skip_dates) {
+            if(dd < Sys.Date() - 31)
+                "The Date field is over a month old."
+            else if(dd > Sys.Date() + 7)
+                ## seen: typo 10 vs. 01, reversed %d-%m, %Y+1
+                "The Date field is in the future."
+        }
     }
 
     ## Check build time stamp
@@ -8007,14 +8013,18 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         out$build_time_stamp_msg <-
             "The build time stamp is missing."
     } else {
-        ts <- strptime(ptime, "%Y-%m-%d", tz = "GMT")
+        ts <- strptime(ptime, "%Y-%m-%d %H:%M:%S", "UTC")
         if(is.na(ts)) {
             out$build_time_stamp_msg <-
-                "The build time stamp has invalid/outdated format."
+                "The build time stamp has an invalid/outdated format."
         }
-        else if(!skip_dates && (as.Date(ts) < Sys.Date() - 31)) {
-            out$build_time_stamp_msg <-
-                "This build time stamp is over a month old."
+        else if(!skip_dates) {
+            if(as.Date(ts) < Sys.Date() - 31)
+                out$build_time_stamp_msg <-
+                    "This build time stamp is over a month old."
+            else if(as.Date(ts) > Sys.Date() + 1)
+                out$build_time_stamp_msg <-
+                    "This build time stamp is in the future."
         }
     }
 
@@ -9135,12 +9145,7 @@ function(x, ...)
       fmt(c(if(length(x$GNUmake)) {
                 "GNU make is a SystemRequirements."
             })),
-      fmt(c(if(length(x$bad_date)) {
-                "The Date field is not in ISO 8601 yyyy-mm-dd format."
-            },
-            if(length(x$old_date)) {
-                "The Date field is over a month old."
-            })),
+      if(length(y <- x$date_msg)) y,
       if(length(y <- x$build_time_stamp_msg)) y,
       if(length(y <- x$placeholders)) {
           paste(c("DESCRIPTION fields with placeholder content:",
