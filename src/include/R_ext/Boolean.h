@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000, 2025 The R Core Team.
+ *  Copyright (C) 2000, 2026 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -55,16 +55,17 @@
 extern "C" {
 #endif
 #ifdef HAVE_ENUM_BASE_TYPE
-// Apple clang warns even in C23 mode: gcc warns about #pragma clang
-// LLVM clang no longer warns: we have no good way to filter Apple clang.
-# if defined  __APPLE__ && defined __clang__
+// Apple clang 17 warns even in C23 mode: gcc warns about #pragma clang
+// LLVM clang no longer warns.
+// Apple clang 21 no longer has that warning.
+# if defined  __APPLE__ && defined __clang__ && __clang_major__ < 21
 #  pragma clang diagnostic push
 #  pragma clang diagnostic ignored "-Wfixed-enum-extension"
 # endif
 
   typedef enum :int { FALSE = 0, TRUE } Rboolean;  // so NOT NA
 
-# if defined  __APPLE__ && defined __clang__
+# if defined  __APPLE__ && defined __clang__ && __clang_major__ < 21
 #  pragma clang diagnostic pop
 # endif
 #else
