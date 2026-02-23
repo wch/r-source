@@ -674,6 +674,9 @@
 
       \item \code{pretty(ch)} again correctly works with \code{ch} a
       character vector of numbers.
+
+      \item \code{persp()} labels the three axes correctly also when C level
+      \code{atan2pi()} is available, fixing \PR{19007} by \I{Klaus Schliep}.
     }
   }
 }
