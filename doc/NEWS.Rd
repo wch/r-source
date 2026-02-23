@@ -169,10 +169,6 @@
       \code{named.dim = FALSE} switch, no longer creating a named
       \code{dim(<result>)} by default.
 
-      \item \code{approx(<x_with_ties>, <y_with_NA>, na.rm = FALSE)} now
-      should always call the \code{ties()} function, fixing \PR{17604}
-      reported by \I{Bill Dunlap}.
-
       \item \code{match.arg()} gets a new option \code{several.ok = "all"},
       fulfilling the wish of \I{Jim Hester} in \PR{16659}.
 
@@ -556,10 +552,6 @@
       \I{Mikael Jagan} and \I{Suharto Anggono}).
       \code{diff(<ts-matrix>)} remains matrix, even when it has length zero.
 
-      \item \code{model.frame(~1, list(), na.action=na.pass)} and similar
-      \dQuote{border-line} uses no longer produce invalid data frames,
-      fixing \PR{18977}, reported with patch by \I{Mikael Jagan}.
-
       \item Values returned by active binding functions are now marked as
       not mutable to prevent unintended mutation in complex assignment
       operations.
@@ -591,10 +583,6 @@
       generic \code{norm()} now uses \code{type = "O"} as has been the
       intention for more than ten years, fixing \PR{18979} thanks to
       \I{Mikael Jagan}.
-
-      \item \code{length(<POSIXlt>) <- v} is more careful about balancing,
-      notably when \code{v} is not integer, thanks to \I{Suharto Anggono}'s
-      remarks on the mailing list R-devel.
 
       \item On Windows terminals \kbd{Ctrl-C} now breaks out of waiting for
       keyboard input, fixing \PR{18982}.
@@ -665,6 +653,18 @@
 
       \item Formatting book-type \code{bibentry} objects now converts
       \LaTeX accents also in the publisher and series fields.
+
+      \item \code{model.frame(~1, list(), na.action=na.pass)} and similar
+      \dQuote{border-line} uses no longer produce invalid data frames,
+      fixing \PR{18977}, reported with patch by \I{Mikael Jagan}.
+
+      \item \code{length(<POSIXlt>) <- v} is more careful about balancing,
+      notably when \code{v} is not integer, thanks to \I{Suharto Anggono}'s
+      remarks on the mailing list R-devel.
+
+      \item \code{approx(<x_with_ties>, <y_with_NA>, na.rm = FALSE)} now
+      should always call the \code{ties()} function, fixing \PR{17604}
+      reported by \I{Bill Dunlap}.
 
       \item \code{besselJ(1, 1e-15)} and similar now give correct results,
       thanks to \I{Leo Mada} and other \I{\dQuote{R-help}ers}.
