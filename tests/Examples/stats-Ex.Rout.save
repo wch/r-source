@@ -8317,10 +8317,10 @@ Residual Deviance: 0.01267 	AIC: 27.03
 > ## tree from the cluster centers.
 > hc <- hclust(dist(USArrests)^2, "cen")
 > memb <- cutree(hc, k = 10)
-> cent <- NULL
-> for(k in 1:10){
-+   cent <- rbind(cent, colMeans(USArrests[memb == k, , drop = FALSE]))
-+ }
+> cent <- matrix(numeric(), 10, 4)
+> for(k in 1:10)
++   cent[k,] <- colMeans(USArrests[memb == k, , drop = FALSE])
+> 
 > hc1 <- hclust(dist(cent)^2, method = "cen", members = table(memb))
 > opar <- par(mfrow = c(1, 2))
 > plot(hc,  labels = FALSE, hang = -1, main = "Original Tree")

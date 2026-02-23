@@ -1,6 +1,6 @@
 % File src/library/stats/man/hclust.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{hclust}
@@ -156,8 +156,10 @@ hclust(d, method = "complete", members = NULL)
   observation sequence number.
 }
 \note{
-  Method \code{"centroid"} is typically meant to be used with
-  \emph{squared} Euclidean distances.
+  Method \code{"centroid"} has been recommended to be used with
+  \emph{squared} Euclidean distances \code{dist(*)^2}, i.e., clustering
+  differently than the traditional \abbr{UPGMC}, where other authors
+  strongly prefer the original.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988).
@@ -231,10 +233,10 @@ plot(hc, hang = -1)
 ## tree from the cluster centers.
 hc <- hclust(dist(USArrests)^2, "cen")
 memb <- cutree(hc, k = 10)
-cent <- NULL
-for(k in 1:10){
-  cent <- rbind(cent, colMeans(USArrests[memb == k, , drop = FALSE]))
-}
+cent <- matrix(numeric(), 10, 4)
+for(k in 1:10)
+  cent[k,] <- colMeans(USArrests[memb == k, , drop = FALSE])
+
 hc1 <- hclust(dist(cent)^2, method = "cen", members = table(memb))
 opar <- par(mfrow = c(1, 2))
 plot(hc,  labels = FALSE, hang = -1, main = "Original Tree")
