@@ -825,13 +825,13 @@ function(dir) {
                        strwrap(format(bibentries[ind]),
                                indent = 2L, exdent = 4L)),
                      collapse = "\n")
-        stop(msg, call. = FALSE)
+        stop(msg, call. = FALSE, domain = NA)
     }
     if(any(ind <- duplicated(keys))) {
         msg <- paste(c("Found the following duplicated keys:", 
                        .strwrap22(sQuote(keys[ind]))),
                      collapse = "\n")
-        stop(msg, call. = FALSE)
+        stop(msg, call. = FALSE, domain = NA)
     }
     saveRDS(bibentries, file.path(dir, "R.rds"))
 }
