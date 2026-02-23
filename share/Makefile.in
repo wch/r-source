@@ -31,7 +31,7 @@ FORCE:
 
 docs:
 
-install: install-message installdirs install-sources
+install: install-message installdirs install-sources install-sources2
 installdirs:
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)"
 	@$(MKINSTALLDIRS) "$(DESTDIR)$(rsharedir)/R"
@@ -54,10 +54,10 @@ install-sources: installdirs  @BUILD_TZONE_TRUE@ install-zoneinfo
 	@for f in $(srcdir)/R/*.R; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/R"; \
 	done
-	@for f in $(srcdir)/bibliographies/*; do \
+	@for f in $(srcdir)/bibliographies/*.R; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/bibliographies"; \
 	done
-	@for f in $(srcdir)/dictionaries/*; do \
+	@for f in $(srcdir)/dictionaries/*.txt; do \
 	  $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/dictionaries"; \
 	done
 	@for f in $(srcdir)/encodings/*; do \
@@ -93,6 +93,15 @@ install-strip: install
 
 install-zoneinfo:
 	@@R_UNZIPCMD@ -qo $(top_srcdir)/src/extra/tzone/zoneinfo.zip -d "$(DESTDIR)$(rsharedir)"
+
+## installed from builddir, made with R from src/library
+install-sources2: installdirs
+	@for f in bibliographies/*.rds; do \
+	    $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/bibliographies"; \
+	done
+	@for f in dictionaries/*.rds; do \
+	    $(INSTALL_DATA) $${f} "$(DESTDIR)$(rsharedir)/dictionaries"; \
+	done
 
 uninstall:
 	@$(ECHO) "uninstalling share ..."
