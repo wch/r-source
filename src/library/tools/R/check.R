@@ -6119,6 +6119,8 @@ add_dummies <- function(dir, Log)
                              "warning: .* \\[-Wc\\+\\+20-extensions\\]",
                              "warning: .* \\[-Wc\\+\\+23-extensions\\]",
                              "warning: .* \\[-Wc\\+\\+2b-extensions\\]",
+                             ## Apple clang 21 version
+                             "warning: .* \\[-Wimplicit-enum-enum-cast\\]",
                              ## LLVM clang 15 versions
                              "warning: .* \\[-Wc\\+\\+14-attribute-extensions\\]",
                              "warning: .* \\[-Wc\\+\\+17-attribute-extensions\\]",
