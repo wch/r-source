@@ -169,15 +169,17 @@ SEXP modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(tmp = mkString("data.frame"));
     setAttrib(data, R_ClassSymbol, tmp);
     UNPROTECT(1);
-    if (length(row_names) == nr) {
+    if (length(row_names) == nr && row_names != R_NilValue) {
 	setAttrib(data, R_RowNamesSymbol, row_names);
     } else {
 	/*
 	PROTECT(row_names = allocVector(INTSXP, nr));
 	for (i = 0; i < nr; i++) INTEGER(row_names)[i] = i+1; */
-	PROTECT(row_names = allocVector(INTSXP, 2));
-	INTEGER(row_names)[0] = NA_INTEGER;
-	INTEGER(row_names)[1] = nr;
+	PROTECT(row_names = allocVector(INTSXP, (nr > 0) ? 2 : 0));
+	if (nr > 0) {
+	    INTEGER(row_names)[0] = NA_INTEGER;
+	    INTEGER(row_names)[1] = nr;
+	}
 	setAttrib(data, R_RowNamesSymbol, row_names);
 	UNPROTECT(1);
     }
