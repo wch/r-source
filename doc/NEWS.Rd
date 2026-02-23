@@ -631,6 +631,10 @@
       contradictory specifications.
      
       \item (Preliminary) support for C++26 has been extended to Windows. 
+
+      \item A non-zero exit status from \file{cleanup}, \file{cleanup.win}
+      or \file{cleanup.ucrt}, if requested via options \option{--clean} or
+      \option{--preclean}, is now reported with a warning.
     }
   }
 
