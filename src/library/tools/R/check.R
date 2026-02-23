@@ -6121,7 +6121,12 @@ add_dummies <- function(dir, Log)
                              ": warning: .* \\[-Wdeprecated-anon-enum-enum-conversion\\]",
                              ## GCC >= 14 version
                              ": warning: .* \\[-Wdeprecated-enum-enum-conversion\\]",
-                            ": warning: .* \\[-Waligned-new",
+                             ## C++20 deprecation -- GCC version
+                             ": warning: .* \\[-Wvolatile\\]",
+                             ## and clang version
+                             ": warning: .* \\[-Wdeprecated-volatile\\]",
+
+                             ": warning: .* \\[-Waligned-new",
                              ## new in gcc 8
                              ": warning: .* \\[-Wcatch-value=\\]",
                              ## removed 2020-05, nowadays clang only
@@ -6337,6 +6342,10 @@ add_dummies <- function(dir, Log)
 
                 ## Filter out StanHeader warnings
                 ex_re <- "StanHeaders/.*\\[-Wunneeded-internal-declaration\\]"
+                lines <- filtergrep(ex_re, lines, useBytes = TRUE)
+
+                ## Filter out RcppParallel/tbb warnings from clang
+                ex_re <- "RcppParallel/include/tbb/.*\\[-Wdeprecated-volatile\\]"
                 lines <- filtergrep(ex_re, lines, useBytes = TRUE)
 
                 ## and GNU extensions in system headers
