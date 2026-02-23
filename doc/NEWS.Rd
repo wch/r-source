@@ -18,6 +18,8 @@
       not C++17 is used if available otherwise C++ is not supported (as
       before).
 
+      (GCC 16 has also switched to C++20 as its default.)
+
       Packages can request C++17 if essential.
     }
   }

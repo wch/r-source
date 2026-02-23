@@ -2987,9 +2987,10 @@ standard which is (almost) fully supported.  On a Unix-alike @R{}'s
 of the supported standards: this relies heavily on the reported values
 of @code{__cplusplus}.
 
-@c Apple clang 14 defaults to C++98 (even 17)
-@c @I{LLVM} clang 14, 15 default to C++14, 16-20 to C++17
-@c g++ 11-15 default to C++17
+@c Apple clang 14-17 default to C++98
+@c Apple clang 21 defaults to C++14
+@c @I{LLVM} clang 14, 15 default to C++14, 16-22 to C++17
+@c g++ 11-15 default to C++17, g++20 to C++20.
 
 The webpage @uref{https://en.cppreference.com/w/cpp/compiler_support.html}
 gives some information on which compiler versions are known to support
