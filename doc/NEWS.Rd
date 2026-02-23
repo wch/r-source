@@ -13,6 +13,10 @@
       \command{tools/rsync-recommended} to fetch recommended packages
       into \R sources using \command{curl} on systems without
       \command{rsync} or behind firewalls.
+
+      \item \code{approx(<x_with_ties>, <y_with_NA>, na.rm = FALSE)} now
+      should always call the \code{ties()} function, fixing \PR{17604}
+      reported by \I{Bill Dunlap}.
     }
   }
 
