@@ -13,10 +13,6 @@
       \command{tools/rsync-recommended} to fetch recommended packages
       into \R sources using \command{curl} on systems without
       \command{rsync} or behind firewalls.
-
-      \item \code{approx(<x_with_ties>, <y_with_NA>, na.rm = FALSE)} now
-      should always call the \code{ties()} function, fixing \PR{17604}
-      reported by \I{Bill Dunlap}.
     }
   }
 
@@ -28,7 +24,7 @@
       Invalid values are still ignored but now give a warning, as do
       contradictory specifications.
 
-      \item (Preliminary) support for C++26 has been extended to Windows. 
+      \item (Preliminary) support for C++26 has been extended to Windows.
 
       \item A non-zero exit status from \file{cleanup}, \file{cleanup.win}
       or \file{cleanup.ucrt}, if requested via options \option{--clean} or
@@ -59,6 +55,10 @@
       \item \code{length(<POSIXlt>) <- v} is more careful about balancing,
       notably when \code{v} is not integer, thanks to \I{Suharto Anggono}'s
       remarks on the mailing list R-devel.
+
+      \item \code{approx(<x_with_ties>, <y_with_NA>, na.rm = FALSE)} now
+      should always call the \code{ties()} function, fixing \PR{17604}
+      reported by \I{Bill Dunlap}.
 
       \item \code{besselJ(1, 1e-15)} and similar now give correct results,
       thanks to \I{Leo Mada} and other \I{\dQuote{R-help}ers}.
