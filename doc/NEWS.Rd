@@ -551,6 +551,11 @@
       Sepal vs Petal dimensions in its first iris data plot, thanks to
       \I{Jeff Dick}'s post on R-devel.
 
+      \item \code{diff(m, lag, dif)} for matrix \code{m} now still returns
+      matrices, also when \code{lag * dif > nrow(m)} (\PR{18972}, thanks to
+      \I{Mikael Jagan} and \I{Suharto Anggono}).
+      \code{diff(<ts-matrix>)} remains matrix, even when it has length zero.
+
       \item \code{model.frame(~1, list(), na.action=na.pass)} and similar
       \dQuote{border-line} uses no longer produce invalid data frames,
       fixing \PR{18977}, reported with patch by \I{Mikael Jagan}.
@@ -609,6 +614,11 @@
       \item \code{rep.int()} and \code{rep_len()} again drop names also
       for factors, fixing a regression in \R 4.0.0.  (Thanks to a report
       by \I{Rui Barradas} and \PR{18999} by \I{Suharto Anggono}.)
+
+      \item \code{str(x)} with a \code{list}-like \code{x} of a class
+      having an \code{str()} S3 method using \code{NextMethod()}, now no
+      longer outputs \code{"List of <...>"} in the default method, thanks
+      to \I{Ian Farm}'s report and fix proposal in \PR{19001}.
     }
   }
 }
@@ -631,8 +641,8 @@
       the \file{DESCRIPTION} file) are now checked more thoroughly.
       Invalid values are still ignored but now give a warning, as do
       contradictory specifications.
-     
-      \item (Preliminary) support for C++26 has been extended to Windows. 
+
+      \item (Preliminary) support for C++26 has been extended to Windows.
 
       \item A non-zero exit status from \file{cleanup}, \file{cleanup.win}
       or \file{cleanup.ucrt}, if requested via options \option{--clean} or
@@ -655,11 +665,6 @@
 
       \item Formatting book-type \code{bibentry} objects now converts
       \LaTeX accents also in the publisher and series fields.
-
-      \item \code{diff(m, lag, dif)} for matrix \code{m} now still returns
-      matrices, also when \code{lag * dif > nrow(m)} (\PR{18972}, thanks to
-      \I{Mikael Jagan} and \I{Suharto Anggono}).
-      \code{diff(<ts-matrix>)} remains matrix, even when it has length zero.
 
       \item \code{besselJ(1, 1e-15)} and similar now give correct results,
       thanks to \I{Leo Mada} and other \I{\dQuote{R-help}ers}.

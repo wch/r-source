@@ -2574,6 +2574,47 @@ stopifnot(is.null(names(rep.int(x, 2))),
 ## had names in 4.0.0 <= R <= 4.5.z because of dispatch to rep() method
 
 
+## str(<obj_w_method using NextMethod>) -- PR#19001
+aa <- grid::arrow(type = "closed")
+writeLines(stro <- capture.output(str(aa, give.attr=FALSE)))
+noListof <- function(st) !grepl("list of ", st, ignore.case=TRUE)
+stopifnot(noListof(stro), length(stro) == 1 + 4)
+## had extra 2nd line  "Class 'arrow'  hidden list of 4"
+strSome <- str.someclass <- function(object, ...) {
+    cat(if(is.null(pr <- attr(.Class, "previous")))
+            sprintf("<%s> .Method for .Class '%s' (length %d)\n",
+                    as.character(.Method), deparse1(.Class), length(object))
+        else sprintf("<%s> .Method for .Class '%s' -- after previous '%s'\n",
+                     as.character(.Method), deparse1(as.vector(.Class)), paste0(pr, collapse=","))
+        )
+    NextMethod()
+}
+x <- structure(list(a = 1, b = 2, c = 3), class = "someclass")
+writeLines(str1 <- capture.output(str(x)))
+rm(str.someclass) # and _register_ it ==> should str() identically:
+.S3method("str", "someclass", strSome)
+str2 <- capture.output(str(x))
+getA3 <- list(name = "str.someclass", where = "registered S3 method for str", visible = FALSE)
+stopifnot(exprs = {
+    noListof(str2)
+    identical(str1, str2)
+    identical(getA3, unclass(getAnywhere("str.someclass"))[names(getA3)])
+})
+## str2 had extra line 'List of ..'   -- now one more level:
+str.s2class <- strSome
+x2  <- structure(list(a = 1, S = 2), class = c("s2class", "someclass"))
+xs2 <- structure(list(a = 1, S = 2), class = c("someclass", "s2class"))
+writeLines(strX2  <- capture.output(str(x2)))
+writeLines(strXs2 <- capture.output(str(xs2)))
+rm(str.s2class) # and _register_ it ...
+.S3method("str", "s2class", strSome)
+strX2.  <- capture.output(str(x2))
+strXs2. <- capture.output(str(xs2))
+stopifnot(identical(strX2 , strX2. ), noListof(strX2. ),
+          identical(strXs2, strXs2.), noListof(strXs2.))
+## strXs?2. did have 'List of' in R <= 4.5.z
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

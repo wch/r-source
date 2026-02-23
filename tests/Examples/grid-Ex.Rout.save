@@ -1,13 +1,11 @@
 
-R Under development (unstable) (2024-03-25 r86191) -- "Unsuffered Consequences"
-Copyright (C) 2024 The R Foundation for Statistical Computing
+R Under development (unstable) (2026-02-10 r89394) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin23.3.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -80,7 +78,6 @@ attr(,"class")
 [1] "arrow"
 > str(arrow(type = "closed"), give.attr=FALSE)
 "arrow" (pkg {grid}) object:
-Class 'arrow'  hidden list of 4
  $ angle : num 30
  $ length: 'simpleUnit' num 0.25inches
  $ ends  : int 2
