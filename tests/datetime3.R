@@ -779,11 +779,12 @@ n <- 4L # >= 3 for NA-filling in subassignment
 z1 <- z2 <- `attr<-`(z <- as.POSIXlt(.POSIXct(double(n), "UTC")),
                      "balanced", NULL)
 z1$year <- z2$year <- z$year[1L] # "un"balance
+stopifnot(identical(z1$year, 70L), identical(z1,z2))
 z1[n] <- z2[[n]] <- z[[1L]]      # check `[<-` and `[[<-`
-stopifnot(z2[,"year"] == 70) # was (70 NA NA 70) previously
+stopifnot(identical(z1,z2), lengths(unclass(z2)) == 4L, z2[,"year"] == 70) # were (70 NA NA 70) previously
 identicalPlt <- function(x, y, ...)
-    identical(balancePOSIXlt(x), balancePOSIXlt(y), ...)
-stopifnot(identicalPlt(z1, z), identicalPlt(z2, z))
+    identical(balancePOSIXlt(x), y, ...)
+stopifnot(attr(z, "balanced"), identicalPlt(z1, z), identicalPlt(z2, z))
 ## failed previously, incl in rev 88441
 
 ## extended & moved from ../src/library/base/man/DateTimeClasses.Rd
@@ -810,6 +811,17 @@ for(lpS in list(.leap.seconds, as.POSIXlt(.leap.seconds))) {
         })
     }
 }
+
+
+## Suharto Anggono's remarks / proposals on the R-devel mail.list, 13 Dec 2025
+z0 <- z
+length(z0) <- 4.9; stopifnot(attr(z,"balanced"), identical(z0,z))
+z1 <- z
+length(z1) <- 4.1; stopifnot(identical(z1,z)) # z0, z1 were not identical to z
+##
+t4 <- t3; length(t4) <- 4L
+stopifnot(all.equal(as.vector(diff(t4)), c(366, -366, 366), tolerance = 6e-6))
+## diff(t4) was all NA in R <= 4.5.2
 
 
 

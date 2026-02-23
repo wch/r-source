@@ -52,6 +52,10 @@
       \dQuote{border-line} uses no longer produce invalid data frames,
       fixing \PR{18977}, reported with patch by \I{Mikael Jagan}.
 
+      \item \code{length(<POSIXlt>) <- v} is more careful about balancing,
+      notably when \code{v} is not integer, thanks to \I{Suharto Anggono}'s
+      remarks on the mailing list R-devel.
+
       \item \code{besselJ(1, 1e-15)} and similar now give correct results,
       thanks to \I{Leo Mada} and other \I{\dQuote{R-help}ers}.
 
