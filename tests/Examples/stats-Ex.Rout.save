@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2026-02-09 r89387) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-02-24 r89471) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin24.6.0
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1266,16 +1266,16 @@ Residual standard error: 0.04103 on 7 degrees of freedom
 +         nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = datN,
 +             trace=TRUE, control = list(maxiter = 10)) )
 0.01722077  (5.34e+02): par = (0.6168807 -1.783839 2.050204 0.2004597)
-3.308944e-06 (1.13e+04): par = (0.5798674 -1.784335 2.028943 0.1920502)
-2.571079e-11 (7.68e+06): par = (0.5793882 -1.78778 2.029276 0.1915479)
-1.650535e-23 (2.91e+03): par = (0.5793887 -1.787785 2.029277 0.1915475)
-3.486470e-28 (9.76e-01): par = (0.5793887 -1.787785 2.029277 0.1915475)
-3.475413e-28 (1.03e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
-3.425893e-28 (5.48e-01): par = (0.5793887 -1.787785 2.029277 0.1915475)
-3.425893e-28 (5.48e-01): par = (0.5793887 -1.787785 2.029277 0.1915475)
-3.425893e-28 (5.48e-01): par = (0.5793887 -1.787785 2.029277 0.1915475)
-3.425893e-28 (5.48e-01): par = (0.5793887 -1.787785 2.029277 0.1915475)
-3.425893e-28 (5.48e-01): par = (0.5793887 -1.787785 2.029277 0.1915475)
+3.308943e-06 (1.13e+04): par = (0.5798674 -1.784335 2.028943 0.1920502)
+2.571069e-11 (7.68e+06): par = (0.5793882 -1.78778 2.029276 0.1915479)
+1.669346e-23 (5.53e+03): par = (0.5793887 -1.787785 2.029277 0.1915475)
+2.285755e-29 (1.59e+01): par = (0.5793887 -1.787785 2.029277 0.1915475)
+1.345909e-29 (1.20e+01): par = (0.5793887 -1.787785 2.029277 0.1915475)
+1.224242e-29 (9.63e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
+1.224242e-29 (9.63e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
+1.224242e-29 (9.63e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
+1.224242e-29 (9.63e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
+1.224242e-29 (9.63e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
 Error in nls(y ~ cbind(exp(-exp(lrc1) * x), exp(-exp(lrc2) * x)), data = xy,  : 
   number of iterations exceeded maximum of 10
 > ## End(Don't show)
@@ -1288,13 +1288,13 @@ Error in nls(y ~ cbind(exp(-exp(lrc1) * x), exp(-exp(lrc2) * x)), data = xy,  :
 3.308942e-06  (9.08e-04): par = (0.5798674 -1.784335 2.028943 0.1920502)
   It.   2, fac=           1, eval (no.,total): ( 1,  2): new dev = 2.57108e-11
 2.571081e-11  (2.53e-06): par = (0.5793882 -1.78778 2.029276 0.1915479)
-  It.   3, fac=           1, eval (no.,total): ( 1,  3): new dev = 1.66968e-23
-1.669677e-23  (2.04e-12): par = (0.5793887 -1.787785 2.029277 0.1915475)
-1.667503e-23  (1.67e-13): par = (2.029277 0.5793887 0.1915475 -1.787785)
+  It.   3, fac=           1, eval (no.,total): ( 1,  3): new dev = 1.66926e-23
+1.669257e-23  (2.04e-12): par = (0.5793887 -1.787785 2.029277 0.1915475)
+1.670550e-23  (1.67e-13): par = (2.029277 0.5793887 0.1915475 -1.787785)
 > all.equal(coef(fm1), coef(fmX1), tolerance=0) # ... rel.diff.: 1.57e-6
-[1] "Mean relative difference: 1.574121e-06"
+[1] "Mean relative difference: 1.574118e-06"
 > all.equal(coef(fm1), coef(fmX),  tolerance=0) # ... rel.diff.: 1.03e-12
-[1] "Mean relative difference: 1.031016e-12"
+[1] "Mean relative difference: 1.032123e-12"
 > ## IGNORE_RDIFF_END
 > stopifnot(all.equal(coef(fm1), coef(fmX1), tolerance = 6e-6),
 +           all.equal(coef(fm1), coef(fmX ), tolerance = 1e-11))
@@ -5177,7 +5177,7 @@ function (V)
         r[seq.int(from = 1L, by = p + 1L, length.out = p)] <- 1
     r
 }
-<bytecode: 0x1092b4898>
+<bytecode: 0x5559e62c4fc8>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7825,7 +7825,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x11c51e630>
+<environment: 0x5559e6d86420>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -7857,6 +7857,217 @@ y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x11 +
 +            start = list(A = 160, B = 700, C = 350))
 > formula(fm1)
 circumference ~ A/(1 + exp((B - age)/C))
+> 
+> 
+> 
+> cleanEx()
+> nameEx("free1way")
+> ### * free1way
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: free1way
+> ### Title: Distribution-free Inference in a Stratified One-Way Layout
+> ### Aliases: free1way free1way.formula free1way.table free1way.numeric
+> ###   free1way.factor print.free1way coef.free1way vcov.free1way
+> ###   logLik.free1way summary.free1way confint.free1way
+> ### Keywords: htest
+> 
+> ### ** Examples
+> 
+> 
+> ## Kruskal-Wallis test
+> kruskal.test(Ozone ~ Month, data = airquality)
+
+	Kruskal-Wallis rank sum test
+
+data:  Ozone by Month
+Kruskal-Wallis chi-squared = 29.267, df = 4, p-value = 6.901e-06
+
+> kt <- free1way(Ozone ~ Month, data = airquality)
+> print(kt)
+
+	5-sample Kruskal-Wallis test against proportional odds alternatives
+
+data:  Ozone by Month (5, 6, 7, 8, 9)
+Perm chi-squared = 29.267, df = 4, p-value = 6.901e-06
+alternative hypothesis: true log-odds ratio is not equal to 0
+
+> # log-odds ratios for comparison with control
+> coef(kt)
+   Month6    Month7    Month8    Month9 
+0.8123639 2.5281594 2.3825979 0.7513235 
+> # Wald inference
+> summary(kt)
+
+Call:
+free1way.formula(formula = Ozone ~ Month, data = airquality)
+
+Coefficients:
+       log-odds ratio Std. Error z value P(>|z|)
+Month6        0.81236    0.64415 1.26113  0.2073
+Month7        2.52816    0.53153 4.75639  0.0000
+Month8        2.38260    0.53370 4.46432  0.0000
+Month9        0.75132    0.47177 1.59256  0.1113
+> confint(kt, test = "Wald")
+            2.5 %   97.5 %
+Month6 -0.4501567 2.074884
+Month7  1.4863809 3.569938
+Month8  1.3365705 3.428625
+Month9 -0.1733322 1.675979
+> 
+> ## Friedman test
+> example(friedman.test, echo = FALSE)
+> me <- colnames(RoundingTimes)
+> d <- expand.grid(me = factor(me, labels = me, levels = me),
++                  id = factor(seq_len(nrow(RoundingTimes))))
+> d$time <- c(t(RoundingTimes))
+> # global p-value identical
+> friedman.test(RoundingTimes)
+
+	Friedman rank sum test
+
+data:  RoundingTimes
+Friedman chi-squared = 11.143, df = 2, p-value = 0.003805
+
+> ft <- free1way(time ~ me | id, data = d)
+> print(ft)
+
+	Stratified 3-sample Kruskal-Wallis test against proportional odds
+	alternatives
+
+data:  time by me (Round Out, Narrow Angle, Wide Angle) 
+	 stratified by id
+Perm chi-squared = 11.143, df = 2, p-value = 0.003805
+alternative hypothesis: true log-odds ratio is not equal to 0
+
+> coef(ft)
+meNarrow Angle   meWide Angle 
+     -1.265280      -3.289198 
+> # Wald inference
+> summary(ft)
+
+Call:
+free1way.formula(formula = time ~ me | id, data = d)
+
+Coefficients:
+               log-odds ratio Std. Error  z value P(>|z|)
+meNarrow Angle       -1.26528    0.68264 -1.85352  0.0638
+meWide Angle         -3.28920    0.79367 -4.14428  0.0000
+> confint(ft, test = "Wald")
+                   2.5 %      97.5 %
+meNarrow Angle -2.603222  0.07266103
+meWide Angle   -4.844765 -1.73363038
+> 
+> ## McNemar test
+> ## paired binary observations
+> example(mcnemar.test, echo = FALSE)
+> # set-up data frame with survey outcomes for voters
+> s <- gl(2, 1, labels = dimnames(Performance)[[1L]])
+> survey <- gl(2, 1, labels = c("1st", "2nd"))
+> nvoters <- c(Performance)
+> x <- expand.grid(survey = survey, voter = factor(seq_len(sum(nvoters))))
+> x$performance <- c(rep(s[c(1, 1)], nvoters[1]), rep(s[c(2, 1)], nvoters[2]),
++                    rep(s[c(1, 2)], nvoters[3]), rep(s[c(2, 2)], nvoters[4]))
+> # note that only those voters changing their minds are relevant
+> mcn <- free1way(xtabs(~ performance + survey + voter, data = x))
+> # same result as mcnemar.test w/o continuity correction
+> print(mcn)
+
+	Stratified 2-sample Wilcoxon test against proportional odds
+	alternatives
+
+data:  performance by survey (c("1st", "2nd")) 
+	 stratified by voter
+Perm Z = 4.166, p-value = 3.099e-05
+alternative hypothesis: true log-odds ratio is not equal to 0
+
+> # X^2 statistic
+> summary(mcn, test = "Permutation")$statistic^2
+  Perm Z 
+17.35593 
+> mcnemar.test(Performance, correct = FALSE)
+
+	McNemar's Chi-squared test
+
+data:  Performance
+McNemar's chi-squared = 17.356, df = 1, p-value = 3.099e-05
+
+> # Wald inference
+> summary(mcn)
+
+Call:
+free1way.table(y = xtabs(~performance + survey + voter, data = x))
+
+Coefficients:
+          log-odds ratio Std. Error z value P(>|z|)
+survey2nd        1.11258    0.19128 5.81639       0
+> confint(mcn, test = "Wald")
+              2.5 %   97.5 %
+survey2nd 0.7376684 1.487484
+> 
+> ## Mantel-Haenszel test w/o continuity correction, 
+> ## Departments are blocks
+> mantelhaen.test(UCBAdmissions, correct = FALSE)
+
+	Mantel-Haenszel chi-squared test without continuity correction
+
+data:  UCBAdmissions
+Mantel-Haenszel X-squared = 1.5246, df = 1, p-value = 0.2169
+alternative hypothesis: true common odds ratio is not equal to 1
+95 percent confidence interval:
+ 0.7719074 1.0603298
+sample estimates:
+common odds ratio 
+        0.9046968 
+
+> mh <- free1way(UCBAdmissions)
+> print(mh)
+
+	Stratified 2-sample Wilcoxon test against proportional odds
+	alternatives
+
+data:  Admit by Gender (c("Male", "Female")) 
+	 stratified by Dept
+Perm Z = -1.2347, p-value = 0.2169
+alternative hypothesis: true log-odds ratio is not equal to 0
+
+> # common odds-ratio, with score interval
+> exp(coef(mh))
+GenderFemale 
+    0.904955 
+> exp(confint(mh, test = "Rao"))
+                 2.5 %  97.5 %
+GenderFemale 0.7723922 1.06027
+> # looking at department-specific 
+> # confidence intervals for log-odds ratios 
+> # it seems Dept A is out of line
+> apply(UCBAdmissions, MARGIN = 3,  
++       FUN = function(x) confint(free1way(as.table(x))))
+      Dept
+                A          B          C          D          E          F
+  [1,] -1.5622307 -1.0556769 -0.1570020 -0.3762303 -0.1913598 -0.7802366
+  [2,] -0.5415513  0.6167797  0.4068713  0.2122505  0.5918809  0.4025005
+> 
+> ## Mantel-Haenszel test treats variables as
+> ## unordered, free1way allows ordered responses
+> example(mantelhaen.test, echo = FALSE)
+> # Does distribution of job satisfaction (ordered) depend on income
+> # in a stratified proportional odds model?
+> # Job Satisfaction is second in array but needs to be first
+> # for free1way to treat it as ordered response
+> ft <- free1way(aperm(Satisfaction, perm = c(2, 1, 3)))
+> summary(ft)
+
+Call:
+free1way.table(y = aperm(Satisfaction, perm = c(2, 1, 3)))
+
+Coefficients:
+                  log-odds ratio Std. Error z value P(>|z|)
+Income5000-15000         0.10794    0.55953 0.19290  0.8470
+Income15000-25000        1.45998    0.62561 2.33369  0.0196
+Income>25000             1.23282    0.65693 1.87663  0.0606
+> 
 > 
 > 
 > 
@@ -9073,23 +9284,23 @@ totss        60.99123 60.99123
 > ## The ordering of the clusters may be platform-dependent.
 > ## IGNORE_RDIFF_BEGIN
 > (cl <- kmeans(x, 5, nstart = 25))
-K-means clustering with 5 clusters of sizes 12, 15, 25, 24, 24
+K-means clustering with 5 clusters of sizes 12, 24, 24, 15, 25
 
 Cluster means:
            x          y
 1  1.3290081  1.1185534
-2  0.8609139  1.3145869
-3 -0.1096832  0.2106891
-4  0.1581362 -0.1761590
-5  0.8043520  0.7805033
+2  0.1581362 -0.1761590
+3  0.8043520  0.7805033
+4  0.8609139  1.3145869
+5 -0.1096832  0.2106891
 
 Clustering vector:
-  [1] 3 4 3 4 3 3 4 4 3 3 5 4 3 3 4 3 4 3 4 3 4 4 3 3 4 3 4 3 3 4 4 4 3 4 3 3 3
- [38] 4 4 4 4 3 3 3 3 3 4 4 4 4 2 5 5 5 5 1 1 1 5 1 2 5 1 2 5 2 5 5 1 2 2 1 2 5
- [75] 5 1 2 2 2 2 5 2 1 5 1 5 2 5 5 5 5 1 5 2 5 5 1 5 2 5
+  [1] 5 2 5 2 5 5 2 2 5 5 3 2 5 5 2 5 2 5 2 5 2 2 5 5 2 5 2 5 5 2 2 2 5 2 5 5 5
+ [38] 2 2 2 2 5 5 5 5 5 2 2 2 2 4 3 3 3 3 1 1 1 3 1 4 3 1 4 3 4 3 3 1 4 4 1 4 3
+ [75] 3 1 4 4 4 4 3 4 1 3 1 3 4 3 3 3 3 1 3 4 3 3 1 3 4 3
 
 Within cluster sum of squares by cluster:
-[1] 1.0314888 0.7104553 2.5330710 1.2816507 1.5056575
+[1] 1.0314888 1.2816507 1.5056575 0.7104553 2.5330710
  (between_SS / total_SS =  88.4 %)
 
 Available components:
@@ -11402,16 +11613,16 @@ Initializing ‘Const’, ‘A’, ‘B’ to '1.'.
 Consider specifying 'start' or using a selfStart model
 1017460.306    (4.15e+02): par = (1 1 1)
 758164.7503    (2.34e+02): par = (13.42031396 1.961485 0.05947543745)
-269506.3538    (3.23e+02): par = (51.75719816 -13.09155956 0.8428607705)
-68969.21895    (1.03e+02): par = (76.0006985 -1.935226741 1.019085799)
-633.3672233    (1.29e+00): par = (100.3761515 8.624648407 5.104490263)
-151.4400223    (9.39e+00): par = (100.6344391 4.913490982 0.2849209561)
-53.08739887    (7.24e+00): par = (100.6830407 6.899303309 0.4637755073)
-1.344478645    (5.97e-01): par = (100.0368306 9.897714142 0.516929494)
+269506.3539    (3.23e+02): par = (51.75719815 -13.09155956 0.8428607704)
+68969.21896    (1.03e+02): par = (76.0006985 -1.93522674 1.019085799)
+633.3672231    (1.29e+00): par = (100.3761515 8.624648403 5.104490265)
+151.4400225    (9.39e+00): par = (100.6344391 4.913490981 0.2849209558)
+53.08739902    (7.24e+00): par = (100.6830407 6.899303306 0.4637755073)
+1.344478646    (5.97e-01): par = (100.0368306 9.897714142 0.516929494)
 0.9908415909   (1.55e-02): par = (100.0300625 9.9144191 0.5023516843)
 0.9906046057   (1.84e-05): par = (100.0288724 9.916224018 0.5025207337)
-0.9906046054   (9.93e-08): par = (100.028875 9.916228366 0.50252165)
-0.9906046054   (6.56e-10): par = (100.028875 9.916228388 0.5025216549)
+0.9906046054   (9.94e-08): par = (100.028875 9.916228366 0.50252165)
+0.9906046054   (5.87e-10): par = (100.028875 9.916228388 0.5025216549)
 Nonlinear regression model
   model: y ~ Const + A * exp(B * x)
    data: parent.frame()
@@ -12729,14 +12940,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x11af92b70>
-<environment: 0x11af9d3c0>
+<bytecode: 0x5559ee214dd0>
+<environment: 0x5559ee254840>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x11af92a20>
-<environment: 0x11af9d3c0>
+<bytecode: 0x5559ee214c80>
+<environment: 0x5559ee254840>
 
 > 
 > 
@@ -12803,6 +13014,59 @@ NOTE: n is number in each group
 
 NOTE: n is number in each group
 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("power.free1way.test")
+> ### * power.free1way.test
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: power.free1way.test
+> ### Title: Power Calculations in Distribution-free Stratified One-Way
+> ###   Layouts
+> ### Aliases: rfree1way power.free1way.test
+> ### Keywords: htest
+> 
+> ### ** Examples
+> 
+> 
+> ## make example reproducible
+> if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)) 
++     runif(1)
+> R.seed <- get(".Random.seed", envir = .GlobalEnv)
+> set.seed(29)
+> 
+> ## sample from proportional odds model with 1:2 allocation
+> ## based on odds ratio of 3, with sample sizes (15, 30)
+> x <- rfree1way(n = 15, delta = log(3), alloc_ratio = 2)
+> 
+> # Wilcoxon-Mann-Whitney rank sum test via classical stats interface
+> wilcox.test(y ~ groups, data = x, exact = FALSE, correct = FALSE)$p.value
+[1] 0.008679882
+> 
+> # Identical p-value obtained from a proportional-odds model 
+> summary(free1way(y ~ groups, data = x), test = "Permutation")$p.value
+     Perm Z 
+0.008679882 
+> 
+> # approximate power for this test
+> power.free1way.test(n = 15, delta = log(3), alloc_ratio = 2)
+
+      2-sample Wilcoxon test against proportional odds alternatives 
+
+                n = 15
+Total sample size = 15 (Control) + 30 (B) = 45
+            power = 0.4879209
+        sig.level = 0.05
+   Standard error = 0.5693603
+   log-odds ratio = 1.098612
+
+NOTE: 'n' is sample size in control group
+
+> 
+> assign(".Random.seed", R.seed, envir = .GlobalEnv)
 > 
 > 
 > 
@@ -13060,6 +13324,74 @@ Dickey-Fuller = -2.6899, Truncation lag parameter = 7, p-value = 0.2863
 > 
 > 
 > graphics::par(get("par.postscript", pos = 'CheckExEnv'))
+> cleanEx()
+> nameEx("ppplot")
+> ### * ppplot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ppplot
+> ### Title: Probability-probability Plots
+> ### Aliases: ppplot
+> ### Keywords: hplot distribution
+> 
+> ### ** Examples
+> 
+> 
+> ## make example reproducible
+> if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)) 
++     runif(1)
+> R.seed <- get(".Random.seed", envir = .GlobalEnv)
+> set.seed(29)
+> 
+> ## well-fitting logistic model
+> nd <- data.frame(groups = gl(2, 50, labels = paste0("G", 1:2)))
+> nd$y <- rlogis(nrow(nd), location = c(0, 2)[nd$groups])
+> with(with(nd, split(y, groups)),
++      ppplot(G1, G2, conf.level = .95,
++             conf.args = list(link = "logit", type = "Wald", col = 2)))
+> # with appropriate Wilcoxon test and log-odds ratio
+> coef(ft <- free1way(y ~ groups, data = nd))
+groupsG2 
+1.668854 
+> # the model-based probability-probability curve
+> prb <- 1:99 / 100
+> points(prb,  plogis(qlogis(prb) - coef(ft)), pch = 3)
+> 
+> ## the corresponding model-based receiver operating characteristic (ROC)
+> ## curve, see Sewak and Hothorn (2023)
+> plot(prb,  plogis(qlogis(1 - prb) - coef(ft), lower.tail = FALSE),
++      xlab = "1 - Specificity", ylab = "Sensitivity", type = "l", 
++      main = "ROC Curve")
+> abline(a = 0, b = 1, col = "lightgrey")
+> # with confidence band
+> lines(prb, plogis(qlogis(1 - prb) - confint(ft, test = "Rao")[1], 
++       lower.tail = FALSE), lty = 3)
+> lines(prb, plogis(qlogis(1 - prb) - confint(ft, test = "Rao")[2], 
++       lower.tail = FALSE), lty = 3)
+> # and corresponding area under the ROC curve (AUC)
+> # with score confidence interval
+> coef(ft, what = "AUC")
+groupsG2 
+ 0.75467 
+> confint(ft, test = "Rao", what = "AUC")
+             2.5 %    97.5 %
+groupsG2 0.6490714 0.8381977
+> 
+> ## ill-fitting normal model
+> nd$y <- rnorm(nrow(nd), mean = c(0, .5)[nd$groups], sd = c(1, 1.5)[nd$groups])
+> with(with(nd, split(y, groups)),
++      ppplot(G1, G2, conf.level = .95,
++             conf.args = list(link = "probit", type = "Wald", col = 2)))
+> # inappropriate probit model
+> coef(free1way(y ~ groups, data = nd, link = "probit"))
+ groupsG2 
+0.6659502 
+> 
+> assign(".Random.seed", R.seed, envir = .GlobalEnv)
+> 
+> 
+> 
 > cleanEx()
 > nameEx("ppr")
 > ### * ppr
@@ -16192,7 +16524,7 @@ Contrast 1 Contrast 2 Contrast 3
 > getInitial(weight ~ mySSlogis(Time, Asym, xmid, scal),
 +            data = subset(ChickWeight, Chick == 1))
      Asym      xmid      scal 
-937.03000  35.22296  11.40521 
+937.03011  35.22296  11.40521 
 > ## IGNORE_RDIFF_END
 > 
 > # 'first.order.log.model' is a function object defining a first order
@@ -17095,8 +17427,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x1093e2988>
-<environment: 0x11cb59160>
+<bytecode: 0x5559e62b9be8>
+<environment: 0x5559eafdacb8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -18138,7 +18470,6 @@ Warning in toeplitz(letters[1:4], LETTERS[20:26]) :
 +    colnames(W) <- paste0(",", if(n <= 9) 1:n else c(1:9, letters[seq_len(n-9)]))
 +    print(W)
 + }
-Loading required namespace: Matrix
 17 x 13 sparse Matrix of class "dgCMatrix"
                                             
  [1,] 76  .  .  .  .  .  .  .  .  .  .  .  .
@@ -19685,7 +20016,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.979 0.15 2.296 0 0 
+Time elapsed:  9.615 0.168 9.785 0 0 
 > grDevices::dev.off()
 null device 
           1 
