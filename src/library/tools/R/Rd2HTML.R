@@ -328,13 +328,13 @@ rdfragment2text <- function(rd, html = TRUE)
 rdfragment2toc <- function(rd)
 {
     rm_href <- function(e) {
-        if(any(attr(e, "Rd_tag") == "\\href")) e[[2L]]
+        if(any(attr(e, "Rd_tag") == "\\href"))
+            structure(e[[2L]], Rd_tag = "LIST")
         else e
     }
     x <- .Rd_apply(rd, rm_href)
-    ans <- try(rdfragment2text(x, html = TRUE), silent = TRUE)
-    if (inherits(ans, "try-error") || isTRUE(grepl("</a>", ans, fixed = TRUE))) {
-        ## print(ans)
+    ans <- rdfragment2text(x, html = TRUE)
+    if(isTRUE(grepl("</a>", ans, fixed = TRUE))) {
         paste0("<p>",
                rdfragment2text(rd, html = FALSE) |> shtmlify(),
                "</p>")
@@ -1346,7 +1346,7 @@ Rd2HTML <-
         done <- TRUE
         ## go through one by one until we hit \description
         for (frag in rd) {
-            if (attr(frag, "Rd_tag") == "\\description") {
+            if (any(attr(frag, "Rd_tag") == "\\description")) {
                 done <- FALSE
                 break
             }
