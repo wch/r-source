@@ -107,6 +107,8 @@ export(aggregate.data.frame, median.default, model.matrix.default,
 ## residuals.lm: CADFest, robustbase
 ## update.default: MuMIn, spatstat
 
+## free1way
+export(free1way, power.free1way.test, ppplot, rfree1way)
 
 ## register all the methods for generics elsewhere in case namespace is
 ## loaded but not currently attached.
@@ -541,6 +543,23 @@ S3method(wilcox.test, formula)
 S3method(window, default)
 S3method(window, ts)
 S3method("window<-", ts)
+
+## free1way
+S3method("free1way", "formula")
+S3method("free1way", "numeric")
+S3method("free1way", "factor")
+S3method("free1way", "table")
+S3method("coef", "free1way")
+S3method("vcov", "free1way")
+S3method("logLik", "free1way")
+S3method("confint", "free1way")
+S3method("summary", "free1way")
+S3method("terms", "free1way")
+S3method("plot", "free1way")
+S3method("model.frame", "free1way")
+S3method("model.matrix", "free1way")
+S3method("print", "free1way")
+S3method("print", "summary.free1way")
 
 ## Cannot register in utils ...
 S3method("update", "packageStatus")
