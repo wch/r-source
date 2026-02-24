@@ -236,6 +236,16 @@
       This makes \R slightly less platform dependent for these functions,
       notably on platforms with less accurate system math libraries, see also
       \url{https://blog.r-project.org/2026/01/30/debugging-sensitivity-to-c-math-library-on-linux/}.
+
+      \item Function \code{free1way()} implementing semiparametrically
+      efficient inference procedures (likelihood- and permutation-based)
+      in distribution-free stratified K-sample oneway layouts was added
+      to the \pkg{stats} package.  Approximate (via
+      \code{power.free1way.test()}) and simulation-based (utilising
+      \code{rfree1way()} for random number generation) power-assessment
+      and sample-size planning as well as model diagnostics (available
+      from a \code{plot} method and probability-probability plots in
+      \code{ppplot()}) complement the functionality.
     }
   }
 
