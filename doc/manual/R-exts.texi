@@ -2552,7 +2552,7 @@ partially supported, not that which is fully implemented.} to say what
 version of @abbr{OpenMP} is supported: version 4.0 (and much of 4.5 or 5.0) is
 supported by recent versions of the Linux and Windows platforms, but
 portable packages cannot assume that end users have recent versions.
-Apple @command{clang} on macOS has no @abbr{OpenMP} support.
+Apple @command{clang} on macOS has no native @abbr{OpenMP} support.
 @uref{https://www.openmp.org/resources/openmp-compilers-tools/} gives
 some idea of what compilers support what versions.  Note that support
 for Fortran compilers is often less up-to-date and that page suggests it
@@ -3103,9 +3103,9 @@ The discussion above is about the standard @R{} ways of compiling C++:
 it will not apply to packages using @file{src/Makefile} or building in a
 subdirectory that do not set the C++ standard.  Do not rely on the
 compilers' default C++ standard, which varies widely and gets changed
-frequently by vendors -- for example Apple clang up to at least 17
-defaults to C++98, @I{LLVM} clang 14--15 to C++14, @I{LLVM} clang 16--21
-and @command{g++} 11--15 to C++17.
+frequently by vendors -- for example Apple clang up to 17 defaulted to
+C++98, Apple clang 21 and @I{LLVM} clang 14--15 to C++14, @I{LLVM}
+clang 16--21 and @command{g++} 11--15 to C++17.
 
 For a package with a @file{src/Makefile} (or a Windows analogue),
 a non-default C++ compiler can be selected by including something like
@@ -3185,8 +3185,8 @@ later have such an option.
 @c GCC 14, LLVM clang 18-20 and Apple clang 16 default to C17
 @c In 2025-01 GCC pre-15 defaulted to C23 (and later was documented so)
 The @command{configure} script in recent previous versions of @R{} aimed
-to choose a C compiler which supported C11: as the default in recent
-versions of @command{gcc} (prior to 15), @I{LLVM} @command{clang} and
+to choose a C compiler which supported C11: as the default in
+@command{gcc} prior to 15, @I{LLVM} @command{clang} and
 Apple @command{clang} is C17, that is what is likely to be chosen.  On
 the other hand, until @R{} 4.3.0 the makefiles for the Windows build
 specified C99 and up to @R{} 4.4.3 used the compiler default which for
