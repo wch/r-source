@@ -237,15 +237,16 @@
       notably on platforms with less accurate system math libraries, see also
       \url{https://blog.r-project.org/2026/01/30/debugging-sensitivity-to-c-math-library-on-linux/}.
 
-      \item Function \code{free1way()} implementing semiparametrically
+      \item Function \code{free1way()} implementing \I{semiparametrically}
       efficient inference procedures (likelihood- and permutation-based)
-      in distribution-free stratified K-sample oneway layouts was added
+      in distribution-free stratified K-sample one-way layouts was added
       to the \pkg{stats} package.  Approximate (via
       \code{power.free1way.test()}) and simulation-based (utilising
       \code{rfree1way()} for random number generation) power-assessment
       and sample-size planning as well as model diagnostics (available
       from a \code{plot} method and probability-probability plots in
       \code{ppplot()}) complement the functionality.
+      Provided by \I{Torsten Hothorn}.
     }
   }
 
@@ -618,8 +619,8 @@
       longer outputs \code{"List of <...>"} in the default method, thanks
       to \I{Ian Farm}'s report and fix proposal in \PR{19001}.
 
-      \item Large (tall) subscripts in plotmath expressions are now positioned
-      correctly.  They were being positioned too high.
+      \item Large (tall) subscripts in \I{plotmath} expressions are now
+      positioned correctly.  They were being positioned too high.
     }
   }
 }

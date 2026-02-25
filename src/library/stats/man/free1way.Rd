@@ -22,7 +22,7 @@ Distribution-free Inference in a Stratified One-Way Layout
 Estimation, tests, and confidence intervals for parameters in the
 distribution-free stratified K-sample one-way layout for binary, ordinal,
 numeric and potentially independently right-censored outcomes, including
-semiparametrically efficient score tests against Lehmann, odds ratio, or
+\I{semiparametrically} efficient score tests against \I{Lehmann}, odds ratio, or
 hazard ratio alternatives with corresponding confidence intervals.
 }
 \usage{
@@ -99,7 +99,7 @@ free1way(y, ...)
   \item{test}{a character vector defining the global test procedure for all
     parameters: \code{"Permutation"} performs a conditional permutation score test
     under the randomisation model, \code{"Wald"} performs a Wald test,
-    \code{"LRT"} a likelihood ratio, and \code{"Rao"} a Rao score test under the
+    \code{"LRT"} a likelihood ratio, and \code{"Rao"} a \I{Rao} score test under the
     population model.}
   \item{alternative}{a character string specifying the alternative
     hypothesis, must be one of \code{"two.sided"} (default),
@@ -128,7 +128,7 @@ depends on \eqn{F_1} and a scalar parameter \eqn{\delta_k}. The link
 function \eqn{Q} defines the model
 \deqn{F_k(y) = Q^{-1}(Q(F_1(y)) - \delta_k)}
 such that positive values of the parameter \eqn{\delta_k} correspond to
-stochasically larger response values in group \eqn{k} when compared to the
+stochastically larger response values in group \eqn{k} when compared to the
 control group. Here, \eqn{\mu_k} defines the null hypothesis \eqn{H_0^k: \delta_k
 - \mu_k = 0, k = 2, \dots, K} (or the one-sided equivalents thereof); 
 the parameter \code{mu} can be a vector of length \eqn{K - 1} or a
@@ -140,9 +140,9 @@ specific models: Log-odds ratio alternatives are based on the logit link
 standard logistic distribution)
 \deqn{\log\left(\frac{F_k(y)}{1 - F_k(y)}\right) = \log\left(\frac{F_1(y)}{1 - F_1(y)}\right) - \delta_k,}
 log-hazard ratio alternatives on the complementary log-log link (\code{link =
-"cloglog"}, with \eqn{Q} being the quantile function of the Gompertz
+"cloglog"}, with \eqn{Q} being the quantile function of the \I{Gompertz}
 minimum extreme value distribution)
-\deqn{1 - F_k(y) = (1 - F_1(y))^{\exp(- \delta_k)},} Lehmann (or reverse
+\deqn{1 - F_k(y) = (1 - F_1(y))^{\exp(- \delta_k)},} \I{Lehmann} (or reverse
 time log-hazard ratio) alternatives on
 the log-log link (\code{link = "loglog"}, with \eqn{Q} being the quantile
 function of the Gumbel maximum extreme value distribution)
@@ -179,18 +179,18 @@ be confused with assumption-free estimators, such as for example the
 Wilcoxon-Mann-Whitney-U statistic for the AUC
 \bibcitep{R:Fay+Malinovsky:2018}. Confidence intervals for the
 model-based measures are best obtained by inverting permutation score,
-likelihood ratio, or Rao score tests \bibcitep{R:Sewak+Hothorn:2023},
+likelihood ratio, or \I{Rao} score tests \bibcitep{R:Sewak+Hothorn:2023},
 exploiting their invariance with respect to monotone transformations.
 
 Assuming one of the semiparametric models, the parameter estimates are
-semiparametrically efficient and the corresponding score tests and
+\I{semiparametrically} efficient and the corresponding score tests and
 confidence intervals are locally most powerful 
 \bibcitep{Chapter 15.5 in |R:Van_der_Vaart:1998|}. An introduction to
 proportional-odds models in this class is available in
 \bibcitet{R:Harrell:2015}.
 
 \code{free1way} allows several classical tests to be performed and enhanced
-with corresonding parameter estimates and a variety of inference
+with corresponding parameter estimates and a variety of inference
 procedures under the randomisation and population model. 
 The two-sample Wilcoxon rank sum test (implemented in
 \code{\link{wilcox.test}}) is obtained with the default \code{link =
@@ -207,7 +207,7 @@ for binary paired comparisons (as in \code{\link{mcnemar.test}}).
 An object of class \code{free1way} with corresponding \code{logLik},
 \code{coef} (which returns \eqn{\delta_k - \mu_k}, not \eqn{\delta_k}
 whenever \code{mu != 0}, because \eqn{\mu_k} enters the model as an offset
-term for the \eqn{k}th group), \code{vcov}, \code{summary}, and \code{confint} methods.
+term for the \eqn{k}-th group), \code{vcov}, \code{summary}, and \code{confint} methods.
 }
 \references{
   \bibshow{*}

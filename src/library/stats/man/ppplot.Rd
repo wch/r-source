@@ -9,7 +9,7 @@
 Probability-probability Plots
 }
 \description{
-\code{ppplot} produces a probabiliy-probability (P-P) plot of two numerical
+\code{ppplot} produces a probability-probability (P-P) plot of two numerical
 variables. If \code{conf.level} is given, an estimate and corresponding 
 confidence band for the P-P curve under a 
 distribution-free semiparametric model is plotted.
@@ -39,7 +39,7 @@ ppplot(x, y, plot.it = TRUE,
 }
   \item{conf.args}{list of arguments defining confidence band computation and
          visualisation: \code{link} defines the link function of a
-         distribition-free semiparametric model, \code{type} specifies the
+         distribution-free semiparametric model, \code{type} specifies the
          statistical concept the confidence band is derived from; see
          \code{\link[stats]{free1way}} for other options. The remaining
          elements govern how the band is plotted.
