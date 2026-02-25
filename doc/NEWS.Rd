@@ -71,6 +71,9 @@
 
       \item \code{persp()} labels the three axes correctly also when C level
       \code{atan2pi()} is available, fixing \PR{19007} by \I{Klaus Schliep}.
+      
+      \item Large (tall) subscripts in \I{plotmath} expressions are now
+      positioned correctly.  They were being positioned too high.
     }
   }
 }
