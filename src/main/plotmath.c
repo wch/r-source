@@ -1412,7 +1412,7 @@ static BBOX RenderSub(SEXP expr, int draw, mathContext *mc,
     s16 = TeX(sigma16, gc, dd);
     SetSubStyle(style, mc, gc);
     subBBox = RenderElement(sub, 0, mc, gc, dd);
-    v = max(max(v, s16), bboxHeight(subBBox) - 0.8 * sigma5);
+    v = max(max(v, s16), bboxHeight(subBBox) - 0.8 * TeX(sigma5, gc, dd));
     subBBox = RenderOffsetElement(sub, 0, -v, draw, mc, gc, dd);
     bodyBBox = CombineBBoxes(bodyBBox, subBBox);
     SetStyle(style, mc, gc);
