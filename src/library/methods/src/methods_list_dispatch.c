@@ -475,7 +475,7 @@ static SEXP get_generic(SEXP symbol, SEXP rho, SEXP package)
 	    } else
 		vl = R_UnboundValue;
 	}
-	rho = ENCLOS(rho);
+	rho = R_ParentEnv(rho);
     }
     /* look in base if either generic is missing */
     if(generic == R_UnboundValue) {
