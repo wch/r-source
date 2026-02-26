@@ -1,7 +1,7 @@
 #  File src/library/tools/R/htmltools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2022-2024 The R Core Team
+#  Copyright (C) 2022-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -62,12 +62,12 @@ function(x, paths = NULL, ignore = character()) {
     i <- vapply(x, inherits, NA, "error")
     e <- x[i]
     x <- Filter(length, x[!i])
-    if(!length(x) && !length(e)) return(NULL)
-    y <- do.call(rbind, c(x, list(make.row.names = FALSE)))
-    if(is.null(y)) {
+    if(!length(x)) {
+        if(!length(e)) return(NULL)
         y <- list() # cannot set an attr on NULL
     } else {
-        y <- cbind(path = rep.int(names(x), vapply(x, nrow, 0)), y)
+        y <- cbind(path = rep.int(names(x), vapply(x, nrow, 0)),
+                   do.call(rbind, c(x, list(make.row.names = FALSE))))
         if(length(ignore)) {
             y <- y[y[, "msg"] %notin% ignore, , drop = FALSE]
         }
