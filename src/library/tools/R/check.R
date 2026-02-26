@@ -638,7 +638,10 @@ add_dummies <- function(dir, Log)
 
         check_src()
         if(do_install &&
-           dir.exists("src") &&
+           (dir.exists("src") ||
+            length(Sys.glob(file.path(libdir, pkgname, "libs",
+                                      sprintf("*%s",
+                                              .Platform$dynlib.ext))))) &&
            length(so_symbol_names_table)) # suitable OS
             check_sos()
 
