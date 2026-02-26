@@ -275,7 +275,12 @@ processRdChunk <- function(code, stage, options, env, macros)
 
 	    tmpcon <- file()
 	    sink(file = tmpcon)
-	    if(options$eval) err <- evalWithOpt(ce, options, env)
+            if(options$eval) err <- withCallingHandlers({
+                evalWithOpt(ce, options, env)
+            }, warning = function(w) {
+                warnRd(code, Rdfile, conditionMessage(w))
+                tryInvokeRestart("muffleWarning")
+            })
 	    res <- c(res, "\n") # attempt to  make sure final line is complete
 	    sink()
 	    output <- readLines(tmpcon, warn = FALSE) # sometimes attempt fails.

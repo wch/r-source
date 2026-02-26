@@ -188,6 +188,7 @@
 
       \item Error messages from failed Rd \verb{\Sexpr} code now include
       the call from the original condition (if available).
+      Warning messages now include Rd source locations.
 
       \item When the environment variable \env{R_WARN_BOUNDS_OPT} is set to
       \code{"yes"}, \code{options(warn = val)} will check if \code{val} is
