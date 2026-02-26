@@ -223,7 +223,9 @@ setRlibs <-
     deps <- unique(c(names(pi$Depends), names(pi$Imports),
                      if(LinkingTo) names(pi$LinkingTo),
                      sug))
-    if(length(libdir) && self2) flink(file.path(libdir, thispkg), tmplib)
+    if(length(libdir) && self2 &&
+       dir.exists(instdir <- file.path(libdir, thispkg))) # needs do_install
+        flink(instdir, tmplib)
     ## .Library is not necessarily canonical, but the .libPaths version is.
     lp <- .libPaths()
     poss <- c(lp[length(lp)], .Library)
