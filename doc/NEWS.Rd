@@ -356,7 +356,7 @@
       \code{Rf_lazy_duplicate}, \code{EXTPTR_PROT}, \code{EXTPTR_PTR},
       \code{EXTPTR_TAG}, \code{NAMED}, \code{FRAME}, \code{HASHTAB},
       \code{IS_S4_OBJECT}, \code{BODY}, \code{FORMALS}, \code{CLOENV},
-      \code{ENCLOS}, \code{Rf_isFrame}, \code{OBJECT},
+      \code{ENCLOS}, \code{OBJECT},
       \code{SET_TYPEOF}, \code{ENVFLAGS}, \code{SET_ENVFLAGS},
       \code{SET_FORMALS}, \code{SET_BODY}, \code{SET_CLOENV},
       \code{STRING_PTR}, \code{DATAPTR}, \code{XTRUELENGTH},
@@ -402,6 +402,9 @@
       as the \R function \code{attributes}. New functions
       \code{R_getAttribCount}, \code{R_getAttribNames},
       \code{R_hasAttrib}, \code{R_nrow}, and \code{R_ncol}.
+
+      The function \code{Rf_isFrame} has been removed; use
+      \code{Rf_isDataFrame} instead.
     }
   }
 

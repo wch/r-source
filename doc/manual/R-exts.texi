@@ -17886,7 +17886,7 @@ SEXP Rf_allocLang(int n)
 #endif
 
 #if R_VERSION < R_Version(4, 5, 0)
-# define isDataFrame(x) Rf_isFrame(x)
+# define Rf_isDataFrame(x) Rf_isFrame(x)
 # define R_ClosureFormals(x) FORMALS(x)
 # define R_ClosureEnv(x) CLOENV(x)
 # define R_ParentEnv(x) ENCLOS(x)
