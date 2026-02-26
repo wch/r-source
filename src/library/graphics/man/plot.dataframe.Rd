@@ -11,12 +11,14 @@
   It is designed for a quick look at numeric data frames.
 }
 \usage{
-\method{plot}{data.frame}(x, \dots)
+\method{plot}{data.frame}(x, formula = NULL, \dots)
 }
 \arguments{
   \item{x}{object of class \code{data.frame}.}
-  \item{\dots}{further arguments to \code{\link{stripchart}},
-    \code{\link{plot.default}} or \code{\link{pairs}}.}
+  \item{formula}{ optional formula, as in \code{\link{plot.formula}}. }
+  \item{\dots}{further arguments to \code{\link{plot.formula}},
+    \code{\link{stripchart}}, \code{\link{plot.default}} or
+    \code{\link{pairs}}. }
 }
 \details{
   This is intended for data frames with \emph{numeric} columns. For more
@@ -32,6 +34,10 @@
   For a single numeric column it uses \code{\link{stripchart}}, and for
   other single-column data frames tries to find a plot method for the
   single column.
+
+  In case a \code{formula} is provided, the \code{\link{plot.formula}}
+  method is called, allowing a simpler invocation of the formula method
+  using the \code{\link[base:pipeOp]{pipe operator}}.
 }
 \seealso{
   \code{\link{data.frame}}
@@ -40,6 +46,7 @@
 plot(OrchardSprays[1], method = "jitter")
 plot(OrchardSprays[c(4,1)])
 plot(OrchardSprays)
+plot(OrchardSprays, decrease ~ treatment)
 
 plot(iris)
 plot(iris[5:4])

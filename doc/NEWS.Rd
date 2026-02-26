@@ -247,6 +247,8 @@
       from a \code{plot} method and probability-probability plots in
       \code{ppplot()}) complement the functionality.
       Provided by \I{Torsten Hothorn}.
+
+      \item \code{plot.data.frame()} now supports a \code{formula} argument.
     }
   }
 
