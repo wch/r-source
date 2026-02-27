@@ -171,11 +171,13 @@ bibentry(bibtype = "Book",
                            family = "Brockwell"),
                     person(given = c("Richard", "A."),
                            family = "Davis")),
+         edition = "Second",
          isbn = "9780387974293",
          lccn = "96224172",
          series = "Springer Series in Statistics",
          year = "1991",
-         publisher = "Springer New York")
+         publisher = "Springer",
+         address = "New York")
 
 bibentry(bibtype = "Article",
          key = "R:Brown+Levy:1994",
@@ -1702,7 +1704,7 @@ bibentry(bibtype = "Book",
          publisher = "Springer",
          year = "1996",
          series = "Springer Texts in Statistics",
-         address = "New York, NY",
+         address = "New York",
          doi = "10.1007/978-1-4757-2526-1")
 
 bibentry(bibtype = "Book",

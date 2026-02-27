@@ -15,10 +15,8 @@
   A time series of length 98.
 }
 \source{
-  \bibcitet{|R:Brockwell+Davis:1991|page 555,
-    |R:Brockwell+Davis:1996|sections 5.1 and 7.6}.
-}
-\references{
-  \bibshow{*}
+\bibinfo{R:Brockwell+Davis:1991}{note}{Page 555}
+\bibinfo{R:Brockwell+Davis:1996}{note}{Sections 5.1 and 7.6}
+\bibshow{R:Brockwell+Davis:1991,R:Brockwell+Davis:1996}
 }
 \keyword{datasets}
