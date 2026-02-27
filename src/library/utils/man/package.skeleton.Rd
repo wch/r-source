@@ -1,6 +1,6 @@
 % File src/library/utils/man/package.skeleton.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2017 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{package.skeleton}
@@ -37,6 +37,7 @@ package.skeleton(name = "anRpackage", list,
 }
 \value{
   Used for its side-effects.
+  Invisibly returns the path of the created package directory.
 }
 \details{
   The arguments \code{list}, \code{environment}, and \code{code_files}

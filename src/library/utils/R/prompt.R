@@ -1,7 +1,7 @@
 #  File src/library/utils/R/prompt.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -461,5 +461,6 @@ promptImport <- function(object, filename = NULL, name = NULL, importedFrom = NU
             "\n",
             gettext("Edit the file and move it to the appropriate directory."),
             domain = NA)
-}
 
+    invisible(filename)
+}

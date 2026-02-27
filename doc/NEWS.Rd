@@ -431,6 +431,9 @@
 
       \item Package \file{README.md} files are now installed and
       featured in HTML help.
+
+      \item \code{package.skeleton()} now invisibly returns the path of the
+      created directory, along the lines of \code{prompt()} \abbr{et al.}.
     }
   }
 
