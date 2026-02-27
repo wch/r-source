@@ -1,0 +1,58 @@
+
+R Under development (unstable) (2026-02-27 r89496) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## To be compared against saved reference output
+> library(tools)
+> Rd2txt_options(underline_titles = FALSE)
+> Rd2txt("bibtools.Rd", stages = "build") |>
++     assertWarning(verbose = TRUE)
+Bibliographic Citations and References
+
+Description:
+
+     Meyer (1953, p. 1)
+
+References:
+
+     Lamport L. (1994). _LaTeX: A Document Preparation System_.
+     Addison-Wesley, Reading, MA. ISBN 0201529831.
+
+     Meyer H. A. (1953). _Forest Mensuration_. Penns Valley Publishers.
+
+See Also:
+
+     Hornik and Murdoch (2011, which is cited only here so not shown
+     above)
+
+Asserted warning: bibtools.Rd:5: Could not find bibentries for the following keys:
+  'non-existent-key'
+> 
+> ## Check cited but not shown
+> pkgdir <- package.skeleton("bibtools", list = ".NotYetImplemented",
++                            path = tempdir()) |> suppressMessages()
+> file.copy("bibtools.Rd", file.path(pkgdir, "man")) |> stopifnot()
+> tools:::.check_Rd_bibentries_cited_not_shown(dir = pkgdir)
+$bibtools.Rd
+[1] "R:Hornik+Murdoch:2011"
+
+attr(,"unexpected_macro_expansion")
+[1] TRUE
+> ## ("unexpected_macro_expansion" as there is no build/partial.rdb)
+> 
+> proc.time()
+   user  system elapsed 
+  0.138   0.017   0.150 
