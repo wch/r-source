@@ -378,7 +378,7 @@ static double mktime0 (stm *tm, const int local)
 #endif
 	return -1.;
     }
-    return local ? R_mktime(tm) : R_timegm(tm);
+    return (double)(local ? R_mktime(tm) : R_timegm(tm));
 }
 
 /*
