@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2025  The R Core Team.
+ *  Copyright (C) 2000-2026  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -117,7 +117,7 @@ Inspectable from R,  sessionInfo()$tzcode_type  is either
 
    This can be use on glibc, macOS and Solaris (and probably FreeBSD),
    but all except 64-bit glibc have issues we can try to work around.
-   It could in principle be used om Windows but the issues there are
+   It could in principle be used on Windows but the issues there are
    too severe (no support for before 1970) to work around.
 
    The system facilities are used for 1902-2037 and outside those
@@ -954,7 +954,7 @@ makelt(stm *tm, SEXP ans, R_xlen_t i, bool valid, double frac_secs)
     SET_STRING_ELT(klass, 1, mkChar("POSIXt"));		\
     classgets(ans, klass);				\
     if(isString(tzone)) setAttrib(ans, install("tzone"), tzone);	\
-    reset_tz(&tzsi);				\
+    reset_tz(&tzsi);							\
     SEXP nm = getAttrib(x, R_NamesSymbol);				\
     if(nm != R_NilValue) setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm); \
     MAYBE_INIT_balanced							\
@@ -1102,8 +1102,8 @@ attribute_hidden SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans = PROTECT(allocVector(VECSXP, nans));
     for(int i = 0; i < 9; i++)
 	SET_VECTOR_ELT(ans, i, allocVector(i > 0 ? INTSXP : REALSXP, n));
-    SET_VECTOR_ELT(ans, 9, allocVector(STRSXP, n));
-    SET_VECTOR_ELT(ans, 10, allocVector(INTSXP, n));
+    SET_VECTOR_ELT(ans,  9, allocVector(STRSXP, n)); // zone
+    SET_VECTOR_ELT(ans, 10, allocVector(INTSXP, n)); // gmtoff
 
     SEXP ansnames = PROTECT(allocVector(STRSXP, nans));
     for(int i = 0; i < nans; i++)
@@ -1281,10 +1281,10 @@ attribute_hidden SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isNull(tz) && strlen(tz1 = CHAR(STRING_ELT(tz, 0)))) {
 	/* If the format includes %Z or %z
 	   we need to try to set TZ accordingly */
-	int needTZ = 0;
+	bool needTZ = false;
 	for(R_xlen_t i = 0; i < m; i++) {
 	    const char *p = translateChar(STRING_ELT(sformat, i));
-	    if (strstr(p, "%Z") || strstr(p, "%z")) {needTZ = 1; break;}
+	    if (strstr(p, "%Z") || strstr(p, "%z")) {needTZ = true; break;}
 	}
 	/* strftime (per POSIX) calls settz(), so we need to set TZ, but
 	   we would not have to call settz() directly (except for the
@@ -1312,10 +1312,11 @@ attribute_hidden SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     R_xlen_t N = (n > 0) ? ((m > n) ? m : n) : 0;
     SEXP ans = PROTECT(allocVector(STRSXP, N));
     char tm_zone[20];
+    bool have_zone =
 #ifdef HAVE_TM_GMTOFF
-    bool have_zone = LENGTH(x) >= 11;// and components w/ length >= 1
+	LENGTH(x) >= 11;// and components w/ length >= 1
 #else
-    bool have_zone = LENGTH(x) >= 10;
+	LENGTH(x) >= 10;
 #endif
     // in case it is needed
     int ns0 = -1;
@@ -1524,7 +1525,7 @@ attribute_hidden SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans = PROTECT(allocVector(VECSXP, nans));
     for(int i = 0; i < 9; i++)
 	SET_VECTOR_ELT(ans, i, allocVector(i > 0 ? INTSXP : REALSXP, N));
-    SET_VECTOR_ELT(ans, 9, allocVector(STRSXP, N));
+    SET_VECTOR_ELT(ans,  9, allocVector(STRSXP, N));
     SET_VECTOR_ELT(ans, 10, allocVector(INTSXP, N));
 
     SEXP ansnames = PROTECT(allocVector(STRSXP, nans));
@@ -1560,7 +1561,7 @@ attribute_hidden SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	    tm.tm_isdst = -1;
 	    if (offset != NA_INTEGER) {
 #ifdef HAVE_TM_GMTOFF
-//		tm.tm_gmtoff = offset;
+		tm.tm_gmtoff = offset; // not always correct; better than always NA
 #endif
 		/* we know the offset, but not the timezone
 		   so all we can do is to convert to time_t,
@@ -1600,7 +1601,7 @@ attribute_hidden SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	makelt(ptm, ans, i, !invalid, invalid ? NA_REAL : psecs - floor(psecs));
 	if (isUTC) {
 	    SET_STRING_ELT(VECTOR_ELT(ans, 9), i, mkChar(tz));
-	    INTEGER(VECTOR_ELT(ans, 10))[i] = 0;
+	    INTEGER(VECTOR_ELT(ans, 10))[i] = 0; // gmtoff
 	} else {
 	    const char *p = "";
 	    if(!invalid && tm.tm_isdst >= 0) {
@@ -1634,7 +1635,7 @@ attribute_hidden SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 } // strptime()
 
 // .Internal(Date2POSIXlt(x)) called from as.POSIXlt.Date
-// It always returns a date-time in UTC.
+// currently always returns a date-time in UTC (even when tz (=stz) is not !)
 attribute_hidden SEXP do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
