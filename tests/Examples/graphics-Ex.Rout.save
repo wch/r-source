@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2025-11-05 r88988) -- "Unsuffered Consequences"
-Copyright (C) 2025 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu
+R Under development (unstable) (2026-02-27 r89492) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin25.3.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2065,6 +2065,7 @@ armed.forces
 > plot(OrchardSprays[1], method = "jitter")
 > plot(OrchardSprays[c(4,1)])
 > plot(OrchardSprays)
+> plot(OrchardSprays, decrease ~ treatment)
 > 
 > plot(iris)
 > plot(iris[5:4])
@@ -2349,7 +2350,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x148a28c60>
+<bytecode: 0x77204aa18>
 <environment: namespace:graphics>
 > 
 > 
@@ -3218,7 +3219,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x1484fa978>
+<bytecode: 0x772b2c820>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3299,7 +3300,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.594 0.099 1.697 0 0 
+Time elapsed:  1.5 0.097 1.6 0 0 
 > grDevices::dev.off()
 null device 
           1 
