@@ -438,11 +438,15 @@ if (requireNamespace("PkgC", lib.loc = "myLib")) {
     ## failed up to R 4.4.x
 }
 
-## R CMD check should *not* warn about \Sexpr{} built sections in Rd (PR#17479):
+
+### Checking Rd files in 'exSexpr'
+
 writeLines(msg <- capture.output(
     tools:::.check_package_parseRd(dir = file.path(pkgPath, "exSexpr"),
                                    minlevel = -Inf)
 ))
+
+## R CMD check should *not* warn about \Sexpr{} built sections in Rd (PR#17479):
 if(length(ifoo <- grep("foo.Rd", msg, fixed = TRUE)))
     stop(".check_package_parseRd() complained about foo.Rd in\n",
          paste0(msg[ifoo], collapse = "\n"))
