@@ -1,7 +1,7 @@
 #  File src/library/base/R/datetime.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1378,18 +1378,17 @@ rep.POSIXlt <- function(x, ...) {
 diff.POSIXt <- function (x, lag = 1L, differences = 1L, ...)
 {
     ismat <- is.matrix(x)
-    r <- if(inherits(x, "POSIXlt")) as.POSIXct(x) else x
     if (length(lag) != 1L || length(differences) > 1L || lag < 1L || differences < 1L)
         stop("'lag' and 'differences' must be integers >= 1")
+    r <- if(inherits(x, "POSIXlt")) as.POSIXct(x) else x
     i1 <- -seq_len(lag)
-    i0 <- integer()
     if (ismat)
         for (i in seq_len(differences))
             r <- r[i1, , drop = FALSE] -
-                r[if(lag < (len <- nrow(r))) -len:-(len - lag + 1L) else i0, , drop = FALSE]
+		r[seq_len(max(nrow(r) - lag, 0L)), , drop = FALSE]
     else
         for (i in seq_len(differences))
-            r <- r[i1] -  r[if(lag < (len <- length(r))) -len:-(len - lag + 1L) else i0]
+	    r <- r[i1] - `length<-`(r, max(length(r) - lag, 0L))
     dots <- list(...)
     if("units" %in% names(dots) && dots$units != "auto")
         units(r) <- match.arg(dots$units,  choices = setdiff(eval(formals(difftime)$units), "auto"))

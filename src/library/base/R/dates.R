@@ -1,7 +1,7 @@
 #  File src/library/base/R/dates.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -436,14 +436,13 @@ diff.Date <- function (x, lag = 1L, differences = 1L, ...)
     if (length(lag) != 1L || length(differences) > 1L || lag < 1L || differences < 1L)
         stop("'lag' and 'differences' must be integers >= 1")
     i1 <- -seq_len(lag)
-    i0 <- integer()
     if (ismat)
         for (i in seq_len(differences))
             x <- x[i1, , drop = FALSE] -
-                x[if(lag < (len <- nrow(x))) -len:-(len - lag + 1L) else i0, , drop = FALSE]
+                x[seq_len(max(nrow(x) - lag, 0L)), , drop = FALSE]
     else
         for(i in seq_len(differences))
-            x <- x[i1] - x[if(lag < (len <- length(x))) -len:-(len - lag + 1L) else i0]
+            x <- x[i1] - `length<-`(x, max(length(x) - lag, 0L))
     if("units" %in% ...names() && (dunits <- list(...)$units) != "auto")
         units(x) <- match.arg(dunits, choices = setdiff(eval(formals(difftime)$units), "auto"))
     x
