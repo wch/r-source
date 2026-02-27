@@ -1,6 +1,6 @@
 % File src/library/graphics/man/plothistogram.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{plot.histogram}
@@ -18,7 +18,7 @@
                sub = NULL, xlab = x$xname, ylab,
                xlim = range(x$breaks), ylim = NULL, log = "",
                axes = TRUE, labels = FALSE, add = FALSE,
-               ann = TRUE, \dots)
+               ann = TRUE, panel.first = NULL, \dots)
 
 \method{lines}{histogram}(x, \dots)
 }
@@ -48,6 +48,12 @@
   \item{add}{logical.  If \code{TRUE}, only the bars are added to the
     current plot.  This is what \code{lines.histogram(*)} does.}
   \item{ann}{logical.  Should annotations (titles and axis titles) be plotted?}
+  \item{panel.first}{an \sQuote{expression} to be evaluated after the
+    plot axes are set up but before any plotting takes place.  This can
+    be useful for drawing background grids.  Note
+    that this works by lazy evaluation: passing this argument from other
+    functions may well not work since it may be evaluated too
+    early.}  
   \item{\dots}{further \link{graphical parameters} to
     \code{title} and \code{axis}.}
 }

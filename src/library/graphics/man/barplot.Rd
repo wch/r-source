@@ -1,6 +1,6 @@
 % File src/library/graphics/man/barplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{barplot}
@@ -26,6 +26,7 @@ barplot(height, \dots)
         inside = TRUE, plot = TRUE, axis.lty = 0, offset = 0,
         add = FALSE, ann = !add && par("ann"), args.legend = NULL,
         orderH = c("none", "incr", "decr"),
+        panel.first = NULL, panel.last = NULL,
         \dots)
 
 \method{barplot}{formula}(formula, data, subset, na.action,
@@ -143,6 +144,16 @@ barplot(height, \dots)
   \item{na.action}{a function which indicates what should happen when
     the data contain \code{\link{NA}} values.  The default is to ignore missing
     values in the given variables.}
+
+  \item{panel.first}{an \sQuote{expression} to be evaluated after the
+    plot axes are set up but before any plotting takes place.  This can
+    be useful for drawing background grids. Note that this works by 
+    lazy evaluation: passing this argument from other functions may 
+    well not work since it may be evaluated too early.}
+  \item{panel.last}{an expression to be evaluated after plotting has
+    taken place but before the axes and title are added.  See the
+    comments about \code{panel.first}.}
+
   \item{\dots}{arguments to be passed to/from other methods.  For the
     default method these can include further arguments (such as
     \code{axes}, \code{asp} and \code{main}) and

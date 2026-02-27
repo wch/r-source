@@ -1,6 +1,6 @@
 % File src/library/graphics/man/hist.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{hist}
@@ -16,7 +16,7 @@ hist(x, \dots)
      xlim = range(breaks), ylim = NULL,
      xlab = xname, ylab,
      axes = TRUE, plot = TRUE, labels = FALSE,
-     nclass = NULL, warn.unused = TRUE, \dots)
+     nclass = NULL, warn.unused = TRUE, panel.first = NULL, \dots)
 }
 \alias{hist}
 \alias{hist.default}
@@ -83,6 +83,11 @@ hist(x, \dots)
   \item{warn.unused}{logical.  If \code{plot = FALSE} and
     \code{warn.unused = TRUE}, a warning will be issued when graphical
     parameters are passed to \code{hist.default()}.}
+  \item{panel.first}{an \sQuote{expression} to be evaluated after the
+    plot axes are set up but before any plotting takes place.  This can
+    be useful for drawing background grids. Note that this works by 
+    lazy evaluation: passing this argument from other function may 
+    well not work since it may be evaluated too early.}    
   \item{\dots}{further arguments and \link{graphical parameters} passed to
     \code{\link{plot.histogram}} and thence to \code{\link{title}} and
     \code{\link{axis}} (if \code{plot = TRUE}).}

@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/boxplot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -135,7 +135,8 @@ bxp <- function(z, notch = FALSE, width = NULL, varwidth = FALSE,
                 outline = TRUE, notch.frac = 0.5, log = "", border = par("fg"),
 		pars = NULL, frame.plot = axes, horizontal = FALSE,
                 ann = TRUE,
-		add = FALSE, at = NULL, show.names = NULL, ...)
+		add = FALSE, at = NULL, show.names = NULL, 
+		panel.first = NULL, panel.last = NULL, ...)
 {
     pars <- as.list(pars)
     if(...length()) { ## ensure '...' takes precedence over 'pars' and does not have duplicates
@@ -259,7 +260,10 @@ bxp <- function(z, notch = FALSE, width = NULL, varwidth = FALSE,
 	    plot.window(xlim = xlim, ylim = ylim, log = log, yaxs = pars$yaxs)
     }
     xlog <- (par("ylog") && horizontal) || (par("xlog") && !horizontal)
-
+	if(!is.null(panel.first)) 
+		if(!inherits(panel.first, "function")) warning("panel.first ignored, it is not a function") 
+		else panel.first()
+	
     pcycle <- function(p, def1, def2 = NULL)# or rather NA {to be rep()ed}?
 	rep(if(length(p)) p else if(length(def1)) def1 else def2,
 	    length.out = n)
@@ -322,7 +326,10 @@ bxp <- function(z, notch = FALSE, width = NULL, varwidth = FALSE,
 			notch = notch, xlog = xlog, i = i)
     if(!ok)
 	warning("some notches went outside hinges ('box'): maybe set notch=FALSE")
-
+	if(!is.null(panel.last)) 
+		if(!inherits(panel.last, "function")) warning("panel.last ignored, it is not a function") 
+		else panel.last()
+	
     axes <- is.null(pars$axes)
     if(!axes) { axes <- pars$axes; pars$axes <- NULL }
     if(axes) {

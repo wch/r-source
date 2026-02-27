@@ -118,6 +118,12 @@
       \item \code{barplot(.., orderH = *)} for stacked bar plots allows to
       sort the stacks each according to size.
 
+      \item New argument \code{panel.first} for \code{hist()} 
+      (via \code{plot.histogram()}), \code{barplot()}, \code{bxp()},
+      and hence implicitly \code{boxplot()}. 
+      All except the former also gain a new \code{panel.last}.
+      Suggested by Marieke Stolte and Julian Welz.
+
       \item \code{plot.default()} gets a new switch \code{lim2} to indicate
       that the default \code{xlim} and \code{ylim} range computations only
       use \emph{jointly} finite x- and y-values; indirectly suggested in

@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/barplot.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,18 +20,19 @@ barplot <- function(height, ...) UseMethod("barplot")
 
 barplot.default <-
 function(height, width = 1, space = NULL, names.arg = NULL,
-	 legend.text = NULL, beside = FALSE, horiz = FALSE,
-	 density = NULL, angle = 45,
-	 col = NULL, border = par("fg"),
-	 main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
-	 xlim = NULL, ylim = NULL, xpd = TRUE, log = "",
-	 axes = TRUE, axisnames = TRUE,
-	 cex.axis = par("cex.axis"), cex.names = par("cex.axis"),
-         inside = TRUE, plot = TRUE, axis.lty = 0, offset = 0, add = FALSE,
-	 ann = !add && par("ann"),
-         args.legend = NULL,
-         orderH = c("none", "incr", "decr"),
-         ...)
+	legend.text = NULL, beside = FALSE, horiz = FALSE,
+	density = NULL, angle = 45,
+	col = NULL, border = par("fg"),
+	main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
+	xlim = NULL, ylim = NULL, xpd = TRUE, log = "",
+	axes = TRUE, axisnames = TRUE,
+	cex.axis = par("cex.axis"), cex.names = par("cex.axis"),
+	inside = TRUE, plot = TRUE, axis.lty = 0, offset = 0, add = FALSE,
+	ann = !add && par("ann"),
+	args.legend = NULL,
+	orderH = c("none", "incr", "decr"),
+	panel.first = NULL, panel.last = NULL,
+	...)
 {
     if (!missing(inside)) .NotYetUsed("inside", error = FALSE)# -> help(.)
 
@@ -145,14 +146,16 @@ function(height, width = 1, space = NULL, names.arg = NULL,
     if(plot) { ##-------- Plotting :
         dev.hold()
 	opar <-
-	    if (horiz)	par(xaxs = "i", xpd = xpd)
-	    else	par(yaxs = "i", xpd = xpd)
+	    if (horiz)	par(xaxs = "i")
+	    else	par(yaxs = "i")
 	on.exit({dev.flush();par(opar)})
 
 	if (!add) {
 	    plot.new()
 	    plot.window(xlim, ylim, log = log, ...)
 	}
+	panel.first
+	opar <- c(opar, par(xpd = xpd))
 
 	xyrect <- function(x1,y1, x2,y2, horizontal = TRUE, ...) {
 	    if(horizontal)
@@ -180,6 +183,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 		##	   horizontal = horiz, border= border)
 	    }
 	}
+	panel.last
 	if (axisnames && !is.null(names.arg)) { # specified or from {col}names
 	    at.l <- if (length(names.arg) != length(w.m)) {
 		if (length(names.arg) == NC) # i.e. beside (!)

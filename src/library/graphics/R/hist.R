@@ -1,7 +1,7 @@
 #  File src/library/graphics/R/hist.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ hist.default <-
 	      xlim = range(breaks), ylim = NULL,
 	      xlab = xname, ylab,
 	      axes = TRUE, plot = TRUE, labels = FALSE, nclass = NULL,
-	      warn.unused = TRUE, ...)
+	      warn.unused = TRUE, panel.first = NULL, ...)
 {
     if (!is.numeric(x))
 	stop("'x' must be numeric")
@@ -140,7 +140,7 @@ hist.default <-
 	plot(r, freq = freq1, col = col, border = border,
 	     angle = angle, density = density,
 	     main = main, xlim = xlim, ylim = ylim, xlab = xlab, ylab = ylab,
-	     axes = axes, labels = labels, ...)
+	     axes = axes, labels = labels, panel.first = panel.first, ...)
 	invisible(r)
     }
     else { ## plot is FALSE
@@ -177,7 +177,7 @@ plot.histogram <-
               sub = NULL,
 	      xlab = x$xname, ylab,
 	      xlim = range(x$breaks), ylim = NULL, log = "",
-	      axes = TRUE, labels = FALSE, add = FALSE, ann = TRUE, ...)
+	      axes = TRUE, labels = FALSE, add = FALSE, ann = TRUE, panel.first = NULL, ...)
 {
     equidist <-
 	if(is.logical(x$equidist)) x$equidist
@@ -197,6 +197,7 @@ plot.histogram <-
 	    ylab <- if (!freq) "Density" else "Frequency"
 	plot.new()
 	plot.window(xlim, ylim, log, ...)	#-> ylim's default from 'y'
+	panel.first
 	if(ann) title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
 	if(axes) {
 	    axis(1, ...)
