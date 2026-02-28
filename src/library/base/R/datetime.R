@@ -670,8 +670,25 @@ c.POSIXct <- function(..., recursive = FALSE) {
 }
 
 ## we need conversion to POSIXct as POSIXlt objects can be in different tz.
+## To preserve fractional second accuracy, do more than just
+##   as.POSIXlt(do.call(c, lapply(list(...), as.POSIXct)))
 c.POSIXlt <- function(..., recursive = FALSE) {
-    as.POSIXlt(do.call(c, lapply(list(...), as.POSIXct)))
+    x <- lapply(list(...), function(x)
+                if(is.character(x) || is.factor(x)) as.POSIXlt(x) else x)
+    ## s:= fractional part of seconds in all of 'x'
+    s <- lapply(x, function(x) if(inherits(x, "POSIXlt")) x$sec - floor(x$sec))
+    n <- lengths(x <- lapply(x, as.POSIXct), use.names = FALSE)
+    x <- as.POSIXlt(do.call(c, x))
+    for(i in seq_along(s)) if(length(si <- s[[i]]) != (ni <- n[[i]]))
+        s[[i]] <- if(is.null(si)) double(ni) else rep_len(si, ni)
+    s <- unlist(s, recursive = FALSE, use.names = FALSE)
+    i <- which(is.finite(x$sec) & s != 0)
+    if(length(i)) {
+        bal <- attr(x, "balanced")
+        x$sec[i] <- floor(x$sec[i]) + s[i]
+        if(!is.null(bal)) attr(x, "balanced") <- bal
+    }
+    x
 }
 
 

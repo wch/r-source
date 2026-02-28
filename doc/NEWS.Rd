@@ -118,9 +118,9 @@
       \item \code{barplot(.., orderH = *)} for stacked bar plots allows to
       sort the stacks each according to size.
 
-      \item New argument \code{panel.first} for \code{hist()} 
+      \item New argument \code{panel.first} for \code{hist()}
       (via \code{plot.histogram()}), \code{barplot()}, \code{bxp()},
-      and hence implicitly \code{boxplot()}. 
+      and hence implicitly \code{boxplot()}.
       All except the former also gain a new \code{panel.last}.
       Suggested by Marieke Stolte and Julian Welz.
 
@@ -640,7 +640,10 @@
       \item \code{as.POSIXlt(ch)}, \code{as.Date(ch)} etc now also work
       correctly when \code{ch} contains \code{"Inf"}, via
       \code{strptime(.)}, fixing \PR{19006}.
-      
+
+      \item \code{c(<POSIXlt>, ..)} now fully preserves sub-second
+      accuracy, fulfilling a part of \I{Suharto Anggono}'s wishlist
+      \PR{18989}.
     }
   }
 }
