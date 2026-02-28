@@ -16,6 +16,62 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+## Compare the Built: string to determine if a binary package is compatible
+## with this build of R
+.is.built.compatible <- function(built, platform=R.version$platform)
+{
+    if (!is.character(built))
+        stop("Built: value is not a string")
+    if (length(built) > 1L)
+        sapply(built, .is.built.compatible)
+    else {
+        bcomp <- strsplit(built, "; ", fixed=TRUE)[[1]]
+        ## we assume no platform means no binaries; or exact match is also ok
+        if (length(bcomp) < 2 || bcomp[2] == "" || bcomp[2] == platform) return(TRUE)
+
+        ## FIXME: should we compare the R.verison as well here?
+
+        ## from here it gets a bit more hairy
+        b.platform <- bcomp[2]
+
+        ## allow R builds to provide their own override if they have special needs
+        ## (is this a good idea?)
+        compatible.platform <- getOption("R.platform.is.compatible")
+        if (is.function(compatible.platform)) return(compatible.platform(b.platform))
+
+        ## darwin is backwards compatible, so compare the major version and allow <=
+        if (length(grep("-darwin[0-9][0-9.]*$", c(b.platform, platform))) == 2L &&
+            ## if everything else matches (mainly arch)
+            gsub("-darwin[0-9][0-9.]*$", "", b.platform) == gsub("-darwin[0-9][0-9.]*$", "", platform)) {
+            vers <- as.integer(gsub(".*-darwin(([0-9]+)|([0-9]+)[.][0-9.]*)$", "\\1", c(b.platform, platform)))
+            ## NOTE: in principle a newer binary can actually work if we are running a
+            ## build that targets older system, but is ran on a macOS that is at least as new,
+            ## but we should not see that unless the binary is from a newer build which
+            ## may not be ABI compatible on the R side
+            return (vers[1] <= vers[2])
+        }
+
+        ## the official spec is <CPU>-<MANUFACTURER>[-<KERNEL>]-<OS>
+        ## but it is not always adhered to, unfortunately
+        p.arch <- gsub("-.*", "", platform)
+        b.arch <- gsub("-.*", "", b.platform)
+
+        if (p.arch == "amd64") p.arch <- "x86_64"
+        if (b.arch == "amd64") b.arch <- "x86_64"
+
+        ## for now, we require exact arch match
+        ## (this doesn't cover things like i386 working on i686)
+        if (p.arch != b.arch) return(FALSE)
+
+        ## we don't get into comparing the OS, it's too messy.
+        ## we may revisit as we see more use-cases
+        ## fail if only one of them has windows/linux respectively
+        if (length(grep("windows", c(b.platform, platform))) == 1L ||
+            length(grep("linux", c(b.platform, platform))) == 1L)
+            return(FALSE)
+        TRUE
+    }
+}
 
 .install.macbinary <-
     function(pkgs, lib, repos = getOption("repos"),
@@ -66,6 +122,8 @@
         if (is.null(desc$Built))
             stop(gettextf("file %s is not a binary package", sQuote(pkg)),
                  domain = NA, call. = FALSE)
+        if (!.is.built.compatible(desc$Built))
+            stop(gettextf("binary package %s is not compatible with this build of R", sQuote(pkg)))
 
         res <- tools::checkMD5sums(pkgname, file.path(tmpDir, pkgname))
         if(!quiet && !is.na(res) && res) {
