@@ -824,6 +824,25 @@ stopifnot(all.equal(as.vector(diff(t4)), c(366, -366, 366), tolerance = 6e-6))
 ## diff(t4) was all NA in R <= 4.5.2
 
 
+## as.POSIXlt.character("Inf") should work   -- PR#19006
+(Ilt <- as.POSIXlt(II <- c(-Inf,Inf))) #  "-Inf" "Inf"
+ Ict <- as.POSIXct(II)
+cII <- as.character(II)
+stopifnot(exprs = {
+    identical(II, as.numeric(Ilt))
+    identical(II, as.numeric(Ict))
+    identical(Ilt, as.POSIXlt(Ict))
+    identical(cII, as.character(Ict))
+    identical(cII, as.character(Ilt))
+    ## the above worked "always", however these three
+    II == as.Date(cII) # calling its helper charToDate()
+    II == as.POSIXct(cII)
+    II == as.POSIXlt(cII)
+})
+## failed in R < 4.6.0 w/  Error in as.POSIXlt.character(x, tz, ...) :
+##	character string is not in a standard unambiguous format
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

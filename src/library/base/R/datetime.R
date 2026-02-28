@@ -373,9 +373,9 @@ length.POSIXlt <- function(x) max(lengths(unclass(x)))
 `$<-.POSIXlt` <- function (x, name, value) {
     r <- NextMethod("$<-")
     class(r) <- oldClass(x)
-    attr(r, "tzone"      ) <- attr(x, "tzone")# "balanced" vs "filled" :
+    attr(r, "tzone"   ) <- attr(x, "tzone")# "balanced" vs "filled" :
     attr(r, "balanced") <- if(isTRUE(attr(x, "balanced")) &&
-                                 length(value) == length(x)) NA # "filled" else NULL
+                              length(value) == length(x)) NA # "filled" else NULL
     r
 }
 
@@ -419,11 +419,21 @@ format.POSIXlt <- function(x, format = "", usetz = FALSE,
 strftime <- function(x, format = "", tz = "", usetz = FALSE, ...)
     format(as.POSIXlt(x, tz = tz), format = format, usetz = usetz, ...)
 
-strptime <- function(x, format, tz = "")
+strptime <- function(x, format, tz = "") {
+    ## must work correctly for  "Inf" or "-Inf"  in 'x'
+    ## TODO efficiently: in C's in strptime_internal() in ../../../main/Rstrptime.h
+    r <-
     .Internal(strptime(if(is.character(x)) x # not losing names(.) here
                        else if(is.object(x)) `names<-`(as.character(x), names(x))
                        else                  `storage.mode<-`(x, "character"),
                        format, tz))
+    npI <- match(c("-Inf","Inf"), x, 0L)
+    if(any(npI)) {
+        if(npI[1L]) r[x == "-Inf"] <- as.POSIXlt.POSIXct(.POSIXct(-Inf))
+        if(npI[2L]) r[x ==  "Inf"] <- as.POSIXlt.POSIXct(.POSIXct( Inf))
+    }
+    r
+}
 
 
 format.POSIXct <- function(x, format = "", tz = "", usetz = FALSE, ...)
@@ -806,12 +816,10 @@ diff.difftime <- function(x, ...)
 
 Ops.difftime <- function(e1, e2)
 {
-    coerceTimeUnit <- function(x)
-    {
+    coerceTimeUnit <- function(x) # coerce to secs
         switch(attr(x, "units"),
                secs = x, mins = 60*x, hours = 60*60*x,
                days = 60*60*24*x, weeks = 60*60*24*7*x)
-    }
     if (nargs() == 1L) {
         switch(.Generic, "+" = {}, "-" = {e1[] <- -unclass(e1)},
                stop(gettextf("unary '%s' not defined for \"difftime\" objects",
@@ -889,45 +897,41 @@ Summary.difftime <- function (..., na.rm)
 {
     ## FIXME: this could return in the smallest of the units of the inputs.
     coerceTimeUnit <- function(x)
-    {
         as.vector(switch(attr(x,"units"),
                          secs = x, mins = 60*x, hours = 60*60*x,
                          days = 60*60*24*x, weeks = 60*60*24*7*x))
-    }
     ok <- switch(.Generic, max = , min = , sum=, range = TRUE, FALSE)
     if (!ok)
         stop(gettextf("'%s' not defined for \"difftime\" objects", .Generic),
              domain = NA)
-    x <- list(...)
-    Nargs <- length(x)
-    if(Nargs == 0) {
+    if(! ...length()) {
         .difftime(do.call(.Generic), "secs")
     } else {
+        x <- list(...)
         units <- sapply(x, attr, "units")
-        if(all(units == units[1L])) {
+        if(all(units == (un1 <- units[[1L]]))) {
             args <- c(lapply(x, as.vector), na.rm = na.rm)
         } else {
             args <- c(lapply(x, coerceTimeUnit), na.rm = na.rm)
-            units <- "secs"
+            un1 <- "secs"
         }
-        .difftime(do.call(.Generic, args), units[[1L]])
+        .difftime(do.call(.Generic, args), un1)
     }
 }
 
 c.difftime <-
 function(..., recursive = FALSE)
 {
-    coerceTimeUnit <- function(x) {
+    coerceTimeUnit <- function(x)
         switch(attr(x, "units"),
                secs = x, mins = 60*x, hours = 60*60*x,
                days = 60*60*24*x, weeks = 60*60*24*7*x)
-    }
     args <- list(...)
     if(!length(args)) return(.difftime(double(), "secs"))
     ind <- vapply(args, inherits, NA, "difftime")
     pos <- which(!ind)
     units <- sapply(args[ind], attr, "units")
-    if(all(units == (un1 <- units[1L]))) {
+    if(all(units == (un1 <- units[[1L]]))) {
         if(length(pos))
             args[pos] <-
                 lapply(args[pos], as.difftime, units = un1)
@@ -1377,12 +1381,11 @@ rep.POSIXlt <- function(x, ...) {
 
 diff.POSIXt <- function (x, lag = 1L, differences = 1L, ...)
 {
-    ismat <- is.matrix(x)
     if (length(lag) != 1L || length(differences) > 1L || lag < 1L || differences < 1L)
         stop("'lag' and 'differences' must be integers >= 1")
     r <- if(inherits(x, "POSIXlt")) as.POSIXct(x) else x
     i1 <- -seq_len(lag)
-    if (ismat)
+    if (is.matrix(x))
         for (i in seq_len(differences))
             r <- r[i1, , drop = FALSE] -
 		r[seq_len(max(nrow(r) - lag, 0L)), , drop = FALSE]
