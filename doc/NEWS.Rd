@@ -354,7 +354,7 @@
       non-API entry points have been upgraded to \samp{WARNING}s in
       preparation for removing declarations and, where possible, hiding
       these entry points:
-      \code{R_nchar}, \code{VECTOR_PTR}, \code{R_tryWrap},
+      \code{R_nchar}, \code{R_tryWrap},
       \code{Rf_NonNullStringMatch}, \code{Rf_isValidString}
       \code{Rf_GetOption}, \code{SET_FRAME}, \code{SET_HASHTAB},
       \code{SET_ENCLOS}, \code{STDVEC_DATAPTR}, \code{SET_S4_OBJECT},
@@ -411,6 +411,8 @@
 
       The function \code{Rf_isFrame} has been removed; use
       \code{Rf_isDataFrame} instead.
+
+      The function \code{VECTOR_PTR} has been removed.
     }
   }
 
@@ -1364,7 +1366,7 @@
       \code{RDEBUG}, \code{REAL0}, \code{Rf_findVarInFrame3},
       \code{SET_BODY}, \code{SET_CLOENV}, \code{SET_FORMALS},
       \code{SET_PRSEEN}, \code{SET_RDEBUG}, \code{STRING_PTR},
-      \code{SYMVALUE}, and \code{VECTOR_PTR}. Any declarations for these
+      and \code{SYMVALUE}. Any declarations for these
       in public header files will be removed in the near future, and
       they will be hidden where possible.
 

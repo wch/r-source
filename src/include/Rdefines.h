@@ -96,8 +96,7 @@ and its contents are no longer documented.
 /* Writable pointers to string data ar not safe eo use in packages. */
 #define CHARACTER_POINTER(x)	STRING_PTR_RO(x)
 #define COMPLEX_POINTER(x)	COMPLEX(x)
-/* Use of VECTOR_PTR will fail; This is probably unused. */
-#define LIST_POINTER(x)		VECTOR_PTR(x)
+#define LIST_POINTER(x)		VECTOR_PTR_RO(x)
 #define RAW_POINTER(x)		RAW(x)
 
 /* The following are not defined in `Programming with Data' but are
@@ -115,12 +114,7 @@ and its contents are no longer documented.
 /* Writable pointers to string data ar not safe eo use in packages. */
 #define CHARACTER_DATA(x)	(STRING_PTR_RO(x))
 #define COMPLEX_DATA(x)		(COMPLEX(x))
-/* Use of VECTOR_PTR will now always fail in packages.
-   VECTOR_DATA seems unused, and RECURSIVE_DATA is used only in
-   the Expat part of XML.
-*/
-#define RECURSIVE_DATA(x)	(VECTOR_PTR(x))
-#define VECTOR_DATA(x)		(VECTOR_PTR(x))
+#define RECURSIVE_DATA(x)	(VECTOR_PTR_RO(x))
 
 #define LOGICAL_VALUE(x)	Rf_asLogical(x)
 #define INTEGER_VALUE(x)	Rf_asInteger(x)
