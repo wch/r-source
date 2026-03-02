@@ -636,9 +636,6 @@
       longer outputs \code{"List of <...>"} in the default method, thanks
       to \I{Ian Farm}'s report and fix proposal in \PR{19001}.
 
-      \item Large (tall) subscripts in \I{plotmath} expressions are now
-      positioned correctly.  They were being positioned too high.
-
       \item \code{as.POSIXlt(ch)}, \code{as.Date(ch)} etc now also work
       correctly when \code{ch} contains \code{"Inf"}, via
       \code{strptime(.)}, fixing \PR{19006}.
@@ -716,6 +713,9 @@
 
       \item \code{persp()} labels the three axes correctly also when C level
       \code{atan2pi()} is available, fixing \PR{19007} by \I{Klaus Schliep}.
+
+      \item Large (tall) subscripts in \I{plotmath} expressions are now
+      positioned correctly.  They were being positioned too high.
     }
   }
 }
