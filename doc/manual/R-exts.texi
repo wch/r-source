@@ -8578,8 +8578,8 @@ definition. However, unlike @LaTeX{}, the number of arguments is
 determined automatically from the highest placeholder number seen in
 the macro definition.  For example, a macro definition containing
 @code{#1} and @code{#3} (but no other placeholders) will define a
-three argument macro (whose second argument will be ignored). As in
-@LaTeX{}, at most 9 arguments may be defined. If the @code{#}
+three argument macro (whose second argument will be ignored).
+At most 4 arguments may be defined. If the @code{#}
 character is followed by a non-digit it will have no special
 significance.  All arguments to user-defined macros will be parsed as
 verbatim text, and simple text-substitution will be used to replace
