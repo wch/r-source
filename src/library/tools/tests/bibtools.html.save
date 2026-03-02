@@ -1,0 +1,34 @@
+<h2 id='bibtools'>Bibliographic Citations and References</h2>
+
+<h3>Description</h3>
+
+<p><a href="#reference+bibtools.Rd+R+3AMeyer+3A1953" class="citation">Meyer (1953, p. 1)</a>
+
+</p>
+
+
+<h3>References</h3>
+
+<span id="reference+bibtools.Rd+R+3AHornik+2BMurdoch+3A2011"></span><p>Hornik K., Murdoch D. (2011).
+&ldquo;Watch Your Spelling!&rdquo;
+<em>The R Journal</em>, <b>3</b>(2), 22.
+\Sexpr[results=rd]{tools:::Rd_expr_doi("10.32614/RJ-2011-014")}.
+</p>
+<span id="reference+bibtools.Rd+R+3ALamport+3A1994"></span><p>Lamport L. (1994).
+<em>LaTeX: A Document Preparation System</em>.
+Addison-Wesley, Reading, MA.
+ISBN 0201529831.
+</p>
+<span id="reference+bibtools.Rd+R+3AMeyer+3A1953"></span><p>Meyer H. A. (1953).
+<em>Forest Mensuration</em>.
+Penns Valley Publishers.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><a href="#reference+bibtools.Rd+R+3AHornik+2BMurdoch+3A2011" class="citation">Hornik and Murdoch (2011, 
+    which is cited only here so not shown above)</a>
+
+</p>
+

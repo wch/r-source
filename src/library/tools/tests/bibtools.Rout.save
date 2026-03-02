@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-02-27 r89496) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-03-02 r89509) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -41,6 +41,14 @@ See Also:
 Asserted warning: bibtools.Rd:5: Could not find bibentries for the following keys:
   'non-existent-key'
 > 
+> ## Also test for changes in HTML conversion
+> Rd2HTML("bibtools.Rd", htmlfile <- tempfile(),
++         stages = "build", standalone = FALSE) |>
++     assertWarning() # the same
+> ## FIXME: carry-over of unshown citation (cache not cleared)
+> Rdiff(htmlfile, "bibtools.html.save")
+[1] 0
+> 
 > ## Check cited but not shown
 > pkgdir <- package.skeleton("bibtools", list = ".NotYetImplemented",
 +                            path = tempdir()) |> suppressMessages()
@@ -55,4 +63,4 @@ attr(,"unexpected_macro_expansion")
 > 
 > proc.time()
    user  system elapsed 
-  0.138   0.017   0.150 
+  0.192   0.021   0.208 
