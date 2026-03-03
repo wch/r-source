@@ -81,6 +81,9 @@
  DefaultPalette
  ENABLE_REFCNT
  ENSURE_NAMED
+ EXTPTR_PROT
+ EXTPTR_TAG
+ EXTPTR_PTR
  EhiWakeUp
  EncodeEnvironment
  EncodeExtptr

@@ -373,11 +373,6 @@ SEXP (PRENV)(SEXP x);
 SEXP (PRVALUE)(SEXP x);
 //int  (PRSEEN)(SEXP x);
 
-/* External pointer access macros */
-SEXP (EXTPTR_PROT)(SEXP);
-SEXP (EXTPTR_TAG)(SEXP);
-void *(EXTPTR_PTR)(SEXP);
-
 /* Pointer Protection and Unprotection */
 #define PROTECT(s)	Rf_protect(s)
 #define UNPROTECT(n)	Rf_unprotect(n)

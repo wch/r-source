@@ -702,7 +702,6 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "R_shallow_duplicate_attr", "Rf_lazy_duplicate",
             ## Documented in WRE in section "Some API replacements for
             ## non-API entry points":
-            "EXTPTR_PROT", "EXTPTR_TAG", "EXTPTR_PTR",
             "OBJECT", "IS_S4_OBJECT",
             "R_lsInternal",
             "REAL0", "COMPLEX0",
@@ -736,7 +735,7 @@ warnNonAPI <-
       "Rf_NonNullStringMatch", "Rf_isValidString", "SET_FRAME",
       "SET_HASHTAB", "SET_ENCLOS", "SET_S4_OBJECT",
       "UNSET_S4_OBJECT", "SET_NAMED", "R_lsInternal", "Rf_lazy_duplicate",
-      "EXTPTR_PROT", "EXTPTR_PTR", "EXTPTR_TAG", "NAMED", "FRAME", "HASHTAB",
+      "NAMED", "FRAME", "HASHTAB",
       "IS_S4_OBJECT", "BODY", "FORMALS", "CLOENV", "ENCLOS",
       "OBJECT", "SET_TYPEOF", "ENVFLAGS", "SET_ENVFLAGS", "SET_FORMALS",
       "DATAPTR",

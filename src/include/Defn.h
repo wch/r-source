@@ -699,6 +699,11 @@ void SET_PRCODE(SEXP x, SEXP v);
 void IF_PROMSXP_SET_PRVALUE(SEXP x, SEXP v);
 int  (PROMISE_IS_EVALUATED)(SEXP x);
 
+/* External pointer access macros */
+SEXP (EXTPTR_PROT)(SEXP);
+SEXP (EXTPTR_TAG)(SEXP);
+void *(EXTPTR_PTR)(SEXP);
+
 /* Hashing Functions */
 int  (HASHASH)(SEXP x);
 int  (HASHVALUE)(SEXP x);

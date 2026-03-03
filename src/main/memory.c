@@ -4593,8 +4593,11 @@ SEXP (SETCAD4R)(SEXP x, SEXP y)
     return y;
 }
 
+attribute_hidden
 SEXP (EXTPTR_PROT)(SEXP x) { CHKEXTPTRSXP(x); return EXTPTR_PROT(CHK(x)); }
+attribute_hidden
 SEXP (EXTPTR_TAG)(SEXP x) { CHKEXTPTRSXP(x); return EXTPTR_TAG(CHK(x)); }
+attribute_hidden
 void *(EXTPTR_PTR)(SEXP x) { CHKEXTPTRSXP(x); return EXTPTR_PTR(CHK(x)); }
 
 attribute_hidden
