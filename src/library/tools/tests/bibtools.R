@@ -19,12 +19,12 @@ tools:::.check_Rd_bibentries_cited_not_shown(dir = pkgdir)
 ## ("unexpected_macro_expansion" as there is no build/partial.rdb)
 
 
-## FIXME: "srcref" of usermacro expansion
-rd <- parse_Rd(textConnection(r"(
-\bibshow{*}
-)"), fragment = TRUE)
+## FIXME: "srcref" of usermacro expansion such as from \bibshow{*}
+rd <- parse_Rd(textConnection(r"(\newcommand{\Emph}{\emph{#1}}
+\Emph{this}
+)"), fragment = TRUE, verbose = TRUE, macros = FALSE)
 rd
 print(lapply(rd, getSrcref), useSource = FALSE)
-## In R < 4.6.0, the expansion [[3]] referred to source "chars 2:12 to 2:11".
+## In R < 4.6.0, the expansion [[4]] referred to source "chars 2:12 to 2:11".
 ## With the correct start column 1, also the old Rd2HTML() does addParaBreaks()
-## between multiple references separated by blank lines in the \Sexpr result.
+## for multiple references separated by blank lines in bibshow's \Sexpr result.
