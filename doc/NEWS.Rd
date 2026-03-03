@@ -356,12 +356,9 @@
       these entry points:
       \code{R_nchar}, \code{R_tryWrap},
       \code{Rf_GetOption},
-      \code{SET_S4_OBJECT},
-      \code{UNSET_S4_OBJECT}, \code{SET_NAMED}, \code{R_lsInternal},
-      \code{NAMED},
-      \code{IS_S4_OBJECT}, \code{BODY}, \code{FORMALS}, \code{CLOENV},
-      \code{OBJECT},
-      \code{SET_TYPEOF}, \code{ENVFLAGS}, \code{SET_ENVFLAGS},
+      \code{R_lsInternal},
+      \code{BODY}, \code{FORMALS}, \code{CLOENV},
+      \code{SET_TYPEOF},
       \code{STRING_PTR},
       \code{R_duplicate_attr},
       \code{getConnection}, \code{R_data_class}.
@@ -412,16 +409,19 @@
       installed header file.
 
       \item These entry points are now marked as hidden and no longer
-      have declarations in installed header files: \code{EXTPTR_PROT},
-      \code{FRAME}, \code{ENCLOS}, \code{EXTPTR_PTR}, \code{EXTPTR_TAG},
-      \code{HASHTAB}, \code{LEVELS}, \code{R_shallow_duplicate_attr},
-      \code{Rf_isValidString}, \code{Rf_lazy_duplicate},
-      \code{Rf_NonNullStringMatch}, \code{SETLENGTH}, \code{SETLEVELS},
-      \code{SET_BODY}, \code{SET_CLOENV}, \code{SET_ENCLOS},
-      \code{SET_FORMALS}, \code{SET_FRAME}, \code{SET_GROWABLE_BIT},
-      \code{SET_HASHTAB}, \code{SET_TRUELENGTH}, \code{STDVEC_DATAPTR},
-      \code{TRUELENGTH} \code{XTRUELENGTH}.
-     }
+      have declarations in installed header files: \code{ENVFLAGS},
+      \code{EXTPTR_PROT}, \code{FRAME}, \code{ENCLOS},
+      \code{EXTPTR_PTR}, \code{EXTPTR_TAG}, \code{HASHTAB},
+      \code{IS_S4_OBJECT}, \code{LEVELS}, \code{NAMED}, \code{OBJECT},
+      \code{R_shallow_duplicate_attr}, \code{Rf_isValidString},
+      \code{Rf_lazy_duplicate}, \code{Rf_NonNullStringMatch},
+      \code{SETLENGTH}, \code{SETLEVELS}, \code{SET_BODY},
+      \code{SET_CLOENV}, \code{SET_ENCLOS}, \code{SET_FORMALS},
+      \code{SET_ENVFLAGS}, \code{SET_FRAME}, \code{SET_GROWABLE_BIT},
+      \code{SET_HASHTAB}, \code{SET_NAMED}, \code{SET_S4_OBJECT},
+      \code{SET_TRUELENGTH}, \code{STDVEC_DATAPTR}, \code{TRUELENGTH},
+      \code{UNSET_S4_OBJECT}, \code{XTRUELENGTH}.
+    }
   }
 
   \subsection{UTILITIES}{

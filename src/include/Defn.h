@@ -577,6 +577,8 @@ void R_check_thread(const char *s);
 
 /* General Cons Cell Attributes */
 int  (MARK)(SEXP x);
+int  (OBJECT)(SEXP x);
+int  (NAMED)(SEXP x);
 int  (REFCNT)(SEXP x);
 int  (TRACKREFS)(SEXP x);
 void (SET_OBJECT)(SEXP x, int v);
@@ -590,6 +592,9 @@ void (DECREMENT_REFCNT)(SEXP x);
 void (INCREMENT_REFCNT)(SEXP x);
 void (DISABLE_REFCNT)(SEXP x);
 void (ENABLE_REFCNT)(SEXP x);
+
+/* S4 object testing */
+int (IS_S4_OBJECT)(SEXP x);
 
 /* S4 object setting */
 void (SET_S4_OBJECT)(SEXP x);
@@ -688,6 +693,7 @@ void SET_INTERNAL(SEXP x, SEXP v);
 SEXP (FRAME)(SEXP x);
 SEXP (ENCLOS)(SEXP x);
 SEXP (HASHTAB)(SEXP x);
+int  (ENVFLAGS)(SEXP x);
 void (SET_ENVFLAGS)(SEXP x, int v);
 void SET_FRAME(SEXP x, SEXP v);
 void SET_ENCLOS(SEXP x, SEXP v);
@@ -716,7 +722,7 @@ void (SET_HASHVALUE)(SEXP x, int v);
 /* Bytecode access macros */
 #define BCODE_CODE(x)	CAR(x)
 #define BCODE_PTR(x) ((BCODE *) DATAPTR(x))
-//#define BCODE_CONSTS(x) CDR(x)
+#define BCODE_CONSTS(x) CDR(x)
 #define BCODE_EXPR(x)	TAG(x)
 #define isByteCode(x)	(TYPEOF(x)==BCODESXP)
 

@@ -259,11 +259,7 @@ int (NO_REFERENCES)(SEXP x);
 
 /* General Cons Cell Attributes */
 SEXP (ATTRIB)(SEXP x);
-int  (OBJECT)(SEXP x);
-//int  (MARK)(SEXP x);
 int  (TYPEOF)(SEXP x);
-int  (NAMED)(SEXP x);
-//int  (REFCNT)(SEXP x);
 void SET_ATTRIB(SEXP x, SEXP v);
 void DUPLICATE_ATTRIB(SEXP to, SEXP from);
 void SHALLOW_DUPLICATE_ATTRIB(SEXP to, SEXP from);
@@ -271,9 +267,6 @@ void (MARK_NOT_MUTABLE)(SEXP x);
 void CLEAR_ATTRIB(SEXP x);
 int  (ANY_ATTRIB)(SEXP x);
 #define NO_ATTRIB(x) (! ANY_ATTRIB(x))
-
-/* S4 object testing */
-int (IS_S4_OBJECT)(SEXP x);
 
 /* Vector Access Functions */
 int  (LENGTH)(SEXP x);
@@ -361,7 +354,6 @@ SEXP (PRINTNAME)(SEXP x);
 //int  (DDVAL)(SEXP x);
 
 /* Environment Access Functions */
-int  (ENVFLAGS)(SEXP x);
 SEXP R_ParentEnv(SEXP);
 
 /* Promise Access Functions */
@@ -1220,11 +1212,7 @@ R_xlen_t R_ncol(SEXP x);
    Stuff that is not API and probably should not be but is getting used.
  */
 
-void (SET_TYPEOF)(SEXP x, int v); // used by Rcpp and much more
-// used by Rcpp (not?), Matrix and more and in an example in R-exts.
 void (SET_OBJECT)(SEXP x, int v); // used by Rcpp (not?), Matrix and more
-void (SET_S4_OBJECT)(SEXP x); // used by essentials qs redland tibble vectrs
-void (UNSET_S4_OBJECT)(SEXP x); // used by essentials vectrs
 const char *R_curErrorBuf(void); // used by Rserve
 int (IS_SCALAR)(SEXP x, int type);
 Rboolean Rf_psmatch(const char *, const char *, Rboolean); // match.c,  used by rgl and in WRE
@@ -1237,22 +1225,15 @@ Rboolean Rf_psmatch(const char *, const char *, Rboolean); // match.c,  used by 
 #define error_return(msg)	{ Rf_error(msg);	   return R_NilValue; }
 #define errorcall_return(cl,msg){ Rf_errorcall(cl, msg);   return R_NilValue; }
 
-// used by admisc arcpbf b64 box clarabel collapse declared drake fcl rlang this.path
-void (SET_ENVFLAGS)(SEXP x, int v);
-
 // used by dplyr magrittr quotedargs
 void SET_PRENV(SEXP x, SEXP v); 
 void SET_PRVALUE(SEXP x, SEXP v);
 void SET_PRCODE(SEXP x, SEXP v); 
 
-// no longer used
-#define BCODE_CONSTS(x) CDR(x) // re-enable in Defn.h after removing here
-void (SET_NAMED)(SEXP x, int v); // used by fastmatch quotedargs
-
 // R_PromiseExp used in lazyeval precondition rlang tibblify vctrs
 #define PREXPR(e) R_PromiseExpr(e)
 
-// foremerly used in rlang
+// formerly used in rlang
 #define BODY_EXPR(e) R_ClosureExpr(e)
 
 // used by BioC::matter; might be reasonable to include in API
