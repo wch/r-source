@@ -61,6 +61,35 @@ attr(,"unexpected_macro_expansion")
 [1] TRUE
 > ## ("unexpected_macro_expansion" as there is no build/partial.rdb)
 > 
+> 
+> ## FIXME: "srcref" of usermacro expansion
+> rd <- parse_Rd(textConnection(r"(
++ \bibshow{*}
++ )"), fragment = TRUE)
+> rd
+
+\Sexpr[results=rd,stage=build]{tools:::Rd_expr_bibshow("*")}
+
+> print(lapply(rd, getSrcref), useSource = FALSE)
+[[1]]
+<srcref: file "<connection>" chars 1:1 to 1:1>
+
+[[2]]
+<srcref: file "<connection>" chars 2:1 to 2:11>
+
+[[3]]
+<srcref: file "<connection>" chars 2:12 to 2:11>
+
+[[4]]
+<srcref: file "<connection>" chars 2:12 to 2:12>
+
+[[5]]
+<srcref: file "<connection>" chars 3:1 to 3:1>
+
+> ## In R < 4.6.0, the expansion [[3]] referred to source "chars 2:12 to 2:11".
+> ## With the correct start column 1, also the old Rd2HTML() does addParaBreaks()
+> ## between multiple references separated by blank lines in the \Sexpr result.
+> 
 > proc.time()
    user  system elapsed 
   0.192   0.021   0.208 
