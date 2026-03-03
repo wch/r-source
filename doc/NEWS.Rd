@@ -365,12 +365,10 @@
       \code{ENCLOS}, \code{OBJECT},
       \code{SET_TYPEOF}, \code{ENVFLAGS}, \code{SET_ENVFLAGS},
       \code{SET_FORMALS}, \code{SET_BODY}, \code{SET_CLOENV},
-      \code{STRING_PTR}, \code{DATAPTR}, \code{XTRUELENGTH},
+      \code{STRING_PTR}, \code{DATAPTR},
       \code{R_duplicate_attr}, \code{R_shallow_duplicate_attr},
       \code{getConnection}, \code{LEVELS}, \code{SETLEVELS},
-      \code{R_data_class},
-      \code{SET_GROWABLE_BIT}, \code{TRUELENGTH}, \code{SET_TRUELENGTH},
-      \code{SETLENGTH}.
+      \code{R_data_class}.
 
       \item The deprecated macros \code{CHARACTER_DATA} and
       \code{CHARACTER_POINTER} now return \code{const} pointers since using
@@ -414,8 +412,10 @@
 
       \item The function \code{VECTOR_PTR} has been removed.
 
-      \item The declaration for \code{STDVEC_DATAPTR} is now in
-      \file{Defn.h} and the entry point is hidden.
+      \item These entry points are now marked as hidden and no
+      longer have declarations in installed header files:
+      \code{SETLENGTH}, \code{SET_GROWABLE_BIT}, \code{SET_TRUELENGTH},
+      \code{STDVEC_DATAPTR}, \code{TRUELENGTH} \code{XTRUELENGTH}.
     }
   }
 

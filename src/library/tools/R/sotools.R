@@ -674,7 +674,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 ## non-API, declared in Defn.h
             "Rf_setSVector",
             "Rf_asRbool", "Rf_asBool2", "R_BadLongVector", "REFCNT",
-            "GROWABLE_BIT_SET", "ALTREP_LENGTH", "ALTVEC_DATAPTR",
+            "ALTREP_LENGTH", "ALTVEC_DATAPTR",
             "ALTVEC_DATAPTR_RO", "ALTSTRING_ELT", "R_signal_protect_error",
             "R_signal_unprotect_error", "R_signal_reprotect_error",
             "Rf_allocVector3", "R_typeToChar", "Rf_translateCharFP",
@@ -687,12 +687,10 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 ## non-API, declared in Rinternals.h
             "SET_OBJECT", ## no longer used in an example in R-exts 
             "SET_S4_OBJECT", "UNSET_S4_OBJECT",
-            "SETLENGTH", "SET_TRUELENGTH", "SETLEVELS",
+            "SETLEVELS",
             "SET_ENVFLAGS", "SET_FRAME", "SET_ENCLOS", "SET_HASHTAB",
             "SET_PRENV", "SET_PRVALUE", "SET_PRCODE",
-            "IS_GROWABLE", "SET_GROWABLE_BIT", "SET_NAMED",
-            "R_PromiseExpr",
-            "R_tryWrap",
+            "SET_NAMED", "R_PromiseExpr", "R_tryWrap",
             "DDVAL", "NAMED", "INTERNAL", "SYMVALUE", "PRSEEN",
             "INTEGER0", "LOGICAL0", "RAW0",
             "REAL0", "COMPLEX0", "LEVELS", "FRAME", "HASHTAB",
@@ -701,8 +699,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "SET_FORMALS", "SET_BODY", "SET_CLOENV", "Rf_findVarInFrame3",
             "PRCODE", "PRENV", "PRVALUE", "R_nchar", "Rf_acopy_string",
             "Rf_NonNullStringMatch",
-            "SET_TYPEOF", "TRUELENGTH", "XLENGTH_EX",
-            "XTRUELENGTH", "Rf_gsetVar",
+            "SET_TYPEOF", "XLENGTH_EX", "Rf_gsetVar",
             "Rf_isValidString", "Rf_isValidStringF",
             "R_shallow_duplicate_attr", "Rf_lazy_duplicate",
             ## Documented in WRE in section "Some API replacements for
@@ -744,10 +741,9 @@ warnNonAPI <-
       "EXTPTR_PROT", "EXTPTR_PTR", "EXTPTR_TAG", "NAMED", "FRAME", "HASHTAB",
       "IS_S4_OBJECT", "BODY", "FORMALS", "CLOENV", "ENCLOS",
       "OBJECT", "SET_TYPEOF", "ENVFLAGS", "SET_ENVFLAGS", "SET_FORMALS",
-      "SET_BODY", "SET_CLOENV", "STRING_PTR", "DATAPTR", "XTRUELENGTH",
+      "SET_BODY", "SET_CLOENV", "STRING_PTR", "DATAPTR",
       "R_shallow_duplicate_attr", "R_duplicate_attr", "getConnection",
-      "LEVELS", "SETLEVELS", "R_data_class",
-      "SET_GROWABLE_BIT", "TRUELENGTH", "SET_TRUELENGTH", "SETLENGTH")
+      "LEVELS", "SETLEVELS", "R_data_class")
 
 ## grDevices uses R_Home R_InputHandlers R_TempDir R_Visible R_cairoCdynload R_fopen R_gzclose R_gzgets R_gzopen R_isForkedChild Rf_envlength Rf_strIsASCII Rf_utf8towcs Rg_set_col_ptrs Ri18n_wcwidth addInputHandler do_X11 do_contourLines do_getGraphicsEventEnv do_getSnapshot do_playSnapshot do_saveplot locale2charset mbcsToUcs2 ptr_R_ProcessEvents
 

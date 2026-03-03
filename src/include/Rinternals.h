@@ -278,7 +278,6 @@ int (IS_S4_OBJECT)(SEXP x);
 /* Vector Access Functions */
 int  (LENGTH)(SEXP x);
 R_xlen_t (XLENGTH)(SEXP x);
-R_xlen_t  (TRUELENGTH)(SEXP x);
 int  (IS_LONG_VEC)(SEXP x);
 int  (LEVELS)(SEXP x);
 
@@ -1124,7 +1123,6 @@ SEXP	 Rf_ScalarReal(double);
 SEXP	 Rf_ScalarString(SEXP);
 R_xlen_t  Rf_xlength(SEXP);
 R_xlen_t  (XLENGTH)(SEXP x);
-R_xlen_t  (XTRUELENGTH)(SEXP x);
 //int LENGTH_EX(SEXP x, const char *file, int line);
 //R_xlen_t XLENGTH_EX(SEXP x);
 # ifdef INLINE_PROTECT
@@ -1259,8 +1257,6 @@ Rboolean Rf_psmatch(const char *, const char *, Rboolean); // match.c,  used by 
 #define error_return(msg)	{ Rf_error(msg);	   return R_NilValue; }
 #define errorcall_return(cl,msg){ Rf_errorcall(cl, msg);   return R_NilValue; }
 
-void (SETLENGTH)(SEXP x, R_xlen_t v); // used by many packages
-void (SET_TRUELENGTH)(SEXP x, R_xlen_t v); // used by many packages
 int  (SETLEVELS)(SEXP x, int v); // used by qs quotedargs
 
 // used by admisc arcpbf b64 box clarabel collapse declared drake fcl rlang this.path
@@ -1273,9 +1269,6 @@ void SET_HASHTAB(SEXP x, SEXP v); // used mmap qs
 void SET_PRENV(SEXP x, SEXP v); 
 void SET_PRVALUE(SEXP x, SEXP v);
 void SET_PRCODE(SEXP x, SEXP v); 
-
-/* Growable vector support */ // still used by a few packages
-void (SET_GROWABLE_BIT)(SEXP x);
 
 // no longer used
 #define BCODE_CONSTS(x) CDR(x) // re-enable in Defn.h after removing here

@@ -4050,8 +4050,11 @@ attribute_hidden void (SET_MAYBEJIT)(SEXP x) { SET_MAYBEJIT(CHK(x)); }
 attribute_hidden void (UNSET_MAYBEJIT)(SEXP x) { UNSET_MAYBEJIT(CHK(x)); }
 
 /* Growable vector support */
+attribute_hidden
 int (IS_GROWABLE)(SEXP x) { return IS_GROWABLE(CHK(x)); }
+attribute_hidden
 int (GROWABLE_BIT_SET)(SEXP x) { return GROWABLE_BIT_SET(CHK(x)); }
+attribute_hidden
 void (SET_GROWABLE_BIT)(SEXP x) { SET_GROWABLE_BIT(CHK(x)); }
 
 static int nvec[32] = {
@@ -4072,8 +4075,10 @@ static R_INLINE SEXP CHK2(SEXP x)
 /* Vector Accessors */
 int (LENGTH)(SEXP x) { return x == R_NilValue ? 0 : LENGTH(CHK2(x)); }
 R_xlen_t (XLENGTH)(SEXP x) { return XLENGTH(CHK2(x)); }
+attribute_hidden
 R_xlen_t (TRUELENGTH)(SEXP x) { return TRUELENGTH(CHK2(x)); }
 
+attribute_hidden
 void (SETLENGTH)(SEXP x, R_xlen_t v)
 {
     if (ALTREP(x))
@@ -4084,6 +4089,7 @@ void (SETLENGTH)(SEXP x, R_xlen_t v)
     SET_STDVEC_LENGTH(CHK2(x), v);
 }
 
+attribute_hidden
 void (SET_TRUELENGTH)(SEXP x, R_xlen_t v) { SET_TRUELENGTH(CHK2(x), v); }
 int  (IS_LONG_VEC)(SEXP x) { return IS_LONG_VEC(CHK2(x)); }
 #ifdef TESTING_WRITE_BARRIER
