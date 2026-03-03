@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-03-03 r89515) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-03-03 r89525) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -16,8 +16,12 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > ## To be compared against saved reference output
+> if (isNamespaceLoaded("tools")) unloadNamespace("tools")
+> Sys.setenv("R_HELP_BIBSTYLE" = "JSS") # fix \bibshow style
 > library(tools)
 > Rd2txt_options(underline_titles = FALSE)
+> 
+> ## Test processing and conversion of bibtools.Rd
 > Rd2txt("bibtools.Rd", stages = "build") |>
 +     assertWarning(verbose = TRUE)
 Bibliographic Citations and References
@@ -28,10 +32,10 @@ Description:
 
 References:
 
-     Lamport L. (1994). _LaTeX: A Document Preparation System_.
+     Lamport L (1994). _LaTeX: A Document Preparation System_.
      Addison-Wesley, Reading, MA. ISBN 0201529831.
 
-     Meyer H. A. (1953). _Forest Mensuration_. Penns Valley Publishers.
+     Meyer HA (1953). _Forest Mensuration_. Penns Valley Publishers.
 
 See Also:
 
@@ -118,4 +122,4 @@ attr(,"unexpected_macro_expansion")
 > 
 > proc.time()
    user  system elapsed 
-  0.188   0.025   0.207 
+  0.221   0.045   0.254 

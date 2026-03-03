@@ -1,6 +1,10 @@
 ## To be compared against saved reference output
+if (isNamespaceLoaded("tools")) unloadNamespace("tools")
+Sys.setenv("R_HELP_BIBSTYLE" = "JSS") # fix \bibshow style
 library(tools)
 Rd2txt_options(underline_titles = FALSE)
+
+## Test processing and conversion of bibtools.Rd
 Rd2txt("bibtools.Rd", stages = "build") |>
     assertWarning(verbose = TRUE)
 
