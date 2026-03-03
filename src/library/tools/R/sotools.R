@@ -726,6 +726,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 warnNonAPI <-
     c("REAL0", "COMPLEX0", "ddfind", "DDVAL", "ENSURE_NAMEDMAX", "INTERNAL",
       "PRSEEN", "SET_PRSEEN", "SYMVALUE", "R_nchar", "R_tryWrap",
+      "STRING_PTR", "ATTRIB", "SET_ATTRIB", "SET_OBJECT",
       "Rf_NonNullStringMatch",
       "R_lsInternal", "Rf_lazy_duplicate",
       "BODY", "FORMALS", "CLOENV",

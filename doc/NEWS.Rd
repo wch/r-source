@@ -361,7 +361,9 @@
       \code{SET_TYPEOF},
       \code{STRING_PTR},
       \code{R_duplicate_attr},
-      \code{getConnection}, \code{R_data_class}.
+      \code{getConnection}, \code{R_data_class},
+      \code{STRING_PTR}, \code{SET_OBJECT},
+      \code{ATTRIB}, \code{SET_ATTRIB}.
 
       \item The deprecated macros \code{CHARACTER_DATA} and
       \code{CHARACTER_POINTER} now return \code{const} pointers since using
