@@ -698,8 +698,6 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "PRCODE", "PRENV", "PRVALUE", "R_nchar", "Rf_acopy_string",
             "Rf_NonNullStringMatch",
             "SET_TYPEOF", "XLENGTH_EX", "Rf_gsetVar",
-            "Rf_isValidString", "Rf_isValidStringF",
-            "R_shallow_duplicate_attr", "Rf_lazy_duplicate",
             ## Documented in WRE in section "Some API replacements for
             ## non-API entry points":
             "OBJECT", "IS_S4_OBJECT",
@@ -732,15 +730,12 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 warnNonAPI <-
     c("REAL0", "COMPLEX0", "ddfind", "DDVAL", "ENSURE_NAMEDMAX", "INTERNAL",
       "PRSEEN", "SET_PRSEEN", "SYMVALUE", "R_nchar", "R_tryWrap",
-      "Rf_NonNullStringMatch", "Rf_isValidString",
-      "SET_S4_OBJECT",
+      "Rf_NonNullStringMatch", "SET_S4_OBJECT",
       "UNSET_S4_OBJECT", "SET_NAMED", "R_lsInternal", "Rf_lazy_duplicate",
       "NAMED",
       "IS_S4_OBJECT", "BODY", "FORMALS", "CLOENV",
       "OBJECT", "SET_TYPEOF", "ENVFLAGS", "SET_ENVFLAGS", "SET_FORMALS",
-      "DATAPTR",
-      "R_shallow_duplicate_attr", "R_duplicate_attr", "getConnection",
-      "R_data_class")
+      "DATAPTR", "getConnection", "R_data_class")
 
 ## grDevices uses R_Home R_InputHandlers R_TempDir R_Visible R_cairoCdynload R_fopen R_gzclose R_gzgets R_gzopen R_isForkedChild Rf_envlength Rf_strIsASCII Rf_utf8towcs Rg_set_col_ptrs Ri18n_wcwidth addInputHandler do_X11 do_contourLines do_getGraphicsEventEnv do_getSnapshot do_playSnapshot do_saveplot locale2charset mbcsToUcs2 ptr_R_ProcessEvents
 

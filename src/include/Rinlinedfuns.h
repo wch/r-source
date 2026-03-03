@@ -805,13 +805,13 @@ INLINE_FUN Rboolean isScalarString(SEXP x)
     return TYPEOF(x) == STRSXP && XLENGTH(x) == 1;
 }
 
-INLINE_FUN Rboolean isValidString(SEXP x)
+HIDDEN INLINE_FUN Rboolean isValidString(SEXP x)
 {
     return TYPEOF(x) == STRSXP && LENGTH(x) > 0 && TYPEOF(STRING_ELT(x, 0)) != NILSXP;
 }
 
 /* non-empty ("") valid string :*/
-INLINE_FUN Rboolean isValidStringF(SEXP x)
+HIDDEN INLINE_FUN Rboolean isValidStringF(SEXP x)
 {
     return isValidString(x) && CHAR(STRING_ELT(x, 0))[0];
 }

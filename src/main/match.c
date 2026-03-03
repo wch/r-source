@@ -46,8 +46,8 @@
 
 
 /* used in subscript.c and subassign.c */
-// In Rinternals.h
-Rboolean NonNullStringMatch(SEXP s, SEXP t)
+// In Defn.h
+attribute_hidden Rboolean NonNullStringMatch(SEXP s, SEXP t)
 {
     /* "" or NA string matches nothing */
     if (s == NA_STRING || t == NA_STRING) return FALSE;

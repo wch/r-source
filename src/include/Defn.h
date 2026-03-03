@@ -829,6 +829,7 @@ Rboolean Rf_conformable(SEXP, SEXP);
 Rboolean Rf_isUserBinop(SEXP);
 int	 Rf_stringPositionTr(SEXP, const char *);
 int LENGTH_EX(SEXP x, const char *file, int line);
+Rboolean Rf_isValidString(SEXP);
 Rboolean Rf_isValidStringF(SEXP);
 //R_xlen_t XLENGTH_EX(SEXP x);
 #endif
@@ -2134,6 +2135,8 @@ R_len_t dispatch_length(SEXP, SEXP, SEXP);
 SEXP dispatch_subset2(SEXP, R_xlen_t, SEXP, SEXP);
 SEXP duplicated(SEXP, Rboolean);
 SEXP R_duplicate_attr(SEXP);
+SEXP R_shallow_duplicate_attr(SEXP);
+SEXP Rf_lazy_duplicate(SEXP);
 R_xlen_t any_duplicated(SEXP, Rboolean);
 R_xlen_t any_duplicated3(SEXP, SEXP, Rboolean);
 SEXP evalList(SEXP, SEXP, SEXP, int);
@@ -2200,6 +2203,7 @@ SEXP mkSYMSXP(SEXP, SEXP);
 SEXP mkTrue(void);
 const char *R_nativeEncoding(void);
 SEXP NewEnvironment(SEXP, SEXP, SEXP);
+Rboolean Rf_NonNullStringMatch(SEXP, SEXP); // match.c
 void onintr(void);
 void onintrNoResume(void);
 void onsigusr1(int);

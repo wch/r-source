@@ -510,9 +510,6 @@ SEXP Rf_dimgets(SEXP, SEXP);
 SEXP Rf_dimnamesgets(SEXP, SEXP);
 SEXP Rf_duplicate(SEXP);
 SEXP Rf_shallow_duplicate(SEXP);
-//SEXP R_duplicate_attr(SEXP);
-SEXP R_shallow_duplicate_attr(SEXP);
-SEXP Rf_lazy_duplicate(SEXP);
 /* the next really should not be here and is also in Defn.h */
 SEXP Rf_duplicated(SEXP, Rboolean); // duplicate.c
 SEXP Rf_eval(SEXP, SEXP);
@@ -549,7 +546,6 @@ SEXP Rf_match(SEXP, SEXP, int);
 SEXP Rf_namesgets(SEXP, SEXP);
 SEXP Rf_mkChar(const char *);
 SEXP Rf_mkCharLen(const char *, int);
-Rboolean Rf_NonNullStringMatch(SEXP, SEXP); // match.c
 int Rf_ncols(SEXP);
 int Rf_nrows(SEXP);
 SEXP Rf_nthcdr(SEXP, int);
@@ -1076,9 +1072,6 @@ Rboolean Rf_isPairList(SEXP);
 Rboolean Rf_isPrimitive(SEXP);
 Rboolean Rf_isScalarString(SEXP);
 Rboolean Rf_isTs(SEXP);
-//Rboolean Rf_isUserBinop(SEXP);
-Rboolean Rf_isValidString(SEXP);
-//Rboolean Rf_isValidStringF(SEXP);
 Rboolean Rf_isVector(SEXP);
 Rboolean Rf_isVectorAtomic(SEXP);
 Rboolean Rf_isVectorList(SEXP);
@@ -1247,9 +1240,6 @@ Rboolean Rf_psmatch(const char *, const char *, Rboolean); // match.c,  used by 
 
 // used by admisc arcpbf b64 box clarabel collapse declared drake fcl rlang this.path
 void (SET_ENVFLAGS)(SEXP x, int v);
-void SET_FRAME(SEXP x, SEXP v); // used by mmap qs
-void SET_ENCLOS(SEXP x, SEXP v); // used by magrittr mmap qs rlang vecrs
-void SET_HASHTAB(SEXP x, SEXP v); // used mmap qs
 
 // used by dplyr magrittr quotedargs
 void SET_PRENV(SEXP x, SEXP v); 

@@ -169,6 +169,7 @@ SEXP shallow_duplicate(SEXP s)
     return t;
 }
 
+attribute_hidden
 SEXP lazy_duplicate(SEXP s) {
     switch (TYPEOF(s)) {
     case NILSXP:
@@ -604,5 +605,6 @@ static SEXP duplicate_attr(SEXP x, Rboolean deep)
     return deep ? duplicate(x) : shallow_duplicate(x);
 }
 
+attribute_hidden
 SEXP R_shallow_duplicate_attr(SEXP x) { return duplicate_attr(x, FALSE); }
 SEXP R_duplicate_attr(SEXP x) { return duplicate_attr(x, TRUE); }

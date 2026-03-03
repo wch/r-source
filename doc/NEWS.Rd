@@ -355,16 +355,15 @@
       preparation for removing declarations and, where possible, hiding
       these entry points:
       \code{R_nchar}, \code{R_tryWrap},
-      \code{Rf_NonNullStringMatch}, \code{Rf_isValidString}
       \code{Rf_GetOption},
       \code{SET_S4_OBJECT},
       \code{UNSET_S4_OBJECT}, \code{SET_NAMED}, \code{R_lsInternal},
-      \code{Rf_lazy_duplicate}, \code{NAMED},
+      \code{NAMED},
       \code{IS_S4_OBJECT}, \code{BODY}, \code{FORMALS}, \code{CLOENV},
       \code{OBJECT},
       \code{SET_TYPEOF}, \code{ENVFLAGS}, \code{SET_ENVFLAGS},
       \code{STRING_PTR}, \code{DATAPTR},
-      \code{R_duplicate_attr}, \code{R_shallow_duplicate_attr},
+      \code{R_duplicate_attr},
       \code{getConnection}, \code{R_data_class}.
 
       \item The deprecated macros \code{CHARACTER_DATA} and
@@ -412,12 +411,14 @@
       \item These entry points are now marked as hidden and no longer
       have declarations in installed header files: \code{EXTPTR_PROT},
       \code{FRAME}, \code{ENCLOS}, \code{EXTPTR_PTR}, \code{EXTPTR_TAG},
-      \code{HASHTAB}, \code{LEVELS}, \code{SETLENGTH}, \code{SETLEVELS},
+      \code{HASHTAB}, \code{LEVELS}, \code{R_shallow_duplicate_attr},
+      \code{Rf_isValidString}, \code{Rf_lazy_duplicate},
+      \code{Rf_NonNullStringMatch}, \code{SETLENGTH}, \code{SETLEVELS},
       \code{SET_BODY}, \code{SET_CLOENV}, \code{SET_ENCLOS},
       \code{SET_FORMALS}, \code{SET_FRAME}, \code{SET_GROWABLE_BIT},
       \code{SET_HASHTAB}, \code{SET_TRUELENGTH}, \code{STDVEC_DATAPTR},
       \code{TRUELENGTH} \code{XTRUELENGTH}.
-    }
+     }
   }
 
   \subsection{UTILITIES}{
