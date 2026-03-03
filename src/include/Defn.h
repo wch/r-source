@@ -670,6 +670,9 @@ int  (RTRACE)(SEXP x);
 void (SET_RDEBUG)(SEXP x, int v);
 void (SET_RSTEP)(SEXP x, int v);
 void (SET_RTRACE)(SEXP x, int v);
+void SET_FORMALS(SEXP x, SEXP v);
+void SET_BODY(SEXP x, SEXP v);
+void SET_CLOENV(SEXP x, SEXP v);
 SEXP R_body_no_src(SEXP x); // body(x) without "srcref" etc, ../main/utils.c
 
 /* Symbol Access Functions */

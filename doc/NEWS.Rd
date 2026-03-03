@@ -364,7 +364,6 @@
       \code{IS_S4_OBJECT}, \code{BODY}, \code{FORMALS}, \code{CLOENV},
       \code{ENCLOS}, \code{OBJECT},
       \code{SET_TYPEOF}, \code{ENVFLAGS}, \code{SET_ENVFLAGS},
-      \code{SET_FORMALS}, \code{SET_BODY}, \code{SET_CLOENV},
       \code{STRING_PTR}, \code{DATAPTR},
       \code{R_duplicate_attr}, \code{R_shallow_duplicate_attr},
       \code{getConnection}, \code{R_data_class}.
@@ -413,10 +412,11 @@
 
       \item These entry points are now marked as hidden and no longer
       have declarations in installed header files: \code{LEVELS},
-      \code{SETLENGTH}, \code{SETLEVELS}, \code{SET_GROWABLE_BIT},
+      \code{SETLENGTH}, \code{SETLEVELS}, \code{SET_BODY},
+      \code{SET_CLOENV}, \code{SET_FORMALS}, \code{SET_GROWABLE_BIT},
       \code{SET_TRUELENGTH}, \code{STDVEC_DATAPTR}, \code{TRUELENGTH}
       \code{XTRUELENGTH}.
-    }
+   }
   }
 
   \subsection{UTILITIES}{

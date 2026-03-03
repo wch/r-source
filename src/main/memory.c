@@ -4615,8 +4615,11 @@ SEXP R_ClosureFormals(SEXP x) { return (FORMALS)(x); }
 SEXP R_ClosureBody(SEXP x) { return (BODY)(x); }
 SEXP R_ClosureEnv(SEXP x) { return (CLOENV)(x); }
 
+attribute_hidden
 void (SET_FORMALS)(SEXP x, SEXP v) { FIX_REFCNT(x, FORMALS(x), v); CHECK_OLD_TO_NEW(x, v); FORMALS(x) = v; }
+attribute_hidden
 void (SET_BODY)(SEXP x, SEXP v) { FIX_REFCNT(x, BODY(x), v); CHECK_OLD_TO_NEW(x, v); BODY(x) = v; }
+attribute_hidden
 void (SET_CLOENV)(SEXP x, SEXP v) { FIX_REFCNT(x, CLOENV(x), v); CHECK_OLD_TO_NEW(x, v); CLOENV(x) = v; }
 void (SET_RDEBUG)(SEXP x, int v) { SET_RDEBUG(CHK(x), v); }
 attribute_hidden

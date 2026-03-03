@@ -694,8 +694,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "INTEGER0", "LOGICAL0", "RAW0",
             "REAL0", "COMPLEX0", "FRAME", "HASHTAB",
             "ENVFLAGS", "RDEBUG", "SET_RDEBUG",
-            "STRING_PTR",
-            "SET_FORMALS", "SET_BODY", "SET_CLOENV", "Rf_findVarInFrame3",
+            "STRING_PTR", "Rf_findVarInFrame3",
             "PRCODE", "PRENV", "PRVALUE", "R_nchar", "Rf_acopy_string",
             "Rf_NonNullStringMatch",
             "SET_TYPEOF", "XLENGTH_EX", "Rf_gsetVar",
@@ -740,7 +739,7 @@ warnNonAPI <-
       "EXTPTR_PROT", "EXTPTR_PTR", "EXTPTR_TAG", "NAMED", "FRAME", "HASHTAB",
       "IS_S4_OBJECT", "BODY", "FORMALS", "CLOENV", "ENCLOS",
       "OBJECT", "SET_TYPEOF", "ENVFLAGS", "SET_ENVFLAGS", "SET_FORMALS",
-      "SET_BODY", "SET_CLOENV", "STRING_PTR", "DATAPTR",
+      "DATAPTR",
       "R_shallow_duplicate_attr", "R_duplicate_attr", "getConnection",
       "R_data_class")
 
