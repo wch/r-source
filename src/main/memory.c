@@ -4156,6 +4156,7 @@ SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i) {
 # define CHKZLN(x) do { } while (0)
 #endif
 
+attribute_hidden
 void *(STDVEC_DATAPTR)(SEXP x)
 {
     if (ALTREP(x))

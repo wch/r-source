@@ -357,7 +357,7 @@
       \code{R_nchar}, \code{R_tryWrap},
       \code{Rf_NonNullStringMatch}, \code{Rf_isValidString}
       \code{Rf_GetOption}, \code{SET_FRAME}, \code{SET_HASHTAB},
-      \code{SET_ENCLOS}, \code{STDVEC_DATAPTR}, \code{SET_S4_OBJECT},
+      \code{SET_ENCLOS}, \code{SET_S4_OBJECT},
       \code{UNSET_S4_OBJECT}, \code{SET_NAMED}, \code{R_lsInternal},
       \code{Rf_lazy_duplicate}, \code{EXTPTR_PROT}, \code{EXTPTR_PTR},
       \code{EXTPTR_TAG}, \code{NAMED}, \code{FRAME}, \code{HASHTAB},
@@ -409,10 +409,13 @@
       \code{R_getAttribCount}, \code{R_getAttribNames},
       \code{R_hasAttrib}, \code{R_nrow}, and \code{R_ncol}.
 
-      The function \code{Rf_isFrame} has been removed; use
+      \item The function \code{Rf_isFrame} has been removed; use
       \code{Rf_isDataFrame} instead.
 
-      The function \code{VECTOR_PTR} has been removed.
+      \item The function \code{VECTOR_PTR} has been removed.
+
+      \item The declaration for \code{STDVEC_DATAPTR} is now in
+      \file{Defn.h} and the entry point is hidden.
     }
   }
 
