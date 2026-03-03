@@ -687,13 +687,12 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 ## non-API, declared in Rinternals.h
             "SET_OBJECT", ## no longer used in an example in R-exts 
             "SET_S4_OBJECT", "UNSET_S4_OBJECT",
-            "SETLEVELS",
             "SET_ENVFLAGS", "SET_FRAME", "SET_ENCLOS", "SET_HASHTAB",
             "SET_PRENV", "SET_PRVALUE", "SET_PRCODE",
             "SET_NAMED", "R_PromiseExpr", "R_tryWrap",
             "DDVAL", "NAMED", "INTERNAL", "SYMVALUE", "PRSEEN",
             "INTEGER0", "LOGICAL0", "RAW0",
-            "REAL0", "COMPLEX0", "LEVELS", "FRAME", "HASHTAB",
+            "REAL0", "COMPLEX0", "FRAME", "HASHTAB",
             "ENVFLAGS", "RDEBUG", "SET_RDEBUG",
             "STRING_PTR",
             "SET_FORMALS", "SET_BODY", "SET_CLOENV", "Rf_findVarInFrame3",
@@ -743,7 +742,7 @@ warnNonAPI <-
       "OBJECT", "SET_TYPEOF", "ENVFLAGS", "SET_ENVFLAGS", "SET_FORMALS",
       "SET_BODY", "SET_CLOENV", "STRING_PTR", "DATAPTR",
       "R_shallow_duplicate_attr", "R_duplicate_attr", "getConnection",
-      "LEVELS", "SETLEVELS", "R_data_class")
+      "R_data_class")
 
 ## grDevices uses R_Home R_InputHandlers R_TempDir R_Visible R_cairoCdynload R_fopen R_gzclose R_gzgets R_gzopen R_isForkedChild Rf_envlength Rf_strIsASCII Rf_utf8towcs Rg_set_col_ptrs Ri18n_wcwidth addInputHandler do_X11 do_contourLines do_getGraphicsEventEnv do_getSnapshot do_playSnapshot do_saveplot locale2charset mbcsToUcs2 ptr_R_ProcessEvents
 

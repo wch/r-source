@@ -3903,7 +3903,7 @@ int (OBJECT)(SEXP x) { return OBJECT(CHK(x)); }
 int (TYPEOF)(SEXP x) { return TYPEOF(CHK(x)); }
 int (NAMED)(SEXP x) { return NAMED(CHK(x)); }
 attribute_hidden int (RTRACE)(SEXP x) { return RTRACE(CHK(x)); }
-int (LEVELS)(SEXP x) { return LEVELS(CHK(x)); }
+attribute_hidden int (LEVELS)(SEXP x) { return LEVELS(CHK(x)); }
 int (REFCNT)(SEXP x) { return REFCNT(CHK(x)); }
 attribute_hidden int (TRACKREFS)(SEXP x) { return TRACKREFS(CHK(x)); }
 int (ALTREP)(SEXP x) { return ALTREP(CHK(x)); }
@@ -3954,6 +3954,7 @@ void (SET_NAMED)(SEXP x, int v)
 }
 attribute_hidden
 void (SET_RTRACE)(SEXP x, int v) { SET_RTRACE(CHK(x), v); }
+attribute_hidden
 int (SETLEVELS)(SEXP x, int v) { return SETLEVELS(CHK(x), v); }
 void DUPLICATE_ATTRIB(SEXP to, SEXP from) {
     SET_ATTRIB(CHK(to), duplicate(CHK(ATTRIB(CHK(from)))));

@@ -101,6 +101,7 @@
  InitParser
  Init_R_Machine
  Init_R_Variables
+ LEVELS
  LOCK_BINDING
  LOGICAL_IS_SORTED
  LoadInitFile
@@ -579,6 +580,7 @@
  Rwin_rename
  Rwin_wrename
  SETLENGTH
+ SETLEVELS
  SETTER_CLEAR_NAMED
  SET_ACTIVE_BINDING_BIT
  SET_ASCII

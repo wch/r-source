@@ -279,7 +279,6 @@ int (IS_S4_OBJECT)(SEXP x);
 int  (LENGTH)(SEXP x);
 R_xlen_t (XLENGTH)(SEXP x);
 int  (IS_LONG_VEC)(SEXP x);
-int  (LEVELS)(SEXP x);
 
 int  *(LOGICAL)(SEXP x);
 int  *(INTEGER)(SEXP x);
@@ -1256,8 +1255,6 @@ Rboolean Rf_psmatch(const char *, const char *, Rboolean); // match.c,  used by 
 				/* match(.) NOT reached : for -Wall */
 #define error_return(msg)	{ Rf_error(msg);	   return R_NilValue; }
 #define errorcall_return(cl,msg){ Rf_errorcall(cl, msg);   return R_NilValue; }
-
-int  (SETLEVELS)(SEXP x, int v); // used by qs quotedargs
 
 // used by admisc arcpbf b64 box clarabel collapse declared drake fcl rlang this.path
 void (SET_ENVFLAGS)(SEXP x, int v);

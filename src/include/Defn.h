@@ -624,11 +624,13 @@ void (SET_GROWABLE_BIT)(SEXP x);
 /* Vector Access Functions */
 void (SETLENGTH)(SEXP x, R_xlen_t v);
 void (SET_TRUELENGTH)(SEXP x, R_xlen_t v);
+int  (LEVELS)(SEXP x);
 int  (SETLEVELS)(SEXP x, int v);
 #ifdef TESTING_WRITE_BARRIER
 R_xlen_t (STDVEC_LENGTH)(SEXP);
 R_xlen_t (STDVEC_TRUELENGTH)(SEXP);
 void (SETALTREP)(SEXP, int);
+R_xlen_t  (TRUELENGTH)(SEXP x);
 #endif
 
 /* Binding Cell Access Functions */
@@ -722,6 +724,7 @@ const void *ALTVEC_DATAPTR_RO(SEXP x);
 const void *ALTVEC_DATAPTR_OR_NULL(SEXP x);
 SEXP ALTVEC_EXTRACT_SUBSET(SEXP x, SEXP indx, SEXP call);
 Rboolean R_is_compact_intseq(SEXP x);
+void *(STDVEC_DATAPTR)(SEXP x);
 
 /* data access */
 int ALTINTEGER_ELT(SEXP x, R_xlen_t i);
