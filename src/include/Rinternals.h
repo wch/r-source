@@ -1113,7 +1113,6 @@ void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
 # endif
 SEXP (CAR)(SEXP e);
-void *(DATAPTR)(SEXP x);
 const void *(DATAPTR_RO)(SEXP x);
 const void *(DATAPTR_OR_NULL)(SEXP x);
 const int *(LOGICAL_OR_NULL)(SEXP x);

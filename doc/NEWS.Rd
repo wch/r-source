@@ -362,7 +362,7 @@
       \code{IS_S4_OBJECT}, \code{BODY}, \code{FORMALS}, \code{CLOENV},
       \code{OBJECT},
       \code{SET_TYPEOF}, \code{ENVFLAGS}, \code{SET_ENVFLAGS},
-      \code{STRING_PTR}, \code{DATAPTR},
+      \code{STRING_PTR},
       \code{R_duplicate_attr},
       \code{getConnection}, \code{R_data_class}.
 
@@ -407,6 +407,9 @@
       \code{Rf_isDataFrame} instead.
 
       \item The function \code{VECTOR_PTR} has been removed.
+
+      The non-API function \code{DATAPTR} is no longer declared in an
+      installed header file.
 
       \item These entry points are now marked as hidden and no longer
       have declarations in installed header files: \code{EXTPTR_PROT},
