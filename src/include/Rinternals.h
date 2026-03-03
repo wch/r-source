@@ -361,9 +361,6 @@ SEXP (PRINTNAME)(SEXP x);
 //int  (DDVAL)(SEXP x);
 
 /* Environment Access Functions */
-SEXP (FRAME)(SEXP x);
-SEXP (ENCLOS)(SEXP x);
-SEXP (HASHTAB)(SEXP x);
 int  (ENVFLAGS)(SEXP x);
 SEXP R_ParentEnv(SEXP);
 

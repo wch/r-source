@@ -685,6 +685,9 @@ void SET_SYMVALUE(SEXP x, SEXP v);
 void SET_INTERNAL(SEXP x, SEXP v);
 
 /* Environment Access Functions */
+SEXP (FRAME)(SEXP x);
+SEXP (ENCLOS)(SEXP x);
+SEXP (HASHTAB)(SEXP x);
 void (SET_ENVFLAGS)(SEXP x, int v);
 void SET_FRAME(SEXP x, SEXP v);
 void SET_ENCLOS(SEXP x, SEXP v);

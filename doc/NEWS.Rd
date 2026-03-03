@@ -356,12 +356,12 @@
       these entry points:
       \code{R_nchar}, \code{R_tryWrap},
       \code{Rf_NonNullStringMatch}, \code{Rf_isValidString}
-      \code{Rf_GetOption}, \code{SET_FRAME}, \code{SET_HASHTAB},
-      \code{SET_ENCLOS}, \code{SET_S4_OBJECT},
+      \code{Rf_GetOption},
+      \code{SET_S4_OBJECT},
       \code{UNSET_S4_OBJECT}, \code{SET_NAMED}, \code{R_lsInternal},
-      \code{Rf_lazy_duplicate}, \code{NAMED}, \code{FRAME}, \code{HASHTAB},
+      \code{Rf_lazy_duplicate}, \code{NAMED},
       \code{IS_S4_OBJECT}, \code{BODY}, \code{FORMALS}, \code{CLOENV},
-      \code{ENCLOS}, \code{OBJECT},
+      \code{OBJECT},
       \code{SET_TYPEOF}, \code{ENVFLAGS}, \code{SET_ENVFLAGS},
       \code{STRING_PTR}, \code{DATAPTR},
       \code{R_duplicate_attr}, \code{R_shallow_duplicate_attr},
@@ -411,12 +411,13 @@
 
       \item These entry points are now marked as hidden and no longer
       have declarations in installed header files: \code{EXTPTR_PROT},
-      \code{EXTPTR_PTR}, \code{EXTPTR_TAG}, \code{LEVELS},
-      \code{SETLENGTH}, \code{SETLEVELS}, \code{SET_BODY},
-      \code{SET_CLOENV}, \code{SET_FORMALS}, \code{SET_GROWABLE_BIT},
-      \code{SET_TRUELENGTH}, \code{STDVEC_DATAPTR}, \code{TRUELENGTH}
-      \code{XTRUELENGTH}.
-   }
+      \code{FRAME}, \code{ENCLOS}, \code{EXTPTR_PTR}, \code{EXTPTR_TAG},
+      \code{HASHTAB}, \code{LEVELS}, \code{SETLENGTH}, \code{SETLEVELS},
+      \code{SET_BODY}, \code{SET_CLOENV}, \code{SET_ENCLOS},
+      \code{SET_FORMALS}, \code{SET_FRAME}, \code{SET_GROWABLE_BIT},
+      \code{SET_HASHTAB}, \code{SET_TRUELENGTH}, \code{STDVEC_DATAPTR},
+      \code{TRUELENGTH} \code{XTRUELENGTH}.
+    }
   }
 
   \subsection{UTILITIES}{
