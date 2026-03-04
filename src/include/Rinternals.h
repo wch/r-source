@@ -542,11 +542,6 @@ int Rf_ncols(SEXP);
 int Rf_nrows(SEXP);
 SEXP Rf_nthcdr(SEXP, int);
 
-// ../main/character.c :
-typedef enum {Bytes, Chars, Width} nchar_type;
-//int R_nchar(SEXP string, nchar_type type_,
-//	    Rboolean allowNA, Rboolean keepNA, const char* msg_name);
-
 SEXP R_ParseEvalString(const char *, SEXP);
 SEXP R_ParseString(const char *);
 void Rf_PrintValue(SEXP);

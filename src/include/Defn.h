@@ -2236,6 +2236,8 @@ SEXP R_data_class(SEXP , Rboolean);
 SEXP R_data_class2(SEXP);
 char *R_LibraryFileName(const char *, char *, size_t);
 SEXP R_LoadFromFile(FILE*, int);
+// ../main/character.c :
+typedef enum {Bytes, Chars, Width} nchar_type;
 int R_nchar(SEXP string, nchar_type type_,
 	    Rboolean allowNA, Rboolean keepNA, const char* msg_name);
 SEXP R_NewHashedEnv(SEXP, int);

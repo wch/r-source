@@ -692,8 +692,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "INTEGER0", "LOGICAL0", "RAW0",
             "REAL0", "COMPLEX0", "RDEBUG", "SET_RDEBUG",
             "STRING_PTR", "Rf_findVarInFrame3",
-            "PRCODE", "PRENV", "PRVALUE", "R_nchar", "Rf_acopy_string",
-            "Rf_NonNullStringMatch",
+            "PRCODE", "PRENV", "PRVALUE", "Rf_acopy_string",
             "SET_TYPEOF", "XLENGTH_EX", "Rf_gsetVar",
             ## Documented in WRE in section "Some API replacements for
             ## non-API entry points":
@@ -725,12 +724,11 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 ## These now generate warnings in check.R
 warnNonAPI <-
     c("REAL0", "COMPLEX0", "ddfind", "DDVAL", "ENSURE_NAMEDMAX", "INTERNAL",
-      "PRSEEN", "SET_PRSEEN", "SYMVALUE", "R_nchar", "R_tryWrap",
+      "PRSEEN", "SET_PRSEEN", "SYMVALUE", "R_tryWrap",
       "STRING_PTR", "ATTRIB", "SET_ATTRIB", "SET_OBJECT",
-      "Rf_NonNullStringMatch",
-      "R_lsInternal", "Rf_lazy_duplicate",
+      "R_lsInternal",
       "BODY", "FORMALS", "CLOENV",
-      "SET_TYPEOF", "SET_FORMALS",
+      "SET_TYPEOF",
       "DATAPTR", "getConnection", "R_data_class")
 
 ## grDevices uses R_Home R_InputHandlers R_TempDir R_Visible R_cairoCdynload R_fopen R_gzclose R_gzgets R_gzopen R_isForkedChild Rf_envlength Rf_strIsASCII Rf_utf8towcs Rg_set_col_ptrs Ri18n_wcwidth addInputHandler do_X11 do_contourLines do_getGraphicsEventEnv do_getSnapshot do_playSnapshot do_saveplot locale2charset mbcsToUcs2 ptr_R_ProcessEvents
