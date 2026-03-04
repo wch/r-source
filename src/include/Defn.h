@@ -776,7 +776,7 @@ SEXP ALTLOGICAL_SUM(SEXP x, Rboolean narm);
 SEXP R_compact_intrange(R_xlen_t n1, R_xlen_t n2);
 SEXP R_deferred_coerceToString(SEXP v, SEXP info);
 SEXP R_virtrep_vec(SEXP, SEXP);
-SEXP R_tryWrap(SEXP);
+//SEXP R_tryWrap(SEXP); // now marked as @eapifun
 SEXP R_tryUnwrap(SEXP);
 
 Rboolean Rf_pmatch(SEXP, SEXP, Rboolean);

@@ -687,7 +687,8 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 ## non-API, declared in Rinternals.h
             "SET_OBJECT", ## no longer used in an example in R-exts 
             "SET_PRENV", "SET_PRVALUE", "SET_PRCODE",
-            "R_PromiseExpr", "R_tryWrap",
+            "R_PromiseExpr",
+            ## "R_tryWrap",
             "DDVAL", "INTERNAL", "SYMVALUE", "PRSEEN",
             "INTEGER0", "LOGICAL0", "RAW0",
             "REAL0", "COMPLEX0", "RDEBUG", "SET_RDEBUG",
@@ -724,7 +725,8 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 ## These now generate warnings in check.R
 warnNonAPI <-
     c("REAL0", "COMPLEX0", "ddfind", "DDVAL", "ENSURE_NAMEDMAX", "INTERNAL",
-      "PRSEEN", "SET_PRSEEN", "SYMVALUE", "R_tryWrap",
+      "PRSEEN", "SET_PRSEEN", "SYMVALUE",
+      ## "R_tryWrap",
       "STRING_PTR", "ATTRIB", "SET_ATTRIB", "SET_OBJECT",
       "R_lsInternal",
       "BODY", "FORMALS", "CLOENV",

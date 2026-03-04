@@ -15130,6 +15130,11 @@ These functions return one of @code{SORTED_DECR}, @code{SORTED_INCR}, or
 @eapifun REAL_IS_SORTED
 @eapifun STRING_IS_SORTED
 
+@deftypefun SEXP R_tryWrap (SEXP @var{x})
+Try to wrap an object in a wrapper to avoid duplication overhead when
+changing attributes. Very experimental and might change or be dropped.
+@end deftypefun
+@eapifun R_tryWrap
 
 
 @node The R API

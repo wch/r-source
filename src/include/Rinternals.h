@@ -1231,7 +1231,7 @@ void SET_PRCODE(SEXP x, SEXP v);
 // formerly used in rlang
 #define BODY_EXPR(e) R_ClosureExpr(e)
 
-// used by BioC::matter; might be reasonable to include in API
+// used by BioC::matter; marked as @eapifun for now
 SEXP R_tryWrap(SEXP);
 
 #ifdef __cplusplus
