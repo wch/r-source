@@ -29,6 +29,7 @@ rd <- parse_Rd(textConnection(r"(\newcommand{\Emph}{\emph{#1}}
 )"), fragment = TRUE, verbose = TRUE, macros = FALSE)
 rd
 print(lapply(rd, getSrcref), useSource = FALSE)
-## In R < 4.6.0, the expansion [[4]] referred to source "chars 2:12 to 2:11".
-## With the correct start column 1, also the old Rd2HTML() does addParaBreaks()
+## The expansion [[4]] currently refers to source "chars 2:12 to 2:11".
+## We would need this to refer to column 1 (re-use the invocations "srcref")
+## such that also in R < 4.6.0, Rd2HTML() would addParaBreaks()
 ## for multiple references separated by blank lines in bibshow's \Sexpr result.

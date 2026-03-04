@@ -4405,6 +4405,7 @@ static int yylex(void)
     int tok = token();
     
     if (parseState.xxDebugTokens) {
+        /* FIXME: Print "+" if/per macrolevel instead of (nonexistent) source location. */
         Rprintf("%d:%d: %s", yylloc.first_line, yylloc.first_column, yytname[YYTRANSLATE(tok)]);
     	if (parseState.xxinRString) Rprintf("(in %c%c)", parseState.xxinRString, parseState.xxinRString);
     	if (tok > 255 && tok != END_OF_INPUT) 
