@@ -1,6 +1,6 @@
 % File src/library/base/man/character.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{character}
@@ -26,11 +26,11 @@ is.character(x)
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
-  \code{as.character} and \code{is.character} are generic: you can
+  \code{as.character} is generic: you can
   write methods to handle specific classes of objects,
-  see \link{InternalMethods}.  Further, for \code{as.character} the
+  see \link{InternalMethods}.  Its
   default method calls \code{\link{as.vector}}, so, only
-  \code{if(is.object(x))} is true, dispatch is first on
+  if \code{is.object(x)} is true, dispatch is first on
   methods for \code{as.character} and then for methods for \code{as.vector}.
 
   \code{as.character} represents real and complex numbers to 15 significant
