@@ -148,3 +148,5 @@ x5 <- strptime("1900-03-01", "%Y-%m-%d", tz = "Europe/Paris")
 y5 <- as.POSIXct(x5)
 str(unclass(as.POSIXlt(y5))) # ditto
 format(y5, "%a, %d %b %Y %H:%M:%S %z")
+
+cat('Time elapsed: ', proc.time(),'\n')

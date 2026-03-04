@@ -94,3 +94,5 @@ x2                # correctly has missing names as NA
 balancePOSIXlt(x2) # recycles names
 strftime(x2, fmt)
 strftime(x2, rep(fmt, length = 10))
+
+cat('Time elapsed: ', proc.time(),'\n')

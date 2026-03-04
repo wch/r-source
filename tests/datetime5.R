@@ -50,3 +50,5 @@ stopifnot(exprs = {
 unique(fOO_  <- format(week.25, "%OS|%OS3|"))
 unique(fOO_1 <- format(week.25, "%OS3|%OS1|%OS3|"))
 
+
+cat('Time elapsed: ', proc.time(),'\n')

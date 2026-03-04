@@ -44,3 +44,5 @@ stopifnot(!is.na(strptime("11-August-1903", "%d-%b-%Y")))
 z <- paste("2017", c(1,365,366), sep = "-")
 (zz <- strptime(z, "%Y-%j"))
 stopifnot(identical(is.na(zz), c(FALSE, FALSE, TRUE)))
+
+cat('Time elapsed: ', proc.time(),'\n')

@@ -82,3 +82,6 @@ Warning message:
 In strptime(z, "%Y-%j") : day-of-year 366 in year 2017 is invalid
 > stopifnot(identical(is.na(zz), c(FALSE, FALSE, TRUE)))
 > 
+> cat('Time elapsed: ', proc.time(),'\n')
+Time elapsed:  0.093 0.069 0.193 0.002 0.01 
+> 
