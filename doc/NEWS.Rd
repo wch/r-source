@@ -122,7 +122,7 @@
       (via \code{plot.histogram()}), \code{barplot()}, \code{bxp()},
       and hence implicitly \code{boxplot()}.
       All except the former also gain a new \code{panel.last}.
-      Suggested by Marieke Stolte and Julian Welz.
+      Suggested by \I{Marieke Stolte} and \I{Julian Welz}.
 
       \item \code{plot.default()} gets a new switch \code{lim2} to indicate
       that the default \code{xlim} and \code{ylim} range computations only
@@ -661,7 +661,7 @@
       \item The \code{"tzcode"} attribute of \code{"POSIXlt"} objects
       should no longer depend on earlier calls, fixing \PR{19005} thanks to
       \I{Ivan Krylov}, a patch by \I{Suharto Anggono} and reports of
-      \dQuote{Non-deterministic POSIXlt tzone in Europe/London ..} on
+      \dQuote{\I{Non-deterministic POSIXlt tzone in Europe/London ..}} on
       R-devel.
     }
   }
