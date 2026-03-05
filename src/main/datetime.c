@@ -809,6 +809,40 @@ static bool set_tz(const char *tz, tzset_info *si)
 	si->hadtz = true;
     } else
 	si->hadtz = false;
+    /* To force tzset() call to refresh tzname, first call tzset() while TZ=UTC.
+       If the desired setting is actually TZ=UTC and tzname is not refreshed,
+       it is OK, because UTC has only one possible time zone abbreviation.
+    */
+    int status = -1; // code = {set,put}env();
+#ifdef HAVE_SETENV
+    status = setenv("TZ", "UTC", 1);
+#elif defined(HAVE_PUTENV)
+    {
+	static char e[] = "TZ=UTC";
+	status = putenv(e);
+    }
+#endif
+    if(!status) tzset();
+    if(!tz[0]) {
+	if(status) {
+	    tzset();
+	    return si->settz;
+	} else if(si->hadtz) {
+	    tz = si->oldtz;
+	} else {
+#ifdef HAVE_UNSETENV
+	    if(unsetenv("TZ")) warning(_("problem with unsetting timezone"));
+#elif defined(HAVE_PUTENV_UNSET)
+	    static char e[] = "TZ";
+	    if(putenv(e)) warning(_("problem with unsetting timezone"));
+#elif defined(HAVE_PUTENV_UNSET2)
+	    static char e[] = "TZ=";
+	    if(putenv(e)) warning(_("problem with unsetting timezone"));
+#endif
+	    tzset();
+	    return si->settz;
+	}
+    }
 #ifdef HAVE_SETENV
     if(setenv("TZ", tz, 1)) warning(_("problem with setting timezone"));
     else si->settz = true;
@@ -1087,12 +1121,7 @@ attribute_hidden SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     tzset_info tzsi;
     prepare_reset_tz(&tzsi);
 
-    if(!isUTC && strlen(tz) > 0) set_tz(tz, &tzsi);
-#ifdef USE_INTERNAL_MKTIME
-    else R_tzsetwall(); // to get the system timezone recorded
-#else
-    tzset();
-#endif
+    if(!isUTC) set_tz(tz, &tzsi);
 
     // Do now as localtime may change tzname.
     BEGIN_MAKElt
@@ -1182,12 +1211,7 @@ attribute_hidden SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     */
     tzset_info tzsi;
     prepare_reset_tz(&tzsi);
-    if(!isUTC && strlen(tz) > 0) set_tz(tz, &tzsi);
-#ifdef USE_INTERNAL_MKTIME
-    else R_tzsetwall(); // to get the system timezone recorded
-#else
-    tzset();
-#endif
+    if(!isUTC) set_tz(tz, &tzsi);
 
     R_xlen_t n = 0, nlen[9];
     for(int i = 0; i < 6; i++)
@@ -1506,12 +1530,7 @@ attribute_hidden SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
     tzset_info tzsi;
     prepare_reset_tz(&tzsi);
 
-    if(!isUTC && strlen(tz) > 0) set_tz(tz, &tzsi);
-#ifdef USE_INTERNAL_MKTIME
-    else R_tzsetwall(); // to get the system timezone recorded
-#else
-    tzset();
-#endif
+    if(!isUTC) set_tz(tz, &tzsi);
 
     // do now in case this gets changed by conversions.
     BEGIN_MAKElt

@@ -10,8 +10,15 @@ options(warn = max(1, getOption("warn")))
 if(!nzchar(Sys.getenv("_R_CHECK_DATETIME3_NO_TZ_"))) withAutoprint({
   ## For some inter-platform reproducibility, try to set timezone
   ## even though  Sys.setenv(..) does *NOT* always work
-  myTZ <- "Australia/Melbourne"
+
+  ## do this early: PR#19005
   (TZenvOrig <- Sys.getenv("TZ"))
+  Sys.setenv(TZ = "Europe/London")
+  (tz42 <- unique(t(replicate(42, attr(.Internal(as.POSIXlt(1, "")), "tzone")[2:3]))))
+  stopifnot(identical(dim(tz42), 1:2))
+  Sys.setenv(TZ = TZenvOrig)# try reverting
+
+  myTZ <- "Australia/Melbourne"
   Sys.setenv(TZ = myTZ)
   Sys.getenv("TZ")
   TZok <- Sys.getenv("TZ") == myTZ
@@ -22,7 +29,8 @@ if(!nzchar(Sys.getenv("_R_CHECK_DATETIME3_NO_TZ_"))) withAutoprint({
   }
 })
 
-## 0-length Date and POSIX[cl]t:  PR#71290
+
+## 0-length Date and POSIX[cl]t:  PR#17290
 D <- structure(17337, class = "Date") # Sys.Date() of "now"
 D; D[0]; D[c(1,2,1)] # test printing of NA too
 stopifnot(identical(capture.output(D[0]), "Date of length 0"))

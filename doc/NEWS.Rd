@@ -657,6 +657,12 @@
       \item \code{c(<POSIXlt>, ..)} now fully preserves sub-second
       accuracy, fulfilling a part of \I{Suharto Anggono}'s wishlist
       \PR{18989}.
+
+      \item The \code{"tzcode"} attribute of \code{"POSIXlt"} objects
+      should no longer depend on earlier calls, fixing \PR{19005} thanks to
+      \I{Ivan Krylov}, a patch by \I{Suharto Anggono} and reports of
+      \dQuote{Non-deterministic POSIXlt tzone in Europe/London ..} on
+      R-devel.
     }
   }
 }
