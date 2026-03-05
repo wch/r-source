@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2025-09-03 r88775) -- "Unsuffered Consequences"
-Copyright (C) 2025 The R Foundation for Statistical Computing
+R Under development (unstable) (2026-03-05 r89541) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -342,14 +342,14 @@ difference in location     0e+00  0e+00   0e+00
 
 > 
 > noquote(sapply(stR2[["conf.int"]], function(.) vapply(., formatCI, "")))
-     two.sided              less                 greater            
-[1,] [-1e-09, -1e-09] (95%) [-Inf, -1e-09] (95%) [-1e-09, Inf] (95%)
-[2,] [-1, 1] (95%)          [-Inf, 1] (95%)      [-1, Inf] (95%)    
-[3,] [-2, 2] (95%)          [-Inf, 2] (95%)      [-2, Inf] (95%)    
-[4,] [-3, 2] (95%)          [-Inf, 2] (95%)      [-3, Inf] (95%)    
-[5,] [-3, 2] (95%)          [-Inf, 2] (95%)      [-3, Inf] (95%)    
+     two.sided          less               greater           
+[1,] [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+[2,] [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+[3,] [-Inf, Inf] (100%) [-Inf, 2] (100%)   [-2, Inf] (100%)  
+[4,] [-3, 3] (100%)     [-Inf, 2] (97%)    [-2, Inf] (97%)   
+[5,] [-3, 3] (96%)      [-Inf, 2] (95%)    [-2, Inf] (97%)   
 > 
 > 
 > proc.time()
    user  system elapsed 
-  0.464   0.035   0.498 
+  0.786   0.086   0.889 
