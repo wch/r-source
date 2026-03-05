@@ -1,4 +1,5 @@
 require("tools")
+Rd2txt_options(underline_titles = FALSE)
 
 # -------------------------------------------------------------------
 # prepare_Rd() is OK with a top level \Sexpr that is yet to be rendered
@@ -80,6 +81,17 @@ Sys.setenv("_R_CHECK_RD_NOTE_LOST_BRACES_" = TRUE)
 bad <- function (Rd) sum(startsWith(checkRd(Rd), "checkRd: (-1) "))
 stopifnot(bad("Rd-braces_ignored.Rd") == 0L,
           bad("Rd-braces_reported.Rd") == 10L)
+
+
+## "srcref" of usermacro expansion
+rd <- parse_Rd(textConnection(r"(\newcommand{\Emph}{\emph{#1}}
+\Emph{this}
+)"), fragment = TRUE, verbose = TRUE, macros = FALSE)
+print(rd) # shows the expansion, not the source
+stopifnot(!grepl("\\Emph", paste(as.character(rd), collapse = ""), fixed = TRUE))
+print(getSrcref(rd[[4]]), useSource = FALSE) # "chars 2:12 to 2:11"
+## Maybe the expansion should not get a "srcref" in the first place?
+## (Note that RdTextFilter would need to be updated in this case.)
 
 
 ## An unmatched un-escaped '{' in a comment in \examples{} ... should *NOT* trip up, but does

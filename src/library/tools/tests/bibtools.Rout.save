@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-03-03 r89525) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-03-05 r89541) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -46,12 +46,11 @@ Asserted warning: bibtools.Rd:5: Could not find bibentries for the following key
   'non-existent-key'
 > 
 > ## Also test for changes in HTML conversion
-> Rd2HTML("bibtools.Rd", htmlfile <- tempfile(),
+> Rd2HTML("bibtools.Rd", out <- "bibtools.html",
 +         stages = "build", standalone = FALSE) |>
 +     assertWarning() # the same
 > ## FIXME: carry-over of unshown citation (cache not cleared)
-> Rdiff(htmlfile, "bibtools.html.save")
-[1] 0
+> if (!Rdiff(out, "bibtools.html.save")) unlink(out)
 > 
 > ## Check cited but not shown
 > pkgdir <- package.skeleton("bibtools", list = ".NotYetImplemented",
@@ -65,62 +64,6 @@ attr(,"unexpected_macro_expansion")
 [1] TRUE
 > ## ("unexpected_macro_expansion" as there is no build/partial.rdb)
 > 
-> 
-> ## FIXME: "srcref" of usermacro expansion such as from \bibshow{*}
-> rd <- parse_Rd(textConnection(r"(\newcommand{\Emph}{\emph{#1}}
-+ \Emph{this}
-+ )"), fragment = TRUE, verbose = TRUE, macros = FALSE)
-0:0: STARTFRAGMENT: 
-1:1: NEWCOMMAND: \newcommand
-1:12: '{'
-1:13: VERB: \Emph
-1:18: '}'
-1:19: '{'
-1:20: VERB: \emph{#1}
-1:29: '}'
-1:30: TEXT: 
-
-2:1: USERMACRO1: \Emph
-2:6: '{'
-2:7: VERB: this
-2:11: '}'
-2:12: LATEXMACRO: \emph
-2:12: '{'
-2:12: TEXT: this
-2:12: '}'
-2:12: TEXT: 
-
-3:1: TEXT: 
-
-4:1: END_OF_INPUT
-> rd
-
-\emph{this}
-
-> print(lapply(rd, getSrcref), useSource = FALSE)
-[[1]]
-<srcref: file "<connection>" chars 1:1 to 1:29>
-
-[[2]]
-<srcref: file "<connection>" chars 1:30 to 1:30>
-
-[[3]]
-<srcref: file "<connection>" chars 2:1 to 2:11>
-
-[[4]]
-<srcref: file "<connection>" chars 2:12 to 2:11>
-
-[[5]]
-<srcref: file "<connection>" chars 2:12 to 2:12>
-
-[[6]]
-<srcref: file "<connection>" chars 3:1 to 3:1>
-
-> ## The expansion [[4]] currently refers to source "chars 2:12 to 2:11".
-> ## We would need this to refer to column 1 (re-use the invocations "srcref")
-> ## such that also in R < 4.6.0, Rd2HTML() would addParaBreaks()
-> ## for multiple references separated by blank lines in bibshow's \Sexpr result.
-> 
 > proc.time()
    user  system elapsed 
-  0.221   0.045   0.254 
+  0.194   0.022   0.211 
