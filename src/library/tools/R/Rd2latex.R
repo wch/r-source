@@ -437,6 +437,7 @@ Rd2latex <- function(Rd, out = "", defines = .Platform$OS.type,
                },
                "\\special"= writeContent(block, tag), ## FIXME, verbatim?
                "\\linkS4class" =,
+               "\\linkS4methods" =,
                "\\link" = writeLink(tag, block),
                "\\cr" = of1("\\\\{}"), ## might be followed by [
                "\\dots" =,

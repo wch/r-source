@@ -36,6 +36,7 @@ get_link <- function(arg, tag, Rdfile) {
 
     topic <- dest <- paste(unlist(arg), collapse = "")
     if (tag == "\\linkS4class") dest <- paste0(dest, "-class")
+    else if (tag == "\\linkS4methods") dest <- paste0(dest, "-methods")
 
     targetfile <- NULL
     pkg <- NULL
@@ -857,6 +858,7 @@ Rd2HTML <-
                "\\var" = writeWrapped(tag, block, doParas),
                "\\special" = writeContent(block, tag), ## FIXME, verbatim?
                "\\linkS4class" =,
+               "\\linkS4methods" =,
                "\\link" = writeLink(tag, block, doParas),
                ## cwhmisc has an empty \\email
                "\\email" = if (length(block)) {

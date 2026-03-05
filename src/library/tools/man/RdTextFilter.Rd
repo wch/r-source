@@ -49,6 +49,7 @@ RdTextFilter(ifile, encoding = "unknown", keepSpacing = TRUE,
   By default, the tags \verb{\S3method}, \verb{\S4method},
   \verb{\command}, \verb{\docType}, \verb{\email}, \verb{\encoding},
   \verb{\file}, \verb{\keyword}, \verb{\link}, \verb{\linkS4class},
+  \verb{\linkS4methods},
   \verb{\method}, \verb{\pkg}, and \verb{\var} are skipped.  Additional
   tags can be skipped by listing them in the \code{drop} argument;
   listing tags in the \code{keep} argument will stop them from being

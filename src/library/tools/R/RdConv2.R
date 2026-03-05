@@ -883,6 +883,7 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
                "\\var" =,
                "\\verb"= checkContent(block, tag),
                "\\linkS4class" =,
+               "\\linkS4methods" =,
                "\\link" = checkLink(tag, block),
                "\\email" = {
                    checkEmail(block)
@@ -1008,6 +1009,7 @@ checkRd <- function(Rd, defines = .Platform$OS.type, stages = "render",
                    },
                    ## these are valid in \code, at least
                    "\\linkS4class" =,
+                   "\\linkS4methods" =,
                    "\\link" = checkLink(tag, block),
                    "\\method" =,
                    "\\S3method" =,

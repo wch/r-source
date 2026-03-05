@@ -661,6 +661,7 @@ Rd2txt <-
                    }
                },
                "\\linkS4class" =,
+               "\\linkS4methods" =,
                "\\link" = writeContent(block, tag),
                "\\cr" = {
                    if (!length(buffer)) { # \cr\cr

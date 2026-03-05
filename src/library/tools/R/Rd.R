@@ -929,13 +929,15 @@ function(x)
                 c(arg, if(is.null(opt)) "" else as.character(opt))
             } else c("", "")
             out <<- rbind(out, val)
-        } else if(identical(tag, "\\linkS4class")) {
+        } else if((lS4c <- identical(tag, "\\linkS4class")) ||
+                           identical(tag, "\\linkS4methods")) {
             arg <- if (length(e)) as.character(e[[1L]]) else ""
+            typ <- if (lS4c) "class" else "methods"
             opt <- attr(e, "Rd_option")
             val <- if(is.null(opt))
-                       c(arg, sprintf("=%s-class", arg))
+                       c(arg, sprintf("=%s-%s", arg, typ))
                    else
-                       c(sprintf("%s-class", arg),
+                       c(sprintf("%s-%s", arg, typ),
                          as.character(opt))
             out <<- rbind(out, val)
         }

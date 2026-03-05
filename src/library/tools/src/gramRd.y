@@ -1210,6 +1210,7 @@ static keywords[] = {
        
     { "\\link",    OPTMACRO },
     { "\\linkS4class", OPTMACRO },
+    { "\\linkS4methods", OPTMACRO },
        
     /* These markup macros require an R-like text argument */
     

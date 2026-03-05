@@ -256,6 +256,10 @@
       Provided by \I{Torsten Hothorn}.
 
       \item \code{plot.data.frame()} now supports a \code{formula} argument.
+
+      \item New Rd macro \verb{\linkS4methods{}}, e.g., for easier linking to
+      method docs in other packages, proposed and coded by \I{Mikael Jagan}
+      in \PR{18998}.
     }
   }
 

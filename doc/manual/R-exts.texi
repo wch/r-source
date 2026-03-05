@@ -3917,7 +3917,7 @@ is installed.  Pointers from package help indices to the installed
 documents are automatically created.  Documents in @file{inst/doc} can
 be in arbitrary format, however we strongly recommend providing them in
 @HTML{} or PDF formats, so users on almost all platforms can easily read
-them.  To 
+them.  To
 ensure that they can be accessed from a browser (as an @HTML{} index is
 provided), the file names should start with an @acronym{ASCII} letter
 and be comprised entirely of @acronym{ASCII} letters or digits or hyphen
@@ -8138,16 +8138,20 @@ extracting a topic from a @code{\alias}, they are not stripped when
 looking up the topic of a @code{\link}.
 
 @findex \linkS4class
+@findex \linkS4methods
 You can specify a link to a different topic than its name by
 @code{\link[=@var{dest}]@{@var{name}@}} which links to topic @var{dest}
 with name @var{name}.  This can be used to refer to the documentation
-for S3/4 classes, for example @code{\code@{"\link[=abc-class]@{abc@}"@}}
-would be a way to refer to the documentation of an S4 class @code{"abc"}
-defined in your package, and
-@code{\code@{"\link[=terms.object]@{terms@}"@}} to the S3 @code{"terms"}
-class (in package @pkg{stats}).  To make these easy to read in the
-source file, @code{\code@{"\linkS4class@{abc@}"@}} expands to the form
-given above and also works with an @code{[@var{pkg}]} `anchor':
+for S3 and S4 classes and methods.  For example,
+@code{\code@{"\link[=terms.object]@{terms@}"@}} would be a way to refer
+to S3 class @code{"terms"} in package @pkg{stats}.  Furthermore,
+@code{\code@{"\link[=abc-class]@{abc@}"@}} and
+@code{\code@{\link[=xyz-methods]@{xyz@}@}} could be used to refer to an
+S4 class @code{"abc"} and methods for an S4 generic @code{xyz}, where
+those are defined in your package.  To make these easy to read in source
+files, @code{\code@{"\linkS4class@{abc@}"@}} and
+@code{\code@{\linkS4methods@{xyz@}@}} expand to the forms given above and
+also work with an @code{[@var{pkg}]} `anchor' (see next para).
 @c since R 4.6.0
 
 There are two other forms with an optional `anchor' argument, specified as
@@ -13634,7 +13638,7 @@ is modified it may suffice to call @code{Rf_shallow_duplicate}.
 @comment FIXME need a separate section on attributes
 At times it may be necessary to copy attributes from one object to
 another.  This can be done using @code{DUPLICATE_ATTRIB} or
-@code{SHALLOW_DUPLICATE_ATTRIB}. 
+@code{SHALLOW_DUPLICATE_ATTRIB}.
 @apifun DUPLICATE_ATTRIB
 @apifun SHALLOW_DUPLICATE_ATTRIB
 @code{ANY_ATTRIB} checks whether there are any attributes, and
