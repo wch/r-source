@@ -3899,7 +3899,7 @@ DL_FUNC R_ExternalPtrAddrFn(SEXP s)
 /* General Cons Cell Attributes */
 SEXP (ATTRIB)(SEXP x) { return CHK(ATTRIB(CHK(x))); }
 int (ANY_ATTRIB)(SEXP x) { return ANY_ATTRIB(CHK(x)); }
-attribute_hidden int (OBJECT)(SEXP x) { return OBJECT(CHK(x)); }
+int (OBJECT)(SEXP x) { return OBJECT(CHK(x)); }
 int (TYPEOF)(SEXP x) { return TYPEOF(CHK(x)); }
 attribute_hidden int (NAMED)(SEXP x) { return NAMED(CHK(x)); }
 attribute_hidden int (RTRACE)(SEXP x) { return RTRACE(CHK(x)); }
