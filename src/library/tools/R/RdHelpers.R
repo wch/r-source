@@ -224,7 +224,9 @@ function(x)
                   string2id(.bibentry_get_key(y)),
                   toRd(y, style = Rd_expr_bibshow_bibstyle()),
                   footers),
-          collapse = "\n\n")
+          ## Rd2HTML() in R < 4.6.0 would not addParaBreaks() for blank lines
+          ## generated from user-macro-expanded \Sexpr code, so add them here:
+          collapse = "\\ifelse{html}{\\out{\n</p><p>\n}}{\n\n}")
 }
 
 Rd_expr_bibcite_keys_cited <- local({
