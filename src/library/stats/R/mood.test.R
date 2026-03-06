@@ -46,7 +46,8 @@ function(x, y, alternative = c("two.sided", "less", "greater"), ...)
         t <- tabulate(match(z, u), length(u))
         p <- cumsum((seq_along(z) - (N + 1L) / 2) ^ 2)
         v <- v - (m * n) / (180 * N * (N - 1L)) *
-            sum(t * (t ^ 2 - 1) * (t ^ 2 - 4 + 15 * (N - t) ^ 2))
+            sum(t * (t ^ 2 - 1) *
+                (t ^ 2 - 4 + 15 * (N - 2 * cumsum(t) + t) ^ 2))
         T <- sum(a * diff(c(0, p[cumsum(t)])) / t)
     }
     z <- (T - E) / sqrt(v)
