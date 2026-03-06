@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2024-08-27 r87063) -- "Unsuffered Consequences"
-Copyright (C) 2024 The R Foundation for Statistical Computing
+R Under development (unstable) (2026-03-06 r89553) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -260,6 +260,343 @@ i  .  .  1  .
 s  .  .  .  1
 t -1 -1 -1 -1
 > 
+> # free1way() et al.
+> example(free1way,            run.donttest = TRUE)
+
+fre1wy> ## No test: 
+fre1wy> 
+fre1wy> ## Kruskal-Wallis test
+fre1wy> kruskal.test(Ozone ~ Month, data = airquality)
+
+	Kruskal-Wallis rank sum test
+
+data:  Ozone by Month
+Kruskal-Wallis chi-squared = 29.267, df = 4, p-value = 6.901e-06
+
+
+fre1wy> kt <- free1way(Ozone ~ Month, data = airquality)
+
+fre1wy> print(kt)
+
+	5-sample Kruskal-Wallis test against proportional odds alternatives
+
+data:  Ozone by Month (5, 6, 7, 8, 9)
+Perm chi-squared = 29.267, df = 4, p-value = 6.901e-06
+alternative hypothesis: true log-odds ratio is not equal to 0
+
+
+fre1wy> # log-odds ratios for comparison with control
+fre1wy> coef(kt)
+   Month6    Month7    Month8    Month9 
+0.8123639 2.5281594 2.3825979 0.7513235 
+
+fre1wy> # Wald inference
+fre1wy> summary(kt)
+
+Call:
+free1way.formula(formula = Ozone ~ Month, data = airquality)
+
+Coefficients:
+       log-odds ratio Std. Error z value P(>|z|)
+Month6        0.81236    0.64415 1.26113  0.2073
+Month7        2.52816    0.53153 4.75639  0.0000
+Month8        2.38260    0.53370 4.46432  0.0000
+Month9        0.75132    0.47177 1.59256  0.1113
+
+fre1wy> confint(kt, test = "Wald")
+            2.5 %   97.5 %
+Month6 -0.4501567 2.074884
+Month7  1.4863809 3.569938
+Month8  1.3365705 3.428625
+Month9 -0.1733322 1.675979
+
+fre1wy> ## Friedman test
+fre1wy> example(friedman.test, echo = FALSE)
+
+fre1wy> me <- colnames(RoundingTimes)
+
+fre1wy> d <- expand.grid(me = factor(me, labels = me, levels = me),
+fre1wy+                  id = factor(seq_len(nrow(RoundingTimes))))
+
+fre1wy> d$time <- c(t(RoundingTimes))
+
+fre1wy> # global p-value identical
+fre1wy> friedman.test(RoundingTimes)
+
+	Friedman rank sum test
+
+data:  RoundingTimes
+Friedman chi-squared = 11.143, df = 2, p-value = 0.003805
+
+
+fre1wy> ft <- free1way(time ~ me | id, data = d)
+
+fre1wy> print(ft)
+
+	Stratified 3-sample Kruskal-Wallis test against proportional odds
+	alternatives
+
+data:  time by me (Round Out, Narrow Angle, Wide Angle) 
+	 stratified by id
+Perm chi-squared = 11.143, df = 2, p-value = 0.003805
+alternative hypothesis: true log-odds ratio is not equal to 0
+
+
+fre1wy> coef(ft)
+meNarrow Angle   meWide Angle 
+     -1.265280      -3.289198 
+
+fre1wy> # Wald inference
+fre1wy> summary(ft)
+
+Call:
+free1way.formula(formula = time ~ me | id, data = d)
+
+Coefficients:
+               log-odds ratio Std. Error  z value P(>|z|)
+meNarrow Angle       -1.26528    0.68264 -1.85352  0.0638
+meWide Angle         -3.28920    0.79367 -4.14428  0.0000
+
+fre1wy> confint(ft, test = "Wald")
+                   2.5 %      97.5 %
+meNarrow Angle -2.603222  0.07266103
+meWide Angle   -4.844765 -1.73363038
+
+fre1wy> ## McNemar test
+fre1wy> ## paired binary observations
+fre1wy> example(mcnemar.test, echo = FALSE)
+
+fre1wy> # set-up data frame with survey outcomes for voters
+fre1wy> s <- gl(2, 1, labels = dimnames(Performance)[[1L]])
+
+fre1wy> survey <- gl(2, 1, labels = c("1st", "2nd"))
+
+fre1wy> nvoters <- c(Performance)
+
+fre1wy> x <- expand.grid(survey = survey, voter = factor(seq_len(sum(nvoters))))
+
+fre1wy> x$performance <- c(rep(s[c(1, 1)], nvoters[1]), rep(s[c(2, 1)], nvoters[2]),
+fre1wy+                    rep(s[c(1, 2)], nvoters[3]), rep(s[c(2, 2)], nvoters[4]))
+
+fre1wy> # note that only those voters changing their minds are relevant
+fre1wy> mcn <- free1way(xtabs(~ performance + survey + voter, data = x))
+
+fre1wy> # same result as mcnemar.test w/o continuity correction
+fre1wy> print(mcn)
+
+	Stratified 2-sample Wilcoxon test against proportional odds
+	alternatives
+
+data:  performance by survey (c("1st", "2nd")) 
+	 stratified by voter
+Perm Z = 4.166, p-value = 3.099e-05
+alternative hypothesis: true log-odds ratio is not equal to 0
+
+
+fre1wy> # X^2 statistic
+fre1wy> summary(mcn, test = "Permutation")$statistic^2
+  Perm Z 
+17.35593 
+
+fre1wy> mcnemar.test(Performance, correct = FALSE)
+
+	McNemar's Chi-squared test
+
+data:  Performance
+McNemar's chi-squared = 17.356, df = 1, p-value = 3.099e-05
+
+
+fre1wy> # Wald inference
+fre1wy> summary(mcn)
+
+Call:
+free1way.table(y = xtabs(~performance + survey + voter, data = x))
+
+Coefficients:
+          log-odds ratio Std. Error z value P(>|z|)
+survey2nd        1.11258    0.19128 5.81639       0
+
+fre1wy> confint(mcn, test = "Wald")
+              2.5 %   97.5 %
+survey2nd 0.7376684 1.487484
+
+fre1wy> ## Mantel-Haenszel test w/o continuity correction, 
+fre1wy> ## Departments are blocks
+fre1wy> mantelhaen.test(UCBAdmissions, correct = FALSE)
+
+	Mantel-Haenszel chi-squared test without continuity correction
+
+data:  UCBAdmissions
+Mantel-Haenszel X-squared = 1.5246, df = 1, p-value = 0.2169
+alternative hypothesis: true common odds ratio is not equal to 1
+95 percent confidence interval:
+ 0.7719074 1.0603298
+sample estimates:
+common odds ratio 
+        0.9046968 
+
+
+fre1wy> mh <- free1way(UCBAdmissions)
+
+fre1wy> print(mh)
+
+	Stratified 2-sample Wilcoxon test against proportional odds
+	alternatives
+
+data:  Admit by Gender (c("Male", "Female")) 
+	 stratified by Dept
+Perm Z = -1.2347, p-value = 0.2169
+alternative hypothesis: true log-odds ratio is not equal to 0
+
+
+fre1wy> # common odds-ratio, with score interval
+fre1wy> exp(coef(mh))
+GenderFemale 
+    0.904955 
+
+fre1wy> exp(confint(mh, test = "Rao"))
+                 2.5 %  97.5 %
+GenderFemale 0.7723922 1.06027
+
+fre1wy> # looking at department-specific 
+fre1wy> # confidence intervals for log-odds ratios 
+fre1wy> # it seems Dept A is out of line
+fre1wy> apply(UCBAdmissions, MARGIN = 3,  
+fre1wy+       FUN = function(x) confint(free1way(as.table(x))))
+      Dept
+                A          B          C          D          E          F
+  [1,] -1.5622307 -1.0556769 -0.1570020 -0.3762303 -0.1913598 -0.7802366
+  [2,] -0.5415513  0.6167797  0.4068713  0.2122505  0.5918809  0.4025005
+
+fre1wy> ## Mantel-Haenszel test treats variables as
+fre1wy> ## unordered, free1way allows ordered responses
+fre1wy> example(mantelhaen.test, echo = FALSE)
+
+fre1wy> # Does distribution of job satisfaction (ordered) depend on income
+fre1wy> # in a stratified proportional odds model?
+fre1wy> # Job Satisfaction is second in array but needs to be first
+fre1wy> # for free1way to treat it as ordered response
+fre1wy> ft <- free1way(aperm(Satisfaction, perm = c(2, 1, 3)))
+
+fre1wy> summary(ft)
+
+Call:
+free1way.table(y = aperm(Satisfaction, perm = c(2, 1, 3)))
+
+Coefficients:
+                  log-odds ratio Std. Error z value P(>|z|)
+Income5000-15000         0.10794    0.55953 0.19290  0.8470
+Income15000-25000        1.45998    0.62561 2.33369  0.0196
+Income>25000             1.23282    0.65693 1.87663  0.0606
+
+fre1wy> ## End(No test)
+fre1wy> 
+fre1wy> 
+> example(power.free1way.test, run.donttest = TRUE)
+
+pwr.1.> ## No test: 
+pwr.1.> 
+pwr.1.> ## make example reproducible
+pwr.1.> set.seed(29)
+
+pwr.1.> ## sample from proportional odds model with 1:2 allocation
+pwr.1.> ## based on odds ratio of 3, with sample sizes (15, 30)
+pwr.1.> x <- rfree1way(n = 15, delta = log(3), alloc_ratio = 2)
+
+pwr.1.> # Wilcoxon-Mann-Whitney rank sum test via classical stats interface
+pwr.1.> wilcox.test(y ~ groups, data = x, exact = FALSE, correct = FALSE)$p.value
+[1] 0.008679882
+
+pwr.1.> # Identical p-value obtained from a proportional-odds model 
+pwr.1.> summary(free1way(y ~ groups, data = x), test = "Permutation")$p.value
+     Perm Z 
+0.008679882 
+
+pwr.1.> # approximate power for this test
+pwr.1.> power.free1way.test(n = 15, delta = log(3), alloc_ratio = 2)
+
+      2-sample Wilcoxon test against proportional odds alternatives 
+
+                n = 15
+Total sample size = 15 (Control) + 30 (B) = 45
+            power = 0.4879209
+        sig.level = 0.05
+   Standard error = 0.5693603
+   log-odds ratio = 1.098612
+
+NOTE: 'n' is sample size in control group
+
+
+pwr.1.> ## End(No test)
+pwr.1.> 
+pwr.1.> 
+> example(ppplot,              run.donttest = TRUE)
+
+ppplot> ## No test: 
+ppplot> 
+ppplot> ## make example reproducible
+ppplot> set.seed(29)
+
+ppplot> ## well-fitting logistic model
+ppplot> nd <- data.frame(groups = gl(2, 50, labels = paste0("G", 1:2)))
+
+ppplot> nd$y <- rlogis(nrow(nd), location = c(0, 2)[nd$groups])
+
+ppplot> with(with(nd, split(y, groups)),
+ppplot+      ppplot(G1, G2, conf.level = .95,
+ppplot+             conf.args = list(link = "logit", type = "Wald", col = 2)))
+
+ppplot> # with appropriate Wilcoxon test and log-odds ratio
+ppplot> coef(ft <- free1way(y ~ groups, data = nd))
+groupsG2 
+1.668854 
+
+ppplot> # the model-based probability-probability curve
+ppplot> prb <- 1:99 / 100
+
+ppplot> points(prb,  plogis(qlogis(prb) - coef(ft)), pch = 3)
+
+ppplot> ## the corresponding model-based receiver operating characteristic (ROC)
+ppplot> ## curve, see Sewak and Hothorn (2023)
+ppplot> plot(prb,  plogis(qlogis(1 - prb) - coef(ft), lower.tail = FALSE),
+ppplot+      xlab = "1 - Specificity", ylab = "Sensitivity", type = "l", 
+ppplot+      main = "ROC Curve")
+
+ppplot> abline(a = 0, b = 1, col = "lightgrey")
+
+ppplot> # with confidence band
+ppplot> lines(prb, plogis(qlogis(1 - prb) - confint(ft, test = "Rao")[1], 
+ppplot+       lower.tail = FALSE), lty = 3)
+
+ppplot> lines(prb, plogis(qlogis(1 - prb) - confint(ft, test = "Rao")[2], 
+ppplot+       lower.tail = FALSE), lty = 3)
+
+ppplot> # and corresponding area under the ROC curve (AUC)
+ppplot> # with score confidence interval
+ppplot> coef(ft, what = "AUC")
+groupsG2 
+ 0.75467 
+
+ppplot> confint(ft, test = "Rao", what = "AUC")
+             2.5 %    97.5 %
+groupsG2 0.6490714 0.8381977
+
+ppplot> ## ill-fitting normal model
+ppplot> nd$y <- rnorm(nrow(nd), mean = c(0, .5)[nd$groups], sd = c(1, 1.5)[nd$groups])
+
+ppplot> with(with(nd, split(y, groups)),
+ppplot+      ppplot(G1, G2, conf.level = .95,
+ppplot+             conf.args = list(link = "probit", type = "Wald", col = 2)))
+
+ppplot> # inappropriate probit model
+ppplot> coef(free1way(y ~ groups, data = nd, link = "probit"))
+ groupsG2 
+0.6659502 
+
+ppplot> ## End(No test)
+ppplot> 
+ppplot> 
+> 
 > # glm.Rd
 > utils::data(anorexia, package = "MASS")
 > 
@@ -337,7 +674,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Residual standard error: 4.67 on 57 degrees of freedom
 
 Number of iterations to convergence: 5 
-Achieved convergence tolerance: 9.32e-07
+Achieved convergence tolerance: 9.34e-07
 
 > ## IGNORE_RDIFF_END
 > 
@@ -406,13 +743,14 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Residual standard error: 1.11 on 17 degrees of freedom
 
 Number of iterations to convergence: 8 
-Achieved convergence tolerance: 2.17e-06
+Achieved convergence tolerance: 2.13e-06
 
 > ## IGNORE_RDIFF_END
 > options(od)
 > 
 > # princomp.Rd
 > ## Robust:
+> set.seed(1)
 > (pc.rob <- princomp(stackloss, covmat = MASS::cov.rob(stackloss)))
 Call:
 princomp(x = stackloss, covmat = MASS::cov.rob(stackloss))

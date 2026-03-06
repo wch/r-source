@@ -86,6 +86,11 @@ stopifnot(all.equal(ffs, fff))
 contrasts(ffs) <- contr.sum(5, sparse = TRUE); contrasts(ffs)
 })
 
+# free1way() et al.
+example(free1way,            run.donttest = TRUE)
+example(power.free1way.test, run.donttest = TRUE)
+example(ppplot,              run.donttest = TRUE)
+
 # glm.Rd
 utils::data(anorexia, package = "MASS")
 
@@ -138,6 +143,7 @@ options(od)
 
 # princomp.Rd
 ## Robust:
+set.seed(1)
 (pc.rob <- princomp(stackloss, covmat = MASS::cov.rob(stackloss)))
 
 # xtabs.Rd

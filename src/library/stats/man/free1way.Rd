@@ -212,7 +212,7 @@ term for the \eqn{k}-th group), \code{vcov}, \code{summary}, and \code{confint} 
 \references{
   \bibshow{*}
 }
-\examples{
+\examples{\donttest{% needs Matrix, so tested in reg-examples3
 
 ## Kruskal-Wallis test
 kruskal.test(Ozone ~ Month, data = airquality)
@@ -284,5 +284,5 @@ example(mantelhaen.test, echo = FALSE)
 ft <- free1way(aperm(Satisfaction, perm = c(2, 1, 3)))
 summary(ft)
 
-}
+}}
 \keyword{htest}

@@ -68,12 +68,9 @@ An object of class \code{stepfun}.
 \references{
   \bibshow{*}
 }
-\examples{
+\examples{\donttest{% needs Matrix, so tested in reg-examples3
 
 ## make example reproducible
-if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)) 
-    runif(1)
-R.seed <- get(".Random.seed", envir = .GlobalEnv)
 set.seed(29)
 
 ## well-fitting logistic model
@@ -112,7 +109,6 @@ with(with(nd, split(y, groups)),
 # inappropriate probit model
 coef(free1way(y ~ groups, data = nd, link = "probit"))
 
-assign(".Random.seed", R.seed, envir = .GlobalEnv)
-}
+}}
 \keyword{hplot}
 \keyword{distribution}
