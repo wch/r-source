@@ -85,7 +85,7 @@ function(x, y,
     y <- factor(y, levels = if(is.numeric(ylevels)) levels(y)[ylevels] else ylevels)
     yaxlabels <- yaxlabels[ylevels]
 
-    ## unconditional density of x
+    ## unconditional density of x for selection of bandwidth and x coordinates
     dx <- if(is.null(from) && is.null(to))
         stats::density(x, bw = bw, n = n, weights = w, ...)
     else
@@ -100,17 +100,33 @@ function(x, y,
       yprop <- cumsum(proportions(tapply(weights, y, FUN = sum, na.rm = TRUE)))
       yprop[is.na(yprop)] <- 0
     }
-    y1 <- matrix(rep(0, n * (ny - 1L)), nrow = (ny - 1L))
+    y1 <- matrix(rep(0, n * ny), nrow = ny)
 
+    ## compute conditional densities in all categories
+    for(i in seq_len(ny)) {
+        yi <- y %in% levels(y)[i]
+        wi <- if (is.null(weights)) NULL else weights[yi] / sum(weights[yi])
+        y1[i,] <- stats::density(x[yi], bw = dx$bw, n = n,
+                                 from = min(dx$x), to = max(dx$x), weights = wi, ...)$y
+    }
+
+    ## total density (sum of all categories)
+    y1 <- y1 * diff(c(0, yprop))
+    dx_y <- colSums(y1)
+
+    ## dropping x coordinates with zero total density
+    dx_y_pos <- dx_y > 0
+    dx_y <- dx_y[dx_y_pos]
+    x1 <- x1[dx_y_pos]
+    y1 <- y1[-ny, dx_y_pos, drop = FALSE]
+
+    ## cumulative densities divided by total density
+    y1[] <- apply(y1, 2L, cumsum)
+    y1 <- sweep(y1, 2L, dx_y, `/`, check.margin = FALSE)
+    
     ## setup return value
     rval <- list()
-
     for(i in seq_len(ny-1L)) {
-        yi <- y %in% levels(y)[seq_len(i)]
-        wi <- if (is.null(weights)) NULL else weights[yi] / sum(weights[yi])
-        dxi <- stats::density(x[yi], bw = dx$bw, n = n,
-                              from = min(dx$x), to = max(dx$x), weights = wi, ...)
-        y1[i,] <- dxi$y/dx$y * yprop[i]
         rval[[i]] <- stats::approxfun(x1, y1[i,], rule = 2)
     }
     names(rval) <- levels(y)[seq_len(ny-1L)]
