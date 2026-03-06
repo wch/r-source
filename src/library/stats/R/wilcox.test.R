@@ -556,10 +556,11 @@ function(STAT, n.x, n.y, alternative)
            "two.sided" = {
                ## NOTE: the permutation distribution is not necessarily
                ## symmetric about its mean.  We compute p-values as in
-               ## \CRANpkg{coin} as the twice the min of the lower and
-               ## upper tail probabilities, unlike binom.test() which
-               ## computes the probability of values with density not
-               ## exceeding that of the observed one.
+               ## as the twice the min of the lower and upper tail
+               ## probabilities, unlike \CRANpkg{coin} which uses
+               ## Prob(|T - E(T)| > |t - E(T)|), and unlike binom.test()
+               ## which computes the probability of values with density
+               ## not exceeding that of the observed one. 
                min(2 * .pwilcox(q, n.x, n.y, z),
                    2 * .pwilcox(q - 1/4, n.x, n.y, z, lower.tail = FALSE),
                    1)
