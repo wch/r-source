@@ -240,3 +240,6 @@ $`%Y-%m-%d %H:%M:%OS9`
 [1] "00.250|001|003|"
 > 
 > 
+> cat('Time elapsed: ', proc.time(),'\n')
+Time elapsed:  0.096 0.035 0.13 0 0.002 
+> 

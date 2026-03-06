@@ -388,3 +388,6 @@ Warning in names(sx) == names(sx15) :
                      <NA> 
              "2022-09-29" 
 > 
+> cat('Time elapsed: ', proc.time(),'\n')
+Time elapsed:  0.116 0.03 0.146 0 0.002 
+> 
