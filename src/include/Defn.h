@@ -837,7 +837,8 @@ int	 Rf_stringPositionTr(SEXP, const char *);
 int LENGTH_EX(SEXP x, const char *file, int line);
 Rboolean Rf_isValidString(SEXP);
 Rboolean Rf_isValidStringF(SEXP);
-//R_xlen_t XLENGTH_EX(SEXP x);
+R_xlen_t XLENGTH_EX(SEXP x);
+R_xlen_t  (XTRUELENGTH)(SEXP x);
 #endif
 
 #ifdef USE_RINTERNALS
