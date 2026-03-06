@@ -1238,4 +1238,23 @@ SEXP R_tryWrap(SEXP);
 }
 #endif
 
+// temporatily add these declarations and unhide until until BioC catches up
+int  (NAMED)(SEXP x);
+void (SET_NAMED)(SEXP x, int v);
+int (IS_S4_OBJECT)(SEXP x);
+void (SET_S4_OBJECT)(SEXP x);
+void (UNSET_S4_OBJECT)(SEXP x);
+SEXP R_data_class(SEXP , Rboolean);
+int  (OBJECT)(SEXP x);  // used in dang via tidyCpp
+void (SET_TYPEOF)(SEXP x, int v);
+int  (ENVFLAGS)(SEXP x);
+void (SET_ENVFLAGS)(SEXP x, int v);
+int  (LEVELS)(SEXP x);  // used in dang via tidyCpp
+int  (SETLEVELS)(SEXP x, int v);  // used in dang via tidyCpp
+void *(EXTPTR_PTR)(SEXP);  // used in rJava in a separate .so file
+SEXP (ENCLOS)(SEXP x);  // used in rJava in a separate .so file
+#if ! (defined(CALLED_FROM_DEFN_H) && !defined(__MAIN__) && (defined(COMPILING_R) || ( __GNUC__ && !defined(__INTEL_COMPILER) )) && (defined(COMPILING_R) || !defined(NO_RINLINEDFUNS)))
+void *(DATAPTR)(SEXP x);
+#endif
+
 #endif /* R_INTERNALS_H_ */

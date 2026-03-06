@@ -3901,9 +3901,11 @@ SEXP (ATTRIB)(SEXP x) { return CHK(ATTRIB(CHK(x))); }
 int (ANY_ATTRIB)(SEXP x) { return ANY_ATTRIB(CHK(x)); }
 int (OBJECT)(SEXP x) { return OBJECT(CHK(x)); }
 int (TYPEOF)(SEXP x) { return TYPEOF(CHK(x)); }
-attribute_hidden int (NAMED)(SEXP x) { return NAMED(CHK(x)); }
+//attribute_hidden
+int (NAMED)(SEXP x) { return NAMED(CHK(x)); }
 attribute_hidden int (RTRACE)(SEXP x) { return RTRACE(CHK(x)); }
-attribute_hidden int (LEVELS)(SEXP x) { return LEVELS(CHK(x)); }
+//attribute_hidden
+int (LEVELS)(SEXP x) { return LEVELS(CHK(x)); }
 int (REFCNT)(SEXP x) { return REFCNT(CHK(x)); }
 attribute_hidden int (TRACKREFS)(SEXP x) { return TRACKREFS(CHK(x)); }
 int (ALTREP)(SEXP x) { return ALTREP(CHK(x)); }
@@ -3946,7 +3948,7 @@ void (SET_ATTRIB)(SEXP x, SEXP v) {
     ATTRIB(x) = v;
 }
 void (SET_OBJECT)(SEXP x, int v) { SET_OBJECT(CHK(x), v); }
-attribute_hidden
+//attribute_hidden
 void (SET_NAMED)(SEXP x, int v)
 {
 #ifndef SWITCH_TO_REFCNT
@@ -3955,7 +3957,7 @@ void (SET_NAMED)(SEXP x, int v)
 }
 attribute_hidden
 void (SET_RTRACE)(SEXP x, int v) { SET_RTRACE(CHK(x), v); }
-attribute_hidden
+//attribute_hidden
 int (SETLEVELS)(SEXP x, int v) { return SETLEVELS(CHK(x), v); }
 void DUPLICATE_ATTRIB(SEXP to, SEXP from) {
     SET_ATTRIB(CHK(to), duplicate(CHK(ATTRIB(CHK(from)))));
@@ -4040,11 +4042,11 @@ attribute_hidden
 void (RAISE_NAMED)(SEXP x, int n) { RAISE_NAMED(CHK(x), n); }
 
 /* S4 object testing */
-attribute_hidden
+//attribute_hidden
 int (IS_S4_OBJECT)(SEXP x){ return IS_S4_OBJECT(CHK(x)); }
-attribute_hidden
+//attribute_hidden
 void (SET_S4_OBJECT)(SEXP x){ SET_S4_OBJECT(CHK(x)); }
-attribute_hidden
+//attribute_hidden
 void (UNSET_S4_OBJECT)(SEXP x){ UNSET_S4_OBJECT(CHK(x)); }
 
 /* JIT optimization support */
@@ -4601,7 +4603,7 @@ attribute_hidden
 SEXP (EXTPTR_PROT)(SEXP x) { CHKEXTPTRSXP(x); return EXTPTR_PROT(CHK(x)); }
 attribute_hidden
 SEXP (EXTPTR_TAG)(SEXP x) { CHKEXTPTRSXP(x); return EXTPTR_TAG(CHK(x)); }
-attribute_hidden
+//attribute_hidden
 void *(EXTPTR_PTR)(SEXP x) { CHKEXTPTRSXP(x); return EXTPTR_PTR(CHK(x)); }
 
 attribute_hidden
@@ -4681,11 +4683,11 @@ attribute_hidden void (SET_DDVAL)(SEXP x, int v) { SET_DDVAL(CHK(x), v); }
 	      __func__, sexptype2char(TYPEOF(x)))
 attribute_hidden
 SEXP (FRAME)(SEXP x) { CHKENVSXP(x); return CHK(FRAME(CHK(x))); }
-attribute_hidden
+//attribute_hidden
 SEXP (ENCLOS)(SEXP x) { CHKENVSXP(x); return CHK(ENCLOS(CHK(x))); }
 attribute_hidden
 SEXP (HASHTAB)(SEXP x) { CHKENVSXP(x); return CHK(HASHTAB(CHK(x))); }
-attribute_hidden
+//attribute_hidden
 int (ENVFLAGS)(SEXP x) { CHKENVSXP(x); return ENVFLAGS(CHK(x)); }
 SEXP R_ParentEnv(SEXP x) { return (ENCLOS)(x); }
 
@@ -4709,7 +4711,7 @@ void (SET_ENCLOS)(SEXP x, SEXP v)
 }
 
 void (SET_HASHTAB)(SEXP x, SEXP v) { FIX_REFCNT(x, HASHTAB(x), v); CHECK_OLD_TO_NEW(x, v); HASHTAB(x) = v; }
-attribute_hidden
+//attribute_hidden
 void (SET_ENVFLAGS)(SEXP x, int v) { SET_ENVFLAGS(x, v); }
 
 /* Promise Accessors */

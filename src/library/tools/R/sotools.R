@@ -559,11 +559,11 @@ function(x)
 }
 
 so_symbol_names_handlers_db$freebsd <-
-function(x)
-{
-    ## same as Linux, most likely, lots of name@@VERSION
-    sub("@.*", "", x)
-}
+    function(x)
+    {
+        ## same as Linux, most likely, lots of name@@VERSION
+        sub("@.*", "", x)
+    }
 
 ## Obsolete ones first,
 nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
@@ -571,6 +571,13 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 
 ## then entry points which are not attribute-hidden
 ## and in a non-API header or no header at all or marked as non-API in a header
+
+## remove declarations and hide these entry points once BioC catches up
+            "OBJECT", "NAMED", "SET_NAMED",
+            "NAMED", "SET_NAMED", "IS_S4_OBJECT", "SET_S4_OBJECT",
+            "UNSET_S4_OBJECT", "R_data_class", "SET_TYPEOF", "ENVFLAGS",
+            "SET_ENVFLAGS", "LEVELS", "SETLEVELS", "EXTPTR_PTR", "ENCLOS",
+            "DATAPTR",
 
             "OutDec", "PRIMOFFSET", "RC_fopen", "R_CollectFromIndex",
             "R_CompiledFileName", "R_FileExists",
@@ -731,7 +738,13 @@ warnNonAPI <-
       "R_lsInternal",
       "BODY", "FORMALS", "CLOENV",
       "SET_TYPEOF",
-      "DATAPTR", "getConnection", "R_data_class")
+      "DATAPTR", "getConnection", "R_data_class",
+      ## remove declarations and hide these entry points once BioC catches up
+      "OBJECT", "NAMED", "SET_NAMED",
+      "NAMED", "SET_NAMED", "IS_S4_OBJECT", "SET_S4_OBJECT",
+      "UNSET_S4_OBJECT", "R_data_class", "SET_TYPEOF", "ENVFLAGS",
+      "SET_ENVFLAGS", "LEVELS", "SETLEVELS", "EXTPTR_PTR", "ENCLOS",
+      "DATAPTR")
 
 ## grDevices uses R_Home R_InputHandlers R_TempDir R_Visible R_cairoCdynload R_fopen R_gzclose R_gzgets R_gzopen R_isForkedChild Rf_envlength Rf_strIsASCII Rf_utf8towcs Rg_set_col_ptrs Ri18n_wcwidth addInputHandler do_X11 do_contourLines do_getGraphicsEventEnv do_getSnapshot do_playSnapshot do_saveplot locale2charset mbcsToUcs2 ptr_R_ProcessEvents
 
