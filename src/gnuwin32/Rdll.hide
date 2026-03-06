@@ -515,7 +515,6 @@
  Rf_installS3Signature
  Rf_isUnmodifiedSpecSym
  Rf_isValidName
- Rf_isValidString
  Rf_lazy_duplicate
  Rf_lfastchoose
  Rf_lgammacor
