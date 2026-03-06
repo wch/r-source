@@ -171,6 +171,7 @@ clean:
 distclean:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
+	-@rm -f $(top_builddir)/share/*/*.rds
 	-@rm -f Makefile
 maintainer-clean: distclean
 
