@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-03-05 r89541) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-03-05 r89546) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -272,21 +272,21 @@ greater.(pseudo)median   2.0 2.0e+00
 +     matrix("", nx, length(alts))))
 , , s0
 
-     two.sided    less            greater       
-[1,] [0, 0] (95%) [-Inf, 0] (95%) [0, Inf] (95%)
-[2,] [0, 1] (95%) [-Inf, 1] (95%) [0, Inf] (95%)
-[3,] [0, 2] (95%) [-Inf, 2] (95%) [0, Inf] (95%)
-[4,] [0, 3] (95%) [-Inf, 3] (95%) [0, Inf] (95%)
-[5,] [0, 4] (95%) [-Inf, 4] (95%) [0, Inf] (95%)
+     two.sided       less               greater         
+[1,] [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%) 
+[2,] [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%) 
+[3,] [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%) 
+[4,] [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%) 
+[5,] [0, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
 
 , , s.
 
-     two.sided            less                greater           
-[1,] [1e-09, 1e-09] (95%) [-Inf, 1e-09] (95%) [1e-09, Inf] (95%)
-[2,] [1e-09, 1] (95%)     [-Inf, 1] (95%)     [1e-09, Inf] (95%)
-[3,] [1e-09, 2] (95%)     [-Inf, 2] (95%)     [1e-09, Inf] (95%)
-[4,] [1e-09, 3] (95%)     [-Inf, 3] (95%)     [1e-09, Inf] (95%)
-[5,] [1e-09, 4] (95%)     [-Inf, 4] (95%)     [1e-09, Inf] (95%)
+     two.sided          less               greater           
+[1,] [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+[2,] [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+[3,] [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+[4,] [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+[5,] [-Inf, Inf] (100%) [-Inf, 4] (97%)    [1e-09, Inf] (97%)
 
 > 
 > 
@@ -352,4 +352,4 @@ difference in location     0e+00  0e+00   0e+00
 > 
 > proc.time()
    user  system elapsed 
-  0.786   0.086   0.889 
+  0.237   0.012   0.240 
