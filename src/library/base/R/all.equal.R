@@ -357,10 +357,6 @@ all.equal.language <- function(target, current, ...)
     if(mt == "expression" && mc == "expression")
 	return(all.equal.list(target, current, ...))
     ttxt <- paste(deparse(target ), collapse = "\n")
-    ## ttxt <- tryCatch(paste(deparse(target ), collapse = "\n"),
-    ##                  error = function(e) NULL)
-    ## if (is.null(ttxt))
-    ##     return("target is not deparse()able")
     ## try: if 'current' is not "language" and deparse() bails out for DOTSXP, see PR#18029
     ctxt <- tryCatch(paste(deparse(current), collapse = "\n"), error=function(e) NULL)
     msg <- c(if(mt != mc)
