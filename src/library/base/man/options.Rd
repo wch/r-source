@@ -700,9 +700,8 @@ getOption(x, default = NULL)
       and \code{"mathjax"}; for all other values basic substitutions are
       used. }
 
-    \item{\code{help.htmltoc}:}{default for the \code{toc} argument
-      of \code{\link{Rd2HTML}}, controlling whether a table of contents
-      should be included. }
+    \item{\code{help.htmltoc}:}{logical: whether a table of contents
+      should be included in dynamic help pages. }
 
     \item{\code{HTTPUserAgent}:}{string used as the \sQuote{user agent} in
       HTTP(S) requests by \code{\link{download.file}}, \code{\link{url}}

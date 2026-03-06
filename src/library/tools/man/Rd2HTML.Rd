@@ -1,6 +1,6 @@
 % File src/library/tools/man/Rd2HTML.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-2025 R Core Team
+% Copyright 2008-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Rd2HTML}
@@ -24,7 +24,7 @@ Rd2HTML(Rd, out = "", package = "", defines = .Platform$OS.type,
         concordance = FALSE,
         standalone = TRUE,
         hooks = list(),
-        toc = isTRUE(getOption("help.htmltoc")),
+        toc = FALSE,
         Rhtml = FALSE,
         ...)
 
@@ -80,7 +80,8 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
     is used by \code{pkg2HTML} to determine the output HTML file path
     given a package name as input. }
   \item{toc}{logical: whether the HTML output should include a table
-      of contents. Ignored unless \code{standalone = TRUE}. }
+    of contents.  This requires a special \code{stylesheet}.
+    Ignored unless \code{standalone = TRUE}. }
   \item{Rhtml}{logical: whether the output is intended to be a \I{Rhtml}
       file that can be processed using \CRANpkg{knitr}. If \code{TRUE}, the
       examples section is wrapped inside a \code{rcode} block. }

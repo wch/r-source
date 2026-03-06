@@ -1,6 +1,6 @@
 #  File src/library/tools/R/Rd2HTML.R
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #  Part of the R package, https://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -461,7 +461,7 @@ Rd2HTML <-
              concordance = FALSE,
              standalone = TRUE,
              hooks = list(),
-             toc = isTRUE(getOption("help.htmltoc")),
+             toc = FALSE, # needs special R-nav.css
              Rhtml = FALSE, # TODO: guess from 'out' if non-missing
              ...)
 {

@@ -1,7 +1,7 @@
 #  File src/library/tools/R/dynamicHelp.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -128,6 +128,9 @@ httpd <- function(path, query, ...)
     }
     linksToTopics <-
         config_val_to_logical(Sys.getenv("_R_HELP_LINKS_TO_TOPICS_", "TRUE"))
+    addTOC <-
+        isTRUE(getOption("help.htmltoc", TRUE))
+
     .HTMLdirListing <- function(dir, base, up) {
         files <- list.files(dir)    # note, no hidden files are listed
         out <- HTMLheader(paste0("Listing of directory<br>", dir),
@@ -347,7 +350,7 @@ httpd <- function(path, query, ...)
         
     cssRegexp <- "^/library/([^/]*)/html/R.css$"
     if (grepl("R\\.css$", path) && !grepl(cssRegexp, path)) {
-        if (isTRUE(getOption("help.htmltoc")))
+        if (addTOC)
             return(list(file = file.path(R.home("doc"), "html", "R-nav.css"),
                         "content-type" = "text/css"))
         else
@@ -570,7 +573,8 @@ httpd <- function(path, query, ...)
         outfile <- tempfile("Rhttpd")
         Rd2HTML(utils:::.getHelpFile(file.path(path, helpdoc)),
                 out = outfile, package = dirpath,
-                dynamic = TRUE, outputEncoding = "UTF-8")
+                dynamic = TRUE, toc = addTOC,
+                outputEncoding = "UTF-8")
         on.exit(unlink(outfile))
         return(list(payload = paste(readLines(file(outfile, encoding="UTF-8")),
                                     collapse = "\n")))
