@@ -27,13 +27,12 @@ package.skeleton(name = "anRpackage", list,
   \item{environment}{an environment where objects are looked for.  See
     \sQuote{Details}.}
   \item{path}{path to put the package directory in.}
-  \item{force}{If \code{FALSE} will not overwrite an existing directory.}
+  \item{force}{logical: if \code{FALSE} will not overwrite an existing directory.}
   \item{code_files}{a character vector with the paths to R code files to
     build the package around.  See \sQuote{Details}.}
-  \item{encoding}{optionally a \code{\link{character}} string with an
-    encoding for an optional \samp{Encoding:} line in
-    \file{DESCRIPTION} when non-ASCII characters will be used; typically
-    one of \code{"latin1"}, \code{"latin2"}, or \code{"UTF-8"}.}
+  \item{encoding}{optionally a character string specifying an
+    \link{Encoding} for the package \file{DESCRIPTION} when
+    non-ASCII characters will be used; often \code{"UTF-8"}.}
 }
 \value{
   Used for its side-effects.

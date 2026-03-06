@@ -3304,7 +3304,7 @@ static SEXP xxmarkup3(SEXP header, SEXP body1, SEXP body2, SEXP body3, int flag,
 {
     SEXP ans;
 #if DEBUGVALS
-    Rprintf("xxmarkup2(header=%p, body1=%p, body2=%p, body3=%p)", header, body1, body2, body3);        
+    Rprintf("xxmarkup3(header=%p, body1=%p, body2=%p, body3=%p)", header, body1, body2, body3);        
 #endif
     
     PRESERVE_SV(ans = allocVector(VECSXP, 3));

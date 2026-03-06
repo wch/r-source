@@ -1658,7 +1658,7 @@ free1way.formula <- function(formula, data, weights, subset, na.action = na.pass
     y <- mf[[response]]
     if (inherits(y, "Surv")) {
         if (!is.null(event))
-            stop(gettextf("Either 'Surv()'in 'formula' or the 'event' argument can be specified in %s",
+            stop(gettextf("Cannot have both a 'Surv()' response and an 'event' argument in %s",
                           "free1way"),
                  domain = NA)
         if (attr(y, "type") != "right")

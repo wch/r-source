@@ -124,7 +124,7 @@ scan(file = "", what = double(), nmax = -1, n = -1, sep = "",
     stripped.
   }
 
-  \item{quiet}{logical: if \code{FALSE} (default), scan() will print a
+  \item{quiet}{logical: if \code{FALSE} (default), print a
     line, saying how many items have been read.}
 
   \item{blank.lines.skip}{logical: if \code{TRUE} blank lines in the
