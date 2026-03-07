@@ -163,7 +163,9 @@ if(FALSE) {
     cross <- Sys.getenv("R_CROSS_BUILD")
     have_cross <- nzchar(cross)
     if(have_cross && !cross %in% c("x64","singlearch"))
-        stop("invalid value ", sQuote(cross), " for R_CROSS_BUILD")
+        stop(gettextf("invalid value for '%s' : %s",
+                      "R_CROSS_BUILD", sQuote(cross)),
+             domain = NA)
     if (have_cross) {
         WINDOWS <- TRUE
 	Sys.setenv(R_OSTYPE = "windows")
@@ -2500,7 +2502,9 @@ if(FALSE) {
     cross <- Sys.getenv("R_CROSS_BUILD")
     if(nzchar(cross)) {
         if(!cross %in% c("x64", "singlearch"))
-            stop("invalid value ", sQuote(cross), " for R_CROSS_BUILD")
+            stop(gettextf("invalid value for '%s' : %s",
+                          "R_CROSS_BUILD", sQuote(cross)),
+                 domain = NA)
         WINDOWS <- TRUE
         Sys.setenv(R_ARCH = if (cross == "singlearch") "" else paste0("/", cross))
     }

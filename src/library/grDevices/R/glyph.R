@@ -133,9 +133,10 @@ checkAxisRange <- function(axis, value) {
     low <- value < standardAxisMin[axis]
     high <- value > standardAxisMax[axis] 
     if (any(low) || any(high)) {
-        warning("Axis value(s) out of range: ",
+        warning(gettext("Axis value(s) out of range"), ": ",
                 paste(paste0(axis[low|high], "=", value[low|high]),
-                      collapse="; "))
+                      collapse="; "),
+                domain = NA)
     }
 }
 
@@ -145,7 +146,7 @@ fontVariation <- function(axis, value) {
     }
     if (!is.character(axis) || any(is.na(axis)) || any(nchar(axis) != 4)||
         any(grepl("[^a-zA-Z]", axis))) {
-        stop("Axis names must 4 ASCII letters long")
+        stop("Axis names must be 4 ASCII letters long")
     }
     if (!is.numeric(value) || any(is.na(value))) {
         stop("Axis values must be numeric")

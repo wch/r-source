@@ -42,19 +42,23 @@ ftable.default <- function(..., exclude = c(NA, NaN),
 	if(is.character(row.vars)) {
 	    i <- pmatch(row.vars, names(dn))
 	    if(anyNA(i))
-		stop("incorrect specification for 'row.vars'")
+		stop(gettextf("incorrect specification for '%s'", "row.vars"),
+		     domain = NA)
 	    row.vars <- i
 	} else if(any((row.vars < 1) | (row.vars > n)))
-	    stop("incorrect specification for 'row.vars'")
+	    stop(gettextf("incorrect specification for '%s'", "row.vars"),
+	         domain = NA)
     }
     if(!is.null(col.vars)) {
 	if(is.character(col.vars)) {
 	    i <- pmatch(col.vars, names(dn))
 	    if(anyNA(i))
-	     stop("incorrect specification for 'col.vars'")
+		stop(gettextf("incorrect specification for '%s'", "col.vars"),
+		     domain = NA)
 	    col.vars <- i
 	} else if(any((col.vars < 1) | (col.vars > n)))
-	    stop("incorrect specification for 'col.vars'")
+	    stop(gettextf("incorrect specification for '%s'", "col.vars"),
+	         domain = NA)
     }
     i <- 1 : n
     if(!is.null(row.vars) && !is.null(col.vars)) {

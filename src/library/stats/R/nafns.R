@@ -160,7 +160,7 @@ naresid.default <- function(omit, x, ...) x
 naresid.exclude <- function(omit, x, ...)
 {
     if (length(omit) == 0 || !is.numeric(omit))
-	stop("invalid argument 'omit'")
+	stop(gettextf("invalid argument '%s'", "omit"), domain = NA)
 
     ## the next line copes with calls from older versions of weights.default.
     if (is.null(x)) return(x)

@@ -1301,10 +1301,10 @@ Rd2HTML <-
             else if (!is.null(last_section_level)) { # argitem
                 current_level <- last_section_level + 1
             }
-            else stop("Invalid value of 'toc_entries'")
+            else stop("invalid value of 'toc_entries'", domain = NA)
             jump_level <- current_level - previous_level
             ## Positive jump values should be exactly 1
-            if (jump_level > 1) warning("Unexpected jump in section level")
+            if (jump_level > 1) warning("unexpected jump in section level", domain = NA)
             if (jump_level > 0) replicate(jump_level, of1("<li><ul>\n")) # see NOTE below
             else if (jump_level < 0) replicate(-jump_level, of1("</ul></li>\n"))
             of0(sprintf("<li><a href='#%s'>%s</a></li>\n", e$id, e$value))

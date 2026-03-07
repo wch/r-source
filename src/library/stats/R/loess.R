@@ -131,9 +131,9 @@ simpleLoess <- function(y, x, weights, span = 0.75, degree = 2L,
     if(D == 1L && sum.drop.sqr)
 	stop("specified the square of a predictor to be dropped with only one numeric predictor")
     if(sum.parametric == D) stop("specified parametric for all predictors")
-    if (length(span) != 1L) stop("invalid argument 'span'")
-    if (length(cell) != 1L) stop("invalid argument 'cell'")
-    if (length(degree) != 1L) stop("invalid argument 'degree'")
+    if (length(span) != 1L) stop(gettextf("invalid argument '%s'", "span"), domain = NA)
+    if (length(cell) != 1L) stop(gettextf("invalid argument '%s'", "cell"), domain = NA)
+    if (length(degree) != 1L) stop(gettextf("invalid argument '%s'", "degree"), domain = NA)
 
     if(surface == "interpolate" && statistics == "approximate") # default
         statistics <- if(trace.hat == "exact") "1.approx"

@@ -19,11 +19,11 @@
 r2dtable <- function(n, r, c)
 {
     if(length(n <- as.integer(n)) == 0L || (n < 0) || is.na(n))
-	stop("invalid argument 'n'")
+	stop(gettextf("invalid argument '%s'", "n"), domain = NA)
     if(length(r <- as.integer(r)) <= 1L || any(r < 0) || anyNA(r))
-	stop("invalid argument 'r'")
+	stop(gettextf("invalid argument '%s'", "r"), domain = NA)
     if(length(c <- as.integer(c)) <= 1L || any(c < 0) || anyNA(c))
-	stop("invalid argument 'c'")
+	stop(gettextf("invalid argument '%s'", "c"), domain = NA)
     if(sum(r) != sum(c))
 	stop("arguments 'r' and 'c' must have the same sums")
     .Call(C_r2dtable, n, r, c) # ../src/r2dtable.c

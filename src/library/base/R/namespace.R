@@ -196,7 +196,7 @@ loadNamespace <- function (package, lib.loc = NULL,
 
     ns <- .Internal(getRegisteredNamespace(package))
     if(!is.null(versionCheck) && !is.list(versionCheck))
-        stop("'versionCheck' must be NULL or list with components 'op' and 'version'")
+        stop("'versionCheck' must be NULL or a list with components 'op' and 'version'")
     checkVer <- !is.null(zop      <- versionCheck[["op"]]) &&
                 !is.null(zversion <- versionCheck[["version"]])
     if (! is.null(ns)) { ## already loaded

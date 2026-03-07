@@ -91,7 +91,8 @@ function(formula, data, subset, na.action, ...)
        || (formula[[3L]][[1L]] != as.name("|"))
        || (length(formula[[3L]][[2L]]) != 1L)
        || (length(formula[[3L]][[3L]]) != 1L))
-        stop("incorrect specification for 'formula'")
+        stop(gettextf("incorrect specification for '%s'", "formula"),
+             domain = NA)
     formula[[3L]][[1L]] <- as.name("+")
     ## </FIXME>
     m <- match.call(expand.dots = FALSE)

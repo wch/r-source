@@ -28,7 +28,7 @@ print.family <- function(x, ...)
 power <- function(lambda = 1)
 {
     if(!is.numeric(lambda) || is.na(lambda))
-        stop("invalid argument 'lambda'")
+        stop(gettextf("invalid argument '%s'", "lambda"), domain = NA)
     if(lambda <= 0) return(make.link("log"))
     if(lambda == 1) return(make.link("identity"))
     linkfun <- function(mu) mu^lambda
