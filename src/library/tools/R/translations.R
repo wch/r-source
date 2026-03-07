@@ -1,7 +1,7 @@
 #  File src/library/tools/R/translations.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,15 +28,17 @@ processPoFile <- function (f, potfile,
     dom <- sub("[.]pot$", "", basename(potfile))
     mo_make <- !is.null(localedir)
 
-    ## Will not update PO file if already in sync; keeps PO-Revision-Date.
-    cmd <- paste("msgmerge",
-                 if (is.character(mergeOpts)) paste("--update", mergeOpts),
-                 shQuote(f), shQuote(potfile))
-    if (verbose) cat("Running cmd", cmd, ":\n")
-    else message("  ", poname, ":", appendLF = FALSE, domain = NA)
-    if (system(cmd) != 0L)
-        return(warning(sprintf("running msgmerge on %s failed", sQuote(f)),
-                       call. = FALSE, domain = NA))
+    if (is.character(mergeOpts)) {
+        ## Will not update PO file if already in sync; keeps PO-Revision-Date.
+        cmd <- paste("msgmerge --update",
+                     paste(mergeOpts, collapse = " "),
+                     shQuote(f), shQuote(potfile))
+        if (verbose) cat("Running cmd", cmd, ":\n")
+        else message("  ", poname, ":", appendLF = FALSE, domain = NA)
+        if (system(cmd) != 0L)
+            return(warning(sprintf("running msgmerge on %s failed", sQuote(f)),
+                           call. = FALSE, domain = NA))
+    }
 
     res <- checkPoFile(f, TRUE)
     if (nrow(res)) {
