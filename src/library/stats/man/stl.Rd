@@ -100,7 +100,7 @@ stl(x, s.window, s.degree = 0,
 
   \code{\link{StructTS}} for different kind of decomposition.
 }
-\examples{
+\examples{\donttest{
 require(graphics)
 
 plot(stl(nottem, "per"))
@@ -123,5 +123,5 @@ plot(stmR, set.pars = NULL)
 sts <- stmR$time.series
 points(time(sts)[iO], 0.8* sts[,"remainder"][iO], pch = 4, col = "red")
 par(op)   # reset
-}
+}}
 \keyword{ts}

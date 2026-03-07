@@ -32,6 +32,7 @@ example(nlminb, run.donttest = TRUE)
 example(optim, run.donttest = TRUE)
 example(prcomp, run.donttest = TRUE)
 example(step, run.donttest = TRUE)
+example(stl, run.donttest = TRUE) # results diff for LLVM 22
 example(summary.manova, run.donttest = TRUE)
 example(uniroot, run.donttest = TRUE)
 

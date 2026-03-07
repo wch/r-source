@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2026-03-05 r89546) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-03-07 r89567) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu
+Platform: aarch64-apple-darwin25.3.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1266,16 +1266,16 @@ Residual standard error: 0.04103 on 7 degrees of freedom
 +         nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2), data = datN,
 +             trace=TRUE, control = list(maxiter = 10)) )
 0.01722077  (5.34e+02): par = (0.6168807 -1.783839 2.050204 0.2004597)
-3.308943e-06 (1.13e+04): par = (0.5798674 -1.784335 2.028943 0.1920502)
-2.571069e-11 (7.68e+06): par = (0.5793882 -1.78778 2.029276 0.1915479)
-1.669346e-23 (5.53e+03): par = (0.5793887 -1.787785 2.029277 0.1915475)
-2.285755e-29 (1.59e+01): par = (0.5793887 -1.787785 2.029277 0.1915475)
-1.345909e-29 (1.20e+01): par = (0.5793887 -1.787785 2.029277 0.1915475)
-1.224242e-29 (9.63e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
-1.224242e-29 (9.63e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
-1.224242e-29 (9.63e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
-1.224242e-29 (9.63e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
-1.224242e-29 (9.63e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
+3.308944e-06 (1.13e+04): par = (0.5798674 -1.784335 2.028943 0.1920502)
+2.571079e-11 (7.68e+06): par = (0.5793882 -1.78778 2.029276 0.1915479)
+1.650535e-23 (2.91e+03): par = (0.5793887 -1.787785 2.029277 0.1915475)
+3.486470e-28 (9.76e-01): par = (0.5793887 -1.787785 2.029277 0.1915475)
+3.475413e-28 (1.03e+00): par = (0.5793887 -1.787785 2.029277 0.1915475)
+3.425893e-28 (5.48e-01): par = (0.5793887 -1.787785 2.029277 0.1915475)
+3.425893e-28 (5.48e-01): par = (0.5793887 -1.787785 2.029277 0.1915475)
+3.425893e-28 (5.48e-01): par = (0.5793887 -1.787785 2.029277 0.1915475)
+3.425893e-28 (5.48e-01): par = (0.5793887 -1.787785 2.029277 0.1915475)
+3.425893e-28 (5.48e-01): par = (0.5793887 -1.787785 2.029277 0.1915475)
 Error in nls(y ~ cbind(exp(-exp(lrc1) * x), exp(-exp(lrc2) * x)), data = xy,  : 
   number of iterations exceeded maximum of 10
 > ## End(Don't show)
@@ -1288,13 +1288,13 @@ Error in nls(y ~ cbind(exp(-exp(lrc1) * x), exp(-exp(lrc2) * x)), data = xy,  :
 3.308942e-06  (9.08e-04): par = (0.5798674 -1.784335 2.028943 0.1920502)
   It.   2, fac=           1, eval (no.,total): ( 1,  2): new dev = 2.57108e-11
 2.571081e-11  (2.53e-06): par = (0.5793882 -1.78778 2.029276 0.1915479)
-  It.   3, fac=           1, eval (no.,total): ( 1,  3): new dev = 1.66926e-23
-1.669257e-23  (2.04e-12): par = (0.5793887 -1.787785 2.029277 0.1915475)
-1.670550e-23  (1.67e-13): par = (2.029277 0.5793887 0.1915475 -1.787785)
+  It.   3, fac=           1, eval (no.,total): ( 1,  3): new dev = 1.66968e-23
+1.669677e-23  (2.04e-12): par = (0.5793887 -1.787785 2.029277 0.1915475)
+1.667503e-23  (1.67e-13): par = (2.029277 0.5793887 0.1915475 -1.787785)
 > all.equal(coef(fm1), coef(fmX1), tolerance=0) # ... rel.diff.: 1.57e-6
-[1] "Mean relative difference: 1.574118e-06"
+[1] "Mean relative difference: 1.574121e-06"
 > all.equal(coef(fm1), coef(fmX),  tolerance=0) # ... rel.diff.: 1.03e-12
-[1] "Mean relative difference: 1.032123e-12"
+[1] "Mean relative difference: 1.031016e-12"
 > ## IGNORE_RDIFF_END
 > stopifnot(all.equal(coef(fm1), coef(fmX1), tolerance = 6e-6),
 +           all.equal(coef(fm1), coef(fmX ), tolerance = 1e-11))
@@ -5177,7 +5177,7 @@ function (V)
         r[seq.int(from = 1L, by = p + 1L, length.out = p)] <- 1
     r
 }
-<bytecode: 0x5637a05887d8>
+<bytecode: 0xbda651498>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7825,7 +7825,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x5637a15c4998>
+<environment: 0xbdab4d8c0>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -9089,23 +9089,23 @@ totss        60.99123 60.99123
 > ## The ordering of the clusters may be platform-dependent.
 > ## IGNORE_RDIFF_BEGIN
 > (cl <- kmeans(x, 5, nstart = 25))
-K-means clustering with 5 clusters of sizes 12, 24, 24, 15, 25
+K-means clustering with 5 clusters of sizes 12, 15, 25, 24, 24
 
 Cluster means:
            x          y
 1  1.3290081  1.1185534
-2  0.1581362 -0.1761590
-3  0.8043520  0.7805033
-4  0.8609139  1.3145869
-5 -0.1096832  0.2106891
+2  0.8609139  1.3145869
+3 -0.1096832  0.2106891
+4  0.1581362 -0.1761590
+5  0.8043520  0.7805033
 
 Clustering vector:
-  [1] 5 2 5 2 5 5 2 2 5 5 3 2 5 5 2 5 2 5 2 5 2 2 5 5 2 5 2 5 5 2 2 2 5 2 5 5 5
- [38] 2 2 2 2 5 5 5 5 5 2 2 2 2 4 3 3 3 3 1 1 1 3 1 4 3 1 4 3 4 3 3 1 4 4 1 4 3
- [75] 3 1 4 4 4 4 3 4 1 3 1 3 4 3 3 3 3 1 3 4 3 3 1 3 4 3
+  [1] 3 4 3 4 3 3 4 4 3 3 5 4 3 3 4 3 4 3 4 3 4 4 3 3 4 3 4 3 3 4 4 4 3 4 3 3 3
+ [38] 4 4 4 4 3 3 3 3 3 4 4 4 4 2 5 5 5 5 1 1 1 5 1 2 5 1 2 5 2 5 5 1 2 2 1 2 5
+ [75] 5 1 2 2 2 2 5 2 1 5 1 5 2 5 5 5 5 1 5 2 5 5 1 5 2 5
 
 Within cluster sum of squares by cluster:
-[1] 1.0314888 1.2816507 1.5056575 0.7104553 2.5330710
+[1] 1.0314888 0.7104553 2.5330710 1.2816507 1.5056575
  (between_SS / total_SS =  88.4 %)
 
 Available components:
@@ -11418,16 +11418,16 @@ Initializing ‘Const’, ‘A’, ‘B’ to '1.'.
 Consider specifying 'start' or using a selfStart model
 1017460.306    (4.15e+02): par = (1 1 1)
 758164.7503    (2.34e+02): par = (13.42031396 1.961485 0.05947543745)
-269506.3539    (3.23e+02): par = (51.75719815 -13.09155956 0.8428607704)
-68969.21896    (1.03e+02): par = (76.0006985 -1.93522674 1.019085799)
-633.3672231    (1.29e+00): par = (100.3761515 8.624648403 5.104490265)
-151.4400225    (9.39e+00): par = (100.6344391 4.913490981 0.2849209558)
-53.08739902    (7.24e+00): par = (100.6830407 6.899303306 0.4637755073)
-1.344478646    (5.97e-01): par = (100.0368306 9.897714142 0.516929494)
+269506.3538    (3.23e+02): par = (51.75719816 -13.09155956 0.8428607705)
+68969.21895    (1.03e+02): par = (76.0006985 -1.935226741 1.019085799)
+633.3672233    (1.29e+00): par = (100.3761515 8.624648407 5.104490263)
+151.4400223    (9.39e+00): par = (100.6344391 4.913490982 0.2849209561)
+53.08739887    (7.24e+00): par = (100.6830407 6.899303309 0.4637755073)
+1.344478645    (5.97e-01): par = (100.0368306 9.897714142 0.516929494)
 0.9908415909   (1.55e-02): par = (100.0300625 9.9144191 0.5023516843)
 0.9906046057   (1.84e-05): par = (100.0288724 9.916224018 0.5025207337)
-0.9906046054   (9.94e-08): par = (100.028875 9.916228366 0.50252165)
-0.9906046054   (5.87e-10): par = (100.028875 9.916228388 0.5025216549)
+0.9906046054   (9.93e-08): par = (100.028875 9.916228366 0.50252165)
+0.9906046054   (6.56e-10): par = (100.028875 9.916228388 0.5025216549)
 Nonlinear regression model
   model: y ~ Const + A * exp(B * x)
    data: parent.frame()
@@ -12745,14 +12745,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x5637a9c46be8>
-<environment: 0x5637a9c4c5e8>
+<bytecode: 0xbdb9f6468>
+<environment: 0xbdba04d28>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x5637a9c46a98>
-<environment: 0x5637a9c4c5e8>
+<bytecode: 0xbdb9f6318>
+<environment: 0xbdba04d28>
 
 > 
 > 
@@ -16237,7 +16237,7 @@ Contrast 1 Contrast 2 Contrast 3
 > getInitial(weight ~ mySSlogis(Time, Asym, xmid, scal),
 +            data = subset(ChickWeight, Chick == 1))
      Asym      xmid      scal 
-937.03011  35.22296  11.40521 
+937.03000  35.22296  11.40521 
 > ## IGNORE_RDIFF_END
 > 
 > # 'first.order.log.model' is a function object defining a first order
@@ -17140,8 +17140,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x5637a052a228>
-<environment: 0x5637a0db7400>
+<bytecode: 0xbda7a65f0>
+<environment: 0xbdb01eee8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -17175,83 +17175,7 @@ f.f1c  1.0 1.00    1 2.00  2.0 2.00    2 4.00  4.0  4.00     4  3.00   3.0
 > 
 > ### ** Examples
 > 
-> require(graphics)
 > 
-> plot(stl(nottem, "per"))
-> plot(stl(nottem, s.window = 7, t.window = 50, t.jump = 1))
-> 
-> plot(stllc <- stl(log(co2), s.window = 21))
-> summary(stllc)
- Call:
- stl(x = log(co2), s.window = 21)
-
- Time.series components:
-    seasonal              trend         remainder         
- Min.   :-9.939e-03   Min.   :5.754   Min.   :-2.255e-03  
- 1st Qu.:-4.537e-03   1st Qu.:5.779   1st Qu.:-4.587e-04  
- Median : 8.778e-04   Median :5.815   Median :-8.867e-06  
- Mean   :-1.304e-06   Mean   :5.819   Mean   :-1.966e-06  
- 3rd Qu.: 4.998e-03   3rd Qu.:5.860   3rd Qu.: 4.023e-04  
- Max.   : 9.115e-03   Max.   :5.899   Max.   : 1.940e-03  
- IQR:
-     STL.seasonal STL.trend STL.remainder data    
-     0.009534     0.081250  0.000861      0.079370
-   %  12.0        102.4       1.1         100.0   
-
- Weights: all == 1
-
- Other components: List of 5
- $ win  : Named num [1:3] 21 21 13
- $ deg  : Named int [1:3] 0 1 1
- $ jump : Named num [1:3] 3 3 2
- $ inner: int 2
- $ outer: int 0
-> ## linear trend, strict period.
-> plot(stl(log(co2), s.window = "per", t.window = 1000))
-> 
-> ## Two STL plotted side by side :
->         stmd <- stl(mdeaths, s.window = "per") # non-robust
-> summary(stmR <- stl(mdeaths, s.window = "per", robust = TRUE))
- Call:
- stl(x = mdeaths, s.window = "per", robust = TRUE)
-
- Time.series components:
-    seasonal           trend        remainder       
- Min.   :-446.83   Min.   :1319   Min.   :-314.584  
- 1st Qu.:-301.57   1st Qu.:1432   1st Qu.: -32.539  
- Median : -79.06   Median :1449   Median :   5.794  
- Mean   :   0.00   Mean   :1473   Mean   :  23.065  
- 3rd Qu.: 304.57   3rd Qu.:1549   3rd Qu.:  47.513  
- Max.   : 544.79   Max.   :1616   Max.   : 872.199  
- IQR:
-     STL.seasonal STL.trend STL.remainder data  
-     606.14       116.77     80.05        707.75
-   %  85.6         16.5      11.3         100.0 
-
- Weights:
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.5594  0.9452  0.7312  0.9853  1.0000 
-
- Other components: List of 5
- $ win  : Named num [1:3] 721 19 13
- $ deg  : Named int [1:3] 0 1 1
- $ jump : Named num [1:3] 73 2 2
- $ inner: int 1
- $ outer: int 15
-> op <- par(mar = c(0, 4, 0, 3), oma = c(5, 0, 4, 0), mfcol = c(4, 2))
-> plot(stmd, set.pars = NULL, labels  =  NULL,
-+      main = "stl(mdeaths, s.w = \"per\",  robust = FALSE / TRUE )")
-> plot(stmR, set.pars = NULL)
-> # mark the 'outliers' :
-> (iO <- which(stmR $ weights  < 1e-8)) # 10 were considered outliers
- [1] 24 26 27 28 36 37 50 52 59 61
-> sts <- stmR$time.series
-> points(time(sts)[iO], 0.8* sts[,"remainder"][iO], pch = 4, col = "red")
-> par(op)   # reset
-> 
-> 
-> 
-> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 > nameEx("summary.aov")
 > ### * summary.aov
@@ -18183,6 +18107,7 @@ Warning in toeplitz(letters[1:4], LETTERS[20:26]) :
 +    colnames(W) <- paste0(",", if(n <= 9) 1:n else c(1:9, letters[seq_len(n-9)]))
 +    print(W)
 + }
+Loading required namespace: Matrix
 17 x 13 sparse Matrix of class "dgCMatrix"
                                             
  [1,] 76  .  .  .  .  .  .  .  .  .  .  .  .
@@ -19729,7 +19654,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  10.762 0.188 10.963 0 0 
+Time elapsed:  2.882 0.262 3.161 0 0 
 > grDevices::dev.off()
 null device 
           1 
