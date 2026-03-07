@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.6.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51+0200\n"
+"POT-Creation-Date: 2026-03-07 10:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,61 +68,61 @@ msgstr ""
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
 
-#: gramLatex.c:2763 gramRd.c:3968
+#: gramLatex.c:2856 gramRd.c:3967
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr ""
 
-#: gramLatex.c:3062 gramRd.c:4521 gramRd.c:4527
+#: gramLatex.c:3167 gramRd.c:4521 gramRd.c:4527
 #, c-format
 msgid "invalid '%s' value"
 msgstr ""
 
-#: gramRd.c:2578 gramRd.c:2581
+#: gramRd.c:2576 gramRd.c:2579
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr ""
 
-#: gramRd.c:3114
+#: gramRd.c:3112
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr ""
 
-#: gramRd.c:3124
+#: gramRd.c:3122
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr ""
 
-#: gramRd.c:3166
+#: gramRd.c:3164
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr ""
 
-#: gramRd.c:3229
+#: gramRd.c:3227
 #, c-format
 msgid "Not enough arguments passed to user macro '%s'"
 msgstr ""
 
-#: gramRd.c:3369 gramRd.c:3373
+#: gramRd.c:3367 gramRd.c:3371
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr ""
 
-#: gramRd.c:3392
+#: gramRd.c:3390
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr ""
 
-#: gramRd.c:3422
+#: gramRd.c:3420
 msgid "macros nested too deeply: infinite recursion?"
 msgstr ""
 
-#: gramRd.c:3830
+#: gramRd.c:3829
 #, c-format
 msgid "Unable to find macro %s"
 msgstr ""
 
-#: gramRd.c:4029
+#: gramRd.c:4028
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr ""
@@ -152,13 +152,21 @@ msgstr ""
 msgid "bad text mode %d in 'deparseRd'"
 msgstr ""
 
-#: http.c:32
+#: http.c:31
 msgid "invalid bind address specification"
 msgstr ""
 
-#: http.c:37
+#: http.c:36
 #, c-format
 msgid "Invalid port number %d: should be in 0:65535, typically above 1024"
+msgstr ""
+
+#: http.c:60
+msgid "allocation error in remove_dot_segments"
+msgstr ""
+
+#: http.c:150 pdscan.c:121
+msgid "non-character argument"
 msgstr ""
 
 #: install.c:95
@@ -176,10 +184,6 @@ msgstr ""
 
 #: pdscan.c:74
 msgid "too many items"
-msgstr ""
-
-#: pdscan.c:121
-msgid "non-character argument"
 msgstr ""
 
 #: signals.c:42

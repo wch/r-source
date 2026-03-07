@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.6.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:17\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -294,9 +294,6 @@ msgstr ""
 msgid "License stub records with missing/empty fields:"
 msgstr ""
 
-msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
-msgstr ""
-
 msgid "Non-portable flags in variable '%s':"
 msgstr ""
 
@@ -471,7 +468,7 @@ msgstr ""
 msgid "Auto-generated content requiring editing in Rd file '%s':"
 msgstr ""
 
-msgid "Rd files without \\description:"
+msgid "Rd files without %s:"
 msgstr ""
 
 msgid "no Rd sections specified"
@@ -798,10 +795,13 @@ msgstr ""
 msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
 msgstr ""
 
-msgid "downloading reverse dependencies ..."
+msgid "downloading reverse dependencies %s"
 msgstr ""
 
-msgid "downloading %s ..."
+msgid "download of reverse dependency %s failed"
+msgstr ""
+
+msgid "download of %d reverse dependencies failed:\n  %s"
 msgstr ""
 
 msgid "checking %s ..."
@@ -915,12 +915,6 @@ msgstr ""
 msgid "restoration failed"
 msgstr ""
 
-msgid "invalid value"
-msgstr ""
-
-msgid "for R_CROSS_BUILD"
-msgstr ""
-
 msgid "error reading file '%s'"
 msgstr ""
 
@@ -1023,6 +1017,9 @@ msgstr ""
 msgid "building a fake installation is disallowed"
 msgstr ""
 
+msgid "specified C++"
+msgstr ""
+
 msgid "using C compiler:"
 msgstr ""
 
@@ -1042,6 +1039,9 @@ msgid "WARNING: failed to revert patch"
 msgstr ""
 
 msgid "Reverted installation-time patch"
+msgstr ""
+
+msgid "Input must be character"
 msgstr ""
 
 msgid "See\n  %s\nfor details."
@@ -1105,6 +1105,12 @@ msgid "Malformed NEWS.Rd file:\nChunk starting\n  %s\ncontains more than one \\i
 msgstr ""
 
 msgid "Malformed NEWS.Rd file:\nChunk starting\n  %s\ncontains no \\item."
+msgstr ""
+
+msgid "There is no binary type for this build of R."
+msgstr ""
+
+msgid "invalid 'type'"
 msgstr ""
 
 msgid "Processing packages:"
@@ -1189,9 +1195,6 @@ msgid "Error: running the tests in %s failed"
 msgstr ""
 
 msgid "Running vignettes for package %s"
-msgstr ""
-
-msgid "Comparing %s to %s ..."
 msgstr ""
 
 msgid "no parsed files found"
@@ -1327,6 +1330,9 @@ msgid "Unknown encoding with non-ASCII data: converting to ASCII"
 msgstr ""
 
 msgid "cannot source package code:"
+msgstr ""
+
+msgid "error in inferior call:\n  %s"
 msgstr ""
 
 msgid "inferiorCallError"
