@@ -663,6 +663,11 @@
       \I{Ivan Krylov}, a patch by \I{Suharto Anggono} and reports of
       \dQuote{\I{Non-deterministic POSIXlt tzone in Europe/London ..}} on
       R-devel.
+
+      \item In intervals with very low density \code{cdplot()} was
+      unreliable, returning probabilities that are greater than one or
+      \code{NaN} (\PR{19011}).
+      Fix from \I{Christoph Dalitz} and \I{Achim Zeileis}.
     }
   }
 }
