@@ -28,7 +28,7 @@ function(y, groups, blocks, ...)
     }
     else {
         if (anyNA(groups) || anyNA(blocks))
-            stop("NA's are not allowed in 'groups' or 'blocks'")
+            stop("NAs are not allowed in 'groups' or 'blocks'")
         if (any(diff(c(length(y), length(groups), length(blocks))) != 0L))
             stop("'y', 'groups' and 'blocks' must have the same length")
         DNAME <- paste0(DNAME, ", ", deparse1(substitute(groups)),
@@ -72,7 +72,7 @@ friedman.test.formula <-
 function(formula, data, subset, na.action, ...)
 {
     if(missing(formula))
-        stop("formula missing")
+        stop("'formula' missing")
     ## <FIXME>
     ## Maybe put this into an internal rewriteTwoWayFormula() when
     ## adding support for strata()

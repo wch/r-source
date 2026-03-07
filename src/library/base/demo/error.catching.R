@@ -75,7 +75,7 @@ tryCatch_WEMs <- function(expr)
 
 f3 <- function(x) {
     r <- log(-x) + sqrt(-x) # produce warnings when x >= 0
-    if(anyNA(r)) message(sprintf("%d NA's produced by log(.) + sqrt(.)", sum(is.na(r))))
+    if(anyNA(r)) message(sprintf("%d NAs produced by log(.) + sqrt(.)", sum(is.na(r))))
     r <- exp(-x)
     if(any(ii <- is.infinite(r))) message(sprintf("Got +/- Inf from x[%s]", deparse(which(ii))))
     r
