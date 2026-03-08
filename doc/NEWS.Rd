@@ -455,7 +455,8 @@
       featured in HTML help.
 
       \item \code{package.skeleton()} now invisibly returns the path of the
-      created directory, along the lines of \code{prompt()} \abbr{et al.}.
+      created directory, similar to \code{prompt()} \abbr{et al.}, and
+      allows creating blank skeletons without any R objects.
     }
   }
 
