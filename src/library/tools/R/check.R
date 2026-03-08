@@ -7617,6 +7617,7 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_CHECK_XREFS_NOTE_MISSING_PACKAGE_ANCHORS_" = "TRUE")
         Sys.setenv("_R_CHECK_PACKAGES_USED_IN_DEMO_" = "TRUE")
         Sys.setenv("_R_CHECK_RCPP_NOT_NEEDED_" = "TRUE")
+        Sys.setenv("_R_CHECK_URLS_SHOW_301_STATUS_" = "TRUE")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE
