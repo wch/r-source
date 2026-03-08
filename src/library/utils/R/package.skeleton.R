@@ -86,8 +86,11 @@ package.skeleton <-
                         paste(sQuote(list[!have]), collapse=", ")),
                 domain = NA)
     list <- list[have]
-    if(!length(list))
-	stop("no R objects specified or available")
+    ## For a long time we had
+    ##   if(!length(list))
+    ##       stop("no R objects specified or available")
+    ## but clearly there is a need for creating skeletons for packages
+    ## with no R code.
 
     message("Creating directories ...", domain = NA)
     ## Make the directories
