@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.6.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25\n"
+"POT-Creation-Date: 2026-03-08 11:37\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -568,9 +568,6 @@ msgid "'code_files' must be a character vector"
 msgstr ""
 
 msgid "'list' must be a character vector naming R objects"
-msgstr ""
-
-msgid "no R objects specified or available"
 msgstr ""
 
 msgid "directory '%s' already exists"
