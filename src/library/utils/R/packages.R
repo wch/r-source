@@ -871,7 +871,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
                     fn <- paste(substring(repos, 6L), fn, sep = "/")
                 }
                 if(file.exists(fn)) {
-                    file.copy(fn, destdir)
+                    ## file.copy(fn, destdir)
                     retval <- rbind(retval, c(p, fn))
                 }
                 else
