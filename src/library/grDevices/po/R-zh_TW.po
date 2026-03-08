@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:17\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -192,6 +192,27 @@ msgstr ""
 
 msgid "Invalid glyph anchor"
 msgstr ""
+
+msgid "Registered axis names must be lower case"
+msgstr ""
+
+msgid "Custom axis names must be upper case"
+msgstr ""
+
+#, fuzzy
+msgid "Axis value(s) out of range"
+msgstr "註標超出邊界了"
+
+#, fuzzy
+msgid "No axes specified"
+msgstr "必須設定 'z' 這個矩陣"
+
+msgid "Axis names must be 4 ASCII letters long"
+msgstr ""
+
+#, fuzzy
+msgid "Axis values must be numeric"
+msgstr "rgb 矩陣必須是數字"
 
 msgid "Font file longer than 500 will be truncated"
 msgstr ""

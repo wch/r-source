@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -212,8 +212,8 @@ msgstr "nie można obliczyć estymatora, zwracanie wartości NA"
 msgid "cannot compute exact p-value with ties"
 msgstr "nie można obliczyć dokładnej wartości prawdopodobieństwa z powtórzonymi wartościami"
 
-msgid "cannot compute exact confidence intervals with ties"
-msgstr "nie można obliczyć dokładnych przedziałów ufności z powtórzonymi wartościami"
+msgid "cannot compute exact confidence interval with ties"
+msgstr "nie można obliczyć dokładnego przedziału ufności z wartościami powtórzonymi"
 
 msgid "'formula' missing or incorrect"
 msgstr "brakuje argumentu 'formula' lub jest niepoprawny"
@@ -611,12 +611,6 @@ msgstr "argument 'y' musi być wektorem liczbowym"
 msgid "not enough finite observations"
 msgstr "niewystarczająca liczba skończonych obserwacji"
 
-msgid "Cannot compute exact p-value with ties"
-msgstr "nie można obliczyć dokładnej wartości prawdopodobieństwa z powtórzonymi wartościami"
-
-msgid "'formula' missing or invalid"
-msgstr "brakuje argumentu 'formula' lub jest niepoprawny"
-
 msgid "invalid formula"
 msgstr "niepoprawna formuła"
 
@@ -824,8 +818,9 @@ msgstr "analiza czynnikowa wymaga przynajmniej trzech zmiennych"
 msgid "no starting values supplied"
 msgstr "nie określono wartości początkowych"
 
-msgid "invalid argument 'lambda'"
-msgstr "niepoprawny argument 'lambda'"
+#, fuzzy
+msgid "invalid argument '%s'"
+msgstr "niepoprawny argument 'n'"
 
 msgid "%s link not recognised"
 msgstr "link %s nie został rozpoznany"
@@ -942,7 +937,77 @@ msgstr "wszystkie grupy muszą zawierać dane"
 msgid "not enough observations"
 msgstr "niewystarczająca liczba obserwacji"
 
-msgid "NA's are not allowed in 'groups' or 'blocks'"
+#, fuzzy
+msgid "incorrect dimensions"
+msgstr "niepoprawne wymiary dla 'xi'"
+
+msgid "at least two response categories required"
+msgstr ""
+
+#, fuzzy
+msgid "at least two groups required"
+msgstr "wymagana jest dwustronna formuła"
+
+msgid "%s currently only allows independent right-censoring"
+msgstr ""
+
+msgid "error computing the Hessian in %s"
+msgstr ""
+
+msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgstr ""
+
+msgid "unsuccessful optimisation in %s"
+msgstr ""
+
+msgid "incompatible length of argument 'mu' in %s"
+msgstr ""
+
+#, fuzzy
+msgid "cannot compute exact permutation distribution in %s"
+msgstr "nie można obliczyć dokładnej wartości prawdopodobieństwa z powtórzonymi wartościami"
+
+#, fuzzy
+msgid "cannot compute one-sided p-values in %s"
+msgstr "nie można obliczyć dokładnej wartości prawdopodobieństwa z powtórzonymi wartościami"
+
+msgid "permutation confidence intervals only available for 2-sample comparisons in %s"
+msgstr ""
+
+#, fuzzy
+msgid "failed to compute confidence interval in %s"
+msgstr "nie można obliczyć dokładnego przedziału ufności z wartościami powtórzonymi"
+
+#, fuzzy
+msgid "incorrect specification for '%s'"
+msgstr "niepoprawne określenie dla argumentu 'row.vars'"
+
+msgid "cannot have both a 'Surv()' response and an 'event' argument in %s"
+msgstr ""
+
+msgid "incorrect argument 'groups' in %s: at least two groups needed"
+msgstr ""
+
+#, fuzzy
+msgid "%s is not defined for unordered responses"
+msgstr "funkcja 'proj()' nie jest zaimplementowana dla wielokrotnych zmiennych zależnych"
+
+#, fuzzy
+msgid "incorrect number of columns for 'prob' in %s"
+msgstr "niepoprawna liczba kolumn w 'x'"
+
+#, fuzzy
+msgid "exactly one of 'n', 'delta', 'power', and 'sig.level' must be NULL"
+msgstr "dokładnie jeden z 'groups', 'n', 'between.var', 'within.var', 'power', oraz 'sig.level' musi mieć wartość NULL"
+
+msgid "effect size can only be computed for two-sample problems in %s"
+msgstr ""
+
+msgid "%s only allows two-sided alternatives in the presence of more than two groups"
+msgstr ""
+
+#, fuzzy
+msgid "NAs are not allowed in 'groups' or 'blocks'"
 msgstr "wartości NA nie są dozwolone w argumentach 'groups' oraz 'blocks'"
 
 msgid "'y', 'groups' and 'blocks' must have the same length"
@@ -951,20 +1016,11 @@ msgstr "argumenty 'y', 'groups' oraz 'block' muszą mieć tę samą długość"
 msgid "not an unreplicated complete block design"
 msgstr "to nie jest niezreplikowana kompletna konstrukcja bloku"
 
-msgid "formula missing"
+msgid "'formula' missing"
 msgstr "brakuje argumentu 'formula'"
-
-msgid "incorrect specification for 'formula'"
-msgstr "niepoprawne określenie dla argumentu 'formula'"
 
 msgid "nothing to tabulate"
 msgstr "nic do tabulowania"
-
-msgid "incorrect specification for 'row.vars'"
-msgstr "niepoprawne określenie dla argumentu 'row.vars'"
-
-msgid "incorrect specification for 'col.vars'"
-msgstr "niepoprawne określenie dla argumentu 'col.vars'"
 
 msgid "'formula' must have both left and right hand sides"
 msgstr "'formula' musi mieć jednocześnie lewą i prawą stronę"
@@ -1420,15 +1476,6 @@ msgstr "określono kwadrat predyktora, który ma zostać pominięty z tylko jedn
 msgid "specified parametric for all predictors"
 msgstr "określono parametry dla wszystkich predyktorów"
 
-msgid "invalid argument 'span'"
-msgstr "niepoprawny argument 'span'"
-
-msgid "invalid argument 'cell'"
-msgstr "niepoprawny argument 'cell'"
-
-msgid "invalid argument 'degree'"
-msgstr "niepoprawny argument 'degree'"
-
 #, fuzzy
 msgid "iterTrace = %d is not obeyed since iterations = %d"
 msgstr "nie jest przestrzegane, ponieważ iteracje ="
@@ -1657,9 +1704,6 @@ msgstr "wszystkie czasy zawierają wartość NA"
 
 msgid "missing values in object"
 msgstr "brakujące wartości w argumencie 'object'"
-
-msgid "invalid argument 'omit'"
-msgstr "niepoprawny argument 'omit'"
 
 msgid "'print.level' must be in {0,1,2}"
 msgstr "argument 'print.level' musi być liczbą w przedziale [0, 1, 2]"
@@ -1959,9 +2003,6 @@ msgstr "elementy 'p' muszą być w przedziale (0,1)"
 msgid "'conf.level' is not a probability"
 msgstr ""
 
-msgid "'formula' missing"
-msgstr "brakuje argumentu 'formula'"
-
 #, fuzzy
 msgid "'type' must be an integer in 1..9"
 msgstr "'y' musi być o jeden dłuższy niż 'x'"
@@ -1978,15 +2019,6 @@ msgstr "brakujące wartości oraz wartości NaN nie są dozwolone jeśli 'na.rm 
 
 msgid "'probs' outside [0,1]"
 msgstr "argument 'probs' jest poza przedziałem [0,1]"
-
-msgid "invalid argument 'n'"
-msgstr "niepoprawny argument 'n'"
-
-msgid "invalid argument 'r'"
-msgstr "niepoprawny argument 'r'"
-
-msgid "invalid argument 'c'"
-msgstr "niepoprawny argument 'c'"
 
 msgid "arguments 'r' and 'c' must have the same sums"
 msgstr "argumenty 'r' oraz 'c' muszą mieć jednakowe sumy"
@@ -2407,26 +2439,22 @@ msgstr "argumenty 'x' oraz 'w' muszą mieć tę samą długość"
 msgid "not enough (non-missing) 'x' observations"
 msgstr "niewystarczająca liczba skończonych obserwacji"
 
-msgid "requested conf.level not achievable"
-msgstr "żądany 'conf.level' nie jest osiągalny"
+#, fuzzy
+msgid "'correct' must be an integer between 0 and 3"
+msgstr "argument 'or' musi być pojedynczą liczbą pomiędzy 0 a Inf"
 
 msgid "cannot compute confidence interval when all observations are zero or tied"
 msgstr "nie można obliczyć przedziału ufności gdy wszystkie obserwacje wynoszą zero lub są powtórzone"
 
-msgid "cannot compute exact confidence interval with ties"
-msgstr "nie można obliczyć dokładnego przedziału ufności z wartościami powtórzonymi"
-
-msgid "cannot compute exact p-value with zeroes"
-msgstr "nie można obliczyć dokładnej wartości prawdopodobieństwa z zerami"
-
-msgid "cannot compute exact confidence interval with zeroes"
-msgstr "nie można obliczyć dokładnego przedziału ufności z zerami"
-
-msgid "Requested conf.level not achievable"
+msgid "requested conf.level not achievable"
 msgstr "żądany 'conf.level' nie jest osiągalny"
 
 msgid "cannot compute confidence interval when all observations are tied"
 msgstr "nie można obliczyć przedziału ufności gdy wszystkie obserwacje są powtórzone"
+
+#, fuzzy
+msgid "'z' is not a rank vector"
+msgstr "argument 'x' nie jest wektorem"
 
 #, fuzzy
 msgid "must supply 'formula' or 'data'"
@@ -2645,6 +2673,54 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "argument 'start.innov' jest zbyt krótki: potrzeba %d punktu"
 msgstr[1] "argument 'start.innov' jest zbyt krótki: potrzeba %d punktów"
 msgstr[2] "argument 'start.innov' jest zbyt krótki: potrzeba %d punktów"
+
+#~ msgid "cannot compute exact confidence intervals with ties"
+#~ msgstr "nie można obliczyć dokładnych przedziałów ufności z powtórzonymi wartościami"
+
+#~ msgid "Cannot compute exact p-value with ties"
+#~ msgstr "nie można obliczyć dokładnej wartości prawdopodobieństwa z powtórzonymi wartościami"
+
+#~ msgid "'formula' missing or invalid"
+#~ msgstr "brakuje argumentu 'formula' lub jest niepoprawny"
+
+#~ msgid "invalid argument 'lambda'"
+#~ msgstr "niepoprawny argument 'lambda'"
+
+#~ msgid "formula missing"
+#~ msgstr "brakuje argumentu 'formula'"
+
+#~ msgid "incorrect specification for 'formula'"
+#~ msgstr "niepoprawne określenie dla argumentu 'formula'"
+
+#~ msgid "incorrect specification for 'col.vars'"
+#~ msgstr "niepoprawne określenie dla argumentu 'col.vars'"
+
+#~ msgid "invalid argument 'span'"
+#~ msgstr "niepoprawny argument 'span'"
+
+#~ msgid "invalid argument 'cell'"
+#~ msgstr "niepoprawny argument 'cell'"
+
+#~ msgid "invalid argument 'degree'"
+#~ msgstr "niepoprawny argument 'degree'"
+
+#~ msgid "invalid argument 'omit'"
+#~ msgstr "niepoprawny argument 'omit'"
+
+#~ msgid "invalid argument 'r'"
+#~ msgstr "niepoprawny argument 'r'"
+
+#~ msgid "invalid argument 'c'"
+#~ msgstr "niepoprawny argument 'c'"
+
+#~ msgid "cannot compute exact p-value with zeroes"
+#~ msgstr "nie można obliczyć dokładnej wartości prawdopodobieństwa z zerami"
+
+#~ msgid "cannot compute exact confidence interval with zeroes"
+#~ msgstr "nie można obliczyć dokładnego przedziału ufności z zerami"
+
+#~ msgid "Requested conf.level not achievable"
+#~ msgstr "żądany 'conf.level' nie jest osiągalny"
 
 #~ msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
 #~ msgstr "funkcja '.nknots.smspl()' jest już eksportowana,; użyj jej zamiast funkcji 'n.knots()'"

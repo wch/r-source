@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2025-03-28 15:38+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -214,8 +214,8 @@ msgstr "kann keinen Schätzer berechnen, gebe NA zurück"
 msgid "cannot compute exact p-value with ties"
 msgstr "kann bei Bindungen keinen exakten p-Wert berechnen"
 
-msgid "cannot compute exact confidence intervals with ties"
-msgstr "Kann kein exaktes Konfidenzintervall bei Bindungen berechnen"
+msgid "cannot compute exact confidence interval with ties"
+msgstr "kann bei Bindungen das exakte Konfidenzintervall nicht berechnen"
 
 msgid "'formula' missing or incorrect"
 msgstr "'formula' fehlt oder ist falsch"
@@ -612,12 +612,6 @@ msgstr "'y' muss ein numerischer Vektor sein"
 msgid "not enough finite observations"
 msgstr "zu wenig endliche Beobachtungen"
 
-msgid "Cannot compute exact p-value with ties"
-msgstr "Kann exakten p-Wert bei Bindungen nicht berechnen"
-
-msgid "'formula' missing or invalid"
-msgstr "'formula' fehlt oder unzulässig"
-
 msgid "invalid formula"
 msgstr "unzulässige Formel"
 
@@ -825,8 +819,9 @@ msgstr "Faktorenanalyse benötigt zumindest drei Variablen"
 msgid "no starting values supplied"
 msgstr "keine Startwerte angegeben"
 
-msgid "invalid argument 'lambda'"
-msgstr "unzulässiges Argument 'lambda'"
+#, fuzzy
+msgid "invalid argument '%s'"
+msgstr "unzulässiges Argument 'n'"
 
 msgid "%s link not recognised"
 msgstr "Link %s nicht erkannt"
@@ -942,7 +937,77 @@ msgstr "alle Gruppen müssen Daten enthalten"
 msgid "not enough observations"
 msgstr "nicht genug Beobachtungen"
 
-msgid "NA's are not allowed in 'groups' or 'blocks'"
+#, fuzzy
+msgid "incorrect dimensions"
+msgstr "falsche Dimensionen für 'xi'"
+
+msgid "at least two response categories required"
+msgstr ""
+
+#, fuzzy
+msgid "at least two groups required"
+msgstr "eine zweiseitige Formel ist nötig"
+
+msgid "%s currently only allows independent right-censoring"
+msgstr ""
+
+msgid "error computing the Hessian in %s"
+msgstr ""
+
+msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgstr ""
+
+msgid "unsuccessful optimisation in %s"
+msgstr ""
+
+msgid "incompatible length of argument 'mu' in %s"
+msgstr ""
+
+#, fuzzy
+msgid "cannot compute exact permutation distribution in %s"
+msgstr "kann bei Bindungen keinen exakten p-Wert berechnen"
+
+#, fuzzy
+msgid "cannot compute one-sided p-values in %s"
+msgstr "kann bei Bindungen nicht die korrekten p-Werte berechnen"
+
+msgid "permutation confidence intervals only available for 2-sample comparisons in %s"
+msgstr ""
+
+#, fuzzy
+msgid "failed to compute confidence interval in %s"
+msgstr "kann bei Bindungen das exakte Konfidenzintervall nicht berechnen"
+
+#, fuzzy
+msgid "incorrect specification for '%s'"
+msgstr "falsche Spezifikation für 'row.vars'"
+
+msgid "cannot have both a 'Surv()' response and an 'event' argument in %s"
+msgstr ""
+
+msgid "incorrect argument 'groups' in %s: at least two groups needed"
+msgstr ""
+
+#, fuzzy
+msgid "%s is not defined for unordered responses"
+msgstr "'proj' ist für multiple Zielgrößen nicht implementiert"
+
+#, fuzzy
+msgid "incorrect number of columns for 'prob' in %s"
+msgstr "falsche Spaltenanzahl in 'x'"
+
+#, fuzzy
+msgid "exactly one of 'n', 'delta', 'power', and 'sig.level' must be NULL"
+msgstr "genau ein Wert aus 'n', 'delta', 'sd', 'power', und 'sig.level' muss NULL sein"
+
+msgid "effect size can only be computed for two-sample problems in %s"
+msgstr ""
+
+msgid "%s only allows two-sided alternatives in the presence of more than two groups"
+msgstr ""
+
+#, fuzzy
+msgid "NAs are not allowed in 'groups' or 'blocks'"
 msgstr "NAs sind in 'groups' oder 'blocks' nicht erlaubt"
 
 msgid "'y', 'groups' and 'blocks' must have the same length"
@@ -951,20 +1016,11 @@ msgstr "'y', 'groups' und 'blocks' müssen gleich lang sein"
 msgid "not an unreplicated complete block design"
 msgstr "kein vollständiges Blockdesign ohne Wiederholungen"
 
-msgid "formula missing"
-msgstr "Formel fehlt"
-
-msgid "incorrect specification for 'formula'"
-msgstr "falsche Spezifikation für 'formula'"
+msgid "'formula' missing"
+msgstr "'formula' fehlt"
 
 msgid "nothing to tabulate"
 msgstr "nichts zu tabellieren"
-
-msgid "incorrect specification for 'row.vars'"
-msgstr "falsche Spezifikation für 'row.vars'"
-
-msgid "incorrect specification for 'col.vars'"
-msgstr "falsche Spezifikation für 'col.vars'"
 
 msgid "'formula' must have both left and right hand sides"
 msgstr "'formula' benötigt sowohl eine linke als auch eine rechte Seite"
@@ -1415,15 +1471,6 @@ msgstr "das Quadrat eines Prädiktors als zu vernachlässigen angenommen, wenn n
 msgid "specified parametric for all predictors"
 msgstr "alle Prädiktoren als parametrisch spezifiziert"
 
-msgid "invalid argument 'span'"
-msgstr "unzulässiges Argument 'span'"
-
-msgid "invalid argument 'cell'"
-msgstr "unzulässiges Argument 'cell'"
-
-msgid "invalid argument 'degree'"
-msgstr "unzulässiges Argument 'degree'"
-
 msgid "iterTrace = %d is not obeyed since iterations = %d"
 msgstr "iterTrace = %d nicht befolgt, da iterations = %d"
 
@@ -1641,9 +1688,6 @@ msgstr "alle Zeiten enthalten ein NA"
 
 msgid "missing values in object"
 msgstr "fehlende Werte im Objekt"
-
-msgid "invalid argument 'omit'"
-msgstr "unzulässiges Argument 'omit'"
 
 msgid "'print.level' must be in {0,1,2}"
 msgstr "'print.level' muss 0, 1 oder 2 sein"
@@ -1940,9 +1984,6 @@ msgstr "Elemente von 'p' müssen in (0, 1) liegen"
 msgid "'conf.level' is not a probability"
 msgstr "'conf.level' ist keine Wahrscheinlichkeit"
 
-msgid "'formula' missing"
-msgstr "'formula' fehlt"
-
 #, fuzzy
 msgid "'type' must be an integer in 1..9"
 msgstr "'y' muss einen länger sein als 'x'"
@@ -1958,15 +1999,6 @@ msgstr "fehlende Werte und NaNs sind nicht erlaubt, wenn 'na.rm' = FALSE"
 
 msgid "'probs' outside [0,1]"
 msgstr "'probs' nicht in [0, 1]"
-
-msgid "invalid argument 'n'"
-msgstr "unzulässiges Argument 'n'"
-
-msgid "invalid argument 'r'"
-msgstr "unzulässiges Argument 'r'"
-
-msgid "invalid argument 'c'"
-msgstr "unzulässiges Argument 'c'"
 
 msgid "arguments 'r' and 'c' must have the same sums"
 msgstr "Argumente 'r' und 'c' müssen dieselben Summen besitzen"
@@ -2381,26 +2413,22 @@ msgstr "'x' und 'w' müssen die selbe Länge haben"
 msgid "not enough (non-missing) 'x' observations"
 msgstr "nicht genug (nicht-fehlende) 'x' Beobachtungen"
 
-msgid "requested conf.level not achievable"
-msgstr "gefordertes conf.level nicht erreichbar"
+#, fuzzy
+msgid "'correct' must be an integer between 0 and 3"
+msgstr "'or' muss einzelne Zahl zwischen 0 und unendlich sein"
 
 msgid "cannot compute confidence interval when all observations are zero or tied"
 msgstr "kann kein Konfidenzintervall berechnen, wenn alle Beobachtungen 0 oder gebunden sind"
 
-msgid "cannot compute exact confidence interval with ties"
-msgstr "kann bei Bindungen das exakte Konfidenzintervall nicht berechnen"
-
-msgid "cannot compute exact p-value with zeroes"
-msgstr "kann den exakten p-Wert bei Nullen nicht berechnen"
-
-msgid "cannot compute exact confidence interval with zeroes"
-msgstr "kann das exakte Konfidenzintervall bei Nullen nicht berechnen"
-
-msgid "Requested conf.level not achievable"
+msgid "requested conf.level not achievable"
 msgstr "gefordertes conf.level nicht erreichbar"
 
 msgid "cannot compute confidence interval when all observations are tied"
 msgstr "kann kein Konfidenzintervall berechnen, wenn alle Beobachtungen gebunden sind"
+
+#, fuzzy
+msgid "'z' is not a rank vector"
+msgstr "'x' ist kein Vektor"
 
 msgid "must supply 'formula' or 'data'"
 msgstr "entweder 'formula' oder 'data' müssen angegeben werden"
@@ -2589,6 +2617,54 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' ist zu kurz: benötige %d Punkt"
 msgstr[1] "'start.innov' ist zu kurz: benötige %d Punkte"
+
+#~ msgid "cannot compute exact confidence intervals with ties"
+#~ msgstr "Kann kein exaktes Konfidenzintervall bei Bindungen berechnen"
+
+#~ msgid "Cannot compute exact p-value with ties"
+#~ msgstr "Kann exakten p-Wert bei Bindungen nicht berechnen"
+
+#~ msgid "'formula' missing or invalid"
+#~ msgstr "'formula' fehlt oder unzulässig"
+
+#~ msgid "invalid argument 'lambda'"
+#~ msgstr "unzulässiges Argument 'lambda'"
+
+#~ msgid "formula missing"
+#~ msgstr "Formel fehlt"
+
+#~ msgid "incorrect specification for 'formula'"
+#~ msgstr "falsche Spezifikation für 'formula'"
+
+#~ msgid "incorrect specification for 'col.vars'"
+#~ msgstr "falsche Spezifikation für 'col.vars'"
+
+#~ msgid "invalid argument 'span'"
+#~ msgstr "unzulässiges Argument 'span'"
+
+#~ msgid "invalid argument 'cell'"
+#~ msgstr "unzulässiges Argument 'cell'"
+
+#~ msgid "invalid argument 'degree'"
+#~ msgstr "unzulässiges Argument 'degree'"
+
+#~ msgid "invalid argument 'omit'"
+#~ msgstr "unzulässiges Argument 'omit'"
+
+#~ msgid "invalid argument 'r'"
+#~ msgstr "unzulässiges Argument 'r'"
+
+#~ msgid "invalid argument 'c'"
+#~ msgstr "unzulässiges Argument 'c'"
+
+#~ msgid "cannot compute exact p-value with zeroes"
+#~ msgstr "kann den exakten p-Wert bei Nullen nicht berechnen"
+
+#~ msgid "cannot compute exact confidence interval with zeroes"
+#~ msgstr "kann das exakte Konfidenzintervall bei Nullen nicht berechnen"
+
+#~ msgid "Requested conf.level not achievable"
+#~ msgstr "gefordertes conf.level nicht erreichbar"
 
 #~ msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
 #~ msgstr ".nknots.smspl() wird jetzt exportiert; bitte statt n.knots() nutzen"
@@ -2819,9 +2895,6 @@ msgstr[1] "'start.innov' ist zu kurz: benötige %d Punkte"
 
 #~ msgid "are just disregarded."
 #~ msgstr "werden einfach ignoriert"
-
-#~ msgid "cannot compute correct p-values with ties"
-#~ msgstr "kann bei Bindungen nicht die korrekten p-Werte berechnen"
 
 #~ msgid "'FUN' must always return a scalar"
 #~ msgstr "'FUN' muss immer einen Skalar zurückgeben"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51+0200\n"
+"POT-Creation-Date: 2026-03-07 10:25+0100\n"
 "PO-Revision-Date: 2025-03-11 11:48+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team:  <R-core@r-project.org>\n"
@@ -120,63 +120,63 @@ msgstr "kann den Status von 'grid' nicht speichern. Zu viele geöffnete Geräte?
 msgid "Cannot create unit scalar from 0-length unit vector"
 msgstr "Kann aus einem unit Vektor der Länge 0 keine unit Skalar erzeugen"
 
-#: unit.c:799 unit.c:1298
+#: unit.c:799 unit.c:1308
 msgid "invalid unit or unit not yet implemented"
 msgstr "unzulässige Einheit oder Einheit noch nicht implementiert"
 
-#: unit.c:1355 unit.c:1386
+#: unit.c:1261 unit.c:1365 unit.c:1396
 msgid "Viewport has zero dimension(s)"
 msgstr "Viewport hat keine Dimension(en)"
 
-#: unit.c:1418 unit.c:1433 unit.c:1448 unit.c:1463
+#: unit.c:1428 unit.c:1443 unit.c:1458 unit.c:1473
 msgid "Unsupported unit conversion"
 msgstr "Nichtunterstützte Einheitenumwandlung"
 
-#: unit.c:1555
+#: unit.c:1565
 msgid "Invalid unit"
 msgstr "Ungültige Einheit"
 
-#: unit.c:1570
+#: unit.c:1580
 msgid "'units' must be character"
 msgstr "'units' müssen Zeichenketten sein"
 
-#: unit.c:1573
+#: unit.c:1583
 msgid "'units' must be of length > 0"
 msgstr "'units' müssen positive Länge haben"
 
-#: unit.c:1584
+#: unit.c:1594
 msgid "data must be either NULL, have length 1, or match the length of the final unit vector"
 msgstr "data muss entweder NULL sein, Länge 1 haben oder die Länge des finalen Einheiten-Vektors"
 
-#: unit.c:1596
+#: unit.c:1606
 msgid "no string supplied for 'strwidth/height' unit"
 msgstr "keine Zeichenkette für die 'strwidth/height' Einheit angegeben"
 
-#: unit.c:1600
+#: unit.c:1610
 msgid "no 'grob' supplied for 'grobwidth/height' unit"
 msgstr "kein 'grob' angegeben für die 'grobwidth/height' Einheit"
 
-#: unit.c:1618
+#: unit.c:1637
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr "'gPath' muss Tiefe 1 in 'grobwidth/height' Einheiten haben"
 
-#: unit.c:1623
+#: unit.c:1642
 msgid "non-NULL value supplied for plain unit"
 msgstr "nicht-NULL Wert angegeben für eine reine Einheit"
 
-#: unit.c:1676 unit.c:1710 unit.c:1759
+#: unit.c:1695 unit.c:1729 unit.c:1778
 msgid "old version of unit class is no longer allowed"
 msgstr "alte Version der Einheitenklasse ist nicht länger erlaubt"
 
-#: unit.c:1682
+#: unit.c:1701
 msgid "object is not coercible to a unit"
 msgstr "Objekt kann nicht in Einheit verwandelt werden"
 
-#: unit.c:1708
+#: unit.c:1727
 msgid "object is not a unit"
 msgstr "Objekt ist keine Einheit"
 
-#: unit.c:1840
+#: unit.c:1859
 msgid "units can only be multiplied with numerics and integers"
 msgstr "Einheiten können nur mit numerischen oder integer Werten multipliziert werden"
 

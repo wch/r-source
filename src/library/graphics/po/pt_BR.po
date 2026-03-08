@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49-0700\n"
+"POT-Creation-Date: 2025-03-31 11:51+0200\n"
 "PO-Revision-Date: 2024-03-19 03:05+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -80,28 +80,28 @@ msgstr "plot.new ainda não foi chamado"
 msgid "invalid graphics state"
 msgstr "estado gráfico inválido"
 
-#: graphics.c:2619
+#: graphics.c:2618
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 
-#: graphics.c:2669
+#: graphics.c:2668
 msgid "No graphics device is active"
 msgstr "Nenhum dispositivo gráfico está ativo"
 
-#: graphics.c:3127
+#: graphics.c:3126
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "flexa de comprimento zero tem ângulo indeterminado e foi pulada"
 
-#: graphics.c:3208
+#: graphics.c:3207
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "parâmetro inválido par(\"bty\") = '%c'; nenhum box() desenhado"
 
-#: graphics.c:3225
+#: graphics.c:3224
 msgid "invalid argument to GBox"
 msgstr "argumento inválido para GBox"
 
-#: graphics.c:3432
+#: graphics.c:3431
 #, fuzzy
 msgid "metric information not available for this device"
 msgstr "informação métrica não disponível para este dispositivo"

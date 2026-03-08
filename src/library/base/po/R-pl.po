@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:50\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -623,6 +623,10 @@ msgstr "'%s' nie jest określone dla uporządkowanych czynników"
 msgid "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
 msgstr "'%s' ma sens tylko dla uporządkowanych czynników jeśli wszystkie argumenty mają ten sam zbiór poziomów"
 
+#, fuzzy
+msgid "directories are ignored"
+msgstr "długie wektory nie są wspierane"
+
 msgid "no files to copy to"
 msgstr "brak plików do skopiowania"
 
@@ -990,11 +994,11 @@ msgstr "nie może mieć argumentów o nazwach"
 msgid "'arg' must be NULL or a character vector"
 msgstr "argument 'arg' musi być wartością NULL lub wektorem tekstowym"
 
+msgid "'several.ok' must be logical or a string starting with \"all\""
+msgstr ""
+
 msgid "'arg' must be of length >= 1"
 msgstr "argument 'arg' musi mieć długość >= 1"
-
-msgid "there is more than one match in 'match.arg'"
-msgstr "jest więcej niż jedno dopasowanie w funkcji 'match.arg()'"
 
 msgid "no match"
 msgstr "brak dopasowania"
@@ -1075,7 +1079,14 @@ msgstr "nie ładuję przestrzeni nazw"
 msgid "%s not found"
 msgstr "wartość %s nie została znaleziona"
 
+msgid "'versionCheck' must be NULL or a list with components 'op' and 'version'"
+msgstr ""
+
 msgid "namespace %s %s is already loaded, but %s %s is required"
+msgstr "przestrzeń nazw %s %s jest już załadowana, ale %s %s jest wymagana"
+
+#, fuzzy
+msgid "namespace '%s' is already loaded so argument '%s' will be ignored."
 msgstr "przestrzeń nazw %s %s jest już załadowana, ale %s %s jest wymagana"
 
 msgid "- loading"
@@ -1557,15 +1568,6 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr "dodatkowe argumenty zostały zignorowane w 'warning()'"
 
-msgid "no natural language support or missing translations"
-msgstr ""
-
-msgid "In bare C locale: LANGUAGE reset, but message language may be unchanged"
-msgstr ""
-
-msgid "In bare C locale, not forcing locale; possibly use 'force = TRUE'?"
-msgstr ""
-
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr ""
 
@@ -1980,6 +1982,9 @@ msgstr[1] ""
 msgstr[2] ""
 "W poleceniu '%s':\n"
 " dodatkowe argumenty %s zostaną odrzucone"
+
+#~ msgid "there is more than one match in 'match.arg'"
+#~ msgstr "jest więcej niż jedno dopasowanie w funkcji 'match.arg()'"
 
 #, fuzzy
 #~ msgid "'name' must be a single character string"

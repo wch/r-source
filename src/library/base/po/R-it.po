@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:50\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2023-01-19 12:03+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -608,6 +608,10 @@ msgstr "'%s' non è definito per variabili factore ordinate"
 msgid "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
 msgstr "'%s' ha senso per variabili factor ordinate se tutti gli argomenti hanno gli stessi livelli"
 
+#, fuzzy
+msgid "directories are ignored"
+msgstr "vettori long non supportati"
+
 msgid "no files to copy to"
 msgstr "nessun file su cui copiare"
 
@@ -975,11 +979,11 @@ msgstr "potrebbe non avere argomenti nominati"
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg' dev'essere NULL o vettore di caratteri"
 
+msgid "'several.ok' must be logical or a string starting with \"all\""
+msgstr ""
+
 msgid "'arg' must be of length >= 1"
 msgstr "'arg' dev'essere lunghezza 1"
-
-msgid "there is more than one match in 'match.arg'"
-msgstr "c'è più di una corrispondenza in 'match.arg'"
 
 msgid "no match"
 msgstr "nessuna corrispondenza"
@@ -1063,7 +1067,14 @@ msgstr ""
 msgid "%s not found"
 msgstr "%s non trovato"
 
+msgid "'versionCheck' must be NULL or a list with components 'op' and 'version'"
+msgstr ""
+
 msgid "namespace %s %s is already loaded, but %s %s is required"
+msgstr "namespace %s %s già caricato, ma %s %s è richiesto"
+
+#, fuzzy
+msgid "namespace '%s' is already loaded so argument '%s' will be ignored."
 msgstr "namespace %s %s già caricato, ma %s %s è richiesto"
 
 msgid "- loading"
@@ -1539,15 +1550,6 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr "ignorati gli argomenti aggiuntivi in warning()"
 
-msgid "no natural language support or missing translations"
-msgstr ""
-
-msgid "In bare C locale: LANGUAGE reset, but message language may be unchanged"
-msgstr ""
-
-msgid "In bare C locale, not forcing locale; possibly use 'force = TRUE'?"
-msgstr ""
-
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr "Sys.setenv(LANGUAGE=\"%s\") potrebbe non essere riuscito"
 
@@ -1927,6 +1929,9 @@ msgstr[0] ""
 msgstr[1] ""
 "In %s :\n"
 " gli argomenti extra %s saranno ignorati"
+
+#~ msgid "there is more than one match in 'match.arg'"
+#~ msgstr "c'è più di una corrispondenza in 'match.arg'"
 
 #~ msgid "'name' must be a single character string"
 #~ msgstr "'name' dev'essere una stringa con un singolo carattere"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:50\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2021-01-27 10:37+0100\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -615,6 +615,10 @@ msgstr "'%s' neapibrėžtas sutvarkytiesiems faktoriams"
 msgid "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
 msgstr "'%s' yra tik reikšminga sutvarkytiesiems faktoriams, jei visi argumentai yra to paties lygio rinkiniai"
 
+#, fuzzy
+msgid "directories are ignored"
+msgstr "ilgi vektoriai yra negalimi"
+
 msgid "no files to copy to"
 msgstr "nėra failo kopijuoti į"
 
@@ -983,11 +987,11 @@ msgstr "gali būti, kad nėra argumento (-ų), pavadintų"
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg' turi būti NULL arba tekstinis vektorius"
 
+msgid "'several.ok' must be logical or a string starting with \"all\""
+msgstr ""
+
 msgid "'arg' must be of length >= 1"
 msgstr "'arg' ilgis turi būti >= 1"
-
-msgid "there is more than one match in 'match.arg'"
-msgstr "yra daugiau nei viena atitiktis 'match.arg'"
 
 msgid "no match"
 msgstr "nėra atitikties"
@@ -1072,7 +1076,14 @@ msgstr ""
 msgid "%s not found"
 msgstr "%s nerastas"
 
+msgid "'versionCheck' must be NULL or a list with components 'op' and 'version'"
+msgstr ""
+
 msgid "namespace %s %s is already loaded, but %s %s is required"
+msgstr "vardų erdvė %s %s jau įkelta, bet turi būti %s %s"
+
+#, fuzzy
+msgid "namespace '%s' is already loaded so argument '%s' will be ignored."
 msgstr "vardų erdvė %s %s jau įkelta, bet turi būti %s %s"
 
 msgid "- loading"
@@ -1549,15 +1560,6 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr "papildomi argumentai ignoruojami warning()"
 
-msgid "no natural language support or missing translations"
-msgstr ""
-
-msgid "In bare C locale: LANGUAGE reset, but message language may be unchanged"
-msgstr ""
-
-msgid "In bare C locale, not forcing locale; possibly use 'force = TRUE'?"
-msgstr ""
-
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr ""
 
@@ -1970,6 +1972,9 @@ msgstr[1] ""
 msgstr[2] ""
 "%s :\n"
 "%s papildomų argumentų bus ignoruojama"
+
+#~ msgid "there is more than one match in 'match.arg'"
+#~ msgstr "yra daugiau nei viena atitiktis 'match.arg'"
 
 #, fuzzy
 #~ msgid "'name' must be a single character string"

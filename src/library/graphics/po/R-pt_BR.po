@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -97,11 +97,18 @@ msgstr "argumento inicial inválido"
 msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at' deve ter o mesmo comprimento que 'z$n', isto é"
 
+msgid "panel.first ignored, it is not a function"
+msgstr ""
+
 msgid "invalid boxplot widths"
 msgstr "larguras de boxplots inválidas"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
 msgstr "alguns entalhes saíram fora das dobradiças ('caixa'): talvez definir notch=FALSE"
+
+#, fuzzy
+msgid "panel.last ignored, it is not a function"
+msgstr "'include.lowest' ignorado pois 'breaks' não é um vetor"
 
 msgid "'formula' should specify exactly two variables"
 msgstr "'formula' deve especificar exatamente duas variáveis"
@@ -476,14 +483,14 @@ msgstr "método de gráfico inválido"
 msgid "'at' must have length equal to the number %d of groups"
 msgstr "'at' deve ter comprimento igual ao número de %d de grupos"
 
-msgid "formula missing or incorrect"
-msgstr "formula faltando ou incorreta"
-
 msgid "'number' must have same length as 'x' and 'y'"
 msgstr "'number' deve ter o mesmo comprimento que 'x' e 'y'"
 
 msgid "exactly one symbol type must be specified"
 msgstr "exatamente um tipo de símbolo deve ser especificado"
+
+msgid "'labels' truncated to length %d"
+msgstr ""
 
 #, fuzzy
 msgid "x log scale:  xinch() is nonsense"
@@ -511,6 +518,9 @@ msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] "argumento %s não está sendo utilizado"
 msgstr[1] "argumentos %s não estão sendo utilizados"
+
+#~ msgid "formula missing or incorrect"
+#~ msgstr "formula faltando ou incorreta"
 
 #~ msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
 #~ msgstr "'counts' negativo. Erro interno no código C para \"bincount\""

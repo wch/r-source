@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:17\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: none\n"
@@ -322,9 +322,6 @@ msgstr ""
 msgid "License stub records with missing/empty fields:"
 msgstr "no es poden tractar els objectes RD amb noms buits o que manquen"
 
-msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
-msgstr "Usa la llicència ACM: només és apropiat per al codi TOMS d'ACM anterior a 2013"
-
 #, fuzzy
 msgid "Non-portable flags in variable '%s':"
 msgstr "Indicadors no portables a la variable «%s»:"
@@ -535,8 +532,8 @@ msgid "Auto-generated content requiring editing in Rd file '%s':"
 msgstr "El contingut generat automàticament que requereix edició a l'objecte Rd «%s»:"
 
 #, fuzzy
-msgid "Rd files without \\description:"
-msgstr "Objectes Rd sense \\description:"
+msgid "Rd files without %s:"
+msgstr "Fitxers Rd sense \\alias:"
 
 #, fuzzy
 msgid "no Rd sections specified"
@@ -992,12 +989,18 @@ msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
 msgstr "'reverse$repos' ha de ser un subconjunt de getOption(\"repos\")"
 
 #, fuzzy
-msgid "downloading reverse dependencies ..."
+msgid "downloading reverse dependencies %s"
 msgstr "s'estan baixant les dependències inverses..."
 
 #, fuzzy
-msgid "downloading %s ..."
-msgstr "s'està baixant %s ..."
+msgid "download of reverse dependency %s failed"
+msgstr "s'estan baixant les dependències inverses..."
+
+#, fuzzy
+msgid ""
+"download of %d reverse dependencies failed:\n"
+"  %s"
+msgstr "s'estan baixant les dependències inverses..."
 
 #, fuzzy
 msgid "checking %s ..."
@@ -1146,14 +1149,6 @@ msgid "restoration failed"
 msgstr "ha fallat la restauració"
 
 #, fuzzy
-msgid "invalid value"
-msgstr "valor no vàlid"
-
-#, fuzzy
-msgid "for R_CROSS_BUILD"
-msgstr "per a RCROSSBUILD"
-
-#, fuzzy
 msgid "error reading file '%s'"
 msgstr "s'ha produït un error en llegir el fitxer «%s»"
 
@@ -1288,6 +1283,9 @@ msgstr "ERROR: no teniu permís per a instal·lar al directori"
 msgid "building a fake installation is disallowed"
 msgstr "no es permet la construcció d'una instal·lació falsa"
 
+msgid "specified C++"
+msgstr ""
+
 #, fuzzy
 msgid "using C compiler:"
 msgstr "utilitzant el compilador de C:"
@@ -1315,6 +1313,10 @@ msgstr "AVÍS: no s'ha pogut revertir el pedaç"
 #, fuzzy
 msgid "Reverted installation-time patch"
 msgstr "S'ha revertit el pedaç del temps d'instal·lació"
+
+#, fuzzy
+msgid "Input must be character"
+msgstr "«text» ha de ser un vector de caràcters"
 
 #, fuzzy
 msgid ""
@@ -1443,6 +1445,13 @@ msgstr ""
 "  %s\n"
 "no conté cap \\item."
 
+msgid "There is no binary type for this build of R."
+msgstr ""
+
+#, fuzzy
+msgid "invalid 'type'"
+msgstr "paquet no vàlid"
+
 #, fuzzy
 msgid "Processing packages:"
 msgstr "Processant paquets:"
@@ -1555,10 +1564,6 @@ msgstr "ha fallat l'execució de «texi2dvi» a «%s»"
 #, fuzzy
 msgid "Running vignettes for package %s"
 msgstr "S'estan executant vinyetes per al paquet %s"
-
-#, fuzzy
-msgid "Comparing %s to %s ..."
-msgstr "S'està comparant %s a %s..."
 
 #, fuzzy
 msgid "no parsed files found"
@@ -1743,6 +1748,11 @@ msgstr "Codificació desconeguda amb dades no ASCII: s'està convertint a ASCII"
 #, fuzzy
 msgid "cannot source package code:"
 msgstr "no es pot font el codi del paquet:"
+
+msgid ""
+"error in inferior call:\n"
+"  %s"
+msgstr ""
 
 msgid "inferiorCallError"
 msgstr ""
@@ -1945,6 +1955,29 @@ msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Entrada BibTeX corresponent:"
 msgstr[1] "Entrades corresponents de BibTeX:"
+
+#~ msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
+#~ msgstr "Usa la llicència ACM: només és apropiat per al codi TOMS d'ACM anterior a 2013"
+
+#, fuzzy
+#~ msgid "Rd files without \\description:"
+#~ msgstr "Objectes Rd sense \\description:"
+
+#, fuzzy
+#~ msgid "downloading %s ..."
+#~ msgstr "s'està baixant %s ..."
+
+#, fuzzy
+#~ msgid "invalid value"
+#~ msgstr "valor no vàlid"
+
+#, fuzzy
+#~ msgid "for R_CROSS_BUILD"
+#~ msgstr "per a RCROSSBUILD"
+
+#, fuzzy
+#~ msgid "Comparing %s to %s ..."
+#~ msgstr "S'està comparant %s a %s..."
 
 #, fuzzy
 #~ msgid "parse error in file '%s':"

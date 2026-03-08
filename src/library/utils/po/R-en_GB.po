@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-08 11:37\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: none\n"
@@ -71,9 +71,6 @@ msgstr "Warning: unknown option '--clean='%s"
 
 msgid "Warning: unknown option %s"
 msgstr "Warning: unknown option %s"
-
-msgid "Output file:"
-msgstr "Output file:"
 
 msgid "Compacting PDF document"
 msgstr "Compacting PDF document"
@@ -295,6 +292,10 @@ msgstr "Enter an environment number, or 0 to exit"
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
 msgstr "recover called non-interactively; frames dumped, use debugger() to view"
+
+#, fuzzy
+msgid "Enter a frame number, or 0 to exit"
+msgstr "Enter an environment number, or 0 to exit"
 
 msgid "No suitable frames for recover()"
 msgstr "No suitable frames for recover()"
@@ -612,14 +613,14 @@ msgstr "'code_files' must be a character vector"
 msgid "'list' must be a character vector naming R objects"
 msgstr "'list' must be a character vector naming R objects"
 
-msgid "no R objects specified or available"
-msgstr "no R objects specified or available"
-
 msgid "directory '%s' already exists"
 msgstr "directory '%s' already exists"
 
 msgid "generic functions and other S4 objects (e.g., '%s') cannot be dumped; use the 'code_files' argument"
 msgstr "generic functions and other S4 objects (e.g., '%s') cannot be dumped; use the 'code_files' argument"
+
+msgid "'download.file()' error code '%d'"
+msgstr "'download.file()' error code '%d'"
 
 msgid "unable to access index for repository %s"
 msgstr "unable to access index for repository %s"
@@ -660,9 +661,6 @@ msgstr "'destdir' is not a directory"
 msgid "no package %s at the repositories"
 msgstr "no package %s at the repositories"
 
-msgid "invalid 'type'"
-msgstr "invalid 'type'"
-
 msgid "package %s does not exist on the local repository"
 msgstr "package %s does not exist on the local repository"
 
@@ -675,8 +673,8 @@ msgstr "--- Please select a CRAN mirror for use in this session ---"
 msgid "trying to use CRAN without setting a mirror"
 msgstr "trying to use CRAN without setting a mirror"
 
-msgid "'download.file()' error code '%d'"
-msgstr "'download.file()' error code '%d'"
+msgid "invalid 'type'"
+msgstr "invalid 'type'"
 
 msgid "failed to download mirrors file (%s); using local file '%s'"
 msgstr "failed to download mirrors file (%s); using local file '%s'"
@@ -760,11 +758,9 @@ msgstr "type == \"both\" cannot be used with 'repos = NULL'"
 msgid "source repository is unavailable to check versions"
 msgstr "source repository is unavailable to check versions"
 
-msgid "cannot install macOS binary packages on Windows"
+#, fuzzy
+msgid "cannot install binary packages from other operating systems on Windows"
 msgstr "cannot install macOS binary packages on Windows"
-
-msgid "cannot install macOS binary packages on this platform"
-msgstr "cannot install macOS binary packages on this platform"
 
 msgid "cannot install Windows binary packages on this platform"
 msgstr "cannot install Windows binary packages on this platform"
@@ -1060,11 +1056,12 @@ msgstr "failed to create directory %s"
 msgid "invalid octal digit"
 msgstr "invalid octal digit"
 
+#, fuzzy
+msgid "removing leading '/' from '%s'"
+msgstr "removing leading '/'"
+
 msgid "removing drive '%s'"
 msgstr "removing drive '%s'"
-
-msgid "removing leading '/'"
-msgstr "removing leading '/'"
 
 msgid "path starts with '~'"
 msgstr "path starts with '~'"
@@ -1072,8 +1069,8 @@ msgstr "path starts with '~'"
 msgid "path contains '..'"
 msgstr "path contains '..'"
 
-msgid "path is empty"
-msgstr "path is empty"
+msgid "cannot extract through symlink"
+msgstr ""
 
 msgid "'tarfile' must be a character string or a connection"
 msgstr "'tarfile' must be a character string or a connection"
@@ -1092,6 +1089,9 @@ msgstr "checksum error for entry '%s'"
 
 msgid "failed to copy %s to %s"
 msgstr "failed to copy %s to %s"
+
+msgid "cannot restore symbolic link from %s to %s as a file copy, because the source doesn't exist; try extracting again?"
+msgstr ""
 
 msgid "unsupported entry type"
 msgstr "unsupported entry type"
@@ -1199,11 +1199,18 @@ msgstr "invalid method:"
 msgid "download had nonzero exit status"
 msgstr "download had nonzero exit status"
 
+msgid "Built: value is not a string"
+msgstr ""
+
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar' returned non-zero exit code %d"
 
-msgid "file %s is not a macOS binary package"
+#, fuzzy
+msgid "file %s is not a binary package"
 msgstr "file %s is not a macOS binary package"
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "package %s successfully unpacked and MD5 sums checked"
@@ -1234,17 +1241,20 @@ msgstr ""
 "The downloaded binary packages are in\n"
 "\t%s"
 
-msgid "'memory.size()' is Windows-specific"
-msgstr "'memory.size()' is Windows-specific"
+msgid "'memory.size()' is no longer supported"
+msgstr "'memory.size()' is no longer supported"
 
-msgid "'memory.limit()' is Windows-specific"
-msgstr "'memory.limit()' is Windows-specific"
+msgid "'memory.limit()' is no longer supported"
+msgstr "'memory.limit()' is no longer supported"
 
 msgid "method 'mailx' is Unix-only"
 msgstr "method 'mailx' is Unix-only"
 
 msgid "zip file %s not found"
 msgstr "zip file %s not found"
+
+msgid "cannot extract package from %s"
+msgstr ""
 
 msgid "failed to create %s"
 msgstr "failed to create %s"
@@ -1261,12 +1271,6 @@ msgstr "unable to copy temporary installation %s to %s"
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
 msgstr "Only '*.zip' and '*.tar.gz' files can be installed."
 
-msgid "'memory.size()' is no longer supported"
-msgstr "'memory.size()' is no longer supported"
-
-msgid "'memory.limit()' is no longer supported"
-msgstr "'memory.limit()' is no longer supported"
-
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog() cannot be used non-interactively"
 
@@ -1277,6 +1281,12 @@ msgid "%d Sweave file for basename %s found"
 msgid_plural "%d Sweave files for basename %s found"
 msgstr[0] "%d Sweave file for basename %s found"
 msgstr[1] "%d Sweave files for basename %s found"
+
+#, fuzzy
+msgid "Output file:  "
+msgid_plural "Output files:  "
+msgstr[0] "Output file:"
+msgstr[1] "Output file:"
 
 msgid "Output/used file:  "
 msgid_plural "Output/used files:  "
@@ -1441,6 +1451,21 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "invalid roman numeral: %s"
 msgstr[1] "invalid roman numerals: %s"
+
+#~ msgid "no R objects specified or available"
+#~ msgstr "no R objects specified or available"
+
+#~ msgid "cannot install macOS binary packages on this platform"
+#~ msgstr "cannot install macOS binary packages on this platform"
+
+#~ msgid "path is empty"
+#~ msgstr "path is empty"
+
+#~ msgid "'memory.size()' is Windows-specific"
+#~ msgstr "'memory.size()' is Windows-specific"
+
+#~ msgid "'memory.limit()' is Windows-specific"
+#~ msgstr "'memory.limit()' is Windows-specific"
 
 #~ msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 #~ msgstr "It is recommended to use %s/%s instead of %s/%s/%s."

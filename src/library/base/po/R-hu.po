@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:50\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2023-09-01 11:37+0000\n"
 "Last-Translator: Norbert Solymosi <solymosi.norbert@gmail.com>\n"
 "Language-Team: none\n"
@@ -604,6 +604,9 @@ msgstr "'%s' nem definiált rendezett faktorokra"
 msgid "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
 msgstr "'%s' csak akkor értelmezhető rendezett faktorokra, ha minden argumentum szint beállításai megegyeznek"
 
+msgid "directories are ignored"
+msgstr ""
+
 msgid "no files to copy to"
 msgstr "nincsen fájl, amit másolni lehetne ide"
 
@@ -964,11 +967,11 @@ msgstr ""
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg' vagy NULL vagy karakter vektor kell legyen"
 
+msgid "'several.ok' must be logical or a string starting with \"all\""
+msgstr ""
+
 msgid "'arg' must be of length >= 1"
 msgstr "'arg' hossza >= 1 kell legyen"
-
-msgid "there is more than one match in 'match.arg'"
-msgstr "több mint egy egyezés a 'match.arg' függvényben"
 
 msgid "no match"
 msgstr "nincs egyezés"
@@ -1047,8 +1050,15 @@ msgstr ""
 msgid "%s not found"
 msgstr "%s nem található"
 
+msgid "'versionCheck' must be NULL or a list with components 'op' and 'version'"
+msgstr ""
+
 msgid "namespace %s %s is already loaded, but %s %s is required"
 msgstr ""
+
+#, fuzzy
+msgid "namespace '%s' is already loaded so argument '%s' will be ignored."
+msgstr "a(z) %s névteret a(z) %s importálta, így a betöltöttsége nem megszüntethető"
 
 msgid "- loading"
 msgstr ""
@@ -1522,15 +1532,6 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr "a warning()-ban további argumentumok figyelmen kívül hagyva"
 
-msgid "no natural language support or missing translations"
-msgstr ""
-
-msgid "In bare C locale: LANGUAGE reset, but message language may be unchanged"
-msgstr ""
-
-msgid "In bare C locale, not forcing locale; possibly use 'force = TRUE'?"
-msgstr ""
-
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr ""
 
@@ -1907,6 +1908,9 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "there is more than one match in 'match.arg'"
+#~ msgstr "több mint egy egyezés a 'match.arg' függvényben"
 
 #~ msgid "'from' must be specified"
 #~ msgstr "a 'from' argumentumot meg kell adni"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:50\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2024-03-20 03:05+0000\n"
 "Last-Translator: \"Luis D. Verde Arregoitia\" <luisd@ciencias.unam.mx>\n"
 "Language-Team: none\n"
@@ -610,6 +610,10 @@ msgid "'%s' is only meaningful for ordered factors if all arguments have the sam
 msgstr "'%s' solo es significativo para factores ordenados si todos los argumentos tienen el mismo set de niveles"
 
 #, fuzzy
+msgid "directories are ignored"
+msgstr "vectores largos no son soportados"
+
+#, fuzzy
 msgid "no files to copy to"
 msgstr "no hay archivos a donde copiar"
 
@@ -1024,12 +1028,11 @@ msgstr "puede no tener argumento(s) nombrados"
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg' debe ser NULL o un vector carácter"
 
+msgid "'several.ok' must be logical or a string starting with \"all\""
+msgstr ""
+
 msgid "'arg' must be of length >= 1"
 msgstr "'arg' debe ser de longitud >= 1"
-
-#, fuzzy
-msgid "there is more than one match in 'match.arg'"
-msgstr "hay más de una coincidencia en 'match.arg'"
 
 #, fuzzy
 msgid "no match"
@@ -1119,8 +1122,15 @@ msgstr ""
 msgid "%s not found"
 msgstr ""
 
+msgid "'versionCheck' must be NULL or a list with components 'op' and 'version'"
+msgstr ""
+
 msgid "namespace %s %s is already loaded, but %s %s is required"
 msgstr ""
+
+#, fuzzy
+msgid "namespace '%s' is already loaded so argument '%s' will be ignored."
+msgstr "el argumento '%s' será ignorado"
 
 msgid "- loading"
 msgstr ""
@@ -1589,15 +1599,6 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr ""
 
-msgid "no natural language support or missing translations"
-msgstr ""
-
-msgid "In bare C locale: LANGUAGE reset, but message language may be unchanged"
-msgstr ""
-
-msgid "In bare C locale, not forcing locale; possibly use 'force = TRUE'?"
-msgstr ""
-
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr ""
 
@@ -1971,6 +1972,10 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] ""
 msgstr[1] ""
+
+#, fuzzy
+#~ msgid "there is more than one match in 'match.arg'"
+#~ msgstr "hay más de una coincidencia en 'match.arg'"
 
 #~ msgid "'name' must be a single character string"
 #~ msgstr "'name' debe ser un string de un solo caracter"

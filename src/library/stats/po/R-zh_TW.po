@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -216,8 +216,8 @@ msgstr "無法計算估計量，回覆 NA"
 msgid "cannot compute exact p-value with ties"
 msgstr "無法精確計算帶連結的 p 值"
 
-msgid "cannot compute exact confidence intervals with ties"
-msgstr "無法精確計算帶連結的置信區間"
+msgid "cannot compute exact confidence interval with ties"
+msgstr "有連結時無法計算精確的置信區間"
 
 msgid "'formula' missing or incorrect"
 msgstr "沒有 'formula' 或不正確"
@@ -615,12 +615,6 @@ msgstr "'y' 必須是數值向量"
 msgid "not enough finite observations"
 msgstr "有限值的觀察量不夠"
 
-msgid "Cannot compute exact p-value with ties"
-msgstr "無法給連結計算精確 p 值"
-
-msgid "'formula' missing or invalid"
-msgstr "'formula' 遺漏或不正確"
-
 msgid "invalid formula"
 msgstr "公式無效"
 
@@ -828,8 +822,9 @@ msgstr "因子分析至少需要三個變數"
 msgid "no starting values supplied"
 msgstr "沒有設定初始值"
 
-msgid "invalid argument 'lambda'"
-msgstr "引數 'lambda' 無效"
+#, fuzzy
+msgid "invalid argument '%s'"
+msgstr "引數 'n' 無效"
 
 msgid "%s link not recognised"
 msgstr "不明 %s 的鏈結"
@@ -948,7 +943,77 @@ msgstr "所有的組都必須包含資料"
 msgid "not enough observations"
 msgstr "觀察量不夠"
 
-msgid "NA's are not allowed in 'groups' or 'blocks'"
+#, fuzzy
+msgid "incorrect dimensions"
+msgstr "'xi' 的尺寸無效"
+
+msgid "at least two response categories required"
+msgstr ""
+
+#, fuzzy
+msgid "at least two groups required"
+msgstr "需要雙邊公式"
+
+msgid "%s currently only allows independent right-censoring"
+msgstr ""
+
+msgid "error computing the Hessian in %s"
+msgstr ""
+
+msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgstr ""
+
+msgid "unsuccessful optimisation in %s"
+msgstr ""
+
+msgid "incompatible length of argument 'mu' in %s"
+msgstr ""
+
+#, fuzzy
+msgid "cannot compute exact permutation distribution in %s"
+msgstr "無法精確計算帶連結的 p 值"
+
+#, fuzzy
+msgid "cannot compute one-sided p-values in %s"
+msgstr "無法精確計算帶連結的 p 值"
+
+msgid "permutation confidence intervals only available for 2-sample comparisons in %s"
+msgstr ""
+
+#, fuzzy
+msgid "failed to compute confidence interval in %s"
+msgstr "有連結時無法計算精確的置信區間"
+
+#, fuzzy
+msgid "incorrect specification for '%s'"
+msgstr "'row.vars' 設定無效"
+
+msgid "cannot have both a 'Surv()' response and an 'event' argument in %s"
+msgstr ""
+
+msgid "incorrect argument 'groups' in %s: at least two groups needed"
+msgstr ""
+
+#, fuzzy
+msgid "%s is not defined for unordered responses"
+msgstr "'proj' 還沒有為多回應實作"
+
+#, fuzzy
+msgid "incorrect number of columns for 'prob' in %s"
+msgstr "'x' 裡的行數無效"
+
+#, fuzzy
+msgid "exactly one of 'n', 'delta', 'power', and 'sig.level' must be NULL"
+msgstr "'n'，'delta'，'sd'，'power', 和 'sig.level' 之中只能有一個取 NULL 值"
+
+msgid "effect size can only be computed for two-sample problems in %s"
+msgstr ""
+
+msgid "%s only allows two-sided alternatives in the presence of more than two groups"
+msgstr ""
+
+#, fuzzy
+msgid "NAs are not allowed in 'groups' or 'blocks'"
 msgstr "'groups' 或 'blocks' 裡不能有 NA"
 
 msgid "'y', 'groups' and 'blocks' must have the same length"
@@ -957,20 +1022,11 @@ msgstr "'y'，'groups' 和 'blocks' 的長度必須相同"
 msgid "not an unreplicated complete block design"
 msgstr "不是非折疊完全區組設計"
 
-msgid "formula missing"
-msgstr "沒有公式"
-
-msgid "incorrect specification for 'formula'"
-msgstr "'formula' 設定無效"
+msgid "'formula' missing"
+msgstr "沒有 'formula'"
 
 msgid "nothing to tabulate"
 msgstr "沒有可列表的資料"
-
-msgid "incorrect specification for 'row.vars'"
-msgstr "'row.vars' 設定無效"
-
-msgid "incorrect specification for 'col.vars'"
-msgstr "'col.vars' 設定無效"
 
 msgid "'formula' must have both left and right hand sides"
 msgstr "'formula' 的公式左右兩邊都必須存在"
@@ -1428,15 +1484,6 @@ msgstr "只有一個數值預測子時不能忽略預測子的二次方"
 msgid "specified parametric for all predictors"
 msgstr "所有預測子都被設定為參數"
 
-msgid "invalid argument 'span'"
-msgstr "引數 'span' 無效"
-
-msgid "invalid argument 'cell'"
-msgstr "引數 'cell' 無效"
-
-msgid "invalid argument 'degree'"
-msgstr "引數 'degree' 無效"
-
 #, fuzzy
 msgid "iterTrace = %d is not obeyed since iterations = %d"
 msgstr "不遵守 iterations ="
@@ -1665,9 +1712,6 @@ msgstr "所有時間都含 NA"
 
 msgid "missing values in object"
 msgstr "物件裡有遺漏值"
-
-msgid "invalid argument 'omit'"
-msgstr "引數 'omit' 無效"
 
 msgid "'print.level' must be in {0,1,2}"
 msgstr "'print.level' 必須是 {0,1,2}"
@@ -1967,9 +2011,6 @@ msgstr "'p' 的單元必須在(0,1)裡"
 msgid "'conf.level' is not a probability"
 msgstr ""
 
-msgid "'formula' missing"
-msgstr "沒有 'formula'"
-
 #, fuzzy
 msgid "'type' must be an integer in 1..9"
 msgstr "'y' 必須比 'x' 長"
@@ -1986,15 +2027,6 @@ msgstr "'na.rm' 如果設為 FALSE 的話不允許有遺漏值和 NaN"
 
 msgid "'probs' outside [0,1]"
 msgstr "'probs' 在[0,1]外"
-
-msgid "invalid argument 'n'"
-msgstr "引數 'n' 無效"
-
-msgid "invalid argument 'r'"
-msgstr "引數 'r' 無效"
-
-msgid "invalid argument 'c'"
-msgstr "引數 'c' 無效"
 
 msgid "arguments 'r' and 'c' must have the same sums"
 msgstr "引數 'r' 和 'c' 的和必須是一樣的"
@@ -2415,26 +2447,22 @@ msgstr "'x' 和 'w' 的長度必須相同"
 msgid "not enough (non-missing) 'x' observations"
 msgstr "(有限)'x' 觀察量數目不夠"
 
-msgid "requested conf.level not achievable"
-msgstr "無法達到所要求的 conf.level"
+#, fuzzy
+msgid "'correct' must be an integer between 0 and 3"
+msgstr "'or' 必須是在零和 Inf 之間的一個數值"
 
 msgid "cannot compute confidence interval when all observations are zero or tied"
 msgstr "所有觀察資料值都是零或一樣的話，無法計算精確的置信區間"
 
-msgid "cannot compute exact confidence interval with ties"
-msgstr "有連結時無法計算精確的置信區間"
-
-msgid "cannot compute exact p-value with zeroes"
-msgstr "有 0 時無法計算精確的 p 值"
-
-msgid "cannot compute exact confidence interval with zeroes"
-msgstr "有零時無法計算精確的置信區間"
-
-msgid "Requested conf.level not achievable"
+msgid "requested conf.level not achievable"
 msgstr "無法達到所要求的 conf.level"
 
 msgid "cannot compute confidence interval when all observations are tied"
 msgstr "所有觀察資料值都是一樣的話無法計算精確的置信區間"
+
+#, fuzzy
+msgid "'z' is not a rank vector"
+msgstr "'x' 不是向量"
 
 #, fuzzy
 msgid "must supply 'formula' or 'data'"
@@ -2597,6 +2625,54 @@ msgstr[0] "刪除了含 NA，NaN 或 Inf 的 %d 個觀察量"
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' 太短了，需要 %d 個點"
+
+#~ msgid "cannot compute exact confidence intervals with ties"
+#~ msgstr "無法精確計算帶連結的置信區間"
+
+#~ msgid "Cannot compute exact p-value with ties"
+#~ msgstr "無法給連結計算精確 p 值"
+
+#~ msgid "'formula' missing or invalid"
+#~ msgstr "'formula' 遺漏或不正確"
+
+#~ msgid "invalid argument 'lambda'"
+#~ msgstr "引數 'lambda' 無效"
+
+#~ msgid "formula missing"
+#~ msgstr "沒有公式"
+
+#~ msgid "incorrect specification for 'formula'"
+#~ msgstr "'formula' 設定無效"
+
+#~ msgid "incorrect specification for 'col.vars'"
+#~ msgstr "'col.vars' 設定無效"
+
+#~ msgid "invalid argument 'span'"
+#~ msgstr "引數 'span' 無效"
+
+#~ msgid "invalid argument 'cell'"
+#~ msgstr "引數 'cell' 無效"
+
+#~ msgid "invalid argument 'degree'"
+#~ msgstr "引數 'degree' 無效"
+
+#~ msgid "invalid argument 'omit'"
+#~ msgstr "引數 'omit' 無效"
+
+#~ msgid "invalid argument 'r'"
+#~ msgstr "引數 'r' 無效"
+
+#~ msgid "invalid argument 'c'"
+#~ msgstr "引數 'c' 無效"
+
+#~ msgid "cannot compute exact p-value with zeroes"
+#~ msgstr "有 0 時無法計算精確的 p 值"
+
+#~ msgid "cannot compute exact confidence interval with zeroes"
+#~ msgstr "有零時無法計算精確的置信區間"
+
+#~ msgid "Requested conf.level not achievable"
+#~ msgstr "無法達到所要求的 conf.level"
 
 #~ msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
 #~ msgstr ".nknots.smspl() 目前已匯出；用它來替代 n.knots()"

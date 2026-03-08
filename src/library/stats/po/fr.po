@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49-0700\n"
+"POT-Creation-Date: 2026-03-07 10:25+0100\n"
 "PO-Revision-Date: 2021-02-10 18:07+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -22,16 +22,16 @@ msgstr ""
 msgid "bandwidth/span of running medians is larger than n"
 msgstr "largeur de fenêtre de médiane mobile supérieure à n"
 
-#: Srunmed.c:262
+#: Srunmed.c:263
 #, fuzzy, c-format
 msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%lld]"
 msgstr "runmed(x, .., na.action=\"na.fail\"): des valeurs manquantes se trouvent à x[%lld]"
 
-#: Srunmed.c:265
+#: Srunmed.c:266
 msgid "runmed(): invalid 'na.action'"
 msgstr "runmed(): 'na.action' incorrecte"
 
-#: Srunmed.c:315
+#: Srunmed.c:316
 #, c-format
 msgid "na_action logic error (%d), please report!"
 msgstr "na_action erreur logique (%d), veuillez reporter l’erreur, s’il-vous-plait !"
@@ -68,21 +68,26 @@ msgstr "impossible de transformer plus de 100 pars dans arima0"
 msgid "maximum supported lag is 350"
 msgstr "décalage maximum supporté de 350"
 
-#: bandwidths.c:120
+#: bandwidths.c:119
 #, c-format
 msgid "non-finite x[%d] in bandwidth calculation"
 msgstr "valeurs infinies x[%d] dans le calcul de largeur de bande"
 
-#: complete_cases.c:28
+#: bandwidths.c:125
+#, fuzzy
+msgid "data are constant in bandwidth calculation"
+msgstr "valeurs infinies x[%d] dans le calcul de largeur de bande"
+
+#: complete_cases.c:29
 #, c-format
 msgid "invalid 'type' (%s) of argument"
 msgstr "'type' (%s) de l'argument incorrect"
 
-#: complete_cases.c:115
+#: complete_cases.c:116
 msgid "no input has determined the number of cases"
 msgstr "aucune entrée n'a déterminé le nombre de cas"
 
-#: complete_cases.c:218
+#: complete_cases.c:219
 msgid "not all arguments have the same length"
 msgstr "les arguments n'ont pas tous la même taille"
 
@@ -146,7 +151,7 @@ msgstr "expression incorrecte dans '%s'"
 msgid "too many variables"
 msgstr "trop de facteurs"
 
-#: deriv.c:1080 model.c:93
+#: deriv.c:1080 model.c:94
 msgid "invalid variable names"
 msgstr "noms des variables incorrects"
 
@@ -166,11 +171,11 @@ msgstr "distance() : p incorrect"
 msgid "distance(): invalid distance"
 msgstr "distance() : distance incorrecte"
 
-#: distn.c:41
+#: distn.c:36
 msgid "NaNs produced"
 msgstr "Production de NaN"
 
-#: distn.c:42
+#: distn.c:37
 msgid "Non-numeric argument to mathematical function"
 msgstr "Argument non numérique pour une fonction mathématique"
 
@@ -179,12 +184,12 @@ msgstr "Argument non numérique pour une fonction mathématique"
 msgid "Value %g out of range (0, 1)"
 msgstr "Valeur %g hors de l'intervalle (0, 1)"
 
-#: family.c:66 family.c:80 family.c:98
+#: family.c:63 family.c:77 family.c:96
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr "L'argument %s doit être un vecteur numérique non vide"
 
-#: family.c:131 family.c:134
+#: family.c:130 family.c:133
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "l'argument %s doit être un vecteur numérique de longueur 1 ou %d"
@@ -243,7 +248,7 @@ msgstr ""
 "  (kval=%d, itop-ldstp=%d).\n"
 "Augmentez la taille de l’environnement de travail ou considérez l’utilisation de 'simulate.p.value=TRUE’."
 
-#: fexact.c:1458
+#: fexact.c:1460
 #, c-format
 msgid ""
 "FEXACT error 7(%s). LDSTP=%d is too small for this problem,\n"
@@ -254,45 +259,45 @@ msgstr ""
 "  (pastp=%g, ipn_0:=ipoin[itp=%d]=%d, stp[ipn_0]=%g).\n"
 "Augmentez la taille de l’environnement de travail ou considérez l’utilisation de ‘simulate.p.value=TRUE’."
 
-#: fourier.c:62 fourier.c:157
+#: fourier.c:55 fourier.c:150
 msgid "non-numeric argument"
 msgstr "argument non numérique"
 
-#: fourier.c:80 fourier.c:98 fourier.c:171
+#: fourier.c:73 fourier.c:91 fourier.c:164
 msgid "fft factorization error"
 msgstr "erreur de factorisation fft"
 
-#: fourier.c:143
+#: fourier.c:136
 msgid "vector-valued (multivariate) series required"
 msgstr "série multivariée requise"
 
-#: fourier.c:213
+#: fourier.c:206
 #, c-format
 msgid "nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' instead of 'n'"
 msgstr "nextn() n’a pas trouvé de solution < %d = INT_MAX (le plus grand entier) ; passer '0 + n' à la place de 'n'"
 
-#: fourier.c:225
+#: fourier.c:218
 #, fuzzy, c-format
 msgid "nextn<64>() found no solution < %llu = UINT64_MAX (the maximal integer)"
 msgstr "nextn<64>() n’a pas trouvé de solution < %llu = UINT64_MAX (le plus grand entier)"
 
-#: fourier.c:241
+#: fourier.c:234
 msgid "no factors"
 msgstr "pas de variables facteur"
 
-#: fourier.c:242
+#: fourier.c:235
 msgid "too many factors"
 msgstr "trop de facteurs"
 
-#: fourier.c:245
+#: fourier.c:238
 msgid "invalid factors"
 msgstr "variables facteur incorrectes"
 
-#: fourier.c:249
+#: fourier.c:242
 msgid "'n' must have typeof(.) \"integer\" or \"double\""
 msgstr "'n' doit avoir typeof(.) \"integer\" ou \"double\""
 
-#: fourier.c:290
+#: fourier.c:283
 #, c-format
 msgid "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double\")"
 msgstr "nextn() = %<PRIu64> > 2^53 peut ne pas être représentable exactement en R (comme \"double\")"
@@ -338,15 +343,15 @@ msgstr "environnement de travail requis (%.0f) trop large %s."
 msgid " probably because of setting 'se = TRUE'"
 msgstr " probablement à cause de l’argument 'se = TRUE'"
 
-#: loglin.c:367
+#: loglin.c:370
 msgid "this should not happen"
 msgstr "ceci ne devrait pas se produire"
 
-#: loglin.c:369
+#: loglin.c:372
 msgid "algorithm did not converge"
 msgstr "l'algorithme n'a pas convergé"
 
-#: loglin.c:371
+#: loglin.c:374
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "spécification de 'table' ou 'start' incorrecte"
 
@@ -382,23 +387,23 @@ msgstr "La vmethod est incorrecte"
 msgid "Burg's algorithm failed to find partial correlation"
 msgstr "L’algorithme de Burg n'a pas trouvé la corrélation partielle"
 
-#: model.c:91
+#: model.c:92
 msgid "invalid variables"
 msgstr "variables incorrectes"
 
-#: model.c:95 model.c:100
+#: model.c:96 model.c:101
 msgid "number of variables != number of variable names"
 msgstr "le nombre de variables n'est pas égal au nombre de noms de variables"
 
-#: model.c:98
+#: model.c:99
 msgid "invalid extra variables"
 msgstr "variables supplémentaires incorrectes"
 
-#: model.c:102
+#: model.c:103
 msgid "invalid extra variable names"
 msgstr "noms de variables supplémentaires incorrects"
 
-#: model.c:123
+#: model.c:124
 #, c-format
 msgid "overlong names in '%s'"
 msgstr "noms trop longs dans '%s'"
@@ -408,121 +413,121 @@ msgstr "noms trop longs dans '%s'"
 msgid "invalid type (%s) for variable '%s'"
 msgstr "type (%s) incorrect pour la variable '%s'"
 
-#: model.c:155
+#: model.c:156
 #, c-format
 msgid "variable lengths differ (found for '%s')"
 msgstr "les longueurs des variables diffèrent (trouvé pour '%s')"
 
-#: model.c:212
+#: model.c:215
 msgid "invalid result from na.action"
 msgstr "résultat incorrect de na.action"
 
-#: model.c:373 model.c:381 optim.c:221
+#: model.c:376 model.c:384 optim.c:221
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argument '%s' incorrect"
 
-#: model.c:392
+#: model.c:395
 msgid "invalid model frame"
 msgstr "trame de modèle incorrecte"
 
-#: model.c:394
+#: model.c:397
 msgid "do not know how many cases"
 msgstr "nombre de cas inconnu"
 
-#: model.c:418
+#: model.c:421
 #, c-format
 msgid "variable lengths differ (found for variable %d)"
 msgstr "les longueurs des variables diffèrent (trouvé pour la variable %d)"
 
-#: model.c:422 model.c:429
+#: model.c:425 model.c:432
 #, c-format
 msgid "variable %d has no levels"
 msgstr "la variable %d n'a pas de niveaux"
 
-#: model.c:540
+#: model.c:543
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "la réponse est apparue dans le membre de droite et y a été éliminée"
 
-#: model.c:560
+#: model.c:563
 #, c-format
 msgid "term %d would require %.0g columns"
 msgstr "le terme %d nécessite %.0g colonnes"
 
-#: model.c:564
+#: model.c:567
 #, c-format
 msgid "matrix would require %.0g columns"
 msgstr "la matrice nécessite %.0g colonnes"
 
-#: model.c:575
+#: model.c:578
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr "problème avec le terme %d dans model.matrix : aucune colonne n'est assignée"
 
-#: model.c:624 model.c:629 model.c:635 model.c:646 model.c:652 model.c:658
+#: model.c:627 model.c:632 model.c:638 model.c:649 model.c:655 model.c:661
 msgid "term names will be truncated"
 msgstr "les noms des termes seront tronqués"
 
-#: model.c:638
+#: model.c:641
 msgid "complex variables are not currently allowed in model matrices"
 msgstr "les variables complexes ne sont pas encore acceptées dans les matrices de modèle"
 
-#: model.c:662
+#: model.c:665
 #, c-format
 msgid "variables of type '%s' are not allowed in model matrices"
 msgstr "les variables de type '%s' ne sont pas autorisées dans des matrices de modèle"
 
-#: model.c:887
+#: model.c:893
 msgid "invalid formula in 'update'"
 msgstr "formule incorrecte dans 'update'"
 
-#: model.c:921
+#: model.c:927
 msgid "formula expected"
 msgstr "formule attendue"
 
-#: model.c:1089
+#: model.c:1097
 msgid "invalid term in model formula"
 msgstr "terme incorrect dans la formule de modèle"
 
-#: model.c:1180
+#: model.c:1188
 msgid "invalid model formula"
 msgstr "formule de modèle incorrecte"
 
-#: model.c:1212 model.c:1519
+#: model.c:1220 model.c:1527
 msgid "invalid power in formula"
 msgstr "puissance incorrecte dans la formule"
 
-#: model.c:1261
+#: model.c:1269
 msgid "invalid model formula in ExtractVars"
 msgstr "formule de modèle incorrecte dans ExtractVars"
 
-#: model.c:1630
+#: model.c:1638
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "nom dupliqué '%s' dans le data frame utilisant '.'"
 
-#: model.c:1697
+#: model.c:1705
 msgid "invalid model formula in EncodeVars"
 msgstr "formule de modèle incorrecte dans EncodeVars"
 
-#: model.c:1774
+#: model.c:1781
 msgid "argument is not a valid model"
 msgstr "l'argument n'est pas un modèle valide"
 
-#: model.c:1784
+#: model.c:1791
 msgid "'specials' must be NULL or a character vector"
 msgstr "'specials' doit être NULL ou un vecteur de chaîne de caractères"
 
-#: model.c:1795
+#: model.c:1802
 msgid "'data' argument is of the wrong type"
 msgstr "l'argument 'data' est d'un mauvais type"
 
-#: model.c:1867
+#: model.c:1873
 #, c-format
 msgid "'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should no longer happen!"
 msgstr "'varlist' a changé (de nvar=%d) à %d après EncodeVars() -- ceci ne devrait plus se produire !"
 
-#: model.c:2151
+#: model.c:2159
 msgid "'.' in formula and no 'data' argument"
 msgstr "'.' dans la formule et pas d'argument 'data'"
 
@@ -655,118 +660,119 @@ msgstr "'ndeps' est de la mauvaise longueur"
 msgid "unknown 'method'"
 msgstr "'method' inconnue"
 
-#: optimize.c:214 optimize.c:300 optimize.c:522
+#: optimize.c:214 optimize.c:304 optimize.c:526
 msgid "NA replaced by maximum positive value"
 msgstr "NA remplacé par la valeur maximale positive"
 
-#: optimize.c:222 optimize.c:312 optimize.c:530
-msgid "NA/Inf replaced by maximum positive value"
-msgstr "NA / Inf remplacé par la valeur maximale positive"
+#: optimize.c:223 optimize.c:313 optimize.c:535
+msgid "-Inf replaced by maximally negative value"
+msgstr "-Inf remplacé par la valeur négative la plus large possible"
 
-#: optimize.c:231
+#: optimize.c:226 optimize.c:316 optimize.c:538
+#, fuzzy, c-format
+msgid "%s replaced by maximum positive value"
+msgstr "NA remplacé par la valeur maximale positive"
+
+#: optimize.c:236
 msgid "invalid function value in 'optimize'"
 msgstr "valeur de fonction incorrecte dans 'optimize'"
 
-#: optimize.c:249 optimize.c:341 optimize.c:716
+#: optimize.c:252 optimize.c:345 optimize.c:725
 msgid "attempt to minimize non-function"
 msgstr "tentative de minimisation d'un objet qui n'est pas une fonction"
 
-#: optimize.c:256 optimize.c:263 optimize.c:272 optimize.c:346 optimize.c:351
-#: optimize.c:367
+#: optimize.c:259 optimize.c:266 optimize.c:275 optimize.c:350 optimize.c:355
+#: optimize.c:371
 #, c-format
 msgid "invalid '%s' value"
 msgstr "valeur '%s' incorrecte"
 
-#: optimize.c:265 optimize.c:352
+#: optimize.c:268 optimize.c:356
 msgid "'xmin' not less than 'xmax'"
 msgstr "'xmin' n'est pas plus petit que 'xmax'"
 
-#: optimize.c:309
-msgid "-Inf replaced by maximally negative value"
-msgstr "-Inf remplacé par la valeur négative la plus large possible"
-
-#: optimize.c:322
+#: optimize.c:326
 msgid "invalid function value in 'zeroin'"
 msgstr "valeur de fonction incorrecte dans 'zeroin'"
 
-#: optimize.c:357 optimize.c:362
+#: optimize.c:361 optimize.c:366
 #, c-format
 msgid "NA value for '%s' is not allowed"
 msgstr "Une valeur NA n'est pas autorisée pour '%s'"
 
-#: optimize.c:372
+#: optimize.c:376
 msgid "'maxiter' must be positive"
 msgstr "'maxiter' doit être positif"
 
-#: optimize.c:514
+#: optimize.c:518
 msgid "non-finite value supplied by 'nlm'"
 msgstr "valeur non finie fournie par 'nlm'"
 
-#: optimize.c:549
+#: optimize.c:558
 msgid "invalid function value in 'nlm' optimizer"
 msgstr "valeur de fonction incorrecte dans l'optimisateur 'nlm'"
 
-#: optimize.c:561 optimize.c:576
+#: optimize.c:570 optimize.c:585
 msgid "function value caching for optimization is seriously confused"
 msgstr "le cache de valeur de fonction pour l'optimisation est sérieusement perturbé"
 
-#: optimize.c:591
+#: optimize.c:600
 msgid "numeric parameter expected"
 msgstr "paramètre numérique attendu"
 
-#: optimize.c:595
+#: optimize.c:604
 msgid "conflicting parameter lengths"
 msgstr "conflit de taille des paramètres"
 
-#: optimize.c:599
+#: optimize.c:608
 msgid "invalid parameter length"
 msgstr "taille de paramètre incorrecte"
 
-#: optimize.c:609 optimize.c:616
+#: optimize.c:618 optimize.c:625
 msgid "missing value in parameter"
 msgstr "valeur manquante dans le paramètre"
 
-#: optimize.c:621
+#: optimize.c:630
 msgid "invalid parameter type"
 msgstr "type incorrect de paramètre"
 
-#: optimize.c:632
+#: optimize.c:641
 msgid "non-positive number of parameters in nlm"
 msgstr "nombre de paramètres nul ou négatif dans nlm"
 
-#: optimize.c:634
+#: optimize.c:643
 msgid "nlm is inefficient for 1-d problems"
 msgstr "nlm est inefficace pour les problèmes 1-d"
 
-#: optimize.c:636
+#: optimize.c:645
 msgid "invalid gradient tolerance in nlm"
 msgstr "tolérance de gradient incorrecte dans nlm"
 
-#: optimize.c:638
+#: optimize.c:647
 msgid "invalid iteration limit in nlm"
 msgstr "limite d'itération incorrecte dans nlm"
 
-#: optimize.c:640
+#: optimize.c:649
 msgid "minimization function has no good digits in nlm"
 msgstr "la fonction de minimisation n'a pas des nombres acceptables dans nlm"
 
-#: optimize.c:642
+#: optimize.c:651
 msgid "no analytic gradient to check in nlm!"
 msgstr "pas de gradient analytique à vérifier dans nlm !"
 
-#: optimize.c:644
+#: optimize.c:653
 msgid "no analytic Hessian to check in nlm!"
 msgstr "pas de Hessien analytique à vérifier dans nlm !"
 
-#: optimize.c:646
+#: optimize.c:655
 msgid "probable coding error in analytic gradient"
 msgstr "erreur d'encodage probable dans le gradient analytique"
 
-#: optimize.c:648
+#: optimize.c:657
 msgid "probable coding error in analytic Hessian"
 msgstr "erreur d'encodage probable dans le Hessien analytique"
 
-#: optimize.c:650
+#: optimize.c:659
 #, c-format
 msgid ""
 "*** unknown error message (msg = %d) in nlm()\n"
@@ -775,23 +781,23 @@ msgstr ""
 "*** message d'erreur inconnu (msg = %d) dans nlm()\n"
 "*** ne devrait pas se produire !"
 
-#: optimize.c:661
+#: optimize.c:670
 msgid "Relative gradient close to zero.\n"
 msgstr "Gradient relatif proche de zéro.\n"
 
-#: optimize.c:662 optimize.c:666
+#: optimize.c:671 optimize.c:675
 msgid "Current iterate is probably solution.\n"
 msgstr "L'itération courante est probablement la solution.\n"
 
-#: optimize.c:665
+#: optimize.c:674
 msgid "Successive iterates within tolerance.\n"
 msgstr "Itération successsives à l'intérieur du seuil de tolérance.\n"
 
-#: optimize.c:669
+#: optimize.c:678
 msgid "Last global step failed to locate a point lower than x.\n"
 msgstr "Le dernier pas global n'a pas pu localiser un point plus bas que x.\n"
 
-#: optimize.c:670
+#: optimize.c:679
 msgid ""
 "Either x is an approximate local minimum of the function,\n"
 "the function is too non-linear for this algorithm,\n"
@@ -801,11 +807,11 @@ msgstr ""
 "soit la fonction est trop non linéaire pour cet algorithme,\n"
 "soit steptol est trop large.\n"
 
-#: optimize.c:675
+#: optimize.c:684
 msgid "Iteration limit exceeded.  Algorithm failed.\n"
 msgstr "Limite d'itérations dépassée. L'algorithme a échoué.\n"
 
-#: optimize.c:678
+#: optimize.c:687
 msgid ""
 "Maximum step size exceeded 5 consecutive times.\n"
 "Either the function is unbounded below,\n"
@@ -819,16 +825,16 @@ msgstr ""
 "vers le haut dans une direction,\n"
 "soit stepmx est trop petit.\n"
 
-#: optimize.c:740 optimize.c:745 optimize.c:749 optimize.c:753 optimize.c:757
-#: optimize.c:761 optimize.c:766
+#: optimize.c:749 optimize.c:754 optimize.c:758 optimize.c:762 optimize.c:766
+#: optimize.c:770 optimize.c:775
 msgid "invalid NA value in parameter"
 msgstr "valeur NA incorrecte dans le paramètre"
 
-#: optimize.c:795
+#: optimize.c:804
 msgid "hessian supplied is of the wrong length or mode, so ignored"
 msgstr "le Hessien fourni est de la mauvaise longueur ou mode, et est ignoré"
 
-#: optimize.c:799
+#: optimize.c:808
 msgid "gradient supplied is of the wrong length or mode, so ignored"
 msgstr "le gradient fourni est de mauvaise longueur ou mode, et est ignoré"
 
@@ -869,55 +875,57 @@ msgstr "la fonction de gradient doit renvoyer un vecteur numérique de longueur 
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr "La function Hessian doit renvoyer une matrice carrée numérique d'ordre %d"
 
-#: port.c:387
+#: port.c:386
 msgid "'rho' must be an environment"
 msgstr "'rho' doit être un environnement"
 
-#: port.c:389 port.c:555
-msgid "'d' must be a nonempty numeric vector"
+#: port.c:388 port.c:554
+#, fuzzy
+msgid "'d' must be a nonempty numeric (double) vector"
 msgstr "'d' doit être un vecteur numérique non vide"
 
-#: port.c:391
+#: port.c:390
 msgid "When Hessian defined must also have gradient defined"
 msgstr "Quand Hessian est défini, un gradient doit l'être aussi"
 
-#: port.c:394
-#, c-format
-msgid "environment 'rho' must contain a numeric vector '.par' of length %d"
+#: port.c:393
+#, fuzzy, c-format
+msgid "environment 'rho' must contain a numeric (double) vector '.par' of length %d"
 msgstr "l'environnement 'rho' doit contenir un vecteur numérique '.par' de longueur %d"
 
-#: port.c:408
-msgid "'lower' and 'upper' must be numeric vectors"
+#: port.c:407
+#, fuzzy
+msgid "'lower' and 'upper' must be numeric (double) vectors"
 msgstr "'lower' et 'upper' doivent tous deux être des vecteurs numériques"
 
-#: port.c:467
+#: port.c:466
 msgid "'getElement' applies only to named lists"
 msgstr "'getElement' n'est applicable que pour des listes nommées"
 
-#: port.c:488
+#: port.c:487
 #, c-format
 msgid "%s$%s() not found"
 msgstr "%s$%s() introuvable"
 
-#: port.c:501
+#: port.c:500
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
 msgstr "'gradient' doit être une matrice numérique de dimension (%d, %d)"
 
-#: port.c:522
+#: port.c:521
 #, c-format
 msgid "fcn produced mode %d, length %d - wanted mode %d, length %d"
 msgstr "'fcn' a produit un mode %d de longueur %d - il fallait un mode %d de longueur %d"
 
-#: port.c:535
+#: port.c:534
 msgid "invalid type for eval_check_store"
 msgstr "type incorrect pour 'eval_check_store'"
 
-#: port.c:556
+#: port.c:555
 msgid "m must be a list"
 msgstr "'m' doit être une liste"
 
-#: port.c:576
+#: port.c:575
 msgid "'lowerb' and 'upperb' must be numeric vectors"
 msgstr "'lowerb' et 'upperb' doivent tous deux être des vecteurs numériques"
 
@@ -937,32 +945,32 @@ msgstr "'scal' doit être une matrice carrée de réels"
 msgid "'scal' matrix is not positive-definite"
 msgstr "la matrice 'scal' n'est pas définie et positive"
 
-#: random.c:53 random.c:137 random.c:217 random.c:307
+#: random.c:49 random.c:133 random.c:213 random.c:303
 msgid "NAs produced"
 msgstr "Production de NAs"
 
-#: random.c:60 random.c:66 random.c:72 random.c:87 random.c:167 random.c:256
-#: random.c:394
+#: random.c:56 random.c:62 random.c:68 random.c:83 random.c:163 random.c:252
+#: random.c:390
 msgid "invalid arguments"
 msgstr "arguments incorrects"
 
-#: random.c:333
+#: random.c:329
 msgid "NA in probability vector"
 msgstr "NA dans un vecteur de probabilités"
 
-#: random.c:335
+#: random.c:331
 msgid "negative probability"
 msgstr "probabilité négative"
 
-#: random.c:341
+#: random.c:337
 msgid "no positive probabilities"
 msgstr "pas de probabilités positives"
 
-#: random.c:353
+#: random.c:349
 msgid "invalid first argument 'n'"
 msgstr "premier argument 'n' incorrect"
 
-#: random.c:355
+#: random.c:351
 msgid "invalid second argument 'size'"
 msgstr "second argument 'size' incorrect"
 
@@ -980,6 +988,9 @@ msgstr "règle finale incorrecte pour une médiane mobile de 3 : %d"
 #, c-format
 msgid "missing value in last %d observations"
 msgstr "valeur manquante dans les %d dernières observations"
+
+#~ msgid "NA/Inf replaced by maximum positive value"
+#~ msgstr "NA / Inf remplacé par la valeur maximale positive"
 
 #, c-format
 #~ msgid "Bug in fexact3, it[i=%d]=%d: negative key %d (kyy=%d)\n"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -219,7 +219,7 @@ msgstr "kestirim hesaplanamadı, NA döndürülüyor"
 msgid "cannot compute exact p-value with ties"
 msgstr ""
 
-msgid "cannot compute exact confidence intervals with ties"
+msgid "cannot compute exact confidence interval with ties"
 msgstr ""
 
 msgid "'formula' missing or incorrect"
@@ -629,12 +629,6 @@ msgstr "'y' sayısal bir vektör olmalı"
 msgid "not enough finite observations"
 msgstr "yetersiz sayıda sonlu gözlemler"
 
-msgid "Cannot compute exact p-value with ties"
-msgstr ""
-
-msgid "'formula' missing or invalid"
-msgstr "'formula' eksik veya geçersiz"
-
 msgid "invalid formula"
 msgstr "geçersiz formül"
 
@@ -848,8 +842,9 @@ msgstr "faktör analizi en az 3 değişken gerektirir"
 msgid "no starting values supplied"
 msgstr "başlangıç değeri verilmedi"
 
-msgid "invalid argument 'lambda'"
-msgstr "geçersiz argüman 'lambda'"
+#, fuzzy
+msgid "invalid argument '%s'"
+msgstr "geçersiz argüman 'n'"
 
 #, fuzzy
 msgid "%s link not recognised"
@@ -970,8 +965,78 @@ msgstr "tüm gruplar veri içermeli"
 msgid "not enough observations"
 msgstr "yetersiz gözlem sayısı"
 
-msgid "NA's are not allowed in 'groups' or 'blocks'"
+#, fuzzy
+msgid "incorrect dimensions"
+msgstr "'xi' için hatalı boyutlar"
+
+msgid "at least two response categories required"
 msgstr ""
+
+#, fuzzy
+msgid "at least two groups required"
+msgstr "iki taraflı formül zorunlu"
+
+msgid "%s currently only allows independent right-censoring"
+msgstr ""
+
+msgid "error computing the Hessian in %s"
+msgstr ""
+
+msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgstr ""
+
+msgid "unsuccessful optimisation in %s"
+msgstr ""
+
+msgid "incompatible length of argument 'mu' in %s"
+msgstr ""
+
+#, fuzzy
+msgid "cannot compute exact permutation distribution in %s"
+msgstr "sıfırlarla kesin p-değeri hesaplanamıyor"
+
+#, fuzzy
+msgid "cannot compute one-sided p-values in %s"
+msgstr "sıfırlarla kesin p-değeri hesaplanamıyor"
+
+msgid "permutation confidence intervals only available for 2-sample comparisons in %s"
+msgstr ""
+
+#, fuzzy
+msgid "failed to compute confidence interval in %s"
+msgstr "sıfırlarla kesin güven aralığı hesaplanamıyor"
+
+#, fuzzy
+msgid "incorrect specification for '%s'"
+msgstr "'row.vars' için geçersiz özellik"
+
+msgid "cannot have both a 'Surv()' response and an 'event' argument in %s"
+msgstr ""
+
+msgid "incorrect argument 'groups' in %s: at least two groups needed"
+msgstr ""
+
+#, fuzzy
+msgid "%s is not defined for unordered responses"
+msgstr "'model.tables' çoklu cevaplar için tanımlanmadı"
+
+#, fuzzy
+msgid "incorrect number of columns for 'prob' in %s"
+msgstr "'x'de hatalı sütun sayısı"
+
+#, fuzzy
+msgid "exactly one of 'n', 'delta', 'power', and 'sig.level' must be NULL"
+msgstr "'n', 'delta', 'sd', 'power', veya 'sig.level' dan biri tam olarak NULL olmalı"
+
+msgid "effect size can only be computed for two-sample problems in %s"
+msgstr ""
+
+msgid "%s only allows two-sided alternatives in the presence of more than two groups"
+msgstr ""
+
+#, fuzzy
+msgid "NAs are not allowed in 'groups' or 'blocks'"
+msgstr "gruplarda veya bloklarda NA'lara izin verilmiyor"
 
 msgid "'y', 'groups' and 'blocks' must have the same length"
 msgstr ""
@@ -979,20 +1044,11 @@ msgstr ""
 msgid "not an unreplicated complete block design"
 msgstr ""
 
-msgid "formula missing"
-msgstr "formül eksik"
-
-msgid "incorrect specification for 'formula'"
-msgstr "'formula' için geçersiz özellik"
+msgid "'formula' missing"
+msgstr "'formula' eksik"
 
 msgid "nothing to tabulate"
 msgstr ""
-
-msgid "incorrect specification for 'row.vars'"
-msgstr "'row.vars' için geçersiz özellik"
-
-msgid "incorrect specification for 'col.vars'"
-msgstr "'col.vars' için geçersiz özellik"
 
 msgid "'formula' must have both left and right hand sides"
 msgstr "'formula' hem sol hem sağ taraf içermeli"
@@ -1461,18 +1517,6 @@ msgid "specified parametric for all predictors"
 msgstr ""
 
 #, fuzzy
-msgid "invalid argument 'span'"
-msgstr "geçersiz argüman 'n'"
-
-#, fuzzy
-msgid "invalid argument 'cell'"
-msgstr "geçersiz argüman 'c'"
-
-#, fuzzy
-msgid "invalid argument 'degree'"
-msgstr "geçersiz argüman 'r'"
-
-#, fuzzy
 msgid "iterTrace = %d is not obeyed since iterations = %d"
 msgstr "sonlu gözlem yok"
 
@@ -1701,9 +1745,6 @@ msgstr "bütün zamanlar bir NA içeriyor"
 
 msgid "missing values in object"
 msgstr "nesnede eksik değerler"
-
-msgid "invalid argument 'omit'"
-msgstr "geçersiz argüman 'omit'"
 
 msgid "'print.level' must be in {0,1,2}"
 msgstr "'print.level' içinde olmalı"
@@ -2003,9 +2044,6 @@ msgstr "'p' nin öğeleri (0,1) içinde olmalı"
 msgid "'conf.level' is not a probability"
 msgstr ""
 
-msgid "'formula' missing"
-msgstr "'formula' eksik"
-
 #, fuzzy
 msgid "'type' must be an integer in 1..9"
 msgstr "'y' 'x' den bir daha uzun olmalı"
@@ -2022,15 +2060,6 @@ msgstr ""
 
 msgid "'probs' outside [0,1]"
 msgstr "'probs' [0,1] dışında"
-
-msgid "invalid argument 'n'"
-msgstr "geçersiz argüman 'n'"
-
-msgid "invalid argument 'r'"
-msgstr "geçersiz argüman 'r'"
-
-msgid "invalid argument 'c'"
-msgstr "geçersiz argüman 'c'"
 
 msgid "arguments 'r' and 'c' must have the same sums"
 msgstr ""
@@ -2470,27 +2499,23 @@ msgid "not enough (non-missing) 'x' observations"
 msgstr "yetersiz (sonlu) 'x' gözlemleri"
 
 #, fuzzy
-msgid "requested conf.level not achievable"
-msgstr "İstenen conf.level elde edilemiyor"
+msgid "'correct' must be an integer between 0 and 3"
+msgstr "'p' 0 ve 1 arasında tek bir sayı olmalı"
 
 #, fuzzy
 msgid "cannot compute confidence interval when all observations are zero or tied"
 msgstr "sıfırlarla kesin güven aralığı hesaplanamıyor"
 
-msgid "cannot compute exact confidence interval with ties"
-msgstr ""
-
-msgid "cannot compute exact p-value with zeroes"
-msgstr "sıfırlarla kesin p-değeri hesaplanamıyor"
-
-msgid "cannot compute exact confidence interval with zeroes"
-msgstr "sıfırlarla kesin güven aralığı hesaplanamıyor"
-
-msgid "Requested conf.level not achievable"
+#, fuzzy
+msgid "requested conf.level not achievable"
 msgstr "İstenen conf.level elde edilemiyor"
 
 msgid "cannot compute confidence interval when all observations are tied"
 msgstr ""
+
+#, fuzzy
+msgid "'z' is not a rank vector"
+msgstr "'x' bir vektör değil"
 
 #, fuzzy
 msgid "must supply 'formula' or 'data'"
@@ -2700,6 +2725,48 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' çok kısa: %d nokta gerekli"
 msgstr[1] "'start.innov' çok kısa: %d nokta gerekli"
 
+#~ msgid "'formula' missing or invalid"
+#~ msgstr "'formula' eksik veya geçersiz"
+
+#~ msgid "invalid argument 'lambda'"
+#~ msgstr "geçersiz argüman 'lambda'"
+
+#~ msgid "formula missing"
+#~ msgstr "formül eksik"
+
+#~ msgid "incorrect specification for 'formula'"
+#~ msgstr "'formula' için geçersiz özellik"
+
+#~ msgid "incorrect specification for 'col.vars'"
+#~ msgstr "'col.vars' için geçersiz özellik"
+
+#, fuzzy
+#~ msgid "invalid argument 'span'"
+#~ msgstr "geçersiz argüman 'n'"
+
+#, fuzzy
+#~ msgid "invalid argument 'cell'"
+#~ msgstr "geçersiz argüman 'c'"
+
+#, fuzzy
+#~ msgid "invalid argument 'degree'"
+#~ msgstr "geçersiz argüman 'r'"
+
+#~ msgid "invalid argument 'omit'"
+#~ msgstr "geçersiz argüman 'omit'"
+
+#~ msgid "invalid argument 'r'"
+#~ msgstr "geçersiz argüman 'r'"
+
+#~ msgid "invalid argument 'c'"
+#~ msgstr "geçersiz argüman 'c'"
+
+#~ msgid "cannot compute exact p-value with zeroes"
+#~ msgstr "sıfırlarla kesin p-değeri hesaplanamıyor"
+
+#~ msgid "Requested conf.level not achievable"
+#~ msgstr "İstenen conf.level elde edilemiyor"
+
 #~ msgid "link \"%s\" not available for quasipoisson family; available links are %s"
 #~ msgstr "bağlantı \"%s\" quasipoisson ailesi için mevcut değil; mevcut bağlantılar: %s"
 
@@ -2785,15 +2852,8 @@ msgstr[1] "'start.innov' çok kısa: %d nokta gerekli"
 #~ msgid "sample is too sparse to find alph2"
 #~ msgstr "örnek alph2'yi bulmak için çok aralıklı"
 
-#~ msgid "NA's are not allowed in groups or blocks"
-#~ msgstr "gruplarda veya bloklarda NA'lara izin verilmiyor"
-
 #~ msgid "y, groups and blocks must have the same length"
 #~ msgstr "y, gruplar ve bloklar aynı uzunluğa sahip olmalı"
-
-#, fuzzy
-#~ msgid "cannot compute exact p-values with ties"
-#~ msgstr "sıfırlarla kesin p-değeri hesaplanamıyor"
 
 #~ msgid "family '"
 #~ msgstr "aile '"

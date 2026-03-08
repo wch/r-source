@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:50\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -609,6 +609,10 @@ msgstr "'%s' não definido para fatores ordenados"
 msgid "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
 msgstr "'%s' só faz sentido para fatores ordenados se todos os argumentos tiverem os mesmos conjuntos de níveis"
 
+#, fuzzy
+msgid "directories are ignored"
+msgstr "vetores longos não são suportados"
+
 msgid "no files to copy to"
 msgstr "nenhum arquivo para onde copiar"
 
@@ -977,11 +981,11 @@ msgstr "não pode haver argumento(s) nomeado(s)"
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg' deve ser NULL ou um vetor caractere"
 
+msgid "'several.ok' must be logical or a string starting with \"all\""
+msgstr ""
+
 msgid "'arg' must be of length >= 1"
 msgstr "'arg' deve ter comprimento >= 1"
-
-msgid "there is more than one match in 'match.arg'"
-msgstr "há mais de um pareamento em 'match.arg'"
 
 msgid "no match"
 msgstr "nenhum pareamento"
@@ -1065,7 +1069,14 @@ msgstr ""
 msgid "%s not found"
 msgstr "%s não encontrado"
 
+msgid "'versionCheck' must be NULL or a list with components 'op' and 'version'"
+msgstr ""
+
 msgid "namespace %s %s is already loaded, but %s %s is required"
+msgstr "namespace %s %s já está carregado, mas %s %s é necessário"
+
+#, fuzzy
+msgid "namespace '%s' is already loaded so argument '%s' will be ignored."
 msgstr "namespace %s %s já está carregado, mas %s %s é necessário"
 
 msgid "- loading"
@@ -1541,15 +1552,6 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr "argumentos adicionais ignorados em warning()"
 
-msgid "no natural language support or missing translations"
-msgstr ""
-
-msgid "In bare C locale: LANGUAGE reset, but message language may be unchanged"
-msgstr ""
-
-msgid "In bare C locale, not forcing locale; possibly use 'force = TRUE'?"
-msgstr ""
-
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr "Sys.setenv(LANGUAGE=\"%s\") pode ter falhado"
 
@@ -1929,6 +1931,9 @@ msgstr[0] ""
 msgstr[1] ""
 "Em %s :\n"
 " argumentos extras %s serão ignorados"
+
+#~ msgid "there is more than one match in 'match.arg'"
+#~ msgstr "há mais de um pareamento em 'match.arg'"
 
 #~ msgid "'name' must be a single character string"
 #~ msgstr "'name' deve ser uma única string de caracteres"

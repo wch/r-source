@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2024-03-22 18:10+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: none\n"
@@ -209,8 +209,9 @@ msgstr "no es pot calcular l'estimació, retornant NA"
 msgid "cannot compute exact p-value with ties"
 msgstr "no es pot calcular un p-valor exacte amb empats"
 
-msgid "cannot compute exact confidence intervals with ties"
-msgstr "no es poden calcular intervals de confiança exactes amb empats"
+#, fuzzy
+msgid "cannot compute exact confidence interval with ties"
+msgstr "no es pot calcular un interval de confiança exacte amb vincles"
 
 msgid "'formula' missing or incorrect"
 msgstr "«formula» absent o incorrecta"
@@ -630,14 +631,6 @@ msgid "not enough finite observations"
 msgstr "no hi ha prou observacions finites"
 
 #, fuzzy
-msgid "Cannot compute exact p-value with ties"
-msgstr "No es pot calcular el valor p exacte amb les relacions"
-
-#, fuzzy
-msgid "'formula' missing or invalid"
-msgstr "manca la «fórmula» o no és vàlida"
-
-#, fuzzy
 msgid "invalid formula"
 msgstr "fórmula no vàlida"
 
@@ -913,8 +906,8 @@ msgid "no starting values supplied"
 msgstr "no s'han proporcionat valors inicials"
 
 #, fuzzy
-msgid "invalid argument 'lambda'"
-msgstr "l'argument «lambda» no és vàlid"
+msgid "invalid argument '%s'"
+msgstr "l'argument «n» no és vàlid"
 
 #, fuzzy
 msgid "%s link not recognised"
@@ -1064,7 +1057,76 @@ msgid "not enough observations"
 msgstr "no hi ha prou observacions"
 
 #, fuzzy
-msgid "NA's are not allowed in 'groups' or 'blocks'"
+msgid "incorrect dimensions"
+msgstr "dimensions incorrectes per a «xi»"
+
+msgid "at least two response categories required"
+msgstr ""
+
+#, fuzzy
+msgid "at least two groups required"
+msgstr "es requereix una fórmula de dues cares"
+
+msgid "%s currently only allows independent right-censoring"
+msgstr ""
+
+msgid "error computing the Hessian in %s"
+msgstr ""
+
+msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgstr ""
+
+msgid "unsuccessful optimisation in %s"
+msgstr ""
+
+msgid "incompatible length of argument 'mu' in %s"
+msgstr ""
+
+#, fuzzy
+msgid "cannot compute exact permutation distribution in %s"
+msgstr "no es pot calcular un p-valor exacte amb empats"
+
+#, fuzzy
+msgid "cannot compute one-sided p-values in %s"
+msgstr "no es pot calcular un p-valor exacte amb empats"
+
+msgid "permutation confidence intervals only available for 2-sample comparisons in %s"
+msgstr ""
+
+#, fuzzy
+msgid "failed to compute confidence interval in %s"
+msgstr "no es pot calcular un interval de confiança exacte amb vincles"
+
+#, fuzzy
+msgid "incorrect specification for '%s'"
+msgstr "especificació incorrecta per a 'row.vars'"
+
+msgid "cannot have both a 'Surv()' response and an 'event' argument in %s"
+msgstr ""
+
+msgid "incorrect argument 'groups' in %s: at least two groups needed"
+msgstr ""
+
+#, fuzzy
+msgid "%s is not defined for unordered responses"
+msgstr "'proj' no està implementat per a múltiples respostes"
+
+#, fuzzy
+msgid "incorrect number of columns for 'prob' in %s"
+msgstr "nombre de columnes incorrecte a «x»"
+
+#, fuzzy
+msgid "exactly one of 'n', 'delta', 'power', and 'sig.level' must be NULL"
+msgstr "exactament un de «n», «delta», «sd», «power» i «sig.level» ha de ser NULL"
+
+msgid "effect size can only be computed for two-sample problems in %s"
+msgstr ""
+
+msgid "%s only allows two-sided alternatives in the presence of more than two groups"
+msgstr ""
+
+#, fuzzy
+msgid "NAs are not allowed in 'groups' or 'blocks'"
 msgstr "No es permeten els NA a «groups» o «blocks»"
 
 #, fuzzy
@@ -1076,23 +1138,11 @@ msgid "not an unreplicated complete block design"
 msgstr "no és un disseny de bloc complet no replicat"
 
 #, fuzzy
-msgid "formula missing"
-msgstr "manca la fórmula"
-
-#, fuzzy
-msgid "incorrect specification for 'formula'"
-msgstr "especificació incorrecta per a «fórmula»"
+msgid "'formula' missing"
+msgstr "Manca la «fórmula»"
 
 msgid "nothing to tabulate"
 msgstr "no hi ha res a tabular"
-
-#, fuzzy
-msgid "incorrect specification for 'row.vars'"
-msgstr "especificació incorrecta per a 'row.vars'"
-
-#, fuzzy
-msgid "incorrect specification for 'col.vars'"
-msgstr "especificació incorrecta per a «col.vars»"
 
 #, fuzzy
 msgid "'formula' must have both left and right hand sides"
@@ -1683,18 +1733,6 @@ msgid "specified parametric for all predictors"
 msgstr "paramètrica especificada per a tots els predictors"
 
 #, fuzzy
-msgid "invalid argument 'span'"
-msgstr "argument «span» no vàlid"
-
-#, fuzzy
-msgid "invalid argument 'cell'"
-msgstr "l'argument «cell» no és vàlid"
-
-#, fuzzy
-msgid "invalid argument 'degree'"
-msgstr "l'argument «grau» no és vàlid"
-
-#, fuzzy
 msgid "iterTrace = %d is not obeyed since iterations = %d"
 msgstr "iterTrace = %d no s'obeeix ja que iteracions = %d"
 
@@ -1978,10 +2016,6 @@ msgstr "tots els temps contenen un NA"
 #, fuzzy
 msgid "missing values in object"
 msgstr "manquen valors a l'objecte"
-
-#, fuzzy
-msgid "invalid argument 'omit'"
-msgstr "l'argument «omit» no és vàlid"
 
 #, fuzzy
 msgid "'print.level' must be in {0,1,2}"
@@ -2369,10 +2403,6 @@ msgid "'conf.level' is not a probability"
 msgstr "«conf.level» no és una probabilitat"
 
 #, fuzzy
-msgid "'formula' missing"
-msgstr "Manca la «fórmula»"
-
-#, fuzzy
 msgid "'type' must be an integer in 1..9"
 msgstr "«y» ha de ser una més llarga que «x»"
 
@@ -2391,18 +2421,6 @@ msgstr "manquen valors i no es permet NaN si «na.rm» és FALS"
 #, fuzzy
 msgid "'probs' outside [0,1]"
 msgstr "«probs» fora de [0,1]"
-
-#, fuzzy
-msgid "invalid argument 'n'"
-msgstr "l'argument «n» no és vàlid"
-
-#, fuzzy
-msgid "invalid argument 'r'"
-msgstr "l'argument «r» no és vàlid"
-
-#, fuzzy
-msgid "invalid argument 'c'"
-msgstr "l'argument «c» no és vàlid"
 
 #, fuzzy
 msgid "arguments 'r' and 'c' must have the same sums"
@@ -2948,32 +2966,24 @@ msgid "not enough (non-missing) 'x' observations"
 msgstr "no hi ha suficients observacions «x» (no perdudes)"
 
 #, fuzzy
-msgid "requested conf.level not achievable"
-msgstr "conf.level sol·licitat no assolible"
+msgid "'correct' must be an integer between 0 and 3"
+msgstr "«or» ha de ser un únic nombre entre 0 i Inf"
 
 #, fuzzy
 msgid "cannot compute confidence interval when all observations are zero or tied"
 msgstr "no es pot calcular l'interval de confiança quan totes les observacions són zero o lligades"
 
 #, fuzzy
-msgid "cannot compute exact confidence interval with ties"
-msgstr "no es pot calcular un interval de confiança exacte amb vincles"
-
-#, fuzzy
-msgid "cannot compute exact p-value with zeroes"
-msgstr "no es pot calcular el valor p exacte amb zeros"
-
-#, fuzzy
-msgid "cannot compute exact confidence interval with zeroes"
-msgstr "no es pot calcular l'interval de confiança exacte amb zeros"
-
-#, fuzzy
-msgid "Requested conf.level not achievable"
-msgstr "El conf.level sol·licitat no és assolible"
+msgid "requested conf.level not achievable"
+msgstr "conf.level sol·licitat no assolible"
 
 #, fuzzy
 msgid "cannot compute confidence interval when all observations are tied"
 msgstr "no es pot calcular l'interval de confiança quan totes les observacions estan lligades"
+
+#, fuzzy
+msgid "'z' is not a rank vector"
+msgstr "'x' no és un vector"
 
 #, fuzzy
 msgid "must supply 'formula' or 'data'"
@@ -3202,6 +3212,69 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "«start.innov» és massa curt: cal %d punt"
 msgstr[1] "«start.innov» és massa curt: calen %d punts"
+
+#~ msgid "cannot compute exact confidence intervals with ties"
+#~ msgstr "no es poden calcular intervals de confiança exactes amb empats"
+
+#, fuzzy
+#~ msgid "Cannot compute exact p-value with ties"
+#~ msgstr "No es pot calcular el valor p exacte amb les relacions"
+
+#, fuzzy
+#~ msgid "'formula' missing or invalid"
+#~ msgstr "manca la «fórmula» o no és vàlida"
+
+#, fuzzy
+#~ msgid "invalid argument 'lambda'"
+#~ msgstr "l'argument «lambda» no és vàlid"
+
+#, fuzzy
+#~ msgid "formula missing"
+#~ msgstr "manca la fórmula"
+
+#, fuzzy
+#~ msgid "incorrect specification for 'formula'"
+#~ msgstr "especificació incorrecta per a «fórmula»"
+
+#, fuzzy
+#~ msgid "incorrect specification for 'col.vars'"
+#~ msgstr "especificació incorrecta per a «col.vars»"
+
+#, fuzzy
+#~ msgid "invalid argument 'span'"
+#~ msgstr "argument «span» no vàlid"
+
+#, fuzzy
+#~ msgid "invalid argument 'cell'"
+#~ msgstr "l'argument «cell» no és vàlid"
+
+#, fuzzy
+#~ msgid "invalid argument 'degree'"
+#~ msgstr "l'argument «grau» no és vàlid"
+
+#, fuzzy
+#~ msgid "invalid argument 'omit'"
+#~ msgstr "l'argument «omit» no és vàlid"
+
+#, fuzzy
+#~ msgid "invalid argument 'r'"
+#~ msgstr "l'argument «r» no és vàlid"
+
+#, fuzzy
+#~ msgid "invalid argument 'c'"
+#~ msgstr "l'argument «c» no és vàlid"
+
+#, fuzzy
+#~ msgid "cannot compute exact p-value with zeroes"
+#~ msgstr "no es pot calcular el valor p exacte amb zeros"
+
+#, fuzzy
+#~ msgid "cannot compute exact confidence interval with zeroes"
+#~ msgstr "no es pot calcular l'interval de confiança exacte amb zeros"
+
+#, fuzzy
+#~ msgid "Requested conf.level not achievable"
+#~ msgstr "El conf.level sol·licitat no és assolible"
 
 #, fuzzy
 #~ msgid ".nknots.smspl() is now exported; use it instead of n.knots()"

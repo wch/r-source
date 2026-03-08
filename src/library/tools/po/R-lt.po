@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tools 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:17\n"
 "PO-Revision-Date: 2021-11-08 10:33+0100\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -319,9 +319,6 @@ msgstr ""
 msgid "License stub records with missing/empty fields:"
 msgstr "negali susidoroti su Rd objektais trūkstamais/tuščiais pavadinimais"
 
-msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
-msgstr ""
-
 msgid "Non-portable flags in variable '%s':"
 msgstr "Neperkeliamos žymos kintamajame '%s':"
 
@@ -503,7 +500,7 @@ msgid "Auto-generated content requiring editing in Rd file '%s':"
 msgstr "Automatiškai sugeneruotas turinys, kurį reikia redaguoti Rd objekte '%s':"
 
 #, fuzzy
-msgid "Rd files without \\description:"
+msgid "Rd files without %s:"
 msgstr "Rd failas su dubliuotais pseudonimais '%s':"
 
 msgid "no Rd sections specified"
@@ -857,11 +854,19 @@ msgstr "nėra paketų, kuriuos galima patikrinti"
 msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
 msgstr ""
 
-msgid "downloading reverse dependencies ..."
+#, fuzzy
+msgid "downloading reverse dependencies %s"
 msgstr "atsisiunčiamos atvirkštinės priklausomybės ..."
 
-msgid "downloading %s ..."
-msgstr "parsiunčiama %s ..."
+#, fuzzy
+msgid "download of reverse dependency %s failed"
+msgstr "atsisiunčiamos atvirkštinės priklausomybės ..."
+
+#, fuzzy
+msgid ""
+"download of %d reverse dependencies failed:\n"
+"  %s"
+msgstr "atsisiunčiamos atvirkštinės priklausomybės ..."
 
 msgid "checking %s ..."
 msgstr "tikrinama %s ..."
@@ -975,12 +980,6 @@ msgstr ".install_packages() išėjimo būsena"
 msgid "restoration failed"
 msgstr "įkėlimas nepavyko"
 
-msgid "invalid value"
-msgstr "neleistina reikšmė"
-
-msgid "for R_CROSS_BUILD"
-msgstr "dėl R_CROSS_BUILD"
-
 msgid "error reading file '%s'"
 msgstr "klaida nuskaitant failą '%s'"
 
@@ -1085,6 +1084,9 @@ msgstr "KLAIDA: nėra leidimo įdiegti į katalogą"
 msgid "building a fake installation is disallowed"
 msgstr "kurti netikrą diegimą yra neleidžiama"
 
+msgid "specified C++"
+msgstr ""
+
 msgid "using C compiler:"
 msgstr ""
 
@@ -1105,6 +1107,10 @@ msgstr ""
 
 msgid "Reverted installation-time patch"
 msgstr ""
+
+#, fuzzy
+msgid "Input must be character"
+msgstr "text' turi būti simbolių vektorius"
 
 msgid ""
 "See\n"
@@ -1213,6 +1219,13 @@ msgstr ""
 "  %s\n"
 "nėra \\item."
 
+msgid "There is no binary type for this build of R."
+msgstr ""
+
+#, fuzzy
+msgid "invalid 'type'"
+msgstr "netinkamas paketas"
+
 msgid "Processing packages:"
 msgstr "Apdorojami paketai:"
 
@@ -1304,9 +1317,6 @@ msgstr "nepavyko 'texi2dvi' esančio '%s' vykdymas"
 
 msgid "Running vignettes for package %s"
 msgstr "Vykdomos vinjetės paketui %s"
-
-msgid "Comparing %s to %s ..."
-msgstr "Lyginami %s su %s..."
 
 msgid "no parsed files found"
 msgstr "nerasta išanalizuotų failų"
@@ -1449,6 +1459,11 @@ msgstr "Nežinomas kodavimas su ne ASCII duomenimis: konvertavimas į ASCII"
 
 msgid "cannot source package code:"
 msgstr "negalima gauti paketo kodo:"
+
+msgid ""
+"error in inferior call:\n"
+"  %s"
+msgstr ""
 
 msgid "inferiorCallError"
 msgstr ""
@@ -1654,6 +1669,22 @@ msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Atitinkamas BibTeX įrašas:"
 msgstr[1] "Atitinkami BibTeX įrašai:"
 msgstr[2] "Atitinkamų BibTeX įrašų:"
+
+#, fuzzy
+#~ msgid "Rd files without \\description:"
+#~ msgstr "Rd failas su dubliuotais pseudonimais '%s':"
+
+#~ msgid "downloading %s ..."
+#~ msgstr "parsiunčiama %s ..."
+
+#~ msgid "invalid value"
+#~ msgstr "neleistina reikšmė"
+
+#~ msgid "for R_CROSS_BUILD"
+#~ msgstr "dėl R_CROSS_BUILD"
+
+#~ msgid "Comparing %s to %s ..."
+#~ msgstr "Lyginami %s su %s..."
 
 #, fuzzy
 #~ msgid "one of 'package' and 'dir' must be specified."

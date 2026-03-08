@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:50-0700\n"
+"POT-Creation-Date: 2025-03-31 11:51+0200\n"
 "PO-Revision-Date: 2024-03-25 15:00+0300\n"
 "Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
@@ -96,21 +96,21 @@ msgstr "'file' -- это не соединение"
 msgid "cannot write to this connection"
 msgstr "не могу писать в это соединение"
 
-#: io.c:1110
+#: io.c:1111
 msgid "'dec' must be a single character"
 msgstr "'dec' должен быть одним символом"
 
-#: io.c:1137
+#: io.c:1138
 #, c-format
 msgid "corrupt data frame -- length of column %d does not match nrows"
 msgstr "поврежденная таблица данных -- длина колонки %d не соответствует строкам"
 
-#: io.c:1171
+#: io.c:1172
 #, c-format
 msgid "column %d claims to be a factor but does not have numeric codes"
 msgstr "колонка %d считает себя фактором, но у нее нет числовых кодов"
 
-#: io.c:1189
+#: io.c:1190
 msgid "corrupt matrix -- dims do not match length"
 msgstr "поврежденная матрица -- длины измерений не сходятся"
 

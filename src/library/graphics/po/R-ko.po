@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2018-04-09 12:06-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -101,11 +101,18 @@ msgstr "첫번째 인자가 잘못되었습니다"
 msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at'의 길이는 반드시 'z$n'와 같아야 합니다 (즉, %d이어야 합니다)"
 
+msgid "panel.first ignored, it is not a function"
+msgstr ""
+
 msgid "invalid boxplot widths"
 msgstr "박스플롯의 너비들이 유효하지 않습니다"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
 msgstr ""
+
+#, fuzzy
+msgid "panel.last ignored, it is not a function"
+msgstr "'breaks'가 벡터가 아니므로 'include.lowest'는 무시됩니다"
 
 msgid "'formula' should specify exactly two variables"
 msgstr "'formula'는 반드시 두 변수들을 정확히 지정해야 합니다"
@@ -463,14 +470,14 @@ msgstr "유효하지 않은 플롯팅 메소드입니다"
 msgid "'at' must have length equal to the number %d of groups"
 msgstr "'at'는 반드시 그룹의 개수 %d와 동일한 길이를 가져야 합니다"
 
-msgid "formula missing or incorrect"
-msgstr "formula가 누락되었거나 잘못되었습니다"
-
 msgid "'number' must have same length as 'x' and 'y'"
 msgstr "'x'와 'y'와 같이 'number' 역시 동일한 길이를 가져야 합니다"
 
 msgid "exactly one symbol type must be specified"
 msgstr "반드시 하나의 심볼유형이 지정되어져야 합니다"
+
+msgid "'labels' truncated to length %d"
+msgstr ""
 
 msgid "x log scale:  xinch() is nonsense"
 msgstr "x log scale: xinch()는 아무런 의미가 없습니다."
@@ -492,3 +499,6 @@ msgstr[0] "박스플랏 %2$d내에 이상값 (%1$s)가 그려지지 않았습니
 msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] ""
+
+#~ msgid "formula missing or incorrect"
+#~ msgstr "formula가 누락되었거나 잘못되었습니다"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-04-01 10:33-0700\n"
+"POT-Creation-Date: 2026-03-07 10:25+0100\n"
 "PO-Revision-Date: 2024-03-25 14:44+0300\n"
 "Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
@@ -53,23 +53,23 @@ msgstr "не могу извлечь оконницу верхнего уровня (выводы 'grid' и 'graphics' сме
 msgid "attempt to plot on null device"
 msgstr "попытка чертить на нулевом устройстве"
 
-#: grid.c:1711
+#: grid.c:1710
 msgid "there is no layout defined"
 msgstr "нет заданного эскиза"
 
-#: grid.c:1933
+#: grid.c:1932
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "край многоугольника не найден (нулевая ширина или высота?)"
 
-#: grid.c:1942
+#: grid.c:1941
 msgid "polygon edge not found"
 msgstr "край многоугольника не найден"
 
-#: grid.c:2096
+#: grid.c:2095
 msgid "require at least two points to draw arrow"
 msgstr "надо как минимум две точки, чтобы нарисовать стрелку"
 
-#: grid.c:2467
+#: grid.c:2466
 msgid "non-finite control point in Xspline"
 msgstr "не-конечная контрольная точка в Xspline"
 
@@ -99,7 +99,7 @@ msgstr "значение 'pch' = '%d' не реализовано"
 msgid "invalid plotting symbol"
 msgstr "неправильный символ графика"
 
-#: grid.c:5197
+#: grid.c:5198
 msgid "unable to clip to rotated rectangle"
 msgstr "не могу обрезать до повернутого четырехугольника"
 
@@ -123,63 +123,63 @@ msgstr "не могу сохранить состояние 'grid'. Открыто слишком много устройств?"
 msgid "Cannot create unit scalar from 0-length unit vector"
 msgstr "Не могу создать единичный скаляр из нулевого единичного вектора"
 
-#: unit.c:799 unit.c:1298
+#: unit.c:799 unit.c:1308
 msgid "invalid unit or unit not yet implemented"
 msgstr "неправильная или не разработанная единица"
 
-#: unit.c:1355 unit.c:1386
+#: unit.c:1261 unit.c:1365 unit.c:1396
 msgid "Viewport has zero dimension(s)"
 msgstr "Оконница имеет ноль измерений"
 
-#: unit.c:1418 unit.c:1433 unit.c:1448 unit.c:1463
+#: unit.c:1428 unit.c:1443 unit.c:1458 unit.c:1473
 msgid "Unsupported unit conversion"
 msgstr "Неподдерживаемая конверсия единиц измерения"
 
-#: unit.c:1555
+#: unit.c:1565
 msgid "Invalid unit"
 msgstr "Неправильная единица"
 
-#: unit.c:1570
+#: unit.c:1580
 msgid "'units' must be character"
 msgstr "единицы должен быть буквами"
 
-#: unit.c:1573
+#: unit.c:1583
 msgid "'units' must be of length > 0"
 msgstr "единицы должны быть длиной > 0"
 
-#: unit.c:1584
+#: unit.c:1594
 msgid "data must be either NULL, have length 1, or match the length of the final unit vector"
 msgstr "данные должны быть или NULL, или длиной 1, или соответствовать длине окончательного единичного вектора"
 
-#: unit.c:1596
+#: unit.c:1606
 msgid "no string supplied for 'strwidth/height' unit"
 msgstr "нет сроки для единицы 'strwidth/height'"
 
-#: unit.c:1600
+#: unit.c:1610
 msgid "no 'grob' supplied for 'grobwidth/height' unit"
 msgstr "нет 'grob' для единицы 'grobwidth/height'"
 
-#: unit.c:1618
+#: unit.c:1637
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr "'gPath' должен быть единичной грубины в единицах 'grobwidth/height'"
 
-#: unit.c:1623
+#: unit.c:1642
 msgid "non-NULL value supplied for plain unit"
 msgstr "для plain единицы указано не-NULL значение"
 
-#: unit.c:1676 unit.c:1710 unit.c:1759
+#: unit.c:1695 unit.c:1729 unit.c:1778
 msgid "old version of unit class is no longer allowed"
 msgstr "старая версия единичного класса больше не разрешается"
 
-#: unit.c:1682
+#: unit.c:1701
 msgid "object is not coercible to a unit"
 msgstr "объект не конвертируется в вдиницу"
 
-#: unit.c:1708
+#: unit.c:1727
 msgid "object is not a unit"
 msgstr "объект не является единицей"
 
-#: unit.c:1840
+#: unit.c:1859
 msgid "units can only be multiplied with numerics and integers"
 msgstr "единицы можно умножать только на целые или десятичные числа"
 
@@ -187,11 +187,11 @@ msgstr "единицы можно умножать только на целые или десятичные числа"
 msgid "Unable to calculate text width/height (using zero)"
 msgstr "Не могу посчитать ширину/высоту текста (использую 0)"
 
-#: viewport.c:56
+#: viewport.c:57
 msgid "Mask is not logical value ('none' or 'inherit')"
 msgstr "Маска не является логическим значением ('none' или 'inherit')"
 
-#: viewport.c:330
+#: viewport.c:331
 msgid "non-finite location and/or size for viewport"
 msgstr "не-конечное положение и/или размер оконницы"
 

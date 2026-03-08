@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-08 11:37\n"
 "PO-Revision-Date: 2012-01-09 20:51+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,9 +76,6 @@ msgstr "Advarsel: Ukendt indstilling"
 #, fuzzy
 msgid "Warning: unknown option %s"
 msgstr "Advarsel: Ukendt indstilling"
-
-msgid "Output file:"
-msgstr ""
 
 #, fuzzy
 msgid "Compacting PDF document"
@@ -303,6 +300,9 @@ msgid "Enter an environment number, or 0 to exit"
 msgstr ""
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
+msgstr ""
+
+msgid "Enter a frame number, or 0 to exit"
 msgstr ""
 
 msgid "No suitable frames for recover()"
@@ -616,13 +616,13 @@ msgstr ""
 msgid "'list' must be a character vector naming R objects"
 msgstr ""
 
-msgid "no R objects specified or available"
-msgstr ""
-
 msgid "directory '%s' already exists"
 msgstr ""
 
 msgid "generic functions and other S4 objects (e.g., '%s') cannot be dumped; use the 'code_files' argument"
+msgstr ""
+
+msgid "'download.file()' error code '%d'"
 msgstr ""
 
 msgid "unable to access index for repository %s"
@@ -665,10 +665,6 @@ msgstr ""
 msgid "no package %s at the repositories"
 msgstr ""
 
-#, fuzzy
-msgid "invalid 'type'"
-msgstr "Ugyldigt argument for »filter«."
-
 msgid "package %s does not exist on the local repository"
 msgstr ""
 
@@ -681,8 +677,9 @@ msgstr ""
 msgid "trying to use CRAN without setting a mirror"
 msgstr ""
 
-msgid "'download.file()' error code '%d'"
-msgstr ""
+#, fuzzy
+msgid "invalid 'type'"
+msgstr "Ugyldigt argument for »filter«."
 
 msgid "failed to download mirrors file (%s); using local file '%s'"
 msgstr ""
@@ -763,10 +760,7 @@ msgstr ""
 msgid "source repository is unavailable to check versions"
 msgstr ""
 
-msgid "cannot install macOS binary packages on Windows"
-msgstr ""
-
-msgid "cannot install macOS binary packages on this platform"
+msgid "cannot install binary packages from other operating systems on Windows"
 msgstr ""
 
 msgid "cannot install Windows binary packages on this platform"
@@ -1059,10 +1053,10 @@ msgstr ""
 msgid "invalid octal digit"
 msgstr ""
 
-msgid "removing drive '%s'"
+msgid "removing leading '/' from '%s'"
 msgstr ""
 
-msgid "removing leading '/'"
+msgid "removing drive '%s'"
 msgstr ""
 
 msgid "path starts with '~'"
@@ -1072,7 +1066,7 @@ msgstr ""
 msgid "path contains '..'"
 msgstr "sti til %s indeholder mellemrum."
 
-msgid "path is empty"
+msgid "cannot extract through symlink"
 msgstr ""
 
 msgid "'tarfile' must be a character string or a connection"
@@ -1091,6 +1085,9 @@ msgid "checksum error for entry '%s'"
 msgstr ""
 
 msgid "failed to copy %s to %s"
+msgstr ""
+
+msgid "cannot restore symbolic link from %s to %s as a file copy, because the source doesn't exist; try extracting again?"
 msgstr ""
 
 msgid "unsupported entry type"
@@ -1201,10 +1198,17 @@ msgstr "Ugyldigt argument for »filter«."
 msgid "download had nonzero exit status"
 msgstr ""
 
+msgid "Built: value is not a string"
+msgstr ""
+
 msgid "'tar' returned non-zero exit code %d"
 msgstr ""
 
-msgid "file %s is not a macOS binary package"
+#, fuzzy
+msgid "file %s is not a binary package"
+msgstr "Filter »%s« er ikke tilgængelig."
+
+msgid "binary package %s is not compatible with this build of R"
 msgstr ""
 
 msgid "package %s successfully unpacked and MD5 sums checked"
@@ -1232,10 +1236,10 @@ msgid ""
 "\t%s"
 msgstr ""
 
-msgid "'memory.size()' is Windows-specific"
+msgid "'memory.size()' is no longer supported"
 msgstr ""
 
-msgid "'memory.limit()' is Windows-specific"
+msgid "'memory.limit()' is no longer supported"
 msgstr ""
 
 msgid "method 'mailx' is Unix-only"
@@ -1244,6 +1248,9 @@ msgstr ""
 #, fuzzy
 msgid "zip file %s not found"
 msgstr "pakke %s blev ikke fundet"
+
+msgid "cannot extract package from %s"
+msgstr ""
 
 msgid "failed to create %s"
 msgstr ""
@@ -1260,12 +1267,6 @@ msgstr ""
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
 msgstr ""
 
-msgid "'memory.size()' is no longer supported"
-msgstr ""
-
-msgid "'memory.limit()' is no longer supported"
-msgstr ""
-
 msgid "winDialog() cannot be used non-interactively"
 msgstr ""
 
@@ -1277,6 +1278,11 @@ msgid "%d Sweave file for basename %s found"
 msgid_plural "%d Sweave files for basename %s found"
 msgstr[0] "%d Sweavefiler for basisnavn %s blev fundet:"
 msgstr[1] "%d Sweavefiler for basisnavn %s blev fundet:"
+
+msgid "Output file:  "
+msgid_plural "Output files:  "
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "Output/used file:  "
 msgid_plural "Output/used files:  "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:17\n"
 "PO-Revision-Date: 2021-02-10 17:40+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -192,6 +192,27 @@ msgstr ""
 
 msgid "Invalid glyph anchor"
 msgstr ""
+
+msgid "Registered axis names must be lower case"
+msgstr ""
+
+msgid "Custom axis names must be upper case"
+msgstr ""
+
+#, fuzzy
+msgid "Axis value(s) out of range"
+msgstr "indice hors plage"
+
+#, fuzzy
+msgid "No axes specified"
+msgstr "aucune matrice 'z' n'est spécifiée"
+
+msgid "Axis names must be 4 ASCII letters long"
+msgstr ""
+
+#, fuzzy
+msgid "Axis values must be numeric"
+msgstr "la matrice 'rgb' doit être numérique"
 
 msgid "Font file longer than 500 will be truncated"
 msgstr ""

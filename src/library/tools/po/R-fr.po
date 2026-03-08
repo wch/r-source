@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:17\n"
 "PO-Revision-Date: 2021-02-10 17:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -324,9 +324,6 @@ msgstr ""
 msgid "License stub records with missing/empty fields:"
 msgstr "impossible de travailler avec des objets Rd dont les noms sont manquants ou vides"
 
-msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
-msgstr ""
-
 msgid "Non-portable flags in variable '%s':"
 msgstr "Indicateur non portable dans la variable '%s' :"
 
@@ -508,7 +505,7 @@ msgid "Auto-generated content requiring editing in Rd file '%s':"
 msgstr "Contenu automatique de l'objet Rd '%s' à éditer :"
 
 #, fuzzy
-msgid "Rd files without \\description:"
+msgid "Rd files without %s:"
 msgstr "Fichiers Rd avec alias '%s' dupliqué :"
 
 msgid "no Rd sections specified"
@@ -863,11 +860,19 @@ msgstr "pas de packages à vérifier"
 msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
 msgstr "'reverse$repos' devrait être un sous-ensemble de getOption(\"repos\")"
 
-msgid "downloading reverse dependencies ..."
+#, fuzzy
+msgid "downloading reverse dependencies %s"
 msgstr "téléchargement des dépendances inverses ..."
 
-msgid "downloading %s ..."
-msgstr "téléchargement de %s ..."
+#, fuzzy
+msgid "download of reverse dependency %s failed"
+msgstr "téléchargement des dépendances inverses ..."
+
+#, fuzzy
+msgid ""
+"download of %d reverse dependencies failed:\n"
+"  %s"
+msgstr "téléchargement des dépendances inverses ..."
 
 msgid "checking %s ..."
 msgstr "vérification de %s ..."
@@ -981,12 +986,6 @@ msgstr "statut de sortie .install_packages()"
 msgid "restoration failed"
 msgstr "la restauration a échoué"
 
-msgid "invalid value"
-msgstr "valeur incorrecte"
-
-msgid "for R_CROSS_BUILD"
-msgstr "pour R_CROSS_BUILD"
-
 msgid "error reading file '%s'"
 msgstr "erreur de lecture dans le fichier '%s'"
 
@@ -1092,6 +1091,9 @@ msgstr "ERREUR : pas de permission pour installer dans le répertoire"
 msgid "building a fake installation is disallowed"
 msgstr "construire une installation fantôme n'est pas permise"
 
+msgid "specified C++"
+msgstr ""
+
 msgid "using C compiler:"
 msgstr ""
 
@@ -1112,6 +1114,10 @@ msgstr ""
 
 msgid "Reverted installation-time patch"
 msgstr ""
+
+#, fuzzy
+msgid "Input must be character"
+msgstr "'text' doit être un vecteur de chaînes de caractères"
 
 msgid ""
 "See\n"
@@ -1220,6 +1226,13 @@ msgstr ""
 "  %s\n"
 "contiennent no \\item."
 
+msgid "There is no binary type for this build of R."
+msgstr ""
+
+#, fuzzy
+msgid "invalid 'type'"
+msgstr "package incorrect"
+
 msgid "Processing packages:"
 msgstr "Traitement des packages :"
 
@@ -1311,9 +1324,6 @@ msgstr "l'exécution de 'make' a échoué"
 
 msgid "Running vignettes for package %s"
 msgstr "Exécution des vignettes pour le package %s"
-
-msgid "Comparing %s to %s ..."
-msgstr "Comparaison de %s à %s ..."
 
 msgid "no parsed files found"
 msgstr "aucun fichier source n'est trouvé"
@@ -1456,6 +1466,11 @@ msgstr "Encodage inconnu avec des données non-ASCII : conversion vers ASCII"
 
 msgid "cannot source package code:"
 msgstr "impossible de sourcer le code du package :"
+
+msgid ""
+"error in inferior call:\n"
+"  %s"
+msgstr ""
 
 #, fuzzy
 msgid "inferiorCallError"
@@ -1629,6 +1644,22 @@ msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Entrée BibTeX correspondante :"
 msgstr[1] "Entrées BibTeX correspondantes :"
+
+#, fuzzy
+#~ msgid "Rd files without \\description:"
+#~ msgstr "Fichiers Rd avec alias '%s' dupliqué :"
+
+#~ msgid "downloading %s ..."
+#~ msgstr "téléchargement de %s ..."
+
+#~ msgid "invalid value"
+#~ msgstr "valeur incorrecte"
+
+#~ msgid "for R_CROSS_BUILD"
+#~ msgstr "pour R_CROSS_BUILD"
+
+#~ msgid "Comparing %s to %s ..."
+#~ msgstr "Comparaison de %s à %s ..."
 
 #, fuzzy
 #~ msgid "one of 'package' and 'dir' must be specified."

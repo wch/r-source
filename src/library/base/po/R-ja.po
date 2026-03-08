@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:50\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2024-03-19 03:05+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -625,6 +625,10 @@ msgstr "'%s' は順序因子に対しては定義されません"
 msgid "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
 msgstr "もし全ての引数が同じ水準となっている場合、'%s' は順序因子に対してのみ意味を成します"
 
+#, fuzzy
+msgid "directories are ignored"
+msgstr "long vectorはサポートされていません"
+
 msgid "no files to copy to"
 msgstr "そこへコピーすべきファイルがありません"
 
@@ -996,11 +1000,11 @@ msgstr ""
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg' は、NULL かひとつの文字ベクトルでなければなりません"
 
+msgid "'several.ok' must be logical or a string starting with \"all\""
+msgstr ""
+
 msgid "'arg' must be of length >= 1"
 msgstr "'arg' は長さ 1 以上でなければなりません"
-
-msgid "there is more than one match in 'match.arg'"
-msgstr "'match.arg' に複数のマッチがあります"
 
 msgid "no match"
 msgstr "マッチしません"
@@ -1081,7 +1085,14 @@ msgstr "名前空間をロードしません"
 msgid "%s not found"
 msgstr "%s を見付けることができません"
 
+msgid "'versionCheck' must be NULL or a list with components 'op' and 'version'"
+msgstr ""
+
 msgid "namespace %s %s is already loaded, but %s %s is required"
+msgstr "名前空間 %s %s は既にロードされましたが、%s %s が要求されています"
+
+#, fuzzy
+msgid "namespace '%s' is already loaded so argument '%s' will be ignored."
 msgstr "名前空間 %s %s は既にロードされましたが、%s %s が要求されています"
 
 msgid "- loading"
@@ -1571,15 +1582,6 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr "warning() 中の追加引数は無視されます"
 
-msgid "no natural language support or missing translations"
-msgstr ""
-
-msgid "In bare C locale: LANGUAGE reset, but message language may be unchanged"
-msgstr ""
-
-msgid "In bare C locale, not forcing locale; possibly use 'force = TRUE'?"
-msgstr ""
-
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr ""
 
@@ -1931,6 +1933,9 @@ msgid_plural ""
 msgstr[0] ""
 "%s中:\n"
 " 余分な引数 %s は無視されます"
+
+#~ msgid "there is more than one match in 'match.arg'"
+#~ msgstr "'match.arg' に複数のマッチがあります"
 
 #, fuzzy
 #~ msgid "'name' must be a single character string"

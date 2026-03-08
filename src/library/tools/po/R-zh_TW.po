@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:17\n"
 "PO-Revision-Date: 2021-11-06 22:40+0100\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -325,9 +325,6 @@ msgstr ""
 msgid "License stub records with missing/empty fields:"
 msgstr "無法使用缺少或有空白名稱的 Rd 物件"
 
-msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
-msgstr ""
-
 msgid "Non-portable flags in variable '%s':"
 msgstr "變數 '%s' 裡有不可攜的標記："
 
@@ -510,7 +507,7 @@ msgid "Auto-generated content requiring editing in Rd file '%s':"
 msgstr "在 Rd 物件 '%s' 裡自動產生的內容需要修改："
 
 #, fuzzy
-msgid "Rd files without \\description:"
+msgid "Rd files without %s:"
 msgstr "Rd 檔案不能有重複的別名 '%s'："
 
 msgid "no Rd sections specified"
@@ -870,11 +867,19 @@ msgstr "沒有可以查檢的東西"
 msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
 msgstr ""
 
-msgid "downloading reverse dependencies ..."
+#, fuzzy
+msgid "downloading reverse dependencies %s"
 msgstr "下載扭轉的依存性"
 
-msgid "downloading %s ..."
-msgstr "下載 %s。。。"
+#, fuzzy
+msgid "download of reverse dependency %s failed"
+msgstr "下載扭轉的依存性"
+
+#, fuzzy
+msgid ""
+"download of %d reverse dependencies failed:\n"
+"  %s"
+msgstr "下載扭轉的依存性"
 
 msgid "checking %s ..."
 msgstr "%s…"
@@ -989,13 +994,6 @@ msgstr ".install_packages() 離開狀態"
 msgid "restoration failed"
 msgstr "載入失敗"
 
-#, fuzzy
-msgid "invalid value"
-msgstr "套件無效。"
-
-msgid "for R_CROSS_BUILD"
-msgstr ""
-
 msgid "error reading file '%s'"
 msgstr "讀取檔案 '%s' 時發生錯誤"
 
@@ -1100,6 +1098,9 @@ msgstr "錯誤：沒有在這個目錄裡安裝的許可"
 msgid "building a fake installation is disallowed"
 msgstr "不充許偽造安裝"
 
+msgid "specified C++"
+msgstr ""
+
 msgid "using C compiler:"
 msgstr ""
 
@@ -1120,6 +1121,10 @@ msgstr ""
 
 msgid "Reverted installation-time patch"
 msgstr ""
+
+#, fuzzy
+msgid "Input must be character"
+msgstr "'text' 必須是字元向量"
 
 msgid ""
 "See\n"
@@ -1228,6 +1233,13 @@ msgstr ""
 "  %s\n"
 "沒有\\itemize."
 
+msgid "There is no binary type for this build of R."
+msgstr ""
+
+#, fuzzy
+msgid "invalid 'type'"
+msgstr "套件無效。"
+
 msgid "Processing packages:"
 msgstr "正在處理套件："
 
@@ -1320,9 +1332,6 @@ msgstr "給 '%s' 呼叫 'texi2dvi' 失敗了"
 
 msgid "Running vignettes for package %s"
 msgstr "執行簡介給程式套件 %s"
-
-msgid "Comparing %s to %s ..."
-msgstr "比較 %s 和 %s"
 
 msgid "no parsed files found"
 msgstr "找不到句法分析過的檔案"
@@ -1463,6 +1472,11 @@ msgstr "不明帶非 ASCII 資料的編碼: 轉換為 ASCII"
 
 msgid "cannot source package code:"
 msgstr "無法讀取套件來源編碼"
+
+msgid ""
+"error in inferior call:\n"
+"  %s"
+msgstr ""
 
 msgid "inferiorCallError"
 msgstr ""
@@ -1606,6 +1620,20 @@ msgstr[0] "%d 項套件測試失敗"
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "相關的 BibTeX 條目："
+
+#, fuzzy
+#~ msgid "Rd files without \\description:"
+#~ msgstr "Rd 檔案不能有重複的別名 '%s'："
+
+#~ msgid "downloading %s ..."
+#~ msgstr "下載 %s。。。"
+
+#, fuzzy
+#~ msgid "invalid value"
+#~ msgstr "套件無效。"
+
+#~ msgid "Comparing %s to %s ..."
+#~ msgstr "比較 %s 和 %s"
 
 #, fuzzy
 #~ msgid "one of 'package' and 'dir' must be specified."

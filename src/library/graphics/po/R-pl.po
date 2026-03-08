@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -98,11 +98,18 @@ msgstr "niepoprawny pierwszy argument"
 msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at' musi mieć tę samą długość co 'z$n', tzn. %d"
 
+msgid "panel.first ignored, it is not a function"
+msgstr ""
+
 msgid "invalid boxplot widths"
 msgstr "niepoprawne szerokości wykresu pudełkowego"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
 msgstr "niektóre wcięcia wyszły poza oś ('box'): może ustaw 'notch=FALSE'"
+
+#, fuzzy
+msgid "panel.last ignored, it is not a function"
+msgstr "'include.lowest' zignorowano ponieważ 'breaks' nie jest wektorem"
 
 msgid "'formula' should specify exactly two variables"
 msgstr "'formula' powinna określać dokładnie dwie zmienne"
@@ -462,14 +469,14 @@ msgstr "niepoprawna metoda rysowania wykresu"
 msgid "'at' must have length equal to the number %d of groups"
 msgstr "argument 'at' musi mieć długość równą liczbie %d grup"
 
-msgid "formula missing or incorrect"
-msgstr "brakuje formuły lub jest ona niepoprawna"
-
 msgid "'number' must have same length as 'x' and 'y'"
 msgstr "'number' musi mieć tę samą długość co 'x' oraz 'y'"
 
 msgid "exactly one symbol type must be specified"
 msgstr "dokładnie jeden typ symbolu musi być określony"
+
+msgid "'labels' truncated to length %d"
+msgstr ""
 
 msgid "x log scale:  xinch() is nonsense"
 msgstr "skala logarytmiczna x:  'xinch()' nie ma sensu"
@@ -498,6 +505,9 @@ msgid_plural "arguments %s are not made use of"
 msgstr[0] "argument %s nie robi użytku z"
 msgstr[1] "argumenty %s nie robią użytku z"
 msgstr[2] "argumenty %s nie robią użytku z"
+
+#~ msgid "formula missing or incorrect"
+#~ msgstr "brakuje formuły lub jest ona niepoprawna"
 
 #, fuzzy
 #~ msgid "fuzz must be non-negative"

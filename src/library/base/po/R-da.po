@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:50\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2015-03-25 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -636,6 +636,10 @@ msgstr "'%s' er ikke defineret for faktorer i rækkefølge"
 msgid "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
 msgstr "'%s' er kun meningsfuldt for faktorer i rækkefølge hvis alle argumenter har de samme niveausæt"
 
+#, fuzzy
+msgid "directories are ignored"
+msgstr "lange vektorer er ikke understøttet"
+
 msgid "no files to copy to"
 msgstr "ingen filer at kopiere til"
 
@@ -1006,11 +1010,11 @@ msgstr ""
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg' skal være NULL eller en tegnvektor"
 
+msgid "'several.ok' must be logical or a string starting with \"all\""
+msgstr ""
+
 msgid "'arg' must be of length >= 1"
 msgstr "'arg' skal have længden >= 1"
-
-msgid "there is more than one match in 'match.arg'"
-msgstr "der er mere end en match i 'match.arg'"
 
 msgid "no match"
 msgstr "ingen match"
@@ -1093,7 +1097,14 @@ msgstr "indlæser ikke et navnerum"
 msgid "%s not found"
 msgstr "%s blev ikke fundet"
 
+msgid "'versionCheck' must be NULL or a list with components 'op' and 'version'"
+msgstr ""
+
 msgid "namespace %s %s is already loaded, but %s %s is required"
+msgstr "navnerum %s %s er indlæst, men %s %s er krævet"
+
+#, fuzzy
+msgid "namespace '%s' is already loaded so argument '%s' will be ignored."
 msgstr "navnerum %s %s er indlæst, men %s %s er krævet"
 
 msgid "- loading"
@@ -1586,15 +1597,6 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr "yderligere argumenter ignoreret i warning()"
 
-msgid "no natural language support or missing translations"
-msgstr ""
-
-msgid "In bare C locale: LANGUAGE reset, but message language may be unchanged"
-msgstr ""
-
-msgid "In bare C locale, not forcing locale; possibly use 'force = TRUE'?"
-msgstr ""
-
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr ""
 
@@ -1979,6 +1981,9 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "ekstra argument %s vil blive ignoreret"
 msgstr[1] "ekstra argumentet %s vil blive ignoreret"
+
+#~ msgid "there is more than one match in 'match.arg'"
+#~ msgstr "der er mere end en match i 'match.arg'"
 
 #, fuzzy
 #~ msgid "'name' must be a single character string"

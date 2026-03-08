@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:50\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2023-12-20 13:03+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -608,6 +608,9 @@ msgstr "'%s'对順序化的因子没有意义"
 msgid "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
 msgstr "如果所有的参数都有相同的因子水平设置的话，'%s'才能对順序化的因子有意义"
 
+msgid "directories are ignored"
+msgstr ""
+
 msgid "no files to copy to"
 msgstr "拷贝时没有可以写的文件"
 
@@ -974,11 +977,11 @@ msgstr ""
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg'要么是NULL，要么是字符向量。"
 
+msgid "'several.ok' must be logical or a string starting with \"all\""
+msgstr ""
+
 msgid "'arg' must be of length >= 1"
 msgstr "'arg'的长度必需大于等于一"
-
-msgid "there is more than one match in 'match.arg'"
-msgstr "'match.arg'里有重复的匹配"
 
 msgid "no match"
 msgstr "找不到匹配"
@@ -1059,7 +1062,14 @@ msgstr "不载入命名空间"
 msgid "%s not found"
 msgstr "%s不存在"
 
+msgid "'versionCheck' must be NULL or a list with components 'op' and 'version'"
+msgstr ""
+
 msgid "namespace %s %s is already loaded, but %s %s is required"
+msgstr "载入了命名空间%1$s %2$s，但需要的是%3$s %4$s"
+
+#, fuzzy
+msgid "namespace '%s' is already loaded so argument '%s' will be ignored."
 msgstr "载入了命名空间%1$s %2$s，但需要的是%3$s %4$s"
 
 msgid "- loading"
@@ -1553,15 +1563,6 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr "warning()里的附加参数忽略不用"
 
-msgid "no natural language support or missing translations"
-msgstr ""
-
-msgid "In bare C locale: LANGUAGE reset, but message language may be unchanged"
-msgstr ""
-
-msgid "In bare C locale, not forcing locale; possibly use 'force = TRUE'?"
-msgstr ""
-
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr ""
 
@@ -1919,6 +1920,9 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] "额外参数%s忽略不用"
+
+#~ msgid "there is more than one match in 'match.arg'"
+#~ msgstr "'match.arg'里有重复的匹配"
 
 #~ msgid "'name' must be a single character string"
 #~ msgstr "“name”必须是单个字符串"

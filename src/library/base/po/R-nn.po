@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:50\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -655,6 +655,9 @@ msgstr "«%s» er ikkje definert for ordna faktorar"
 msgid "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
 msgstr "«%s» gjev berre meining for ordna faktorar viss alle argumenta har same nivå"
 
+msgid "directories are ignored"
+msgstr ""
+
 msgid "no files to copy to"
 msgstr "ingen filer å kopiera til"
 
@@ -1036,11 +1039,11 @@ msgstr ""
 msgid "'arg' must be NULL or a character vector"
 msgstr "«arg» må vera NULL eller ein teiknvektor"
 
+msgid "'several.ok' must be logical or a string starting with \"all\""
+msgstr ""
+
 msgid "'arg' must be of length >= 1"
 msgstr "«arg» må ha minst eitt element"
-
-msgid "there is more than one match in 'match.arg'"
-msgstr "det finst meir enn eitt treff i «match.arg»"
 
 msgid "no match"
 msgstr "ingen treff"
@@ -1125,8 +1128,15 @@ msgstr "lastar ikkje eit namnerom"
 msgid "%s not found"
 msgstr "fann ikkje «%s»"
 
+msgid "'versionCheck' must be NULL or a list with components 'op' and 'version'"
+msgstr ""
+
 #, fuzzy
 msgid "namespace %s %s is already loaded, but %s %s is required"
+msgstr "pakken «%s %s» er lasta, men «%s %s» trengst av «%s»"
+
+#, fuzzy
+msgid "namespace '%s' is already loaded so argument '%s' will be ignored."
 msgstr "pakken «%s %s» er lasta, men «%s %s» trengst av «%s»"
 
 msgid "- loading"
@@ -1637,15 +1647,6 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr "fleire argument ignorerte i warning()"
 
-msgid "no natural language support or missing translations"
-msgstr ""
-
-msgid "In bare C locale: LANGUAGE reset, but message language may be unchanged"
-msgstr ""
-
-msgid "In bare C locale, not forcing locale; possibly use 'force = TRUE'?"
-msgstr ""
-
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr ""
 
@@ -2051,6 +2052,9 @@ msgid_plural ""
 " extra arguments %s will be disregarded"
 msgstr[0] "ekstraargument(a) «%s» vert ikkje brukt(e)"
 msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
+
+#~ msgid "there is more than one match in 'match.arg'"
+#~ msgstr "det finst meir enn eitt treff i «match.arg»"
 
 #, fuzzy
 #~ msgid "'name' must be a single character string"

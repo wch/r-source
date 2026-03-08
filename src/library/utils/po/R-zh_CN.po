@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:50\n"
+"POT-Creation-Date: 2026-03-08 11:37\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -77,9 +77,6 @@ msgstr "警告：没有%s这样的选项"
 
 msgid "Warning: unknown option %s"
 msgstr "警告：没有%s这样的选项"
-
-msgid "Output file:"
-msgstr ""
 
 msgid "Compacting PDF document"
 msgstr "压缩了PDF文件"
@@ -303,6 +300,10 @@ msgstr "请输入一个环境号，要退出的话输入0"
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
 msgstr "非交互式地調用了recover; 傾印出了所有的框，可以用debugger()来进行检查"
+
+#, fuzzy
+msgid "Enter a frame number, or 0 to exit"
+msgstr "请输入一个环境号，要退出的话输入0"
 
 msgid "No suitable frames for recover()"
 msgstr "找不到可用于recover()的框"
@@ -620,14 +621,15 @@ msgstr "'code_files'必需是字符向量"
 msgid "'list' must be a character vector naming R objects"
 msgstr "'list'必需是为R对象取名的字符向量"
 
-msgid "no R objects specified or available"
-msgstr "没有指点定的R对象"
-
 msgid "directory '%s' already exists"
 msgstr "已经有了'%s'这样一个目录"
 
 msgid "generic functions and other S4 objects (e.g., '%s') cannot be dumped; use the 'code_files' argument"
 msgstr "泛型函数和其他S4对象（例如'%s'）不能被转储出来；用'code_files'这个参数"
+
+#, fuzzy
+msgid "'download.file()' error code '%d'"
+msgstr "read.dcf()在'%s'文件上出了错"
 
 msgid "unable to access index for repository %s"
 msgstr "无法在貯藏處%s中读写索引"
@@ -668,10 +670,6 @@ msgstr "'destdir'不是目录"
 msgid "no package %s at the repositories"
 msgstr "貯藏處里没有%s这样的程序包"
 
-#, fuzzy
-msgid "invalid 'type'"
-msgstr "询问无效"
-
 msgid "package %s does not exist on the local repository"
 msgstr "地方貯藏處里没有%s这样的程序包"
 
@@ -685,8 +683,8 @@ msgid "trying to use CRAN without setting a mirror"
 msgstr "试试在不设定镜像的情况下用CRAN"
 
 #, fuzzy
-msgid "'download.file()' error code '%d'"
-msgstr "read.dcf()在'%s'文件上出了错"
+msgid "invalid 'type'"
+msgstr "询问无效"
 
 msgid "failed to download mirrors file (%s); using local file '%s'"
 msgstr ""
@@ -780,12 +778,8 @@ msgid "source repository is unavailable to check versions"
 msgstr "无法用代码源库来检查版本"
 
 #, fuzzy
-msgid "cannot install macOS binary packages on Windows"
+msgid "cannot install binary packages from other operating systems on Windows"
 msgstr "无法在Windows下安装MacOS X二元程序包"
-
-#, fuzzy
-msgid "cannot install macOS binary packages on this platform"
-msgstr "无法在此平台下安装MacOS X二元程序包"
 
 msgid "cannot install Windows binary packages on this platform"
 msgstr "无法在此平台下安装Windows二元程序包"
@@ -1081,16 +1075,19 @@ msgstr ""
 msgid "xz"
 msgstr ""
 
+msgid "zstd"
+msgstr ""
+
 msgid "failed to create directory %s"
 msgstr "无法建立目录%s"
 
 msgid "invalid octal digit"
 msgstr "八进制数字格式无效"
 
-msgid "removing drive '%s'"
+msgid "removing leading '/' from '%s'"
 msgstr ""
 
-msgid "removing leading '/'"
+msgid "removing drive '%s'"
 msgstr ""
 
 msgid "path starts with '~'"
@@ -1100,7 +1097,7 @@ msgstr ""
 msgid "path contains '..'"
 msgstr "指向%s的路径里不能有空格,"
 
-msgid "path is empty"
+msgid "cannot extract through symlink"
 msgstr ""
 
 msgid "'tarfile' must be a character string or a connection"
@@ -1120,6 +1117,9 @@ msgstr "项目'%s'检查和错误"
 
 msgid "failed to copy %s to %s"
 msgstr "无法把%s拷贝到%s"
+
+msgid "cannot restore symbolic link from %s to %s as a file copy, because the source doesn't exist; try extracting again?"
+msgstr ""
 
 msgid "unsupported entry type"
 msgstr "不支持这一项目类型"
@@ -1236,11 +1236,18 @@ msgstr "格式无效"
 msgid "download had nonzero exit status"
 msgstr "下载退出状态不是零"
 
+msgid "Built: value is not a string"
+msgstr ""
+
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar'退出码为%d"
 
-msgid "file %s is not a macOS binary package"
+#, fuzzy
+msgid "file %s is not a binary package"
 msgstr "文件%s不是OS X的二进制软件包"
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "程序包%s打开成功，MD5和检查也通过"
@@ -1271,10 +1278,12 @@ msgstr ""
 "下载的二进制程序包在\n"
 "\t%s里"
 
-msgid "'memory.size()' is Windows-specific"
+#, fuzzy
+msgid "'memory.size()' is no longer supported"
 msgstr "'memory.size()'只在Windows上有用"
 
-msgid "'memory.limit()' is Windows-specific"
+#, fuzzy
+msgid "'memory.limit()' is no longer supported"
 msgstr "'memory.limit()'只在Windows上有用"
 
 msgid "method 'mailx' is Unix-only"
@@ -1282,6 +1291,10 @@ msgstr "'mailx'只在Unix上有用"
 
 msgid "zip file %s not found"
 msgstr "找不到%s这一zip文件"
+
+#, fuzzy
+msgid "cannot extract package from %s"
+msgstr "无法建立HTML程序包索引"
 
 msgid "failed to create %s"
 msgstr "无法建立%s"
@@ -1300,14 +1313,6 @@ msgstr "无法将临时安装%s搬到%s"
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
 msgstr ""
 
-#, fuzzy
-msgid "'memory.size()' is no longer supported"
-msgstr "'memory.size()'只在Windows上有用"
-
-#, fuzzy
-msgid "'memory.limit()' is no longer supported"
-msgstr "'memory.limit()'只在Windows上有用"
-
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog()不能在非互交形式下使用"
 
@@ -1318,6 +1323,10 @@ msgstr "winDialogString()不能在非互交形式下使用"
 msgid "%d Sweave file for basename %s found"
 msgid_plural "%d Sweave files for basename %s found"
 msgstr[0] "找到了%d个不含路径文件字符串为%s的Sweave文件:"
+
+msgid "Output file:  "
+msgid_plural "Output files:  "
+msgstr[0] ""
 
 msgid "Output/used file:  "
 msgid_plural "Output/used files:  "
@@ -1333,6 +1342,10 @@ msgstr[0] "角色设定得无效: %s"
 
 msgid "Invalid ORCID iD: %s."
 msgid_plural "Invalid ORCID iDs: %s."
+msgstr[0] ""
+
+msgid "Invalid ROR ID: %s."
+msgid_plural "Invalid ROR IDs: %s."
 msgstr[0] ""
 
 msgid "A bibentry of bibtype %s has to specify the field: %s"
@@ -1447,6 +1460,19 @@ msgstr[0] "最后一个记录不完全，%d行忽略不用"
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "罗马数字无效：%s"
+
+#~ msgid "no R objects specified or available"
+#~ msgstr "没有指点定的R对象"
+
+#, fuzzy
+#~ msgid "cannot install macOS binary packages on this platform"
+#~ msgstr "无法在此平台下安装MacOS X二元程序包"
+
+#~ msgid "'memory.size()' is Windows-specific"
+#~ msgstr "'memory.size()'只在Windows上有用"
+
+#~ msgid "'memory.limit()' is Windows-specific"
+#~ msgstr "'memory.limit()'只在Windows上有用"
 
 #~ msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 #~ msgstr "建议你用%s/%s而不用%s/%s/%s。"
@@ -1775,9 +1801,6 @@ msgstr[0] "罗马数字无效：%s"
 
 #~ msgid "Making links in per-session dir ..."
 #~ msgstr "在每會期文件目录里建立联结…"
-
-#~ msgid "cannot create HTML package index"
-#~ msgstr "无法建立HTML程序包索引"
 
 #~ msgid "cannot create HTML search index"
 #~ msgstr "无法建立HTML搜索索引"

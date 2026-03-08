@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:17\n"
 "PO-Revision-Date: 2024-03-22 18:05+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -195,6 +195,27 @@ msgstr ""
 
 msgid "Invalid glyph anchor"
 msgstr ""
+
+msgid "Registered axis names must be lower case"
+msgstr ""
+
+msgid "Custom axis names must be upper case"
+msgstr ""
+
+#, fuzzy
+msgid "Axis value(s) out of range"
+msgstr "subscrito fora da faixa"
+
+#, fuzzy
+msgid "No axes specified"
+msgstr "nenhuma matriz 'z' especificada"
+
+msgid "Axis names must be 4 ASCII letters long"
+msgstr ""
+
+#, fuzzy
+msgid "Axis values must be numeric"
+msgstr "matriz rgb deve ser numérica"
 
 msgid "Font file longer than 500 will be truncated"
 msgstr ""

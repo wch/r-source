@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-04-01 10:33-0700\n"
+"POT-Creation-Date: 2026-03-07 10:25+0100\n"
 "PO-Revision-Date: 2024-03-19 03:05+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: none\n"
@@ -55,27 +55,27 @@ msgstr "no es pot barrejar l'àrea de visualització de nivell superior («grid�
 msgid "attempt to plot on null device"
 msgstr "s'ha intentat dibuixar en un dispositiu nul"
 
-#: grid.c:1711
+#: grid.c:1710
 #, fuzzy
 msgid "there is no layout defined"
 msgstr "no hi ha cap disposició definida"
 
-#: grid.c:1933
+#: grid.c:1932
 #, fuzzy
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "no s'ha trobat la vora del polígon (zero-width o zero-height?)"
 
-#: grid.c:1942
+#: grid.c:1941
 #, fuzzy
 msgid "polygon edge not found"
 msgstr "no s'ha trobat la vora del polígon"
 
-#: grid.c:2096
+#: grid.c:2095
 #, fuzzy
 msgid "require at least two points to draw arrow"
 msgstr "requereix com a mínim dos punts per a dibuixar la fletxa"
 
-#: grid.c:2467
+#: grid.c:2466
 #, fuzzy
 msgid "non-finite control point in Xspline"
 msgstr "punt de control no definit a Xspline"
@@ -108,7 +108,7 @@ msgstr "valor de pch no implementat «%d»"
 msgid "invalid plotting symbol"
 msgstr "el símbol gràfic no és vàlid"
 
-#: grid.c:5197
+#: grid.c:5198
 #, fuzzy
 msgid "unable to clip to rotated rectangle"
 msgstr "no s'ha pogut retallar el rectangle girat"
@@ -138,76 +138,76 @@ msgstr "no s'ha pogut emmagatzemar l'estat de la graella.  Hi ha massa dispositi
 msgid "Cannot create unit scalar from 0-length unit vector"
 msgstr "No es pot crear un escalar d'unitat a partir del vector d'unitat de longitud 0"
 
-#: unit.c:799 unit.c:1298
+#: unit.c:799 unit.c:1308
 #, fuzzy
 msgid "invalid unit or unit not yet implemented"
 msgstr "unitat o unitat encara no implementada"
 
-#: unit.c:1355 unit.c:1386
+#: unit.c:1261 unit.c:1365 unit.c:1396
 #, fuzzy
 msgid "Viewport has zero dimension(s)"
 msgstr "L'àrea de visualització té dimensió zero"
 
-#: unit.c:1418 unit.c:1433 unit.c:1448 unit.c:1463
+#: unit.c:1428 unit.c:1443 unit.c:1458 unit.c:1473
 #, fuzzy
 msgid "Unsupported unit conversion"
 msgstr "Conversió d'unitat no suportada"
 
-#: unit.c:1555
+#: unit.c:1565
 #, fuzzy
 msgid "Invalid unit"
 msgstr "Unitat no vàlida"
 
-#: unit.c:1570
+#: unit.c:1580
 #, fuzzy
 msgid "'units' must be character"
 msgstr "'unitats' ha de ser un caràcter"
 
-#: unit.c:1573
+#: unit.c:1583
 msgid "'units' must be of length > 0"
 msgstr "'unitats' ha de ser de longitud of 0"
 
-#: unit.c:1584
+#: unit.c:1594
 #, fuzzy
 msgid "data must be either NULL, have length 1, or match the length of the final unit vector"
 msgstr "les dades han de ser NULL, tenir longitud 1, o coincidir amb la longitud del vector unitari final"
 
-#: unit.c:1596
+#: unit.c:1606
 #, fuzzy
 msgid "no string supplied for 'strwidth/height' unit"
 msgstr "no s'ha proporcionat cap cadena per a la unitat «strwidth/height»"
 
-#: unit.c:1600
+#: unit.c:1610
 #, fuzzy
 msgid "no 'grob' supplied for 'grobwidth/height' unit"
 msgstr "no s'ha subministrat cap «grob» per a la unitat «grobwidth/height»"
 
-#: unit.c:1618
+#: unit.c:1637
 #, fuzzy
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr "«gPath» ha de tenir profunditat 1 en unitats «grobwidth/height»"
 
-#: unit.c:1623
+#: unit.c:1642
 #, fuzzy
 msgid "non-NULL value supplied for plain unit"
 msgstr "s'ha proporcionat un valor no nul per a la unitat plana"
 
-#: unit.c:1676 unit.c:1710 unit.c:1759
+#: unit.c:1695 unit.c:1729 unit.c:1778
 #, fuzzy
 msgid "old version of unit class is no longer allowed"
 msgstr "ja no es permet una versió antiga de la classe unitària"
 
-#: unit.c:1682
+#: unit.c:1701
 #, fuzzy
 msgid "object is not coercible to a unit"
 msgstr "l'objecte no és coercible amb una unitat"
 
-#: unit.c:1708
+#: unit.c:1727
 #, fuzzy
 msgid "object is not a unit"
 msgstr "l'objecte no és una unitat"
 
-#: unit.c:1840
+#: unit.c:1859
 #, fuzzy
 msgid "units can only be multiplied with numerics and integers"
 msgstr "les unitats només es poden multiplicar amb nombres i enters"
@@ -217,12 +217,12 @@ msgstr "les unitats només es poden multiplicar amb nombres i enters"
 msgid "Unable to calculate text width/height (using zero)"
 msgstr "No es pot calcular l'amplada/alçada del text (usant zero)"
 
-#: viewport.c:56
+#: viewport.c:57
 #, fuzzy
 msgid "Mask is not logical value ('none' or 'inherit')"
 msgstr "La màscara no és un valor lògic («none» o «inherit»)"
 
-#: viewport.c:330
+#: viewport.c:331
 #, fuzzy
 msgid "non-finite location and/or size for viewport"
 msgstr "ubicació i/o mida no acabades per a l'àrea de visualització"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grDevices 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:17\n"
 "PO-Revision-Date: 2020-11-29 17:27+0200\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -186,6 +186,27 @@ msgstr ""
 
 msgid "Invalid glyph anchor"
 msgstr ""
+
+msgid "Registered axis names must be lower case"
+msgstr ""
+
+msgid "Custom axis names must be upper case"
+msgstr ""
+
+#, fuzzy
+msgid "Axis value(s) out of range"
+msgstr "indeksas nepatenka į sritį"
+
+#, fuzzy
+msgid "No axes specified"
+msgstr "'z' matrica nenurodyta"
+
+msgid "Axis names must be 4 ASCII letters long"
+msgstr ""
+
+#, fuzzy
+msgid "Axis values must be numeric"
+msgstr "rgb matrica turi būti skaitinė"
 
 msgid "Font file longer than 500 will be truncated"
 msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2023-04-14 03:05+0000\n"
 "Last-Translator: Hugo Gruson <hugo.gruson@normalesup.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -216,8 +216,8 @@ msgstr "impossible de calculer l'estimation, NA est renvoyé"
 msgid "cannot compute exact p-value with ties"
 msgstr "impossible de calculer la p-value exacte avec des ex-aequos"
 
-msgid "cannot compute exact confidence intervals with ties"
-msgstr "impossible de calculer les intervalles de confiance exacts avec des ex-aequos"
+msgid "cannot compute exact confidence interval with ties"
+msgstr "impossible de calculer un intervalle de confiance exact avec des ex-aequos"
 
 msgid "'formula' missing or incorrect"
 msgstr "'formula' manquante ou incorrecte"
@@ -615,12 +615,6 @@ msgstr "'y' doit être un vecteur numérique"
 msgid "not enough finite observations"
 msgstr "pas assez d'observations non indéfinies"
 
-msgid "Cannot compute exact p-value with ties"
-msgstr "Impossible de calculer la p-value exacte avec des ex-aequos"
-
-msgid "'formula' missing or invalid"
-msgstr "'formula' manquante ou incorrecte"
-
 msgid "invalid formula"
 msgstr "'formula' incorrecte"
 
@@ -828,8 +822,9 @@ msgstr "l'analyse factorielle nécessite au moins trois variables"
 msgid "no starting values supplied"
 msgstr "pas de valeurs initiales fournies"
 
-msgid "invalid argument 'lambda'"
-msgstr "argument 'lambda' incorrect"
+#, fuzzy
+msgid "invalid argument '%s'"
+msgstr "argument 'n' incorrect"
 
 msgid "%s link not recognised"
 msgstr "lien %s non reconnu"
@@ -943,7 +938,77 @@ msgstr "tous les groupes doivent contenir des données"
 msgid "not enough observations"
 msgstr "pas assez d'observations"
 
-msgid "NA's are not allowed in 'groups' or 'blocks'"
+#, fuzzy
+msgid "incorrect dimensions"
+msgstr "dimensions incorrectes pour 'xi'"
+
+msgid "at least two response categories required"
+msgstr ""
+
+#, fuzzy
+msgid "at least two groups required"
+msgstr "une formule à deux membres est requise"
+
+msgid "%s currently only allows independent right-censoring"
+msgstr ""
+
+msgid "error computing the Hessian in %s"
+msgstr ""
+
+msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgstr ""
+
+msgid "unsuccessful optimisation in %s"
+msgstr ""
+
+msgid "incompatible length of argument 'mu' in %s"
+msgstr ""
+
+#, fuzzy
+msgid "cannot compute exact permutation distribution in %s"
+msgstr "impossible de calculer la p-value exacte avec des ex-aequos"
+
+#, fuzzy
+msgid "cannot compute one-sided p-values in %s"
+msgstr "impossible de calculer les p-values correctes avec des ex-aequos"
+
+msgid "permutation confidence intervals only available for 2-sample comparisons in %s"
+msgstr ""
+
+#, fuzzy
+msgid "failed to compute confidence interval in %s"
+msgstr "impossible de calculer un intervalle de confiance exact avec des ex-aequos"
+
+#, fuzzy
+msgid "incorrect specification for '%s'"
+msgstr "'row.vars' incorrect"
+
+msgid "cannot have both a 'Surv()' response and an 'event' argument in %s"
+msgstr ""
+
+msgid "incorrect argument 'groups' in %s: at least two groups needed"
+msgstr ""
+
+#, fuzzy
+msgid "%s is not defined for unordered responses"
+msgstr "'proj' n'est pas implémenté pour les réponses multiples"
+
+#, fuzzy
+msgid "incorrect number of columns for 'prob' in %s"
+msgstr "le nombre de colonnes de 'x' est incorrect"
+
+#, fuzzy
+msgid "exactly one of 'n', 'delta', 'power', and 'sig.level' must be NULL"
+msgstr "un et un seul parmi 'n', 'delta', 'sd', 'power', et 'sig.level' doit être NULL"
+
+msgid "effect size can only be computed for two-sample problems in %s"
+msgstr ""
+
+msgid "%s only allows two-sided alternatives in the presence of more than two groups"
+msgstr ""
+
+#, fuzzy
+msgid "NAs are not allowed in 'groups' or 'blocks'"
 msgstr "Les NAs ne sont pas autorisés dans 'groups' ou 'blocks'"
 
 msgid "'y', 'groups' and 'blocks' must have the same length"
@@ -952,20 +1017,11 @@ msgstr "'y', 'groups' et 'blocks' doivent avoir la même longueur"
 msgid "not an unreplicated complete block design"
 msgstr "ce n'est pas un plan en bloc complet sans répétitions"
 
-msgid "formula missing"
-msgstr "formule manquante"
-
-msgid "incorrect specification for 'formula'"
-msgstr "'formula' incorrecte"
+msgid "'formula' missing"
+msgstr "'formula' manquante"
 
 msgid "nothing to tabulate"
 msgstr "rien à tabuler"
-
-msgid "incorrect specification for 'row.vars'"
-msgstr "'row.vars' incorrect"
-
-msgid "incorrect specification for 'col.vars'"
-msgstr "'col.vars' incorrect"
 
 msgid "'formula' must have both left and right hand sides"
 msgstr "'formula' doit avoir un membre de gauche et un membre de droite"
@@ -1424,15 +1480,6 @@ msgstr "le carré d'un prédicteur à ignorer a été spécifié, alors qu'il n'
 msgid "specified parametric for all predictors"
 msgstr "tous les prédicteurs spécifiés sont paramétriques"
 
-msgid "invalid argument 'span'"
-msgstr "argument 'span' incorrect"
-
-msgid "invalid argument 'cell'"
-msgstr "argument 'cell' incorrect"
-
-msgid "invalid argument 'degree'"
-msgstr "argument 'degree' incorrect"
-
 msgid "iterTrace = %d is not obeyed since iterations = %d"
 msgstr "iterTrace = %d n’est pas respecté puisque le nombre d’iterations = %d"
 
@@ -1653,9 +1700,6 @@ msgstr "toutes les dates contiennent un NA"
 
 msgid "missing values in object"
 msgstr "valeurs manquantes dans l'objet"
-
-msgid "invalid argument 'omit'"
-msgstr "argument 'omit' incorrect"
 
 msgid "'print.level' must be in {0,1,2}"
 msgstr "'print.level' doit appartenir à {0,1,2}"
@@ -1953,9 +1997,6 @@ msgstr "les éléments de 'p' doivent appartenir à (0,1)"
 msgid "'conf.level' is not a probability"
 msgstr ""
 
-msgid "'formula' missing"
-msgstr "'formula' manquante"
-
 #, fuzzy
 msgid "'type' must be an integer in 1..9"
 msgstr "'y' doit être plus long que 'x' de un"
@@ -1971,15 +2012,6 @@ msgstr "les valeurs manquantes et les NaN ne sont pas autorisés si 'na.rm' est 
 
 msgid "'probs' outside [0,1]"
 msgstr "'probs' en dehors de [0,1]"
-
-msgid "invalid argument 'n'"
-msgstr "argument 'n' incorrect"
-
-msgid "invalid argument 'r'"
-msgstr "argument 'r' incorrect"
-
-msgid "invalid argument 'c'"
-msgstr "argument 'c' incorrect"
 
 msgid "arguments 'r' and 'c' must have the same sums"
 msgstr "les arguments 'r' et 'c' doivent avoir la même somme"
@@ -2396,26 +2428,22 @@ msgstr "'x' et 'w' doivent avoir la même longueur"
 msgid "not enough (non-missing) 'x' observations"
 msgstr "pas assez d'observations 'x' (définies)"
 
-msgid "requested conf.level not achievable"
-msgstr "requête conf.level impossible à atteindre"
+#, fuzzy
+msgid "'correct' must be an integer between 0 and 3"
+msgstr "'or' doit être un nombre positif ou nul"
 
 msgid "cannot compute confidence interval when all observations are zero or tied"
 msgstr "impossible de calculer un intervalle de confiance avec des observations toutes égales ou valant toutes zéro"
 
-msgid "cannot compute exact confidence interval with ties"
-msgstr "impossible de calculer un intervalle de confiance exact avec des ex-aequos"
-
-msgid "cannot compute exact p-value with zeroes"
-msgstr "impossible de calculer une p-value exacte avec des zéros"
-
-msgid "cannot compute exact confidence interval with zeroes"
-msgstr "impossible de calculer un intervalle de confiance exact avec des zéros"
-
-msgid "Requested conf.level not achievable"
-msgstr "Requête 'conf.level' impossible à atteindre"
+msgid "requested conf.level not achievable"
+msgstr "requête conf.level impossible à atteindre"
 
 msgid "cannot compute confidence interval when all observations are tied"
 msgstr "impossible de calculer un intervalle de confiance avec des observations toutes égales"
+
+#, fuzzy
+msgid "'z' is not a rank vector"
+msgstr "'x' n'est pas un vecteur"
 
 #, fuzzy
 msgid "must supply 'formula' or 'data'"
@@ -2606,6 +2634,54 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' est trop court : il faut %d point"
 msgstr[1] "'start.innov' est trop court : il faut %d points"
+
+#~ msgid "cannot compute exact confidence intervals with ties"
+#~ msgstr "impossible de calculer les intervalles de confiance exacts avec des ex-aequos"
+
+#~ msgid "Cannot compute exact p-value with ties"
+#~ msgstr "Impossible de calculer la p-value exacte avec des ex-aequos"
+
+#~ msgid "'formula' missing or invalid"
+#~ msgstr "'formula' manquante ou incorrecte"
+
+#~ msgid "invalid argument 'lambda'"
+#~ msgstr "argument 'lambda' incorrect"
+
+#~ msgid "formula missing"
+#~ msgstr "formule manquante"
+
+#~ msgid "incorrect specification for 'formula'"
+#~ msgstr "'formula' incorrecte"
+
+#~ msgid "incorrect specification for 'col.vars'"
+#~ msgstr "'col.vars' incorrect"
+
+#~ msgid "invalid argument 'span'"
+#~ msgstr "argument 'span' incorrect"
+
+#~ msgid "invalid argument 'cell'"
+#~ msgstr "argument 'cell' incorrect"
+
+#~ msgid "invalid argument 'degree'"
+#~ msgstr "argument 'degree' incorrect"
+
+#~ msgid "invalid argument 'omit'"
+#~ msgstr "argument 'omit' incorrect"
+
+#~ msgid "invalid argument 'r'"
+#~ msgstr "argument 'r' incorrect"
+
+#~ msgid "invalid argument 'c'"
+#~ msgstr "argument 'c' incorrect"
+
+#~ msgid "cannot compute exact p-value with zeroes"
+#~ msgstr "impossible de calculer une p-value exacte avec des zéros"
+
+#~ msgid "cannot compute exact confidence interval with zeroes"
+#~ msgstr "impossible de calculer un intervalle de confiance exact avec des zéros"
+
+#~ msgid "Requested conf.level not achievable"
+#~ msgstr "Requête 'conf.level' impossible à atteindre"
 
 #~ msgid ".nknots.smspl() is now exported; use it instead of n.knots()"
 #~ msgstr ".nknots.smspl() est maintenant exporté ; utilisez-le à la place de n.knots()"
@@ -2833,6 +2909,3 @@ msgstr[1] "'start.innov' est trop court : il faut %d points"
 
 #~ msgid "are just disregarded."
 #~ msgstr "sont ignorés."
-
-#~ msgid "cannot compute correct p-values with ties"
-#~ msgstr "impossible de calculer les p-values correctes avec des ex-aequos"

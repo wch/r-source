@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:50\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2025-03-24 14:45+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -607,6 +607,10 @@ msgstr "'%s' ist nicht definiert für geordnete Faktoren"
 msgid "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
 msgstr "'%s' ist nur sinnvoll für geordnete Faktoren, wenn alle Argumente dieselben \"level sets\" haben"
 
+#, fuzzy
+msgid "directories are ignored"
+msgstr "lange Vektoren sind nicht unterstützt"
+
 msgid "no files to copy to"
 msgstr "keine Dateien, um dorthin zu kopieren"
 
@@ -973,11 +977,11 @@ msgstr "Argument(e) dürfen nicht benannt sein"
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg' muss NULL oder ein Zeichenkettenvektor sein"
 
+msgid "'several.ok' must be logical or a string starting with \"all\""
+msgstr ""
+
 msgid "'arg' must be of length >= 1"
 msgstr "'arg' muss Länge >=1 haben"
-
-msgid "there is more than one match in 'match.arg'"
-msgstr "mehr als ein Treffer in 'match.arg'"
 
 msgid "no match"
 msgstr "kein Treffer"
@@ -1059,7 +1063,14 @@ msgstr ""
 msgid "%s not found"
 msgstr "%s nicht gefunden"
 
+msgid "'versionCheck' must be NULL or a list with components 'op' and 'version'"
+msgstr ""
+
 msgid "namespace %s %s is already loaded, but %s %s is required"
+msgstr "Namensraum %s %s ist bereits geladen, aber %s %s wird gefordert"
+
+#, fuzzy
+msgid "namespace '%s' is already loaded so argument '%s' will be ignored."
 msgstr "Namensraum %s %s ist bereits geladen, aber %s %s wird gefordert"
 
 msgid "- loading"
@@ -1537,15 +1548,6 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr "zusätzliche Argumente in warning() ignoriert"
 
-msgid "no natural language support or missing translations"
-msgstr "keine Unterstützung für natürliche Sprache oder fehlende Übersetzung"
-
-msgid "In bare C locale: LANGUAGE reset, but message language may be unchanged"
-msgstr "In reiner C Lokalisierung: LANGUAGE reset, aber Sprache der Nachricht vielleicht unverändert"
-
-msgid "In bare C locale, not forcing locale; possibly use 'force = TRUE'?"
-msgstr "In reiner C Lokalisierung, keine Erzwingen der Lokalisierung; evtl nutze 'force = TRUE'?"
-
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr "Sys.setenv(LANGUAGE=\"%s\") evtl. fehlgeschlagen"
 
@@ -1927,6 +1929,18 @@ msgstr[0] ""
 msgstr[1] ""
 "In %s :\n"
 "zusätzliche Argumente %s werden verworfen"
+
+#~ msgid "there is more than one match in 'match.arg'"
+#~ msgstr "mehr als ein Treffer in 'match.arg'"
+
+#~ msgid "no natural language support or missing translations"
+#~ msgstr "keine Unterstützung für natürliche Sprache oder fehlende Übersetzung"
+
+#~ msgid "In bare C locale: LANGUAGE reset, but message language may be unchanged"
+#~ msgstr "In reiner C Lokalisierung: LANGUAGE reset, aber Sprache der Nachricht vielleicht unverändert"
+
+#~ msgid "In bare C locale, not forcing locale; possibly use 'force = TRUE'?"
+#~ msgstr "In reiner C Lokalisierung, keine Erzwingen der Lokalisierung; evtl nutze 'force = TRUE'?"
 
 #~ msgid "'name' must be a single character string"
 #~ msgstr "'name' muss eine einzelne Zeichenkette sein"

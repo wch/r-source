@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2024-03-25 14:40+0300\n"
 "Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
@@ -102,11 +102,18 @@ msgstr "неправильный первый аргумент"
 msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at' должен иметь ту же длину, что и 'z$n', т.е. %d"
 
+msgid "panel.first ignored, it is not a function"
+msgstr ""
+
 msgid "invalid boxplot widths"
 msgstr "неправильные ширины у ящиков-с-усами"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
 msgstr "некоторые notches ушли за пределы hinges ('box'): наверное, надо сделать notch=FALSE"
+
+#, fuzzy
+msgid "panel.last ignored, it is not a function"
+msgstr "'include.lowest' пропущен, т.к. 'breaks' не является вектором"
 
 msgid "'formula' should specify exactly two variables"
 msgstr "'formula' должна определять в точности две переменные"
@@ -463,14 +470,14 @@ msgstr "неправильный метод рисования"
 msgid "'at' must have length equal to the number %d of groups"
 msgstr "'at' должен иметь длина длину равную числу %d групп"
 
-msgid "formula missing or incorrect"
-msgstr "формула пропущена или неправильная"
-
 msgid "'number' must have same length as 'x' and 'y'"
 msgstr "'number' должен иметь ту же длину, что и 'x' и 'y'"
 
 msgid "exactly one symbol type must be specified"
 msgstr "должен быть указан в точности один тип символа"
+
+msgid "'labels' truncated to length %d"
+msgstr ""
 
 msgid "x log scale:  xinch() is nonsense"
 msgstr "логарифмическая шкала x:  xinch() бессмысленно"
@@ -498,6 +505,9 @@ msgid_plural "arguments %s are not made use of"
 msgstr[0] "аргумент %s не для использования"
 msgstr[1] "аргументы %s не для использования"
 msgstr[2] "аргументы %s не для использования"
+
+#~ msgid "formula missing or incorrect"
+#~ msgstr "формула пропущена или неправильная"
 
 #, fuzzy
 #~ msgid "fuzz must be non-negative"

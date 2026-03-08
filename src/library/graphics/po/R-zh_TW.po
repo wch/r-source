@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -101,11 +101,18 @@ msgstr "第一個引數無效"
 msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at' 同 'z$n' 的長度必須相等，如 %d"
 
+msgid "panel.first ignored, it is not a function"
+msgstr ""
+
 msgid "invalid boxplot widths"
 msgstr "boxplot 寬度無效"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
 msgstr "一些槽在折葉點外('box'): 可能是因為 notch=FALSE"
+
+#, fuzzy
+msgid "panel.last ignored, it is not a function"
+msgstr "因為 'breaks' 不對向量，'include.lowest' 忽略不用"
 
 msgid "'formula' should specify exactly two variables"
 msgstr "'formula' 只能設定兩個變數"
@@ -463,14 +470,14 @@ msgstr "畫圖方法無效"
 msgid "'at' must have length equal to the number %d of groups"
 msgstr "'at' 的長度必須同組數目 %d 相等"
 
-msgid "formula missing or incorrect"
-msgstr "要麼是缺少公式，要麼是公式設定無效"
-
 msgid "'number' must have same length as 'x' and 'y'"
 msgstr "'number' 的長度必須同 'x' 和 'y' 的長度相同"
 
 msgid "exactly one symbol type must be specified"
 msgstr "只能設定一個符號種類"
+
+msgid "'labels' truncated to length %d"
+msgstr ""
 
 msgid "x log scale:  xinch() is nonsense"
 msgstr "x 對數尺度：xinch()沒有意義"
@@ -492,6 +499,9 @@ msgstr[0] "boxplot%2$d 裡沒有畫離群值(%1$s)"
 msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] "沒有用 %s 這個引數"
+
+#~ msgid "formula missing or incorrect"
+#~ msgstr "要麼是缺少公式，要麼是公式設定無效"
 
 #, fuzzy
 #~ msgid "fuzz must be non-negative"

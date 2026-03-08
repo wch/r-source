@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:17\n"
 "PO-Revision-Date: 2023-08-31 11:06+0000\n"
 "Last-Translator: Geraldine Gomez Millan <geralidine.gomez@javeriana.edu.co>\n"
 "Language-Team: none\n"
@@ -185,6 +185,24 @@ msgid "Unknown height; using bottom anchor"
 msgstr ""
 
 msgid "Invalid glyph anchor"
+msgstr ""
+
+msgid "Registered axis names must be lower case"
+msgstr ""
+
+msgid "Custom axis names must be upper case"
+msgstr ""
+
+msgid "Axis value(s) out of range"
+msgstr ""
+
+msgid "No axes specified"
+msgstr ""
+
+msgid "Axis names must be 4 ASCII letters long"
+msgstr ""
+
+msgid "Axis values must be numeric"
 msgstr ""
 
 msgid "Font file longer than 500 will be truncated"

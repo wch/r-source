@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:17\n"
 "PO-Revision-Date: 2023-01-04 14:29+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -324,9 +324,6 @@ msgstr ""
 msgid "License stub records with missing/empty fields:"
 msgstr "non posso lavorare con oggetti Rd con nomi assenti/vuoti"
 
-msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
-msgstr "Utilizza una licenza ACM: appropriata unicamente per codice pre-2013 ACM TOMS"
-
 msgid "Non-portable flags in variable '%s':"
 msgstr "Flag non portatili nella variabile '%s':"
 
@@ -508,7 +505,7 @@ msgid "Auto-generated content requiring editing in Rd file '%s':"
 msgstr "Il contenuto auto-generato richiede la modifica nell'oggetto Rd '%s':"
 
 #, fuzzy
-msgid "Rd files without \\description:"
+msgid "Rd files without %s:"
 msgstr "File Rd con alias duplicati '%s':"
 
 msgid "no Rd sections specified"
@@ -861,11 +858,19 @@ msgstr "nessun pacchetto da controllare"
 msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
 msgstr "'reverse$repos' dovrebbe essere un sottoinsieme di getOption(\"repos\")"
 
-msgid "downloading reverse dependencies ..."
+#, fuzzy
+msgid "downloading reverse dependencies %s"
 msgstr "scaricando dipendenze inverse ..."
 
-msgid "downloading %s ..."
-msgstr "scaricando %s ..."
+#, fuzzy
+msgid "download of reverse dependency %s failed"
+msgstr "scaricando dipendenze inverse ..."
+
+#, fuzzy
+msgid ""
+"download of %d reverse dependencies failed:\n"
+"  %s"
+msgstr "scaricando dipendenze inverse ..."
 
 msgid "checking %s ..."
 msgstr "controllando %s ..."
@@ -978,12 +983,6 @@ msgstr "stato di uscita di .install_packages()"
 msgid "restoration failed"
 msgstr "ripristino fallito"
 
-msgid "invalid value"
-msgstr "valore non valido"
-
-msgid "for R_CROSS_BUILD"
-msgstr "pe R_CROSS_BUILD"
-
 msgid "error reading file '%s'"
 msgstr "errore durante la lettura del file '%s'"
 
@@ -1086,6 +1085,9 @@ msgstr "ERRORE: non ci sono i permessi per installare nella directory"
 msgid "building a fake installation is disallowed"
 msgstr "non è ammesso avviare una installazione fake"
 
+msgid "specified C++"
+msgstr ""
+
 msgid "using C compiler:"
 msgstr "con compilatore C:"
 
@@ -1106,6 +1108,10 @@ msgstr "AVVERTIMENTO: ripristino patch fallito"
 
 msgid "Reverted installation-time patch"
 msgstr "Annullata patch durante l'installazione"
+
+#, fuzzy
+msgid "Input must be character"
+msgstr "'text' dev'essere un vettore di caratteri"
 
 msgid ""
 "See\n"
@@ -1215,6 +1221,13 @@ msgstr ""
 "  %s\n"
 "non contengono \\item."
 
+msgid "There is no binary type for this build of R."
+msgstr ""
+
+#, fuzzy
+msgid "invalid 'type'"
+msgstr "pacchetto non valido"
+
 msgid "Processing packages:"
 msgstr "Elaboro i pacchetti:"
 
@@ -1306,9 +1319,6 @@ msgstr "esecuzione di 'texi2dvi' su '%s' fallita"
 
 msgid "Running vignettes for package %s"
 msgstr "Eseguendo vignette per il pacchetto %s"
-
-msgid "Comparing %s to %s ..."
-msgstr "Comparando %s a %s ..."
 
 msgid "no parsed files found"
 msgstr "nessun file trovato"
@@ -1451,6 +1461,11 @@ msgstr "Codifica sconosciuta con dati non-ASCII: conversione in ASCII"
 
 msgid "cannot source package code:"
 msgstr "non è possibile eseguire il codice del pacchetto:"
+
+msgid ""
+"error in inferior call:\n"
+"  %s"
+msgstr ""
 
 msgid "inferiorCallError"
 msgstr "inferiorCallError"
@@ -1623,6 +1638,25 @@ msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Voce BibTeX corrispondente:"
 msgstr[1] "Voci BibTeX corrispondenti:"
+
+#~ msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
+#~ msgstr "Utilizza una licenza ACM: appropriata unicamente per codice pre-2013 ACM TOMS"
+
+#, fuzzy
+#~ msgid "Rd files without \\description:"
+#~ msgstr "File Rd con alias duplicati '%s':"
+
+#~ msgid "downloading %s ..."
+#~ msgstr "scaricando %s ..."
+
+#~ msgid "invalid value"
+#~ msgstr "valore non valido"
+
+#~ msgid "for R_CROSS_BUILD"
+#~ msgstr "pe R_CROSS_BUILD"
+
+#~ msgid "Comparing %s to %s ..."
+#~ msgstr "Comparando %s a %s ..."
 
 #, fuzzy
 #~ msgid "one of 'package' and 'dir' must be specified."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49-0700\n"
+"POT-Creation-Date: 2026-03-07 10:25+0100\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -42,124 +42,132 @@ msgstr "파일 '%s'에서 md5가 작동하지 않습니다"
 msgid "sha256 failed on file '%s'"
 msgstr "파일 '%s'에서 md5가 작동하지 않습니다"
 
-#: getfmts.c:61
+#: getfmts.c:60
 #, c-format
 msgid "only %d arguments are allowed"
 msgstr "오로지 %d 인자들만이 허용됩니다"
 
-#: getfmts.c:66
+#: getfmts.c:65
 msgid "'fmt' is not a character vector"
 msgstr "'fmt'는 문자형 벡터가 아닙니다"
 
-#: getfmts.c:69
+#: getfmts.c:68
 msgid "'fmt' must be length 1"
 msgstr "'fmt'는 반드시 길이가 1이어야 합니다"
 
-#: getfmts.c:75
+#: getfmts.c:74
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "'fmt' 길이가 최대 포맷길이 %d를 초과합니다"
 
-#: getfmts.c:96
+#: getfmts.c:95
 #, c-format
 msgid "unrecognised format specification '%s'"
 msgstr "알 수 없는 포맷 지정 '%s'입니다"
 
-#: getfmts.c:136
+#: getfmts.c:135
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr ""
 
-#: gramLatex.c:2592 gramRd.c:3971
+#: gramLatex.c:2856 gramRd.c:3967
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "라인 %d에 있는 긴 문자열에 대한 버퍼를 할당할 수 없습니다"
 
-#: gramLatex.c:2869 gramRd.c:4524 gramRd.c:4530
+#: gramLatex.c:3167 gramRd.c:4521 gramRd.c:4527
 #, c-format
 msgid "invalid '%s' value"
 msgstr "유효하지 않은 '%s' 값입니다"
 
-#: gramRd.c:2581 gramRd.c:2584
+#: gramRd.c:2576 gramRd.c:2579
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr "%s:%d:%d에 잘못된 마크업이 있습니다"
 
-#: gramRd.c:3117
+#: gramRd.c:3112
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr "매크로 '%s'는 이전에 정의되었습니다"
 
-#: gramRd.c:3127
+#: gramRd.c:3122
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr "사용자 정의된 매크로에서는 최대 4개의 인자들이 허용됩니다"
 
-#: gramRd.c:3169
+#: gramRd.c:3164
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr "'%s'에 주어진 매크로 정의가 없습니다."
 
-#: gramRd.c:3232
+#: gramRd.c:3227
 #, fuzzy, c-format
 msgid "Not enough arguments passed to user macro '%s'"
 msgstr "사용자 정의된 매크로에서는 최대 4개의 인자들이 허용됩니다"
 
-#: gramRd.c:3372 gramRd.c:3376
+#: gramRd.c:3367 gramRd.c:3371
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr "%s:%d에 있는 따옴표 처리된 문자열 내에 새로운 행이 있습니다"
 
-#: gramRd.c:3395
+#: gramRd.c:3390
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr "라인 %d에 있는 긴 매크로에 대해서 버퍼를 할당할 수 없습니다"
 
-#: gramRd.c:3425
+#: gramRd.c:3420
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "매크로들이 너무 깊게 중첩되어 있습니다:  무한 반복을 하나요?"
 
-#: gramRd.c:3833
+#: gramRd.c:3829
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "매크로 %s를 찾을 수 없습니다"
 
-#: gramRd.c:4032
+#: gramRd.c:4028
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "입력을 끝을 알 수 없습니다 (in %c quoted string opened at %s:%d:%d)"
 
-#: gramRd.c:4537
+#: gramRd.c:4534
 msgid "cannot open the connection"
 msgstr "커넥션을 열 수 없습니다"
 
-#: gramRd.c:4544
+#: gramRd.c:4541
 msgid "cannot read from this connection"
 msgstr "이 커넥션으로부터 읽을 수 없습니다"
 
-#: gramRd.c:4552
+#: gramRd.c:4549
 msgid "invalid Rd file"
 msgstr "유효한 Rd 파일이 아닙니다"
 
-#: gramRd.c:4571
+#: gramRd.c:4569
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr ""
 
-#: gramRd.c:4574
+#: gramRd.c:4572
 msgid "bad state"
 msgstr "잘못된 상태입니다"
 
-#: gramRd.c:4587
+#: gramRd.c:4585
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "'deparseRd'에 잘못된 텍스트 모드 %d가 있습니다"
 
-#: http.c:32
+#: http.c:31
 msgid "invalid bind address specification"
 msgstr "유효하지 않은 바인드 주소지정이 있습니다"
 
-#: http.c:37
+#: http.c:36
 #, c-format
 msgid "Invalid port number %d: should be in 0:65535, typically above 1024"
+msgstr ""
+
+#: http.c:60
+msgid "allocation error in remove_dot_segments"
+msgstr ""
+
+#: http.c:150 pdscan.c:121
+msgid "non-character argument"
 msgstr ""
 
 #: install.c:95
@@ -175,12 +183,8 @@ msgstr "유효하지 않은 '%s' 인자입니다"
 msgid "write error during file append"
 msgstr "파일병합을 하는 동안 쓰기 에러가 발생했습니다"
 
-#: pdscan.c:67
+#: pdscan.c:74
 msgid "too many items"
-msgstr ""
-
-#: pdscan.c:115
-msgid "non-character argument"
 msgstr ""
 
 #: signals.c:42
@@ -195,6 +199,6 @@ msgstr "이 플랫폼에서 psnice()은 지원되지 않습니다"
 msgid "invalid argument type"
 msgstr "유효하지 않은 인자 타입입니다"
 
-#: text.c:225 text.c:247
+#: text.c:227 text.c:249
 msgid "out of memory"
 msgstr "메모리가 부족합니다"

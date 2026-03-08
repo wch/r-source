@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49-0700\n"
+"POT-Creation-Date: 2025-03-31 11:51+0200\n"
 "PO-Revision-Date: 2022-10-14 10:16+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -77,28 +77,28 @@ msgstr "plot.new non è ancora stato chiamato"
 msgid "invalid graphics state"
 msgstr "stato grafico non valido"
 
-#: graphics.c:2619
+#: graphics.c:2618
 msgid "graphics device closed during call to locator or identify"
 msgstr "dispositivo grafico chiuso durante la chiamata a locator o identify"
 
-#: graphics.c:2669
+#: graphics.c:2668
 msgid "No graphics device is active"
 msgstr "Nessun dispositivo grafico attivo"
 
-#: graphics.c:3127
+#: graphics.c:3126
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "frecce di lunghezza nulla hanno un angolo indeterminato e quindi saranno ignorate"
 
-#: graphics.c:3208
+#: graphics.c:3207
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "par(\"bty\") = '%c' non valido; nessun box() disegnato"
 
-#: graphics.c:3225
+#: graphics.c:3224
 msgid "invalid argument to GBox"
 msgstr "argomento non valido in GBox"
 
-#: graphics.c:3432
+#: graphics.c:3431
 msgid "metric information not available for this device"
 msgstr "informazione metrica non disponibile per questo dispositivo"
 

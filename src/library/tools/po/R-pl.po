@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:17\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -323,9 +323,6 @@ msgstr ""
 msgid "License stub records with missing/empty fields:"
 msgstr "nie można poradzić sobie z obiektami Rd z brakującymi/pustymi nazwami"
 
-msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
-msgstr ""
-
 msgid "Non-portable flags in variable '%s':"
 msgstr "Nieprzenośne flagi w zmiennej '%s':"
 
@@ -508,7 +505,7 @@ msgid "Auto-generated content requiring editing in Rd file '%s':"
 msgstr "Automatycznie wygenerowana treść wymagająca wykonania edycji w obiekcie Rd '%s':"
 
 #, fuzzy
-msgid "Rd files without \\description:"
+msgid "Rd files without %s:"
 msgstr "Pliki Rd z powtórzonym aliasem '%s':"
 
 msgid "no Rd sections specified"
@@ -868,11 +865,19 @@ msgstr "brak pakietów do sprawdzenia"
 msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
 msgstr ""
 
-msgid "downloading reverse dependencies ..."
+#, fuzzy
+msgid "downloading reverse dependencies %s"
 msgstr "pobieranie wstecznych zależności ..."
 
-msgid "downloading %s ..."
-msgstr "pobieranie pliku %s ..."
+#, fuzzy
+msgid "download of reverse dependency %s failed"
+msgstr "pobieranie wstecznych zależności ..."
+
+#, fuzzy
+msgid ""
+"download of %d reverse dependencies failed:\n"
+"  %s"
+msgstr "pobieranie wstecznych zależności ..."
 
 msgid "checking %s ..."
 msgstr "sprawdzanie %s ..."
@@ -987,13 +992,6 @@ msgstr "Status wyjścia dla funkcji '.install_packages()'"
 msgid "restoration failed"
 msgstr "ładowanie nie powiodło się"
 
-#, fuzzy
-msgid "invalid value"
-msgstr "niepoprawny pakiet"
-
-msgid "for R_CROSS_BUILD"
-msgstr ""
-
 msgid "error reading file '%s'"
 msgstr "błąd podczas czytania pliku '%s'"
 
@@ -1098,6 +1096,9 @@ msgstr "BŁĄD: brak uprawnień aby zainstalować w katalogu"
 msgid "building a fake installation is disallowed"
 msgstr "budowałe fałszywej instalacji jest zabronione"
 
+msgid "specified C++"
+msgstr ""
+
 msgid "using C compiler:"
 msgstr ""
 
@@ -1118,6 +1119,10 @@ msgstr ""
 
 msgid "Reverted installation-time patch"
 msgstr ""
+
+#, fuzzy
+msgid "Input must be character"
+msgstr "argument 'text' musi być wektorem tekstowym"
 
 msgid ""
 "See\n"
@@ -1227,6 +1232,13 @@ msgstr ""
 "  %s\n"
 "nie zawiera \\itemize."
 
+msgid "There is no binary type for this build of R."
+msgstr ""
+
+#, fuzzy
+msgid "invalid 'type'"
+msgstr "niepoprawny pakiet"
+
 msgid "Processing packages:"
 msgstr "Przetwarzanie pakietów:"
 
@@ -1319,9 +1331,6 @@ msgstr "działanie 'texi2dvi' na pliku '%s' nie powiodło się"
 
 msgid "Running vignettes for package %s"
 msgstr "Uruchamianie ilustracji dla pakietu %s"
-
-msgid "Comparing %s to %s ..."
-msgstr "Porównywanie %s z %s ..."
 
 msgid "no parsed files found"
 msgstr "nie znaleziono plików przeanalizowanych składniowo"
@@ -1462,6 +1471,11 @@ msgstr "Nieznane kodowanie z danymi nie-ASCII: konwertowanie do ASCII"
 
 msgid "cannot source package code:"
 msgstr "nie można wykonać kodu pakietu:"
+
+msgid ""
+"error in inferior call:\n"
+"  %s"
+msgstr ""
 
 msgid "inferiorCallError"
 msgstr ""
@@ -1669,6 +1683,20 @@ msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Odpowiedni wpis BibTeX:"
 msgstr[1] "Odpowiednie wpisy BibTeX:"
 msgstr[2] "Odpowiednie wpisy BibTeX:"
+
+#, fuzzy
+#~ msgid "Rd files without \\description:"
+#~ msgstr "Pliki Rd z powtórzonym aliasem '%s':"
+
+#~ msgid "downloading %s ..."
+#~ msgstr "pobieranie pliku %s ..."
+
+#, fuzzy
+#~ msgid "invalid value"
+#~ msgstr "niepoprawny pakiet"
+
+#~ msgid "Comparing %s to %s ..."
+#~ msgstr "Porównywanie %s z %s ..."
 
 #, fuzzy
 #~ msgid "one of 'package' and 'dir' must be specified."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2021-02-10 17:38+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -99,11 +99,18 @@ msgstr "premier argument incorrect"
 msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at' doit avoir la même longueur que 'z$n', c'est-à-dire %d"
 
+msgid "panel.first ignored, it is not a function"
+msgstr ""
+
 msgid "invalid boxplot widths"
 msgstr "largeurs des boites à dispersion incorrectes"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
 msgstr "quelques indentations (\"notches\") dépassent des jointures (\"hinges\") ('box') : utilisez peut-être notch=FALSE"
+
+#, fuzzy
+msgid "panel.last ignored, it is not a function"
+msgstr "'include.lowest' ignoré car 'breaks' n'est pas un vecteur"
 
 msgid "'formula' should specify exactly two variables"
 msgstr "'formula' doit spécifier exactement deux variables"
@@ -461,14 +468,14 @@ msgstr "méthode graphique incorrecte"
 msgid "'at' must have length equal to the number %d of groups"
 msgstr "'at' doit être de même longueur que le nombre %d de groupes"
 
-msgid "formula missing or incorrect"
-msgstr "'formula' manquante ou incorrecte"
-
 msgid "'number' must have same length as 'x' and 'y'"
 msgstr "'number' doit être de même longueur que 'x' et 'y'"
 
 msgid "exactly one symbol type must be specified"
 msgstr "exactement un type de symbole doit être donné"
+
+msgid "'labels' truncated to length %d"
+msgstr ""
 
 msgid "x log scale:  xinch() is nonsense"
 msgstr "l'échelle des x est logarithmique : xinch() n'a pas de sens"
@@ -493,6 +500,9 @@ msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] "l'argument %s n'est pas utilisé par"
 msgstr[1] "les arguments %s ne sont pas utilisés par"
+
+#~ msgid "formula missing or incorrect"
+#~ msgstr "'formula' manquante ou incorrecte"
 
 #, fuzzy
 #~ msgid "fuzz must be non-negative"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -98,11 +98,18 @@ msgstr "最初の引数が無効です"
 msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at' は 'z$n' と同じ長さ (すなわち %d) を持たなければなりません"
 
+msgid "panel.first ignored, it is not a function"
+msgstr ""
+
 msgid "invalid boxplot widths"
 msgstr "boxplot の幅が無効です"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
 msgstr "いくつかのノッチがヒンジの外に置かれました('box'): おそらく notch=FALSE とすべきです"
+
+#, fuzzy
+msgid "panel.last ignored, it is not a function"
+msgstr "'breaks' がベクトルではないので 'include.lowest' は無視されます"
 
 msgid "'formula' should specify exactly two variables"
 msgstr "'formula' は丁度二つの変数を特定すべきです"
@@ -462,14 +469,14 @@ msgstr "無効な plot メソッドです"
 msgid "'at' must have length equal to the number %d of groups"
 msgstr "'at' はグループ数 %d と同じ長さを持たなければなりません"
 
-msgid "formula missing or incorrect"
-msgstr "formula が無いか不正確です"
-
 msgid "'number' must have same length as 'x' and 'y'"
 msgstr "'number' は 'x' および 'y' と同じ長さでなければなりません"
 
 msgid "exactly one symbol type must be specified"
 msgstr "丁度一つのシンボルタイプを指定しなければなりません"
+
+msgid "'labels' truncated to length %d"
+msgstr ""
 
 msgid "x log scale:  xinch() is nonsense"
 msgstr "x は対数スケールです: xinch() は意味をなしていません"
@@ -491,6 +498,9 @@ msgstr[0] "外れ値 (%s) は描かれません 箱型図 %d 中では"
 msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] "引数 %s は使用されていません"
+
+#~ msgid "formula missing or incorrect"
+#~ msgstr "formula が無いか不正確です"
 
 #, fuzzy
 #~ msgid "fuzz must be non-negative"

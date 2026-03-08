@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2022-10-14 10:12+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -99,11 +99,18 @@ msgstr "primo argomento non valido"
 msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr "'at' dev'essere della stessa lunghezza di 'z$n', es. %d"
 
+msgid "panel.first ignored, it is not a function"
+msgstr ""
+
 msgid "invalid boxplot widths"
 msgstr "larghezza boxplot non valida"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
 msgstr "alcune tacche sono andate fuori dai cardini ('box'): potresti impostare notch=FALSE"
+
+#, fuzzy
+msgid "panel.last ignored, it is not a function"
+msgstr "'include.lowest' ignorato poiché 'breaks' non è un vettore"
 
 msgid "'formula' should specify exactly two variables"
 msgstr "'formula' dovrebbe specificare esattamente due variabili"
@@ -460,14 +467,14 @@ msgstr "metodo di disegno non valido"
 msgid "'at' must have length equal to the number %d of groups"
 msgstr "'at' deve avere lunghezza pari al numero di %d gruppi"
 
-msgid "formula missing or incorrect"
-msgstr "formula assente o sbagliata"
-
 msgid "'number' must have same length as 'x' and 'y'"
 msgstr "'number' deve avere la stessa lunghezza di 'x' e 'y'"
 
 msgid "exactly one symbol type must be specified"
 msgstr "dev'essere specificato esattamente un tipo di simbolo"
+
+msgid "'labels' truncated to length %d"
+msgstr ""
 
 msgid "x log scale:  xinch() is nonsense"
 msgstr "x log scale:  xinch() è un nonsense"
@@ -492,6 +499,9 @@ msgid "argument %s is not made use of"
 msgid_plural "arguments %s are not made use of"
 msgstr[0] "l'argomento %s non ha fatto uso di"
 msgstr[1] "gli argomenti %s non hanno fatto uso di"
+
+#~ msgid "formula missing or incorrect"
+#~ msgstr "formula assente o sbagliata"
 
 #, fuzzy
 #~ msgid "fuzz must be non-negative"

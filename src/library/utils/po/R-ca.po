@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-08 11:37\n"
 "PO-Revision-Date: 2024-03-20 03:05+0000\n"
 "Last-Translator: Joan Maspons <joanmaspons@gmail.com>\n"
 "Language-Team: none\n"
@@ -85,10 +85,6 @@ msgstr "Avís: l'opció «%s» és desconeguda"
 #, fuzzy
 msgid "Warning: unknown option %s"
 msgstr "Avís: l'opció %s és desconeguda"
-
-#, fuzzy
-msgid "Output file:"
-msgstr "Fitxer de sortida:"
 
 #, fuzzy
 msgid "Compacting PDF document"
@@ -372,6 +368,10 @@ msgstr "Introduïu un número d'entorn, o 0 per a sortir"
 #, fuzzy
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
 msgstr "recupera cridats no interactivament; fotogrames bolcats, usa debugger() per a veure"
+
+#, fuzzy
+msgid "Enter a frame number, or 0 to exit"
+msgstr "Introduïu un número d'entorn, o 0 per a sortir"
 
 #, fuzzy
 msgid "No suitable frames for recover()"
@@ -787,16 +787,16 @@ msgid "'list' must be a character vector naming R objects"
 msgstr "«list» ha de ser un vector de caràcters que nomeni els objectes R"
 
 #, fuzzy
-msgid "no R objects specified or available"
-msgstr "no s'ha especificat o disponible cap objecte R"
-
-#, fuzzy
 msgid "directory '%s' already exists"
 msgstr "el directori «%s» ja existeix"
 
 #, fuzzy
 msgid "generic functions and other S4 objects (e.g., '%s') cannot be dumped; use the 'code_files' argument"
 msgstr "les funcions genèriques i altres objectes S4 (p. ex., «%s») no es poden bolcar; utilitzeu l'argument «codefiles»"
+
+#, fuzzy
+msgid "'download.file()' error code '%d'"
+msgstr "Codi d'error «%d» de «download.file()»"
 
 #, fuzzy
 msgid "unable to access index for repository %s"
@@ -851,10 +851,6 @@ msgid "no package %s at the repositories"
 msgstr "no hi ha cap paquet %s als repositoris"
 
 #, fuzzy
-msgid "invalid 'type'"
-msgstr "«type» no vàlid"
-
-#, fuzzy
 msgid "package %s does not exist on the local repository"
 msgstr "el paquet %s no existeix al repositori local"
 
@@ -871,8 +867,8 @@ msgid "trying to use CRAN without setting a mirror"
 msgstr "s'està intentant utilitzar la CRAN sense establir una rèplica"
 
 #, fuzzy
-msgid "'download.file()' error code '%d'"
-msgstr "Codi d'error «%d» de «download.file()»"
+msgid "invalid 'type'"
+msgstr "«type» no vàlid"
 
 #, fuzzy
 msgid "failed to download mirrors file (%s); using local file '%s'"
@@ -980,12 +976,8 @@ msgid "source repository is unavailable to check versions"
 msgstr "el repositori font no està disponible per a comprovar les versions"
 
 #, fuzzy
-msgid "cannot install macOS binary packages on Windows"
+msgid "cannot install binary packages from other operating systems on Windows"
 msgstr "no s'han pogut instal·lar els paquets binaris macOS al Windows"
-
-#, fuzzy
-msgid "cannot install macOS binary packages on this platform"
-msgstr "no es poden instal·lar els paquets binaris macOS en aquesta plataforma"
 
 #, fuzzy
 msgid "cannot install Windows binary packages on this platform"
@@ -1371,12 +1363,12 @@ msgid "invalid octal digit"
 msgstr "dígit octal no vàlid"
 
 #, fuzzy
-msgid "removing drive '%s'"
-msgstr "s'està eliminant la unitat «%s»"
+msgid "removing leading '/' from '%s'"
+msgstr "s'està eliminant el «/» inicial"
 
 #, fuzzy
-msgid "removing leading '/'"
-msgstr "s'està eliminant el «/» inicial"
+msgid "removing drive '%s'"
+msgstr "s'està eliminant la unitat «%s»"
 
 #, fuzzy
 msgid "path starts with '~'"
@@ -1386,9 +1378,8 @@ msgstr "el camí comença amb «»"
 msgid "path contains '..'"
 msgstr "el camí conté «..»"
 
-#, fuzzy
-msgid "path is empty"
-msgstr "el camí està buit"
+msgid "cannot extract through symlink"
+msgstr ""
 
 #, fuzzy
 msgid "'tarfile' must be a character string or a connection"
@@ -1413,6 +1404,9 @@ msgstr "error de suma de verificació per a l'entrada '%s'"
 #, fuzzy
 msgid "failed to copy %s to %s"
 msgstr "no s'ha pogut copiar %s a %s"
+
+msgid "cannot restore symbolic link from %s to %s as a file copy, because the source doesn't exist; try extracting again?"
+msgstr ""
 
 #, fuzzy
 msgid "unsupported entry type"
@@ -1552,13 +1546,19 @@ msgstr "mètode no vàlid:"
 msgid "download had nonzero exit status"
 msgstr "la baixada té un estat de sortida diferent de zero"
 
+msgid "Built: value is not a string"
+msgstr ""
+
 #, fuzzy
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar' ha retornat un codi de sortida no nul %d"
 
 #, fuzzy
-msgid "file %s is not a macOS binary package"
+msgid "file %s is not a binary package"
 msgstr "el fitxer %s no és un paquet binari macOS"
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
 
 #, fuzzy
 msgid "package %s successfully unpacked and MD5 sums checked"
@@ -1597,12 +1597,12 @@ msgstr ""
 "\t%s"
 
 #, fuzzy
-msgid "'memory.size()' is Windows-specific"
-msgstr "«memory.size()» és específic de Windows"
+msgid "'memory.size()' is no longer supported"
+msgstr "'memory.size()' ja no és compatible"
 
 #, fuzzy
-msgid "'memory.limit()' is Windows-specific"
-msgstr "«memory.limit()» és específic de Windows"
+msgid "'memory.limit()' is no longer supported"
+msgstr "'memory.limit()' ja no és compatible"
 
 #, fuzzy
 msgid "method 'mailx' is Unix-only"
@@ -1611,6 +1611,9 @@ msgstr "el mètode «mailx» és només Unix"
 #, fuzzy
 msgid "zip file %s not found"
 msgstr "no s'ha trobat el fitxer zip %s"
+
+msgid "cannot extract package from %s"
+msgstr ""
 
 #, fuzzy
 msgid "failed to create %s"
@@ -1633,14 +1636,6 @@ msgid "Only '*.zip' and '*.tar.gz' files can be installed."
 msgstr "Només es poden instal·lar els fitxers «*.zip» i «*.tar.gz»."
 
 #, fuzzy
-msgid "'memory.size()' is no longer supported"
-msgstr "'memory.size()' ja no és compatible"
-
-#, fuzzy
-msgid "'memory.limit()' is no longer supported"
-msgstr "'memory.limit()' ja no és compatible"
-
-#, fuzzy
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog() no es pot utilitzar de forma no interactiva"
 
@@ -1653,6 +1648,12 @@ msgid "%d Sweave file for basename %s found"
 msgid_plural "%d Sweave files for basename %s found"
 msgstr[0] "S'ha trobat %d fitxer de suavitat per al nom base %s"
 msgstr[1] "S'han trobat %d fitxers de suavitat per al nom base %s"
+
+#, fuzzy
+msgid "Output file:  "
+msgid_plural "Output files:  "
+msgstr[0] "Fitxer de sortida:"
+msgstr[1] "Fitxer de sortida:"
 
 #, fuzzy
 msgid "Output/used file:  "
@@ -1843,6 +1844,26 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "el nombre roman no és vàlid: %s"
 msgstr[1] "nombres romans no vàlids: %s"
+
+#, fuzzy
+#~ msgid "no R objects specified or available"
+#~ msgstr "no s'ha especificat o disponible cap objecte R"
+
+#, fuzzy
+#~ msgid "cannot install macOS binary packages on this platform"
+#~ msgstr "no es poden instal·lar els paquets binaris macOS en aquesta plataforma"
+
+#, fuzzy
+#~ msgid "path is empty"
+#~ msgstr "el camí està buit"
+
+#, fuzzy
+#~ msgid "'memory.size()' is Windows-specific"
+#~ msgstr "«memory.size()» és específic de Windows"
+
+#, fuzzy
+#~ msgid "'memory.limit()' is Windows-specific"
+#~ msgstr "«memory.limit()» és específic de Windows"
 
 #, fuzzy
 #~ msgid "It is recommended to use %s/%s instead of %s/%s/%s."

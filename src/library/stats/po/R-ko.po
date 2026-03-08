@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2018-04-09 12:10-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -216,8 +216,8 @@ msgstr "추정치를 계산할 수 없어 NA를 반환합니다"
 msgid "cannot compute exact p-value with ties"
 msgstr "tie가 있어 정확한 p값을 계산할 수 없습니다"
 
-msgid "cannot compute exact confidence intervals with ties"
-msgstr "tie가 있어 정확한 신뢰구간을 계산할 수 없습니다"
+msgid "cannot compute exact confidence interval with ties"
+msgstr ""
 
 msgid "'formula' missing or incorrect"
 msgstr "'formula'가 누락되었거나 잘못되었습니다"
@@ -615,12 +615,6 @@ msgstr "'y'는 반드시 수치형 벡터이어야 합니다"
 msgid "not enough finite observations"
 msgstr "유한한 값을 가지는 관측치가 충분하지 않습니다"
 
-msgid "Cannot compute exact p-value with ties"
-msgstr "tie때문에 정확한 p값을 계산할 수 없습니다"
-
-msgid "'formula' missing or invalid"
-msgstr "'formula'가 누락되었거나 유효하지 않습니다"
-
 msgid "invalid formula"
 msgstr "유효하지 않은 formula입니다"
 
@@ -828,8 +822,9 @@ msgstr "factor analysis는 최소 3개의 변수들을 필요로 합니다"
 msgid "no starting values supplied"
 msgstr "제공된 시작값들이 없습니다"
 
-msgid "invalid argument 'lambda'"
-msgstr "유효하지 않은 인자 'lambda'입니다"
+#, fuzzy
+msgid "invalid argument '%s'"
+msgstr "유효하지 않은 인자 'n'입니다"
 
 msgid "%s link not recognised"
 msgstr "인식되지 않는 %s 링크입니다"
@@ -948,7 +943,76 @@ msgstr "모든 그룹들은 반드시 데이터를 가지고 있어야 합니다
 msgid "not enough observations"
 msgstr ""
 
-msgid "NA's are not allowed in 'groups' or 'blocks'"
+#, fuzzy
+msgid "incorrect dimensions"
+msgstr "'xi'의 차원이 잘못되었습니다"
+
+msgid "at least two response categories required"
+msgstr ""
+
+#, fuzzy
+msgid "at least two groups required"
+msgstr "양변을 가진 formula가 필요합니다"
+
+msgid "%s currently only allows independent right-censoring"
+msgstr ""
+
+msgid "error computing the Hessian in %s"
+msgstr ""
+
+msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgstr ""
+
+msgid "unsuccessful optimisation in %s"
+msgstr ""
+
+msgid "incompatible length of argument 'mu' in %s"
+msgstr ""
+
+#, fuzzy
+msgid "cannot compute exact permutation distribution in %s"
+msgstr "tie가 있어 정확한 p값을 계산할 수 없습니다"
+
+#, fuzzy
+msgid "cannot compute one-sided p-values in %s"
+msgstr "tie가 있어 정확한 p값을 계산할 수 없습니다"
+
+msgid "permutation confidence intervals only available for 2-sample comparisons in %s"
+msgstr ""
+
+#, fuzzy
+msgid "failed to compute confidence interval in %s"
+msgstr "tie가 있어 정확한 신뢰구간을 계산할 수 없습니다"
+
+#, fuzzy
+msgid "incorrect specification for '%s'"
+msgstr "'row.vars' 지정이 잘못되었습니다"
+
+msgid "cannot have both a 'Surv()' response and an 'event' argument in %s"
+msgstr ""
+
+msgid "incorrect argument 'groups' in %s: at least two groups needed"
+msgstr ""
+
+msgid "%s is not defined for unordered responses"
+msgstr ""
+
+#, fuzzy
+msgid "incorrect number of columns for 'prob' in %s"
+msgstr "'x'에 있는 열의 개수가 잘못되었습니다"
+
+#, fuzzy
+msgid "exactly one of 'n', 'delta', 'power', and 'sig.level' must be NULL"
+msgstr "'n', 'delta', 'sd', 'power', 그리고 'sig.level' 중의 하나는 반드시 NULL이어야 합니다"
+
+msgid "effect size can only be computed for two-sample problems in %s"
+msgstr ""
+
+msgid "%s only allows two-sided alternatives in the presence of more than two groups"
+msgstr ""
+
+#, fuzzy
+msgid "NAs are not allowed in 'groups' or 'blocks'"
 msgstr "NA는 'groups' 또는 'blocks'내에서 허용되지 않습니다"
 
 msgid "'y', 'groups' and 'blocks' must have the same length"
@@ -957,20 +1021,11 @@ msgstr "'y', 'groups' 그리고 'blocks'는 반드시 같은 길이를 가지고
 msgid "not an unreplicated complete block design"
 msgstr "unreplicated complete 블록 디자인이 아닙니다"
 
-msgid "formula missing"
-msgstr "formula가 없습니다"
-
-msgid "incorrect specification for 'formula'"
-msgstr "formula' 지정이 잘못되었습니다"
+msgid "'formula' missing"
+msgstr "'formula'가 없습니다"
 
 msgid "nothing to tabulate"
 msgstr "테이블을 만들 것이 없습니다"
-
-msgid "incorrect specification for 'row.vars'"
-msgstr "'row.vars' 지정이 잘못되었습니다"
-
-msgid "incorrect specification for 'col.vars'"
-msgstr "'col.vars' 지정이 잘못되었습니다"
 
 msgid "'formula' must have both left and right hand sides"
 msgstr "'formula'는 반드시 좌변과 우변이 함께 있어야 합니다"
@@ -1427,15 +1482,6 @@ msgstr ""
 msgid "specified parametric for all predictors"
 msgstr ""
 
-msgid "invalid argument 'span'"
-msgstr "유효하지 않은 인자 'span'입니다"
-
-msgid "invalid argument 'cell'"
-msgstr "유효하지 않은 인자 'cell'입니다"
-
-msgid "invalid argument 'degree'"
-msgstr "유효하지 않은 인자 'degree'입니다"
-
 msgid "iterTrace = %d is not obeyed since iterations = %d"
 msgstr ""
 
@@ -1663,9 +1709,6 @@ msgstr ""
 
 msgid "missing values in object"
 msgstr "객체안에 결측값들이 있습니다"
-
-msgid "invalid argument 'omit'"
-msgstr "유효하지 않은 인수 'omit'입니다"
 
 msgid "'print.level' must be in {0,1,2}"
 msgstr "'print.level'은 반드시 {0,1,2}내에 있어야 합니다"
@@ -1958,9 +2001,6 @@ msgstr "'p'의 구성요소들은 반드시 (0,1)내에 있어야 합니다"
 msgid "'conf.level' is not a probability"
 msgstr ""
 
-msgid "'formula' missing"
-msgstr "'formula'가 없습니다"
-
 #, fuzzy
 msgid "'type' must be an integer in 1..9"
 msgstr "'y'는 반드시 'x'보다 길어야 합니다."
@@ -1977,15 +2017,6 @@ msgstr "만약 'na.rm'이 FALSE라면 결측값들과 NaN은 허용되지 않습
 
 msgid "'probs' outside [0,1]"
 msgstr "'probs'는 [0,1] 범위외입니다"
-
-msgid "invalid argument 'n'"
-msgstr "유효하지 않은 인자 'n'입니다"
-
-msgid "invalid argument 'r'"
-msgstr "유효하지 않은 인자 'r'입니다"
-
-msgid "invalid argument 'c'"
-msgstr "유효하지 않은 인자 'c'입니다"
 
 msgid "arguments 'r' and 'c' must have the same sums"
 msgstr "인자들 'r'과 'c'는 반드시 같은 총계를 가져야 합니다"
@@ -2406,26 +2437,22 @@ msgstr "'x'와 'w'는 반드시 같은 길이를 가져야 합니다."
 msgid "not enough (non-missing) 'x' observations"
 msgstr "'x' 관측값들이 충분하지 않습니다"
 
-msgid "requested conf.level not achievable"
-msgstr "수행할 수 없는 conf.level의 값이 주어졌습니다."
+#, fuzzy
+msgid "'correct' must be an integer between 0 and 3"
+msgstr "'or'은 반드시 0과 Inf사이의 한개의 숫자이어야 합니다"
 
 msgid "cannot compute confidence interval when all observations are zero or tied"
 msgstr "모든 관측치들의 값이 0이거나 같은 경우에는 신뢰구간을 계산할 수 없습니다."
 
-msgid "cannot compute exact confidence interval with ties"
-msgstr ""
-
-msgid "cannot compute exact p-value with zeroes"
-msgstr ""
-
-msgid "cannot compute exact confidence interval with zeroes"
-msgstr ""
-
-msgid "Requested conf.level not achievable"
+msgid "requested conf.level not achievable"
 msgstr "수행할 수 없는 conf.level의 값이 주어졌습니다."
 
 msgid "cannot compute confidence interval when all observations are tied"
 msgstr "모든 관측치들의 값이 같다면 신뢰구간을 계산 할 수 없습니다"
+
+#, fuzzy
+msgid "'z' is not a rank vector"
+msgstr "'x'는 벡터가 아닙니다"
 
 #, fuzzy
 msgid "must supply 'formula' or 'data'"
@@ -2588,6 +2615,45 @@ msgstr[0] "NA, NaNs 그리고/또는 Infs를 가지는 %d 개의 관측치들이
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
+
+#~ msgid "Cannot compute exact p-value with ties"
+#~ msgstr "tie때문에 정확한 p값을 계산할 수 없습니다"
+
+#~ msgid "'formula' missing or invalid"
+#~ msgstr "'formula'가 누락되었거나 유효하지 않습니다"
+
+#~ msgid "invalid argument 'lambda'"
+#~ msgstr "유효하지 않은 인자 'lambda'입니다"
+
+#~ msgid "formula missing"
+#~ msgstr "formula가 없습니다"
+
+#~ msgid "incorrect specification for 'formula'"
+#~ msgstr "formula' 지정이 잘못되었습니다"
+
+#~ msgid "incorrect specification for 'col.vars'"
+#~ msgstr "'col.vars' 지정이 잘못되었습니다"
+
+#~ msgid "invalid argument 'span'"
+#~ msgstr "유효하지 않은 인자 'span'입니다"
+
+#~ msgid "invalid argument 'cell'"
+#~ msgstr "유효하지 않은 인자 'cell'입니다"
+
+#~ msgid "invalid argument 'degree'"
+#~ msgstr "유효하지 않은 인자 'degree'입니다"
+
+#~ msgid "invalid argument 'omit'"
+#~ msgstr "유효하지 않은 인수 'omit'입니다"
+
+#~ msgid "invalid argument 'r'"
+#~ msgstr "유효하지 않은 인자 'r'입니다"
+
+#~ msgid "invalid argument 'c'"
+#~ msgstr "유효하지 않은 인자 'c'입니다"
+
+#~ msgid "Requested conf.level not achievable"
+#~ msgstr "수행할 수 없는 conf.level의 값이 주어졌습니다."
 
 #~ msgid "package 'MASS' must be installed"
 #~ msgstr "패키지 'MASS'가 반드시 설치되어야 합니다."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:50\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2024-01-30 03:05+0000\n"
 "Last-Translator: Heather Turner <ht@heatherturner.net>\n"
 "Language-Team: none\n"
@@ -603,6 +603,10 @@ msgstr "'%s' not defined for ordered factors"
 msgid "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
 msgstr "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
 
+#, fuzzy
+msgid "directories are ignored"
+msgstr "long vectors are not supported"
+
 msgid "no files to copy to"
 msgstr "no files to copy to"
 
@@ -968,11 +972,11 @@ msgstr "may not have argument(s) named"
 msgid "'arg' must be NULL or a character vector"
 msgstr "'arg' must be NULL or a character vector"
 
+msgid "'several.ok' must be logical or a string starting with \"all\""
+msgstr ""
+
 msgid "'arg' must be of length >= 1"
 msgstr "'arg' must be of length >= 1"
-
-msgid "there is more than one match in 'match.arg'"
-msgstr "there is more than one match in 'match.arg'"
 
 msgid "no match"
 msgstr "no match"
@@ -1056,7 +1060,14 @@ msgstr ""
 msgid "%s not found"
 msgstr "%s not found"
 
+msgid "'versionCheck' must be NULL or a list with components 'op' and 'version'"
+msgstr ""
+
 msgid "namespace %s %s is already loaded, but %s %s is required"
+msgstr "namespace %s %s is already loaded, but %s %s is required"
+
+#, fuzzy
+msgid "namespace '%s' is already loaded so argument '%s' will be ignored."
 msgstr "namespace %s %s is already loaded, but %s %s is required"
 
 msgid "- loading"
@@ -1530,15 +1541,6 @@ msgstr ""
 msgid "additional arguments ignored in warning()"
 msgstr "additional arguments ignored in warning()"
 
-msgid "no natural language support or missing translations"
-msgstr ""
-
-msgid "In bare C locale: LANGUAGE reset, but message language may be unchanged"
-msgstr ""
-
-msgid "In bare C locale, not forcing locale; possibly use 'force = TRUE'?"
-msgstr ""
-
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 
@@ -1916,6 +1918,9 @@ msgstr[0] ""
 msgstr[1] ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
+
+#~ msgid "there is more than one match in 'match.arg'"
+#~ msgstr "there is more than one match in 'match.arg'"
 
 #~ msgid "'name' must be a single character string"
 #~ msgstr "'name' must be a single character string"

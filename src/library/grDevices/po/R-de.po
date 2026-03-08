@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:17\n"
 "PO-Revision-Date: 2025-03-24 14:59+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -189,6 +189,27 @@ msgstr "Unbekannte Höhe; nutze unteren Anker"
 
 msgid "Invalid glyph anchor"
 msgstr "Ungültiger Glyh-Anker"
+
+msgid "Registered axis names must be lower case"
+msgstr ""
+
+msgid "Custom axis names must be upper case"
+msgstr ""
+
+#, fuzzy
+msgid "Axis value(s) out of range"
+msgstr "Index außerhalb des Bereichs"
+
+#, fuzzy
+msgid "No axes specified"
+msgstr "keine 'z' Matrix angegeben"
+
+msgid "Axis names must be 4 ASCII letters long"
+msgstr ""
+
+#, fuzzy
+msgid "Axis values must be numeric"
+msgstr "RGB Matrix muss numerisch sein"
 
 msgid "Font file longer than 500 will be truncated"
 msgstr "Zeichensatz Datei länger als 500 wird abgeschnitten"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-08 11:37\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -71,9 +71,6 @@ msgstr "Alerta: opção desconhecida '--clean='%s"
 
 msgid "Warning: unknown option %s"
 msgstr "Alerta: opção desconhecida %s"
-
-msgid "Output file:"
-msgstr "Arquivo de saída:"
 
 msgid "Compacting PDF document"
 msgstr "Compactando documento PDF"
@@ -295,6 +292,10 @@ msgstr "Insira um número de ambiente ou 0 para sair"
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
 msgstr "recuperação chamada de forma não interativa; frames descartadas, use debugger() para visualizar"
+
+#, fuzzy
+msgid "Enter a frame number, or 0 to exit"
+msgstr "Insira um número de ambiente ou 0 para sair"
 
 msgid "No suitable frames for recover()"
 msgstr "Nenhuma frame adequada para recover()"
@@ -613,14 +614,14 @@ msgstr "'code_files' deve ser um vetor de caracteres"
 msgid "'list' must be a character vector naming R objects"
 msgstr "'list' deve ser um vetor de caracteres que nomeia objetos R"
 
-msgid "no R objects specified or available"
-msgstr "nenhum objeto R especificado ou disponível"
-
 msgid "directory '%s' already exists"
 msgstr "o diretório '%s' já existe"
 
 msgid "generic functions and other S4 objects (e.g., '%s') cannot be dumped; use the 'code_files' argument"
 msgstr "funções genéricas e outros objetos S4 (e.g., '%s') não podem ser descartados; use o argumento 'code_files'"
+
+msgid "'download.file()' error code '%d'"
+msgstr "'download.file()' código de erro '%d'"
 
 msgid "unable to access index for repository %s"
 msgstr "não é possível acessar o índice para o repositório %s"
@@ -661,9 +662,6 @@ msgstr "'destdir' não é um diretório"
 msgid "no package %s at the repositories"
 msgstr "nenhum pacote %s nos repositórios"
 
-msgid "invalid 'type'"
-msgstr "'type' inválido"
-
 msgid "package %s does not exist on the local repository"
 msgstr "pacote %s não existe no repositório local"
 
@@ -676,8 +674,8 @@ msgstr "--- Por favor selecione um mirror do CRAN para esta sessão ---"
 msgid "trying to use CRAN without setting a mirror"
 msgstr "tentando usar o CRAN sem definir um mirror"
 
-msgid "'download.file()' error code '%d'"
-msgstr "'download.file()' código de erro '%d'"
+msgid "invalid 'type'"
+msgstr "'type' inválido"
 
 msgid "failed to download mirrors file (%s); using local file '%s'"
 msgstr "falha ao baixar arquivo de mirrors (%s); usando arquivo local '%s'"
@@ -761,11 +759,9 @@ msgstr "type == \"both\" não pode ser usado com 'repos = NULL'"
 msgid "source repository is unavailable to check versions"
 msgstr "repositório fonte não está disponível para verificar versões"
 
-msgid "cannot install macOS binary packages on Windows"
+#, fuzzy
+msgid "cannot install binary packages from other operating systems on Windows"
 msgstr "não é possível instalar pacotes binários do macOS no Windows"
-
-msgid "cannot install macOS binary packages on this platform"
-msgstr "não é possível instalar pacotes binários do macOS nesta plataforma"
 
 msgid "cannot install Windows binary packages on this platform"
 msgstr "não é possível instalar pacotes binários do Windows nesta plataforma"
@@ -1062,11 +1058,12 @@ msgstr "falha em criar o diretório %s"
 msgid "invalid octal digit"
 msgstr "dígito octal inválido"
 
+#, fuzzy
+msgid "removing leading '/' from '%s'"
+msgstr "removendo '/' à esquerda"
+
 msgid "removing drive '%s'"
 msgstr "removendo drive '%s'"
-
-msgid "removing leading '/'"
-msgstr "removendo '/' à esquerda"
 
 msgid "path starts with '~'"
 msgstr "caminho começa com '~'"
@@ -1074,8 +1071,8 @@ msgstr "caminho começa com '~'"
 msgid "path contains '..'"
 msgstr "caminho contém '..'"
 
-msgid "path is empty"
-msgstr "caminho está vazio"
+msgid "cannot extract through symlink"
+msgstr ""
 
 msgid "'tarfile' must be a character string or a connection"
 msgstr "'tarfile' deve ser uma string de caracteres ou uma conexão"
@@ -1094,6 +1091,9 @@ msgstr "erro de checksum para campo '%s'"
 
 msgid "failed to copy %s to %s"
 msgstr "falha ao copiar %s para %s"
+
+msgid "cannot restore symbolic link from %s to %s as a file copy, because the source doesn't exist; try extracting again?"
+msgstr ""
 
 msgid "unsupported entry type"
 msgstr ""
@@ -1201,11 +1201,18 @@ msgstr "método inválido:"
 msgid "download had nonzero exit status"
 msgstr "download teve status de saída diferente de zero"
 
+msgid "Built: value is not a string"
+msgstr ""
+
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar' retornou código de saída diferente de zero %d"
 
-msgid "file %s is not a macOS binary package"
+#, fuzzy
+msgid "file %s is not a binary package"
 msgstr "arquivo %s não é um pacote binário de macOS"
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "pacote %s desempacotado com sucesso e somas MD5 verificadas"
@@ -1236,17 +1243,20 @@ msgstr ""
 "Os pacotes binários baixados estão em\n"
 "\t%s"
 
-msgid "'memory.size()' is Windows-specific"
-msgstr "'memory.size()' é específico do Windows"
+msgid "'memory.size()' is no longer supported"
+msgstr "'memory.size()' não é mais suportado"
 
-msgid "'memory.limit()' is Windows-specific"
-msgstr "'memory.limit()' é específico do Windows"
+msgid "'memory.limit()' is no longer supported"
+msgstr "'memory.limit()' não é mais suportado"
 
 msgid "method 'mailx' is Unix-only"
 msgstr "método 'mailx' é apenas para Unix"
 
 msgid "zip file %s not found"
 msgstr "arquivo zip %s não encontrado"
+
+msgid "cannot extract package from %s"
+msgstr ""
 
 msgid "failed to create %s"
 msgstr "falha ao criar %s"
@@ -1263,12 +1273,6 @@ msgstr "não foi possível copiar instalação temporária %s para %s"
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
 msgstr "Apenas arquivos '*.zip' e '*.tar.gz' podem ser instalados."
 
-msgid "'memory.size()' is no longer supported"
-msgstr "'memory.size()' não é mais suportado"
-
-msgid "'memory.limit()' is no longer supported"
-msgstr "'memory.limit()' não é mais suportado"
-
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog() não pode ser usada de forma não interativa"
 
@@ -1279,6 +1283,12 @@ msgid "%d Sweave file for basename %s found"
 msgid_plural "%d Sweave files for basename %s found"
 msgstr[0] "%d arquivo Sweave encontrado para o nome base %s"
 msgstr[1] "%d arquivos Sweave encontrados para o nome base %s"
+
+#, fuzzy
+msgid "Output file:  "
+msgid_plural "Output files:  "
+msgstr[0] "Arquivo de saída:"
+msgstr[1] "Arquivo de saída:"
 
 msgid "Output/used file:  "
 msgid_plural "Output/used files:  "
@@ -1443,6 +1453,21 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "algarismo romano inválido: %s"
 msgstr[1] "algarismos romanos inválidos: %s"
+
+#~ msgid "no R objects specified or available"
+#~ msgstr "nenhum objeto R especificado ou disponível"
+
+#~ msgid "cannot install macOS binary packages on this platform"
+#~ msgstr "não é possível instalar pacotes binários do macOS nesta plataforma"
+
+#~ msgid "path is empty"
+#~ msgstr "caminho está vazio"
+
+#~ msgid "'memory.size()' is Windows-specific"
+#~ msgstr "'memory.size()' é específico do Windows"
+
+#~ msgid "'memory.limit()' is Windows-specific"
+#~ msgstr "'memory.limit()' é específico do Windows"
 
 #~ msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 #~ msgstr "É recomendado usar %s/%s ao invés de %s/%s/%s."

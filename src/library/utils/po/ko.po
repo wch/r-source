@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:50-0700\n"
+"POT-Creation-Date: 2025-03-31 11:51+0200\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -94,21 +94,21 @@ msgstr "'file'은 커넥션이 아닙니다."
 msgid "cannot write to this connection"
 msgstr "이 커넥션에 쓰기를 할 수 없습니다."
 
-#: io.c:1110
+#: io.c:1111
 msgid "'dec' must be a single character"
 msgstr "'dec'는 반드시 한개의 문자이어야 합니다"
 
-#: io.c:1137
+#: io.c:1138
 #, fuzzy, c-format
 msgid "corrupt data frame -- length of column %d does not match nrows"
 msgstr "데이터 프레임이 손상되었습니다 -- 열의 길이 %d가 행의 개수와 일치하지 않습니다"
 
-#: io.c:1171
+#: io.c:1172
 #, c-format
 msgid "column %d claims to be a factor but does not have numeric codes"
 msgstr ""
 
-#: io.c:1189
+#: io.c:1190
 #, fuzzy
 msgid "corrupt matrix -- dims do not match length"
 msgstr "올바른 행렬이 아닙니다 -- dims 가 길이가 일치하지 않습니다"

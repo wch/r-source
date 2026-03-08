@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-04-01 10:33-0700\n"
+"POT-Creation-Date: 2026-03-07 10:25+0100\n"
 "PO-Revision-Date: 2022-08-31 15:04+0000\n"
 "Last-Translator: Marcel Ramos <marcel.ramos@sph.cuny.edu>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -51,23 +51,23 @@ msgstr "impossible de rendre la vue de plus haut niveau active (sorties 'grid' e
 msgid "attempt to plot on null device"
 msgstr "tentative de dessin dans un périphérique 'null'"
 
-#: grid.c:1711
+#: grid.c:1710
 msgid "there is no layout defined"
 msgstr "aucune mise en page définie"
 
-#: grid.c:1933
+#: grid.c:1932
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "extrémité de polygone non trouvé (longueur ou largeur nulle?)"
 
-#: grid.c:1942
+#: grid.c:1941
 msgid "polygon edge not found"
 msgstr "extrémités de polygone non trouvés"
 
-#: grid.c:2096
+#: grid.c:2095
 msgid "require at least two points to draw arrow"
 msgstr "il faut au moins deux points pour tracer une flèche"
 
-#: grid.c:2467
+#: grid.c:2466
 msgid "non-finite control point in Xspline"
 msgstr "point de contrôle non fini dans Xspline"
 
@@ -97,7 +97,7 @@ msgstr ""
 msgid "invalid plotting symbol"
 msgstr "symboles graphiques incorrects"
 
-#: grid.c:5197
+#: grid.c:5198
 msgid "unable to clip to rotated rectangle"
 msgstr "impossible de couper au rectangle pivoté"
 
@@ -121,63 +121,63 @@ msgstr "impossible de conserver l'état de 'grid'. Trop de périphériques ouver
 msgid "Cannot create unit scalar from 0-length unit vector"
 msgstr "Impossible de créer un scalaire unitaire à partir d’un vecteur d’unité de longueur nulle"
 
-#: unit.c:799 unit.c:1298
+#: unit.c:799 unit.c:1308
 msgid "invalid unit or unit not yet implemented"
 msgstr "unité non autorisée ou pas encore implémentée"
 
-#: unit.c:1355 unit.c:1386
+#: unit.c:1261 unit.c:1365 unit.c:1396
 msgid "Viewport has zero dimension(s)"
 msgstr "Le zone active (Viewport) a des dimensions nulles"
 
-#: unit.c:1418 unit.c:1433 unit.c:1448 unit.c:1463
+#: unit.c:1428 unit.c:1443 unit.c:1458 unit.c:1473
 msgid "Unsupported unit conversion"
 msgstr "Conversion d'unités non supportée"
 
-#: unit.c:1555
+#: unit.c:1565
 msgid "Invalid unit"
 msgstr "Unité incorrecte"
 
-#: unit.c:1570
+#: unit.c:1580
 msgid "'units' must be character"
 msgstr "les unités dans 'units' doivent être une chaîne de caractères"
 
-#: unit.c:1573
+#: unit.c:1583
 msgid "'units' must be of length > 0"
 msgstr "Les unités dans 'units' doivent être de longueur > 0"
 
-#: unit.c:1584
+#: unit.c:1594
 msgid "data must be either NULL, have length 1, or match the length of the final unit vector"
 msgstr "les données doivent être NULL, avoir une longueur 1, ou être de la même longueur que la vecteur unité final"
 
-#: unit.c:1596
+#: unit.c:1606
 msgid "no string supplied for 'strwidth/height' unit"
 msgstr "pas de chaîne de caractères fournie pour l’unité 'strwidth/height'"
 
-#: unit.c:1600
+#: unit.c:1610
 msgid "no 'grob' supplied for 'grobwidth/height' unit"
 msgstr "pas de 'grob' fourni pour 'grobwidth/height'"
 
-#: unit.c:1618
+#: unit.c:1637
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr "'gPath' doit avoir une profondeur de 1 dans les unités 'grobwidth/height'"
 
-#: unit.c:1623
+#: unit.c:1642
 msgid "non-NULL value supplied for plain unit"
 msgstr "valeur non nulle fournie pour l’unité"
 
-#: unit.c:1676 unit.c:1710 unit.c:1759
+#: unit.c:1695 unit.c:1729 unit.c:1778
 msgid "old version of unit class is no longer allowed"
 msgstr "une vieille version de la classe unité n’est plus autorisée"
 
-#: unit.c:1682
+#: unit.c:1701
 msgid "object is not coercible to a unit"
 msgstr "l’object n’est pas convertible en une unité"
 
-#: unit.c:1708
+#: unit.c:1727
 msgid "object is not a unit"
 msgstr "l’object n’est pas une unité"
 
-#: unit.c:1840
+#: unit.c:1859
 msgid "units can only be multiplied with numerics and integers"
 msgstr "les unités ne peuvent être multipliées que par des nombres décimaux ou entiers"
 
@@ -185,11 +185,11 @@ msgstr "les unités ne peuvent être multipliées que par des nombres décimaux 
 msgid "Unable to calculate text width/height (using zero)"
 msgstr ""
 
-#: viewport.c:56
+#: viewport.c:57
 msgid "Mask is not logical value ('none' or 'inherit')"
 msgstr "Le masque n’est pas une valeur booléenne ('none' ou 'inherit’)"
 
-#: viewport.c:330
+#: viewport.c:331
 msgid "non-finite location and/or size for viewport"
 msgstr "position et / ou taille de vue non finies"
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:17\n"
 "PO-Revision-Date: 2024-03-25 14:29+0300\n"
 "Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
@@ -193,6 +193,27 @@ msgstr "Неизвестная высота; использую нижнюю границу"
 
 msgid "Invalid glyph anchor"
 msgstr "Некорректный якорь глифа"
+
+msgid "Registered axis names must be lower case"
+msgstr ""
+
+msgid "Custom axis names must be upper case"
+msgstr ""
+
+#, fuzzy
+msgid "Axis value(s) out of range"
+msgstr "индекс вне пределов"
+
+#, fuzzy
+msgid "No axes specified"
+msgstr "не указана 'z'-матрица"
+
+msgid "Axis names must be 4 ASCII letters long"
+msgstr ""
+
+#, fuzzy
+msgid "Axis values must be numeric"
+msgstr "rgb-матрица должна быть числовой"
 
 msgid "Font file longer than 500 will be truncated"
 msgstr "Путь к файлу шрифта длиннее 500 байт будет усечён"

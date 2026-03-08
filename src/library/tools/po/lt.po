@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tools 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49-0700\n"
+"POT-Creation-Date: 2026-03-07 10:25+0100\n"
 "PO-Revision-Date: 2021-11-06 22:43+0100\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -41,125 +41,133 @@ msgstr "md5 nepavyko faile '%ls'"
 msgid "sha256 failed on file '%s'"
 msgstr "md5 nepavyko faile '%s'"
 
-#: getfmts.c:61
+#: getfmts.c:60
 #, c-format
 msgid "only %d arguments are allowed"
 msgstr "leidžiami tik %d argumentai"
 
-#: getfmts.c:66
+#: getfmts.c:65
 msgid "'fmt' is not a character vector"
 msgstr "'fmt' nėra tekstinis vektorius"
 
-#: getfmts.c:69
+#: getfmts.c:68
 msgid "'fmt' must be length 1"
 msgstr "'fmt' turi būti 1 ilgis"
 
-#: getfmts.c:75
+#: getfmts.c:74
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "'fmt' ilgis viršija maksimalų formato ilgį %d"
 
-#: getfmts.c:96
+#: getfmts.c:95
 #, c-format
 msgid "unrecognised format specification '%s'"
 msgstr "neatpažinto formato specifikacija '%s'"
 
-#: getfmts.c:136
+#: getfmts.c:135
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "ne daugiau kaip viena žvaigždutė '*' yra palaikoma kiekvienoje konvertavimo specifikacijoje"
 
-#: gramLatex.c:2592 gramRd.c:3971
+#: gramLatex.c:2856 gramRd.c:3967
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "nepavyko priskirti buferio ilgoms eilutėms eilutėje %d"
 
-#: gramLatex.c:2869 gramRd.c:4524 gramRd.c:4530
+#: gramLatex.c:3167 gramRd.c:4521 gramRd.c:4527
 #, c-format
 msgid "invalid '%s' value"
 msgstr "neteisinga '%s' reikšmė"
 
-#: gramRd.c:2581 gramRd.c:2584
+#: gramRd.c:2576 gramRd.c:2579
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr "blogas žymėjimas (papildoma vieta?) %s:%d:%d"
 
-#: gramRd.c:3117
+#: gramRd.c:3112
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr "Anksčiau apibrėžta makrokomanda '%s'."
 
-#: gramRd.c:3127
+#: gramRd.c:3122
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr "Vartotojo apibrėžtoms makrokomandoms leidžiami ne daugiau kaip 4 argumentai."
 
-#: gramRd.c:3169
+#: gramRd.c:3164
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr "Nėra '%s' makrokomandos apibrėžimo."
 
-#: gramRd.c:3232
+#: gramRd.c:3227
 #, c-format
 msgid "Not enough arguments passed to user macro '%s'"
 msgstr "Nepakanka argumentų, perduotų vartotojo makrokomandai '%s'"
 
-#: gramRd.c:3372 gramRd.c:3376
+#: gramRd.c:3367 gramRd.c:3371
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr "nauja eilutė cituojamoje eilutėje ties %s:%d"
 
-#: gramRd.c:3395
+#: gramRd.c:3390
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr "nepavyko priskirti buferio ilgoms makrokomandoms eilutėje %d"
 
-#: gramRd.c:3425
+#: gramRd.c:3420
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "makrokomandos įdėtos per giliai: begalinė rekursija?"
 
-#: gramRd.c:3833
+#: gramRd.c:3829
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "Nepavyko rasti makrokomandos %s"
 
-#: gramRd.c:4032
+#: gramRd.c:4028
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "Netikėta įvesties pabaiga (%c cituojama eilutė atidaryta ties %s:%d:%d)"
 
-#: gramRd.c:4537
+#: gramRd.c:4534
 msgid "cannot open the connection"
 msgstr "negalima atidaryti ryšio"
 
-#: gramRd.c:4544
+#: gramRd.c:4541
 msgid "cannot read from this connection"
 msgstr "negalima skaityti iš šio ryšio"
 
-#: gramRd.c:4552
+#: gramRd.c:4549
 msgid "invalid Rd file"
 msgstr "neleistinas Rd failas"
 
-#: gramRd.c:4571
+#: gramRd.c:4569
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr "‘deparseRd’ palaiko tik pašalinančio pobūdžio elementus"
 
-#: gramRd.c:4574
+#: gramRd.c:4572
 msgid "bad state"
 msgstr "bloga būsena"
 
-#: gramRd.c:4587
+#: gramRd.c:4585
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "netinkamas teksto režimas %d, esantis 'deparseRd'"
 
-#: http.c:32
+#: http.c:31
 msgid "invalid bind address specification"
 msgstr "netinkama susiejimo adreso specifikacija"
 
-#: http.c:37
+#: http.c:36
 #, c-format
 msgid "Invalid port number %d: should be in 0:65535, typically above 1024"
 msgstr ""
+
+#: http.c:60
+msgid "allocation error in remove_dot_segments"
+msgstr ""
+
+#: http.c:150 pdscan.c:121
+msgid "non-character argument"
+msgstr "ne simbolių argumentas"
 
 #: install.c:95
 msgid "path too long"
@@ -174,13 +182,9 @@ msgstr "neteisingas argumentas '%s'"
 msgid "write error during file append"
 msgstr "rašymo klaida failo pridėjimo metu"
 
-#: pdscan.c:67
+#: pdscan.c:74
 msgid "too many items"
 msgstr "per daug elementų"
-
-#: pdscan.c:115
-msgid "non-character argument"
-msgstr "ne simbolių argumentas"
 
 #: signals.c:42
 msgid "pskill() is not supported on this platform"
@@ -194,6 +198,6 @@ msgstr "psnice() nepalaikomas šioje platformoje"
 msgid "invalid argument type"
 msgstr "neleistinas argumento tipas"
 
-#: text.c:225 text.c:247
+#: text.c:227 text.c:249
 msgid "out of memory"
 msgstr "trūksta atminties"

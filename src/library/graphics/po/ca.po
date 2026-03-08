@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49-0700\n"
+"POT-Creation-Date: 2025-03-31 11:51+0200\n"
 "PO-Revision-Date: 2024-03-18 06:08+0000\n"
 "Last-Translator: Robert Castelo <robert.castelo@upf.edu>\n"
 "Language-Team: none\n"
@@ -77,28 +77,28 @@ msgstr "«plot.new» encara no s'ha cridat"
 msgid "invalid graphics state"
 msgstr "l'estat dels gràfics no és vàlid"
 
-#: graphics.c:2619
+#: graphics.c:2618
 msgid "graphics device closed during call to locator or identify"
 msgstr "dispositiu gràfic tancat durant la crida al localitzador o a identificador"
 
-#: graphics.c:2669
+#: graphics.c:2668
 msgid "No graphics device is active"
 msgstr "No hi ha cap dispositiu gràfic actiu"
 
-#: graphics.c:3127
+#: graphics.c:3126
 msgid "zero-length arrow is of indeterminate angle and so skipped"
 msgstr "la fletxa de longitud zero és d'angle indeterminat i per això s'omet"
 
-#: graphics.c:3208
+#: graphics.c:3207
 #, c-format
 msgid "invalid par(\"bty\") = '%c'; no box() drawn"
 msgstr "par(\"bty\") = «%c» no vàlid; no s'ha dibuixat cap «box()»"
 
-#: graphics.c:3225
+#: graphics.c:3224
 msgid "invalid argument to GBox"
 msgstr "argument no vàlid per a GBox"
 
-#: graphics.c:3432
+#: graphics.c:3431
 msgid "metric information not available for this device"
 msgstr "la informació mètrica no està disponible per a aquest dispositiu"
 

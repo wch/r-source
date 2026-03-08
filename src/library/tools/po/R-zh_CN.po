@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:17\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -335,9 +335,6 @@ msgstr ""
 msgid "License stub records with missing/empty fields:"
 msgstr "无法使用缺少或有空白名字的Rd对象"
 
-msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
-msgstr ""
-
 msgid "Non-portable flags in variable '%s':"
 msgstr "变量'%s'里有不可便携的标志:"
 
@@ -530,8 +527,8 @@ msgid "Auto-generated content requiring editing in Rd file '%s':"
 msgstr "在Rd对象'%s'里自动产生的内容需要修改："
 
 #, fuzzy
-msgid "Rd files without \\description:"
-msgstr "Rd文件内有空的段:"
+msgid "Rd files without %s:"
+msgstr "Rd文件内没有'%s':"
 
 #, fuzzy
 msgid "no Rd sections specified"
@@ -901,11 +898,19 @@ msgstr "没有可以查检的东西"
 msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
 msgstr ""
 
-msgid "downloading reverse dependencies ..."
+#, fuzzy
+msgid "downloading reverse dependencies %s"
 msgstr "下载扭转了的依赖关系"
 
-msgid "downloading %s ..."
-msgstr "下载%s。。。"
+#, fuzzy
+msgid "download of reverse dependency %s failed"
+msgstr "下载扭转了的依赖关系"
+
+#, fuzzy
+msgid ""
+"download of %d reverse dependencies failed:\n"
+"  %s"
+msgstr "下载扭转了的依赖关系"
 
 msgid "checking %s ..."
 msgstr "%s…"
@@ -1021,12 +1026,6 @@ msgstr "程序包无效."
 msgid "restoration failed"
 msgstr "载入失败"
 
-msgid "invalid value"
-msgstr "无效值"
-
-msgid "for R_CROSS_BUILD"
-msgstr ""
-
 msgid "error reading file '%s'"
 msgstr "读取文件'%s'时出了错"
 
@@ -1134,6 +1133,9 @@ msgstr "错误：没有在这个目录里安装的许可"
 msgid "building a fake installation is disallowed"
 msgstr "不充许伪造安装"
 
+msgid "specified C++"
+msgstr ""
+
 msgid "using C compiler:"
 msgstr ""
 
@@ -1154,6 +1156,10 @@ msgstr ""
 
 msgid "Reverted installation-time patch"
 msgstr ""
+
+#, fuzzy
+msgid "Input must be character"
+msgstr "参数'x'必需是字符向量"
 
 msgid ""
 "See\n"
@@ -1261,6 +1267,13 @@ msgstr ""
 "  %s\n"
 "没有\\itemize."
 
+msgid "There is no binary type for this build of R."
+msgstr ""
+
+#, fuzzy
+msgid "invalid 'type'"
+msgstr "程序包无效."
+
 msgid "Processing packages:"
 msgstr "正在处理程序包:"
 
@@ -1355,9 +1368,6 @@ msgstr "调用'make'失败"
 
 msgid "Running vignettes for package %s"
 msgstr "执行小文品给程序包%s"
-
-msgid "Comparing %s to %s ..."
-msgstr "比较%s和%s"
 
 msgid "no parsed files found"
 msgstr "没有找到句法分析过的文件"
@@ -1501,6 +1511,11 @@ msgstr "没有这样带非ASCII数据的编码: 转换为ASCII"
 #, fuzzy
 msgid "cannot source package code:"
 msgstr "无法读取程序包源编码"
+
+msgid ""
+"error in inferior call:\n"
+"  %s"
+msgstr ""
 
 #, fuzzy
 msgid "inferiorCallError"
@@ -1650,6 +1665,19 @@ msgstr[0] ""
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
+
+#, fuzzy
+#~ msgid "Rd files without \\description:"
+#~ msgstr "Rd文件内有空的段:"
+
+#~ msgid "downloading %s ..."
+#~ msgstr "下载%s。。。"
+
+#~ msgid "invalid value"
+#~ msgstr "无效值"
+
+#~ msgid "Comparing %s to %s ..."
+#~ msgstr "比较%s和%s"
 
 #~ msgid "Bad \\usage lines found in documentation object '%s':"
 #~ msgstr "使用文档对象'%s'有些\\usage不正确:"

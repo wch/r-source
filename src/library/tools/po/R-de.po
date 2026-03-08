@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:17\n"
 "PO-Revision-Date: 2025-07-10 15:25+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -311,9 +311,6 @@ msgstr "Lizenzkürzel ist unzulässig laut DCF."
 msgid "License stub records with missing/empty fields:"
 msgstr "Lizenzkürzel Eintrag mit fehlenden/leeren Einträgen:"
 
-msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
-msgstr "Benutzt die ACM Lizenz: nur zulässig für ACM TOMS Kode vor 2013"
-
 msgid "Non-portable flags in variable '%s':"
 msgstr "Nicht portierbare Flags in der Variablen '%s'"
 
@@ -492,8 +489,9 @@ msgstr "Argumenteinträge ohne Beschreibung in Rd Datei '%s':"
 msgid "Auto-generated content requiring editing in Rd file '%s':"
 msgstr "Automatisch generierter Inhalt benötigt noch Bearbeitung in Rd Datei '%s':"
 
-msgid "Rd files without \\description:"
-msgstr "Rd Dateien ohne \\description"
+#, fuzzy
+msgid "Rd files without %s:"
+msgstr "Rd Dateien ohne \\alias:"
 
 msgid "no Rd sections specified"
 msgstr "kein Rd Abschnitt angegeben"
@@ -845,11 +843,19 @@ msgstr "keine Pakete zu überprüfen"
 msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
 msgstr "'reverse$repos' sollte eine Teilmenge von getOption(\"repos\") sein"
 
-msgid "downloading reverse dependencies ..."
+#, fuzzy
+msgid "downloading reverse dependencies %s"
 msgstr "lade umgekehrte Abhängigkeiten herunter ..."
 
-msgid "downloading %s ..."
-msgstr "Herunterladen von %s ..."
+#, fuzzy
+msgid "download of reverse dependency %s failed"
+msgstr "lade umgekehrte Abhängigkeiten herunter ..."
+
+#, fuzzy
+msgid ""
+"download of %d reverse dependencies failed:\n"
+"  %s"
+msgstr "lade umgekehrte Abhängigkeiten herunter ..."
 
 msgid "checking %s ..."
 msgstr "überprüfe %s ..."
@@ -962,12 +968,6 @@ msgstr "install_packages() Exitstatus"
 msgid "restoration failed"
 msgstr "Wiederherstellung fehlgeschlagen"
 
-msgid "invalid value"
-msgstr "ungültiger Wert"
-
-msgid "for R_CROSS_BUILD"
-msgstr "für R_CROSS_BUILD"
-
 msgid "error reading file '%s'"
 msgstr "Fehler beim Lesen der Datei '%s'"
 
@@ -1070,6 +1070,9 @@ msgstr "Fehler: keine ausreichenden Rechte zur Installation in das Verzeichnis"
 msgid "building a fake installation is disallowed"
 msgstr "eine Scheininstallation ist nicht erlaubt"
 
+msgid "specified C++"
+msgstr ""
+
 msgid "using C compiler:"
 msgstr "nutze C Compiler:"
 
@@ -1090,6 +1093,10 @@ msgstr "Warnung: Reverting Patch fehlgeschlagen"
 
 msgid "Reverted installation-time patch"
 msgstr "Kehre Installations-Zeit Patch um"
+
+#, fuzzy
+msgid "Input must be character"
+msgstr "'text' muss ein Zeichenkettenvektor sein"
 
 msgid ""
 "See\n"
@@ -1197,6 +1204,13 @@ msgstr ""
 "  %s\n"
 "enthält kein \\item."
 
+msgid "There is no binary type for this build of R."
+msgstr ""
+
+#, fuzzy
+msgid "invalid 'type'"
+msgstr "ungültiges Paket"
+
 msgid "Processing packages:"
 msgstr "Bearbeitete Pakete:"
 
@@ -1284,9 +1298,6 @@ msgstr "Fehler: Ausführen der Tests in %s fehlgeschlagen"
 
 msgid "Running vignettes for package %s"
 msgstr "Ausführen der Vignetten für das Paket %s"
-
-msgid "Comparing %s to %s ..."
-msgstr "Vergleiche %s mit %s ..."
 
 msgid "no parsed files found"
 msgstr "keine geparsten Dateien gefunden"
@@ -1426,6 +1437,11 @@ msgstr "Unbekannte Kodierung mit nicht-ASCII Daten: konvertiere nach ASCII"
 
 msgid "cannot source package code:"
 msgstr "kann Paketquelltext nicht einlesen:"
+
+msgid ""
+"error in inferior call:\n"
+"  %s"
+msgstr ""
 
 msgid "inferiorCallError"
 msgstr "inferiorCallError"
@@ -1597,6 +1613,24 @@ msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Zugehöriger BibTeX Eintrag:"
 msgstr[1] "Zugehörige BibTeX Einträge:"
+
+#~ msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
+#~ msgstr "Benutzt die ACM Lizenz: nur zulässig für ACM TOMS Kode vor 2013"
+
+#~ msgid "Rd files without \\description:"
+#~ msgstr "Rd Dateien ohne \\description"
+
+#~ msgid "downloading %s ..."
+#~ msgstr "Herunterladen von %s ..."
+
+#~ msgid "invalid value"
+#~ msgstr "ungültiger Wert"
+
+#~ msgid "for R_CROSS_BUILD"
+#~ msgstr "für R_CROSS_BUILD"
+
+#~ msgid "Comparing %s to %s ..."
+#~ msgstr "Vergleiche %s mit %s ..."
 
 #, fuzzy
 #~ msgid "one of 'package' and 'dir' must be specified."

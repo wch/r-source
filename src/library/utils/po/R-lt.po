@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: utils 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-08 11:37\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -71,9 +71,6 @@ msgstr "Įspėjimas: nežinoma parinktis '--clean='%s"
 
 msgid "Warning: unknown option %s"
 msgstr "Įspėjimas: nežinoma parinktis %s"
-
-msgid "Output file:"
-msgstr "Išvesties failas:"
 
 msgid "Compacting PDF document"
 msgstr "PDF dokumento glaudinimas"
@@ -296,6 +293,10 @@ msgstr "Įveskite aplinkos numerį arba 0, kad išeitumėte"
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
 msgstr "susigrąžinti iškvietimą ne interaktyviai; sistemos išmestos, naudoti debugger(), kad peržiūrėti"
+
+#, fuzzy
+msgid "Enter a frame number, or 0 to exit"
+msgstr "Įveskite aplinkos numerį arba 0, kad išeitumėte"
 
 msgid "No suitable frames for recover()"
 msgstr "Nėra tinkamų sistemų dėl recover()"
@@ -618,14 +619,14 @@ msgstr "'code_files' turi būti tekstinis vektorius"
 msgid "'list' must be a character vector naming R objects"
 msgstr "'list' turi būti tekstinis vektorius įvardijantis R objektus"
 
-msgid "no R objects specified or available"
-msgstr "nenurodyti arba nepasiekiami R objektai"
-
 msgid "directory '%s' already exists"
 msgstr "katalogas '%s' jau yra"
 
 msgid "generic functions and other S4 objects (e.g., '%s') cannot be dumped; use the 'code_files' argument"
 msgstr "bendrinės funkcijos ir kiti S4 objektai (pvz., '%s') negali būti išmesti; naudoti argumentą 'code_files'"
+
+msgid "'download.file()' error code '%d'"
+msgstr "'download.file()' klaidos kodas '%d'"
 
 msgid "unable to access index for repository %s"
 msgstr "nepavyko pasiekti saugyklos %s indekso"
@@ -666,9 +667,6 @@ msgstr "'destdir' nėra katalogas"
 msgid "no package %s at the repositories"
 msgstr "saugyklose nėra paketo %s"
 
-msgid "invalid 'type'"
-msgstr "neleistinas 'type'"
-
 msgid "package %s does not exist on the local repository"
 msgstr "paketo %s vietinėje saugykloje nėra"
 
@@ -681,8 +679,8 @@ msgstr "--- Pasirinkite CRAN, kuris bus naudojamas šiame seanse ---"
 msgid "trying to use CRAN without setting a mirror"
 msgstr "bandymas naudoti CRAN be dublikato nustatymo"
 
-msgid "'download.file()' error code '%d'"
-msgstr "'download.file()' klaidos kodas '%d'"
+msgid "invalid 'type'"
+msgstr "neleistinas 'type'"
 
 msgid "failed to download mirrors file (%s); using local file '%s'"
 msgstr "nepavyko atsisiųsti failo (%s); naudojant vietinį failą '%s'"
@@ -766,11 +764,9 @@ msgstr "type == \"both\" negali būti naudojami su 'repos = NULL'"
 msgid "source repository is unavailable to check versions"
 msgstr "šaltinio saugykla nepasiekiama versijoms tikrinti"
 
-msgid "cannot install macOS binary packages on Windows"
+#, fuzzy
+msgid "cannot install binary packages from other operating systems on Windows"
 msgstr "nepavyksta įdiegti macOS dvejetainių paketų operacinėje sistemoje Windows"
-
-msgid "cannot install macOS binary packages on this platform"
-msgstr "nepavyksta įdiegti macOS dvejetainių paketų šioje platformoje"
 
 msgid "cannot install Windows binary packages on this platform"
 msgstr "nepavyksta įdiegti Windows dvejetainių paketų šioje platformoje"
@@ -1072,11 +1068,12 @@ msgstr "nepavyko sukurti katalogo %s"
 msgid "invalid octal digit"
 msgstr "neleistinas aštuntainis skaitmuo"
 
+#, fuzzy
+msgid "removing leading '/' from '%s'"
+msgstr "pašalinti priekinį '/'"
+
 msgid "removing drive '%s'"
 msgstr "šalinant diską '%s'"
-
-msgid "removing leading '/'"
-msgstr "pašalinti priekinį '/'"
 
 msgid "path starts with '~'"
 msgstr "kelias prasideda '~'"
@@ -1084,8 +1081,8 @@ msgstr "kelias prasideda '~'"
 msgid "path contains '..'"
 msgstr "kelias turi '..'"
 
-msgid "path is empty"
-msgstr "kelias yra tuščias"
+msgid "cannot extract through symlink"
+msgstr ""
 
 msgid "'tarfile' must be a character string or a connection"
 msgstr "'tarfile' turi būti simbolių eilutė arba ryšys"
@@ -1104,6 +1101,9 @@ msgstr "įrašo '%s' checksum klaida"
 
 msgid "failed to copy %s to %s"
 msgstr "nepavyko nukopijuoti %s į %s"
+
+msgid "cannot restore symbolic link from %s to %s as a file copy, because the source doesn't exist; try extracting again?"
+msgstr ""
 
 msgid "unsupported entry type"
 msgstr "nepalaikomas įrašo tipas"
@@ -1213,11 +1213,18 @@ msgstr "neleistinas formatas"
 msgid "download had nonzero exit status"
 msgstr "atsisiuntimas turėjo nenulinio išėjimo būseną"
 
+msgid "Built: value is not a string"
+msgstr ""
+
 msgid "'tar' returned non-zero exit code %d"
 msgstr "'tar' grąžino ne nulinį išėjimo kodą %d"
 
-msgid "file %s is not a macOS binary package"
+#, fuzzy
+msgid "file %s is not a binary package"
 msgstr "failas %s nėra macOS dvejetainis paketas"
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
 
 msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr "paketas %s sėkmingai išpakuotas ir MD5 sumos patikrintos"
@@ -1248,10 +1255,12 @@ msgstr ""
 "Atsisiųsti dvejetainiai paketai yra\n"
 "\t%s"
 
-msgid "'memory.size()' is Windows-specific"
+#, fuzzy
+msgid "'memory.size()' is no longer supported"
 msgstr "'memory.size()' yra skirtas Windows"
 
-msgid "'memory.limit()' is Windows-specific"
+#, fuzzy
+msgid "'memory.limit()' is no longer supported"
 msgstr "'memory.limit()' yra skirtas Windows"
 
 msgid "method 'mailx' is Unix-only"
@@ -1259,6 +1268,10 @@ msgstr "metodas 'mailx' yra tik Unix"
 
 msgid "zip file %s not found"
 msgstr "zip failas %s nerastas"
+
+#, fuzzy
+msgid "cannot extract package from %s"
+msgstr "2. Paketų pašalinimas iš %s"
 
 msgid "failed to create %s"
 msgstr "nepavyko sukurti %s"
@@ -1275,14 +1288,6 @@ msgstr "neįmanoma perkelti laikino diegimo %s į %s"
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
 msgstr "Galima įdiegti tik '*.zip' ir '*.tar.gz' failus."
 
-#, fuzzy
-msgid "'memory.size()' is no longer supported"
-msgstr "'memory.size()' yra skirtas Windows"
-
-#, fuzzy
-msgid "'memory.limit()' is no longer supported"
-msgstr "'memory.limit()' yra skirtas Windows"
-
 msgid "winDialog() cannot be used non-interactively"
 msgstr "winDialog() negali būti naudojamas ne interaktyviai"
 
@@ -1294,6 +1299,13 @@ msgid_plural "%d Sweave files for basename %s found"
 msgstr[0] "Rastas %d Sweave failas, skirtas pagrindiniam vardui %s"
 msgstr[1] "Rasti %d Sweave failai, skirti pagrindiniam vardui %s"
 msgstr[2] "Rasta %d Sweave failų, skirtų pagrindiniam vardui %s"
+
+#, fuzzy
+msgid "Output file:  "
+msgid_plural "Output files:  "
+msgstr[0] "Išvesties failas:"
+msgstr[1] "Išvesties failas:"
+msgstr[2] "Išvesties failas:"
 
 msgid "Output/used file:  "
 msgid_plural "Output/used files:  "
@@ -1489,6 +1501,21 @@ msgstr[0] "neteisingas romėniškas skaitmuo: %s"
 msgstr[1] "neteisingi romėniški skaitmenys: %s"
 msgstr[2] "neteisingų romėniškų skaitmenų: %s"
 
+#~ msgid "no R objects specified or available"
+#~ msgstr "nenurodyti arba nepasiekiami R objektai"
+
+#~ msgid "cannot install macOS binary packages on this platform"
+#~ msgstr "nepavyksta įdiegti macOS dvejetainių paketų šioje platformoje"
+
+#~ msgid "path is empty"
+#~ msgstr "kelias yra tuščias"
+
+#~ msgid "'memory.size()' is Windows-specific"
+#~ msgstr "'memory.size()' yra skirtas Windows"
+
+#~ msgid "'memory.limit()' is Windows-specific"
+#~ msgstr "'memory.limit()' yra skirtas Windows"
+
 #~ msgid "It is recommended to use %s/%s instead of %s/%s/%s."
 #~ msgstr "Rekomenduojama naudoti %s/%s vietoj %s/%s/%s."
 
@@ -1605,9 +1632,6 @@ msgstr[2] "neteisingų romėniškų skaitmenų: %s"
 
 #~ msgid "a documentation file"
 #~ msgstr "dokumentacijos failą"
-
-#~ msgid "2. Removing packages from %s"
-#~ msgstr "2. Paketų pašalinimas iš %s"
 
 #~ msgid "3. Removing packages from %s"
 #~ msgstr "3. Paketų pašalinimas iš %s"

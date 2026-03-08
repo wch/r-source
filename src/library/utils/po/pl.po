@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:50-0700\n"
+"POT-Creation-Date: 2025-03-31 11:51+0200\n"
 "PO-Revision-Date: 2018-04-01 14:31+0200\n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -91,21 +91,21 @@ msgstr "argument 'file' nie jest połączeniem"
 msgid "cannot write to this connection"
 msgstr "nie można zapisać w tym połączeniu"
 
-#: io.c:1110
+#: io.c:1111
 msgid "'dec' must be a single character"
 msgstr "argument 'dec' musi być pojedynczym znakiem"
 
-#: io.c:1137
+#: io.c:1138
 #, fuzzy, c-format
 msgid "corrupt data frame -- length of column %d does not match nrows"
 msgstr "uszkodzona ramka danych -- długość kolumny %d nie zgadza się z liczbą wierszy"
 
-#: io.c:1171
+#: io.c:1172
 #, fuzzy, c-format
 msgid "column %d claims to be a factor but does not have numeric codes"
 msgstr "kolumna %d twierdzi, że jest czynnikiem, ale nie posiada kodów liczbowych"
 
-#: io.c:1189
+#: io.c:1190
 #, fuzzy
 msgid "corrupt matrix -- dims do not match length"
 msgstr "macierz jest uszkodzona -- wymiary nie zgadzają się z długością"

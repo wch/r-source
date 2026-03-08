@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-03-07 12:43\n"
 "PO-Revision-Date: 2024-03-25 14:51+0300\n"
 "Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
@@ -217,8 +217,8 @@ msgstr "не могу подсчитать оценку, возвращаю NA"
 msgid "cannot compute exact p-value with ties"
 msgstr "не могу подсчитать точное p-значение при наличии повторяющихся наблюдений"
 
-msgid "cannot compute exact confidence intervals with ties"
-msgstr "не могу подсчитать точные доверительные интервалы при наличии повторяющихся наблюдений"
+msgid "cannot compute exact confidence interval with ties"
+msgstr "совпадающие значения: не могу высчитать точный доверительный интервал"
 
 msgid "'formula' missing or incorrect"
 msgstr "'formula' пропущена или неправильная"
@@ -616,12 +616,6 @@ msgstr "'y' должен быть числовым вектором"
 msgid "not enough finite observations"
 msgstr "недостаточно конечных наблюдений"
 
-msgid "Cannot compute exact p-value with ties"
-msgstr "Есть совпадающие значения: не могу высчитать точное p-значение"
-
-msgid "'formula' missing or invalid"
-msgstr "'formula' пропущена либо неправильная"
-
 msgid "invalid formula"
 msgstr "неправильная формула"
 
@@ -829,8 +823,9 @@ msgstr "факторный анализ требует как минимум три переменные"
 msgid "no starting values supplied"
 msgstr "не указано стартовое значение"
 
-msgid "invalid argument 'lambda'"
-msgstr "неправильный аргумент 'lambda'"
+#, fuzzy
+msgid "invalid argument '%s'"
+msgstr "неправильный аргумент 'n'"
 
 msgid "%s link not recognised"
 msgstr "%s ссылка не распознана"
@@ -944,7 +939,77 @@ msgstr "все группы должны содержать данные"
 msgid "not enough observations"
 msgstr "недостаточно наблюдений"
 
-msgid "NA's are not allowed in 'groups' or 'blocks'"
+#, fuzzy
+msgid "incorrect dimensions"
+msgstr "неправильные измерения у 'xi'"
+
+msgid "at least two response categories required"
+msgstr ""
+
+#, fuzzy
+msgid "at least two groups required"
+msgstr "нужна двусторонняя формула"
+
+msgid "%s currently only allows independent right-censoring"
+msgstr ""
+
+msgid "error computing the Hessian in %s"
+msgstr ""
+
+msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgstr ""
+
+msgid "unsuccessful optimisation in %s"
+msgstr ""
+
+msgid "incompatible length of argument 'mu' in %s"
+msgstr ""
+
+#, fuzzy
+msgid "cannot compute exact permutation distribution in %s"
+msgstr "не могу подсчитать точное p-значение при наличии повторяющихся наблюдений"
+
+#, fuzzy
+msgid "cannot compute one-sided p-values in %s"
+msgstr "совпадающие значения: не могу высчитать корректные p-values"
+
+msgid "permutation confidence intervals only available for 2-sample comparisons in %s"
+msgstr ""
+
+#, fuzzy
+msgid "failed to compute confidence interval in %s"
+msgstr "совпадающие значения: не могу высчитать точный доверительный интервал"
+
+#, fuzzy
+msgid "incorrect specification for '%s'"
+msgstr "неправильное указание 'row.vars'"
+
+msgid "cannot have both a 'Surv()' response and an 'event' argument in %s"
+msgstr ""
+
+msgid "incorrect argument 'groups' in %s: at least two groups needed"
+msgstr ""
+
+#, fuzzy
+msgid "%s is not defined for unordered responses"
+msgstr "'proj' для множественных откликов не реализован"
+
+#, fuzzy
+msgid "incorrect number of columns for 'prob' in %s"
+msgstr "неправильное количество колонок в 'x'"
+
+#, fuzzy
+msgid "exactly one of 'n', 'delta', 'power', and 'sig.level' must be NULL"
+msgstr "в точности один из 'n', 'delta', 'sd', 'power', 'sig.level' должен быть NULL"
+
+msgid "effect size can only be computed for two-sample problems in %s"
+msgstr ""
+
+msgid "%s only allows two-sided alternatives in the presence of more than two groups"
+msgstr ""
+
+#, fuzzy
+msgid "NAs are not allowed in 'groups' or 'blocks'"
 msgstr "NAs не разрешены в 'groups' и 'blocks'"
 
 msgid "'y', 'groups' and 'blocks' must have the same length"
@@ -953,20 +1018,11 @@ msgstr "'y', 'groups' и 'blocks' должны иметь одну длину"
 msgid "not an unreplicated complete block design"
 msgstr "не нереплицированный полноблочный дизайн"
 
-msgid "formula missing"
+msgid "'formula' missing"
 msgstr "'formula' пропущена"
-
-msgid "incorrect specification for 'formula'"
-msgstr "неправильное определение 'formula'"
 
 msgid "nothing to tabulate"
 msgstr "нечего табулировать"
-
-msgid "incorrect specification for 'row.vars'"
-msgstr "неправильное указание 'row.vars'"
-
-msgid "incorrect specification for 'col.vars'"
-msgstr "неправильное указание 'col.vars'"
 
 msgid "'formula' must have both left and right hand sides"
 msgstr "'формула' должна иметь и левую, и правую стороны"
@@ -1419,15 +1475,6 @@ msgstr "указанный квадрат предиктора будет сброшен к только одному числовому пре
 msgid "specified parametric for all predictors"
 msgstr "указан параметрический для всех предикторов"
 
-msgid "invalid argument 'span'"
-msgstr "неправильный аргумент 'span'"
-
-msgid "invalid argument 'cell'"
-msgstr "неправильный аргумент 'cell'"
-
-msgid "invalid argument 'degree'"
-msgstr "неправильный аргумент 'degree'"
-
 msgid "iterTrace = %d is not obeyed since iterations = %d"
 msgstr "iterTrace = %d не выполнено поскольку iterations = %d"
 
@@ -1645,9 +1692,6 @@ msgstr "все времена содержат NA"
 
 msgid "missing values in object"
 msgstr "пропущенные значения в объекте"
-
-msgid "invalid argument 'omit'"
-msgstr "недопустимый аргумент 'omit'"
 
 msgid "'print.level' must be in {0,1,2}"
 msgstr "'print.level' должен быть в {0,1,2}"
@@ -1944,9 +1988,6 @@ msgstr "элементы 'p' должны быть в (0,1)"
 msgid "'conf.level' is not a probability"
 msgstr "'conf.level' должен быть вероятностью"
 
-msgid "'formula' missing"
-msgstr "'formula' пропущена"
-
 #, fuzzy
 msgid "'type' must be an integer in 1..9"
 msgstr "'y' должен быть длиннее чем 'x'"
@@ -1962,15 +2003,6 @@ msgstr "пропущенные значения и NaNs не разрешены если 'na.rm' = FALSE"
 
 msgid "'probs' outside [0,1]"
 msgstr "'probs' вне [0,1]"
-
-msgid "invalid argument 'n'"
-msgstr "неправильный аргумент 'n'"
-
-msgid "invalid argument 'r'"
-msgstr "неправильный аргумент 'r'"
-
-msgid "invalid argument 'c'"
-msgstr "неправильный аргумент 'c'"
 
 msgid "arguments 'r' and 'c' must have the same sums"
 msgstr "аргументы 'r' и 'c' должны иметь одинаковые суммы"
@@ -2385,26 +2417,22 @@ msgstr "'x' и 'w' должны иметь одинаковую длину"
 msgid "not enough (non-missing) 'x' observations"
 msgstr "недостаточно (не-пропущенных) данных 'x'"
 
-msgid "requested conf.level not achievable"
-msgstr "заданный доверительный интервал не достигаем"
+#, fuzzy
+msgid "'correct' must be an integer between 0 and 3"
+msgstr "'conf.level' должен быть одним числом между 0 и 1"
 
 msgid "cannot compute confidence interval when all observations are zero or tied"
 msgstr "не могу высчитать доверительный интервал, когда все наблюдения нулевые или связаны"
 
-msgid "cannot compute exact confidence interval with ties"
-msgstr "совпадающие значения: не могу высчитать точный доверительный интервал"
-
-msgid "cannot compute exact p-value with zeroes"
-msgstr "не могу высчитать точное p-значение при наличии нулей"
-
-msgid "cannot compute exact confidence interval with zeroes"
-msgstr "не могу высчитать точный доверительный интервал при наличии нулей"
-
-msgid "Requested conf.level not achievable"
-msgstr "Заданный доверительный интервал не достигнут"
+msgid "requested conf.level not achievable"
+msgstr "заданный доверительный интервал не достигаем"
 
 msgid "cannot compute confidence interval when all observations are tied"
 msgstr "не могу высчитать доверительный интервал, когда все наблюдения связаны"
+
+#, fuzzy
+msgid "'z' is not a rank vector"
+msgstr "'x' -- не вектор"
 
 #, fuzzy
 msgid "must supply 'formula' or 'data'"
@@ -2622,6 +2650,54 @@ msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' слишком короткий: нужно %d точку"
 msgstr[1] "'start.innov' слишком короткий: нужно %d точки"
 msgstr[2] "'start.innov' слишком короткий: нужно %d точек"
+
+#~ msgid "cannot compute exact confidence intervals with ties"
+#~ msgstr "не могу подсчитать точные доверительные интервалы при наличии повторяющихся наблюдений"
+
+#~ msgid "Cannot compute exact p-value with ties"
+#~ msgstr "Есть совпадающие значения: не могу высчитать точное p-значение"
+
+#~ msgid "'formula' missing or invalid"
+#~ msgstr "'formula' пропущена либо неправильная"
+
+#~ msgid "invalid argument 'lambda'"
+#~ msgstr "неправильный аргумент 'lambda'"
+
+#~ msgid "formula missing"
+#~ msgstr "'formula' пропущена"
+
+#~ msgid "incorrect specification for 'formula'"
+#~ msgstr "неправильное определение 'formula'"
+
+#~ msgid "incorrect specification for 'col.vars'"
+#~ msgstr "неправильное указание 'col.vars'"
+
+#~ msgid "invalid argument 'span'"
+#~ msgstr "неправильный аргумент 'span'"
+
+#~ msgid "invalid argument 'cell'"
+#~ msgstr "неправильный аргумент 'cell'"
+
+#~ msgid "invalid argument 'degree'"
+#~ msgstr "неправильный аргумент 'degree'"
+
+#~ msgid "invalid argument 'omit'"
+#~ msgstr "недопустимый аргумент 'omit'"
+
+#~ msgid "invalid argument 'r'"
+#~ msgstr "неправильный аргумент 'r'"
+
+#~ msgid "invalid argument 'c'"
+#~ msgstr "неправильный аргумент 'c'"
+
+#~ msgid "cannot compute exact p-value with zeroes"
+#~ msgstr "не могу высчитать точное p-значение при наличии нулей"
+
+#~ msgid "cannot compute exact confidence interval with zeroes"
+#~ msgstr "не могу высчитать точный доверительный интервал при наличии нулей"
+
+#~ msgid "Requested conf.level not achievable"
+#~ msgstr "Заданный доверительный интервал не достигнут"
 
 #~ msgid "diag(.) had 0 or NA entries; non-finite result is doubtful"
 #~ msgstr "у diag(.) 0 или NA вхождений; не-конечный результат сомнителен"
@@ -2851,9 +2927,6 @@ msgstr[2] "'start.innov' слишком короткий: нужно %d точек"
 
 #~ msgid "are just disregarded."
 #~ msgstr "проигнорировано."
-
-#~ msgid "cannot compute correct p-values with ties"
-#~ msgstr "совпадающие значения: не могу высчитать корректные p-values"
 
 #~ msgid "'FUN' must always return a scalar"
 #~ msgstr "'FUN' должен всегда возвращать скаляр"
