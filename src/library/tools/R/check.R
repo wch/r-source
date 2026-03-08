@@ -5625,7 +5625,7 @@ add_dummies <- function(dir, Log)
         eq <- .Rd_get_equations_from_Rd_db(db)
 
         i1 <- (length(db) && isTRUE(R_check_Rd_validate_Rd2HTML))
-        i2 <- (length(eq) && isTRUE(R_check_Rd_math_rendering))
+        i2 <- (length(eq) && !isFALSE(R_check_Rd_math_rendering))
         if(!i1 && !i2)
             return()
 
@@ -5745,7 +5745,7 @@ add_dummies <- function(dir, Log)
         }
 
         if(i2) { ## report on math rendering
-            if(!OK2) {
+            if(!OK2 && isTRUE(R_check_Rd_math_rendering)) {
                 if(!any) noteLog(Log)
                 any <- TRUE
                 printLog0(Log,
