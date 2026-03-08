@@ -870,8 +870,10 @@ download.packages <- function(pkgs, destdir, available = NULL,
                 } else {
                     fn <- paste(substring(repos, 6L), fn, sep = "/")
                 }
-                if(file.exists(fn))
+                if(file.exists(fn)) {
+                    file.copy(fn, destdir)
                     retval <- rbind(retval, c(p, fn))
+                }
                 else
                     warning(gettextf("package %s does not exist on the local repository", sQuote(p)),
                             domain = NA, immediate. = TRUE)
