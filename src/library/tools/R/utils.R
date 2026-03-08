@@ -23,6 +23,7 @@
 file_ext <-
 function(x)
 {
+    x <- as.character(x) # for basename() ...    
     ## Return the file extensions.
     ## (Only purely alphanumeric extensions are recognized.)
     ifelse(grepl("^(.*[^.]+.*)[.]([[:alnum:]]+)$", basename(x)),
@@ -88,6 +89,7 @@ function(x, start = getwd(), parent = TRUE)
 file_path_sans_ext <-
 function(x, compression = FALSE)
 {
+    x <- as.character(x) # for basename() ...
     ## Return the file paths without extensions.
     ## (Only purely alphanumeric extensions are recognized.)
     if(compression)
