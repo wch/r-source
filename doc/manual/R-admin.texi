@@ -5155,8 +5155,9 @@ help with installing all the needed components.  (At the time of writing
 @code{install.libs("r-base-dev")} installed neither @code{readline5} nor
 those needed to support @I{Pango}.)
 
-Intel users want the @code{darwin20} components: the @code{darwin17}
-ones are for macOS 10.13--10.15.
+Apple Silicon users of Sonoma (14) or later want the @code{darwin23}
+components.  Intel users want the @code{darwin20} components: the
+@code{darwin17} ones are for macOS 10.13--10.15.
 
 Or this can be done manually, by for example
 @example
@@ -5541,7 +5542,7 @@ The main @TeX{} implementation used by the developers is
 @I{MacTeX}@footnote{An essentially equivalent @TeX{} installation can be
 obtained by the Unix TeX Live installation scripts.}
 (@uref{https://www.tug.org/mactex/}): the full installation is about
-8.5GB, but a much smaller version (`Basic TeX') is available at
+9.7GB, but a much smaller version (`Basic TeX') is available at
 @uref{https://www.tug.org/mactex/morepackages.html} to which you will
 need to add some packages to build @R{}, e.g.@: for the 2022 version we
 needed to add@footnote{E.g.@: @emph{via} @command{tlmgr install helvetic
@@ -5552,6 +5553,9 @@ packages needed to check @acronym{CRAN} increased this to about 600MB.}
 provides a graphical means to manage @TeX{} packages.  These contain
 executables which run natively on both @cputype{arm64} and
 @cputype{x86_64}.
+
+Others have used @I{TinyTex} which can be installed using CRAN package
+@CRANpkg{tinytex}. 
 
 Checking packages thoroughly requires @I{Ghostscript} (part of the full
 @I{MacTeX} distribution or separately from
