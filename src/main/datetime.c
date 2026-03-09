@@ -730,7 +730,6 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
 #ifdef HAVE_TM_GMTOFF
 	res->tm_gmtoff = -sdiff;
 #endif
-
 	// No DST before 1916
 	if(res->tm_year < 16) res->tm_isdst = 0;
 	return res;
@@ -968,7 +967,8 @@ makelt(stm *tm, SEXP ans, R_xlen_t i, bool valid, double frac_secs)
 
 // Used in do_asPOSIXlt do_strptime
 // Uses tz from enclosing function
-#define BEGIN_MAKElt					\
+#define SET_TZONE					\
+    /* set now in case this gets changed by conversions. */ \
     SEXP tzone;						\
     if (isUTC) {					\
 	tzone = PROTECT(mkString(tz));			\
@@ -978,6 +978,49 @@ makelt(stm *tm, SEXP ans, R_xlen_t i, bool valid, double frac_secs)
 	SET_STRING_ELT(tzone, 1, mkChar(R_tzname[0]));	\
 	SET_STRING_ELT(tzone, 2, mkChar(R_tzname[1]));	\
     }
+
+// Used in do_asPOSIXlt()  and  do_strptime() -- uses (stz, isUTC, tz) from enclosing function
+#define GET_tz_n_CHECK							\
+   if(!isString(stz) || LENGTH(stz) != 1)				\
+	error(_("invalid '%s' value"), "tz");				\
+   const char *tz = CHAR(STRING_ELT(stz, 0));				\
+   bool new_tz = strlen(tz) == 0;  /* tz = "" */			\
+   if(new_tz) {								\
+	/* do a direct look up here as this does not otherwise		\
+	   work on Windows */						\
+	char *p = getenv("TZ");						\
+	if(p) {								\
+	    stz = mkString(p); /* make a copy */			\
+	    tz = CHAR(STRING_ELT(stz, 0));				\
+	    PROTECT(stz);						\
+	} else								\
+	    new_tz = false;						\
+    }									\
+    /*									\
+       isUTC here means that the timezone has been set to UTC		\
+       either  by default, for example as the system timezone		\
+       or      via TZ="UTC",						\
+       or      via a 'tz' argument.					\
+									\
+       It controls setting TZ, the use of gmtime vs localtime, forcing	\
+       isdst = 0 and how the "tzone" attribute is set.			\
+    */									\
+    bool isUTC = (strcmp(tz, "GMT") == 0 || strcmp(tz, "UTC") == 0);	\
+    /*									\
+      if !isUTC we need to set the tz, not set tm_isdst and use mktime	\
+      not timegm (or an emulation).					\
+    */									\
+    tzset_info tzsi;							\
+    prepare_reset_tz(&tzsi);						\
+									\
+    if(!isUTC) set_tz(tz, &tzsi)
+
+
+// Used in do_asPOSIXlt()  and  do_strptime() -- uses (stz, isUTC, tz) from enclosing function
+#define GET_tz_CHECK_n_TZONE						\
+    GET_tz_n_CHECK;							\
+    SET_TZONE
+
 
 // Used in do_asPOSIXlt do_strptime do_D2POSIXlt
 // Uses ans ansnames tzone tzsi from enclosing function
@@ -992,7 +1035,7 @@ makelt(stm *tm, SEXP ans, R_xlen_t i, bool valid, double frac_secs)
     SEXP nm = getAttrib(x, R_NamesSymbol);				\
     if(nm != R_NilValue) setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm); \
     MAYBE_INIT_balanced							\
-    setAttrib(ans, lt_balancedSymbol, _balanced_);
+    setAttrib(ans, lt_balancedSymbol, _balanced_)
 
 
 /*
@@ -1095,37 +1138,8 @@ attribute_hidden SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     SEXP x = PROTECT(coerceVector(CAR(args), REALSXP));
     SEXP stz = CADR(args);
-    if(!isString((stz)) || LENGTH(stz) != 1)
-	error(_("invalid '%s' value"), "tz");
-    const char *tz = CHAR(STRING_ELT(stz, 0));
-    if(strlen(tz) == 0) {
-	/* do a direct look up here as this does not otherwise
-	   work on Windows */
-	char *p = getenv("TZ");
-	if(p) {
-	    stz = mkString(p); /* make a copy */
-	    tz = CHAR(STRING_ELT(stz, 0));
-	}
-    }
-    PROTECT(stz); // it might be new
-    /*
-       In this function isUTC means that the timezone has been set to
-       UTC either by default, for example as the system timezone or
-       via TZ="UTC", or via a 'tz' argument.
-
-       It controls setting TZ, the use of gmtime vs localtime, forcing
-       isdst = 0 and how the "tzone" attribute is set.
-    */
-    bool isUTC = (strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0);
-
-    tzset_info tzsi;
-    prepare_reset_tz(&tzsi);
-
-    if(!isUTC) set_tz(tz, &tzsi);
-
-    // Do now as localtime may change tzname.
-    BEGIN_MAKElt
-
+    GET_tz_CHECK_n_TZONE
+    /*------------------*/
     R_xlen_t n = XLENGTH(x);
     int nans = 11;
     SEXP ans = PROTECT(allocVector(VECSXP, nans));
@@ -1172,8 +1186,8 @@ attribute_hidden SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 	}
     }
-    END_MAKElt
-    UNPROTECT(6);
+    END_MAKElt;
+    UNPROTECT(5 + (int)new_tz);
     return ans;
 } // asPOSIXlt
 
@@ -1188,30 +1202,8 @@ attribute_hidden SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 
     SEXP x = PROTECT(duplicate(CAR(args))); // maybe coerced on next line
     valid_POSIXlt(x, 9);
-
-    SEXP stz;
-    if(!isString((stz = CADR(args))) || LENGTH(stz) != 1)
-	error(_("invalid '%s' value"), "tz");
-    const char *tz = CHAR(STRING_ELT(stz, 0));
-    if(strlen(tz) == 0) { // tz = ""
-	/* do a direct look up here as this does not otherwise
-	   work on Windows */
-	char *p = getenv("TZ");
-	if(p) {
-	    stz = mkString(p);
-	    tz = CHAR(STRING_ELT(stz, 0));
-	}
-    }
-
-    PROTECT(stz); // it might be new
-    int isUTC = (strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) ? 1 : 0;
-    /*
-      if !isUTC we need to set the tz, not set tm_isdst and use mktime
-      not timegm (or an emulation).
-    */
-    tzset_info tzsi;
-    prepare_reset_tz(&tzsi);
-    if(!isUTC) set_tz(tz, &tzsi);
+    SEXP stz = CADR(args);
+    GET_tz_n_CHECK;
 
     R_xlen_t n = 0, nlen[9];
     for(int i = 0; i < 6; i++)
@@ -1276,7 +1268,7 @@ attribute_hidden SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     classgets(ans, klass);
 
     reset_tz(&tzsi);
-    UNPROTECT(4);
+    UNPROTECT(3 + (int)new_tz);
     return ans;
 } // as.POSIXct()
 
@@ -1505,42 +1497,20 @@ attribute_hidden SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
 
-    SEXP x, sformat, stz;
+    SEXP x, sformat;
     if(!isString((x = CAR(args))))
 	error(_("invalid '%s' argument"), "x");
     if(!isString((sformat = CADR(args))) || XLENGTH(sformat) == 0)
 	error(_("invalid '%s' argument"), "format");
-    if(!isString((stz = CADDR(args))) || LENGTH(stz) != 1)
-	error(_("invalid '%s' value"), "tz");
-    const char *tz = CHAR(STRING_ELT(stz, 0));
-    if(strlen(tz) == 0) {
-	/* do a direct look up here as this does not otherwise
-	   work on Windows */
-	char *p = getenv("TZ");
-	if(p) {
-	    stz = mkString(p);
-	    tz = CHAR(STRING_ELT(stz, 0));
-	}
-    }
-    PROTECT(stz); /* it might be new */
-
-    // Usage of isUTC here follows do_asPOSIXlt
-    bool isUTC = (strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0);
-
-    tzset_info tzsi;
-    prepare_reset_tz(&tzsi);
-
-    if(!isUTC) set_tz(tz, &tzsi);
-
-    // do now in case this gets changed by conversions.
-    BEGIN_MAKElt
-
+    SEXP stz = CADDR(args);
+    GET_tz_CHECK_n_TZONE
+    /*------------------*/
     R_xlen_t
       n = XLENGTH(x),
       m = XLENGTH(sformat),
       N = (n > 0) ? ((m > n) ? m : n) : 0;
 
-    int nans = 11;
+    const int nans = 11;
     SEXP ans = PROTECT(allocVector(VECSXP, nans));
     for(int i = 0; i < 9; i++)
 	SET_VECTOR_ELT(ans, i, allocVector(i > 0 ? INTSXP : REALSXP, N));
@@ -1640,7 +1610,7 @@ attribute_hidden SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     } /* for(i ..) */
 
-    END_MAKElt
+    END_MAKElt;
     if(nm != R_NilValue) {
 	if (N > n) {// we need to recycle names
 	    SEXP nm3 = allocVector(STRSXP, N);
@@ -1649,9 +1619,9 @@ attribute_hidden SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	    setAttrib(VECTOR_ELT(ans, 5), R_NamesSymbol, nm3);
 	}
     }
-    UNPROTECT(5);
+    UNPROTECT(4 + (int)new_tz);
     return ans;
-} // strptime()
+} // do_strptime
 
 // .Internal(Date2POSIXlt(x)) called from as.POSIXlt.Date
 // currently always returns a date-time in UTC (even when tz (=stz) is not !)
@@ -1660,10 +1630,10 @@ attribute_hidden SEXP do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     SEXP x = PROTECT(coerceVector(CAR(args), REALSXP));
     SEXP stz = CADR(args);
-    if(!isString((stz)) || LENGTH(stz) != 1)
+    if(!isString(stz) || LENGTH(stz) != 1)
 	error(_("invalid '%s' value"), "tz");
     const char *tz = CHAR(STRING_ELT(stz, 0));
-    if (!tz[0]) tz = "UTC";;
+    if (!tz[0]) tz = "UTC";
     R_xlen_t n = XLENGTH(x);
     SEXP ans = PROTECT(allocVector(VECSXP, 11));
     for(int i = 0; i < 9; i++)
@@ -1719,7 +1689,7 @@ attribute_hidden SEXP do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 
     tzset_info tzsi; /* tz reset not used */
     prepare_dummy_reset_tz(&tzsi);
-    END_MAKElt
+    END_MAKElt;
 
     UNPROTECT(5);
     return ans;
