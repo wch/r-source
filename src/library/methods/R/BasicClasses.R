@@ -1,7 +1,7 @@
 #  File src/library/methods/R/BasicClasses.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -550,6 +550,7 @@
          c("POSIXct", "POSIXt"),
          c("POSIXlt", "POSIXt"),
          "Date",
+         "difftime",
          "dump.frames",
          c("glm.null", "glm", "lm"),
          c("anova.glm.null", "anova.glm"),

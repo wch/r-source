@@ -260,6 +260,8 @@
       \item New Rd macro \verb{\linkS4methods{}}, e.g., for easier linking to
       method docs in other packages, proposed and coded by \I{Mikael Jagan}
       in \PR{18998}.
+
+      \item Class \code{"difftime"} is now also among the S4 \code{"OldClasses"}.
     }
   }
 
