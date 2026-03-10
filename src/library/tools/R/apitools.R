@@ -364,22 +364,53 @@ Rsyms <- function(keep = c("F", "V")) {
     rsyms
 }
 
-pkgRsyms <- function(pkg, lib.loc = NULL) {
+
+pkgRepo <- function(pkg, lib.loc = NULL) {
+    pd <- packageDescription(pkg, lib.loc = lib.loc)
+    if (! is.null(pd$Priority) && pd$Priority == "base")
+        "base"
+    else if (! is.null(pd$Repository))
+        pd$Repository
+    else if (! is.null(pd$RemoteType))
+        pd$RemoteType
+    else ""
+}
+
+pkgRsyms <- function(pkg, lib.loc = NULL, repo = FALSE) {
     libdir <- system.file("libs", package = pkg, lib.loc = lib.loc)
     libs <- Sys.glob(file.path(libdir, "*.so"))
     if (length(libs) > 0) {
         val <- rbind_list(lapply(libs, ofile_syms, keep = "U"))
         val$package <- rep(pkg, nrow(val))
         val$type <- NULL
+        if (repo)
+            val$repo <- pkgRepo(pkg)
         merge(val, Rsyms())
     }
     else NULL
 }
 
 allPkgsRsyms <- function(lib.loc = NULL,
-                           Ncpus = getOption("Ncpus", 1L),
-                           verbose = getOption("verbose")) {
+                         Ncpus = getOption("Ncpus", 1L),
+                         verbose = getOption("verbose"),
+                         repo = FALSE) {
     p <- rownames(utils::installed.packages(lib.loc = lib.loc))
-    rbind_list(.package_apply(p, pkgRsyms, Ncpus = Ncpus, verbose = verbose))
+    rbind_list(.package_apply(p, pkgRsyms, Ncpus = Ncpus,
+                              verbose = verbose, repo = repo))
 }
 
+moduleRsyms <- function(repo = FALSE) {
+    ext <- .Platform$dynlib.ext
+    moddir <- R.home("modules")
+    mods <- Sys.glob(file.path(moddir, sprintf("*%s", ext)))
+    oneMod <- function(mod) {
+        v <- ofile_syms(mod, keep = "U")
+        v$type <- NULL
+        v$package <- sub(ext, "", basename(mod), fixed = TRUE)
+        if (repo)
+            v$repo <- "modules"
+        v
+    }
+    v <- rbind_list(lapply(mods, oneMod))
+    merge(v, Rsyms())
+}
