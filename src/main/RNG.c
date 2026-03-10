@@ -877,12 +877,12 @@ static double R_unif_index_0(double dn)
 //generate a random non-negative integer < 2 ^ bits in 16 bit chunks
 static double rbits(int bits)
 {
-    int_least64_t v = 0;
+    uint_least64_t v = 0;
     for (int n = 0; n <= bits; n += 16) {
 	int v1 = (int) floor(unif_rand() * 65536);
 	v = 65536 * v + v1;
     }
-    const int_least64_t one64 = 1L;
+    const uint_least64_t one64 = 1L;
     // mask out the bits in the result that are not needed
     return (double) (v & ((one64 << bits) - 1));
 }
