@@ -68,10 +68,10 @@ RSiteSearch <- function(string,
 
     qstring <- paste(string, mpp, sortby, restr, words, sep = "&")
     browseURL(qstring)
-    
-    if(!missing("format"))
-        warning("argument 'format' is deprecated and has no affect on search results")
-    
+
+    if(!missing(format))
+        warning("argument 'format' is deprecated and has no effect on search results")
+
     cat(gettextf("A search query has been submitted to %s",
                  "https://search.r-project.org"), "\n", sep = "")
     cat(gettext("The results page should open in your browser shortly\n"))
