@@ -56,6 +56,14 @@ static SEXP row_names_gets(SEXP vec, SEXP val)
 	return ans;
     }
     if(isInteger(val)) {
+	if (ALTREP(val) && ! R_is_compact_intseq(val)) {
+	    // accept an ALTREP as is, but for now still allow compact
+	    // 1:n to be converted to internal compact form
+	    PROTECT(val);
+	    ans =  installAttrib(vec, R_RowNamesSymbol, val);
+	    UNPROTECT(1); /* vec */
+	    return ans;
+	}
 	bool OK_compact = TRUE;
 	int i, n = LENGTH(val);
 	if(n == 2 && INTEGER_ELT(val, 0) == NA_INTEGER) {
@@ -184,6 +192,9 @@ SEXP getAttrib(SEXP vec, SEXP name)
     /* special test for c(NA, n) rownames of data frames: */
     if (name == R_RowNamesSymbol) {
 	SEXP s = getAttrib0(vec, R_RowNamesSymbol);
+	if (ALTREP(s))
+	    // to allow for special row.names attributes in packages
+	    return s;
 	if(isInteger(s) && LENGTH(s) == 2 && INTEGER(s)[0] == NA_INTEGER) {
 	    int n = abs(INTEGER(s)[1]);
 	    if (n > 0)
