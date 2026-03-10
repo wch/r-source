@@ -383,7 +383,7 @@ pkgRsyms <- function(pkg, lib.loc = NULL, repo = FALSE) {
         val <- rbind_list(lapply(libs, ofile_syms, keep = "U"))
         val$package <- rep(pkg, nrow(val))
         val$type <- NULL
-        if (repo)
+        if (nrow(val) > 0 && repo)
             val$repo <- pkgRepo(pkg)
         merge(val, Rsyms())
     }
@@ -407,7 +407,7 @@ moduleRsyms <- function(repo = FALSE) {
         v <- ofile_syms(mod, keep = "U")
         v$type <- NULL
         v$package <- sub(ext, "", basename(mod), fixed = TRUE)
-        if (repo)
+        if (nrow(v) > 0 && repo)
             v$repo <- "modules"
         v
     }
