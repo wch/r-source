@@ -60,8 +60,9 @@ static SEXP row_names_gets(SEXP vec, SEXP val)
 	    // accept an ALTREP as is, but for now still allow compact
 	    // 1:n to be converted to internal compact form
 	    PROTECT(val);
+	    PROTECT(val);
 	    ans =  installAttrib(vec, R_RowNamesSymbol, val);
-	    UNPROTECT(1); /* vec */
+	    UNPROTECT(2); /* vec, val */
 	    return ans;
 	}
 	bool OK_compact = TRUE;
