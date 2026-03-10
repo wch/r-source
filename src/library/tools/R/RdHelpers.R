@@ -331,7 +331,7 @@ function(x, textual = FALSE)
                            y,
                            rep_len("\\if{html}{\\out{</a>}}", n),
                            after,
-                           collapse = ";"),
+                           collapse = "; "),
                     ")")
     }
     Rd_expr_bibcite_keys_cited(keys, TRUE)
