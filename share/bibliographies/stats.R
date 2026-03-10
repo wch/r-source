@@ -47,6 +47,20 @@ bibentry(bibtype = "Article",
          author = person(given = c("Maurice", "Stevenson"),
                          family = "Bartlett"))
 
+bibentry(bibtype = "Article",
+         key = "R:Bartlett:1938",
+         title = "Methods of Estimating Mental Factors",
+         volume = "141",
+         ##doi = "10.1038/",
+         ## lacks a DOI and is missing in the electronic index of that issue
+         number = "3570",
+         journal = "Nature",
+         author = person(given = c("Maurice", "Stevenson"),
+                         family = "Bartlett"),
+         year = "1938",
+         month = "apr",
+         pages = "609--610")
+
 bibentry(bibtype = "InCollection",
          key = "R:Bates+Chambers:1992",
          author = c(person(given = c("Douglas", "M."),
@@ -1505,12 +1519,11 @@ bibentry(bibtype = "Article",
          doi = "10.1038/141246a0",
          number = "3562",
          journal = "Nature",
-         publisher = "Springer Science and Business Media LLC",
          author = person(given = c("Godfrey", "H."),
                          family = "Thomson"),
          year = "1938",
          month = "feb",
-         pages = "246--246")
+         pages = "246")
 
 bibentry(bibtype = "Article",
          key = "R:Thomson:1990",
@@ -2742,6 +2755,7 @@ bibentry(bibtype = "Book",
          author = person(given = c("Godfrey", "H."),
                          family = "Thomson"),
          title = "The Factorial Analysis of Human Ability",
+         edition = "5th",
          publisher = "University of London Press",
          year = "1951",
          address = "London")
