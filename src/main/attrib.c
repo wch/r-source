@@ -59,7 +59,7 @@ static SEXP row_names_gets(SEXP vec, SEXP val)
 	if (ALTREP(val) && ! R_is_compact_intseq(val)) {
 	    // accept an ALTREP as is, but for now still allow compact
 	    // 1:n to be converted to internal compact form
-	    PROTECT(val);
+	    PROTECT(vec);
 	    PROTECT(val);
 	    ans =  installAttrib(vec, R_RowNamesSymbol, val);
 	    UNPROTECT(2); /* vec, val */
