@@ -5965,12 +5965,10 @@ Use of ICU for collation and the @command{configure} option
 @section @I{OpenBSD}
 @cindex @I{OpenBSD}
 
-@I{Ingo Feinerer} installed @R{} version 3.2.2 on OpenBSD 5.8 arch
+@I{Ingo Feinerer} provides builds for OpenBSD arch
 @cputype{amd64} (their name for @cputype{x86_64}).  Details of the build
 (and patches applied) are at
-@uref{https://cvsweb.openbsd.org/cgi-bin/cvsweb/ports/math/R/},
-currently updated for @R{} 4.2.3.
-
+@uref{https://cvsweb.openbsd.org/ports/math/R/}.
 
 @node Cygwin
 @section @I{Cygwin}

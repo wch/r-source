@@ -1453,17 +1453,20 @@ impressive on-line example.  More details can be found in
 @node What is R-plus?
 @section What is R-plus?
 
-For a very long time, there was no such thing.
+@c For a very long time, there was no such thing.
 
 @c This seems gone as of 2019-10.
 @c @url{http://www.xlsolutions-corp.com/, XLSolutions Corporation} is
 @c currently beta testing a commercially supported version of R named R+
 @c (read R plus).
 
-Revolution Analytics has released @I{REvolution R}, now available as
-Microsoft R (see
-@url{https://blog.revolutionanalytics.com/2016/01/microsoft-r-open.html}
-for more information).
+@c Commented out 2026-03-11: the link to the REvolution blog stopped
+@c working some time ago, and the status of Microsoft R seems unclear
+@c (nowadays integrated into the SQL Machine Learning Services)?
+@c Revolution Analytics has released @I{REvolution R}, now available as
+@c Microsoft R (see
+@c @url{https://blog.revolutionanalytics.com/2016/01/microsoft-r-open.html}
+@c for more information).
 
 @c Now archived at <http://archive.today/WrgxY>
 @c @url{http://www.random-technologies-llc.com/, Random Technologies}
@@ -1472,11 +1475,9 @@ for more information).
 @c combines R with enterprise-level validation, documentation, software
 @c support, and consulting services, as well as related R-based products.
 
-See also
+See @c also
 @url{https://en.wikipedia.org/wiki/R_programming_language#Commercialized_versions_of_R}
 for pointers to commercialized versions of R.
-
-
 
 @node R Web Interfaces
 @chapter R Web Interfaces
