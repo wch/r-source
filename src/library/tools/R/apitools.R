@@ -366,7 +366,7 @@ Rsyms <- function(keep = c("F", "V")) {
 
 
 pkgRepo <- function(pkg, lib.loc = NULL) {
-    pd <- packageDescription(pkg, lib.loc = lib.loc)
+    pd <- utils::packageDescription(pkg, lib.loc = lib.loc)
     if (! is.null(pd$Priority) && pd$Priority == "base")
         "base"
     else if (! is.null(pd$Repository))
