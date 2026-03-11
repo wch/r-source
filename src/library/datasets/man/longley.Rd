@@ -30,10 +30,10 @@
   collinear.
 }
 \source{
-  \bibcitet{R:Longley:1967}.
+  \bibshow{R:Longley:1967}
 }
 \references{
-  \bibshow{*, R:Becker+Chambers+Wilks:1988}
+  \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \examples{
 require(stats); require(graphics)

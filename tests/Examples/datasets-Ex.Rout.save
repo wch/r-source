@@ -191,7 +191,7 @@ Residual standard error: 2.55 on 4 degrees of freedom
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: ChickWeight
-> ### Title: Weight versus age of chicks on different diets
+> ### Title: Weight Versus Age of Chicks on Different Diets
 > ### Aliases: ChickWeight
 > ### Keywords: datasets
 > 

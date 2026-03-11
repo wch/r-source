@@ -32,7 +32,7 @@
     I had endeavoured to do so empirically.  The material used was a
     correlation table containing the height and left middle finger
     measurements of 3000 criminals, from a paper by
-    \bibcitet{|R:MacDonell:1902|p.\sspace{}219)}.
+    \bibcitet{|R:MacDonell:1902|p.\sspace{}219}.
     The
     measurements were written 
     out on 3000 pieces of cardboard, which were then very thoroughly
@@ -46,7 +46,7 @@
     giving us the \emph{z} of Section III.}
 
   The table is in fact page 216 and not page 219 in
-  \bibcitep{R:MacDonell:1902}.
+  \bibcitet{R:MacDonell:1902}.
   In the \I{MacDonell} table, the middle finger lengths were given in mm
   and the heights in feet/inches intervals, they are both converted into
   cm here.  The midpoints of intervals were used, e.g., where \I{MacDonell}
@@ -54,9 +54,9 @@
   2.54*(\eqn{4' 8''}).
 
   \I{MacDonell} credited the source of data (page 178) as follows:
-  \emph{The data on which the memoir is based were obtained, through the
+  \dQuote{The data on which the memoir is based were obtained, through the
     kindness of Dr \I{Garson}, from the Central Metric Office, New Scotland Yard...}
-  He pointed out on page 179 that : \emph{The forms were drawn at random
+  He pointed out on page 179 that : \dQuote{The forms were drawn at random
     from the mass on the office shelves; we are therefore dealing with a
     random sampling.}
 }

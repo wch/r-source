@@ -6,7 +6,7 @@
 \name{ChickWeight}
 \docType{data}
 \alias{ChickWeight}
-\title{Weight versus age of chicks on different diets}
+\title{Weight Versus Age of Chicks on Different Diets}
 \description{
   The \code{ChickWeight} data frame has 578 rows and 4 columns from an
   experiment on the effect of diet on early growth of chicks.
@@ -26,14 +26,14 @@
     }
     \item{\code{Chick}}{
       an ordered factor with levels
-      \code{18} < \dots < \code{48}
+      \samp{18} < \dots < \samp{48}
       giving a unique identifier for the chick.  The ordering of
       the levels groups chicks on the same diet together and
       orders them according to their final weight (lightest to
       heaviest) within diet.
     }
     \item{\code{Diet}}{
-      a factor with levels 1, \dots, 4 indicating which
+      a factor with levels \samp{1}, \dots, \samp{4} indicating which
       experimental diet the chick received.
     }
   }
@@ -41,15 +41,15 @@
 \details{
   The body weights of the chicks were measured at birth and every
   second day thereafter until day 20.  They were also measured on day
-  21.  There were four groups on chicks on different protein diets.
+  21.  There were four groups of chicks on different protein diets.
 
   This dataset was originally part of package \CRANpkg{nlme}, and that has
   methods (including for \code{[}, \code{as.data.frame}, \code{plot} and
   \code{print}) for its grouped-data classes.
 }
 \source{
-  \bibinfo{R:Crowder+Hand:1990}{note}{Example 5.3}
-  \bibinfo{R:Hand+Crowder:1996}{note}{Table A.2}
+  \bibinfo{R:Crowder+Hand:1990}{note}{Example 5.3, pages 74--78}
+  \bibinfo{R:Hand+Crowder:1996}{note}{Table A.2, page 172}
   \bibshow{R:Crowder+Hand:1990,
     R:Hand+Crowder:1996,
     R:Pinheiro+Bates:2000}

@@ -1,6 +1,6 @@
 % File src/library/datasets/man/InsectSprays.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{InsectSprays}
@@ -8,8 +8,8 @@
 \alias{InsectSprays}
 \title{Effectiveness of Insect Sprays}
 \description{
-  The counts of insects in agricultural experimental units treated with
-  different insecticides.
+  Counts of an insect, the tobacco hornworm, in agricultural
+  experimental units treated with six different insecticides.
 }
 \usage{InsectSprays}
 \format{
@@ -20,10 +20,11 @@
   }
 }
 \source{
-  \bibcitet{R:Beall:1942}.
+  \bibshow{R:Beall:1942}
+  Table 7.
 }
 \references{
-  \bibshow{*, R:McNeil:1977}
+  \bibshow{R:McNeil:1977}
 }
 \examples{
 require(stats); require(graphics)

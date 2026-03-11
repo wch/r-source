@@ -1,6 +1,6 @@
 % File src/library/datasets/man/UKDriverDeaths.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{UKDriverDeaths}
@@ -15,6 +15,8 @@
   of car drivers in
   Great Britain killed or seriously injured Jan 1969 to Dec 1984.
   Compulsory wearing of seat belts was introduced on 31 Jan 1983.
+  The effects of this intervention were analyzed by
+  \bibcitet{R:Harvey+Durbin:1986}.
 
   \code{Seatbelts} is more information on the same problem.
 }
@@ -32,15 +34,21 @@ Seatbelts
     \item{\code{kms}}{distance driven.}
     \item{\code{PetrolPrice}}{petrol price.}
     \item{\code{VanKilled}}{number of van (\sQuote{light goods vehicle})
-      drivers.}
+      drivers killed.}
     \item{\code{law}}{0/1: was the law in effect that month?}
   }
 }
 \source{
-  \bibcitet{|R:Harvey:1989|pages 519--523, R:Durbin+Koopman:2001}.
+  \bibinfo{R:Durbin+Koopman:2001}{footer}{
+    Data was available from the book website, now archived at
+    \url{https://web.archive.org/web/20020304222057/http://www.ssfpack.com/dkbook/}.}
+  \describe{
+    \item{Of \code{UKDriverDeaths}:}{\bibshow{R:Harvey:1989} Pages 519--523.}
+    \item{Of \code{Seatbelts}, additionally:}{\bibshow{R:Durbin+Koopman:2001}}
+  }
 }
 \references{
-  \bibshow{*, R:Harvey+Durbin:1986}
+  \bibshow{*}
 }
 \examples{
 require(stats); require(graphics)

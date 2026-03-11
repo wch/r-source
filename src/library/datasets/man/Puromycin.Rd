@@ -23,9 +23,7 @@
       a numeric vector of instantaneous reaction rates (counts/min/min)
     }
     \item{\code{state}}{
-      a factor with levels
-      \code{treated}
-      \code{untreated}
+      a factor with levels \samp{treated} and \samp{untreated}
     }
   }
 }
@@ -40,7 +38,7 @@
 }
 \source{
   \bibinfo{R:Bates+Watts:1988}{note}{Appendix A1.3}
-  \bibshow{*, R:Bates+Watts:1988}
+  \bibshow{R:Treloar:1974, R:Bates+Watts:1988}
 }
 
 \seealso{

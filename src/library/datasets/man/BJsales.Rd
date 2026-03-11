@@ -1,6 +1,6 @@
 % File src/library/datasets/man/BJsales.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{BJsales}
@@ -11,7 +11,7 @@
 \description{
   The sales time series \code{BJsales} and leading indicator
   \code{BJsales.lead} each contain 150 observations.
-  The objects are of class \code{"ts"}.
+  The objects are of class \code{"\link{ts}"}.
 }
 \usage{
 BJsales
@@ -23,7 +23,7 @@ BJsales.lead
   \url{https://robjhyndman.com/TSDL/}
 }
 \references{
-  \bibinfo{R:Brockwell+Davis:1991}{note}{Page 414}
+  \bibinfo{R:Brockwell+Davis:1991}{note}{Example 11.2.2, page 414}
   \bibshow{*, R:Brockwell+Davis:1991}
 }
 \keyword{datasets}

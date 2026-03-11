@@ -9,7 +9,8 @@
 \title{Pharmacokinetics of Theophylline}
 \description{
   The \code{Theoph} data frame has 132 rows and 5 columns of data from
-  an experiment on the pharmacokinetics of theophylline.}
+  an experiment on the pharmacokinetics of theophylline.
+}
 \usage{Theoph}
 \format{
   An object of class
@@ -17,7 +18,7 @@
   containing the following columns:
   \describe{
     \item{\code{Subject}}{
-      an ordered factor with levels \code{1}, \dots, \code{12}
+      an ordered factor with levels \samp{1}, \dots, \samp{12}
       identifying the subject on whom the observation was made.  The
       ordering is by increasing maximum concentration of theophylline
       observed.
@@ -43,18 +44,18 @@
   then serum concentrations were measured at 11 time points over the
   next 25 hours.
 
-  These data are analyzed in \bibcitet{R:Davidian+Giltinan:1995} and
+  These data are analyzed in
+  \bibcitet{|R:Davidian+Giltinan:1995|Section 5.5\, p.\sspace{}145\, and Section 6.6\, p.\sspace{}176}
+  and
   \bibcitet{R:Pinheiro+Bates:2000} using a two-compartment open pharmacokinetic model,
   for which a self-starting model function, \code{SSfol}, is available.
 
-  This dataset was originally part of package \CRANpkg{nlme}, and that has
+  This dataset was originally part of package \CRANpkg{nlme}
+  \bibcitep{|R:Pinheiro+Bates:2000|Appendix A.29}, and that has
   methods (including for \code{[}, \code{as.data.frame}, \code{plot} and
   \code{print}) for its grouped-data classes.
 }
-\source{
-  \bibinfo{R:Davidian+Giltinan:1995}{footer}{
-    (section 5.5, p.\sspace{}145 and section 6.6, p.\sspace{}176)}
-  \bibinfo{R:Pinheiro+Bates:2000}{footer}{(Appendix A.29)}
+\references{
   \bibshow{*}
 }
 \seealso{\code{\link{SSfol}}}

@@ -1,6 +1,6 @@
 % File src/library/datasets/man/Nile.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Nile}
@@ -10,7 +10,7 @@
 \usage{Nile}
 \description{
   Measurements of the annual flow of the river Nile at Aswan (formerly
-  \code{Assuan}), 1871--1970, in \eqn{10^8 m^3},
+  \sQuote{Assuan}), 1871--1970, in \eqn{10^8 m^3},
   \dQuote{with apparent changepoint near 1898}
   \bibcitep{|R:Cobb:1978|Table 1\, page 249}.
 }
@@ -18,7 +18,9 @@
   A time series of length 100.
 }
 \source{
-  \bibcitet{R:Durbin+Koopman:2001}
+  \bibshow{R:Durbin+Koopman:2001}\cr
+  Data was available from the book website, now archived at
+  \url{https://web.archive.org/web/20020304222057/http://www.ssfpack.com/dkbook/}.
 }
 \references{
   \bibshow{*, R:Balke:1993}

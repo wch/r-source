@@ -14,10 +14,10 @@
 \usage{nhtemp}
 \format{A time series of 60 observations.}
 \source{
-  \bibcitet{R:Vaux+Brinker:1972}.
+  \bibshow{R:Vaux+Brinker:1972}
 }
 \references{
-  \bibshow{*, R:McNeil:1977}
+  \bibshow{R:McNeil:1977}
 }
 \examples{
 require(stats); require(graphics)

@@ -1,6 +1,6 @@
 % File src/library/datasets/man/zCO2.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2011 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{CO2}
@@ -49,13 +49,13 @@
   \eqn{CO_2}{CO2} concentration.  Half the plants of each type were
   chilled overnight before the experiment was conducted.
 
-  This dataset was originally part of package \CRANpkg{nlme}, and that has
+  This dataset was originally part of package \CRANpkg{nlme}
+  \bibcitep{|R:Pinheiro+Bates:2000|Appendix A.5}, and that has
   methods (including for \code{[}, \code{as.data.frame}, \code{plot} and
   \code{print}) for its grouped-data classes.
 }
 \source{
-  \bibcitet{R:Potvin+Lechowicz+Tardif:1990,
-    R:Pinheiro+Bates:2000}
+  \bibshow{R:Potvin+Lechowicz+Tardif:1990}
 }
 \references{
   \bibshow{*}
