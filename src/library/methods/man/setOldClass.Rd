@@ -1,6 +1,6 @@
 % File src/library/methods/man/setOldClass.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025, 2016 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setOldClass}
@@ -18,6 +18,7 @@
 \alias{data.frame-class}
 \alias{data.frameRowLabels-class}
 \alias{density-class}
+\alias{difftime-class}
 \alias{dump.frames-class}
 \alias{factor-class}
 \alias{formula-class}
@@ -93,12 +94,12 @@ setOldClass(Classes, prototype, where, test = FALSE, S4Class)
   \code{prototype}:
     An optional object to use as the prototype.  If the S3 class is
     not to be \code{VIRTUAL} (the default), the use of \code{S4Class=} is
-    preferred. 
-  
+    preferred.
+
   \code{where}:
     Where to store the class definitions. Should be the default (the
     package namespace) for normal use in an application package.
-  
+
   \code{test}: flag, if \code{TRUE}, arrange to test inheritance
     explicitly for each object, needed if the S3 class can have a
     different set of class strings, with the same first string.
@@ -138,7 +139,7 @@ setOldClass(Classes, prototype, where, test = FALSE, S4Class)
   Many of the widely used S3 classes in the standard R distribution
   come pre-defined for use with S4.  These don't need to be explicitly
   declared in your package (although it does no harm to do so).
- 
+
   The list \code{.OldClassesList} contains the old-style classes that
   are defined by the methods package.  Each element of the list is a
   character vector, with multiple strings if inheritance is included.
