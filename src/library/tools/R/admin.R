@@ -1129,7 +1129,9 @@ compactPDF <-
     dummy <- rep.int(NA_real_, length(paths))
     ans <- data.frame(old = dummy, new = dummy, row.names = paths)
     ## These should not have spaces, but quote below to be safe.
-    tf <- tempfile("pdf"); tf2 <- tempfile("pdf")
+    ## Some (newer ?) 'qpdf' versions want the '.pdf' file extension
+    tf <- tempfile("pdf", fileext=".pdf")
+    tf2 <- tempfile("pdf", fileext=".pdf")
     verb2 <- verbose >= 2
     for (p in paths) {
         res <- 0
