@@ -278,16 +278,23 @@ inRbuildignore <- function(files, pkgdir) {
             if(file.exists(vignette_index_path))
                 unlink(vignette_index_path)
 
-## this is not a logical field
-##	    if (nchar(parse_description_field(desc, "VignetteBuilder", "")))
-##		ensure_installed()
+            ## PR#18191: ensure tempory installation so can be checked
+            ## for a vignette engine
+            if(desc["Package"] %in%
+               .get_requires_from_package_db(desc, "VignetteBuilder"))
+                ensure_installed()
 
             ## PR#15775: check VignetteBuilder packages are installed
-            ## This is a bit wasteful: we do not need them in this process
-            loadVignetteBuilder(pkgdir, TRUE)
+            ## PR#18191: ensure tempory installation directory is also
+            ## checked 
+            loadVignetteBuilder(pkgdir, TRUE,
+                                lib.loc = c(libdir, .libPaths()))
 
             ## Look for vignette sources
-            vigns <- pkgVignettes(dir = '.', check = TRUE)
+            ## PR#18191: ensure tempory installation directory is also
+            ## checked 
+            vigns <- pkgVignettes(dir = '.', check = TRUE,
+                                  lib.loc = c(libdir, .libPaths()))
             if (!is.null(vigns) && length(vigns$docs)) {
                 ensure_installed()
                 ## Good to do this in a separate process: it might die
