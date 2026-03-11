@@ -1234,10 +1234,6 @@ void SET_PRCODE(SEXP x, SEXP v);
 // used by BioC::matter; marked as @eapifun for now
 SEXP R_tryWrap(SEXP);
 
-#ifdef __cplusplus
-}
-#endif
-
 // temporatily add these declarations and unhide until until BioC catches up
 int  (NAMED)(SEXP x);
 void (SET_NAMED)(SEXP x, int v);
@@ -1255,6 +1251,10 @@ void *(EXTPTR_PTR)(SEXP);  // used in rJava in a separate .so file
 SEXP (ENCLOS)(SEXP x);  // used in rJava in a separate .so file
 #if ! (defined(CALLED_FROM_DEFN_H) && !defined(__MAIN__) && (defined(COMPILING_R) || ( __GNUC__ && !defined(__INTEL_COMPILER) )) && (defined(COMPILING_R) || !defined(NO_RINLINEDFUNS)))
 void *(DATAPTR)(SEXP x);
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* R_INTERNALS_H_ */
