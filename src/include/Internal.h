@@ -83,6 +83,7 @@ SEXP do_bcprofstop(SEXP, SEXP, SEXP, SEXP);
 SEXP do_begin(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bincode(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bind(SEXP, SEXP, SEXP, SEXP);
+SEXP do_bindingType(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bindtextdomain(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bitwise(SEXP, SEXP, SEXP, SEXP);
 SEXP do_body(SEXP, SEXP, SEXP, SEXP);

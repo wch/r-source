@@ -660,6 +660,17 @@ SEXP R_UnwindProtect(SEXP (*fun)(void *data), void *data,
                      void *cleandata, SEXP cont); // context.c
 
 /* Environment and Binding Features */
+typedef enum {
+    R_BindingTypeUnbound = 0,  // Unbound in this environment
+    R_BindingTypeValue = 1,    // Direct value binding
+    R_BindingTypeMissing = 2,  // Missing argument
+    R_BindingTypeDelayed = 3,  // Delayed (promise)
+    R_BindingTypeForced = 4,   // Forced (promise)
+    R_BindingTypeActive = 5,   // Active binding
+} R_BindingType_t;
+
+R_BindingType_t R_GetBindingType(SEXP sym, SEXP env);
+
 SEXP R_NewEnv(SEXP, int, int);
 Rboolean R_IsPackageEnv(SEXP rho); // envir.c
 SEXP R_PackageEnvName(SEXP rho);

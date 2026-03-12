@@ -2614,6 +2614,29 @@ stopifnot(identical(strX2 , strX2. ), noListof(strX2. ),
           identical(strXs2, strXs2.), noListof(strXs2.))
 ## strXs?2. did have 'List of' in R <= 4.5.z
 
+## simple test for R_GetBindingType
+local({
+    getBindingType <- function(sym, env) {
+        if (is.character(sym)) 
+            sym <- as.name(sym)
+        .Internal(getBindingType(sym, env))
+    }
+    f0 <- function() getBindingType("x", environment())
+    stopifnot(f0() == "unbound")
+    f1 <- function() { x <- 1; getBindingType("x", environment())}
+    stopifnot(f1() == "value")
+    f2 <- function(x) getBindingType("x", environment())
+    stopifnot(f2() == "missing")
+    f3 <- function(x) getBindingType("x", environment())
+    stopifnot(f3(1) == "delayed")
+    f4 <- function(x) { x; getBindingType("x", environment())}
+    stopifnot(f4(1) == "forced")
+    f5 <- function() {
+        makeActiveBinding("x", \(x) 1, environment())
+        getBindingType("x", environment())
+    }
+    stopifnot(f5() == "active")
+})
 
 
 ## keep at end

@@ -775,6 +775,78 @@ static SEXP R_GetGlobalCacheLoc(SEXP symbol)
 }
 #endif /* USE_GLOBAL_CACHE */
 
+
+/*----------------------------------------------------------------------
+  R_GetBindingType
+*/
+
+static R_BindingType_t BINDING_TYPE(SEXP cell)
+{
+    if (BNDCELL_TAG(cell))
+	// avoid expanding immediate values
+        return R_BindingTypeValue;
+    else if (IS_ACTIVE_BINDING(cell))
+        return R_BindingTypeActive;
+    else {
+	SEXP value = CAR(cell);
+	if (value == R_MissingArg)
+	    return R_BindingTypeMissing;
+	else if (TYPEOF(value) == PROMSXP) {
+	    if (PROMISE_IS_EVALUATED(value))
+		return R_BindingTypeForced;
+	    else
+		return R_BindingTypeDelayed;
+	}
+	else 
+	    return R_BindingTypeValue;
+    }
+}
+
+static R_BindingType_t SYMBOL_BINDING_TYPE(SEXP cell)
+{
+    // probably no need to support symbol bindings
+    error("symbol bindings not supported yet");
+}
+
+attribute_hidden
+R_BindingType_t R_GetVarLocType(R_varloc_t vl)
+{
+    SEXP cell = vl.cell;
+    if (cell == NULL || cell == R_UnboundValue)
+        return R_BindingTypeUnbound;
+    else if (TYPEOF(cell) == SYMSXP)
+	return SYMBOL_BINDING_TYPE(cell);
+    else
+	return BINDING_TYPE(cell);
+}
+
+R_BindingType_t R_GetBindingType(SEXP sym, SEXP env) {
+    if (TYPEOF(sym) != SYMSXP)
+	error(_("not a symbol"));
+    if (TYPEOF(env) != ENVSXP)
+	error(_("not an environment"));
+
+    R_varloc_t loc = R_findVarLocInFrame(env, sym);
+    return R_GetVarLocType(loc);
+}
+
+attribute_hidden SEXP do_bindingType(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    SEXP sym = CAR(args);
+    SEXP env = CADR(args);
+    switch(R_GetBindingType(sym, env)) {
+    case R_BindingTypeUnbound: return mkString("unbound");
+    case R_BindingTypeValue: return mkString("value");
+    case R_BindingTypeMissing: return mkString("missing");
+    case R_BindingTypeDelayed: return mkString("delayed");
+    case R_BindingTypeForced: return mkString("forced");
+    case R_BindingTypeActive: return mkString("active");
+    default: error("unknown binding type; should not happen");
+    }
+}
+
+
 /*----------------------------------------------------------------------
 
   unbindVar

@@ -429,6 +429,9 @@
       \code{SET_HASHTAB}, \code{SET_NAMED}, \code{SET_S4_OBJECT},
       \code{SET_TRUELENGTH}, \code{STDVEC_DATAPTR}, \code{TRUELENGTH},
       \code{UNSET_S4_OBJECT}, \code{XTRUELENGTH}.
+
+      \item New experimental function \code{R_GetBindingType} to support
+      inspecting environments without forcing delayed or active bindings.
     }
   }
 

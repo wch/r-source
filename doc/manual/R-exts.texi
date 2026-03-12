@@ -17875,8 +17875,8 @@ most uses the functions @code{R_getVar} and @code{R_getVarEx} added in
 
 In rare cases package @R{} or C code may want to obtain more detailed
 information on a binding, such as whether the binding is delayed or
-not. This is currently not possible within the API, but is under
-consideration.
+not. An experimental function @code{R_GetBindingType} is now available.
+@eapifun R_GetBindingType
 
 @node Some backports
 @subsection Some backports
