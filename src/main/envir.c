@@ -3531,6 +3531,32 @@ void R_unLockBinding(SEXP sym, SEXP env)
     }
 }
 
+void R_MakeDelayedBinding(SEXP sym, SEXP expr, SEXP evalEnv, SEXP env) {
+    if (TYPEOF(sym) != SYMSXP)
+	error(_("not a symbol"));
+    if (TYPEOF(env) != ENVSXP)
+	error(_("not an environment"));
+    if (TYPEOF(evalEnv) != ENVSXP)
+	error(_("not an environment"));
+    defineVar(sym, Rf_mkPROMISE(expr, evalEnv), env);
+}
+
+void R_MakeForcedBinding(SEXP sym, SEXP expr, SEXP value, SEXP env) {
+    if (TYPEOF(sym) != SYMSXP)
+	error(_("not a symbol"));
+    if (TYPEOF(env) != ENVSXP)
+	error(_("not an environment"));
+    defineVar(sym, R_mkEVPROMISE(expr, value), env);
+}
+
+void R_MakeMissingBinding(SEXP sym, SEXP env) {
+    if (TYPEOF(sym) != SYMSXP)
+	error(_("not a symbol"));
+    if (TYPEOF(env) != ENVSXP)
+	error(_("not an environment"));
+    defineVar(sym, R_MissingArg, env);
+}
+
 void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env)
 {
     if (TYPEOF(sym) != SYMSXP)

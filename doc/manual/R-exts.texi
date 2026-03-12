@@ -17876,7 +17876,13 @@ most uses the functions @code{R_getVar} and @code{R_getVarEx} added in
 In rare cases package @R{} or C code may want to obtain more detailed
 information on a binding, such as whether the binding is delayed or
 not. An experimental function @code{R_GetBindingType} is now available.
+Also available for creating bindings of different types:
+@code{R_MakeDelayedBinding}, @code{R_MakeForcedBinding}, and
+@code{R_MakeMissingBinding}.
 @eapifun R_GetBindingType
+@eapifun R_MakeDelayedBinding
+@eapifun R_MakeForcedBinding
+@eapifun R_MakeMissingBinding
 
 @node Some backports
 @subsection Some backports
