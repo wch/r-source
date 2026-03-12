@@ -1235,7 +1235,7 @@ void SET_PRCODE(SEXP x, SEXP v);
 SEXP R_tryWrap(SEXP);
 
 // temporatily add these declarations and unhide until until BioC catches up
-//int  (NAMED)(SEXP x);      // used in Biostrings
+int  (NAMED)(SEXP x);      // used in Biostrings
 void (SET_NAMED)(SEXP x, int v);      // used in Biostrings
 int (IS_S4_OBJECT)(SEXP x);
 void (SET_S4_OBJECT)(SEXP x);
