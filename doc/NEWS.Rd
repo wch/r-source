@@ -744,6 +744,11 @@
 
       \item Large (tall) subscripts in \I{plotmath} expressions are now
       positioned correctly.  They were being positioned too high.
+
+      \item \code{Ops} group (Arith, Compare,..) methods for
+      matrix-\code{"ts"} now do return (zero length) matrices even when the
+      two series do not overlap, a very partial fix of \PR{18972} which is to
+      be fully addressed later.
     }
   }
 }
@@ -1394,7 +1399,7 @@
       \code{RDEBUG}, \code{REAL0}, \code{Rf_findVarInFrame3},
       \code{SET_BODY}, \code{SET_CLOENV}, \code{SET_FORMALS},
       \code{SET_PRSEEN}, \code{SET_RDEBUG}, \code{STRING_PTR},
-      and \code{SYMVALUE}. Any declarations for these
+      \code{SYMVALUE}, and \code{VECTOR_PTR}. Any declarations for these
       in public header files will be removed in the near future, and
       they will be hidden where possible.
 
