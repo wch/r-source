@@ -225,7 +225,8 @@ modify the R source code archive, currently consisting of
 @I{Brian Ripley},
 @I{Deepayan Sarkar},
 @I{Duncan Temple Lang},
-@I{Luke Tierney}, and 
+@I{Heather Turner},
+@I{Luke Tierney}, and
 @I{Simon Urbanek},
 @end display
 @noindent
@@ -258,7 +259,7 @@ platforms including @var{cpu}-linux-gnu for the @I{i386},
 @I{amd64}/@I{x86_64}, @I{alpha}, @I{arm}, @I{arm64}, @I{hppa},
 @I{mips}/@I{mipsel}, @I{powerpc}, @I{s390x} and @I{sparc}
 @acronym{CPU}s (e.g.,
-@url{https://buildd.debian.org/build.php?&pkg=r-base}), 
+@url{https://buildd.debian.org/build.php?&pkg=r-base}),
 @I{386-hurd-gnu},
 @var{cpu}-@I{kfreebsd}-gnu for @I{i386} and @I{amd64},
 @c <FIXME>
