@@ -8,7 +8,7 @@
 \alias{InsectSprays}
 \title{Effectiveness of Insect Sprays}
 \description{
-  Counts of an insect, the tobacco hornworm, in agricultural
+  Counts of an insect, the tobacco \I{hornworm}, in agricultural
   experimental units treated with six different insecticides.
 }
 \usage{InsectSprays}

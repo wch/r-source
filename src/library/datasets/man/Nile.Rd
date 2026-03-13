@@ -10,7 +10,7 @@
 \usage{Nile}
 \description{
   Measurements of the annual flow of the river Nile at Aswan (formerly
-  \sQuote{Assuan}), 1871--1970, in \eqn{10^8 m^3},
+  \sQuote{\I{Assuan}}), 1871--1970, in \eqn{10^8 m^3},
   \dQuote{with apparent changepoint near 1898}
   \bibcitep{|R:Cobb:1978|Table 1\, page 249}.
 }

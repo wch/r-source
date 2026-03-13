@@ -23,7 +23,7 @@
 @c things.
 @c For now, simply hard-wire the year again.
 @c @include version.texi
-@set FAQ_YEAR 2024
+@set FAQ_YEAR 2026
 @c </FIXME>
 
 @macro CRAN{}
@@ -225,8 +225,8 @@ modify the R source code archive, currently consisting of
 @I{Brian Ripley},
 @I{Deepayan Sarkar},
 @I{Duncan Temple Lang},
-@I{Heather Turner},
-@I{Luke Tierney}, and
+@I{Luke Tierney},
+@I{Heather Turner}, and
 @I{Simon Urbanek},
 @end display
 @noindent

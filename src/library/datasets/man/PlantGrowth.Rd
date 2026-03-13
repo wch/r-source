@@ -21,8 +21,8 @@
     [, 2] \tab \code{group}  \tab factor
   }
 
-  The levels of \code{group} are \sQuote{\I{ctrl}}, \sQuote{\I{trt1}},
-  and \sQuote{\I{trt2}}.
+  The levels of \code{group} are \samp{ctrl}, \samp{trt1},
+  and \samp{trt2}.
 }
 \examples{
 ## One factor ANOVA example from Dobson's book, cf. Table 7.4:

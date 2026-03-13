@@ -81,8 +81,8 @@ makeARIMA(phi, theta, Delta, kappa = 1e6,
   \code{SSinit} is therefore recommended, notably also in
   \code{\link{arima}()}.
   The \code{"Rossignol2011"} method has been proposed and partly
-  documented by \I{Raphael Rossignol}, Univ. Grenoble, on 2011-09-20 (see
-  PR#14682, below), and later been ported to C by \I{Matwey V. Kornilov}.
+  documented by \I{Raphael Rossignol}, Univ. Grenoble, on 2011-09-20
+  (\PR{14682}), and later been ported to C by \I{Matwey V. Kornilov}.
   It computes the covariance matrix of
   \eqn{(X_{t-1},...,X_{t-p},Z_t,...,Z_{t-q})}
   by the method of difference equations
@@ -126,8 +126,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6,
     R:Durbin+Koopman:2001,
     R:Gardner+Harvey+Phillips:1980}
 
-  R bug report PR#14682 (2011-2013)
-  \url{https://bugs.r-project.org/show_bug.cgi?id=14682}.
+  R bug report \PR{14682} (2011--2013)
 }
 
 \seealso{
