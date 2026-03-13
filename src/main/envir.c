@@ -1503,13 +1503,15 @@ static int ddVal(SEXP symbol)
 
 #define length_DOTS(_v_) (TYPEOF(_v_) == DOTSXP ? length(_v_) : 0)
 
-SEXP ddfind(int i, SEXP rho)
+static SEXP ddfind(int i, SEXP rho)
 {
     if(i <= 0)
 	error(_("indexing '...' with non-positive index %d"), i);
     /* first look for ... symbol  */
     SEXP vl = R_findVar(R_DotsSymbol, rho);
     if (vl != R_UnboundValue) {
+	if (TYPEOF(vl) != DOTSXP && vl != R_MissingArg)
+	    error(_("bad ... value"));
 	if (length_DOTS(vl) >= i) {
 	    vl = nthcdr(vl, i - 1);
 	    return(CAR(vl));
