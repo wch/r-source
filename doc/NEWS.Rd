@@ -680,6 +680,10 @@
       unreliable, returning probabilities that are greater than one or
       \code{NaN} (\PR{19011}).
       Fix from \I{Christoph Dalitz} and \I{Achim Zeileis}.
+
+      \item \command{R CMD build} now installs packages providing their
+      own vignette engine (\PR{18191}).
+      Patch by \I{Paul Smith}.
     }
   }
 }
