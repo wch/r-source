@@ -431,10 +431,13 @@
       \code{UNSET_S4_OBJECT}, \code{XTRUELENGTH}.
 
       \item New experimental function \code{R_GetBindingType} to support
-      inspecting environments without forcing delayed or active
+      inspecting environment bindings without forcing delayed or active
       bindings.  New functions \code{R_MakeDelayedBinding},
-      \code{R_MakeForcedBinding} and \code{R_MakeMissingBinding}
-      (\PR{18928}).
+      \code{R_MakeForcedBinding} and \code{R_MakeMissingBinding} for
+      creating bindings. For examining features of bindings:
+      \code{R_ForcedBindingExpression},
+      \code{R_DelayedBindingExpression}, and
+      \code{R_DelayedBindingEnvironment} (\PR{18928}).
     }
   }
 

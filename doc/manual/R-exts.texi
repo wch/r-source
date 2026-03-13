@@ -17883,6 +17883,13 @@ Also available for creating bindings of different types:
 @eapifun R_MakeDelayedBinding
 @eapifun R_MakeForcedBinding
 @eapifun R_MakeMissingBinding
+For examining features of bindings: @code{R_ForcedBindingExpression},
+@code{R_DelayedBindingExpression}, and
+@code{R_DelayedBindingEnvironment}.
+@eapifun R_ForcedBindingExpression
+@eapifun R_DelayedBindingExpression
+@eapifun R_DelayedBindingEnvironment
+
 
 @node Some backports
 @subsection Some backports

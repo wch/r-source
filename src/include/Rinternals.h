@@ -689,6 +689,9 @@ void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env);
 Rboolean R_BindingIsLocked(SEXP sym, SEXP env); // envir.c
 Rboolean R_BindingIsActive(SEXP sym, SEXP env); // envir.c
 SEXP R_ActiveBindingFunction(SEXP sym, SEXP env);
+SEXP R_ForcedBindingExpression(SEXP sym, SEXP env);
+SEXP R_DelayedBindingExpression(SEXP sym, SEXP env);
+SEXP R_DelayedBindingEnvironment(SEXP sym, SEXP env);
 //Rboolean R_HasFancyBindings(SEXP rho); // envir.c
 
 

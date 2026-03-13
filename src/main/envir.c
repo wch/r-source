@@ -820,13 +820,17 @@ R_BindingType_t R_GetVarLocType(R_varloc_t vl)
 	return BINDING_TYPE(cell);
 }
 
-R_BindingType_t R_GetBindingType(SEXP sym, SEXP env) {
+static R_varloc_t R_findVarLocInFrameCheck(SEXP env, SEXP sym)
+{
     if (TYPEOF(sym) != SYMSXP)
 	error(_("not a symbol"));
     if (TYPEOF(env) != ENVSXP)
 	error(_("not an environment"));
+    return R_findVarLocInFrame(env, sym);
+}
 
-    R_varloc_t loc = R_findVarLocInFrame(env, sym);
+R_BindingType_t R_GetBindingType(SEXP sym, SEXP env) {
+    R_varloc_t loc = R_findVarLocInFrameCheck(env, sym);
     return R_GetVarLocType(loc);
 }
 
@@ -3662,6 +3666,53 @@ attribute_hidden Rboolean R_HasFancyBindings(SEXP rho)
     }
 }
 
+// get the expression for a delayed or forced binding
+attribute_hidden
+static SEXP R_GetVarLocExpression(R_varloc_t loc)
+{
+    SEXP cell = loc.cell;
+    if (cell == NULL || cell == R_UnboundValue)
+	error(_("unbound variable"));
+
+    SEXP value = BINDING_VALUE(cell);
+    if (TYPEOF(value) != PROMSXP)
+	error(_("not a delayed or forced binding"));
+
+    /* This has special handling for bytecode, unlike `PREXPR()` */
+    return R_PromiseExpr(value);
+
+}
+
+SEXP R_DelayedBindingExpression(SEXP sym, SEXP env)
+{
+    R_varloc_t loc = R_findVarLocInFrameCheck(env, sym);
+    if (R_GetVarLocType(loc) != R_BindingTypeDelayed)
+	error(_("not a delayed binding"));	
+    return R_GetVarLocExpression(loc);
+}
+
+SEXP R_ForcedBindingExpression(SEXP sym, SEXP env)
+{
+    R_varloc_t loc = R_findVarLocInFrameCheck(env, sym);
+    if (R_GetVarLocType(loc) != R_BindingTypeForced)
+	error(_("not a forced binding"));	
+    return R_GetVarLocExpression(loc);
+}
+
+// get the environment for a delayed binding
+SEXP R_DelayedBindingEnvironment(SEXP sym, SEXP env) {
+    R_varloc_t loc = R_findVarLocInFrame(env, sym);
+    SEXP cell = loc.cell;
+    if (cell == NULL || cell == R_UnboundValue)
+	error(_("unbound variable"));
+
+    SEXP value = BINDING_VALUE(cell);
+    if (TYPEOF(value) != PROMSXP || PROMISE_IS_EVALUATED(value))
+	error(_("not a delayed binding"));
+    
+    return PRENV(value);
+}
+
 SEXP R_ActiveBindingFunction(SEXP sym, SEXP env)
 {
     if (TYPEOF(sym) != SYMSXP)
@@ -4733,4 +4784,3 @@ attribute_hidden void findFunctionForBody(SEXP body) {
 	}
     }
 }
-
