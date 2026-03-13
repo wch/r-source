@@ -1,7 +1,7 @@
 #  File src/library/tools/R/urltools.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2015-2024 The R Core Team
+#  Copyright (C) 2015-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -717,6 +717,13 @@ function(db, remote = TRUE, verbose = FALSE, parallel = FALSE, pool = NULL)
         ##             paste0("https://doi.org/api/handles/10.",
         ##                     sub(pat, "\\2", urlspos[ind]))
         ## but using the parts is considerably faster ...
+        ind <- ((tolower(myparts[, 2L]) == "bugs.r-project.org") &
+                (myparts[, 3L] == "/show_bug.cgi") &
+                nzchar(myparts[, 4L]) &
+                !nzchar(myparts[, 5L]))                       
+        if(any(ind))
+            urlspos[ind] <- paste0("https://bugs.r-project.org/chkbug?",
+                                   myparts[ind, 4L])
         headers <- .fetch_headers(urlspos)
         if(parallel &&
            any(ind <- vapply(headers,
