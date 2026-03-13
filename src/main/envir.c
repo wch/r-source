@@ -3667,7 +3667,6 @@ attribute_hidden Rboolean R_HasFancyBindings(SEXP rho)
 }
 
 // get the expression for a delayed or forced binding
-attribute_hidden
 static SEXP R_GetVarLocExpression(R_varloc_t loc)
 {
     SEXP cell = loc.cell;
