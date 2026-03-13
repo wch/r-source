@@ -1,7 +1,7 @@
 #  File src/library/utils/R/news.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -191,10 +191,14 @@ function(x, doBrowse = interactive(), browser = getOption("browser"), ...)
 `[.news_db` <- function(x, i, j, drop) {
     ## Ensure that 'bad' attribute is subscripted as necessary.
     y <- NextMethod()
-    if(inherits(y, "news_db")
-       && !missing(i)
-       && !is.null(bad <- attr(x, "bad"))) {
-        attr(y, "bad") <- bad[i]
+    if(inherits(y, "news_db") && !missing(i)) {
+        if(!is.null(bad <- attr(x, "bad")))
+            attr(y, "bad") <- bad[i]
+        ## <FIXME>
+        ## See the 'optimization' for the R news db in the print()
+        ## method: need to avoid getting shown everything if we
+        ## subscript directly and not via subset() ...
+        attr(y, "subset") <- i
     }
     y
 }
