@@ -262,6 +262,10 @@
       in \PR{18998}.
 
       \item Class \code{"difftime"} is now also among the S4 \code{"OldClasses"}.
+
+      \item New function \code{bitstring()} as a user-friendly wrapper
+      around \code{intToBits()}, etc.
+
     }
   }
 

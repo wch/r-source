@@ -9,7 +9,7 @@ export("?", .AtNames, .DollarNames, .S3methods, .romans, Rprof, Rprofmem,
        aspell_package_R_files, aspell_package_Rd_files,
        aspell_package_vignettes,
        aspell_write_personal_dictionary_file, available.packages,
-       browseEnv, browseURL, browseVignettes, bug.report,
+       bitstring, browseEnv, browseURL, browseVignettes, bug.report,
        capture.output, changedFiles, charClass, checkCRAN,
        .checkHT,
        chooseBioCmirror, chooseCRANmirror, citation, cite, citeNatbib,
@@ -59,12 +59,17 @@ S3method(as.character, roman)
 S3method(as.person, default)
 S3method(as.personList, default)
 S3method(as.personList, person)
+S3method(bitstring, default)
+S3method(bitstring, raw)
+S3method(bitstring, integer)
+S3method(bitstring, numeric)
 S3method(close, txtProgressBar)
 S3method(edit, data.frame)
 S3method(edit, default)
 S3method(edit, matrix)
 S3method(edit, vignette)
 S3method(format, MethodsFunction)
+S3method(format, bitstring)
 S3method(format, "aspell")
 S3method(format, "aspell_inspect_context")
 S3method(format, "news_db")
@@ -81,6 +86,7 @@ S3method(head, ftable)
 S3method(print, "aspell")
 S3method(print, "aspell_inspect_context")
 S3method(print, Bibtex)
+S3method(print, bitstring)
 S3method(print, changedFiles)
 S3method(print, fileSnapshot)
 S3method(print, findLineNumResult)
