@@ -2616,26 +2616,107 @@ stopifnot(identical(strX2 , strX2. ), noListof(strX2. ),
 
 ## simple test for R_GetBindingType
 local({
-    getBindingType <- function(sym, env) {
-        if (is.character(sym)) 
+    getBindingType <- function(sym, env = parent.frame()) {
+        if (is.character(sym))
             sym <- as.name(sym)
         .Internal(getBindingType(sym, env))
     }
-    f0 <- function() getBindingType("x", environment())
+    f0 <- function() getBindingType("x")
     stopifnot(f0() == "unbound")
-    f1 <- function() { x <- 1; getBindingType("x", environment())}
+    f1 <- function() { x <- 1; getBindingType("x")}
     stopifnot(f1() == "value")
-    f2 <- function(x) getBindingType("x", environment())
+    f2 <- function(x) getBindingType("x")
     stopifnot(f2() == "missing")
-    f3 <- function(x) getBindingType("x", environment())
+    f3 <- function(x) getBindingType("x")
     stopifnot(f3(1) == "delayed")
-    f4 <- function(x) { x; getBindingType("x", environment())}
+    f4 <- function(x) { x; getBindingType("x")}
     stopifnot(f4(1) == "forced")
     f5 <- function() {
         makeActiveBinding("x", \(x) 1, environment())
-        getBindingType("x", environment())
+        getBindingType("x")
     }
     stopifnot(f5() == "active")
+})
+
+## R_GetBindingType with promise chains from `...` expansion (PR#18928)
+## Expanding `...` into named parameters creates promise chains where
+## PRCODE of the wrapper is the original PROMSXP
+local({
+    getBindingType <- function(sym, env = parent.frame()) {
+        if (is.character(sym))
+            sym <- as.name(sym)
+        .Internal(getBindingType(sym, env))
+    }
+    g <- function(x) getBindingType("x")
+    # `...` expansion into a named parameter wraps the dot promise
+    x <- 1
+    f <- function(...) g(...)
+    stopifnot(f(x) == "delayed")
+    # Forcing the dot then expanding: unwrapping must detect the forced inner
+    f <- function(...) { force(..1); g(...) }
+    stopifnot(f(x) == "forced")
+    # Deeper chain: `...` -> `...` -> named parameter
+    mid <- function(...) g(...)
+    f <- function(...) mid(...)
+    stopifnot(f(x) == "delayed")
+    # Force at the top of a deeper chain
+    f <- function(...) { force(..1); mid(...) }
+    stopifnot(f(x) == "forced")
+})
+
+## R_DelayedBindingExpression and R_DelayedBindingEnvironment
+local({
+    delayedExpr <- function(sym, env = parent.frame()) {
+        if (is.character(sym)) sym <- as.name(sym)
+        .Internal(delayedBindingExpression(sym, env = parent.frame()))
+    }
+    delayedEnv <- function(sym, env = parent.frame()) {
+        if (is.character(sym)) sym <- as.name(sym)
+        .Internal(delayedBindingEnvironment(sym, env))
+    }
+    e <- environment()
+    x <- 1
+    g <- function(x) delayedExpr("x")
+    stopifnot(identical(g(x), quote(x)))
+    g <- function(x) delayedEnv("x", environment())
+    stopifnot(identical(g(x), e))
+    # Through forwarded ...
+    get_expr <- function(x) delayedExpr("x")
+    get_env <- function(x) delayedEnv("x")
+    f <- function(...) get_expr(...)
+    stopifnot(identical(f(x), quote(x)))
+    f <- function(...) get_env(...)
+    stopifnot(identical(f(x), e))
+    # Deeper chain
+    mid_expr <- function(...) get_expr(...)
+    f <- function(...) mid_expr(...)
+    stopifnot(identical(f(x), quote(x)))
+    mid_env <- function(...) get_env(...)
+    f <- function(...) mid_env(...)
+    stopifnot(identical(f(x), e))
+})
+
+## R_ForcedBindingExpression
+local({
+    forcedExpr <- function(sym, env = parent.frame()) {
+        if (is.character(sym)) sym <- as.name(sym)
+        .Internal(forcedBindingExpression(sym, env))
+    }
+    x <- 1
+    g <- function(x) { force(x); forcedExpr("x") }
+    stopifnot(identical(g(x), quote(x)))
+    # Through forwarded ...
+    get_expr <- function(x) { force(x); forcedExpr("x") }
+    f <- function(...) get_expr(...)
+    stopifnot(identical(f(x), quote(x)))
+    # Forced at outer level, then forwarded into named param
+    inner <- function(x) forcedExpr("x")
+    f <- function(...) { force(..1); inner(...) }
+    stopifnot(identical(f(x), quote(x)))
+    # Deeper chain
+    mid <- function(...) inner(...)
+    f <- function(...) { force(..1); mid(...) }
+    stopifnot(identical(f(x), quote(x)))
 })
 
 
