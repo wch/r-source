@@ -694,6 +694,23 @@ SEXP R_DelayedBindingExpression(SEXP sym, SEXP env);
 SEXP R_DelayedBindingEnvironment(SEXP sym, SEXP env);
 //Rboolean R_HasFancyBindings(SEXP rho); // envir.c
 
+/* Dots interface */
+typedef enum {
+    R_DotTypeValue = 0,
+    R_DotTypeMissing = 1,
+    R_DotTypeDelayed = 2,
+    R_DotTypeForced = 3
+} R_DotType_t;
+
+Rboolean R_DotsExist(SEXP env);
+int R_DotsLength(SEXP env);
+SEXP R_DotsNames(SEXP env);
+SEXP R_DotsElt(int i, SEXP env);
+
+R_DotType_t R_GetDotType(int i, SEXP env);
+SEXP R_DotDelayedExpression(int i, SEXP env);
+SEXP R_DotDelayedEnvironment(int i, SEXP env);
+SEXP R_DotForcedExpression(int i, SEXP env);
 
 /* ../main/errors.c : */
 /* needed for R_load/savehistory handling in front ends */

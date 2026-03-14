@@ -1556,6 +1556,11 @@ static int ddVal(SEXP symbol)
 
 #define length_DOTS(_v_) (TYPEOF(_v_) == DOTSXP ? length(_v_) : 0)
 
+Rboolean R_DotsExist(SEXP env)
+{
+    return R_findVar(R_DotsSymbol, env) != R_UnboundValue;
+}
+
 static SEXP ddfind(int i, SEXP rho)
 {
     if(i <= 0)
@@ -1586,6 +1591,15 @@ SEXP ddfindVar(SEXP symbol, SEXP rho)
     return ddfind(i, rho);
 }
 
+SEXP R_DotsElt(int i, SEXP env)
+{
+    SEXP val = ddfind(i, env);
+    if (TYPEOF(val) == PROMSXP)
+	return eval(val, env);
+    else
+	return val;
+}
+
 attribute_hidden SEXP do_dotsElt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
@@ -1595,46 +1609,150 @@ attribute_hidden SEXP do_dotsElt(SEXP call, SEXP op, SEXP args, SEXP env)
     if (! isNumeric(si) || XLENGTH(si) != 1)
 	errorcall(call, _("indexing '...' with an invalid index"));
     int i = asInteger(si);
-    return eval(ddfind(i, env), env);
+    return R_DotsElt(i, env);
+}
+
+int R_DotsLength(SEXP env)
+{
+    SEXP vl = R_findVar(R_DotsSymbol, env);
+    if (vl == R_UnboundValue)
+	error(_("incorrect context: the current call has no '...' to look in"));
+    return length_DOTS(vl);
 }
 
 attribute_hidden SEXP do_dotsLength(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
-    SEXP vl = R_findVar(R_DotsSymbol, env);
-    if (vl == R_UnboundValue)
-	error(_("incorrect context: the current call has no '...' to look in"));
-    // else
-    return ScalarInteger(length_DOTS(vl));
+    return ScalarInteger(R_DotsLength(env));
 }
 
-attribute_hidden SEXP do_dotsNames(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP R_DotsNames(SEXP env)
 {
-    checkArity(op, args);
     SEXP vl = R_findVar(R_DotsSymbol, env);
     PROTECT(vl);
     if (vl == R_UnboundValue)
 	error(_("incorrect context: the current call has no '...' to look in"));
-    // else
-    SEXP out;
+    SEXP out = R_NilValue;
     int n = length_DOTS(vl);
-    Rboolean named = FALSE;
     for(int i = 0; i < n; i++) {
 	if(TAG(vl) != R_NilValue) {
-	    if(!named) { named = TRUE;
-		PROTECT(out = allocVector(STRSXP, n)); // and is filled with "" already
+	    if(out == R_NilValue) {
+		// this fills 'out' with ""
+		PROTECT(out = allocVector(STRSXP, n));
 	    }
 	    SET_STRING_ELT(out, i, PRINTNAME(TAG(vl)));
 	}
         vl = CDR(vl);
     }
-    if(named) {
-        UNPROTECT(1);
-    } else {
-	out = R_NilValue;
-    }
-    UNPROTECT(1);
+    if(out != R_NilValue)
+        UNPROTECT(1); // out
+    UNPROTECT(1); // vl
     return out;
+}
+
+attribute_hidden SEXP do_dotsNames(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    return R_DotsNames(env);
+}
+
+R_DotType_t R_GetDotType(int i, SEXP env)
+{
+    SEXP value = ddfind(i, env);
+
+    if (value == R_MissingArg)
+	return R_DotTypeMissing;
+
+    if (TYPEOF(value) == PROMSXP) {
+	Rboolean forced;
+	promiseUnwrap(value, &forced);
+	if (forced)
+	    return R_DotTypeForced;
+	else
+	    return R_DotTypeDelayed;
+    }
+
+    return R_DotTypeValue;
+}
+
+SEXP R_DotDelayedExpression(int i, SEXP env)
+{
+    SEXP value = ddfind(i, env);
+    if (TYPEOF(value) != PROMSXP)
+	error(_("not a delayed ... element"));
+
+    Rboolean forced;
+    SEXP inner = promiseUnwrap(value, &forced);
+    if (forced)
+	error(_("not a delayed ... element"));
+
+    return R_PromiseExpr(inner);
+}
+
+SEXP R_DotDelayedEnvironment(int i, SEXP env)
+{
+    SEXP value = ddfind(i, env);
+    if (TYPEOF(value) != PROMSXP)
+	error(_("not a delayed ... element"));
+
+    Rboolean forced;
+    SEXP inner = promiseUnwrap(value, &forced);
+    if (forced)
+	error(_("not a delayed ... element"));
+
+    return PRENV(inner);
+}
+
+SEXP R_DotForcedExpression(int i, SEXP env)
+{
+    SEXP value = ddfind(i, env);
+    if (TYPEOF(value) != PROMSXP)
+	error(_("not a forced ... element"));
+
+    Rboolean forced;
+    SEXP inner = promiseUnwrap(value, &forced);
+    if (!forced)
+	error(_("not a forced ... element"));
+
+    return R_PromiseExpr(inner);
+}
+
+attribute_hidden SEXP do_dotType(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    int i = asInteger(CAR(args));
+    SEXP env = CADR(args);
+    switch(R_GetDotType(i, env)) {
+    case R_DotTypeValue: return mkString("value");
+    case R_DotTypeMissing: return mkString("missing");
+    case R_DotTypeDelayed: return mkString("delayed");
+    case R_DotTypeForced: return mkString("forced");
+    default: error("unknown dot type; should not happen");
+    }
+}
+
+attribute_hidden SEXP do_dotDelayedExpr(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    int i = asInteger(CAR(args));
+    SEXP env = CADR(args);
+    return R_DotDelayedExpression(i, env);
+}
+
+attribute_hidden SEXP do_dotDelayedEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    int i = asInteger(CAR(args));
+    SEXP env = CADR(args);
+    return R_DotDelayedEnvironment(i, env);
+}
+
+attribute_hidden SEXP do_dotForcedExpr(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    int i = asInteger(CAR(args));
+    SEXP env = CADR(args);
+    return R_DotForcedExpression(i, env);
 }
 
 #undef length_DOTS
