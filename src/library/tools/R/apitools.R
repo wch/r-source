@@ -376,11 +376,27 @@ pkgRepo <- function(pkg, lib.loc = NULL) {
     else ""
 }
 
-pkgRsyms <- function(pkg, lib.loc = NULL, repo = FALSE) {
-    libdir <- system.file("libs", package = pkg, lib.loc = lib.loc)
-    libs <- Sys.glob(file.path(libdir, "*.so"))
+pkgSharedLibs <- function(pkg, lib.loc = NULL, all.so = FALSE) {
+    if (all.so) {
+        pat <- sprintf("\\%s$|\\.jnilib$", .Platform$dynlib.ext)
+        pkgdir <- system.file(package = pkg, lib.loc = lib.loc)
+        so <- dir(pkgdir, pattern = pat, recursive = TRUE,
+                  all.files = TRUE, full.names = TRUE)
+        if (Sys.info()[["sysname"]] == "Darwin")
+            so <- grepv("DWARF", so, invert = TRUE)
+        so
+    }
+    else {
+        libdir <- system.file("libs", package = pkg, lib.loc = lib.loc)
+        Sys.glob(file.path(libdir, "*.so"))
+    }
+}
+
+pkgRsyms <- function(pkg, lib.loc = NULL, repo = FALSE, all.so = FALSE) {
+    libs <- pkgSharedLibs(pkg, all.so = all.so)
     if (length(libs) > 0) {
         val <- rbind_list(lapply(libs, ofile_syms, keep = "U"))
+        val <- clear_rownames(unique(val))
         val$package <- rep(pkg, nrow(val))
         val$type <- NULL
         if (nrow(val) > 0 && repo)
@@ -393,10 +409,12 @@ pkgRsyms <- function(pkg, lib.loc = NULL, repo = FALSE) {
 allPkgsRsyms <- function(lib.loc = NULL,
                          Ncpus = getOption("Ncpus", 1L),
                          verbose = getOption("verbose"),
-                         repo = FALSE) {
+                         repo = FALSE,
+                         all.so = FALSE) {
     p <- rownames(utils::installed.packages(lib.loc = lib.loc))
     rbind_list(.package_apply(p, pkgRsyms, Ncpus = Ncpus,
-                              verbose = verbose, repo = repo))
+                              verbose = verbose, repo = repo,
+                              all.so = all.so))
 }
 
 moduleRsyms <- function(repo = FALSE) {
