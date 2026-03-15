@@ -287,7 +287,6 @@ const Rcomplex *(COMPLEX_RO)(SEXP x);
 SEXP (VECTOR_ELT)(SEXP x, R_xlen_t i);
 void SET_STRING_ELT(SEXP x, R_xlen_t i, SEXP v);
 SEXP SET_VECTOR_ELT(SEXP x, R_xlen_t i, SEXP v);
-SEXP *(STRING_PTR)(SEXP x);
 const SEXP *(STRING_PTR_RO)(SEXP x);
 const SEXP *(VECTOR_PTR_RO)(SEXP x);
 
@@ -1268,8 +1267,8 @@ void SET_PRCODE(SEXP x, SEXP v);
 SEXP R_tryWrap(SEXP);
 
 // temporatily add these declarations and unhide until until BioC catches up
-int  (NAMED)(SEXP x);      // used in Biostrings
-void (SET_NAMED)(SEXP x, int v);      // used in Biostrings
+//int  (NAMED)(SEXP x);      // used in Biostrings
+//void (SET_NAMED)(SEXP x, int v);      // used in Biostrings
 int (IS_S4_OBJECT)(SEXP x);
 void (SET_S4_OBJECT)(SEXP x);
 void (UNSET_S4_OBJECT)(SEXP x);
@@ -1281,6 +1280,7 @@ void (SET_ENVFLAGS)(SEXP x, int v);  // used in GOfuncR
 int  (LEVELS)(SEXP x);  // used in dang via tidyCpp
 int  (SETLEVELS)(SEXP x, int v);  // used in dang via tidyCpp
 SEXP R_lsInternal(SEXP, Rboolean);  // used in rJava in a separate .so file
+SEXP *(STRING_PTR)(SEXP x); // used in matter
 //void *(EXTPTR_PTR)(SEXP);  // used in rJava in a separate .so file
 //SEXP (ENCLOS)(SEXP x);  // used in rJava in a separate .so file
 #if ! (defined(CALLED_FROM_DEFN_H) && !defined(__MAIN__) && (defined(COMPILING_R) || ( __GNUC__ && !defined(__INTEL_COMPILER) )) && (defined(COMPILING_R) || !defined(NO_RINLINEDFUNS)))

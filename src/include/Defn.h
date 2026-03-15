@@ -631,6 +631,7 @@ void (SETLENGTH)(SEXP x, R_xlen_t v);
 void (SET_TRUELENGTH)(SEXP x, R_xlen_t v);
 int  (LEVELS)(SEXP x);
 int  (SETLEVELS)(SEXP x, int v);
+SEXP *(STRING_PTR)(SEXP x);
 #ifdef TESTING_WRITE_BARRIER
 R_xlen_t (STDVEC_LENGTH)(SEXP);
 R_xlen_t (STDVEC_TRUELENGTH)(SEXP);
