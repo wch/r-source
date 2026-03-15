@@ -55,7 +55,7 @@ checkMD5sums <- function(package, dir)
     if (is.null(dot))
         stop("current working directory cannot be ascertained")
     setwd(dir)
-    x <- md5sum(dir(dir, recursive = TRUE))
+    x <- md5sum(dir(recursive = TRUE))
     setwd(dot)
     x <- x[names(x) != "MD5"]
     nmx <- names(x)
