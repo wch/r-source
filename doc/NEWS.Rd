@@ -443,10 +443,10 @@
       \code{R_DelayedBindingExpression}, and
       \code{R_DelayedBindingEnvironment} (\PR{18928}).  New functions
       for examning \code{...} bindings in environments:
-      \code{R_DotsLength}, \code{R_DotsNames}, \code{R_DotsElt},
-      \code{R_GetDotType}, \code{R_DotDelayedExpression},
-      \code{R_DotDelayedEnvironment}, and \code{R_DotForcedExpression}
-      (\PR{18928}).
+      \code{R_DotsExist}, \code{R_DotsLength}, \code{R_DotsNames},
+      \code{R_DotsElt}, \code{R_GetDotType},
+      \code{R_DotDelayedExpression}, \code{R_DotDelayedEnvironment}, and
+      \code{R_DotForcedExpression} (\PR{18928}).
     }
   }
 

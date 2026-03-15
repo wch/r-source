@@ -17890,9 +17890,10 @@ For examining features of bindings: @code{R_ForcedBindingExpression},
 @eapifun R_DelayedBindingExpression
 @eapifun R_DelayedBindingEnvironment
 Functions for examining @code{...} bindings in environments:
-@code{R_DotsLength}, @code{R_DotsNames}, @code{R_DotsElt},
-@code{R_GetDotType}, @code{R_DotDelayedExpression},
+@code{R_DotsExist}, @code{R_DotsLength}, @code{R_DotsNames},
+@code{R_DotsElt}, @code{R_GetDotType}, @code{R_DotDelayedExpression},
 @code{R_DotDelayedEnvironment} and @code{R_DotForcedExpression}.
+@eapifun R_DotsExist
 @eapifun R_DotsLength
 @eapifun R_DotsNames
 @eapifun R_DotsElt
