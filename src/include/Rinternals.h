@@ -532,7 +532,6 @@ Rboolean Rf_isUnsorted(SEXP, Rboolean); // sort.c
 Rboolean R_isTRUE(SEXP); // util.c
 SEXP Rf_lengthgets(SEXP, R_len_t);
 SEXP Rf_xlengthgets(SEXP, R_xlen_t);
-SEXP R_lsInternal(SEXP, Rboolean); // envir.c
 SEXP R_lsInternal3(SEXP, Rboolean, Rboolean); // envir.c
 SEXP Rf_match(SEXP, SEXP, int);
 SEXP Rf_namesgets(SEXP, SEXP);
@@ -1281,6 +1280,7 @@ int  (ENVFLAGS)(SEXP x);  // used in GOfuncR
 void (SET_ENVFLAGS)(SEXP x, int v);  // used in GOfuncR
 int  (LEVELS)(SEXP x);  // used in dang via tidyCpp
 int  (SETLEVELS)(SEXP x, int v);  // used in dang via tidyCpp
+SEXP R_lsInternal(SEXP, Rboolean);  // used in rJava in a separate .so file
 //void *(EXTPTR_PTR)(SEXP);  // used in rJava in a separate .so file
 //SEXP (ENCLOS)(SEXP x);  // used in rJava in a separate .so file
 #if ! (defined(CALLED_FROM_DEFN_H) && !defined(__MAIN__) && (defined(COMPILING_R) || ( __GNUC__ && !defined(__INTEL_COMPILER) )) && (defined(COMPILING_R) || !defined(NO_RINLINEDFUNS)))

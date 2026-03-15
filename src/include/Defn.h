@@ -1828,6 +1828,7 @@ int R_system(const char *);
 SEXP R_FindPackageEnv(SEXP info);
 Rboolean R_HasFancyBindings(SEXP rho); // envir.c
 void R_RestoreHashCount(SEXP rho); // envir.c
+SEXP R_lsInternal(SEXP, Rboolean); // envir.c
 
 void R_XDREncodeDouble(double d, void *buf);
 double R_XDRDecodeDouble(void *buf);
