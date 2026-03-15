@@ -360,6 +360,10 @@
       \code{Rf_lazy_duplicate} have been added to those reported
       by \command{R CMD check}.
 
+      \item Packages using the non-API functions \code{ATTRIB} and
+      \code{SET_ATTRIB} will now receive check \samp{NOTE}s.
+      See \sQuote{Writing R Extensions} for alternatives to use.
+
       \item \command{R CMD check} \samp{NOTE}s on the use of these
       non-API entry points have been upgraded to \samp{WARNING}s in
       preparation for removing declarations and, where possible, hiding
@@ -373,7 +377,7 @@
       \code{R_duplicate_attr},
       \code{getConnection}, \code{R_data_class},
       \code{STRING_PTR}, \code{SET_OBJECT},
-      \code{ATTRIB}, \code{SET_ATTRIB}.
+      \code{ATTRIB}, \code{SET_ATTRIB}, \code{Rf_findVarInFrame3}.
 
       \item The deprecated macros \code{CHARACTER_DATA} and
       \code{CHARACTER_POINTER} now return \code{const} pointers since using
@@ -397,10 +401,6 @@
 
       \item New function \code{R_mapAttrib} for iterating over the
       attributes of an object.
-
-      \item Packages using the non-API functions \code{ATTRIB} and
-      \code{SET_ATTRIB} will now receive check \samp{NOTE}s.
-      See \sQuote{Writing R Extensions} for alternatives to use.
 
       \item New functions \code{R_altrep_class_name} and
       \code{R_altrep_class_package} for retrieving the class name symbol

@@ -735,7 +735,7 @@ warnNonAPI <-
       "PRSEEN", "SET_PRSEEN", "SYMVALUE",
       ## "R_tryWrap",
       "STRING_PTR", "ATTRIB", "SET_ATTRIB", "SET_OBJECT",
-      "R_lsInternal",
+      "R_lsInternal", "Rf_findVarInFrame3",
       "BODY", "FORMALS", "CLOENV",
       "SET_TYPEOF",
       "DATAPTR", "getConnection", "R_data_class",
