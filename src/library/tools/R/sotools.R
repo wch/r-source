@@ -573,7 +573,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 ## and in a non-API header or no header at all or marked as non-API in a header
 
 ## remove declarations and hide these entry points once BioC catches up
-            "OBJECT", "NAMED", "SET_NAMED",
+            "OBJECT",
             "NAMED", "SET_NAMED", "IS_S4_OBJECT", "SET_S4_OBJECT",
             "UNSET_S4_OBJECT", "R_data_class", "SET_TYPEOF", "ENVFLAGS",
             "SET_ENVFLAGS", "LEVELS", "SETLEVELS", "EXTPTR_PTR", "ENCLOS",
@@ -582,13 +582,13 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "OutDec", "PRIMOFFSET", "RC_fopen", "R_CollectFromIndex",
             "R_CompiledFileName", "R_FileExists",
             "R_FreeStringBuffer", "R_FunTab", "R_GE_setVFontRoutines",
-            "R_GetVarLocMISSING",
+            "R_GetVarLocMISSING", "Rsleep",
             "R_MethodsNamespace", "R_NewHashedEnv",
             "R_OpenCompiledFile", "R_PV", "R_ParseContext",
             "R_ParseContextLast", "R_ParseContextLine",
             "R_ParseError", "R_ParseErrorMsg", "R_SrcfileSymbol",
             "R_SrcrefSymbol", "R_Visible", "R_addTaskCallback",
-            "R_cairoCdynload", "R_data_class",
+            "R_cairoCdynload",
             "R_deferred_default_method", "R_execMethod",
             "R_findVarLocInFrame","R_fopen", "R_gc_torture",
             "R_getTaskCallbackNames", "R_get_arith_function",
@@ -639,8 +639,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "tql2_", "tqlrat_", "tred1_", "tred2_", "utf8locale", "yylloc",
             "R_opendir", "R_readdir", "R_closedir",
             # "signrank_free", "wilcox_free" are API only from 4.2.0
-            "ENSURE_NAMEDMAX", "IS_ASCII", "IS_UTF8", "SET_PRSEEN",
-            "ddfind",
+            "ENSURE_NAMEDMAX", "IS_ASCII", "IS_UTF8",
 
 ## Rinterface.h, Rembedded.h, R_ext/{RStartup,eventloop}.h
             "AllDevicesKilled", "R_CStackLimit", "R_CStackStart",
@@ -696,20 +695,17 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "SET_PRENV", "SET_PRVALUE", "SET_PRCODE",
             "R_PromiseExpr",
             ## "R_tryWrap",
-            "DDVAL", "INTERNAL", "SYMVALUE", "PRSEEN",
+            "DDVAL", "INTERNAL", "SYMVALUE",
             "INTEGER0", "LOGICAL0", "RAW0", "REAL0", "COMPLEX0",
             "RDEBUG", "SET_RDEBUG", "STRING_PTR",
             "Rf_findVar", "Rf_findVarInFrame", "Rf_findVarInFrame3",
             "PRCODE", "PRENV", "PRVALUE", "Rf_acopy_string",
-            "SET_TYPEOF", "XLENGTH_EX", "Rf_gsetVar",
+            "XLENGTH_EX", "Rf_gsetVar",
             ## Documented in WRE in section "Some API replacements for
             ## non-API entry points":
             "R_lsInternal",
-            "REAL0", "COMPLEX0",
-            "STRING_PTR", "DATAPTR",
             "Rf_allocSExp",
             "BODY", "FORMALS", "CLOENV",
-            "IS_ASCII", "IS_UTF8",
             "ATTRIB", "SET_ATTRIB",
 ## experimental resizable vector entry points -- now in the experimental API
             ## "R_isResizable", "R_maxLength", "R_resizeVector",
@@ -731,20 +727,22 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
 
 ## These now generate warnings in check.R
 warnNonAPI <-
-    c("REAL0", "COMPLEX0", "ddfind", "DDVAL", "ENSURE_NAMEDMAX", "INTERNAL",
-      "PRSEEN", "SET_PRSEEN", "SYMVALUE",
+    c("REAL0", "COMPLEX0", "INTEGER0", "LOGICAL0", "RAW0",
+      "DDVAL", "ENSURE_NAMEDMAX", "INTERNAL", "SYMVALUE",
       ## "R_tryWrap",
       "STRING_PTR", "ATTRIB", "SET_ATTRIB", "SET_OBJECT",
       "R_lsInternal", "Rf_findVarInFrame3",
-      "BODY", "FORMALS", "CLOENV",
-      "SET_TYPEOF",
-      "DATAPTR", "getConnection", "R_data_class",
+      "BODY", "FORMALS", "CLOENV", "getConnection", "Rsleep",
       ## remove declarations and hide these entry points once BioC catches up
-      "OBJECT", "NAMED", "SET_NAMED",
-      "NAMED", "SET_NAMED", "IS_S4_OBJECT", "SET_S4_OBJECT",
+      "OBJECT", "NAMED", "SET_NAMED", "IS_S4_OBJECT", "SET_S4_OBJECT",
       "UNSET_S4_OBJECT", "R_data_class", "SET_TYPEOF", "ENVFLAGS",
       "SET_ENVFLAGS", "LEVELS", "SETLEVELS", "EXTPTR_PTR", "ENCLOS",
       "DATAPTR", "Rf_isValidString")
+
+## sanity checks
+stopifnot(anyDuplicated(nonAPI) == 0)
+stopifnot(anyDuplicated(warnNonAPI) == 0)
+stopifnot(length(setdiff(warnNonAPI, nonAPI)) == 0)
 
 ## grDevices uses R_Home R_InputHandlers R_TempDir R_Visible R_cairoCdynload R_fopen R_gzclose R_gzgets R_gzopen R_isForkedChild Rf_envlength Rf_strIsASCII Rf_utf8towcs Rg_set_col_ptrs Ri18n_wcwidth addInputHandler do_X11 do_contourLines do_getGraphicsEventEnv do_getSnapshot do_playSnapshot do_saveplot locale2charset mbcsToUcs2 ptr_R_ProcessEvents
 
