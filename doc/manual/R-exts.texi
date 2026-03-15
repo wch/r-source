@@ -14078,7 +14078,7 @@ SEXP Rf_eval(SEXP expr, SEXP rho);
 @noindent
 the equivalent of the interpreted @R{} code @code{eval(expr, envir =
 rho)} (so @code{rho} must be an environment), although we can also make
-use of @code{Rf_findVar}, @code{Rf_defineVar} and @code{Rf_findFun} (which
+use of @code{R_getVar}, @code{Rf_defineVar} and @code{Rf_findFun} (which
 restricts the search to functions).
 @apifun Rf_findFun
 
@@ -14376,7 +14376,7 @@ SEXP numeric_deriv(SEXP args)
 
 @group
     for(i = 0, start = 0; i < LENGTH(theta); i++, start += LENGTH(ans)) @{
-        par = PROTECT(Rf_findVar(Rf_installChar(STRING_ELT(theta, i)), rho));
+        par = PROTECT(R_getVar(Rf_installChar(STRING_ELT(theta, i)), rho, /* inherits = */ FALSE));
         tt = REAL(par)[0];
         xx = fabs(tt);
         delta = (xx < 1) ? eps : xx*eps;
@@ -14444,7 +14444,7 @@ applicable.)
 @example
 @group
     for(i = 0, start = 0; i < LENGTH(theta); i++, start += LENGTH(ans)) @{
-        par = PROTECT(Rf_findVar(Rf_installChar(STRING_ELT(theta, i)), rho));
+        par = PROTECT(R_getVar(Rf_installChar(STRING_ELT(theta, i)), rho, /* inherits = */ FALSE));
 @end group
 @end example
 
@@ -14454,8 +14454,8 @@ variables.  In the @code{for} loop, we first create a symbol
 corresponding to the @I{@code{i}-th} element of the @code{STRSXP}
 @code{theta}.  Here, @code{STRING_ELT(theta, i)} accesses the
 @I{@code{i}-th} element of the @code{STRSXP} @code{theta}.
-@code{installChar()} installs the element as a name and @code{Rf_findVar}
-finds its value.
+@code{installChar()} installs the element as a name and @code{R_getVar}
+finds its value in @code{rho}.
 @apifun CHAR
 @comment FIXME in packages CHAR is remapped to R_CHAR; mention that here?
 @apifun R_CHAR
