@@ -448,6 +448,9 @@
       \code{R_DotDelayedExpression}, \code{R_DotDelayedEnvironment}, and
       \code{R_DotForcedExpression} (\PR{18928}).
 
+      \item New function \code{R_envSymbols} returns a vector of the
+      symbols for which an environment contains bindings (\PR{18928}).
+
       \item The functions \code{Rf_findVar} and \code{findVarInFrame}
       are now marked as non-API, and uses in packages will now receive
       check \samp{NOTE}s.  See \sQuote{Writing R Extensions} for

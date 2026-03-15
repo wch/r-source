@@ -3241,6 +3241,19 @@ SEXP R_lsInternal(SEXP env, Rboolean all)
     return R_lsInternal3(env, all, TRUE);
 }
 
+SEXP R_envSymbols(SEXP env)
+{
+    // this could be rewritten to avoid allocating the intermediate STRSXP
+    // this would be mor efficient for non-USER-DATABASE environments
+    SEXP names = PROTECT(R_lsInternal3(env, TRUE, FALSE));
+    R_xlen_t n = XLENGTH(names);
+    SEXP val = PROTECT(allocVector(VECSXP, n));
+    for (R_xlen_t i = 0; i < n; i++)
+	SET_VECTOR_ELT(val, i, installChar(STRING_ELT(names, i)));
+    UNPROTECT(2); // names, val
+    return val;			 
+}
+
 /* transform an environment into a named list: as.list.environment(.) */
 
 attribute_hidden SEXP do_env2list(SEXP call, SEXP op, SEXP args, SEXP rho)

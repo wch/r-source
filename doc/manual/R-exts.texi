@@ -17889,6 +17889,9 @@ For examining features of bindings: @code{R_ForcedBindingExpression},
 @eapifun R_ForcedBindingExpression
 @eapifun R_DelayedBindingExpression
 @eapifun R_DelayedBindingEnvironment
+A vector of the symbols for which an anvironment has bindings is
+returned by @code{R_envSymbols}.
+@eapifun R_envSymbols
 Functions for examining @code{...} bindings in environments:
 @code{R_DotsExist}, @code{R_DotsLength}, @code{R_DotsNames},
 @code{R_DotsElt}, @code{R_GetDotType}, @code{R_DotDelayedExpression},
