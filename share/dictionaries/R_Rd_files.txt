@@ -33,6 +33,7 @@ bezier
 beziers
 biexponential
 Bioassay
+bitstring
 blocky
 branchings
 builtins
