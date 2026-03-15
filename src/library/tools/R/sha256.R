@@ -1,7 +1,7 @@
 #  File src/library/tools/R/sha256.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,6 +30,22 @@ sha256sum <- function(files, bytes) {
 
 # The following fns are neither used nor exported - for now.
 
+## exclude legacy MD5 if present for backward compatibility.
+## If both are included then SHA256 has to be created first since MD5
+## checks in old versions of R don't skip it. This means SHA256 may not
+## include MD5 to avoid catch 22 (infinite hash updates).
+## We also exclude the signature as that will be created at the end.
+## So the order if all present must be:
+## .installSHA256sums() -> sign("SHA256") -> .installMD5sums()
+.hash.excluded.paths <- c("SHA256", "SHA256.sig", "MD5")
+
+## The SHA256 file has been augmented (compared to MD5) to include
+## the length to prevent length-extension attacks so the format is
+## ([0-9a-f]{64}) ([0-9]{1,}) (.*)
+## with hash=\1, size=\2 and path=\3
+## Although this makes it incompatible with the sha256sum tool,
+## it is more secure and easy to convert back, e.g. with
+## sed -E 's:([^ ]+) [^ ]+ (.*):\1 *\2:'
 .installSHA256sums <- function(pkgDir, outDir = pkgDir)
 {
     dot <- getwd()
@@ -37,9 +53,10 @@ sha256sum <- function(files, bytes) {
         stop("current working directory cannot be ascertained")
     setwd(pkgDir)
     x <- sha256sum(dir(".", recursive=TRUE))
+    x <- x[names(x) %notin% .hash.excluded.paths]
+    fs <- file.size(names(x))
     setwd(dot)
-    x <- x[names(x) != "SHA256"]
-    cat(paste(x, names(x), sep=" *"), sep="\n",
+    cat(paste(x, fs, names(x), sep=" "), sep="\n",
         file=file.path(outDir, "SHA256"))
 }
 
@@ -50,16 +67,21 @@ checkSHA256sums <- function(package, dir)
     sha256file <- file.path(dir, "SHA256")
     if(!file.exists(sha256file)) return(NA)
     inlines <- readLines(sha256file)
-    ## now split on the first space.
+    ## now split into hash, size and name
     xx <- sub("^([0-9a-fA-F]*)(.*)", "\\1", inlines)
-    nmxx <- names(xx) <- sub("^[0-9a-fA-F]* [ |*](.*)", "\\1", inlines)
+    sizes <- sub("^[0-9a-fA-F]* ([0-9]+) (.*)", "\\1", inlines)
+    nmxx <- names(xx) <- names(sizes) <- sub("^[0-9a-fA-F]* [0-9]+ (.*)", "\\1", inlines)
     dot <- getwd()
     if (is.null(dot))
         stop("current working directory cannot be ascertained")
     setwd(dir)
-    x <- sha256sum(dir(dir, recursive = TRUE))
+    x <- sha256sum(dir(recursive = TRUE))
+    x <- x[names(x) %notin% .hash.excluded.paths]
+    fs <- file.size(names(x))
+    names(fs) <- names(x)
+    ## should not happen but to avoid NA in comparisons set to -1 which will lead to FALSE anyway
+    if (any(is.na(fs))) fs[is.na(fs)] <- -1
     setwd(dot)
-    x <- x[names(x) != "SHA256"]
     nmx <- names(x)
     res <- TRUE
     not.here <- (nmxx %notin% nmx)
@@ -72,7 +94,7 @@ checkSHA256sums <- function(package, dir)
             cat("file", sQuote(nmxx[not.here]), "is missing\n", sep = " ")
     }
     nmxx <- nmxx[!not.here]
-    diff <- xx[nmxx] != x[nmxx]
+    diff <- (xx[nmxx] != x[nmxx]) | (sizes[nmxx] != fs[nmxx])
     if(any(diff)) {
         res <- FALSE
         files <- nmxx[diff]
