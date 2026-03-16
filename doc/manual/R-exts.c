@@ -39,7 +39,8 @@ SEXP getListElement(SEXP list, const char *str)
 
     for (int i = 0; i < Rf_length(list); i++)
 	if(strcmp(CHAR(STRING_ELT(names, i)), str) == 0) {
-	    elmt = VECTOR_ELT(list, i);
+	    /* ASCII only */
+            elmt = VECTOR_ELT(list, i);
 	    break;
 	}
     return elmt;
@@ -49,11 +50,13 @@ SEXP getvar(SEXP name, SEXP rho)
 {
     SEXP ans;
 
-    if(!Rf_isString(name) || Rf_length(name) != 1)
-	Rf_error("name is not a single string");
-    if(!Rf_isEnvironment(rho))
-	Rf_error("rho should be an environment");
-    ans = Rf_findVar(Rf_installChar(STRING_ELT(name, 0)), rho);
+    if (!Rf_isString(name) || Rf_length(name) != 1)
+        Rf_error("name is not a single string");
+    if (!Rf_isEnvironment(rho))
+        Rf_error("rho should be an environment");
+    ans = R_getVar(Rf_installChar(STRING_ELT(name, 0)), rho, TRUE);
+    if (TYPEOF(ans) != REALSXP || Rf_length(ans) == 0)
+        Rf_error("value is not a numeric vector with at least one element");
     Rprintf("first value is %f\n", REAL(ans)[0]);
     return R_NilValue;
 }
@@ -273,7 +276,7 @@ SEXP numeric_deriv(SEXP args)
     rgr = REAL(gradient); rans = REAL(ans);
 
     for(i = 0, start = 0; i < LENGTH(theta); i++, start += LENGTH(ans)) {
-	PROTECT(par = Rf_findVar(Rf_installChar(STRING_ELT(theta, i)), rho));
+	par = PROTECT(R_getVar(Rf_installChar(STRING_ELT(theta, i)), rho, TRUE));
 	tt = REAL(par)[0];
 	xx = fabs(tt);
 	delta = (xx < 1) ? eps : xx*eps;

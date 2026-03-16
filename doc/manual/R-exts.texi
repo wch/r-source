@@ -13290,13 +13290,19 @@ environment. @code{R_getVarEx} can be used to return a default value if
 no binding is found; this corresponds to the @R{} function @code{get0}.
 @apifun R_getVarEx
 The third argument to @code{R_getVar} and @code{R_getVarEx} corresponds
-to the @code{inherits} argument to the @R{} function @code{get}.
+to the @code{inherits} argument to the @R{} function @code{get}:
+@example
+@group
+SEXP R_getVar(SEXP sym, SEXP rho, Rboolean inherits);
+SEXP R_getVarEx(SEXP sym, SEXP rho, Rboolean inherits, SEXP ifnotfound);
+@end group
+@end example
 
 Functions with syntax
 @example
 @group
-void Rf_defineVar(SEXP symbol, SEXP value, SEXP rho)
-void Rf_setVar(SEXP symbol, SEXP value, SEXP rho)
+void Rf_defineVar(SEXP symbol, SEXP value, SEXP rho);
+void Rf_setVar(SEXP symbol, SEXP value, SEXP rho);
 @end group
 @end example
 @apifun Rf_defineVar
@@ -14376,7 +14382,7 @@ SEXP numeric_deriv(SEXP args)
 
 @group
     for(i = 0, start = 0; i < LENGTH(theta); i++, start += LENGTH(ans)) @{
-        par = PROTECT(R_getVar(Rf_installChar(STRING_ELT(theta, i)), rho, /* inherits = */ FALSE));
+        par = PROTECT(R_getVar(Rf_installChar(STRING_ELT(theta, i)), rho, TRUE));
         tt = REAL(par)[0];
         xx = fabs(tt);
         delta = (xx < 1) ? eps : xx*eps;
@@ -14444,7 +14450,7 @@ applicable.)
 @example
 @group
     for(i = 0, start = 0; i < LENGTH(theta); i++, start += LENGTH(ans)) @{
-        par = PROTECT(R_getVar(Rf_installChar(STRING_ELT(theta, i)), rho, /* inherits = */ FALSE));
+        par = PROTECT(R_getVar(Rf_installChar(STRING_ELT(theta, i)), rho, TRUE));
 @end group
 @end example
 
