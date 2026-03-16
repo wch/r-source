@@ -737,7 +737,9 @@ warnNonAPI <-
       "OBJECT", "NAMED", "SET_NAMED", "IS_S4_OBJECT", "SET_S4_OBJECT",
       "UNSET_S4_OBJECT", "R_data_class", "SET_TYPEOF", "ENVFLAGS",
       "SET_ENVFLAGS", "LEVELS", "SETLEVELS", "EXTPTR_PTR", "ENCLOS",
-      "DATAPTR", "Rf_isValidString")
+      "DATAPTR", "Rf_isValidString",
+      "PRCODE", "SET_PRCODE", "PRENV", "SET_PRENV",
+      "PRVALUE", "SET_PRVALUE", "R_PromiseExpr", "Rf_allocSExp")
 
 ## sanity checks
 stopifnot(anyDuplicated(nonAPI) == 0)
