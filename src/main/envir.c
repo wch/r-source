@@ -1594,7 +1594,10 @@ SEXP ddfindVar(SEXP symbol, SEXP rho)
 SEXP R_DotsElt(int i, SEXP env)
 {
     SEXP val = ddfind(i, env);
-    return eval(val, env);
+    if (TYPEOF(val) == PROMSXP || val == R_MissingArg)
+	return eval(val, env);
+    else
+	return val;
 }
 
 attribute_hidden SEXP do_dotsElt(SEXP call, SEXP op, SEXP args, SEXP env)

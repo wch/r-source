@@ -2719,6 +2719,17 @@ local({
     stopifnot(identical(f(x), quote(x)))
 })
 
+## R_DotsElt errors on missing dot argument
+local({
+    f <- function(...) ...elt(1)
+    x <- 1
+    stopifnot(identical(f(x), 1))
+    stopifnot(inherits(tryCatch(f(, 1), error = identity), "missingArgError"))
+    # This is another error path
+    stopifnot(grepl("the ... list contains fewer than",
+                    tryCatch(f(), error = conditionMessage)))
+})
+
 ## simple test for R_GetDotType
 local({
     getDotType <- function(i, env = parent.frame())
@@ -2796,9 +2807,6 @@ local({
     f <- function(...) inner_forced(...)
     stopifnot(identical(f(x), quote(x)))
 })
-
-## make sure this signals an error:
-tools::assertError((function(...) ...elt(1))(,))
 
 
 ## keep at end
