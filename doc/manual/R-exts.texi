@@ -17690,8 +17690,8 @@ functions that should be used instead:
 @item PRVALUE SET_PRVALUE
 @itemx PRCODE SET_PRCODE R_PromiseExpr
 @itemx PRENV SET_PRENV
-       Use the binding access API added in @R{} 4.6.0. @xref{Working
-       with variable bindings}.
+       Use the binding access API added in @R{} 4.6.0.
+       @xref{Working with variable bindings}.
 @end table
 
 For recently added entry points packages that need to be compiled
