@@ -2797,6 +2797,9 @@ local({
     stopifnot(identical(f(x), quote(x)))
 })
 
+## make sure this signals an error:
+tools::assertError((function(...) ...elt(1))(,))
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
