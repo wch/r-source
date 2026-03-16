@@ -2150,7 +2150,8 @@ function(dir)
                           ## Need to extract the code in the examples.
                           ## Rd2ex() does that and more, but provides no
                           ## output if there are no examples ...
-                          Rd2ex(u, p)
+                          ## Dynamic Rd requires installation (PR#19020).
+                          Rd2ex(u, p, stages = NULL)
                           if(file.exists(p))
                               wrk(p, v)
                       }, error = function(e) NULL)
