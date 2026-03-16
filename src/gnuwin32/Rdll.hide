@@ -80,8 +80,10 @@
  DebugMenuitem
  DefaultPalette
  ENABLE_REFCNT
+ ENCLOS
  ENSURE_NAMED
  EXTPTR_PROT
+ EXTPTR_PTR
  EXTPTR_TAG
  EhiWakeUp
  EncodeEnvironment

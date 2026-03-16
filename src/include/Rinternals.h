@@ -1270,17 +1270,17 @@ SEXP R_tryWrap(SEXP);
 // temporatily add these declarations and unhide until until BioC catches up
 //int  (NAMED)(SEXP x);      // used in Biostrings
 //void (SET_NAMED)(SEXP x, int v);      // used in Biostrings
-int (IS_S4_OBJECT)(SEXP x);
-void (SET_S4_OBJECT)(SEXP x);
-void (UNSET_S4_OBJECT)(SEXP x);
-SEXP R_data_class(SEXP , Rboolean);
+int (IS_S4_OBJECT)(SEXP x); // used in chopsticks, SharedObject
+void (SET_S4_OBJECT)(SEXP x); //used in chopsticks, SharedObject
+void (UNSET_S4_OBJECT)(SEXP x); // used in SharedObject
+SEXP R_data_class(SEXP , Rboolean); // used in chopsticks
 int  (OBJECT)(SEXP x);  // used in dang via tidyCpp, used in SharedObject
 void (SET_TYPEOF)(SEXP x, int v); // used in HilbertVisGUI
 int  (ENVFLAGS)(SEXP x);  // used in GOfuncR
 void (SET_ENVFLAGS)(SEXP x, int v);  // used in GOfuncR
-int  (LEVELS)(SEXP x);  // used in dang via tidyCpp
-int  (SETLEVELS)(SEXP x, int v);  // used in dang via tidyCpp
-SEXP R_lsInternal(SEXP, Rboolean);  // used in rJava in a separate .so file
+//int  (LEVELS)(SEXP x);  // used in dang via tidyCpp
+//int  (SETLEVELS)(SEXP x, int v);  // used in dang via tidyCpp
+//SEXP R_lsInternal(SEXP, Rboolean);  // used in rJava in a separate .so file
 SEXP *(STRING_PTR)(SEXP x); // used in matter
 //void *(EXTPTR_PTR)(SEXP);  // used in rJava in a separate .so file
 //SEXP (ENCLOS)(SEXP x);  // used in rJava in a separate .so file

@@ -4603,7 +4603,7 @@ attribute_hidden
 SEXP (EXTPTR_PROT)(SEXP x) { CHKEXTPTRSXP(x); return EXTPTR_PROT(CHK(x)); }
 attribute_hidden
 SEXP (EXTPTR_TAG)(SEXP x) { CHKEXTPTRSXP(x); return EXTPTR_TAG(CHK(x)); }
-//attribute_hidden
+attribute_hidden
 void *(EXTPTR_PTR)(SEXP x) { CHKEXTPTRSXP(x); return EXTPTR_PTR(CHK(x)); }
 
 attribute_hidden
@@ -4683,7 +4683,7 @@ attribute_hidden void (SET_DDVAL)(SEXP x, int v) { SET_DDVAL(CHK(x), v); }
 	      __func__, sexptype2char(TYPEOF(x)))
 attribute_hidden
 SEXP (FRAME)(SEXP x) { CHKENVSXP(x); return CHK(FRAME(CHK(x))); }
-//attribute_hidden
+attribute_hidden
 SEXP (ENCLOS)(SEXP x) { CHKENVSXP(x); return CHK(ENCLOS(CHK(x))); }
 attribute_hidden
 SEXP (HASHTAB)(SEXP x) { CHKENVSXP(x); return CHK(HASHTAB(CHK(x))); }
@@ -4718,7 +4718,7 @@ void (SET_ENVFLAGS)(SEXP x, int v) { SET_ENVFLAGS(x, v); }
 SEXP (PRCODE)(SEXP x) { return CHK(PRCODE(CHK(x))); }
 SEXP (PRENV)(SEXP x) { return CHK(PRENV(CHK(x))); }
 SEXP (PRVALUE)(SEXP x) { return CHK(PRVALUE(CHK(x))); }
-int (PRSEEN)(SEXP x) { return PRSEEN(CHK(x)); }
+attribute_hidden int (PRSEEN)(SEXP x) { return PRSEEN(CHK(x)); }
 attribute_hidden
 int (PROMISE_IS_EVALUATED)(SEXP x)
 {
@@ -4728,7 +4728,7 @@ int (PROMISE_IS_EVALUATED)(SEXP x)
 
 void (SET_PRENV)(SEXP x, SEXP v){ FIX_REFCNT(x, PRENV(x), v); CHECK_OLD_TO_NEW(x, v); PRENV(x) = v; }
 void (SET_PRCODE)(SEXP x, SEXP v) { FIX_REFCNT(x, PRCODE(x), v); CHECK_OLD_TO_NEW(x, v); PRCODE(x) = v; }
-void (SET_PRSEEN)(SEXP x, int v) { SET_PRSEEN(CHK(x), v); }
+attribute_hidden void (SET_PRSEEN)(SEXP x, int v) { SET_PRSEEN(CHK(x), v); }
 
 void (SET_PRVALUE)(SEXP x, SEXP v)
 {
