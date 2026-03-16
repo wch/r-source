@@ -830,8 +830,29 @@ static R_BindingType_t BINDING_TYPE(SEXP cell)
 
 static R_BindingType_t SYMBOL_BINDING_TYPE(SEXP cell)
 {
-    // probably no need to support symbol bindings
-    error("symbol bindings not supported yet");
+    if (IS_ACTIVE_BINDING(cell))
+        return R_BindingTypeActive;
+
+    SEXP value = SYMVALUE(cell);
+    if (value == R_UnboundValue)
+	return R_BindingTypeUnbound;
+
+    /* Shouldn't happen but for completeness */
+    if (value == R_MissingArg)
+	return R_BindingTypeMissing;
+
+    /* There really shouldn't be any promise chains here but we unwrap
+       for consistency with BINDING_TYPE */
+    if (TYPEOF(value) == PROMSXP) {
+	Rboolean forced;
+	promiseUnwrap(value, &forced);
+	if (forced)
+	    return R_BindingTypeForced;
+	else
+	    return R_BindingTypeDelayed;
+    }
+
+    return R_BindingTypeValue;
 }
 
 attribute_hidden
@@ -3852,6 +3873,24 @@ attribute_hidden Rboolean R_HasFancyBindings(SEXP rho)
     }
 }
 
+/* Like BINDING_VALUE but handles symbol cells (base namespace) via
+   SYMVALUE instead of CAR. Also signals an error for active bindings. */
+static R_INLINE SEXP BINDING_OR_SYMBOL_VALUE(SEXP cell)
+{
+    if (IS_ACTIVE_BINDING(cell))
+	error("BINDING_OR_SYMBOL_VALUE called on active binding");
+
+    if (TYPEOF(cell) == SYMSXP)
+	return SYMVALUE(cell);
+
+    if (BNDCELL_TAG(cell)) {
+	R_expand_binding_value(cell);
+	return CAR0(cell);
+    }
+
+    return CAR(cell);
+}
+
 // get the expression for a delayed or forced binding
 static SEXP R_GetVarLocExpression(R_varloc_t loc)
 {
@@ -3859,7 +3898,7 @@ static SEXP R_GetVarLocExpression(R_varloc_t loc)
     if (cell == NULL || cell == R_UnboundValue)
 	error(_("unbound variable"));
 
-    SEXP value = BINDING_VALUE(cell);
+    SEXP value = BINDING_OR_SYMBOL_VALUE(cell);
     if (TYPEOF(value) != PROMSXP)
 	error(_("not a delayed or forced binding"));
 
@@ -3889,12 +3928,12 @@ SEXP R_ForcedBindingExpression(SEXP sym, SEXP env)
 
 // get the environment for a delayed binding
 SEXP R_DelayedBindingEnvironment(SEXP sym, SEXP env) {
-    R_varloc_t loc = R_findVarLocInFrame(env, sym);
+    R_varloc_t loc = R_findVarLocInFrameCheck(env, sym);
     SEXP cell = loc.cell;
     if (cell == NULL || cell == R_UnboundValue)
 	error(_("unbound variable"));
 
-    SEXP value = BINDING_VALUE(cell);
+    SEXP value = BINDING_OR_SYMBOL_VALUE(cell);
     if (TYPEOF(value) != PROMSXP)
 	error(_("not a delayed binding"));
 

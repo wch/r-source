@@ -2664,6 +2664,48 @@ local({
     stopifnot(f(x) == "forced")
 })
 
+## R_GetBindingType with symbol bindings (base namespace)
+local({
+    getBindingType <- function(sym, env) {
+        if (is.character(sym))
+            sym <- as.name(sym)
+        .Internal(getBindingType(sym, env))
+    }
+    stopifnot(getBindingType("T", baseenv()) == "value")
+    stopifnot(getBindingType("c", baseenv()) == "value")
+    stopifnot(getBindingType(".TAOCP1997init", baseenv()) == "delayed")
+    stopifnot(getBindingType(".Library.site", baseenv()) == "active")
+    stopifnot(getBindingType("..nonexistent..", baseenv()) == "unbound")
+})
+
+## Binding accessors with symbol bindings (base namespace)
+local({
+    delayedExpr <- function(sym, env) {
+        if (is.character(sym)) sym <- as.name(sym)
+        .Internal(delayedBindingExpression(sym, env))
+    }
+    delayedEnv <- function(sym, env) {
+        if (is.character(sym)) sym <- as.name(sym)
+        .Internal(delayedBindingEnvironment(sym, env))
+    }
+    forcedExpr <- function(sym, env) {
+        if (is.character(sym)) sym <- as.name(sym)
+        .Internal(forcedBindingExpression(sym, env))
+    }
+    # `.TAOCP1997init` is lazily loaded in base. We're checking this one
+    # because it's unlikely to have been forced by another test.
+    expr <- delayedExpr(".TAOCP1997init", baseenv())
+    stopifnot(is.language(expr))
+    env <- delayedEnv(".TAOCP1997init", baseenv())
+    stopifnot(is.environment(env))
+    force(.TAOCP1997init)
+    expr <- forcedExpr(".TAOCP1997init", baseenv())
+    stopifnot(is.language(expr))
+    # `.Library.site` is an active binding in base
+    fn <- activeBindingFunction(as.name(".Library.site"), baseenv())
+    stopifnot(is.function(fn))
+})
+
 ## R_DelayedBindingExpression and R_DelayedBindingEnvironment
 local({
     delayedExpr <- function(sym, env = parent.frame()) {
