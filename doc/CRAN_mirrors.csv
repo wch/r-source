@@ -40,7 +40,8 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "France (Lyon 2) [https]",France,Lyon,https://mirror.ibcp.fr/pub/CRAN/,"CNRS IBCP, Lyon","alexis.michon # ibcp.fr",1,fr,"secure_mirror_from_master"
 "France (Paris 1) [https]",France,Paris,https://cran.asnr.fr/,"French Authority for Nuclear Safety and Radiation Protection (ASNR), Paris","yann.richet # asnr.fr",1,fr,"secure_mirror_from_master"
 "Germany (Erlangen) [https]",Germany,Erlangen,https://ftp.fau.de/cran/,"Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU)","rrze-ftp-admins # fau.de",1,de,"secure_mirror_from_master"
-"Germany (Falkenstein) [https]",Germany,Falkenstein,https://cran.datenrettung360.de/,"Hetzner Online GmbH","noc # siecon-it.com",1,de
+"Germany (Falkenstein 1) [https]",Germany,Falkenstein,https://cran.datenrettung360.de/,"Hetzner Online GmbH","noc # siecon-it.com",1,de
+"Germany (Falkenstein 2) [https]",Germany,Falkenstein,https://mirror.rabisu.com/mirrors/CRAN/,Rabisu,"mirror # rabisu.com",1,de
 "Germany (Göttingen) [https]",Germany,Göttingen,https://ftp.gwdg.de/pub/misc/cran/,"GWDG Göttingen","ftpadmin # gwdg.de",1,de,"secure_mirror_from_master"
 "Germany (Leipzig) [https]",Germany,Leipzig,https://mirror.dogado.de/cran/,"dogado GmbH","mirror # dogado.de",1,de,"secure_mirror_from_master"
 "Germany (Münster) [https]",Germany,Münster,https://cran.uni-muenster.de/,"University of Münster, Germany","Edzer Pebesma <edzer.pebesma # uni-muenster.de>",1,de,"secure_mirror_from_master"
