@@ -1579,7 +1579,8 @@ static int ddVal(SEXP symbol)
 
 Rboolean R_DotsExist(SEXP env)
 {
-    return R_findVar(R_DotsSymbol, env) != R_UnboundValue;
+    SEXP vl = R_findVar(R_DotsSymbol, env) ;
+    return vl != R_UnboundValue && TYPEOF(vl) == DOTSXP;
 }
 
 static SEXP ddfind(int i, SEXP rho)
