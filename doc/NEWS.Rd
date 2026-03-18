@@ -189,8 +189,6 @@
       It also provides more useful summaries for complex vectors, with
       \code{polar} determining if polar or cartesian coordinates are more
       relevant; mostly based on a proposal by \I{Mikael Jagan}.
-      Experimentally, and to be changed before release,
-      \code{summary(<raw>)} also provides quantitative information.
 
       \item Error messages from failed Rd \verb{\Sexpr} code now include
       the call from the original condition (if available).
