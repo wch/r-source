@@ -145,6 +145,7 @@ SEXP do_dotcall(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dotDelayedEnv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dotDelayedExpr(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dotForcedExpr(SEXP, SEXP, SEXP, SEXP);
+SEXP do_dotsExist(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dotsElt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dotsLength(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dotsNames(SEXP, SEXP, SEXP, SEXP);

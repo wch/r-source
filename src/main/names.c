@@ -926,6 +926,7 @@ FUNTAB R_FunTab[] =
 {"delayedBindingExpression", do_delayedBindingExpr, 0, 11, 2, {PP_FUNCALL, PREC_FN, 0}},
 {"delayedBindingEnvironment", do_delayedBindingEnv, 0, 11, 2, {PP_FUNCALL, PREC_FN, 0}},
 {"forcedBindingExpression", do_forcedBindingExpr, 0, 11, 2, {PP_FUNCALL, PREC_FN, 0}},
+{"dotsExist", do_dotsExist,		0, 11,	1,      {PP_FUNCALL, PREC_FN,	0}},
 {"getDotType", do_dotType,		0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
 {"dotDelayedExpression", do_dotDelayedExpr, 0, 11, 2,  {PP_FUNCALL, PREC_FN,	0}},
 {"dotDelayedEnvironment", do_dotDelayedEnv, 0, 11, 2,  {PP_FUNCALL, PREC_FN,	0}},

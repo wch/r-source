@@ -2851,6 +2851,26 @@ local({
 })
 
 
+## R_DotsExist() returns TRUE for empty dots (R_MissingArg)
+local({
+    dotsExist <- function(env = parent.frame())
+        .Internal(dotsExist(env))
+    fn <- function(...) dotsExist()
+    fn_no_dots <- function() dotsExist()
+    stopifnot(
+        isTRUE(fn()),
+        isTRUE(fn(1)),
+        isTRUE(fn(1, 2, 3)),
+        isFALSE(fn_no_dots())
+    )
+    ## Non-DOTSXP values bound to `...`
+    e <- new.env(parent = emptyenv())
+    e$... <- NULL
+    stopifnot(isFALSE(dotsExist(e)))
+    e$... <- 1
+    stopifnot(isFALSE(dotsExist(e)))
+})
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
