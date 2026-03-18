@@ -17878,44 +17878,117 @@ Some additional functions may be added for working with attributes.
 @node Working with variable bindings
 @subsection Working with variable bindings
 
-The functions @code{Rf_findVar} and @code{Rf_findVarInFrame} have been used in
-a number of packages but are too low level to be part of the API. For
-most uses the functions @code{R_getVar} and @code{R_getVarEx} added in
-@R{} 4.5.0 will be sufficient. These are analogous to the R functions
-@code{get} and @code{get0}.
+The internal functions @code{Rf_findVar} and @code{Rf_findVarInFrame}
+have been used in a number of packages but are too low level to be part
+of the API. For most uses the functions @code{R_getVar} and
+@code{R_getVarEx} added in @R{} 4.5.0 will be sufficient. These are
+analogous to the R functions @code{get} and @code{get0}.
 
 In rare cases package @R{} or C code may want to obtain more detailed
 information on a binding, such as whether the binding is delayed or
-not. An experimental function @code{R_GetBindingType} is now available.
-Also available for creating bindings of different types:
-@code{R_MakeDelayedBinding}, @code{R_MakeForcedBinding}, and
-@code{R_MakeMissingBinding}.
+not. An experimental C API has been added in @R{} 4.6.0. An @R{} level
+API may be added as well.
+
+The type of a binding for a symbol in an environment can be obtained
+with
+@example
+@group
+R_BindingType_t R_GetBindingType(SEXP sym, SEXP env);
+@end group
+@end example
 @eapifun R_GetBindingType
-@eapifun R_MakeDelayedBinding
-@eapifun R_MakeForcedBinding
-@eapifun R_MakeMissingBinding
-For examining features of bindings: @code{R_ForcedBindingExpression},
-@code{R_DelayedBindingExpression}, and
-@code{R_DelayedBindingEnvironment}.
+The returned value type is an @code{enum} with possible values
+@code{R_BindingTypeUnbound}, @code{R_BindingTypeValue},
+@code{R_BindingTypeMissing}, @code{R_BindingTypeDelayed},
+@code{R_BindingTypeForced}, and @code{R_BindingTypeActive}.
+@eapivar R_BindingTypeUnbound
+@eapivar R_BindingTypeValue
+@eapivar R_BindingTypeMissing
+@eapivar R_BindingTypeDelayed
+@eapivar R_BindingTypeForced
+@eapivar R_BindingTypeActive
+
+Features of forced or delayed bindings can be examined with
+@example
+@group
+SEXP R_ForcedBindingExpression(SEXP sym, SEXP env);
+SEXP R_DelayedBindingExpression(SEXP sym, SEXP env);
+SEXP R_DelayedBindingEnvironment(SEXP sym, SEXP env);
+@end group
+@end example
 @eapifun R_ForcedBindingExpression
 @eapifun R_DelayedBindingExpression
 @eapifun R_DelayedBindingEnvironment
-A vector of the symbols for which an anvironment has bindings is
-returned by @code{R_envSymbols}.
+
+New forced, delayed, and missing bindings can be created with
+@example
+@group
+void R_MakeForcedBinding(SEXP sym, SEXP expr, SEXP value, SEXP env);
+void R_MakeDelayedBinding(SEXP sym, SEXP expr, SEXP evalEnv, SEXP env);
+void R_MakeMissingBinding(SEXP sym, SEXP env);
+@end group
+@end example
+@eapifun R_MakeForcedBinding
+@eapifun R_MakeDelayedBinding
+@eapifun R_MakeMissingBinding
+
+A vector of the symbols for which an environment has bindings is
+returned by
+@example
+@group
+SEXP R_envSymbols(SEXP env);
+@end group
+@end example
 @eapifun R_envSymbols
-Functions for examining @code{...} bindings in environments:
-@code{R_DotsExist}, @code{R_DotsLength}, @code{R_DotsNames},
-@code{R_DotsElt}, @code{R_GetDotType}, @code{R_DotDelayedExpression},
-@code{R_DotDelayedEnvironment} and @code{R_DotForcedExpression}.
+
+Whether a proper @code{...} binding exists can be determined with
+@example
+@group
+Rboolean R_DotsExist(SEXP env);
+@end group
+@end example
 @eapifun R_DotsExist
+
+Length and names of a @code{...} binding are returned by
+@example
+@group
+int R_DotsLength(SEXP env);
+SEXP R_DotsNames(SEXP env);
+@end group
+@end example
 @eapifun R_DotsLength
 @eapifun R_DotsNames
-@eapifun R_DotsElt
+These correspond to the @R{} functions @code{...length} and @code{...names}.
+
+The type of an individual @code{...} element can be obtained with
+@example
+@group
+R_DotType_t R_GetDotType(int i, SEXP env);
+@end group
+@end example
 @eapifun R_GetDotType
+The returned value is an @code{enum} with possible values
+@code{R_DotTypeValue}, @code{R_DotTypeMissing}, @code{R_DotTypeDelayed},
+and @code{R_DotTypeForced}.
+@eapivar R_DotTypeValue
+@eapivar R_DotTypeMissing
+@eapivar R_DotTypeDelayed
+@eapivar R_DotTypeForced
+
+Individual @code{...} elements can be examined using
+@example
+@group
+SEXP R_DotsElt(int i, SEXP env);
+SEXP R_DotForcedExpression(int i, SEXP env);
+SEXP R_DotDelayedExpression(int i, SEXP env);
+SEXP R_DotDelayedEnvironment(int i, SEXP env);
+@end group
+@end example
+@eapifun R_DotsElt
 @eapifun R_DotDelayedExpression
 @eapifun R_DotDelayedEnvironment
 @eapifun R_DotForcedExpression
-
+@code{R_DotsElt} corresponds to the @R{} function @code{...elt}.
 
 
 @node Some backports

@@ -532,7 +532,7 @@ Rboolean R_isTRUE(SEXP); // util.c
 SEXP Rf_lengthgets(SEXP, R_len_t);
 SEXP Rf_xlengthgets(SEXP, R_xlen_t);
 SEXP R_lsInternal3(SEXP, Rboolean, Rboolean); // envir.c
-SEXP R_envSymbols(SEXP); // envir.c
+SEXP R_envSymbols(SEXP env); // envir.c
 SEXP Rf_match(SEXP, SEXP, int);
 SEXP Rf_namesgets(SEXP, SEXP);
 SEXP Rf_mkChar(const char *);
