@@ -36,14 +36,9 @@ summary.default <- function(object, ..., digits, quantile.type = 7,
         if(!is.null(n <- dimnames(tb)[[1L]]) && any(iN <- is.na(n)))
             dimnames(tb)[[1L]][iN] <- "NAs"
         c(Mode = "logical", tb)
-    } else if(is.numeric(object) || is.raw(object)) {
-       if (is.raw(object)) { # no NAs, no arithmetic -> as.int
-            nas <- FALSE
-            object <- as.integer(object)
-       } else {
+    } else if(is.numeric(object)) {
 	nas <- is.na(object)
 	object <- object[!nas]
-       }
 	qq <- stats::quantile(object, names = FALSE, type = quantile.type)
         qq <- c(qq[1L:3L], mean(object), qq[4L:5L])
 	if(!missing(digits)) qq <- signif(qq, digits)
