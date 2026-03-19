@@ -453,7 +453,7 @@
 
       \item The functions \code{Rf_findVar} and \code{findVarInFrame}
       are now marked as non-API, and uses in packages will now receive
-      check \samp{NOTE}s.  See \sQuote{Writing R Extensions} for
+      check \samp{WARNING}s.  See \sQuote{Writing R Extensions} for
       alternatives to use.
 
       \item \command{R CMD check} \samp{NOTE}s on the use of the non-API

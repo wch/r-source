@@ -731,7 +731,8 @@ warnNonAPI <-
       "DDVAL", "ENSURE_NAMEDMAX", "INTERNAL", "SYMVALUE",
       ## "R_tryWrap",
       "STRING_PTR", "ATTRIB", "SET_ATTRIB", "SET_OBJECT",
-      "R_lsInternal", "Rf_findVarInFrame3",
+      "Rf_findVar", "Rf_findVarInFrame", "Rf_findVarInFrame3",
+      "R_lsInternal",
       "BODY", "FORMALS", "CLOENV", "getConnection", "Rsleep",
       ## remove declarations and hide these entry points once BioC catches up
       "OBJECT", "NAMED", "SET_NAMED", "IS_S4_OBJECT", "SET_S4_OBJECT",
