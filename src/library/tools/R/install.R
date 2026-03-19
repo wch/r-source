@@ -444,6 +444,9 @@ if(FALSE) {
         is_first_package <<- FALSE
 
         if (tar_up) { # Unix only
+            starsmsg(stars, "SHA256 sums")
+            .installSHA256sums(instdir)
+            ## TODO: add signature
             starsmsg(stars, "creating tarball")
             version <- desc["Version"]
             filename <- if (!grepl("darwin", R.version$os)) {
@@ -511,6 +514,20 @@ if(FALSE) {
                             ))
         if (res) errmsg("installing binary package failed")
 
+        res <- checkSHA256sums(pkg, instdir)
+        if(!is.na(res) && res) {
+            starsmsg(stars,
+                     gettextf("package %s successfully unpacked and %s sums checked",
+                              sQuote(pkg), "SHA256"))
+        } else {
+            res <- checkMD5sums(pkg, instdir)
+            if(!is.na(res) && res) {
+                starsmsg(stars,
+		     gettextf("package %s successfully unpacked and %s sums checked",
+                              sQuote(pkg), "MD5"))
+	    }
+	}
+        
         if (tar_up) {
             starsmsg(stars, sQuote(pkg),
                      " was already a binary package and will not be rebuilt")
@@ -1052,11 +1069,18 @@ if(FALSE) {
                          sQuote(desc["Package"]),
                          sQuote(desc["Version"])))
 
-        res <- checkMD5sums(pkg_name, getwd())
+        res <- checkSHA256sums(pkg_name, getwd())
         if(!is.na(res) && res) {
             starsmsg(stars,
-                     gettextf("package %s successfully unpacked and MD5 sums checked",
-                              sQuote(pkg_name)))
+                     gettextf("package %s successfully unpacked and %s sums checked",
+                              sQuote(pkg_name), "SHA256"))
+        } else {
+            res <- checkMD5sums(pkg_name, getwd())
+            if(!is.na(res) && res) {
+                starsmsg(stars,
+                     gettextf("package %s successfully unpacked and %s sums checked",
+                              sQuote(pkg_name), "MD5"))
+            }
         }
 
         if (file.exists(file.path(instdir, "DESCRIPTION"))) {
