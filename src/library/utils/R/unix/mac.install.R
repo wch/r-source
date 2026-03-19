@@ -43,7 +43,9 @@
         if (length(grep("-darwin[0-9][0-9.]*$", c(b.platform, platform))) == 2L &&
             ## if everything else matches (mainly arch)
             gsub("-darwin[0-9][0-9.]*$", "", b.platform) == gsub("-darwin[0-9][0-9.]*$", "", platform)) {
-            vers <- as.integer(gsub(".*-darwin(([0-9]+)|([0-9]+)[.][0-9.]*)$", "\\1", c(b.platform, platform)))
+            vers <- as.integer(gsub("[.].*","",gsub(".*-darwin(([0-9]+)|([0-9]+)[.][0-9.]*)$", "\\1", c(b.platform, platform))))
+            ## if we cannot recognize versions (shouldn't happen), we have to give up and hope for the best
+            if (any(is.na(vers))) return(TRUE)
             ## NOTE: in principle a newer binary can actually work if we are running a
             ## build that targets older system, but is ran on a macOS that is at least as new,
             ## but we should not see that unless the binary is from a newer build which
