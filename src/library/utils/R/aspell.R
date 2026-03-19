@@ -485,6 +485,7 @@ aspell_control_R_manuals <-
            "--add-texinfo-ignore=defcodeindex",
            "--add-texinfo-ignore=eapifun",
            "--add-texinfo-ignore=eapihdr",
+           "--add-texinfo-ignore=eapivar",
            "--add-texinfo-ignore=embfun",
            "--add-texinfo-ignore=embhdr",
            "--add-texinfo-ignore=embvar",
