@@ -432,7 +432,7 @@
       \code{SET_TRUELENGTH}, \code{STDVEC_DATAPTR}, \code{TRUELENGTH},
       \code{UNSET_S4_OBJECT}, \code{XTRUELENGTH}.
 
-      \item New experimental API for working with variable bindiongs in
+      \item New experimental API for working with variable bindings in
       environments. The function \code{R_GetBindingType} identifies the
       binding type without forcing a delayed or active binding.  New
       bindings care created by \code{R_MakeDelayedBinding},
