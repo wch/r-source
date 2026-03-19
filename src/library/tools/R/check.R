@@ -2507,6 +2507,9 @@ add_dummies <- function(dir, Log)
         if (dir.exists("man") && !extra_arch) {
             checkingLog(Log, "Rd files")
             t1 <- proc.time()
+            Sys.setenv("_R_BIBTOOLS_CACHE_BIBENTRIES_" =
+                           Sys.getenv("_R_BIBTOOLS_CACHE_BIBENTRIES_",
+                                      "TRUE"))
             minlevel <- if (is_base_pkg) -Inf else
                 as.numeric(Sys.getenv("_R_CHECK_RD_CHECKRD_MINLEVEL_", "-1"))
             Rcmd <- paste(opWarn_string, "\n",

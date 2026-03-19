@@ -23,7 +23,13 @@ function()
 R_bibentries <-
 function()
 {
-    readRDS(file.path(R_bibliographies_dir(), "R.rds"))
+    if(.bibtools_cache_bibentries() &&
+       !is.null(bib <- .bibtools_bibentries_cache("R")))
+        return(bib)
+    bib <- readRDS(file.path(R_bibliographies_dir(), "R.rds"))
+    if(.bibtools_cache_bibentries())
+        .bibtools_bibentries_cache("R", bib)
+    bib
 }
 
 ## utils:::.bibentry_get_key
@@ -53,8 +59,11 @@ function(keys)
                           dir <- dirname(dir)
                           c(dir, file.path(dir, "inst"))
                       } else character()
+               pkg <- if(length(dir)) {
+                          basename(dir[1L])
+                      } else character()
                c(R_bibentries(),
-                 .bibentries_from_REFERENCES(dir))
+                 .bibentries_from_REFERENCES(dir, pkg))
            } else NULL
     if(!any(ind)) {
         ## Special-case for efficiency.
@@ -75,7 +84,7 @@ function(keys)
                        brp
                    else {
                        dir <- system.file(package = pj)
-                       .bibentries_from_REFERENCES(dir)
+                       .bibentries_from_REFERENCES(dir, pj)
                    }
             kj <- keys[i[[j]]]
             pos <- match(sub(".*::", "", kj),
@@ -100,18 +109,28 @@ function(keys)
 }
 
 .bibentries_from_REFERENCES <-
-function(dir)
+function(dir, pkg)
 {
+    if(!length(pkg))
+        return(utils::bibentry())
+    bib <- NULL
+    if(.bibtools_cache_bibentries() &&
+       !is.null(bib <- .bibtools_bibentries_cache(pkg)))
+        return(bib)
     for(d in dir[nzchar(dir)]) {
-        if(file.exists(path <- file.path(d, "REFERENCES.rds")))
-            return(readRDS(path))
+        bib <- if(file.exists(path <- file.path(d, "REFERENCES.rds")))
+            readRDS(path)
         else if(file.exists(path <- file.path(d, "REFERENCES.R")))
-            return(utils::readCitationFile(path,
-                                           list(Encoding = "UTF-8")))
+            utils::readCitationFile(path, list(Encoding = "UTF-8"))
         else if(file.exists(path <- file.path(d, "REFERENCES.bib")))
-            return(`names<-`(bibtex::read.bib(path), NULL))
+            `names<-`(bibtex::read.bib(path), NULL)
+        if(!is.null(bib)) {
+            if(.bibtools_cache_bibentries())
+                .bibtools_bibentries_cache(pkg, bib)
+            return(bib)
+        }
     }
-    utils::bibentry()        
+    utils::bibentry()
 }
 
 .bibentries_from_bibtex <-
@@ -245,7 +264,9 @@ function(dir)
     y
 }
 
-.bibentries_cited_or_shown <- function(x) {
+.bibentries_cited_or_shown <-
+function(x)
+{
     tab <- NULL
     recurse <- function(e) {
         if(identical(attr(e, "Rd_tag"), "USERMACRO") &&
@@ -279,8 +300,38 @@ function(x)
     keys
 }
 
-.bibkeys_from_show <- function(x)
+.bibkeys_from_show <-
+function(x)
 {
     x <- trimws(x)
     strsplit(x, ",[[:space:]]*")[[1L]]
 }
+
+.bibtools_cache_bibentries <- local({
+    val <- FALSE
+    function(new) {
+        if(!missing(new)) {
+            ## <FIXME>
+            ## Ideally we would do 
+            ##   val <<- config_val_to_logical(new)
+            ## But that needs utils, and we need to set this when
+            ## loading.  So if we really want/need to make caching
+            ## customizable, the best we can do is something like
+            val <<- isTRUE(as.logical(new))
+            ## </FIXME>
+        } else
+            val
+    }
+})
+
+.bibtools_bibentries_cache <- local({
+    val <- list()
+    function(pkg, bib) {
+        if(missing(pkg))
+            val
+        else if(missing(bib))
+            val[[pkg]]
+        else
+            val[[pkg]] <<- bib
+    }
+})
