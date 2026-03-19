@@ -27,12 +27,19 @@ checkMD5sums(package, dir)
   is searched for.
 
   The private function \code{tools:::.installMD5sums} is used to create
-  \code{MD5} files in the Windows build.
+  \code{MD5} files.
+}
+\note{
+  The use of the \code{MD5} files has been deprecated in favor of
+  \code{SHA256} files checked by \code{\link{checkSHA256sums}} since
+  MD5 hashes are succeptible to hash-collision and length-extension
+  attacks and therefore are only suitable for integrity checks and not
+  for verification of authenticity.
 }
 \value{
   \code{checkMD5sums} returns a logical, \code{NA} if there is no
   \file{MD5} file to be checked.
 }
-\seealso{\code{\link{md5sum}}}
+\seealso{\code{\link{md5sum}}, \code{\link{checkSHA256sums}}}
 
 \keyword{utilities}

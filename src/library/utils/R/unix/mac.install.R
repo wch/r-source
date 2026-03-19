@@ -127,7 +127,7 @@
         if (!.is.built.compatible(desc$Built))
             stop(gettextf("binary package %s is not compatible with this build of R", sQuote(pkg)))
 
-        res <- tools:::checkSHA256sums(pkgname, file.path(tmpDir, pkgname))
+        res <- tools::checkSHA256sums(pkgname, file.path(tmpDir, pkgname))
         if(!quiet && !is.na(res) && res) {
             cat(gettextf("package %s successfully unpacked and %s sums checked",
                          sQuote(pkgname), "SHA256"), "\n", sep="")
