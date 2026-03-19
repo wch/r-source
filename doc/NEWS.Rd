@@ -432,19 +432,21 @@
       \code{SET_TRUELENGTH}, \code{STDVEC_DATAPTR}, \code{TRUELENGTH},
       \code{UNSET_S4_OBJECT}, \code{XTRUELENGTH}.
 
-      \item New experimental function \code{R_GetBindingType} to support
-      inspecting environment bindings without forcing delayed or active
-      bindings.  New functions \code{R_MakeDelayedBinding},
-      \code{R_MakeForcedBinding} and \code{R_MakeMissingBinding} for
-      creating bindings. For examining features of bindings:
+      \item New experimental API for working with variable bindiongs in
+      environments. The function \code{R_GetBindingType} identifies the
+      binding type without forcing a delayed or active binding.  New
+      bindings care created by \code{R_MakeDelayedBinding},
+      \code{R_MakeForcedBinding} and \code{R_MakeMissingBinding}.
+      Delayed and forced bindings can be inspected with
       \code{R_ForcedBindingExpression},
       \code{R_DelayedBindingExpression}, and
-      \code{R_DelayedBindingEnvironment} (\PR{18928}).  New functions
-      for examining \code{...} bindings in environments:
+      \code{R_DelayedBindingEnvironment}.  Bindings for \code{...} in
+      function call environments can be examined with
       \code{R_DotsExist}, \code{R_DotsLength}, \code{R_DotsNames},
       \code{R_DotsElt}, \code{R_GetDotType},
       \code{R_DotDelayedExpression}, \code{R_DotDelayedEnvironment}, and
-      \code{R_DotForcedExpression} (\PR{18928}).
+      \code{R_DotForcedExpression}. Contributed by Lionel Henry and
+      Davis Vaughan in \PR{18928}.
 
       \item New function \code{R_envSymbols} returns a vector of the
       symbols for which an environment contains bindings (\PR{18928}).
