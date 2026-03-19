@@ -54,16 +54,23 @@ function(query, package = "R", lib.loc = NULL,
 
     ## Manipulate fields for querying (but return the original ones).
     db1 <- db
-    ## Canonicalize version entries which *start* with a valid numeric
-    ## version, i.e., drop things like " patched".
     version <- db$Version
-    pos <- regexpr(sprintf("^%s",
-                           .standard_regexps()$valid_numeric_version),
-                   version)
-    if(any(ind <- (pos > -1L)))
-        version[ind] <-
-            substring(version[ind], 1L, attr(pos, "match.length")[ind])
-    db1$Version <- numeric_version(version, strict = FALSE)
+    ## For R, special-case R version specials as appropriate.
+    ## Otherwise, canonicalize version entries which *start* with a
+    ## valid numeric version, i.e., drop things like " patched".
+    if(package == "R") {
+        class(version) <- "R_version_string_with_specials"
+    } else {
+        pos <- regexpr(sprintf("^%s",
+                               .standard_regexps()$valid_numeric_version),
+                       version)
+        if(any(ind <- (pos > -1L)))
+            version[ind] <-
+                substring(version[ind], 1L, attr(pos,
+                                                 "match.length")[ind])
+        version <- numeric_version(version, strict = FALSE)
+    }
+    db1$Version <- version
     db1$Date <- as.Date(db$Date)
 
     r <- eval(substitute(query), db1, parent.frame())
@@ -206,4 +213,34 @@ function(x, doBrowse = interactive(), browser = getOption("browser"), ...)
 subset.news_db <-
 function(x, subset, ...) {
     do.call(news, list(substitute(subset), db = x))
+}
+
+Ops.R_version_string_with_specials <-
+function(e1, e2)
+{
+    ## Compare == and != as given strings.
+    if(.Generic %in% c("==", "!="))
+        return(do.call(.Generic,
+                       list(as.character(e1),
+                            as.character(e2))))
+    ## Otherwise, compare as numeric versions after replacing specials
+    ## as appropriate.
+    f <- function(e) {
+        ind <- (e == "R-devel")
+        if(any(ind) &&
+           R.version$status == "Under development (unstable)")
+            e[ind] <- paste(R.version[c("major", "minor")],
+                            collapse = ".")
+        ind <- endsWith(e, "patched")
+        if(any(ind))
+            e[ind] <- sub(" *patched", ".1", e[ind])
+        e
+    }
+    if(is.character(e1))
+        e1 <- f(as.character(e1))
+    if(is.character(e2))
+        e2 <- f(as.character(e2))
+    do.call(.Generic,
+            list(numeric_version(e1, strict = FALSE),
+                 numeric_version(e2, strict = FALSE)))
 }
