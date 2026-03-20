@@ -40,7 +40,7 @@
   \code{print}) for its grouped-data classes.
 }
 \source{
-  \bibcitet{|R:Davidian+Giltinan:1995|Table 2.1\, p.\sspace{}18}
+  \bibcitet{|R:Davidian+Giltinan:1995|table 2.1 on page 18}
 
   Originally: \bibcitet{R:Kwan+Breault+Umbenhauer:1976}
 }

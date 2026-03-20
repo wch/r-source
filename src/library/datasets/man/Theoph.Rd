@@ -45,7 +45,8 @@
   next 25 hours.
 
   These data are analyzed in
-  \bibcitet{|R:Davidian+Giltinan:1995|Section 5.5\, p.\sspace{}145\, and Section 6.6\, p.\sspace{}176}
+  \bibcitet{|R:Davidian+Giltinan:1995|page 145 in section 5.5 and page
+  176 in section 6.6}
   and
   \bibcitet{R:Pinheiro+Bates:2000} using a two-compartment open pharmacokinetic model,
   for which a self-starting model function, \code{SSfol}, is available.
