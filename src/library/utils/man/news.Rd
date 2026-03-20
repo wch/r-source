@@ -148,7 +148,7 @@ db <- news()
   html <- tools::toHTML(subset(db, is.na(Version))) # emulate doBrowse with query
 }
 ## Bug fixes with PR number in 4.0.0.
-db4 <- news(Version == "4.0.0" & grepl("^BUG", Category) & grepl("PR#", Text),
+db4 <- news(Version == "4.0.0" & grepl("^Bug", Category) & grepl("PR#", Text),
             db = db)
 nrow(db4)
 \dontshow{stopifnot(is.null(attr(db4, "bad")) && nrow(db4) == 25 )}
