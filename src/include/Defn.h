@@ -670,6 +670,8 @@ SEXP CONS_NR(SEXP a, SEXP b);
 int  (MISSING)(SEXP x);
 
 /* Closure Access Functions */
+SEXP (BODY)(SEXP x);
+SEXP (CLOENV)(SEXP x);
 int  (RDEBUG)(SEXP x);
 int  (RSTEP)(SEXP x);
 int  (RTRACE)(SEXP x);

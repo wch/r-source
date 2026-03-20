@@ -333,8 +333,8 @@ SEXP SETCAD4R(SEXP e, SEXP y);
 
 /* Closure Access Functions */
 SEXP (FORMALS)(SEXP x);
-SEXP (BODY)(SEXP x);
-SEXP (CLOENV)(SEXP x);
+//SEXP (BODY)(SEXP x);
+//SEXP (CLOENV)(SEXP x);
 //int  (RDEBUG)(SEXP x);
 //int  (RSTEP)(SEXP x);
 //int  (RTRACE)(SEXP x);
