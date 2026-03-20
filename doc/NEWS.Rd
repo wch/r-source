@@ -708,6 +708,10 @@
       \item \command{R CMD build} now installs packages providing their
       own vignette engine (\PR{18191}).
       Patch by \I{Paul Smith}.
+
+      \item \code{ar.burg()}, \code{ar.yw()} and \code{ar.ols()} deal
+      better with non finite AIC values thanks to \I{Simone Giannerini}'s
+      remarks on R-devel.
     }
   }
 }

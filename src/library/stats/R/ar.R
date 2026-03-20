@@ -1,7 +1,7 @@
 #  File src/library/stats/R/ar.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1999-2019 The R Core Team
+#  Copyright (C) 1999-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -139,8 +139,8 @@ ar.yw.default <-
         partialacf <- array(diag(coefs), dim = c(order.max, 1L, 1L))
         var.pred <- c(r[1L], z$vars)
         xaic <- n.obs * log(var.pred) + 2 * (0L:order.max) + 2 * demean
-        maic <- min(aic)
-	xaic <- setNames(if(is.finite(maic)) xaic - min(xaic) else
+        maic <- min(xaic) # wrongly was min(aic) in {0, 1}
+	xaic <- setNames(if(is.finite(maic)) xaic - maic else
 			 ifelse(xaic == maic, 0, Inf),
 			 0L:order.max)
         order <- if (aic) (0L:order.max)[xaic == 0L] else order.max
@@ -426,8 +426,8 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     YH <- AA %*% t(X)
     E <- drop(rbind(matrix(NA, m, nser), t(Y - YH)))
 
-    maic <- min(aic)
-    xaic <- setNames(if(is.finite(maic)) xaic - min(xaic) else
+    maic <- min(xaic) # wrongly was min(aic) in {0, 1}
+    xaic <- setNames(if(is.finite(maic)) xaic - maic else
 		     ifelse(xaic == maic, 0, Inf), order.min:order.max)
     dim(ar) <- c(nser, nser, m)
     ar <- aperm(ar, c(3L,1L,2L))
@@ -567,8 +567,8 @@ ar.burg.default <-
     var.pred <- if(var.method == 1L) z[[2L]] else z[[3L]]
     if (any(is.nan(var.pred))) stop("zero-variance series")
     xaic <- n.used * log(var.pred) + 2 * (0L:order.max) + 2 * demean
-    maic <- min(aic)
-    xaic <- setNames(if(is.finite(maic)) xaic - min(xaic) else
+    maic <- min(xaic) # wrongly was min(aic) in {0, 1}
+    xaic <- setNames(if(is.finite(maic)) xaic - maic else
 		     ifelse(xaic == maic, 0, Inf), 0L:order.max)
     order <- if (aic) (0L:order.max)[xaic == 0] else order.max
     ar <- if (order) coefs[order, 1L:order] else numeric()
