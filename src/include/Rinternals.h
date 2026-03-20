@@ -534,6 +534,8 @@ SEXP Rf_xlengthgets(SEXP, R_xlen_t);
 SEXP R_lsInternal3(SEXP, Rboolean, Rboolean); // envir.c
 SEXP R_envSymbols(SEXP env); // envir.c
 SEXP Rf_match(SEXP, SEXP, int);
+Rboolean Rf_pmatch(SEXP, SEXP, Rboolean);
+Rboolean Rf_psmatch(const char *, const char *, Rboolean);
 SEXP Rf_namesgets(SEXP, SEXP);
 SEXP Rf_mkChar(const char *);
 SEXP Rf_mkCharLen(const char *, int);
@@ -1243,7 +1245,6 @@ R_xlen_t R_ncol(SEXP x);
 void (SET_OBJECT)(SEXP x, int v); // used by Rcpp (not?), Matrix and more
 const char *R_curErrorBuf(void); // used by Rserve
 int (IS_SCALAR)(SEXP x, int type);
-Rboolean Rf_psmatch(const char *, const char *, Rboolean); // match.c,  used by rgl and in WRE
 
 /* used in a couple of packages but should probably be dropped 
    error_return: grr rJava rbedrock
