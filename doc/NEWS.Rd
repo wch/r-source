@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo CHANGES IN R-devel}{
+\section{\Rlogo Changes in R-devel}{
   \subsection{Significant User-Visible Changes}{
     \itemize{
       \item The R citation now provides a \abbr{DOI}
@@ -716,7 +716,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.5.3}{
+\section{\Rlogo Changes in R 4.5.3}{
 
   \subsection{Utilities}{
     \itemize{
@@ -794,7 +794,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.5.2}{
+\section{\Rlogo Changes in R 4.5.2}{
 
   \subsection{Utilities}{
     \itemize{
@@ -878,7 +878,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.5.1}{
+\section{\Rlogo Changes in R 4.5.1}{
 
   \subsection{New Features}{
     \itemize{
@@ -938,7 +938,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.5.0}{
+\section{\Rlogo Changes in R 4.5.0}{
   \subsection{New Features}{
     \itemize{
       \item \code{as.integer(rl)} and hence \code{as.raw(rl)} now work for
@@ -1717,7 +1717,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.4.3}{
+\section{\Rlogo Changes in R 4.4.3}{
   \subsection{Installation}{
     \itemize{
       \item \R can be installed using C23 (for example with
@@ -1812,7 +1812,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.4.2}{
+\section{\Rlogo Changes in R 4.4.2}{
   \subsection{C-Level Facilities}{
     \itemize{
       \item The S-compatibility macros \code{F77_COM} and
@@ -1848,7 +1848,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.4.1}{
+\section{\Rlogo Changes in R 4.4.1}{
   \subsection{C-Level Facilities}{
     \itemize{
       \item Functions \code{R_atof} and \code{R_strtod} declared in
@@ -1914,7 +1914,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.4.0}{
+\section{\Rlogo Changes in R 4.4.0}{
   \subsection{Significant User-Visible Changes}{
     \itemize{
       \item Startup banners, \command{R --version}, \code{sessionInfo()}
@@ -2656,7 +2656,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.3.3}{
+\section{\Rlogo Changes in R 4.3.3}{
 
   \subsection{New Features}{
     \itemize{
@@ -2760,7 +2760,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.3.2}{
+\section{\Rlogo Changes in R 4.3.2}{
   \subsection{New Features}{
     \itemize{
       \item The default initialization of the \code{"repos"} option
@@ -2885,7 +2885,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.3.1}{
+\section{\Rlogo Changes in R 4.3.1}{
   \subsection{C-Level Facilities}{
     \itemize{
       \item The C-level API version of \R's \code{integrate()},
@@ -2953,7 +2953,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.3.0}{
+\section{\Rlogo Changes in R 4.3.0}{
   \subsection{Significant User-Visible Changes}{
     \itemize{
       \item Calling \code{&&} or \code{||} with LHS or (if evaluated) RHS of
@@ -3780,7 +3780,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.2.3}{
+\section{\Rlogo Changes in R 4.2.3}{
   \subsection{C-Level Facilities}{
     \itemize{
       \item The definition of \code{DL_FUNC} in \file{R_ext/Rdynload.h}
@@ -3867,7 +3867,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.2.2}{
+\section{\Rlogo Changes in R 4.2.2}{
   \subsection{New Features}{
     \itemize{
       \item \code{tools::Rdiff(useDiff = TRUE)} checks for the presence
@@ -3988,7 +3988,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.2.1}{
+\section{\Rlogo Changes in R 4.2.1}{
   \subsection{New Features}{
     \itemize{
       \item New function \code{utils::findCRANmirror()} to find out if a
@@ -4113,7 +4113,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.2.0}{
+\section{\Rlogo Changes in R 4.2.0}{
   \subsection{Significant User-Visible Changes}{
     \itemize{
       \item The \code{formula} method of \code{aggregate()} now matches
@@ -4862,7 +4862,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.1.3}{
+\section{\Rlogo Changes in R 4.1.3}{
   \subsection{New Features}{
     \itemize{
       \item The default version of Bioconductor has been changed to
@@ -4956,7 +4956,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.1.2}{
+\section{\Rlogo Changes in R 4.1.2}{
   \subsection{C-Level Facilities}{
     \itemize{
       \item The workaround in headers \file{R.h} and \file{Rmath.h}
@@ -5038,7 +5038,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.1.1}{
+\section{\Rlogo Changes in R 4.1.1}{
   \subsection{New Features}{
     \itemize{
       \item \code{require(\var{pkg}, quietly = TRUE)} is quieter and in
@@ -5141,7 +5141,7 @@
 }
 
 
-\section{\Rlogo CHANGES IN R 4.1.0}{
+\section{\Rlogo Changes in R 4.1.0}{
   \subsection{Future Directions}{
     \itemize{
       \item It is planned that the 4.1.x series will be the last to
@@ -5844,7 +5844,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.0.5}{
+\section{\Rlogo Changes in R 4.0.5}{
   \subsection{Bug Fixes}{
     \itemize{
       \item The change to the internal table in \R 4.0.4 for
@@ -5859,7 +5859,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.0.4}{
+\section{\Rlogo Changes in R 4.0.4}{
 
   \subsection{New Features}{
     \itemize{
@@ -5944,7 +5944,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.0.3}{
+\section{\Rlogo Changes in R 4.0.3}{
 
   \subsection{New Features}{
     \itemize{
@@ -6077,7 +6077,7 @@
 }
 
 
-\section{\Rlogo CHANGES IN R 4.0.2}{
+\section{\Rlogo Changes in R 4.0.2}{
 
   \subsection{Utilities}{
     \itemize{
@@ -6107,7 +6107,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.0.1}{
+\section{\Rlogo Changes in R 4.0.1}{
 
   \subsection{New Features}{
     \itemize{
@@ -6163,7 +6163,7 @@
   }
 }
 
-\section{\Rlogo CHANGES IN R 4.0.0}{
+\section{\Rlogo Changes in R 4.0.0}{
 
   \subsection{Significant User-Visible Changes}{
     \itemize{
@@ -6918,7 +6918,7 @@
   }
 }
 
-\section{CHANGES in previous versions}{
+\section{Changes in previous versions}{
   \itemize{
     \item Older news can be found in text format in files
     \ifelse{html}{\href{../NEWS.0}{NEWS.0}, \href{../NEWS.1}{NEWS.1},
