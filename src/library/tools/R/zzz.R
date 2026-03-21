@@ -1,7 +1,7 @@
 #  File src/library/tools/R/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2013 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -58,5 +58,5 @@ rm(C_parseLatex)
 	Rd2txt_options(itemBullet = "\u2022 ")
     Rd_expr_bibshow_bibstyle(Sys.getenv("R_HELP_BIBSTYLE", "JSS"))
     .bibtools_cache_bibentries(Sys.getenv("_R_BIBTOOLS_CACHE_BIBENTRIES_",
-                                          "FALSE"))
+                                          "TRUE"))
 }
