@@ -442,11 +442,11 @@
       \code{R_DelayedBindingExpression}, and
       \code{R_DelayedBindingEnvironment}.  Bindings for \code{...} in
       function call environments can be examined with
-      \code{R_DotsExist}, \code{R_DotsLength}, \code{R_DotsNames},
-      \code{R_DotsElt}, \code{R_GetDotType},
+      \code{R_findDotsEnv}, \code{R_DotsExist}, \code{R_DotsLength},
+      \code{R_DotsNames}, \code{R_DotsElt}, \code{R_GetDotType},
       \code{R_DotDelayedExpression}, \code{R_DotDelayedEnvironment}, and
-      \code{R_DotForcedExpression}. Contributed by Lionel Henry and
-      Davis Vaughan in \PR{18928}.
+      \code{R_DotForcedExpression}. Contributed by Lionel Henry, Davis
+      Vaughan, and Charlie Gao in \PR{18928}.
 
       \item New function \code{R_envSymbols} returns a vector of the
       symbols for which an environment contains bindings (\PR{18928}).

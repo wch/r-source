@@ -17941,7 +17941,20 @@ SEXP R_envSymbols(SEXP env);
 @end example
 @eapifun R_envSymbols
 
-Whether a proper @code{...} binding exists can be determined with
+The environment containing a @code{...} binding can be found by walking
+parent environments with
+@example
+@group
+SEXP R_findDotsEnv(SEXP env);
+@end group
+@end example
+@eapifun R_findDotsEnv
+This returns the first environment in the chain starting from @var{env}
+that contains a proper @code{...} binding, or @code{R_EmptyEnv} if none
+is found.
+
+Whether a proper @code{...} binding exists in a given frame can be
+determined with
 @example
 @group
 Rboolean R_DotsExist(SEXP env);
@@ -17989,6 +18002,13 @@ SEXP R_DotDelayedEnvironment(int i, SEXP env);
 @eapifun R_DotDelayedEnvironment
 @eapifun R_DotForcedExpression
 @code{R_DotsElt} corresponds to the @R{} function @code{...elt}.
+
+Note that all these functions look up @code{...} only in the specified
+@var{env} frame and do not search parent environments.  The @R{}
+functions @code{...length}, @code{...names}, and @code{...elt} do walk
+parent environments (using @code{R_findDotsEnv} internally).  If you
+need inherited lookup from C code, call @code{R_findDotsEnv} first and
+pass the result to the accessor functions.
 
 
 @node Some backports

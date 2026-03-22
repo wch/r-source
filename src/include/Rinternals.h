@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2025  The R Core Team.
+ *  Copyright (C) 1999--2026  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This header file is free software; you can redistribute it and/or modify
@@ -703,6 +703,7 @@ typedef enum {
     R_DotTypeForced = 3
 } R_DotType_t;
 
+SEXP R_findDotsEnv(SEXP env);
 Rboolean R_DotsExist(SEXP env);
 int R_DotsLength(SEXP env);
 SEXP R_DotsNames(SEXP env);

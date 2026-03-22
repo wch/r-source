@@ -2774,8 +2774,8 @@ local({
 
 ## simple test for R_GetDotType
 local({
-    getDotType <- function(i, env = parent.frame())
-        .Internal(getDotType(i, env))
+    getDotType <- function(i, env = parent.frame(), inherits = TRUE)
+        .Internal(getDotType(i, env, inherits))
     g <- function(...) getDotType(1L, environment())
     x <- 1
     stopifnot(g(x) == "delayed")
@@ -2786,8 +2786,8 @@ local({
 
 ## R_GetDotType with promise chains from `...` expansion
 local({
-    getDotType <- function(i, env = parent.frame())
-        .Internal(getDotType(i, env))
+    getDotType <- function(i, env = parent.frame(), inherits = TRUE)
+        .Internal(getDotType(i, env, inherits))
     inner <- function(...) getDotType(1L)
     x <- 1
     f <- function(...) inner(...)
@@ -2805,10 +2805,10 @@ local({
 
 ## R_DotDelayedExpression and R_DotDelayedEnvironment
 local({
-    dotDelayedExpr <- function(i, env = parent.frame())
-        .Internal(dotDelayedExpression(i, env))
-    dotDelayedEnv <- function(i, env = parent.frame())
-        .Internal(dotDelayedEnvironment(i, env))
+    dotDelayedExpr <- function(i, env = parent.frame(), inherits = TRUE)
+        .Internal(dotDelayedExpression(i, env, inherits))
+    dotDelayedEnv <- function(i, env = parent.frame(), inherits = TRUE)
+        .Internal(dotDelayedEnvironment(i, env, inherits))
     get_expr <- function(...) dotDelayedExpr(1L)
     get_env <- function(...) dotDelayedEnv(1L)
     e <- environment()
@@ -2831,8 +2831,8 @@ local({
 
 ## R_DotForcedExpression
 local({
-    dotForcedExpr <- function(i, env = parent.frame())
-        .Internal(dotForcedExpression(i, env))
+    dotForcedExpr <- function(i, env = parent.frame(), inherits = TRUE)
+        .Internal(dotForcedExpression(i, env, inherits))
     get_expr <- function(...) dotForcedExpr(1L)
     x <- 1
     g <- function(...) { force(..1); dotForcedExpr(1L) }
@@ -2853,8 +2853,8 @@ local({
 
 ## R_DotsExist() returns TRUE for empty dots (R_MissingArg)
 local({
-    dotsExist <- function(env = parent.frame())
-        .Internal(dotsExist(env))
+    dotsExist <- function(env = parent.frame(), inherits = TRUE)
+        .Internal(dotsExist(env, inherits))
     fn <- function(...) dotsExist()
     fn_no_dots <- function() dotsExist()
     stopifnot(
@@ -2869,6 +2869,248 @@ local({
     stopifnot(isFALSE(dotsExist(e)))
     e$... <- 1
     stopifnot(isFALSE(dotsExist(e)))
+})
+
+## C API: R_DotsExist() does not reach into parent environments (PR#18928)
+## (positive tests above in "R_DotsExist() returns TRUE for empty dots")
+local({
+    dotsExist <- function(env = parent.frame(), inherits = TRUE)
+        .Internal(dotsExist(env, inherits))
+    fn <- function(...) local(dotsExist(inherits = FALSE))
+    stopifnot(isFALSE(fn()))
+    stopifnot(isFALSE(fn(1)))
+    stopifnot(isFALSE(fn(1, 2, 3)))
+})
+
+## C API: R_DotsLength() does not reach into parent environments (PR#18928)
+local({
+    dotsLength <- function(env = parent.frame(), inherits = TRUE)
+        .Internal(dotsLength(env, inherits))
+    fn <- function(...) local(dotsLength(inherits = FALSE))
+    stopifnot(grepl("incorrect context",
+                    tryCatch(fn(1, 2), error = conditionMessage)))
+    ## Works when `...` is directly in the frame
+    fn2 <- function(...) dotsLength(inherits = FALSE)
+    stopifnot(
+        fn2() == 0L,
+        fn2(1) == 1L,
+        fn2(1, 2, 3) == 3L
+    )
+    ## Works with forwarded dots
+    inner <- function(...) dotsLength(inherits = FALSE)
+    outer <- function(...) inner(...)
+    stopifnot(outer(1, 2, 3) == 3L)
+})
+
+## C API: R_DotsNames() does not reach into parent environments (PR#18928)
+local({
+    dotsNames <- function(env = parent.frame(), inherits = TRUE)
+        .Internal(dotsNames(env, inherits))
+    fn <- function(...) local(dotsNames(inherits = FALSE))
+    stopifnot(grepl("incorrect context",
+                    tryCatch(fn(a = 1), error = conditionMessage)))
+    ## Works when `...` is directly in the frame
+    fn2 <- function(...) dotsNames(inherits = FALSE)
+    stopifnot(
+        identical(fn2(a = 1, b = 2), c("a", "b")),
+        is.null(fn2(1, 2)),
+        is.null(fn2())
+    )
+    ## Works with forwarded dots
+    inner <- function(...) dotsNames(inherits = FALSE)
+    outer <- function(...) inner(...)
+    stopifnot(identical(outer(x = 10, y = 20), c("x", "y")))
+})
+
+## C API: R_DotsElt() does not reach into parent environments (PR#18928)
+local({
+    dotsElt <- function(i, env = parent.frame(), inherits = TRUE)
+        .Internal(dotsElt(i, env, inherits))
+    fn <- function(...) local(dotsElt(1L, inherits = FALSE))
+    stopifnot(grepl("no ... to look in",
+                    tryCatch(fn(42), error = conditionMessage)))
+    ## Works when `...` is directly in the frame
+    fn2 <- function(...) dotsElt(1L, inherits = FALSE)
+    stopifnot(
+        fn2(42) == 42,
+        identical(fn2("hello"), "hello")
+    )
+    fn3 <- function(...)
+        c(dotsElt(1L, inherits = FALSE), dotsElt(2L, inherits = FALSE))
+    stopifnot(identical(fn3(10, 20), c(10, 20)))
+    ## Works with forwarded dots
+    inner <- function(...) dotsElt(1L, inherits = FALSE)
+    outer <- function(...) inner(...)
+    stopifnot(outer(99) == 99)
+})
+
+## C API: R_GetDotType() does not reach into parent environments (PR#18928)
+local({
+    getDotType <- function(i, env = parent.frame(), inherits = TRUE)
+        .Internal(getDotType(i, env, inherits))
+    fn <- function(...) local(getDotType(1L, inherits = FALSE))
+    stopifnot(grepl("no ... to look in",
+                    tryCatch(fn(1), error = conditionMessage)))
+    ## (positive tests above in "simple test for R_GetDotType")
+})
+
+## C API: R_DotDelayedExpression()/Environment() do not reach parents
+## (PR#18928) (positive tests above in "R_DotDelayedExpression and
+## R_DotDelayedEnvironment")
+local({
+    dotDelayedExpr <- function(i, env = parent.frame(), inherits = TRUE)
+        .Internal(dotDelayedExpression(i, env, inherits))
+    dotDelayedEnv <- function(i, env = parent.frame(), inherits = TRUE)
+        .Internal(dotDelayedEnvironment(i, env, inherits))
+    x <- 1
+    fn <- function(...) local(dotDelayedExpr(1L, inherits = FALSE))
+    stopifnot(grepl("no ... to look in",
+                    tryCatch(fn(x), error = conditionMessage)))
+    fn2 <- function(...) local(dotDelayedEnv(1L, inherits = FALSE))
+    stopifnot(grepl("no ... to look in",
+                    tryCatch(fn2(x), error = conditionMessage)))
+})
+
+## C API: R_DotForcedExpression() does not reach parents (PR#18928)
+## (positive tests above in "R_DotForcedExpression")
+local({
+    dotForcedExpr <- function(i, env = parent.frame(), inherits = TRUE)
+        .Internal(dotForcedExpression(i, env, inherits))
+    x <- 1
+    fn <- function(...) {
+        force(..1)
+        local(dotForcedExpr(1L, inherits = FALSE))
+    }
+    stopifnot(grepl("no ... to look in",
+                    tryCatch(fn(x), error = conditionMessage)))
+})
+
+## R API: ...length() retains inherited scoping (PR#18928)
+local({
+    ## Through local()
+    f <- function(...) local(...length())
+    stopifnot(
+        f(1, 2, 3) == 3L,
+        f() == 0L,
+        f(1) == 1L
+    )
+    ## Through nested function without `...`
+    f2 <- function(...) {
+        g <- function() ...length()
+        g()
+    }
+    stopifnot(f2(1, 2) == 2L)
+    ## Deeper nesting
+    f3 <- function(...) {
+        g <- function() {
+            h <- function() ...length()
+            h()
+        }
+        g()
+    }
+    stopifnot(f3(1, 2, 3, 4) == 4L)
+    ## Direct call still works
+    f0 <- function(...) ...length()
+    stopifnot(f0(1, 2) == 2L)
+})
+
+## R API: ...names() retains inherited scoping (PR#18928)
+local({
+    ## Through local()
+    f <- function(...) local(...names())
+    stopifnot(
+        identical(f(a = 1, b = 2), c("a", "b")),
+        is.null(f(1, 2)),
+        is.null(f())
+    )
+    ## Through nested function without `...`
+    f2 <- function(...) {
+        g <- function() ...names()
+        g()
+    }
+    stopifnot(identical(f2(x = 10, y = 20), c("x", "y")))
+    ## Direct call still works
+    f0 <- function(...) ...names()
+    stopifnot(identical(f0(a = 1), "a"))
+})
+
+## R API: ...elt() retains inherited scoping (PR#18928)
+local({
+    ## Through local()
+    f <- function(...) local(...elt(1))
+    stopifnot(f(42) == 42)
+    ## Through nested function without `...`
+    f2 <- function(...) {
+        g <- function() ...elt(2)
+        g()
+    }
+    stopifnot(f2("a", "b") == "b")
+    ## Deeper nesting
+    f3 <- function(...) {
+        g <- function() {
+            h <- function() ...elt(1)
+            h()
+        }
+        g()
+    }
+    stopifnot(f3(99) == 99)
+    ## Direct call still works
+    f0 <- function(...) ...elt(1)
+    stopifnot(f0(7) == 7)
+    ## Multiple elements through nested scope
+    f4 <- function(...) {
+        g <- function() c(...elt(1), ...elt(2))
+        g()
+    }
+    stopifnot(identical(f4(10, 20), c(10, 20)))
+    ## Named dots
+    f5 <- function(...) local(...elt(2))
+    stopifnot(f5(a = 1, b = 2) == 2)
+})
+
+## R API errors when no `...` in scope at all (PR#18928)
+local({
+    f <- function() ...length()
+    stopifnot(grepl("incorrect context",
+                    tryCatch(f(), error = conditionMessage)))
+    g <- function() ...elt(1)
+    stopifnot(grepl("no ... to look in",
+                    tryCatch(g(), error = conditionMessage)))
+    h <- function() ...names()
+    stopifnot(grepl("incorrect context",
+                    tryCatch(h(), error = conditionMessage)))
+    ## Also through local()
+    f <- function() local(...length())
+    stopifnot(grepl("incorrect context",
+                    tryCatch(f(), error = conditionMessage)))
+    g <- function() local(...elt(1))
+    stopifnot(grepl("no ... to look in",
+                    tryCatch(g(), error = conditionMessage)))
+    h <- function() local(...names())
+    stopifnot(grepl("incorrect context",
+                    tryCatch(h(), error = conditionMessage)))
+})
+
+## R API: `...` overwritten with non-DOTSXP skips frame (PR#18928)
+local({
+    ## Overwritten in current frame: R_findDotsEnv skips it, errors
+    f <- function(...) { "..." <- 1; ...elt(1) }
+    stopifnot(grepl("no ... to look in",
+                    tryCatch(f(1), error = conditionMessage)))
+    f <- function(...) { "..." <- 1:2; ...length() }
+    stopifnot(grepl("incorrect context",
+                    tryCatch(f(1), error = conditionMessage)))
+    f <- function(...) { "..." <- NULL; ...names() }
+    stopifnot(grepl("incorrect context",
+                    tryCatch(f(a = 1), error = conditionMessage)))
+    ## Overwritten in local(): R_findDotsEnv skips local, finds parent
+    f <- function(...) local({ "..." <- 1; ...elt(1) })
+    stopifnot(f(42) == 42)
+    f <- function(...) local({ "..." <- NULL; ...length() })
+    stopifnot(f(1) == 1L)
+    stopifnot(f(1, 2, 3) == 3L)
+    f <- function(...) local({ "..." <- 1; ...names() })
+    stopifnot(identical(f(a = 1, b = 2), c("a", "b")))
 })
 
 ## keep at end

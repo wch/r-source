@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2025  The R Core Team
+ *  Copyright (C) 1997--2026  The R Core Team
  *  Copyright (C) 2003--2018  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -926,11 +926,14 @@ FUNTAB R_FunTab[] =
 {"delayedBindingExpression", do_delayedBindingExpr, 0, 11, 2, {PP_FUNCALL, PREC_FN, 0}},
 {"delayedBindingEnvironment", do_delayedBindingEnv, 0, 11, 2, {PP_FUNCALL, PREC_FN, 0}},
 {"forcedBindingExpression", do_forcedBindingExpr, 0, 11, 2, {PP_FUNCALL, PREC_FN, 0}},
-{"dotsExist", do_dotsExist,		0, 11,	1,      {PP_FUNCALL, PREC_FN,	0}},
-{"getDotType", do_dotType,		0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
-{"dotDelayedExpression", do_dotDelayedExpr, 0, 11, 2,  {PP_FUNCALL, PREC_FN,	0}},
-{"dotDelayedEnvironment", do_dotDelayedEnv, 0, 11, 2,  {PP_FUNCALL, PREC_FN,	0}},
-{"dotForcedExpression", do_dotForcedExpr, 0, 11, 2,    {PP_FUNCALL, PREC_FN,	0}},
+{"dotsExist", do_dotsExist,		0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
+{"getDotType", do_dotType,		0, 11,	3,      {PP_FUNCALL, PREC_FN,	0}},
+{"dotDelayedExpression", do_dotDelayedExpr, 0, 11, 3,  {PP_FUNCALL, PREC_FN,	0}},
+{"dotDelayedEnvironment", do_dotDelayedEnv, 0, 11, 3,  {PP_FUNCALL, PREC_FN,	0}},
+{"dotForcedExpression", do_dotForcedExpr, 0, 11, 3,    {PP_FUNCALL, PREC_FN,	0}},
+{"dotsLength", do_CDotsLength,		0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
+{"dotsNames", do_CDotsNames,		0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
+{"dotsElt", do_CDotsElt,		0, 11,	3,      {PP_FUNCALL, PREC_FN,	0}},
 {"mkUnbound",	do_mkUnbound,		0, 111,	1,      {PP_FUNCALL, PREC_FN,	0}},
 {"isNamespaceEnv",do_isNSEnv,		0, 11,	1,      {PP_FUNCALL, PREC_FN,	0}},
 {"registerNamespace",do_regNS,		0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
