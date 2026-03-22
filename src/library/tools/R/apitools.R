@@ -214,8 +214,9 @@ readFileSyms <- function(fpath) {
     else as.data.frame(v)[c("name", "type")]
 }
 
+
 ## crude approach based on string matching
-## **** this is to crude -- needs to allow more
+## **** this is too crude -- needs to allow more
 inRfunsCrude <- function(syms) {
     syms <- union(syms[syms == toupper(syms)],
                   grep("^_?Rf?_", syms, value = TRUE))
@@ -240,7 +241,7 @@ inRfuns <- function(syms) {
     if (length(rfuns) == 0)
         inRfunsCrude(syms)
     else
-        syms[unmap(syms) %in% unmap(rfuns)]
+        intersect(syms, rfuns)
 }
 
 cleanRfuns <- function(val) {
