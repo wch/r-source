@@ -365,6 +365,16 @@ Rsyms <- function(keep = c("F", "V")) {
     rsyms
 }
 
+## similar to checkLibAPI but also picke up variables
+checkObjAPI <- function(exe) {
+    ofile_syms(exe, keep = "U") |>
+        clear_rownames() |>
+        transform(type = NULL) |>
+        merge(Rsyms()) |>
+        transform(name = sub("^_", "", name)) |>
+        merge(funAPI(), all.x = TRUE) |>
+        sort_by(~ apitype)
+}
 
 pkgRepo <- function(pkg, lib.loc = NULL) {
     pd <- utils::packageDescription(pkg, lib.loc = lib.loc)
