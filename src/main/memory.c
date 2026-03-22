@@ -4681,11 +4681,11 @@ attribute_hidden void (SET_DDVAL)(SEXP x, int v) { SET_DDVAL(CHK(x), v); }
     if (TYPEOF(x) != ENVSXP && x != R_NilValue)				\
 	error(_("%s: argument of type %s is not an environment or NULL"), \
 	      __func__, sexptype2char(TYPEOF(x)))
-attribute_hidden
+//attribute_hidden
 SEXP (FRAME)(SEXP x) { CHKENVSXP(x); return CHK(FRAME(CHK(x))); }
-attribute_hidden
+//attribute_hidden
 SEXP (ENCLOS)(SEXP x) { CHKENVSXP(x); return CHK(ENCLOS(CHK(x))); }
-attribute_hidden
+//attribute_hidden
 SEXP (HASHTAB)(SEXP x) { CHKENVSXP(x); return CHK(HASHTAB(CHK(x))); }
 //attribute_hidden
 int (ENVFLAGS)(SEXP x) { CHKENVSXP(x); return ENVFLAGS(CHK(x)); }
@@ -4694,7 +4694,7 @@ SEXP R_ParentEnv(SEXP x) { return (ENCLOS)(x); }
 attribute_hidden
 void (SET_FRAME)(SEXP x, SEXP v) { FIX_REFCNT(x, FRAME(x), v); CHECK_OLD_TO_NEW(x, v); FRAME(x) = v; }
 
-attribute_hidden
+//attribute_hidden
 void (SET_ENCLOS)(SEXP x, SEXP v)
 {
     if (v == R_NilValue)
