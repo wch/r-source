@@ -70,11 +70,11 @@
     ## Not really important, but to be consistent with help pages
     pkgversion <- utils::packageDescription(package, fields = "Version")
     footer.lines <-
-        sprintf('<hr><div style="text-align: center;">[Package <em>%s</em> version %s <a href="../html/00Index.html">Index</a>]</div>', package, pkgversion)
+        sprintf('<hr><div style="text-align: center;">[Package <em>%s</em> version %s <a href="../html/00Index.html">Index</a>]</div>', shtmlify(package), pkgversion)
     rhtml <-
         c(HTMLheader(title = sprintf("%s '%s::%s'",
                                      switch(type, demo = "Demo for", example = "Examples for"),
-                                     package, topic),
+                                     shtmlify(package), shtmlify(topic)),
                      Rhome = Rhome,
                      logo = FALSE, up = NULL, top = NULL),
           header.lines,
@@ -83,7 +83,7 @@
           "\nend.rcode-->\n\n",
           footer.lines,
           "</div></body></html>")
-    figdir <- tempfile(pattern = package, fileext = topic)
+    figdir <- tempfile(pattern = "code2html", fileext = type)
     on.exit(unlink(figdir, recursive = TRUE), add = TRUE)
     ## Record old knitr / chunk options and restore on exit
     old_opts_knit <- knitr::opts_knit$get()
@@ -91,7 +91,7 @@
     on.exit(knitr::opts_knit$restore(old_opts_knit), add = TRUE)
     on.exit(knitr::opts_chunk$restore(old_opts_chunk), add = TRUE)
     knitr::opts_knit$set(upload.fun = function(x) paste0("data:", mime_type(x), ";base64,", xfun::base64_encode(x)),
-                         unnamed.chunk.label = sprintf("%s-%s-%s", type, package, topic))
+                         unnamed.chunk.label = sprintf("%s-%s", type, package))
     knitr::opts_chunk$set(comment = "", warning = TRUE, message = TRUE, error = TRUE,
                           fig.path = file.path(figdir, "fig-"),
                           fig.width = 9, fig.height = 7,

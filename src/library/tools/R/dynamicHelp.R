@@ -395,7 +395,7 @@ httpd <- function(path, query, ...)
     demoRegexp <- "^/library/([^/]*)/demo$"
     demosRegexp <- "^/library/([^/]*)/demo/([^/]*)$"
     DemoRegexp <- "^/library/([^/]*)/Demo/([^/]*)$"
-    ExampleRegexp <- "^/library/([^/]*)/Example/([^/]*)$"
+    ExampleRegexp <- "^/library/([^/]*)/Example/(.*)$"
     newsRegexp <- "^/library/([^/]*)/NEWS([.](Rd|md))?$"
     readmeRegexp <- "^/library/([^/]*)/README[.]md$"    
     figureRegexp <- "^/library/([^/]*)/(help|html)/figures/([^/]*)$"
