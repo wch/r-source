@@ -376,6 +376,7 @@ varAPI <- function() {
 
 ## similar to checkLibAPI but also picke up variables
 checkObjAPI <- function(exe) {
+    name <- NULL ## keep codetools happy
     ofile_syms(exe, keep = "U") |>
         clear_rownames() |>
         transform(type = NULL) |>
