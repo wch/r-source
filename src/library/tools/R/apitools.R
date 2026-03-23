@@ -332,7 +332,7 @@ ofile_syms <- function(fname, keep = c("F", "V", "U")) {
         match_type <-function(type)
             ifelse(type == "T", "F", ifelse(type == "U", "U", "V"))
         val <- as.data.frame(v)[c("name", "type")]
-        val <- val[val$type %in% c("U", "B", "D", "T"), ]
+        val <- val[val$type %in% c("U", "B", "D", "T", "S"), ]
         val$type <- match_type(val$type)
         val <- val[val$type %in% keep, ]
         val
