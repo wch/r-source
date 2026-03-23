@@ -919,6 +919,8 @@ INLINE_FUN Rboolean isDataFrame(SEXP s)
     }
     return FALSE;
 }
+/* keep available under old name for now for old RStudio in particular */
+INLINE_FUN Rboolean Rf_isFrame(SEXP s) { return isDataFrame(s); }
 
 /* DIFFERENT than R's  is.language(.) in ../main/coerce.c [do_is(), case 301:]
  *                                    which is   <=>  SYMSXP || LANGSXP || EXPRSXP */
