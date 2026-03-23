@@ -264,6 +264,10 @@
 
       \item New function \code{bitstring()} as a user-friendly wrapper
       around \code{intToBits()}, etc.
+
+      \item \code{plot.lm()} now omits the smoother in the residuals vs 
+      leverage plot. This never made much sense, but if you really want it,
+      you can force the old behaviour by setting \code{panel.raw=panel.smooth}.
     }
   }
 

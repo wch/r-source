@@ -14,7 +14,7 @@
        "Residuals vs Leverage",
        expression("Cook's dist vs Leverage* " * h[ii] / (1 - h[ii]))),
      panel = if(add.smooth) function(x, y, ...)
-              panel.smooth(x, y, iter=iter.smooth, ...) else points,
+              panel.smooth(x, y, iter=iter.smooth, ...) else panel.raw,
      sub.caption = NULL, main = "",
      ask = prod(par("mfcol")) < length(which) && dev.interactive(),
      \dots,
@@ -26,6 +26,7 @@
      label.pos = c(4,2),
      cex.caption = 1, cex.oma.main = 1.25
    , extend.ylim.f = 0.08
+   , panel.raw = points
      )
 }
 \arguments{
@@ -48,9 +49,13 @@
     default vector in \sQuote{Usage}.  Can be set to
     \code{""} or \code{NA} to suppress all captions.
   }
-  \item{panel}{panel function.  The useful alternative to
-    \code{\link{points}}, \code{\link{panel.smooth}} can be chosen
-    by \code{add.smooth = TRUE}.}
+  \item{panel}{panel function for plotting points. This will by default 
+    add a smothing curve via  
+     \code{\link{panel.smooth}}
+    if \code{add.smooth = TRUE} and use \code{panel.raw} (which by
+    default is \code{\link{points}}) instead. For the residuals vs 
+    leverage plot, the smooth makes little sense and 
+    \code{panel.raw} is used.}
   \item{sub.caption}{common title---above the figures if there are more
     than one; used as \code{sub} (s.\code{\link{title}}) otherwise.  If
     \code{NULL}, as by default, a possible abbreviated version of
@@ -92,6 +97,7 @@
   \item{extend.ylim.f}{a numeric vector of length 1 or 2, to be used in
     \code{ylim <- \link{extendrange}(r=ylim, f = *)}
     for plots \code{1} and \code{5} when \code{id.n} is non-empty.}
+  \item{panel.raw}{a function to use for plots without a smoother.}
 }
 \description{
   Six plots (selectable by \code{which}) are currently available: a plot
