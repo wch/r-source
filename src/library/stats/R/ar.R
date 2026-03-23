@@ -78,7 +78,7 @@ ar.yw.default <-
             # generalization of the Levinson(-Durbin) algorithm
             betaA <- betaB <- 0
             for (i in 0L:m) {
-                betaA <- betaA + A[i + 1L, , ] %*% xacf[m + 2L - i, , ]
+                betaA <- betaA + A[i + 1L, , ] %*%   xacf[m + 2L - i, , ]
                 betaB <- betaB + B[i + 1L, , ] %*% t(xacf[m + 2L - i, , ])
             }
             KA <- -t(qr.solve(t(EB), t(betaA)))
@@ -164,7 +164,7 @@ ar.yw.default <-
             solve(toeplitz(drop(xacf)[seq_len(order)]))
     class(res) <- "ar"
     res
-}
+} # ar.yw.default
 
 print.ar <- function(x, digits = max(3L, getOption("digits") - 3L), ...)
 {
@@ -357,8 +357,9 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     if (order.max < 0L)	     stop("'order.max' must be >= 0")
     if (order.max >= n.used) stop("'order.max' must be < 'n.used'")
     order.min <- if (aic) 0L else order.max
-    varE <- seA <- A <- vector("list", order.max - order.min + 1L)
-    xaic <- rep.int(Inf, order.max - order.min + 1L)
+    nM <- order.max - order.min + 1L # number of Models
+    varE <- seA <- A <- vector("list", nM)
+    xaic <- rep.int(Inf, nM)
 
     ## allow for rounding error
     det <- function(x) max(0, prod(diag(qr(x)$qr))*(-1)^(ncol(x)-1))
@@ -383,7 +384,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         ## FIXME: use [t]crossprod();  and instead of solve(XX), use solve(qr(X)) !!
         Y <- t(y[, iser])
         N <- ncol(Y)
-        XX <- t(X)%*%X
+        XX <- crossprod(X)
         rank <- qr(XX)$rank
         if (rank != nrow(XX))
         {
@@ -394,24 +395,25 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
             break
         }
         P <- if(ncol(XX) > 0) solve(XX) else XX
-        A[[m - order.min + 1L]] <- Y %*% X %*% P
-        YH <- A[[m - order.min + 1L]] %*% t(X)
+        im <- m - order.min + 1L
+        A[[im]] <- Y %*% X %*% P
+        YH <- tcrossprod(A[[im]], X)
         E <- (Y - YH)
-        varE[[m - order.min + 1L]] <- tcrossprod(E)/N
-        varA <- P %x% (varE[[m - order.min + 1L]])
-        seA[[m - order.min+1L]] <-
-            if(ncol(varA) > 0) sqrt(diag(varA)) else numeric()
-        xaic[m - order.min+1L] <-
-            n.used*log(det(varE[[m-order.min+1L]])) + 2*nser*(nser*m+intercept)
+        varE[[im]] <- tcrossprod(E)/N
+        varA <- P %x% varE[[im]]
+        seA[[im]] <- if(ncol(varA) > 0) sqrt(diag(varA)) else numeric()
+        xaic[im]  <- 2*nser*(nser*m+intercept) + n.used *
+            determinant.matrix(varE[[m-order.min+1L]], logarithm=TRUE)$modulus
     }
 
-    # Determine best model
+    # Determine best model: order 'm' ; im := index of m-th order model
     m <- if(aic) which.max(xaic == min(xaic)) + order.min - 1L else order.max
+    im <- m - order.min + 1L
 
     ## Recalculate residuals of best model
 
     y <- embed(x, m+1L)
-    AA <- A[[m - order.min + 1L]]
+    AA <- A[[im]]
     if(intercept) {
         xint <- AA[, 1L]
         ar <- AA[, -1L]
@@ -422,23 +424,22 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         xint <- NULL
         ar <- AA
     }
-    Y <- t(y[, iser, drop = FALSE])
-    YH <- AA %*% t(X)
-    E <- drop(rbind(matrix(NA, m, nser), t(Y - YH)))
+    tY <- y[, iser, drop = FALSE]
+    tYH <- X %*% t(AA) # == t(YH) ; YH <- AA %*% t(X)
+    E <- drop(rbind(matrix(NA, m, nser), tY - tYH))
 
     maic <- min(xaic) # wrongly was min(aic) in {0, 1}
     xaic <- setNames(if(is.finite(maic)) xaic - maic else
 		     ifelse(xaic == maic, 0, Inf), order.min:order.max)
-    dim(ar) <- c(nser, nser, m)
-    ar <- aperm(ar, c(3L,1L,2L))
-    ses <- seA[[m - order.min + 1L]]
+    ses <- seA[[im]]
     if(intercept) {
         sem <- ses[iser]
         ses <- ses[-iser]
     } else sem <- rep.int(0, nser)
-    dim(ses) <- c(nser, nser, m)
+    dim(ar) <- dim(ses) <- c(nser, nser, m)
+    ar  <- aperm(ar,  c(3L,1L,2L))
     ses <- aperm(ses, c(3L,1L,2L))
-    var.pred <- varE[[m - order.min + 1L]]
+    var.pred <- varE[[im]]
     if(nser > 1L) {
         snames <- colnames(x)
         dimnames(ses) <- dimnames(ar) <- list(seq_len(m), snames, snames)
@@ -457,8 +458,8 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         aa <- outer(sc, 1/sc)
         if(nser > 1L && m) for(i in seq_len(m)) ar[i,,] <- ar[i,,]*aa
         var.pred <- var.pred * drop(outer(sc, sc))
-        E <- E * rep.int(sc, rep.int(NROW(E), nser))
-        sem <- sem*sc
+        E   <- E  * rep.int(sc, rep.int(NROW(E), nser))
+        sem <- sem* sc
         if(m)
             for(i in seq_len(m)) ses[i,,] <- ses[i,,]*aa
     }
@@ -508,7 +509,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
             order = integer(1L),
             as.integer(aic))
     partialacf <- aperm(array(z$pacf, dim = c(nser, nser, order.max + 1L)), 3:1)[-1L, , , drop = FALSE]
-    var.pred <- aperm(array(z$var, dim = c(nser, nser, order.max + 1L)), 3:1)
+    var.pred   <- aperm(array(z$var,  dim = c(nser, nser, order.max + 1L)), 3:1)
     xaic <- setNames(z$aic - min(z$aic), 0:order.max)
     order <- z$order
     resid <- x
@@ -565,7 +566,7 @@ ar.burg.default <-
     coefs <- matrix(z[[1L]], order.max, order.max)
     partialacf <- array(diag(coefs), dim = c(order.max, 1L, 1L))
     var.pred <- if(var.method == 1L) z[[2L]] else z[[3L]]
-    if (any(is.nan(var.pred))) stop("zero-variance series")
+    if (anyNA(var.pred)) stop("zero-variance series") # anyNA() fast checking for NaN
     xaic <- n.used * log(var.pred) + 2 * (0L:order.max) + 2 * demean
     maic <- min(xaic) # wrongly was min(aic) in {0, 1}
     xaic <- setNames(if(is.finite(maic)) xaic - maic else
@@ -574,7 +575,7 @@ ar.burg.default <-
     ar <- if (order) coefs[order, 1L:order] else numeric()
     var.pred <- var.pred[order + 1L]
     resid <- if(order) c(rep(NA, order), embed(x, order+1L) %*% c(1, -ar))
-    else x
+             else x
     if(ists) {
         attr(resid, "tsp") <- xtsp
         attr(resid, "class") <- "ts"
@@ -590,7 +591,7 @@ ar.burg.default <-
     }
     class(res) <- "ar"
     res
-}
+} # ar.burg.default
 
 ar.burg.mts <-
 function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
@@ -615,26 +616,27 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     }
     else x.mean <- rep(0, nser)
     order.max <- floor(if(is.null(order.max)) 10 * log10(n.used) else order.max)
+    dm <- c(nser, nser, order.max + 1L)
+    dbln2m <- double(prod(dm))
     z <- .C(C_multi_burg,
             as.integer(n.used),
             resid = as.double(x),
             as.integer(order.max),
             as.integer(nser),
-            coefs = double((1L + order.max) * nser * nser),
-            pacf = double((1L + order.max) * nser * nser),
-            var = double((1L + order.max) * nser * nser),
+            coefs = dbln2m,
+            pacf  = dbln2m,
+            var   = dbln2m,
             aic = double(1L + order.max),
             order = integer(1L),
             as.integer(aic),
             as.integer(var.method))
-    partialacf <-
-        aperm(array(z$pacf, dim = c(nser, nser, order.max + 1L)), 3:1)[-1L, , , drop = FALSE]
-    var.pred <- aperm(array(z$var, dim = c(nser, nser, order.max + 1L)), 3:1)
+    partialacf <- aperm(array(z$pacf, dim = dm), 3:1)[-1L, , , drop = FALSE]
+    var.pred   <- aperm(array(z$var,  dim = dm), 3:1)
     xaic <- setNames(z$aic - min(z$aic), 0:order.max)
     order <- z$order
     ar <- if (order)
-        -aperm(array(z$coefs, dim = c(nser, nser, order.max + 1L)), 3:1)[2L:(order + 1L), , , drop = FALSE]
-    else array(dim = c(0, nser, nser))
+              -aperm(array(z$coefs, dim = dm), 3:1)[2L:(order + 1L), , , drop = FALSE]
+          else array(dim = c(0, nser, nser))
     var.pred <- var.pred[order + 1L, , , drop = TRUE]
     resid <- matrix(z$resid, nrow = n.used, ncol = nser)
     if (order) resid[seq_len(order), ] <- NA
