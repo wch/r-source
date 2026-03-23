@@ -33,9 +33,9 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
 	  add.smooth = getOption("add.smooth"),
           iter.smooth = if(isGlm # && binomialLike
                            ) 0 else 3,
-	  label.pos = c(4,2), cex.caption = 1, cex.oma.main = 1.25
-        , extend.ylim.f = 0.08
-        , panel.raw = points
+          panel.raw = points,
+	  label.pos = c(4,2), cex.caption = 1, cex.oma.main = 1.25,
+          extend.ylim.f = 0.08
           )
 {
     dropInf <- function(x, h) {

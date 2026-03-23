@@ -23,10 +23,10 @@
      cook.col = 8, cook.lty = 2, cook.legendChanges = list(),
      add.smooth = getOption("add.smooth"),
      iter.smooth = if(isGlm) 0 else 3,
+     panel.raw = points,
      label.pos = c(4,2),
-     cex.caption = 1, cex.oma.main = 1.25
-   , extend.ylim.f = 0.08
-   , panel.raw = points
+     cex.caption = 1, cex.oma.main = 1.25,
+     extend.ylim.f = 0.08
      )
 }
 \arguments{
@@ -50,10 +50,10 @@
     \code{""} or \code{NA} to suppress all captions.
   }
   \item{panel}{panel function for plotting points. This will by default 
-    add a smothing curve via  
+    add a smoothing curve via  
      \code{\link{panel.smooth}}
     if \code{add.smooth = TRUE} and use \code{panel.raw} (which by
-    default is \code{\link{points}}) instead. For the residuals vs 
+    default is \code{\link{points}}) otherwise. For the residuals vs 
     leverage plot, the smooth makes little sense and 
     \code{panel.raw} is used.}
   \item{sub.caption}{common title---above the figures if there are more
@@ -89,6 +89,7 @@
     particularly desirable for the (predominant) case of binary
     observations, but also for other models where the response
     distribution can be highly skewed.}
+  \item{panel.raw}{a function to use for plots without a smoother.}
   \item{label.pos}{positioning of labels, for the left half and right
     half of the graph respectively, for plots 1-3, 5, 6.}
   \item{cex.caption}{controls the size of \code{caption}.}
@@ -97,7 +98,6 @@
   \item{extend.ylim.f}{a numeric vector of length 1 or 2, to be used in
     \code{ylim <- \link{extendrange}(r=ylim, f = *)}
     for plots \code{1} and \code{5} when \code{id.n} is non-empty.}
-  \item{panel.raw}{a function to use for plots without a smoother.}
 }
 \description{
   Six plots (selectable by \code{which}) are currently available: a plot
