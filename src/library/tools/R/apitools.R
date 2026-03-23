@@ -365,6 +365,15 @@ Rsyms <- function(keep = c("F", "V")) {
     rsyms
 }
 
+## only allows for variables specified in WRE for now
+varAPI <- function() {
+    varpat <- "^@(eapi|api|emb)var +.*"
+    vlines <- trimws(grepv(varpat, WRE()))
+    vars <- sub("^.* +", "", vlines)
+    atypes <- sub(varpat, "\\1", vlines)
+    data.frame(name = vars, loc = rep("WRE", length(vars)), apitype = atypes)
+}
+
 ## similar to checkLibAPI but also picke up variables
 checkObjAPI <- function(exe) {
     ofile_syms(exe, keep = "U") |>
@@ -372,7 +381,7 @@ checkObjAPI <- function(exe) {
         transform(type = NULL) |>
         merge(Rsyms()) |>
         transform(name = sub("^_", "", name)) |>
-        merge(funAPI(), all.x = TRUE) |>
+        merge(rbind(funAPI(), varAPI()), all.x = TRUE) |>
         sort_by(~ apitype)
 }
 
