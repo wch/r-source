@@ -24,7 +24,7 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
 	  "Residuals vs Leverage",
 	  expression("Cook's dist vs Leverage* " * h[ii] / (1 - h[ii]))),
 	  panel = if(add.smooth) function(x, y, ...)
-              panel.smooth(x, y, iter=iter.smooth, ...) else points,
+              panel.smooth(x, y, iter=iter.smooth, ...) else panel.raw,
 	  sub.caption = NULL, main = "",
 	  ask = prod(par("mfcol")) < length(which) && dev.interactive(), ...,
 	  id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75,
@@ -35,6 +35,7 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
                            ) 0 else 3,
 	  label.pos = c(4,2), cex.caption = 1, cex.oma.main = 1.25
         , extend.ylim.f = 0.08
+        , panel.raw = points
           )
 {
     dropInf <- function(x, h) {
@@ -292,7 +293,7 @@ function (x, which = c(1,2,3,5), ## was which = 1L:4L,
             plot(xx, rs, xlim = c(0, max(xx, na.rm = TRUE)), ylim = ylim,
                  main = main, xlab = "Leverage", ylab = ylab5, type = "n",
                  ...)
-            panel(xx, rs, ...)
+            panel.raw(xx, rs, ...) # smoother is not desirable
             abline(h = 0, v = 0, lty = 3, col = "gray")
             if (one.fig)
                 title(sub = sub.caption, ...)
