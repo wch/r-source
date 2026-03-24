@@ -158,6 +158,7 @@ inRbuildignore <- function(files, pkgdir) {
             '                        "gzip" (default), "none", "bzip2", "xz", "zstd"',
             "  --md5                 add MD5 sums",
             "  --sha256              add SHA256 sums",
+            "  --sign                sign the package (implies --sum256, requires GnuPG)",
             "  --log                 log to file 'pkg-00build.log' when processing ",
             "                        the pkgdir with basename 'pkg'",
             "  --user=               explicitly set the tarball creator name (for 'Packaged:')",
@@ -851,6 +852,7 @@ inRbuildignore <- function(files, pkgdir) {
     manual <- TRUE  # Install the manual if Rds contain \Sexprs
     with_md5 <- FALSE
     with_sha256 <- FALSE
+    sign <- FALSE
     with_log <- FALSE
 ##    INSTALL_opts <- character()
     pkgs <- character()
@@ -935,6 +937,8 @@ inRbuildignore <- function(files, pkgdir) {
             with_md5 <- TRUE
         } else if (a == "--sha256") {
             with_sha256 <- TRUE
+        } else if (a == "--sign") {
+            sign <- with_sha256 <- TRUE
         } else if (a == "--log") {
             with_log <- TRUE
         } else if (substr(a, 1, 23) == "--install-dependencies=") {
@@ -1253,11 +1257,25 @@ inRbuildignore <- function(files, pkgdir) {
         if(with_sha256) {
 	    messageLog(Log, "adding SHA256 file")
             .installSHA256sums(pkgname)
+            if(sign) {
+                messageLog(Log, "signing package")
+                create.signature(file.path(pkgname, "SHA256"),
+                                 file.path(pkgname, "SHA256.sig"))
+                sig <- verify.signature(file.path(pkgname, "SHA256"),
+                                        file.path(pkgname, "SHA256.sig"))
+                if (isTRUE(sig)) {
+                    info <- attr(sig,"result")
+                    messageLog(Log, paste("signed with", info$fingerprint, info$userid))
+                }
+            }
         } else {
             ## remove any stale file
             unlink(file.path(pkgname, "SHA256"))
         }
-        ## TODO: add SHA256 signing here.
+        if (!sign) {
+            ## remove any stale file
+            unlink(file.path(pkgname, "SHA256.sig"))
+        }
         if(with_md5) {
 	    messageLog(Log, "adding MD5 file")
             .installMD5sums(pkgname)
