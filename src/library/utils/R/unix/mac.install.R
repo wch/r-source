@@ -127,17 +127,28 @@
         if (!.is.built.compatible(desc$Built))
             stop(gettextf("binary package %s is not compatible with this build of R", sQuote(pkg)))
 
-        res <- tools::checkSHA256sums(pkgname, file.path(tmpDir, pkgname))
+        ## this one includes SHA256 check
+        res <- tools::verifySHA256signature(pkgname, file.path(tmpDir, pkgname))
         if(!quiet && !is.na(res) && res) {
             cat(gettextf("package %s successfully unpacked and %s sums checked",
                          sQuote(pkgname), "SHA256"), "\n", sep="")
+            info <- attr(res, "result")
+            cat(gettextf("package %s signature verified (%s %s)",
+                         sQuote(pkgname), info$fingerprint, info$userid), "\n", sep="")
             flush.console()
         } else {
-            res <- tools::checkMD5sums(pkgname, file.path(tmpDir, pkgname))
+            res <- tools::checkSHA256sums(pkgname, file.path(tmpDir, pkgname))
             if(!quiet && !is.na(res) && res) {
                 cat(gettextf("package %s successfully unpacked and %s sums checked",
-                             sQuote(pkgname), "MD5"), "\n", sep="")
+                             sQuote(pkgname), "SHA256"), "\n", sep="")
                 flush.console()
+            } else {
+                res <- tools::checkMD5sums(pkgname, file.path(tmpDir, pkgname))
+                if(!quiet && !is.na(res) && res) {
+                    cat(gettextf("package %s successfully unpacked and %s sums checked",
+                                 sQuote(pkgname), "MD5"), "\n", sep="")
+                    flush.console()
+                }
             }
         }
 
