@@ -421,12 +421,16 @@
 
       \item New function \code{Rf_isScalarString}.
 
-      \item The non-API header files \file{R_ext/Callbacks.h} and
-      \file{R_ext/PrtUtil.h} are no longer copied to the installed
-      includes directory. The \code{R_ObjectTable} type definitions
-      formally in \file{R_ext/Callbacks.h} are now available in the new
-      header file \file{R_ext/ObjectTable.h}.  This new header file
-      should be used in packages instead of \file{R_ext/Callbacks.h}.
+      \item The \code{R_ObjectTable} type definitions formally in
+      \file{R_ext/Callbacks.h} are now available in the new header file
+      \file{R_ext/ObjectTable.h}. This new header file should be used in
+      packages instead of \file{R_ext/Callbacks.h}.
+
+      \item Task callback support declared in \file{R_ext/Callbacks.h}
+      has been enabled again. It was disabled for \R 4.5.0.
+
+      \item The non-API header file \file{R_ext/PrtUtil.h} is no longer
+      copied to the installed \file{include} directory.
 
       \item New function \code{R_mapAttrib} for iterating over the
       attributes of an object.

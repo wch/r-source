@@ -19247,6 +19247,17 @@ algorithm as @code{2.11.0 patched > 2.11.0 > 2.11.0 alpha > 2.8.1}) and
 use its value for @code{InstallPath}.
 @end itemize
 
+@node Task callbacks
+@section Task callbacks
+The file @file{R_ext/Callbacks.h} defines an API for working with task
+callbacks from the C level.  This corresponds to the @R{} level
+interface provided by @code{addTaskCallback()} and
+@code{removeTaskCallback()}.  The C interface is likely to be most
+useful in embedded contexts.
+@c could mark as @embhdr but might be useful elsewhere
+@eapihdr R_ext/Callbacks.h
+
+
 
 @node Function and variable index
 @unnumbered Function and variable index
