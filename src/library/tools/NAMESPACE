@@ -37,7 +37,7 @@ export("Adobe_glyphs", "HTMLheader", "Rcmd", "Rd2HTML", "pkg2HTML", "Rd2ex",
        "startDynamicHelp", "testInstalledBasic",
        "testInstalledPackage", "testInstalledPackages", "texi2dvi",
        "texi2pdf", "toHTML", "toRd", "toTitleCase", "undoc",
-       "update_pkg_po", "vignetteEngine",
+       "update_pkg_po", "verifySHA256signature", "vignetteEngine",
        vignetteInfo,
        "write_PACKAGES", "update_PACKAGES", "xgettext", "xgettext2pot", "xngettext")
 
