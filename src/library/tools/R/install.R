@@ -236,6 +236,7 @@ if(FALSE) {
             "      --pkglock		use a per-package lock directory",
             "      			(default for a single package)",
             "      --build    	build binaries of the installed package(s)",
+            "      --sign		sign the installed package(s)",
             "      --install-tests	install package-specific tests (if any)",
             "      --no-R, --no-libs, --no-data, --no-help, --no-demo, --no-exec,",
             "      --no-inst",
@@ -443,13 +444,35 @@ if(FALSE) {
         .Call(C_dirchmod, instdir, group.writable)
         is_first_package <<- FALSE
 
-        if (tar_up) { # Unix only
+        if (sign && !zip_up) {
             starsmsg(stars, "SHA256 sums")
             .installSHA256sums(instdir)
-            ## TODO: add signature
+            starsmsg(stars, "signing")
+            create.signature(file.path(instdir, "SHA256"),
+                             file.path(instdir, "SHA256.sig"))
+            sig <- verify.signature(file.path(instdir, "SHA256"),
+                                    file.path(instdir, "SHA256.sig"))
+            if (isTRUE(sig)) {
+                info <- attr(sig,"result")
+                starsmsg(stars, paste("signed with", info$fingerprint, info$userid))
+            }
+        }
+        if (tar_up) { # Unix only
+            if (!sign) { # sign has already done this above
+                starsmsg(stars, "SHA256 sums")
+                .installSHA256sums(instdir)
+            }
             starsmsg(stars, "creating tarball")
             version <- desc["Version"]
-            filename <- if (!grepl("darwin", R.version$os)) {
+            compression <- "gzip"
+            compression_level <- 9L
+            custom.bin <- .pkg.type(.Platform$pkgType) == "other.binary"
+            filename <- if (custom.bin) {
+                build <- gsub("^([[:lower:]]+)[.]binary(|[.]([[:alnum:]_-]+))$","\\1\\2", .Platform$pkgType)
+                compression <- if(nzchar(extSoftVersion()["zstd"])) "zstd" else "xz"
+                ## we could adjust compression_level for zstd here - perhaps an env var?
+                paste0(pkg_name, "_", version, "_R_", gsub(".", "-", build, fixed=TRUE), ".tar.", compression)
+            } else if (!grepl("darwin", R.version$os)) {
                 paste0(pkg_name, "_", version, "_R_",
                        Sys.getenv("R_PLATFORM"), ".tar.gz")
             } else {
@@ -457,8 +480,8 @@ if(FALSE) {
             }
             filepath <- file.path(startdir, filename)
             owd <- setwd(lib)
-            res <- utils::tar(filepath, curPkg, compression = "gzip",
-                              compression_level = 9L,
+            res <- utils::tar(filepath, curPkg, compression = compression,
+                              compression_level = compression_level,
                               tar = Sys.getenv("R_INSTALL_TAR"))
             if (res)
                 errmsg(sprintf("packaging into %s failed", sQuote(filename)))
@@ -519,6 +542,15 @@ if(FALSE) {
             starsmsg(stars,
                      gettextf("package %s successfully unpacked and %s sums checked",
                               sQuote(pkg), "SHA256"))
+            if (isTRUE(file.exists(sig <- file.path(instdir, "SHA256.sig")))) {
+                res <- verifySHA256signature(pkg, instdir)
+                if(!is.na(res) && res) {
+                    info <- attr(res, "result")
+                    starsmsg(stars,
+                             gettextf("package %s signature verified (%s %s)",
+                                      sQuote(pkg), info$fingerprint, info$userid))
+                }
+            }
         } else {
             res <- checkMD5sums(pkg, instdir)
             if(!is.na(res) && res) {
@@ -1074,6 +1106,15 @@ if(FALSE) {
             starsmsg(stars,
                      gettextf("package %s successfully unpacked and %s sums checked",
                               sQuote(pkg_name), "SHA256"))
+            if (isTRUE(file.exists("SHA256.sig"))) {
+                res <- verifySHA256signature(pkg_name, getwd())
+                if(!is.na(res) && res) {
+                    info <- attr(res, "result")
+                    starsmsg(stars,
+                             gettextf("package %s signature verified (%s %s)",
+                                      sQuote(pkg_name), info$fingerprint, info$userid))
+                }
+            }
         } else {
             res <- checkMD5sums(pkg_name, getwd())
             if(!is.na(res) && res) {
@@ -2041,6 +2082,7 @@ if(FALSE) {
     pkglock <- FALSE  # set for per-package locking
     libs_only <- FALSE
     tar_up <- zip_up <- FALSE
+    sign <- FALSE
     shargs <- character()
     multiarch <- TRUE
     force_biarch <- FALSE
@@ -2133,6 +2175,8 @@ if(FALSE) {
             get_user_libPaths <- TRUE
         } else if (a == "--build") {
             if (WINDOWS) zip_up <- TRUE else tar_up <- TRUE
+        } else if (a == "--sign") {
+            sign <- TRUE
         } else if (substr(a, 1, 16) == "--data-compress=") {
             dc <- substr(a, 17, 1000)
             dc <- match.arg(dc, c("none", "gzip", "bzip2", "xz"))
