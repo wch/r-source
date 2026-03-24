@@ -1648,7 +1648,8 @@ static Rboolean Rf_RunningToplevelHandlers = FALSE;
   since they could be more identified by an invariant (rather than
   position).
  */
-attribute_hidden R_ToplevelCallbackEl *
+//attribute_hidden
+R_ToplevelCallbackEl *
 Rf_addTaskCallback(R_ToplevelCallback cb, void *data,
 		   void (*finalizer)(void *), const char *name, int *pos)
 {
@@ -1703,7 +1704,8 @@ static void removeToplevelHandler(R_ToplevelCallbackEl *e)
     }
 }
 
-attribute_hidden Rboolean
+//attribute_hidden
+Rboolean
 Rf_removeTaskCallbackByName(const char *name)
 {
     R_ToplevelCallbackEl *el = Rf_ToplevelTaskHandlers, *prev = NULL;
@@ -1737,7 +1739,8 @@ Rf_removeTaskCallbackByName(const char *name)
   Remove the top-level task handler/callback identified by
   its position in the list of callbacks.
  */
-attribute_hidden Rboolean
+//attribute_hidden
+Rboolean
 Rf_removeTaskCallbackByIndex(int id)
 {
     R_ToplevelCallbackEl *el = Rf_ToplevelTaskHandlers, *tmp = NULL;
