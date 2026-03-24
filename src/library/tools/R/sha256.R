@@ -28,8 +28,6 @@ sha256sum <- function(files, bytes) {
     }
 }
 
-# The following fns are neither used nor exported - for now.
-
 ## exclude legacy MD5 if present for backward compatibility.
 ## If both are included then SHA256 has to be created first since MD5
 ## checks in old versions of R don't skip it. This means SHA256 may not
