@@ -16,6 +16,23 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
+## from R 4.6.0 on are 4 possible types:
+## "source"       - .tar.gz, source
+## "mac.binary"   - .tgz, macOS binary
+## "win.binary"   - .zip, Windows binary
+## "other.binary" - .tar.(bz2|xz|zstd) custom binary
+## In the long run the plan is to replace all with custom binaries
+## since they cover all OSes and will allow us to remove special cases.
+.pkg.type <- function(type) {
+    if (grepl(".binary", type, fixed=TRUE)) {
+        ## strip build name
+        type <- gsub("^([[:lower:]]+[.]binary)[.].*", "\\1", type)
+        ## at this point we only care about win, mac or other
+        if (! type %in% c("win.binary", "mac.binary"))
+            type <- "other.binary"
+    } else "source"
+}
+
 write_PACKAGES <-
 function(dir = ".", fields = NULL, type,
          verbose = FALSE, unpacked = FALSE, subdirs = FALSE,
@@ -32,11 +49,7 @@ function(dir = ".", fields = NULL, type,
         type <- .Platform$pkgType
     }
     if (grepl(".binary", type, fixed=TRUE)) {
-        ## strip build name
-        type <- gsub("^([[:lower:]]+[.]binary)[.].*", "\\1", type)
-        ## at this point we only care about win, mac or other
-        if (! type %in% c("win.binary", "mac.binary"))
-            type <- "other.binary"
+        type <- .pkg.type(type)
     } else {
         ## for compatibility with R < 4.6.0 we handle partial matching
         ## of c("source", "win.binary", "mac.binary") as it was using match.arg
