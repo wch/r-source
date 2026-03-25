@@ -379,7 +379,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
 		if(m) cbind(rep.int(1,nrow(y)), y[, (nser+1L):ncol(y)])
 		else as.matrix(rep.int(1, nrow(y)))
 	    } else {
-		if(m) y[, (nser+1L):ncol(y)] else matrix(0, nrow(y), 0)
+		if(m) y[, (nser+1L):ncol(y), drop=FALSE] else matrix(0, nrow(y), 0)
 	    }
         ## FIXME: use [t]crossprod();  and instead of solve(XX), use solve(qr(X)) !!
         Y <- t(y[, iser])
@@ -403,7 +403,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         varA <- P %x% varE[[im]]
         seA[[im]] <- if(ncol(varA) > 0) sqrt(diag(varA)) else numeric()
         xaic[im]  <- 2*nser*(nser*m+intercept) + n.used *
-            determinant.matrix(varE[[m-order.min+1L]], logarithm=TRUE)$modulus
+            log(det(varE[[im]])) ## rather =!?= determinant.matrix(varE[[im]], logarithm=TRUE)$modulus
     }
 
     # Determine best model: order 'm' ; im := index of m-th order model

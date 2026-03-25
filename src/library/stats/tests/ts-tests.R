@@ -39,6 +39,21 @@ ar(sunspot.year, method = "burg")
 ar(sunspot.year, method = "ols")
 ar(sunspot.year, method = "mle")
 
+x4d <- diff(log(EuStockMarkets))
+x1 <- x4d[,1]
+## aic=FALSE: just compute AR(<order.max>):
+m6 <- ar.ols(x1, order.max = 6, demean = FALSE, aic = FALSE)
+stopifnot(all.equal(array(c(4.167, -22.03, -7.737,
+                            4.181, -27.62, 6.851), dim = c(6L, 1L, 1L)),
+                    m6$ar*1000, tolerance = 1e-3))
+lm6 <- lapply(setNames(,c("yw","burg","mle")), \(meth)
+              ar(x1, aic=FALSE, order.max = 6, method = meth, demean=FALSE))
+(mar <- vapply(lm6, `[[`, numeric(6), "ar")) # 6 x 3  AR(6) coef
+relD <- abs(mar / c(m6$ar) - 1) # |rel. difference to "ols"|
+stopifnot(identical(dim(relD), c(6L, 3L)),
+          ## AR(6) coefficients are "relatively equal":
+          print(colMeans(relD)) < 0.1, max(relD) < 0.2)
+
 
 ### tests using presidents, contains missing values
 acf(presidents, na.action = na.pass)
