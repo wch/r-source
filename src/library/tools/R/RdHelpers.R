@@ -189,7 +189,7 @@ function(x)
     cited <- Rd_expr_bibcite_keys_cited()    
     ## Would be nice to have a common reader for possibly multi-line
     ## comma separated values ...
-    given <- strsplit(x, ",[[:space:]]*")[[1L]]
+    given <- strsplit(x, ",[[:space:]]*", perl = TRUE)[[1L]]
     if(any(given == "*"))
         given <- c(given[given != "*"], cited)
     Rd_expr_bibcite_keys_cited(setdiff(cited, given))
@@ -243,36 +243,36 @@ Rd_expr_bibcite <-
 function(x, textual = FALSE)
 {
     x <- trimws(x)
-    given <- strsplit(x, "(?<!\\\\),[[:space:]]*", perl = TRUE)[[1L]]
+    m <- gregexpr("|", x, fixed = TRUE)
+    if (m[[1L]][1L] == -1L) { # simple keys
+        keys <- strsplit(x, ",[[:space:]]*", perl = TRUE)[[1L]]
+        after <- before <- rep("", length(keys))
+    } else { # a single citespec (commas are no longer treated as separators)
     ## We used to extract parts based on
-    ##   parts <- strsplit(given, "|", fixed = TRUE)
+    ##   parts <- strsplit(x, "|", fixed = TRUE)
     ## but that does not work as per ?strsplit
     ##   if there is a match at the end of the string, the output is the
     ##   same as with the match removed.
     ## Argh.
-    parts <- regmatches(given,
-                        gregexpr("|", given, fixed = TRUE),
-                        invert = TRUE)
+    parts <- regmatches(x, m, invert = TRUE)
+    ## FIXME: can be simplified as we no longer allow mixing citespecs and keys
     if(!all(ind <- (lengths(parts) %in% c(1L, 3L)))) {
         msg <- paste(c("Found the following invalid citespecs:", 
-                       .strwrap22(sQuote(given[!ind]))),
+                       .strwrap22(sQuote(x[!ind]))),
                      collapse = "\n")
-        warning(msg, call. = FALSE)
+        warning(msg, call. = FALSE, domain = NA)
         parts <- parts[ind]
     }
-    keys <- after <- before <- rep_len("", length(parts))
+    keys <- after <- before <- rep("", length(parts))
     if(any(ind <- (lengths(parts) == 1L))) {
         keys[ind] <- unlist(parts[ind], use.names = FALSE)
     }
     if(any(ind <- (lengths(parts) == 3L))) {
         parts <- parts[ind]
         keys[ind] <- vapply(parts, `[`, "", 2L)
-        after[ind] <- gsub("\\,", ",",
-                           vapply(parts, `[`, "", 3L),
-                           fixed = TRUE)
-        before[ind] <- gsub("\\,", ",",
-                            vapply(parts, `[`, "", 1L),
-                            fixed = TRUE)
+        after[ind] <- vapply(parts, `[`, "", 3L)
+        before[ind] <- vapply(parts, `[`, "", 1L)
+    }
     }
     bib <- .bibentries_from_keys(keys)
     ind <- keys %in% .bibentry_get_key(bib)

@@ -287,15 +287,12 @@ function(x)
 function(x)
 {
     x <- trimws(x)
-    given <- strsplit(x, "(?<!\\\\),[[:space:]]*", perl = TRUE)[[1L]]
-    parts <- regmatches(given, gregexpr("|", given, fixed = TRUE),
-        invert = TRUE)
-    keys <- rep_len("", length(parts))
-    if (any(ind <- (lengths(parts) == 1L))) {
-        keys[ind] <- unlist(parts[ind], use.names = FALSE)
-    }
-    if (any(ind <- (lengths(parts) == 3L))) {
-        keys[ind] <- vapply(parts[ind], `[`, "", 2L)
+    m <- gregexpr("|", x, fixed = TRUE)
+    if (m[[1L]][1L] == -1L) { # simple keys
+        keys <- strsplit(x, ",[[:space:]]*", perl = TRUE)[[1L]]
+    } else { # a single citespec
+        parts <- regmatches(x, m, invert = TRUE)[[1L]]
+        keys <- if (length(parts) == 3L) parts[2L] else character()
     }
     keys
 }
@@ -304,7 +301,7 @@ function(x)
 function(x)
 {
     x <- trimws(x)
-    strsplit(x, ",[[:space:]]*")[[1L]]
+    strsplit(x, ",[[:space:]]*", perl = TRUE)[[1L]]
 }
 
 .bibtools_cache_bibentries <- local({
