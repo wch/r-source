@@ -1557,9 +1557,11 @@ Remember that @LaTeX{} needs to be on the path.
 @c
 The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
 OS X' which takes you to a new page. Two files are offered for download,
-@file{R-@value{VERSIONno}-arm64.pkg} and @file{R-@value{VERSIONno}-x86_64.pkg}.
-Both are for macOS 11 or later (@I{Big Sur}, @I{Monterey}, @I{Ventura},
-@I{Sonoma}, @dots{}).
+@file{R-@value{VERSIONno}-arm64.pkg} (for macOS 14 or later, @I{Sonoma},
+@I{Sequoia}, @I{Tahoe}, @dots{}) and
+@file{R-@value{VERSIONno}-x86_64.pkg} (for macOS 11 or later, @I{Big
+Sur}, @I{Monterey}, @I{Ventura}, @I{Sonoma}, @I{Sequoia}, @I{Tahoe},
+@dots{}).
 
 The first is for `Apple Silicon' (@emph{aka} `M1', `M2', @dots{}) Macs, the
 second for older Macs with an @cputype{x86_64} (Intel) CPU.
@@ -1586,9 +1588,9 @@ component is needed to use package @pkg{tcltk}. The `@I{Texinfo}' component
 is only needed by those installing source packages or @R{} from its
 sources.)
 
-Note for @I{Ventura} users: installation from the @file{Downloads} folder
-may not be allowed or may require additional authorization, so we
-suggest you download somewhere else such as your desktop or home folder.
+Note: installation from the @file{Downloads} folder may not be allowed
+or may require additional authorization, so we suggest you download
+somewhere else such as your desktop or home folder.
 
 These are Apple Installer packages.  If you encounter any problem during
 the installation, please check the Installer log by clicking on the
@@ -1646,7 +1648,7 @@ as on any other Unix-alike: see the next chapter of this manual.  There
 are some small differences which may surprise users of @R{} on other
 platforms, notably the default location of the personal library
 directory (under @file{~/Library/R}, e.g.@:
-@file{~/Library/R/arm64/4.4/library}), and that warnings, messages and
+@file{~/Library/R/arm64/4.6/library}), and that warnings, messages and
 other output to @file{stderr} are highlighted in bold.
 
 @c https://ryanhomer.github.io/posts/build-openmp-macos-catalina-complete
@@ -1742,7 +1744,7 @@ pkgutil --files org.r-project.arm64.texinfo
 @end example
 
 @noindent
-(For the `Intel build, replace @code{arm64} by @code{x86_64}.)
+(For the Intel build, replace @code{arm64} by @code{x86_64}.)
 These are paths relative to @file{/}, the root of the file system.
 @c Maybe too dangerous for naive users.
 @c file.remove removes empty directories on Unix.
@@ -1770,8 +1772,8 @@ versions can be installed together.} of the @R{} framework which it
 finds installed.  This can be avoided by using @command{pkgutil
 --forget} (see the previous section).  However, note that different
 versions are installed under
-@file{/Library/Frameworks/R.framework/Versions} as @file{4.4-arm64} (or
-@file{4.4-x86_64}), @file{4.3} and so on, so it is not possible to have
+@file{/Library/Frameworks/R.framework/Versions} as @file{4.6-arm64} (or
+@file{4.6-x86_64}), @file{4.5-arm64} and so on, so it is not possible to have
 different @samp{4.x.y} versions installed for the same @samp{x} and CPU
 type.
 
@@ -5094,11 +5096,7 @@ Windows).
 @cindex macOS
 
 The instructions here are for `Apple Silicon' (@cputype{arm64}) or Intel
-64-bit (@cputype{x86_64}) builds on macOS 11 (@I{Big Sur}), 12
-(@I{Monterey)}, 13 (@I{Ventura}), 14 (@I{Sonoma}) and likely later.
-(They may well work on Intel macOS 10.14 or 10.15, but are untested
-there.)
-
+64-bit (@cputype{x86_64}) builds on macOS 11 (@I{Big Sur}) and later.
 
 @node Prerequisites
 @subsection Prerequisites
@@ -5139,7 +5137,8 @@ partially or completely remove them.
 
 The Command Line Tools provide C and C++ compilers derived from @I{LLVM}'s
 @command{clang} but nowadays known as `Apple clang' with different
-versioning (so Apple clang 15 is unrelated to @I{LLVM} clang 15).
+versioning (so Apple clang 17 is unrelated to @I{LLVM} clang 17 and
+Apple clang 21 is only similar to  @I{LLVM} clang 21).
 
 @item
 A Fortran compiler. @xref{Fortran compilers}.
@@ -5161,10 +5160,10 @@ components.  Intel users want the @code{darwin20} components: the
 
 Or this can be done manually, by for example
 @example
-curl -OL https://mac.r-project.org/bin/darwin20/arm64/pcre2-10.44-darwin.20-arm64.tar.xz
-sudo tar -xvzf pcre2-10.44-darwin.20-arm64.tar.gz -C /
-curl -OL https://mac.r-project.org/bin/darwin20/arm64/xz-5.6.3-darwin.20-arm64.tar.xz
-sudo tar -xvzf xz-5.6.3-darwin.20-arm64.tar.xz -C /
+curl -OL https://mac.r-project.org/bin/darwin23/arm64/pcre2-10.44-darwin.23-arm64.tar.xz
+sudo tar -xvzf pcre2-10.44-darwin.23-arm64.tar.gz -C /
+curl -OL https://mac.r-project.org/bin/darwin23/arm64/xz-5.6.3-darwin.23-arm64.tar.xz
+sudo tar -xvzf xz-5.6.3-darwin.23-arm64.tar.xz -C /
 @end example
 @noindent
 (@command{sudo} is not needed if your account owns @file{/opt/R/arm64} or
@@ -5318,23 +5317,23 @@ Updating an @cputype{arm64} build may fail because of the bug described
 at @uref{https://openradar.appspot.com/FB8914243} but @emph{ab initio}
 builds work.  This has been far rarer since macOS 13.
 
-If you are using the macOS 13 @abbr{SDK}@footnote{@command{ls -l `xcrun
--show-sdk-path`} in a terminal will show you which @abbr{SDK} is selected.},
-you may need to add something like @code{-mmacos-version-min=12.0} to
-@samp{CFLAGS}.
+@c If you are using the macOS 13 @abbr{SDK}@footnote{@command{ls -l `xcrun
+@c -show-sdk-path`} in a terminal will show you which @abbr{SDK} is selected.},
+@c you may need to add something like @code{-mmacos-version-min=12.0} to
+@c @samp{CFLAGS}.
 
-Linker warnings like
-@example
-ld: warning: could not create compact unwind for _sort_:
-   register 26 saved somewhere other than in frame
-ld: warning: ld: warning:
-   could not create compact unwind for _arcoef_: registers 23 and 24 not saved contiguously in frame
-ld: warning: could not create compact unwind for ___emutls_get_address:
-   registers 23 and 24 not saved contiguously in frame
-@end example
-@noindent
-can be ignored.  These stem from compiled Fortran code, including its
-run-time libraries.
+@c Linker warnings like
+@c @example
+@c ld: warning: could not create compact unwind for _sort_:
+@c    register 26 saved somewhere other than in frame
+@c ld: warning: ld: warning:
+@c    could not create compact unwind for _arcoef_: registers 23 and 24 not saved contiguously in frame
+@c ld: warning: could not create compact unwind for ___emutls_get_address:
+@c    registers 23 and 24 not saved contiguously in frame
+@c @end example
+@c @noindent
+@c can be ignored.  These stem from compiled Fortran code, including its
+@c run-time libraries.
 
 The default security settings can make it difficult to install Apple
 packages which have not been `notarized'@footnote{See
@@ -5376,17 +5375,17 @@ symlink is broken, the driver will issue a warning and use @code{xcrun
 is used when using @command{gfortran} to link, so not when building @R{}
 but when installing a few packages.)
 
-Other builds of @command{gfortran} for @code{arm64} macOS 14 are
-available at
-@uref{https://github.com/fxcoudert/gfortran-for-macOS/releases}. To use
-one of the pre-built compilers with Apple @command{clang} needs
-something like
-@example
-LDFLAGS="-L/opt/R/arm64/lib -rpath /usr/local/gfortran/lib"
-@end example
-@noindent
-in @file{config.site} to ensure the matching Fortran run-time libraries are
-found.
+@c Other builds of @command{gfortran} for @code{arm64} macOS 14 are
+@c available at
+@c @uref{https://github.com/fxcoudert/gfortran-for-macOS/releases}. To use
+@c one of the pre-built compilers with Apple @command{clang} needs
+@c something like
+@c @example
+@c LDFLAGS="-L/opt/R/arm64/lib -rpath /usr/local/gfortran/lib"
+@c @end example
+@c @noindent
+@c in @file{config.site} to ensure the matching Fortran run-time libraries are
+@c found.
 
 @node Cairo graphics
 @subsection Cairo graphics
@@ -5713,9 +5712,8 @@ installed at first use.  Check if a @abbr{JRE} is installed by running
 installed this may prompt you to install it from Oracle@footnote{Oracle
 Java has a restrictive licence, unlike distributions based on @I{OpenJDK}.}
 (but see the next paragraph).  We recommend you install a version with
-long-term support, e.g.@: 17 or 21@footnote{The planned next @I{LTS}
-release is 25 in September 2025.  Java 8 @emph{aka} 1.8.0 is still
-@I{LTS} but some packages require 11 or later.}  but not 18--20, 22--24
+long-term support, e.g.@: 21 or 25@footnote{Java 8 @emph{aka} 1.8.0 is still
+@I{LTS} but some packages require 11 or later.}  but not 18--20, 22--24, 26
 with a 6-month lifetime. 
 
 The currently simplest way to install Java is from
@@ -5763,16 +5761,14 @@ Adoptium} set e.g.@:
 JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home
 @end example
 @noindent
-in @file{config.site}.  For Java 21 from @uref{https://jdk.java.net/}
+in @file{config.site}.  For Java 25 from @uref{https://jdk.java.net/}
 (which might no longer be available), use
 @example
-JAVA_HOME=/path/to/jdk-21.jdk/Contents/Home
+JAVA_HOME=/path/to/jdk-25.jdk/Contents/Home
 @end example
 
 @c For an @cputype{arm64} build, the earliest Java version which is
 @c officially supported is 17.
-
-@c jdk.java.net no longer has Java 11 nor 17 LTS builds.
 
 Note that it is necessary to set the environment variable @env{NOAWT} to
 @code{1} to install many of the Java-using packages.
@@ -5847,23 +5843,24 @@ However, there are some important details.
 @itemize
 
 @item
-Current @acronym{CRAN} macOS distributions are targeted at @I{Big Sur}
-so it is wise to ensure that the compilers generate code that will run
-on @I{Big Sur} or later.  With the recommended compilers we can use
+Current @acronym{CRAN} macOS distributions are targeted at @I{Sonoma} or
+@I{Big Sur} (Intel) so it is wise to ensure that the compilers generate
+code that will run on that OS or later.  With the recommended
+compilers we can use something like
 @example
-CC="clang -mmacos-version-min=11.0"
-CXX="clang++ -mmacos-version-min=11.0"
-FC="/opt//gfortran/bin/gfortran -mmacosx-version-min=11.0"
+CC="clang -mmacos-version-min=14.0"
+CXX="clang++ -mmacos-version-min=14.0"
+FC="/opt//gfortran/bin/gfortran -mmacosx-version-min=14.0"
 @end example
 @noindent
 or set the environment variable
 @example
-export MACOSX_DEPLOYMENT_TARGET=11.0
+export MACOSX_DEPLOYMENT_TARGET=14.0
 @end example
 
 @item
-Using the flag @option{-Werror=partial-availability} can help trigger
-compilation errors on functionality not in @I{Big Sur}.
+Using the C/C++ flag @option{-Werror=partial-availability} can help trigger
+compilation errors on functionality not in @I{Sonoma}.
 
 @item
 Check that any compiled code is not dynamically linked to libraries only
