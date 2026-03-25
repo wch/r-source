@@ -62,8 +62,8 @@ function(keys)
                pkg <- if(length(dir)) {
                           basename(dir[1L])
                       } else character()
-               c(R_bibentries(),
-                 .bibentries_from_REFERENCES(dir, pkg))
+               c(.bibentries_from_REFERENCES(dir, pkg),
+                 R_bibentries())
            } else NULL
     if(!any(ind)) {
         ## Special-case for efficiency.
