@@ -50,8 +50,8 @@
 
 .gpg.sign <- function(doc, out, uid, keyring, use.default.keyring=missing(keyring), overwrite=TRUE, quiet=FALSE) {
     gpg <- .gpg(quiet=quiet)
-    if (isFALSE(gpg)) stop("gpg is not avaiable for signing.")
-    doc <- normalizePath(doc, "/", TRUE)    
+    if (isFALSE(gpg)) stop("gpg is not available for signing")
+    doc <- normalizePath(doc, "/", TRUE)
     out <- path.expand(out)
     if (file.exists(out)) {
         if (overwrite)
@@ -69,7 +69,7 @@
     }
     if (isFALSE(use.default.keyring)) {
         if (missing(keyring))
-            stop("if use.default.keyring=FALSE then keyring must be specified")
+            stop("'keyring' must be specified if 'use.default.keyring=FALSE'")
         args <- c(args, "--no-default-keyring")
     }
     if (!missing(keyring)) args <- c(args, sapply(keyring, function(x) c("--keyring", x)))
@@ -102,7 +102,7 @@
     if (isFALSE(gpg)) {
         if (quiet)
             return(NA)
-        stop("gpg is not avaiable for signing.")
+        stop("gpg is not available for signing")
     }
     doc <- normalizePath(doc, "/", TRUE)
     sig <- normalizePath(sig, "/", TRUE)
@@ -111,7 +111,7 @@
     args <- c("--status-fd", "1")
     if (isFALSE(use.default.keyring)) {
         if (missing(keyring))
-            stop("if use.default.keyring=FALSE then keyring must be specified")
+            stop("'keyring' must be specified if 'use.default.keyring=FALSE'")
         args <- c(args, "--no-default-keyring")
     }
     if (!missing(keyring)) args <- c(args, sapply(keyring, function(x) c("--keyring", x)))

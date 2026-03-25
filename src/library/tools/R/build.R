@@ -1,7 +1,7 @@
 #  File src/library/tools/R/build.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -158,7 +158,7 @@ inRbuildignore <- function(files, pkgdir) {
             '                        "gzip" (default), "none", "bzip2", "xz", "zstd"',
             "  --md5                 add MD5 sums",
             "  --sha256              add SHA256 sums",
-            "  --sign                sign the package (implies --sum256, requires GnuPG)",
+            "  --sign                sign the package (implies --sha256, requires GnuPG)",
             "  --log                 log to file 'pkg-00build.log' when processing ",
             "                        the pkgdir with basename 'pkg'",
             "  --user=               explicitly set the tarball creator name (for 'Packaged:')",
@@ -280,21 +280,19 @@ inRbuildignore <- function(files, pkgdir) {
             if(file.exists(vignette_index_path))
                 unlink(vignette_index_path)
 
-            ## PR#18191: ensure tempory installation so can be checked
+            ## PR#18191: ensure temporary installation so can be checked
             ## for a vignette engine
             if(desc["Package"] %in%
                .get_requires_from_package_db(desc, "VignetteBuilder"))
                 ensure_installed()
 
             ## PR#15775: check VignetteBuilder packages are installed
-            ## PR#18191: ensure tempory installation directory is also
-            ## checked 
+            ## PR#18191: ensure temporary installation is found
             loadVignetteBuilder(pkgdir, TRUE,
                                 lib.loc = c(libdir, .libPaths()))
 
             ## Look for vignette sources
-            ## PR#18191: ensure tempory installation directory is also
-            ## checked 
+            ## PR#18191: ensure temporary installation is found
             vigns <- pkgVignettes(dir = '.', check = TRUE,
                                   lib.loc = c(libdir, .libPaths()))
             if (!is.null(vigns) && length(vigns$docs)) {

@@ -421,7 +421,7 @@
 
       \item New function \code{Rf_isScalarString}.
 
-      \item The \code{R_ObjectTable} type definitions formally in
+      \item The \code{R_ObjectTable} type definitions formerly in
       \file{R_ext/Callbacks.h} are now available in the new header file
       \file{R_ext/ObjectTable.h}. This new header file should be used in
       packages instead of \file{R_ext/Callbacks.h}.
@@ -480,8 +480,8 @@
       \code{R_findDotsEnv}, \code{R_DotsExist}, \code{R_DotsLength},
       \code{R_DotsNames}, \code{R_DotsElt}, \code{R_GetDotType},
       \code{R_DotDelayedExpression}, \code{R_DotDelayedEnvironment}, and
-      \code{R_DotForcedExpression}. Contributed by Lionel Henry, Davis
-      Vaughan, and Charlie Gao in \PR{18928}.
+      \code{R_DotForcedExpression}. Contributed by \I{Lionel Henry},
+      \I{Davis Vaughan}, and \I{Charlie Gao} in \PR{18928}.
 
       \item New function \code{R_envSymbols} returns a vector of the
       symbols for which an environment contains bindings (\PR{18928}).

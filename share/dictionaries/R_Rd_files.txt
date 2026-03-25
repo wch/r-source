@@ -152,6 +152,8 @@ iteratively
 jitter
 kerning
 keypress
+keyring
+keyrings
 lazyload
 len
 lexically

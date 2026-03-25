@@ -1,11 +1,11 @@
 % File src/library/tools/man/checkMD5sums.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2015 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{checkMD5sums}
 \alias{checkMD5sums}
-\title{Check and Create MD5 Checksum Files}
+\title{Check and Create \file{MD5} Checksum Files}
 \description{
   \code{checkMD5sums} checks the files against a file \file{MD5}.
 }
@@ -27,12 +27,12 @@ checkMD5sums(package, dir)
   is searched for.
 
   The private function \code{tools:::.installMD5sums} is used to create
-  \code{MD5} files.
+  \file{MD5} files.
 }
 \note{
-  The use of the \code{MD5} files has been deprecated in favor of
-  \code{SHA256} files checked by \code{\link{checkSHA256sums}} since
-  MD5 hashes are succeptible to hash-collision and length-extension
+  As from \R 4.6.0, the use of \file{MD5} files has been deprecated in
+  favor of \file{SHA256} files checked by \code{\link{checkSHA256sums}},
+  since MD5 hashes are susceptible to hash-collision and length-extension
   attacks and therefore are only suitable for integrity checks and not
   for verification of authenticity.
 }
