@@ -486,17 +486,17 @@
       \item New function \code{R_envSymbols} returns a vector of the
       symbols for which an environment contains bindings (\PR{18928}).
 
-      \item The functions \code{Rf_findVar} and \code{findVarInFrame}
-      are now marked as non-API, and uses in packages will now receive
-      check \samp{WARNING}s.  See \sQuote{Writing R Extensions} for
-      alternatives to use.
-
       \item \command{R CMD check} \samp{NOTE}s on the use of the non-API
       entry points \code{PRCODE}, \code{SET_PRCODE}, \code{PRENV},
       \code{SET_PRENV}, \code{PRVALUE}, \code{SET_PRVALUE},
       \code{R_PromiseExpr}, and \code{Rf_allocSExp} have been upgraded
       to \samp{WARNING}s in preparation for removing declarations and,
       where possible, hiding these entry points.
+
+      \item New functions \code{R_getVar} and \code{R_getVarEx}. In most
+      cases these can be used instead of the non-API functions
+      \code{Rf_findVar} and \code{Rf_findVarInFrame}.  Other cases can
+      be handled by the new API for working with variable bindings.
     }
   }
 
