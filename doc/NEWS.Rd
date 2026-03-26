@@ -8,6 +8,37 @@
 \section{\Rlogo Changes in R-devel}{
   \subsection{Significant User-Visible Changes}{
     \itemize{
+      \item .
+    }
+  }
+
+  \subsection{New Features}{
+    \itemize{
+      \item .
+    }
+  }
+
+  \subsection{Installation}{
+    \itemize{
+      \item .
+    }
+  }
+
+  \subsection{Package Installation}{
+    \itemize{
+      \item .
+    }
+  }
+
+  \subsection{C-LEVEL FACILITIES}{
+    \itemize{
+      \item .
+    }
+  }
+}
+\section{\Rlogo Changes in R 4.6.0}{
+  \subsection{Significant User-Visible Changes}{
+    \itemize{
       \item The R citation now provides a \abbr{DOI}
       (\I{10.32614/R.manuals}): please update your
       bibliographies accordingly.
