@@ -13445,6 +13445,17 @@ SEXP Rf_mkString(const char *);
 @end group
 @end example
 
+Some useful pre-allocated values are available as @code{R_FalseValue},
+@code{R_LogicalNAValue}, @code{R_TrueValue}, @code{R_BlankScalarString},
+@code{R_BlankString}, and @code{R_NaString}
+@eapivar R_FalseValue
+@eapivar R_LogicalNAValue
+@eapivar R_TrueValue
+@eapivar R_BlankScalarString
+@eapivar R_BlankString
+@eapivar R_NaString
+
+
 Some of the @code{Rf_is@var{XXXX}} functions differ from their apparent
 @R{}-level counterparts: for example @code{Rf_isVector} is true for any
 atomic vector type (@code{Rf_isVectorAtomic}) and for lists and expressions
