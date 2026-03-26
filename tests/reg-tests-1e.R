@@ -2614,6 +2614,7 @@ stopifnot(identical(strX2 , strX2. ), noListof(strX2. ),
           identical(strXs2, strXs2.), noListof(strXs2.))
 ## strXs?2. did have 'List of' in R <= 4.5.z
 
+
 ## simple test for R_GetBindingType
 local({
     getBindingType <- function(sym, env = parent.frame()) {
@@ -3112,6 +3113,26 @@ local({
     f <- function(...) local({ "..." <- 1; ...names() })
     stopifnot(identical(f(a = 1, b = 2), c("a", "b")))
 })
+
+
+## checking isa() consistency, notably S3 vs S4
+setClass("z4", contains = "numeric")
+setClass("zz4", contains = "z4")
+z3  <- `class<-`(0, "z3")
+zz3 <- `class<-`(1, c("zz3", "z3"))
+z4  <- new("z4", 0)
+zz4 <- new("zz4",1)
+stopifnot(isa(z4, "z4"), isa(zz4, "z4"), !isa(z4, "zz4"),
+          isa(z3, "z3"), isa(zz3, "z3"), !isa(z3, "zz3"),
+          removeClass("zz4"), removeClass("z4"))
+## union() needed adaptation (fumbled in r89677 before correction):
+x <- factor(c("a", "b", "a"))
+y <- factor(c("b", "c"))
+(uxy <- union(x, y))
+stopifnot(identical(uxy, factor(c("a", "b", "c"))))
+## levels were  b c a  for a few days
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
