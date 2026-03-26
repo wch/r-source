@@ -58,5 +58,5 @@ rm(C_parseLatex)
 	Rd2txt_options(itemBullet = "\u2022 ")
     Rd_expr_bibshow_bibstyle(Sys.getenv("R_HELP_BIBSTYLE", "JSS"))
     .bibtools_cache_bibentries(Sys.getenv("_R_BIBTOOLS_CACHE_BIBENTRIES_",
-                                          "TRUE"))
+                                          "FALSE"))
 }

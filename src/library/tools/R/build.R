@@ -100,6 +100,10 @@ inRbuildignore <- function(files, pkgdir) {
 
     Sys.umask("022") # Perl version did not have this.
 
+    Sys.setenv("_R_BIBTOOLS_CACHE_BIBENTRIES_" =
+                   Sys.getenv("_R_BIBTOOLS_CACHE_BIBENTRIES_",
+                              "TRUE"))
+
     writeLinesNL <- function(text, file)
     {
         ## a version that uses NL line endings everywhere
