@@ -675,6 +675,14 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "ptr_do_selectlist", "readconsolecfg",
             "run_Rmainloop", "setup_Rmainloop",
 
+            ## some variables
+            "R_NamespaceRegistry", "R_Srcref", "R_UnboundValue",
+            "R_InBCInterpreter", "R_CurrentExpression",
+            "R_CStackDir", "R_MB_CUR_MAX", "R_MissingArg",
+            "R_compact_intseq_class", "R_compact_realseq_class",
+            "R_num_math_threads", "R_max_num_math_threads",
+            "R_FalseValue", "R_LogicalNAValue", "R_TrueValue",
+
 ## non-API, removed in R 4.5.0 and long deprecated in R_ext/RS.h (and as call_S in S.h)
             "call_R",
 ## non-API, declared in Defn.h

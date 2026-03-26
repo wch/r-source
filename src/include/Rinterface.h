@@ -148,6 +148,10 @@ extern uintptr_t R_CStackStart;	/* Initial stack address */
 # define extern
 #endif
 
+#ifdef HAVE_AQUA
+extern int (*ptr_CocoaSystem)(const char*);
+#endif
+
 extern void (*ptr_R_Suicide)(const char *);
 extern void (*ptr_R_ShowMessage)(const char *);
 extern int  (*ptr_R_ReadConsole)(const char *, unsigned char *, int, int);

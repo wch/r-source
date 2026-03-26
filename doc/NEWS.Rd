@@ -528,6 +528,9 @@
       cases these can be used instead of the non-API functions
       \code{Rf_findVar} and \code{Rf_findVarInFrame}.  Other cases can
       be handled by the new API for working with variable bindings.
+
+      \item Packages using any non-API variables will now receive check
+      \samp{NOTE}s.      
     }
   }
 

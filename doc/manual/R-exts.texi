@@ -13445,12 +13445,8 @@ SEXP Rf_mkString(const char *);
 @end group
 @end example
 
-Some useful pre-allocated values are available as @code{R_FalseValue},
-@code{R_LogicalNAValue}, @code{R_TrueValue}, @code{R_BlankScalarString},
-@code{R_BlankString}, and @code{R_NaString}
-@eapivar R_FalseValue
-@eapivar R_LogicalNAValue
-@eapivar R_TrueValue
+Some useful pre-allocated values are available as
+@code{R_BlankScalarString}, @code{R_BlankString}, and @code{R_NaString}
 @eapivar R_BlankScalarString
 @eapivar R_BlankString
 @eapivar R_NaString
