@@ -730,6 +730,7 @@ warnNonAPI <-
     c("REAL0", "COMPLEX0", "INTEGER0", "LOGICAL0", "RAW0",
       "DDVAL", "ENSURE_NAMEDMAX", "INTERNAL", "SYMVALUE",
       ## "R_tryWrap",
+      "Rf_PrintDefaults", "Rf_EncodeElement",
       "STRING_PTR", "ATTRIB", "SET_ATTRIB", "SET_OBJECT",
       "Rf_findVar", "Rf_findVarInFrame", "Rf_findVarInFrame3",
       "R_lsInternal",
