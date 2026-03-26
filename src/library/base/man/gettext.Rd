@@ -1,6 +1,6 @@
 % File src/library/base/man/gettext.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{gettext}
@@ -33,7 +33,7 @@ Sys.setLanguage(lang, unset = "en") %, force = FALSE
   \item{\dots}{one or more character vectors.}
   \item{trim}{logical indicating if the white space trimming in
     \code{gettext()} should happen.  \code{trim = FALSE} may be needed for
-    compiled code (C / C++) messages which often end with \code{\\n}.}
+    compiled code (C / C++) messages which often end with \samp{\n}.}
   \item{domain}{the \sQuote{domain} for the translation, a \code{character}
     string, or \code{\link{NULL}}; see \sQuote{Details}.}
   \item{n}{a non-negative integer.}
@@ -83,7 +83,8 @@ Sys.setLanguage(lang, unset = "en") %, force = FALSE
 
   For \code{gettext}, when \code{trim} is true as by default,
   leading and trailing whitespace is ignored (\dQuote{trimmed}) when
-  looking for the translation.
+  looking for the translation.  R-level message catalogues from
+  \code{\link{xgettext2pot}} contain only trimmed messages.
 
   \code{ngettext} is used where the message needs to vary by a single
   integer.  Translating such messages is subject to very specific rules
