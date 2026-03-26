@@ -576,6 +576,8 @@ void R_check_thread(const char *s);
 */
 
 /* General Cons Cell Attributes */
+SEXP (ATTRIB)(SEXP x);
+void SET_ATTRIB(SEXP x, SEXP v);
 int  (MARK)(SEXP x);
 int  (OBJECT)(SEXP x);
 int  (NAMED)(SEXP x);
@@ -710,6 +712,9 @@ void SET_PRVALUE(SEXP x, SEXP v);
 void SET_PRCODE(SEXP x, SEXP v);
 void IF_PROMSXP_SET_PRVALUE(SEXP x, SEXP v);
 int  (PROMISE_IS_EVALUATED)(SEXP x);
+SEXP R_PromiseExpr(SEXP);
+#define PREXPR(e) R_PromiseExpr(e)
+
 
 /* External pointer access macros */
 SEXP (EXTPTR_PROT)(SEXP);
@@ -1787,6 +1792,7 @@ SEXP Rf_allocFormalsList4(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4);
 SEXP Rf_allocFormalsList5(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5);
 SEXP Rf_allocFormalsList6(SEXP sym1, SEXP sym2, SEXP sym3, SEXP sym4, SEXP sym5, SEXP sym6);
 SEXP R_allocObject(void);
+SEXP Rf_allocSExp(SEXPTYPE);
 SEXP Rf_arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP),
                        SEXP (*)(SEXP, int), SEXP);
 SEXP Rf_fixSubset3Args(SEXP, SEXP, SEXP, SEXP*);
@@ -2041,6 +2047,9 @@ Rboolean R_GetVarLocMISSING(R_varloc_t);
 void R_SetVarLocValue(R_varloc_t, SEXP);
 SEXP R_findVar(SEXP, SEXP);
 SEXP R_findVarInFrame(SEXP, SEXP);
+SEXP Rf_findVar(SEXP, SEXP);
+SEXP Rf_findVarInFrame(SEXP, SEXP);
+SEXP Rf_findVarInFrame3(SEXP, SEXP, Rboolean); // envir.c
 
 /* deparse option bits: change do_dump if more are added */
 
