@@ -28,8 +28,7 @@
         ## strip build name
         type <- gsub("^([[:lower:]]+[.]binary)[.].*", "\\1", type)
         ## at this point we only care about win, mac or other
-        if (! type %in% c("win.binary", "mac.binary"))
-            type <- "other.binary"
+        if (! type %in% c("win.binary", "mac.binary")) "other.binary" else type
     } else "source"
 }
 
