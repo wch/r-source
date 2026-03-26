@@ -12983,6 +12983,44 @@ functions get and set individual attributes.  Their second argument is a
 @code{SEXP} defining the name in the symbol table of the attribute we
 want; these and many such symbols are defined in the header file
 @file{Rinternals.h}.
+@comment FIXME once all of Rinternals.h is in the API we can drop these:
+@apivar R_AsCharacterSymbol
+@apivar R_BaseSymbol
+@apivar R_BraceSymbol
+@apivar R_Bracket2Symbol
+@apivar R_BracketSymbol
+@apivar R_ClassSymbol
+@apivar R_DeviceSymbol
+@apivar R_DimSymbol
+@apivar R_DollarSymbol
+@apivar R_DotsSymbol
+@apivar R_DoubleColonSymbol
+@apivar R_DropSymbol
+@apivar R_EvalSymbol
+@apivar R_FunctionSymbol
+@apivar R_LastvalueSymbol
+@apivar R_LevelsSymbol
+@apivar R_ModeSymbol
+@apivar R_NaRmSymbol
+@apivar R_NameSymbol
+@apivar R_NamespaceEnvSymbol
+@apivar R_PackageSymbol
+@apivar R_PreviousSymbol
+@apivar R_QuoteSymbol
+@apivar R_RowNamesSymbol
+@apivar R_SeedsSymbol
+@apivar R_SortListSymbol
+@apivar R_SourceSymbol
+@apivar R_SpecSymbol
+@apivar R_TripleColonSymbol
+@apivar R_TspSymbol
+@apivar R_dot_Generic
+@apivar R_dot_Method
+@apivar R_dot_defined
+@apivar R_dot_packageName
+@apivar R_dot_target
+@apivar R_AtsignSymbol
+@apivar R_baseSymbol
 
 There are shortcuts here too: the functions @code{Rf_namesgets},
 @code{Rf_dimgets} and @code{Rf_dimnamesgets} are the internal versions of the
@@ -14567,7 +14605,14 @@ SEXP menu_ttest3()
 @end example
 @noindent
 Note that a single line of text may give rise to more than one @R{}
-expression.
+expression. @code{R_GlobalEnv} provides access from C to the @R{}-level
+@code{.GlobalEnv}. The base environment, base namespace, and empty
+environment can be accessed as @code{R_BaseEnv}, @code{R_BaseNamespace},
+and @code{R_EmptyEnv}.
+@apivar R_GlobalEnv
+@apivar R_BaseEnv
+@apivar R_BaseNamespace
+@apivar R_EmptyEnv
 
 @apifun R_ParseVector
 @code{R_ParseVector} is essentially the code used to implement
@@ -18438,7 +18483,7 @@ contain an existing writable directory, and it is not
 cleaned up when @R{} is shut down.
 @embvar R_TempDir
 
-@embfun R_Interactive
+@embvar R_Interactive
 @embhdr Rinterface.h
 @code{Rf_initEmbeddedR} sets @R{} to be in interactive mode: you can set
 @code{R_Interactive} (defined in @file{Rinterface.h}) subsequently to
@@ -18847,8 +18892,8 @@ used by the @pkg{tcltk} package. Input handlers are managed with
 @code{addInputHandler},@code{getInputHandler}, and
 @code{removeInputHandler}. The handlers are held in a linked list
 @code{R_InputHandlers}.
-@embfun R_PolledEvents
-@embfun R_wait_usec
+@embvar R_PolledEvents
+@embvar R_wait_usec
 @embfun addInputHandler
 @embfun getInputHandler
 @embfun removeInputHandler
