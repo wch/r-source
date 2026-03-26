@@ -5,7 +5,7 @@
 \title{R News}
 \encoding{UTF-8}
 
-\section{\Rlogo Changes in R-devel}{
+\section{\Rlogo Changes in R 4.6.0}{
   \subsection{Significant User-Visible Changes}{
     \itemize{
       \item The R citation now provides a \abbr{DOI}
