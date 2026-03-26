@@ -55,8 +55,8 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
     }
     res <- tools::checkMD5sums(pkgname, file.path(tmpDir, pkgname))
     if(!quiet && !is.na(res) && res) {
-        cat(gettextf("package %s successfully unpacked and MD5 sums checked\n",
-                     sQuote(pkgname)))
+        cat(gettextf("package %s successfully unpacked and %s sums checked\n",
+                     sQuote(pkgname), "MD5"))
         flush.console()
     }
 

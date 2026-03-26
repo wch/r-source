@@ -33,16 +33,19 @@
         if (missing(min.ver)) return(gpg)
         if (length(e) && length(grep("^gpg.* [0-9.]+$", e[1L]))) {
             ver <- package_version(gsub("^gpg.* ([0-9.]+)$", "\\1", e[1L]), FALSE)
-            if (!any(is.na(ver)) && ver < package_version(min.ver)) {
-                if (!quiet) warning("gpg (", sQuote(gpg),") is present but too old (", min.ver," is required, but ",ver," is present)")
+            min.ver <- package_version(min.ver)
+            if (!any(is.na(ver)) && ver < min.ver) {
+                if (!quiet)
+                    warning(sprintf("'%s' is too old: need version %s, found %s",
+                                    gpg, min.ver, ver), domain = NA)
                 return(FALSE)
             }
         } else {
-            if (!quiet) warning("Cannot determine version of gpg (", sQuote(gpg), "), won't use.")
+            if (!quiet) warning("Cannot determine version of gpg (", sQuote(gpg), "), won't use.", domain = NA)
             return(FALSE)
         }
     } else {
-        if (!quiet) warning("gpg (", sQuote(gpg),") is not present")
+        if (!quiet) warning("gpg (", sQuote(gpg),") is not present", domain = NA)
         return(FALSE)
     }
     gpg
@@ -50,7 +53,7 @@
 
 .gpg.sign <- function(doc, out, uid, keyring, use.default.keyring=missing(keyring), overwrite=TRUE, quiet=FALSE) {
     gpg <- .gpg(quiet=quiet)
-    if (isFALSE(gpg)) stop("gpg is not available for signing")
+    if (isFALSE(gpg)) stop("'gpg' is not available for signing")
     doc <- normalizePath(doc, "/", TRUE)
     out <- path.expand(out)
     if (file.exists(out)) {
@@ -64,7 +67,7 @@
     args <- c("--status-fd", "1")
     if (!missing(uid)) {
         if (!is.character(uid) || length(uid) != 1L)
-            stop("invalid user id (uid), must be a string")
+            stop(gettextf("'%s' must be a character string", "uid"), domain = NA)
         args <- c(args, "-u", uid)
     }
     if (isFALSE(use.default.keyring)) {
@@ -83,14 +86,15 @@
     args <- c(args, "-o", out, "--detach-sign", doc)
     res <- if (quiet) suppressWarnings(.gpg.run(gpg, args)) else .gpg.run(gpg, args)
     if (isFALSE(res))
-        stop("Calling gpg to sign failed.")
+        stop("Failed to invoke 'gpg' for signing")
     .g <- function(x, pat) if (length(v <- grep(pat, x, value=TRUE))) regmatches(v, regexec(pat, v))[[1]][-1] else NULL
     sfp <- .g(res, "^\\[GNUPG:\\] KEY_CONSIDERED ([0-9a-fA-F]+) ")
     rst <- if (is.numeric(attr(res, "status"))) attr(res, "status") else 0L
     sfe <- .g(res, "gpg: signing failed: (.*)")
     if (!quiet) {
         if (length(grep("^\\[GNUPG:\\] PINENTRY_LAUNCHED", res)) && rst != 0L)
-            stop("Cannot sign due to failed pin entry for key ", sfp, if (length(sfe)) paste0(": ", sfe) else "")
+            stop(gettextf("Cannot sign due to failed pin entry for key %s", sfp %||% "??"),
+                 if (length(sfe)) paste0(": ", sfe) else "", domain = NA)
         if (length(sfe))
             stop("Signing failed: ", sfe)
     }
@@ -102,7 +106,7 @@
     if (isFALSE(gpg)) {
         if (quiet)
             return(NA)
-        stop("gpg is not available for signing")
+        stop("'gpg' is not available for signing")
     }
     doc <- normalizePath(doc, "/", TRUE)
     sig <- normalizePath(sig, "/", TRUE)
