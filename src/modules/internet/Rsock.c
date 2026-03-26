@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
 
- *  Copyright (C) 1998-2023   The R Core Team
+ *  Copyright (C) 1998-2026   The R Core Team
  *  Copyright (C) 1996, 1997  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -295,11 +295,11 @@ int R_SocketWaitMultiple(int nsock, int *insockfd, int *ready, int *write,
 #ifdef Unix
 	if(R_wait_usec > 0) {
 	    int delta;
-	    if (mytimeout < 0 || R_wait_usec / 1e-6 < mytimeout - used)
+	    if (mytimeout < 0 || R_wait_usec * 1e-6 < mytimeout - used)
 		delta = R_wait_usec;
 	    else
 		delta = (int)ceil(1e6 * (mytimeout - used));
-	    tv.tv_sec = delta / 1000000;
+	    tv.tv_sec = delta / 1000000; // integer div
 	    tv.tv_usec = (suseconds_t)(delta - tv.tv_sec * 1000000);
 	} else if (mytimeout >= 0) {
 	    tv.tv_sec = (int)(mytimeout - used);
@@ -472,7 +472,7 @@ int R_SockConnect(int port, char *host, int timeout)
 	if (R_socket_error(status))
 	    /* Ermm.. ?? */
 	    CLOSE_N_RETURN(-1);
-	    
+
 	if (status == 0) {
 	    /* Time out */
 	    if(used < timeout) continue;
@@ -577,7 +577,7 @@ int R_SockListen(int sockp, char *buf, int len, int timeout)
        16.6 of "UNIX Network Programming: The sockets networking API", vol 1,
        Stevens, Fenner, Rudoff.
     */
-       
+
     while(1) {
 	R_ProcessEvents();
 	set_timeval(&tv, timeout);
