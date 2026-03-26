@@ -365,13 +365,37 @@ Rsyms <- function(keep = c("F", "V")) {
     rsyms
 }
 
-## only allows for variables specified in WRE for now
-varAPI <- function() {
+## variables declared in installed headers:
+## probaly not quite right but maybe good enough?
+getVarsHdr <- function(fpath, lines) {
+    if (missing(lines))
+        lines <- readLines(fpath)
+    fppat <- r"(^\s*(extern|LibExtern)\s+\w+\s+\(\s*\*\s*(\w+)\).*)"
+    vpat <- r"(^\s*(extern|LibExtern)\s+\w+(\s+|\s*\*\s*)(\w+)\s*;.*)"
+    c(sub(vpat, "\\3", grepv(vpat, lines)),
+      sub(fppat, "\\2", grepv(fppat, lines)))
+}
+
+varAPI <- function () 
+{
     varpat <- "^@(eapi|api|emb)var +.*"
     vlines <- trimws(grepv(varpat, WRE()))
     vars <- sub("^.* +", "", vlines)
     atypes <- sub(varpat, "\\1", vlines)
-    data.frame(name = vars, loc = rep("WRE", length(vars)), apitype = atypes)
+    val <- data.frame(name = vars,
+                      loc = rep("WRE", length(vars)),
+                      apitype = atypes)
+    hdrpat <- "^@(eapi|api|emb)hdr +.*"
+    vlines <- trimws(grepv(hdrpat, WRE()))
+    vfiles <- sub("^.* +", "", vlines)
+    atypes <- sub(hdrpat, "\\1", vlines)
+    getOneHdr <- function(x, a) {
+        val <- getVarsHdr(file.path(R.home("include"), x))
+        if (length(val) > 0)
+            data.frame(name = val, loc = x, apitype = a)
+    }
+    val <- rbind(unique(val), rbind_list(mapply(getOneHdr, vfiles, atypes)))
+    clear_rownames(val)
 }
 
 ## similar to checkLibAPI but also picke up variables
