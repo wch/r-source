@@ -2,7 +2,7 @@
  *  Routines used in calculating least squares solutions in a
  *  nonlinear model in nls library for R.
  *
- *  Copyright 2005-2025 The R Core Team
+ *  Copyright 2005-2026 The R Core Team
  *  Copyright 2006      The R Foundation
  *  Copyright 1999-2001 Douglas M. Bates
  *                      Saikat DebRoy
@@ -324,7 +324,7 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho, SEXP dir, SEXP eps_, SEXP centr)
     for(int i = 0; i < LENGTH(theta); i++) {
 	const char *name = translateChar(STRING_ELT(theta, i));
 	SEXP s_name = install(name);
-	SEXP temp = findVar(s_name, rho1);
+	SEXP temp = R_getVar(s_name, rho1, TRUE);
 	if(isInteger(temp))
 	    error(_("variable '%s' is integer, not numeric"), name);
 	if(!isReal(temp))

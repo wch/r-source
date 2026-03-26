@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003-2025 The R Core Team
+ *                2003-2026 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -556,8 +556,8 @@ static SEXP findInChildren(SEXP name, SEXP strict, SEXP children, int depth)
     PROTECT(result);
     while (count < n && !found) {
 	result = findViewport(name, strict,
-			      PROTECT(findVar(installTrChar(STRING_ELT(childnames, count)),
-				      children)),
+			      PROTECT(R_getVar(installTrChar(STRING_ELT(childnames, count)),
+					       children, TRUE)),
 			      depth);
 	found = INTEGER(VECTOR_ELT(result, 0))[0] > 0;
 	UNPROTECT(1);
@@ -610,8 +610,8 @@ static SEXP findViewport(SEXP name, SEXP strict, SEXP vp, int depth)
 		       /*
 			* Does this do inherits=FALSE?
 			*/
-		       findVar(installTrChar(STRING_ELT(name, 0)),
-			       viewportChildren(vp)));
+		       R_getVar(installTrChar(STRING_ELT(name, 0)),
+				viewportChildren(vp), TRUE));
     } else {
 	/*
 	 * If this is a strict match, fail
@@ -746,8 +746,8 @@ static SEXP findvppathInChildren(SEXP path, SEXP name,
     PROTECT(result);
     while (count < n && !found) {
 	SEXP vp, newpathsofar;
-	PROTECT(vp = findVar(installTrChar(STRING_ELT(childnames, count)),
-			     children));
+	PROTECT(vp = R_getVar(installTrChar(STRING_ELT(childnames, count)),
+			      children, TRUE));
 	PROTECT(newpathsofar = growPath(pathsofar,
 					VECTOR_ELT(vp, VP_NAME)));
 	result = findvppath(path, name, strict, newpathsofar, vp, depth);
@@ -797,8 +797,8 @@ static SEXP findvppath(SEXP path, SEXP name, SEXP strict,
 		       /*
 			* Does this do inherits=FALSE?
 			*/
-		       findVar(installTrChar(STRING_ELT(name, 0)),
-			       viewportChildren(vp)));
+		       R_getVar(installTrChar(STRING_ELT(name, 0)),
+				viewportChildren(vp), TRUE));
     } else {
 	result = findvppathInChildren(path, name, strict, pathsofar,
 				      viewportChildren(vp), depth + 1);

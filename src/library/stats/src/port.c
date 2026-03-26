@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2025   The R Core Team.
+ *  Copyright (C) 2005-2026   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -388,13 +388,13 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 	error(_("'d' must be a nonempty numeric (double) vector"));
     if (hs != R_NilValue && gr == R_NilValue)
 	error(_("When Hessian defined must also have gradient defined"));
-    if (R_NilValue == (xpt = findVarInFrame(rho, dot_par_symbol)) ||
+    if (R_NilValue == (xpt = R_getVar(dot_par_symbol, rho, FALSE)) ||
 	!isReal(xpt) || LENGTH(xpt) != n)
 	error(_("environment 'rho' must contain a numeric (double) vector '.par' of length %d"),
 	      n);
     /* We are going to alter .par, so must duplicate it */
     defineVar(dot_par_symbol, duplicate(xpt), rho);
-    PROTECT(xpt = findVarInFrame(rho, dot_par_symbol));
+    PROTECT(xpt = R_getVar(dot_par_symbol, rho, FALSE));
 
     if ((LENGTH(lowerb) == n) && (LENGTH(upperb) == n)) {
 	if (isReal(lowerb) && isReal(upperb)) {
@@ -427,7 +427,7 @@ SEXP port_nlminb(SEXP fn, SEXP gr, SEXP hs, SEXP rho,
 	/* duplicate .par value again in case a callback has stored
 	   value (package varComp does this) */
 	defineVar(dot_par_symbol, duplicate(xpt), rho);
-	xpt = findVarInFrame(rho, dot_par_symbol);
+	xpt = R_getVar(dot_par_symbol, rho, FALSE);
 	UNPROTECT(1);
 	PROTECT(xpt);
     } while(INTEGER(iv)[0] < 3);
