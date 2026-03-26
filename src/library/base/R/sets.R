@@ -61,7 +61,7 @@ function(x, y)
     if(.set_ops_need_as_vector(x, y)) {
         x <- as.vector(x)
         y <- as.vector(y)
-    } else if(isa(x, class(y)))
+    } else if(!isa(y, class(x)))
         x <- c(y[0L], x)
     x <- unique(x)
     names(x) <- NULL
