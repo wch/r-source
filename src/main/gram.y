@@ -2121,7 +2121,7 @@ static void IfPush(void)
 	*contextp=='['    ||
 	*contextp=='('    ||
 	*contextp == 'i') {
-	if(contextp - contextstack >= CONTEXTSTACK_SIZE)
+	if(contextp - contextstack >= CONTEXTSTACK_SIZE - 1)
 	    raiseLexError("contextstackOverflow", NO_VALUE, NULL,
 	        _("contextstack overflow (%s:%d:%d)"));
 	*++contextp = 'i';
@@ -3978,7 +3978,7 @@ static int yylex(void)
 	/* Handle brackets, braces and parentheses */
 
     case LBB:
-	if(contextp - contextstack >= CONTEXTSTACK_SIZE - 1)
+	if(contextp - contextstack >= CONTEXTSTACK_SIZE - 2)
 	    raiseLexError("contextstackOverflow", NO_VALUE, NULL,
 	        _("contextstack overflow (%s:%d:%d)"));
 	*++contextp = '[';
@@ -3986,14 +3986,14 @@ static int yylex(void)
 	break;
 
     case '[':
-	if(contextp - contextstack >= CONTEXTSTACK_SIZE)
+	if(contextp - contextstack >= CONTEXTSTACK_SIZE - 1)
 	    raiseLexError("contextstackOverflow", NO_VALUE, NULL,
 	        _("contextstack overflow (%s:%d:%d)"));
 	*++contextp = (char) tok;
 	break;
 
     case LBRACE:
-	if(contextp - contextstack >= CONTEXTSTACK_SIZE)
+	if(contextp - contextstack >= CONTEXTSTACK_SIZE - 1)
 	    raiseLexError("contextstackOverflow", NO_VALUE, NULL,
 	        _("contextstack overflow (%s:%d:%d)"));
 	*++contextp = (char) tok;
@@ -4001,7 +4001,7 @@ static int yylex(void)
 	break;
 
     case '(':
-	if(contextp - contextstack >= CONTEXTSTACK_SIZE)
+	if(contextp - contextstack >= CONTEXTSTACK_SIZE - 1)
 	    raiseLexError("contextstackOverflow", NO_VALUE, NULL,
 	        _("contextstack overflow (%s:%d:%d)"));
 	*++contextp = (char) tok;

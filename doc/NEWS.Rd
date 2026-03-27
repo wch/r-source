@@ -781,6 +781,10 @@
       \item \code{ar.burg()}, \code{ar.yw()} and \code{ar.ols()} deal
       better with non finite AIC values thanks to \I{Simone Giannerini}'s
       remarks on R-devel.
+
+      \item Parsing deeply nested expressions no longer should segfault in 
+      certain circumstances, fixing five different checks on context stack
+      size thanks to \I{Michael Chirico}'s report and patch in \PR{18994}.
     }
   }
 }
