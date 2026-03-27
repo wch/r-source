@@ -1266,6 +1266,9 @@ SEXP (PRVALUE)(SEXP x);
 
 SEXP Rf_allocSExp(SEXPTYPE);
 SEXP R_PromiseExpr(SEXP);
+#ifndef PREXPR
+#define PREXPR(e) R_PromiseExpr(e)
+#endif
 
 SEXP Rf_findVar(SEXP, SEXP);
 SEXP Rf_findVarInFrame(SEXP, SEXP);
