@@ -515,8 +515,9 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
           else
               strsplit(built, "; ", fixed=TRUE)[[1]]
     ## Note that the timestamp should be always in UTC
+    ## Some systems overwrite this field with invalid timestaps so ignore those
     if (length(bc) >= 3L)
-        as.POSIXct(bc[3], "UTC")
+        tryCatch(as.POSIXct(bc[3], "UTC"), error=function(e) NA)
     else
         NA
 }
