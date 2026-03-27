@@ -52,6 +52,7 @@ stopifnot(identical(scan(f, ""), as.character(t(as.matrix(y)))))
 stopifnot(!is.unsorted(NA))
 
 ## str(.) for large factors should be fast:
+if(Sys.getenv("_R_CHECK_DO_R_TIMING_", FALSE)) withAutoprint({
 u <- as.character(runif(1e5))
 dummy <- str(u); dummy <- str(u); # force compilation of str
 R <- 50
@@ -60,6 +61,7 @@ uf <- factor(u)
 (t2 <- system.time(replicate(R, str(uf)))[[1]]) / t1 # typically around 5--10
 stopifnot(t2  / t1 < 30)
 ## was around 600--850 for R <= 3.0.1
+})
 
 
 ## ftable(<array with unusual dimnames>)
@@ -718,8 +720,8 @@ stopifnot(identical(x, y))
 ## y ended up containing -4, not -2^2
 
 
-## besselJ()/besselY() with too large order
-besselJ(1, 2^64) ## NaN with a warning
+## besselJ()/besselY() with too large order -- now NaN with warning
+besselJ(1, 2^64)     # Warning ... too large for bessel_[jy]() algorithm
 besselY(1, c(2^(60:70), Inf))
 ## seg.faulted in R <= 3.1.2
 
@@ -727,7 +729,7 @@ besselY(1, c(2^(60:70), Inf))
 ## besselJ()/besselY() with  nu = k + 1/2; k in {-1,-2,..}
 besselJ(1, -1750.5) ## Inf, with only one warning...
 stopifnot(is.finite(besselY(1, .5 - (1500 + 0:10))))
-## last gave NaNs; both: more warnings in R <= 3.1.x
+## last gave NaNs; both: more warnings in R <= 3.1.x : "precision lost in result"
 
 
 ## BIC() for arima(), also with NA's
