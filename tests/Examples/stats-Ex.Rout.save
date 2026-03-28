@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-03-27 r89728) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-03-27 r89733) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin25.3.0
 
@@ -8607,10 +8607,11 @@ FAMI   -3   87   84   84   96   94   94   94   98   99   99  100
 > 
 > ### Name: influence.measures
 > ### Title: Regression Deletion Diagnostics
-> ### Aliases: influence.measures hat hatvalues hatvalues.lm rstandard
-> ###   rstandard.lm rstandard.glm rstudent rstudent.lm rstudent.glm dfbeta
-> ###   dfbeta.lm dfbetas dfbetas.lm dfbetas.glm dffits dffits.lm dffits.glm
-> ###   covratio cooks.distance cooks.distance.lm cooks.distance.glm
+> ### Aliases: influence.measures hat hatvalues hatvalues.lm hatvalues.nls
+> ###   rstandard rstandard.lm rstandard.glm rstudent rstudent.lm
+> ###   rstudent.glm dfbeta dfbeta.lm dfbetas dfbetas.lm dfbetas.glm dffits
+> ###   dffits.lm dffits.glm covratio cooks.distance cooks.distance.lm
+> ###   cooks.distance.glm
 > ### Keywords: regression
 > 
 > ### ** Examples
@@ -11211,6 +11212,15 @@ Residual standard error: 0.0192 on 13 degrees of freedom
 Asym   2.3452   0.078154  30.007 2.1655e-13
 xmid   1.4831   0.081353  18.230 1.2185e-10
 scal   1.0415   0.032271  32.272 8.5069e-14
+> 
+> hatfm1 <- hatvalues(fm1DNase1) # for nls() since R 4.6.0
+> plot(resid(fm1DNase1) ~ hatfm1, xlab = quote(h[list(i,i)]),
++      main = "Residuals vs Hatvalues (nonlinear!)"); abline(h = 0, lty=2, col="gray")
+> text(resid(fm1DNase1) ~ hatfm1, subset = hatfm1 > 0.4, pos = 3, col = 2)
+> p.n <- length(coef(fm1DNase1)) / NROW(DNase1)
+> mtext(substitute( p/n == {3/16 == PN}, list(PN = p.n)))
+> abline(v = 2*p.n, col = 4, lty = 3)
+> axis(3, at=2*p.n, labels="2 p/n", line = -1/2, padj = 1/2, col=4, col.axis=4)
 > 
 > ## using conditional linearity
 > fm2DNase1 <- nls(density ~ 1/(1 + exp((xmid - log(conc))/scal)),

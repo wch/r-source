@@ -1512,6 +1512,17 @@ bibentry(bibtype = "Article",
          pages = "13--25")
 
 bibentry(bibtype = "Article",
+         key = "R:StLaurent+Cook:1992",
+         author = "Roy T. {St. Laurent} and R. Dennis Cook",
+         title = "Leverage and Superleverage in Nonlinear Regression",
+         journal = "Journal of the American Statistical Association",
+         volume = "87",
+         number = "420",
+         pages = "985--990",
+         year = "1992",
+         doi = "10.1080/01621459.1992.10476253")
+
+bibentry(bibtype = "Article",
          key = "R:Thomson:1938",
          title = "Methods of Estimating Mental Factors",
          volume = "141",

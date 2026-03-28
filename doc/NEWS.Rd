@@ -36,7 +36,9 @@
     }
   }
 }
+
 \section{\Rlogo Changes in R 4.6.0}{
+
   \subsection{Significant User-Visible Changes}{
     \itemize{
       \item The R citation now provides a \abbr{DOI}
@@ -326,6 +328,10 @@
       \item \code{plot.lm()} now omits the smoother in the residuals vs
       leverage plot. This never made much sense, but if you really want it,
       you can force the old behaviour by setting \code{panel.raw=panel.smooth}.
+
+      \item \code{hatvalues()} now has a method for \code{nls} (nonlinear
+      model) results, prompted by the proposal of \I{Patrice Kiener} and
+      \I{Heather Turner} in \PR{18897}.
     }
   }
 
