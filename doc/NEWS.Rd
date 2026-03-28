@@ -292,7 +292,7 @@
       \item New function \code{bitstring()} as a user-friendly wrapper
       around \code{intToBits()}, etc.
 
-      \item \code{plot.lm()} now omits the smoother in the residuals vs 
+      \item \code{plot.lm()} now omits the smoother in the residuals vs
       leverage plot. This never made much sense, but if you really want it,
       you can force the old behaviour by setting \code{panel.raw=panel.smooth}.
     }
@@ -499,7 +499,7 @@
       be handled by the new API for working with variable bindings.
 
       \item Packages using any non-API variables will now receive check
-      \samp{NOTE}s.      
+      \samp{NOTE}s.
     }
   }
 
@@ -750,6 +750,11 @@
       \item \code{ar.burg()}, \code{ar.yw()} and \code{ar.ols()} deal
       better with non finite AIC values thanks to \I{Simone Giannerini}'s
       remarks on R-devel.
+
+      \item Parsing deeply nested expressions no longer should segfault in
+      certain circumstances, fixing five different checks on context stack
+      size, thanks to \I{Kevin Ushey}'s report and \I{Michael Chirico}'s
+      patch in \PR{18994}.
     }
   }
 }

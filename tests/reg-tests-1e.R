@@ -3133,6 +3133,20 @@ stopifnot(identical(uxy, factor(c("a", "b", "c"))))
 ## levels were  b c a  for a few days
 
 
+## Context stack overflow checks (PR#18458)
+nTXT <- 50 # gram.y has   #define CONTEXTSTACK_SIZE 50
+txtL <- list(brace = strrep("{", nTXT),
+             paren = strrep("(", nTXT),
+             brack = strrep("x[", nTXT),
+             brac2 = strrep("x[[", nTXT %/% 2),
+             cmpIf = paste0("{", strrep("if(1)", nTXT), "}"))
+E <- lapply(txtL, \(txt) tryCid(parse(text = txt)))
+E[[1]]
+(isErr <- vapply(E, isa, NA, what = c("contextstackOverflow", "parseError", "error")))
+stopifnot(isErr)
+## Used to segfault with ASAN due to off-by-one in context stack checks
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
