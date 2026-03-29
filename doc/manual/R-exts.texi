@@ -13274,6 +13274,9 @@ New function closure objects can be created with  @code{R_mkClosure}:
 SEXP R_mkClosure(SEXP formals, SEXP body, SEXP rho);
 @end example
 @apifun R_mkClosure
+For creating the formals you can need to use @code{R_MissingArg} for
+arguments with no default.
+@apivar R_MissingArg
 The components of a closure can be extracted with
 @code{R_ClosureFormals}, @code{R_ClosureBody}, and @code{R_ClosureEnv}.
 For a byte compiled closure @code{R_ClosureBody} returns the compiled
