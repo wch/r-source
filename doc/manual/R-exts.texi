@@ -14692,6 +14692,7 @@ returning the @code{SEXP} of the call's @code{srcref} object or
 @code{abs(skip)} locations are counted up from the bottom of the
 stack. If too few or no source references are found, @code{NULL}
 is returned.
+@apivar R_Srcref
 
 @example
 SEXP R_GetSrcFilename(SEXP srcref);
