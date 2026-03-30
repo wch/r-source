@@ -7484,7 +7484,8 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     ver <- meta["Version"]
     if(is.na(ver))
         stop("Package has no 'Version' field", call. = FALSE)
-    if(grepl("(^|[.-])0[0-9]+", ver))
+    if(grepl("(^|[.-])0[0-9]+", ver) &&
+       !grepl("^[0-9]{4}[.-][0-9]{2}", ver))
         out$version_with_leading_zeroes <- ver
     if((ver == "@VERSION@") &&
        !is.na(meta["Priority"]) &&
