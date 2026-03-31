@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2024 The R Core Team.
+ *  Copyright (C) 2000-2026 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,13 +24,7 @@
 /*
   Experimental: included by src/library/stats/src/distance.c
 
-  Not part of the API.
-
-  Note that only uses R_num_math_threads: it is not clear
-  R_num_math_threads should be exposed at all.
-
-  This is not used currently on Windows, where R_num_math_threads
-  used not to be exposed.
+  This is not used currently on Windows.
 */
 
 #ifndef R_EXT_MATHTHREADS_H_
@@ -42,8 +36,10 @@
 extern "C" {
 #endif
 
+#ifdef USE_MATH_THREADS
 LibExtern int R_num_math_threads;
 LibExtern int R_max_num_math_threads;
+#endif
 
 #ifdef  __cplusplus
 }
