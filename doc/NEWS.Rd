@@ -537,6 +537,10 @@
 
       \item Packages using any non-API variables will now receive check
       \samp{NOTE}s.
+
+      \item New function \code{R_getRegisteredNamespace} finds and
+      returns the namespace environment registered for a name, or
+      \code{R_NilValue} if none is found.
     }
   }
 

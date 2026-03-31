@@ -4311,6 +4311,16 @@ attribute_hidden SEXP do_getRegNS(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue; // -Wall
 }
 
+SEXP R_getRegisteredNamespace(const char *name)
+{
+    SEXP sym = install(name);
+    SEXP val = R_findVarInFrame(R_NamespaceRegistry, sym);
+    if (val == R_UnboundValue)
+	return R_NilValue;
+    else
+	return val;
+}
+
 // .Internal(getNamespaceRegistry())
 attribute_hidden SEXP do_getNSRegistry(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

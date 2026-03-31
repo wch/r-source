@@ -13647,6 +13647,10 @@ include @code{R_existsVarInFrame}, @code{R_removeVarFromFrame},
 @eapifun R_FindNamespace
 @eapifun R_NamespaceEnvSpec
 @eapifun R_IsNamespaceEnv
+@R{} 4.6.0 adds @code{R_getRegisteredNamespace} so find and return the
+namespace environment registered for a name, or @code{R_NilValue} if
+none is found.
+@eapifun R_getRegisteredNamespace
 
 The C functions @code{Rf_match} and @code{Rf_pmatch} correspond to the @R{}
 functions of the same base name.
