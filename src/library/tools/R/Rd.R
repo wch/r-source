@@ -1018,24 +1018,17 @@ function(x)
 
 ### * .Rd_format_title
 
+## FIXME: obsolete: .Rd_get_title() already converts to text and
+## we don't handle LaTeX-style quotes in other sections either.
 .Rd_format_title <-
 function(x)
 {
-    ## Although R-exts says about the Rd title slot that
-    ## <QUOTE>
-    ##   This should be capitalized, not end in a period, and not use
-    ##   any markup (which would cause problems for hypertext search).
-    ## </QUOTE>
-    ## some Rd files have LaTeX-style markup, including
+    ## Although \title supports simple Rd markup since R 2.12.0,
+    ## some Rd files still use
     ## * LaTeX-style single and double quotation
-    ## * Medium and punctuation dashes
-    ## * Escaped ampersand.
     ## Hence we try getting rid of these ...
     x <- gsub("(``|'')", "\"", x)
     x <- gsub("`", "'", x, fixed=TRUE)
-    x <- gsub("([[:alnum:]])--([[:alnum:]])", "\\1-\\2", x)
-    x <- gsub("\\&", "&",  x, fixed=TRUE)
-    x <- gsub("---", "--", x, fixed=TRUE)
     ## Also remove leading and trailing whitespace.
     trimws(x)
 }
