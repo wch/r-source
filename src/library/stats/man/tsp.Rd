@@ -4,7 +4,7 @@
 % Distributed under GPL 2 or later
 
 \name{tsp}
-\title{`Tsp` Attribute of Time-Series-like Objects}
+\title{\code{tsp} Attribute of Time-Series-Like Objects}
 \alias{tsp}
 \alias{tsp<-}
 \alias{hasTsp}
