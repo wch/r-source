@@ -38,7 +38,13 @@
 
    calloc/free are remapped for use in R, so allocation checks are done there.
    freeing is completed by an on.exit action in the R wrappers.
+
+   The Wilcoxon distribution is calculated using work from Andreas Loeffler
+   https://upload.wikimedia.org/wikipedia/commons/f/f5/LoefflerWilcoxonMannWhitneyTest.pdf
+   https://upload.wikimedia.org/wikipedia/de/1/19/MannWhitney_151102.pdf
 */
+
+#include <limits.h>
 
 #include "nmath.h"
 #include "dpq.h"
@@ -47,66 +53,78 @@
 #include <R_ext/Utils.h>
 #endif
 
-static double ***w; /* to store  cwilcox(i,j,k) -> w[i][j][k] */
-static int allocated_m, allocated_n;
+static double *w; /* to store (one half of) the Wilcoxon distribution */
+static int *sigma;
+static int allocated_m, allocated_n, max_k;
+
+static int
+cwilcox_sigma(int k, int m, int n) {
+    /* this is used in w_fill_to_k to calculate w */
+    int s=0, d, iter1, iter2;
+
+    /* the factors of k must be at most k */
+    iter1 = m < k ? m : k;
+    iter2 = m+n < k ? m+n : k;
+    for (d = 1; d <= iter1; d++) s += (k%d==0)*d;
+    for (d = n+1; d <= iter2; d++) s -= (k%d==0)*d;
+    return s;
+}
 
 static void
-w_free(int m, int n)
+w_fill_to_k(int m, int n, int new_k)
 {
-    int i, j;
+    /*
+     * lazily fill in the distribution up to new_k
+     * store the last final index evaluated globally
+     */
+    if(new_k < max_k) return;
 
-    for (i = m; i >= 0; i--) {
-	for (j = n; j >= 0; j--) {
-	    if (w[i][j] != 0)
-		free((void *) w[i][j]);
-	}
-	free((void *) w[i]);
+    int i, k;
+    double s;
+
+    /* fill in the values for sigma */
+    for(i=max_k+1; i<=new_k; i++)
+        sigma[i] = cwilcox_sigma(i, m, n);
+
+    /* fill in the values for the distribution */
+    for (k=max_k+1; k<=new_k; k++) {
+        if (k==0){
+            w[0]=1; /* by definition 0 has only 1 partition */
+        } else {
+            s = 0;
+            for (i = 0; i<k; i++){
+                /* recursion formula */
+                s += w[i]*sigma[k-i];
+            }
+            w[k] = s/k;
+        }
     }
-    free((void *) w);
-    w = 0; allocated_m = allocated_n = 0;
+    max_k = new_k;
+    return;
 }
 
 static void
 w_init_maybe(int m, int n)
 {
-    int i;
+    /* if the size is 0 just return, no need to recall cwilcox_sigma */
+    if (m==0 || n==0) return;
 
-    if (m > n) {
-	i = n; n = m; m = i;
-    }
-    if (w && (m > allocated_m || n > allocated_n))
-	w_free(allocated_m, allocated_n); /* zeroes w */
+    /* if we need to resize, first free the existing array */
+    if ((w || sigma) && (m > allocated_m || n > allocated_n))
+        wilcox_free();
 
-    if (!w) { /* initialize w[][] */
-	m = imax2(m, WILCOX_MAX);
-	n = imax2(n, WILCOX_MAX);
-	w = (double ***) calloc((size_t) m + 1, sizeof(double **));
+    if (!w || !sigma) { /* initialize w[] */
+        w = (double *) calloc(((size_t) m*n)/2+1, sizeof(double));
+        sigma = (int *) calloc(((size_t) m*n)/2+1, sizeof(int));
+
 #ifdef MATHLIB_STANDALONE
-	if (!w) MATHLIB_ERROR(_("wilcox allocation error %d"), 1);
+        if (!w || !sigma) MATHLIB_ERROR(_("wilcox allocation error %d"), 1);
 #endif
-	for (i = 0; i <= m; i++) {
-	    w[i] = (double **) calloc((size_t) n + 1, sizeof(double *));
-#ifdef MATHLIB_STANDALONE
-	    /* the apparent leak here in the in-R case should be
-	       swept up by the on.exit action */
-	    if (!w[i]) {
-		/* first free all earlier allocations */
-		w_free(i-1, n);
-		MATHLIB_ERROR(_("wilcox allocation error %d"), 2);
-	    }
-#endif
-	}
+
 	allocated_m = m; allocated_n = n;
+        max_k = -1;
     }
 }
-
-static void
-w_free_maybe(int m, int n)
-{
-    if (m > WILCOX_MAX || n > WILCOX_MAX)
-	w_free(m, n);
-}
-
 
 #ifndef MATHLIB_STANDALONE
 static int ic = 99999;
@@ -117,52 +135,41 @@ cwilcox(int k, int m, int n)
 {
     int c, i, j,
 	u = m * n;
-    if (k < 0 || k > u)
-	return(0);
-    c = (int)(u / 2);
-    if (k > c)
-	k = u - k; /* hence  k <= floor(u / 2) */
-    if (m < n) {
-	i = m; j = n;
-    } else {
-	i = n; j = m;
-    } /* hence  i <= j */
-
-    if (j == 0) /* and hence i == 0 */
-	return (k == 0);
-
-
-    /* We can simplify things if k is small.  Consider the Mann-Whitney
-       definition, and sort y.  Then if the statistic is k, no more
-       than k of the y's can be <= any x[i], and since they are sorted
-       these can only be in the first k.  So the count is the same as
-       if there were just k y's.
-    */
-    if (j > 0 && k < j) return cwilcox(k, i, k);
-
 #ifndef MATHLIB_STANDALONE
     if (!ic--) {
 	R_CheckUserInterrupt();
 	ic = 99999;
     }
 #endif
+    if (k < 0 || k > u)
+	return(0);
+    c = (int)(u / 2);
+    if (k > c)
+	k = u - k; /* hence  k < floor(u / 2) */
+    if (m < n) {
+	i = m; j = n;
+    } else {
+	i = n; j = m;
+    } /* hence  i <= j */
 
-    if (w[i][j] == 0) {
-	w[i][j] = (double *) calloc((size_t) c + 1, sizeof(double));
-#ifdef MATHLIB_STANDALONE
-	if (!w[i][j]) MATHLIB_ERROR(_("wilcox allocation error %d"), 3);
-#endif
-	for (int l = 0; l <= c; l++)
-	    w[i][j][l] = -1;
-    }
-    if (w[i][j][k] < 0) {
-	if (j == 0) /* and hence i == 0 */
-	    w[i][j][k] = (k == 0);
-	else
-	    w[i][j][k] = cwilcox(k - j, i - 1, j) + cwilcox(k, i, j - 1);
+    /* if any of these values are 0 we return k==0 */
+    if (i == 0 || j == 0 || k == 0) return (k == 0);
 
-    }
-    return(w[i][j][k]);
+    /*
+     * previous iterations called cwilcox(k, i, k) here if j>0 and k<j
+     * however, I'm intentionally not doing that since `sigma` and `w` are
+     * cached for fixed values of m,n. Swapping m,n will force a realloc
+     * and lots of additional w_fill_to_k() calls.
+    */
+
+    /* initialize space for the distribution if it doesn't yet exist */
+    if(!w || !sigma || i != allocated_m || j != allocated_n)
+        w_init_maybe(i,j);
+
+    /* fill in values up to k (caching results) */
+    w_fill_to_k(i,j,k);
+
+    return w[k];
 }
 
 double dwilcox(double x, double m, double n, int give_log)
@@ -183,8 +190,14 @@ double dwilcox(double x, double m, double n, int give_log)
     if ((x < 0) || (x > m * n))
 	return(R_D__0);
 
+    if (m > INT_MAX)
+	MATHLIB_ERROR("m(%g) > INT_MAX", m);
+    if (n > INT_MAX)
+	MATHLIB_ERROR("n(%g) > INT_MAX", n);
+    if (x > INT_MAX)
+	MATHLIB_ERROR("x(%g) > INT_MAX", x);
+
     int mm = (int) m, nn = (int) n, xx = (int) x;
-    w_init_maybe(mm, nn);
     double d = give_log ?
 	log(cwilcox(xx, mm, nn)) - lchoose(m + n, n) :
 	    cwilcox(xx, mm, nn)  /  choose(m + n, n);
@@ -213,8 +226,11 @@ double pwilcox(double q, double m, double n, int lower_tail, int log_p)
     if (q >= m * n)
 	return(R_DT_1);
 
+    if (m > INT_MAX)
+	MATHLIB_ERROR("m(%g) > INT_MAX", m);
+    if (n > INT_MAX)
+	MATHLIB_ERROR("n(%g) > INT_MAX", n);
     int mm = (int) m, nn = (int) n;
-    w_init_maybe(mm, nn);
     double c = choose(m + n, n),
 	p = 0;
     /* Use summation of probs over the shorter range */
@@ -257,8 +273,11 @@ double qwilcox(double x, double m, double n, int lower_tail, int log_p)
     if(log_p || !lower_tail)
 	x = R_DT_qIv(x); /* lower_tail,non-log "p" */
 
+    if (m > INT_MAX)
+	MATHLIB_ERROR("m(%g) > INT_MAX", m);
+    if (n > INT_MAX)
+	MATHLIB_ERROR("n(%g) > INT_MAX", n);
     int mm = (int) m, nn = (int) n;
-    w_init_maybe(mm, nn);
     double c = choose(m + n, n),
 	p = 0.;
     int q = 0;
@@ -305,6 +324,8 @@ double rwilcox(double m, double n)
 	return(0);
 
     r = 0.0;
+    if ((m + n) > INT_MAX)
+	MATHLIB_ERROR("m+n(%g) > INT_MAX", m + n);
     k = (int) (m + n);
     x = (int *) calloc((size_t) k, sizeof(int));
 #ifdef MATHLIB_STANDALONE
@@ -323,5 +344,9 @@ double rwilcox(double m, double n)
 
 void wilcox_free(void)
 {
-    w_free_maybe(allocated_m, allocated_n);
+    free(w);
+    free(sigma);
+    w = NULL; sigma = NULL;
+    allocated_m = allocated_n = 0;
+    max_k = -1;
 }
