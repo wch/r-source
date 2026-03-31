@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2txt.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -495,6 +495,7 @@ Rd2txt <-
         } else header
     }
 
+    ## FIXME: replace by Unicode symbols ("\u2014", "\u2013") when possible
     unescape <- function(x) {
         x <- psub("(---|--)", "-", x)
         x
@@ -937,7 +938,7 @@ Rd2txt <-
                        ## The next item must be TEXT, and start with a space.
                        itemskip <- FALSE
                        if (tag == "TEXT") {
-                           txt <- psub("^ ", "", as.character(tabExpand(block)))
+                           txt <- psub("^ ", "", as.character(unescape(tabExpand(block))))
                            put(txt)
                            if (!haveBlanks &&
                                blocktag %in% c("\\describe", "\\value", "\\arguments"))
