@@ -666,6 +666,7 @@ SEXP R_PackageEnvName(SEXP rho);
 Rboolean R_IsNamespaceEnv(SEXP rho); // envir.c
 SEXP R_NamespaceEnvSpec(SEXP rho);
 SEXP R_FindNamespace(SEXP info);
+SEXP R_getRegisteredNamespace(const char *name);
 void R_LockEnvironment(SEXP env, Rboolean bindings);
 Rboolean R_EnvironmentIsLocked(SEXP env); // envir.c
 void R_LockBinding(SEXP sym, SEXP env);
