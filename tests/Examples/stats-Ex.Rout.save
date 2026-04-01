@@ -19097,8 +19097,8 @@ difference in location
              -2.262424 
 
 > 
-> ## Formula interface.
-> boxplot(Ozone ~ Month, data = airquality)
+> ## Formula interface -- NB: boxplot notches <~~> test for median equality:
+> boxplot(Ozone ~ Month, data = airquality, notch = TRUE)
 > wilcox.test(Ozone ~ Month, data = airquality,
 +             subset = Month %in% c(5, 8))
 
