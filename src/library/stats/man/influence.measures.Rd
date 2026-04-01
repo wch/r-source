@@ -20,6 +20,7 @@
 \alias{hat}
 \alias{hatvalues}
 \alias{hatvalues.lm}
+\alias{hatvalues.nls}
 \alias{rstandard}
 \alias{rstandard.lm}
 \alias{rstandard.glm}
@@ -81,6 +82,7 @@ cooks.distance(model, \dots)
 
 hatvalues(model, \dots)
 \method{hatvalues}{lm}(model, infl = lm.influence(model, do.coef = FALSE), \dots)
+\method{hatvalues}{nls}(model, \dots)% ../R/nls.R %
 
 hat(x, intercept = TRUE)
 }
@@ -159,10 +161,13 @@ hat(x, intercept = TRUE)
   updated for R 4.6 to use \emph{working} residuals and weights; it is
   assumed that the model has methods suitable for
   \code{\link{weighted.residuals}()}.
+
+  The \code{\link{nls}} method for \code{hatvalues()} is based on theory in
+  \bibcitet{R:StLaurent+Cook:1992}.
 }
 \author{
   Several R Core Team members and John Fox, originally in his \CRANpkg{car}
-  package.
+  package; \code{hatvalues.nls} by R Dev Day participants, see \PR{18897}.
 }
 \references{
   \bibshow{*,
