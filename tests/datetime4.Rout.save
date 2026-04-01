@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2024-03-14 r86129) -- "Unsuffered Consequences"
-Copyright (C) 2024 The R Foundation for Statistical Computing
+R Under development (unstable) (2026-03-31 r89756) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -117,7 +117,7 @@ List of 11
  $ yday  : int 181
  $ isdst : int 1
  $ zone  : chr ""
- $ gmtoff: int NA
+ $ gmtoff: int 10800
  - attr(*, "tzone")= chr [1:3] "Europe/Vienna" "CET" "CEST"
  - attr(*, "balanced")= logi TRUE
 > 
@@ -389,5 +389,5 @@ Warning in names(sx) == names(sx15) :
              "2022-09-29" 
 > 
 > cat('Time elapsed: ', proc.time(),'\n')
-Time elapsed:  0.116 0.03 0.146 0 0.002 
+Time elapsed:  0.174 0.055 0.246 0.001 0.007 
 > 
