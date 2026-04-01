@@ -1,7 +1,7 @@
 #  File src/library/stats/R/htest.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -54,8 +54,9 @@ print.htest <- function(x, digits = getOption("digits"), prefix = "\t", ...)
 	}
 	else cat(x$alternative, "\n", sep = "")
     }
-    if(!is.null(x$conf.int)) {
-	cat(format(100 * attr(x$conf.int, "conf.level")),
+    if(!is.null(x$conf.int)) { # almost .format_perc() :
+	cat(format(100 * attr(x$conf.int, "conf.level"), trim = TRUE,
+		   digits = max(2L, digits - 4L), scientific = FALSE),
 	    " percent confidence interval:\n", " ",
 	    paste(format(x$conf.int[1:2], digits=digits), collapse = " "),
             "\n", sep = "")

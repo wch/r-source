@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-03-07 r89567) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-03-27 r89728) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin25.3.0
 
@@ -19080,7 +19080,7 @@ alternative hypothesis: true location shift is greater than 0
 data:  rnorm(10) and rnorm(10, 2)
 W = 7, p-value = 0.0004871
 alternative hypothesis: true location shift is not equal to 0
-95.67429 percent confidence interval:
+95.7 percent confidence interval:
  -3.024352 -1.348555
 sample estimates:
 difference in location 
