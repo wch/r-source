@@ -230,7 +230,7 @@ processRdChunk <- function(code, stage, options, env, macros)
 	                  srcref = codesrcref) # retain for error locations
 	chunkexps <- tryCatch(
 	    parse(text = sub("\n$", "", as.character(code)),
-	          keep.source = options$keep.source),
+	          keep.source = options$keep.source), # FIXME: encoding="UTF-8"?
 	    error = function (e) stopRd(code, Rdfile, conditionMessage(e))
 	)
 
