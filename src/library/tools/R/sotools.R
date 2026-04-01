@@ -678,7 +678,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             ## some variables
             "R_NamespaceRegistry", "R_Srcref", "R_UnboundValue",
             "R_InBCInterpreter", "R_CurrentExpression",
-            "R_CStackDir", "R_MB_CUR_MAX", "R_MissingArg",
+            "R_CStackDir", "R_MB_CUR_MAX",
             "R_compact_intseq_class", "R_compact_realseq_class",
             "R_num_math_threads", "R_max_num_math_threads",
             "R_FalseValue", "R_LogicalNAValue", "R_TrueValue",
