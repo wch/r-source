@@ -1,6 +1,6 @@
 % File src/library/stats/man/wilcox.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{wilcox.test}
@@ -168,9 +168,8 @@ wilcox.test(x, \dots)
   \code{x[i]}, the most common definition of the Mann-Whitney test.
 }
 \section{Warning}{
-  This function can use large amounts of memory and stack (and even
-  crash \R if the stack limit is exceeded) if \code{exact = TRUE} and
-  one sample is large (several thousands or more).
+  This function can take very long time to run if \code{exact = TRUE}
+  and one sample is large (several thousands or more).
 }
 \references{
   \bibinfo{R:Hollander+Wolfe:1973}{note}{Pages 27--33 (one-sample),

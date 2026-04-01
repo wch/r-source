@@ -796,6 +796,12 @@
       certain circumstances, fixing five different checks on context stack
       size, thanks to \I{Kevin Ushey}'s report and \I{Michael Chirico}'s
       patch in \PR{18994}.
+
+      \item The internal \code{cwilcox} function used in computations
+      for the Wilcoxon distribution is now based on an implementation of
+      a formula by \I{Andreas Löffler} provided by \I{Andreas Löffler},
+      \I{Aidan Lakshman}, and \I{Ivan Krylov}, substantially reducing
+      the memory complexity of the original implementation (\PR{18655}).
     }
   }
 }

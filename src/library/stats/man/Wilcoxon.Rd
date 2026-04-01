@@ -1,6 +1,6 @@
 % File src/library/stats/man/Wilcoxon.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Wilcoxon}
@@ -64,18 +64,20 @@ rwilcox(nn, m, n)
   S-PLUS used a different (but equivalent) definition of the Wilcoxon
   statistic: see \code{\link{wilcox.test}} for details.
 }
-\section{Warning}{
-  These functions can use large amounts of memory and stack (and even crash
-  \R if the stack limit is exceeded and stack-checking is not in place)
-  if one sample is large (several thousands or more).
-}
 \source{
-  These ("d","p","q") are calculated via recursion, based on \code{cwilcox(k, m, n)},
+  The d, p and q functions are calculated based on
+  \code{cwilcox(k, m, n)},
   the number of choices with statistic \code{k} from samples of size
-  \code{m} and \code{n}, which is itself calculated recursively and the
-  results cached.  Then \code{dwilcox} and \code{pwilcox} sum
-  appropriate values of \code{cwilcox}, and \code{qwilcox} is based on
-  inversion.
+  \code{m} and \code{n}.
+  Since \R 4.6.0, \code{cwilcox} is calculated using an implementation
+  of the formula from \bibcitet{R:Löffler:1983} provided by
+  \I{Andreas Löffler}, \I{Aidan Lakshman}, and \I{Ivan Krylov}
+  (\PR{18655}), substantially reducing the memory complexity of the
+  older implementation based on the recursions in
+  \bibcitet{R:Mann+Whitney:1947}.
+  Then \code{dwilcox} normalizes,
+  \code{pwilcox} sums appropriate normalized values of \code{cwilcox},
+  and \code{qwilcox} is based on inversion.
 
   \code{rwilcox} generates a random permutation of ranks and evaluates
   the statistic.  Note that it is based on the same C code as \code{\link{sample}()},
@@ -90,6 +92,9 @@ rwilcox(nn, m, n)
   \link{Distributions} for standard distributions, including
   \code{\link{dsignrank}} for the distribution of the
   \emph{one-sample} Wilcoxon signed rank statistic.
+}
+\references{
+  \bibshow{*}
 }
 \examples{
 require(graphics)
