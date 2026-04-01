@@ -30,7 +30,7 @@
     }
   }
 
-  \subsection{C-LEVEL FACILITIES}{
+  \subsection{C-Level Facilities}{
     \itemize{
       \item .
     }
