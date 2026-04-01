@@ -2174,15 +2174,17 @@ repXerr <- quote({
     rep(1:(2^31+1), times = 1:(2^31+3))
 })
 writeLines(repE <- vapply(repXerr[-1L], \(xpr) tryCatch(eval(xpr), error=conditionMessage), "<err>"))
-stopifnot(identical(repE,
-                    c(rep(repE[[1]], 4), rep(repE[[5]], 3), rep(repE[[8]], 4))))
+if (.Machine$sizeof.pointer == 8)
+    stopifnot(identical(repE, repE[c(rep(1,4), rep(5,3), rep(8,4))]))
 if(englishMsgs)
     stopifnot(exprs = {
-        identical(repE[[1]], "length(x) * 'times' * 'each' is too large")
-        identical(repE[[5]], "invalid 'times' argument, given the value of 'each'")
+        identical(repE[[1]],
+                  if (.Machine$sizeof.pointer == 4) "invalid 'times' argument"
+                  else "length(x) * 'times' * 'each' is too large")
+        identical(repE[[7]], "invalid 'times' argument, given the value of 'each'")
         identical(repE[[8]], "invalid 'times' argument")
     })
-## in all cases, msg was " invalid 'times' argument "; in some cases, misleadingly
+## in all cases, msg was "invalid 'times' argument"; in some cases, misleadingly
 
 
 ## implement chkDots's  `allowed` argument -- PR#18936
