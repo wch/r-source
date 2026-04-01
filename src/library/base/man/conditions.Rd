@@ -1,6 +1,6 @@
 % File src/library/base/man/conditions.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{conditions}
@@ -22,8 +22,8 @@
 \alias{simpleWarning}
 \alias{simpleMessage}
 \alias{errorCondition}
-\alias{messageCondition}
 \alias{warningCondition}
+\alias{messageCondition}
 \alias{tryCatch}
 \alias{withCallingHandlers}
 \alias{withRestarts}
@@ -61,8 +61,8 @@ simpleWarning  (message, call = NULL)
 simpleMessage  (message, call = NULL)
 
 errorCondition(message, ..., class = NULL, call = NULL)
-messageCondition(message, ..., class = NULL, call = NULL)
 warningCondition(message, ..., class = NULL, call = NULL)
+messageCondition(message, ..., class = NULL, call = NULL)
 
 \method{as.character}{condition}(x, \dots)
 \method{as.character}{error}(x, \dots)

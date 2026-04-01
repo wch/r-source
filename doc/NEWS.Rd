@@ -140,6 +140,10 @@
       \item \code{chkDots()}' optional argument \code{allowed} has been
       implemented thanks to \I{Trevor Davis}' proposal in \PR{18936}.
 
+      \item New function \code{messageCondition()} to create structured
+      \code{"message"} objects analogous to \code{warningCondition()}
+      and \code{errorCondition()} (\PR{18940}, by \I{Trevor Davis}).
+
       \item \code{wilcox.test()} can now perform exact (conditional)
       inference in case of ties.  Based on contributions by
       \I{Torsten Hothorn}.
