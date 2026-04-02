@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2025    The R Core Team
+ *  Copyright (C) 1998-2026    The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -77,6 +77,12 @@ void F77_NAME(qsort4)(double *v, int *indx, int *ii, int *jj);
 void F77_NAME(qsort3)(double *v,            int *ii, int *jj);
 #endif
 
+// listed as callable from C in WRE
+#ifdef R_RS_H
+int F77_SUB(i1mach)(int *i);
+double F77_SUB(d1mach)(int *i);
+#endif
+    
 /* ../../main/util.c  and others : */
 const char *R_ExpandFileName(const char *);
 #ifdef Win32
@@ -116,14 +122,13 @@ int findInterval(double *xt, int n, double x,
 int findInterval2(double *xt, int n, double x,
 		  Rboolean rightmost_closed,  Rboolean all_inside, Rboolean left_open,
 		  int ilo, int *mflag);
-/* Removed in 4.5.0
+/* Removed in 4.5.0, but still API according too WRE */
 #ifdef R_RS_H
 // Was Rboolean*, but that is not possible in Fortran.
 int F77_SUB(interv)(double *xt, int *n, double *x,
 		    int *rightmost_closed, int *all_inside,
 		    int *ilo, int *mflag);
 #endif
-*/
  
 /* not API, no longer in R
 void find_interv_vec(double *xt, int *n,	double *x,   int *nx,
