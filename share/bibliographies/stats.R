@@ -3102,7 +3102,7 @@ bibentry(bibtype = "Article",
          doi = "10.1093/biomet/55.1.1")
 
 bibentry(bibtype = "Article",
-         key = "R:Löffler:1983",
+         key = "R:Loeffler:1983",
          author = person(given = "Andreas",
                          family = "Löffler"),
          title = "{Über eine Partition der natürlichen Zahlen und ihre Anwendung beim U-Test}",

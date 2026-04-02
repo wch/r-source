@@ -70,7 +70,7 @@ rwilcox(nn, m, n)
   the number of choices with statistic \code{k} from samples of size
   \code{m} and \code{n}.
   Since \R 4.6.0, \code{cwilcox} is calculated using an implementation
-  of the formula from \bibcitet{R:Löffler:1983} provided by
+  of the formula from \bibcitet{R:Loeffler:1983} provided by
   \I{Andreas Löffler}, \I{Aidan Lakshman}, and \I{Ivan Krylov}
   (\PR{18655}), substantially reducing the memory complexity of the
   older implementation based on the recursions in
