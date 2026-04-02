@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2024  The R Core Team.
+ *  Copyright (C) 1998--2026  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -59,8 +59,8 @@
 
 #ifdef R_INTERFACE_PTRS
 # include <Rinternals.h> // for SEXP
-# include <R_ext/RStartup.h> // for SA_TYPE
 #endif
+#include <R_ext/RStartup.h> // for SA_TYPE
 
 #ifdef __cplusplus
 extern "C" {
@@ -91,7 +91,15 @@ extern void R_SaveGlobalEnvToFile(const char *);
 extern void R_FlushConsole(void);
 extern void R_ClearerrConsole(void);
 NORET extern void R_Suicide(const char *);
+NORET extern void R_CleanUp(SA_TYPE, int, int);
 extern char *R_HomeDir(void);
+extern void run_Rmainloop(void);
+extern void R_Busy(int);
+extern int  R_ReadConsole(const char *, unsigned char *, int, int);
+extern void R_WriteConsole(const char *, int);
+extern void R_WriteConsoleEx(const char *, int, int);
+extern void R_ResetConsole(void);
+extern int  R_EditFiles(int, const char **, const char **, const char *);
 extern int R_DirtyImage;	/* Current image dirty */
 extern char *R_GUIType;
 extern void R_setupHistory(void);

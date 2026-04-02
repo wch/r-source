@@ -1553,6 +1553,12 @@ LibExtern SEXP  R_SrcrefSymbol;     /* "srcref" */
 LibExtern Rboolean R_interrupts_suspended INI_as(FALSE);
 LibExtern int R_interrupts_pending INI_as(0);
 
+/* Special Values for Internal Use */
+LibExtern SEXP	R_UnboundValue;	    /* Unbound marker */
+LibExtern SEXP	R_InBCInterpreter;  /* To be found in BC interp. state
+				       (marker) */
+LibExtern SEXP	R_CurrentExpression; /* Use current expression (marker) */
+
 /* R Home Directory */
 LibExtern char *R_Home;		    /* Root of the R tree */
 

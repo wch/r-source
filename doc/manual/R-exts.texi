@@ -14676,7 +14676,6 @@ call = R_ParseString("base::nameOfClass(X)");
 The source references added by the parser are recorded by @R{}'s evaluator
 as it evaluates code. Two functions
 make these available to debuggers running C code:
-@findex R_Srcref
 @apifun R_GetCurrentSrcref
 @apifun R_GetSrcFilename
 
