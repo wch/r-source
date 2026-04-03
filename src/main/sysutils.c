@@ -58,7 +58,7 @@
 attribute_hidden int R_isWriteableDir(char *path);
 
 #ifdef HAVE_AQUA
-int (*ptr_CocoaSystem)(const char*);
+extern int (*ptr_CocoaSystem)(const char*);
 #endif
 
 #ifdef Win32
