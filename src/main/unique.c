@@ -2448,15 +2448,13 @@ static void rehash(R_hashtab_type h, int resize)
 
 static SEXP getcell(R_hashtab_type h, SEXP key, int *pidx)
 {
-    SEXP table = HT_TABLE(h);
-
     if (! HT_IS_VALID(h))
 	rehash(h, FALSE);
 
     int idx = HT_HASH(h, key);
     *pidx = idx;
 
-    SEXP chain = VECTOR_ELT(table, idx);
+    SEXP chain = VECTOR_ELT(HT_TABLE(h), idx);
     while (chain != R_NilValue) {
 	if (HT_EQUAL(h, TAG(chain), key))
 	    return chain;
