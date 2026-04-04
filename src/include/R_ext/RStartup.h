@@ -156,6 +156,9 @@ void R_common_command_line(int *, char **, Rstart);
 void R_set_command_line_arguments(int argc, char **argv);
 
 void setup_Rmainloop(void); // also in Rembedded.h
+void run_Rmainloop(void); // also in Rembedded.h
+
+extern SA_TYPE SaveAction;
 
 #ifdef __cplusplus
 }

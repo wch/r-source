@@ -18834,6 +18834,7 @@ void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
 @embfun fpu_setup
 @comment FIXME need to mention R_RunPendingFinalizers in text
 @embfun R_RunPendingFinalizers
+@embvar SaveAction
 
 These callbacks should never be changed in a running @R{} session (and
 hence cannot be called from an extension package).
