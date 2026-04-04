@@ -41,6 +41,7 @@ extern void Rf_endEmbeddedR(int fatal);
 
 int Rf_initialize_R(int ac, char **av);
 void setup_Rmainloop(void);
+void run_Rmainloop(void);
 extern void R_ReplDLLinit(void);
 extern int R_ReplDLLdo1(void);
 

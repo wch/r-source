@@ -93,7 +93,6 @@ extern void R_ClearerrConsole(void);
 NORET extern void R_Suicide(const char *);
 NORET extern void R_CleanUp(SA_TYPE, int, int);
 extern char *R_HomeDir(void);
-extern void run_Rmainloop(void);
 extern void R_Busy(int);
 extern int  R_ReadConsole(const char *, unsigned char *, int, int);
 extern void R_WriteConsole(const char *, int);
