@@ -120,7 +120,11 @@ getFunsHdr <- function(fpath, lines) {
 
     if (! missing(fpath) && name == "Utils.h")
         lines <- c("#include <R_ext/RS.h>", lines)
-    lines <- ccE(lines, flags = "-DHAVE_AQUA -DR_INTERFACE_PTRS")
+    if (! missing(fpath) && name == "Rinterface.h")
+        flags <- "-DHAVE_AQUA -DR_INTERFACE_PTRS"
+    else
+        flags <- "-DR_INTERFACE_PTRS"
+    lines <- ccE(lines, flags = flags)
     lines <- dropBraces(lines)
 
     ## these could be incorporated into the regex
@@ -373,12 +377,21 @@ Rsyms <- function(keep = c("F", "V")) {
 ## variables declared in installed headers:
 ## probaly not quite right but maybe good enough?
 getVarsHdr <- function(fpath, lines) {
-    if (missing(lines))
+    if (missing(lines)) {
+        if (! file.exists(fpath))
+            return(NULL) ## some headers may not exist on all platforms
         lines <- readLines(fpath)
+        name <- basename(fpath)
+    }
+    else name <- NULL
+
     lines <- lines[! grepl("^#\\s*error", lines)] ## for GraphicsDevice.h
-    lines <- ccE(lines, flags = "-DHAVE_AQUA -DR_INTERFACE_PTRS")
-    lines <- lines[! grepl("^#\\s*error", lines)] ## for GraphicsDevice.h
-    lines <- ccE(lines, flags = "-DHAVE_AQUA -DR_INTERFACE_PTRS")
+
+    if (! missing(fpath) && name == "Rinterface.h")
+        flags <- "-DHAVE_AQUA -DR_INTERFACE_PTRS"
+    else
+        flags <- "-DR_INTERFACE_PTRS"
+    lines <- ccE(lines, flags = flags)
     fppat <- r"(^\s*(extern|LibExtern)\s+\w+\s+\(\s*\*\s*(\w+)\).*)"
     vpat <- r"(^\s*(extern|LibExtern)\s+\w+(\s+|\s*\*\s*)(\w+)\s*;.*)"
     c(sub(vpat, "\\3", grepv(vpat, lines)),
