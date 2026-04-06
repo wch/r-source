@@ -23,7 +23,7 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
 	 notch = FALSE, outline = TRUE, names, plot = TRUE,
 	 border = par("fg"), col = "lightgray", log = "",
 	 pars = list(boxwex = 0.8, staplewex = 0.5, outwex = 0.5),
-	 ann = !add,
+	 ann = !add, warnN = TRUE,
 	 horizontal = FALSE, add = FALSE, at = NULL)
 {
     args <- list(x, ...)
@@ -80,7 +80,7 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
                 c(list(z, notch = notch, width = width, varwidth = varwidth,
                        log = log, border = border, pars = pars,
                        outline = outline, horizontal = horizontal, add = add,
-                       ann = ann,
+                       ann = ann, warnN = warnN,
                        at = at), args[namedargs]),
                 quote = TRUE)# *not* to eval() calls in labels etc
 	invisible(z)
@@ -134,8 +134,8 @@ boxplot.formula <-
 bxp <- function(z, notch = FALSE, width = NULL, varwidth = FALSE,
                 outline = TRUE, notch.frac = 0.5, log = "", border = par("fg"),
 		pars = NULL, frame.plot = axes, horizontal = FALSE,
-                ann = TRUE,
-		add = FALSE, at = NULL, show.names = NULL, 
+                ann = TRUE, warnN = TRUE,
+		add = FALSE, at = NULL, show.names = NULL,
 		panel.first = NULL, panel.last = NULL, ...)
 {
     pars <- as.list(pars)
@@ -165,7 +165,7 @@ bxp <- function(z, notch = FALSE, width = NULL, varwidth = FALSE,
 		else function(x,w) x + w
 	    wid <- wid/2
 	    if (notch) {
-                ## check for overlap of notches and hinges
+                if(warnN) ## check for overlap of notches and hinges
                 ok <- stats[2L] <= conf[1L] && conf[2L] <= stats[4L]
 
 		xx <- xP(x, wid * c(-1, 1, 1, notch.frac, 1,

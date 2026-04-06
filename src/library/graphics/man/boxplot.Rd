@@ -1,6 +1,6 @@
 % File src/library/graphics/man/boxplot.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2019 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{boxplot}
@@ -21,7 +21,7 @@ boxplot(x, \dots)
         drop = FALSE, sep = ".", lex.order = FALSE)
 
 \method{boxplot}{default}(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
-        notch = FALSE, outline = TRUE, names, plot = TRUE,
+        notch = FALSE, warnN = TRUE, outline = TRUE, names, plot = TRUE,
         border = par("fg"), col = "lightgray", log = "",
         pars = list(boxwex = 0.8, staplewex = 0.5, outwex = 0.5),
          ann = !add, horizontal = FALSE, add = FALSE, at = NULL)
@@ -74,6 +74,9 @@ boxplot(x, \dots)
     overlap this is \sQuote{strong evidence} that the two medians differ
     (Chambers \abbr{et al.}, 1983, p.\sspace{}62).  See \code{\link{boxplot.stats}}
     for the calculations used.}
+  \item{warnN}{logical. When \code{notch = TRUE}, indicating if a
+    \code{\link{warning}} should be signalled when some notch gets
+    outside the hinges, i.e., the box.}
   \item{outline}{if \code{outline} is not true, the outliers are
     not drawn (as points whereas S+ uses lines).}% the argument name is most ugly but S+ compatible
   \item{names}{group labels which will be printed under each boxplot.
@@ -149,9 +152,9 @@ boxplot(x, \dots)
 \examples{
 ## boxplot on a formula:
 boxplot(count ~ spray, data = InsectSprays, col = "lightgray")
-# *add* notches (somewhat funny here <--> warning "notches .. outside hinges"):
+# *add* notches and do *not* warn about "notches .. outside hinges":
 boxplot(count ~ spray, data = InsectSprays,
-        notch = TRUE, add = TRUE, col = "blue")
+        notch = TRUE, warnN = FALSE, add = TRUE, col = "blue")
 
 boxplot(decrease ~ treatment, data = OrchardSprays, col = "bisque",
         log = "y")

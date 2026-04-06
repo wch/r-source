@@ -14,7 +14,8 @@
 
   \subsection{New Features}{
     \itemize{
-      \item .
+      \item \code{boxplot()}: when \code{notch=TRUE}, new option \code{warnN=FALSE} suppresses
+      warnings about \dQuote{notches outside hinges}.
     }
   }
 

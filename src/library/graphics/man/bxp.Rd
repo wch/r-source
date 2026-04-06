@@ -13,7 +13,7 @@
 }
 \usage{
 bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
-    outline = TRUE, notch.frac = 0.5, log = "",
+    outline = TRUE, notch.frac = 0.5, warnN = TRUE, log = "",
     border = par("fg"), pars = NULL, frame.plot = axes,
     horizontal = FALSE, ann = TRUE,
     add = FALSE, at = NULL, show.names = NULL,
@@ -35,6 +35,9 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE,
     drawn.}
   \item{notch.frac}{numeric in (0,1). When \code{notch = TRUE}, the
     fraction of the box width that the notches should use.}
+  \item{warnN}{logical. When \code{notch = TRUE}, indicating if a
+    \code{\link{warning}} should be signalled when some notch gets
+    outside the hinges, i.e., the box.}
   \item{border}{character or numeric (vector), the color of the box
     borders.  Is recycled for multiple boxes.  Is used as default for
     the \code{boxcol}, \code{medcol}, \code{whiskcol}, \code{staplecol},
