@@ -18793,7 +18793,7 @@ It needs to be quite complex:
 
 void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
 @{
-    if(saveact == SA_DEFAULT) saveact = SaveAction;
+    if(saveact == SA_DEFAULT) saveact = R_GetSaveAction();
     if(saveact == SA_SAVEASK) @{
        /* ask what to do and set saveact */
     @}
@@ -18834,7 +18834,8 @@ void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
 @embfun fpu_setup
 @comment FIXME need to mention R_RunPendingFinalizers in text
 @embfun R_RunPendingFinalizers
-@embvar SaveAction
+@embfun R_GetSaveAction
+@embfun R_SetSaveAction
 
 These callbacks should never be changed in a running @R{} session (and
 hence cannot be called from an extension package).
