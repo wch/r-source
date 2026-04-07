@@ -159,7 +159,7 @@ void setup_Rmainloop(void); // also in Rembedded.h
 void run_Rmainloop(void); // also in Rembedded.h
 
 SA_TYPE R_GetSaveAction(void);
-SA_TYPE R_SetSaceAction(SA_TYPE new);
+SA_TYPE R_SetSaveAction(SA_TYPE new);
 
 #ifdef __cplusplus
 }

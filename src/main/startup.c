@@ -46,7 +46,7 @@ attribute_hidden bool LoadInitFile = true;  /* Used in R_OpenInitFile */
 
 /* API for reading and changing SaveAction */
 SA_TYPE R_GetSaveAction(void) { return SaveAction; }
-SA_TYPE R_SetSaceAction(SA_TYPE new)
+SA_TYPE R_SetSaveAction(SA_TYPE new)
 {
     SA_TYPE old = SaveAction;
     SaveAction = new;
