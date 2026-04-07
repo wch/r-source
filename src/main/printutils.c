@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999--2025  The R Core Team
+ *  Copyright (C) 1999--2026  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -956,7 +956,7 @@ int Rcons_vprintf(const char *format, va_list arg)
 	/* dummy_vfprintf protects against `res` being counted short; we do not
 	   do that here */
 	p = R_alloc(res+1, sizeof(char));
-	vnsprintf(p, res + 1, format, arg);
+	vsnprintf(p, res + 1, format, arg);
     } else if(res < 0) {
 	/* Some non-C99 conforming vsnprintf implementations return -1 on
 	   truncation instead of only on error. */
