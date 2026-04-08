@@ -360,14 +360,14 @@ getOption(x, default = NULL)
       option \option{--quiet}.  Note that \code{quiet} and \code{verbose}
       \emph{can} both be true.}
 
-      % verbatim, for checking " \t\n\"\\'`><=%;,|&{()}"
+      % verbatim, for checking " \t\n\"\\'`><=;,|&{()}"  -- C source : ../../../main/options.c
     \item{\code{rl_word_breaks}:}{(Unix only:) Used for the \I{readline}-based terminal
-      interface.  Default value \code{" \\t\\n\\"\\\\'`><=\%;,|&{()}"}.%"
+      interface.  Default value \code{" \\t\\n\\"\\\\'`><=;,|&{()}"}.%"
 
       This is the set of characters use to break the input line into
       tokens for object- and file-name completion.  Those who do not use
       spaces around operators may prefer\cr
-      \code{" \\t\\n\\"\\\\'`><=+-*\%;,|&{()}"}%"
+      \code{" \\t\\n\\"\\\\'`><=+-*;,|&{()}"}%"
       }
 
     \item{\code{save.defaults}, \code{save.image.defaults}:}{
