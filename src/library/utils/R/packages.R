@@ -807,11 +807,12 @@ remove.packages <- function(pkgs, lib)
 download.packages <- function(pkgs, destdir, available = NULL,
                               repos = getOption("repos"),
                               contriburl = contrib.url(repos, type),
-                              method, type = getOption("pkgType"), ...)
+                              method, type = getOption("pkgType"),
+                              local = FALSE, ...)
 {
     if (!is.character(type))
         stop(gettextf("'%s' must be a character string", "type"), domain = NA)
-    nonlocalcran <- !all(startsWith(contriburl, "file:"))
+    nonlocalcran <- !all(startsWith(contriburl, "file:")) || local
     if(nonlocalcran && !dir.exists(destdir))
         stop("'destdir' is not a directory")
 
@@ -872,7 +873,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
                     fn <- paste(substring(repos, 6L), fn, sep = "/")
                 }
                 if(file.exists(fn)) {
-                    ## file.copy(fn, destdir)
+                    if(local) file.copy(fn, destdir)
                     retval <- rbind(retval, c(p, fn))
                 }
                 else

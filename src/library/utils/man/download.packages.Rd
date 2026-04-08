@@ -15,7 +15,8 @@
 download.packages(pkgs, destdir, available = NULL,
                   repos = getOption("repos"),
                   contriburl = contrib.url(repos, type),
-                  method, type = getOption("pkgType"), \dots)
+                  method, type = getOption("pkgType"),
+                  local = FALSE, \dots)
 }
 \arguments{
   \item{pkgs}{
@@ -49,6 +50,10 @@ download.packages(pkgs, destdir, available = NULL,
     character string, indicate which type of packages: see
     \code{\link{install.packages}} and \sQuote{Details}.
   }
+  \item{local}{
+    a logical indicating whether packages in local repositories should
+    be \dQuote{downloaded} (i.e., copied) too.
+  }
   \item{\dots}{
     additional arguments to be passed to \code{\link{download.file}}
     and \code{\link{available.packages}}.
@@ -58,9 +63,10 @@ download.packages(pkgs, destdir, available = NULL,
   \code{download.packages} takes a list of package names and a
   destination directory, downloads the newest versions and saves them in
   \code{destdir}.  If the list of available packages is not given as
-  argument, it is obtained from repositories.  If a repository is local,
-  i.e.\sspace{}the URL starts with \code{"file:"}, then the packages are not
-  downloaded but used directly.  Both \code{"file:"} and
+  argument, it is obtained from repositories.  If a repository is local
+  i.e.\sspace{}the URL starts with \code{"file:"},
+  and \code{local} is \code{FALSE} then the packages are not
+  downloaded but used directly (when installing).  Both \code{"file:"} and
   \code{"file:///"} are allowed as prefixes to a file path.  Use the
   latter only for URLs: see \code{\link{url}} for their interpretation.
   (Other forms of \samp{file://} URLs are not supported.)
