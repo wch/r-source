@@ -157,14 +157,12 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                         switch(toc_entry, title = rdtitles, name = rdnames))
 
     language <- descmeta["Language"]
-    if(is.na(language))
-        language <- "en"
-    else if(grepl(",", language))
-        language <- NA_character_
-    ## If DESCRIPTION specifices several languages, we currently cannot
-    ## tell which one will be used for the package Rd files.  We could
-    ## guess to use the first language given, for now simply take the
-    ## language as unknown.
+    language <- if(is.na(language))
+                    "en"
+                else
+                    sub(",.*", "", language)
+    ## If DESCRIPTION specifices several languages, take the first one
+    ## as the primary one for the Rd files (and say so in R-exts).
     
     ## Now to make a file with header + DESCRIPTION + TOC + content + footer
 
