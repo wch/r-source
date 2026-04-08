@@ -251,14 +251,8 @@ static struct {
 
  /* Fill a text buffer with user typed console input. */
 int
-#ifdef AFTER_RJAVA_FIX
 R_ReadConsole(const char *prompt, unsigned char *buf, int len,
 	      int addtohistory)
-#else
-R_ReadConsole(char *prompt, unsigned char *buf, int len,
-	      int addtohistory)
-#endif
-// work-around for non-matching declaration in rJava
 {
     R_ProcessEvents();
     int res = ptr_ReadConsole(prompt, buf, len, addtohistory);

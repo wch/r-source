@@ -2024,12 +2024,7 @@ int R_XDRDecodeInteger(void *buf);
 /* The maximum length of input line which will be asked for,
    in bytes, including the terminator */
 #define CONSOLE_BUFFER_SIZE 4096
-#ifdef AFTER_RJAVA_FIX
 int	R_ReadConsole(const char *, unsigned char *, int, int);
-#else
-// work-around for non-matching declaration in rJava
-int	R_ReadConsole(char *, unsigned char *, int, int);
-#endif
 void	R_WriteConsole(const char *, int); /* equivalent to R_WriteConsoleEx(a, b, 0) */
 void	R_WriteConsoleEx(const char *, int, int);
 void	R_ResetConsole(void);

@@ -94,12 +94,7 @@ NORET extern void R_Suicide(const char *);
 NORET extern void R_CleanUp(SA_TYPE, int, int);
 extern char *R_HomeDir(void);
 extern void R_Busy(int);
-#ifdef AFTER_RJAVA_FIX
 extern int  R_ReadConsole(const char *, unsigned char *, int, int);
-#else
-// work-around for non-matching declaration in rJava
-int	R_ReadConsole(char *, unsigned char *, int, int);
-#endif
 extern void R_WriteConsole(const char *, int);
 extern void R_WriteConsoleEx(const char *, int, int);
 extern void R_ResetConsole(void);
