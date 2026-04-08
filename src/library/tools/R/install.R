@@ -469,7 +469,7 @@ if(FALSE) {
             custom.bin <- .pkg.type(.Platform$pkgType) == "other.binary"
             filename <- if (custom.bin) {
                 build <- gsub("^([[:lower:]]+)[.]binary(|[.]([[:alnum:]_-]+))$","\\1\\2", .Platform$pkgType)
-                compression <- if(nzchar(extSoftVersion()["zstd"])) "zstd" else "xz"
+                compression <- "xz"
                 ## we could adjust compression_level for zstd here - perhaps an env var?
                 paste0(pkg_name, "_", version, "_R_", gsub(".", "-", build, fixed=TRUE), ".tar.", compression)
             } else if (!grepl("darwin", R.version$os)) {
