@@ -17788,6 +17788,24 @@ use back-ported versions defined conditionally. @xref{Some backports}.
 
 @comment FIXME: need to figure out about Rf_allocSExp(DOTSXP)
 
+
+@node Some API replacements for non-API variables
+@subsection Some API replacements for non-API variables
+
+Non-API variables should not be used in packages as they may depend on
+internal structure that may change, or changing them might damage @R{}'s
+internal state. Some non-API variables can be accessed through a
+function interface.
+
+@table @code
+@item SaveVar
+      Use @code{R_GetSaveAction} and @code{R_SetSaveAction}.
+@item @code{R_NamespaceRegistry}
+      Use @code{R_getRegisteredNamespace} to find a registered
+      namespace.
+@end table
+
+
 @node Creating environments
 @subsection Creating environments
 
