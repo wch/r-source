@@ -18092,6 +18092,13 @@ parent environments (using @code{R_findDotsEnv} internally).  If you
 need inherited lookup from C code, call @code{R_findDotsEnv} first and
 pass the result to the accessor functions.
 
+Some internal lookup functions return @code{R_UnboundValue} to indicate
+@emph{not found}. This should not be the case for any functions in the
+external API.
+@c Might eventually want to drop R_UnboundVar from the API need it for
+@c now. It needs to be used as a return value in the RObjectTables API.
+@eapivar R_UnboundValue
+
 
 @node Some backports
 @subsection Some backports
