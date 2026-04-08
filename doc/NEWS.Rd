@@ -273,8 +273,10 @@
 
       \item If \R uses custom binary type in its
       \code{.Platform$pkgType} then \code{R CMD INSTALL --build} will
-      produce \code{<package>_<ver>_R_<system>-<build>.tar.zstd} binary
-      files if \R has \command{zstd} support, \code{.tar.xz} otherwise.
+      produce \code{<package>_<ver>_R_<system>-<build>.tar.xz} binary
+      files. Please note that future versions may use \code{.zstd}
+      compression by default so package tooling should support any of
+      the above mentioned extensions.
 
       \item New facilities have been introduced for package integrity
       verification and package signing. The optional file \file{SHA256}
