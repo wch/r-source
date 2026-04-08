@@ -675,7 +675,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "run_Rmainloop", "setup_Rmainloop",
 
             ## some variables
-            "R_NamespaceRegistry", "R_UnboundValue",
+            "R_NamespaceRegistry",
             "R_InBCInterpreter", "R_CurrentExpression",
             "R_CStackDir", "R_MB_CUR_MAX",
             "R_compact_intseq_class", "R_compact_realseq_class",
