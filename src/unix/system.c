@@ -72,12 +72,7 @@ NORET void R_Suicide(const char *s) {
     exit(2); // same status as Rstd_Suicide
 }
 void R_ShowMessage(const char *s) { ptr_R_ShowMessage(s); }
-#ifdef AFTER_RJAVA_FIX
 int R_ReadConsole(const char *prompt, unsigned char *buf, int len, int addtohistory)
-#else
-// work-around for non-matching declaration in rJava
-int R_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory)
-#endif
 { return ptr_R_ReadConsole(prompt, buf, len, addtohistory); }
 void R_WriteConsole(const char *buf, int len) {if (ptr_R_WriteConsole) ptr_R_WriteConsole(buf, len); else ptr_R_WriteConsoleEx(buf, len, 0); }
 void R_WriteConsoleEx(const char *buf, int len, int otype) {if (ptr_R_WriteConsole) ptr_R_WriteConsole(buf, len); else ptr_R_WriteConsoleEx(buf, len, otype); }
