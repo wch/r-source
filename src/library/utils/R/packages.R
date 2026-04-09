@@ -438,8 +438,10 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         stop("specifying 'contriburl' or 'available' requires a single type, not type = \"both\"")
     }
     if(is.null(available)) {
-        available <- available.packages(contriburl = contriburl,
-                                        method = method, ...)
+        available <- if (type == "both" && .Platform$pkgType != "source")
+                         .available.both(repos, method, ...)
+                     else
+                         available.packages(contriburl = contriburl, method = method, ...)
         if (missing(repos)) repos <- getOption("repos") # May have changed
     }
     if(!is.matrix(oldPkgs) && is.character(oldPkgs)) {
@@ -525,6 +527,29 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 .builtRver <- function(built) ## convert full "Built" string to just R version (unless it is already)
     gsub("^R ([0-9.]+).*", "\\1", built)
 
+## this is a wrapper of available.packages that handles the special case of type="both"
+## by calling available.packages twice: once with "source" and once with "binary",
+## combing the result. Given that the combination step is subject to specific choices,
+## the logic in this wrapper is tailored for internal use in update.packages and old.packages.
+.available.both <- function(repos, method, ...) {
+    ## "both" gets complicated as we have to use available.packages twice
+    fields <- c(tools:::.get_standard_repository_db_fields(), "File", "Built")
+    av.src <- available.packages(contriburl = contrib.url(repos, "source"), method = method, fields = fields, ...)
+    av.bin <- available.packages(contriburl = contrib.url(repos, "binary"), method = method, fields = fields, ...)
+    ## we keep things simple in that we use source unless there is the same binary version
+    ## so that we can get at the Built field. This is more simple than in install.packages
+    ## since we only care about determining whether a package is new, but not which type is
+    ## preferred - install.packages will sort that out.
+    pkg.src <- row.names(av.src)
+    pkg.bin <- row.names(av.bin)
+    bin.ver <- av.bin[pkg.bin, "Version"]
+    src.ver <- av.src[pkg.bin, "Version"]
+    use.bin <- pkg.bin[as.numeric_version(bin.ver) >= as.numeric_version(src.ver)]
+    use.bin <- use.bin[!is.na(use.bin)]
+    use.src <- pkg.src[pkg.src %notin% use.bin]
+    rbind(av.src[use.src,], av.bin[use.bin, ])
+}
+
 old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                          contriburl = contrib.url(repos, type),
                          instPkgs = installed.packages(lib.loc = lib.loc, ...),
@@ -542,9 +567,15 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     }
     if(NROW(instPkgs) == 0L) return(NULL)
 
-    available <- if(is.null(available))
-        available.packages(contriburl = contriburl, method = method, ...)
-    else tools:::.remove_stale_dups(available)
+    ## NB: type is ignored if either available or contriburl is specified.
+    ## update.packages() raises an error in that case, but we can't really do that,
+    ## becuase we get called with available internally
+    available <- if(is.null(available)) {
+                     if (type == "both" && .Platform$pkgType != "source")
+                         .available.both(repos, method, ...)
+                     else
+                         available.packages(contriburl = contriburl, method = method, ...)
+                 } else tools:::.remove_stale_dups(available)
 
     update <- NULL
 
@@ -602,6 +633,8 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     if(!is.matrix(instPkgs))
         stop(gettextf("no installed packages for (invalid?) 'lib.loc=%s'",
                       lib.loc), domain = NA)
+    ## NB: this implicitly uses type="source" even if type="both" - c.f. contrib.url()
+    ##     but that's ok here as there should not be binary packages without sources
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method, ...)
@@ -928,6 +961,9 @@ download.packages <- function(pkgs, destdir, available = NULL,
 
 resolvePkgType <- function(type) {
     ## Not entirely clear this is optimal
+    ## This was built on the assumption that binaries are always a subset, so
+    ## using sources covers everything necssary. Not only is that not guaranteed,
+    ## but binaries now may have additional information such as build timestamps.
     if(type == "both") type <- "source"
     else if(type == "binary") type <- .Platform$pkgType
     type
