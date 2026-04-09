@@ -1,7 +1,7 @@
 #  File src/library/utils/R/completion.R
 #  Part of the R package, https://www.R-project.org
 #
-# Copyright (C) 2006-2022  The R Core Team
+# Copyright (C) 2006-2026  The R Core Team
 # Copyright (C) 2006-2022  Deepayan Sarkar
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -124,7 +124,7 @@ findMatches <- function(pattern, values, fuzzy, backtick)
 {
     if (missing(fuzzy))    fuzzy    <- isTRUE(.CompletionEnv$settings[["fuzzy"]])
     if (missing(backtick)) backtick <- isTRUE(.CompletionEnv$settings[["backtick"]])
-    comps <- 
+    comps <-
         if (fuzzy)
             findFuzzyMatches(pattern, values)
         else
@@ -292,7 +292,6 @@ rc.status <- function()
 ## linebuffer and end to be already set, and itself sets token and
 ## start.  It returns the token.
 
-## FIXME: should this use getOption("rl_word_breaks")?
 
 .guessTokenFromLine <-
     function(linebuffer = .CompletionEnv[["linebuffer"]],
@@ -313,10 +312,13 @@ rc.status <- function()
             suppressWarnings(gregexpr("['\"]", linebuffer,
                                       perl = TRUE))[[1L]]
         else
+            ## basically the complement of  getOption("rl_word_breaks") - should adapt to user setting -- FIXME
+            ## FIXME_Alt: use argument   startPatt = "[^\\.\\w:?$@%[\\]]+" instead of hardwired
+            ##
             ##                    things that should not cause breaks
-            ##                           _____.^._____
-            ##                          /             \
-            suppressWarnings(gregexpr("[^\\.\\w:?$@[\\]]+",
+            ##                           _____.^.______
+            ##                          /              \
+            suppressWarnings(gregexpr("[^\\.\\w:?$@%[\\]]+",
                                       linebuffer,
                                       perl = TRUE))[[1L]]
     start <- ## 0-indexed
