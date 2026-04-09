@@ -91,6 +91,15 @@ checkSHA256sums <- function(package, dir)
         else
             cat("file", sQuote(nmxx[not.here]), "is missing\n", sep = " ")
     }
+    extra.files <- (nmx %notin% nmxx)
+    if (any(extra.files)) {
+        res <- FALSE
+        if (sum(extra.files) > 1L)
+            cat("extraneous files", paste(sQuote(nmx[extra.files]), collapse = ", "),
+                "\n", sep = " ")
+        else
+            cat("extraneous file", sQuote(nmx[extra.files]), "\n", sep = " ")
+    }
     nmxx <- nmxx[!not.here]
     diff <- (xx[nmxx] != x[nmxx]) | (sizes[nmxx] != fs[nmxx])
     if(any(diff)) {
