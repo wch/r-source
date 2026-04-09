@@ -65,7 +65,14 @@ function(dir, outDir, builtStamp=character())
         ## Prefer date in ISO 8601 format, UTC, avoid sub-seconds.
         builtStamp <- format(Sys.time(), "%Y-%m-%d %H:%M:%S",
                              tz = "UTC", usetz = TRUE)
+    } else {
+        ## Debian may have passed a timestamp in RFC 822 format,
+        ## if it parses use it but as ISO 8601, UTC, no sub-seconds
+        if (!is.na(res <- strptime(builtStamp, "%a, %d %b %Y %T %z", tz="UTC")))
+            builtStamp <- format(res, "%Y-%m-%d %H:%M:%S",
+                                 tz = "UTC", usetz = TRUE)
     }
+
     Built <-
 	paste0("R ",
 	       paste(R.version[c("major", "minor")], collapse = "."),
