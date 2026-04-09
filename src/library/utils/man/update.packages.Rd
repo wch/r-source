@@ -106,7 +106,7 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   version of \R (for example built under 3.3.x when running \R 3.4.0).
   In either case, for binary package types the timestamp of the
   \code{"Built"} field is also used and a package is considered new if
-  the built timestamp in the repostitory is more recent than the one in
+  the built timestamp in the repository is more recent than the one in
   the installed package. Timestamps not in ISO format are silently
   ignored.
   (For binary package types there is no check that the version on the
@@ -138,7 +138,7 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   For \code{old.packages}, \code{NULL} or a matrix with one row per
   package, row names the package names and column names
   \code{"Package"}, \code{"LibPath"}, \code{"Installed"} (the version),
-  \code{"Built"} (the eponymous field in binary packages),
+  \code{"Built"} (the eponymous \file{DESCRIPTION} field of installed packages),
   \code{"ReposVer"} and \code{"Repository"}.
 
   For \code{new.packages} a character vector of package names,
