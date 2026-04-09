@@ -14,8 +14,8 @@
 
   \subsection{New Features}{
     \itemize{
-      \item \code{boxplot()}: when \code{notch=TRUE}, new option \code{warnN=FALSE} suppresses
-      warnings about \dQuote{notches outside hinges}.
+      \item \code{boxplot()}: when \code{notch=TRUE}, new option \code{warnN=FALSE}
+      suppresses warnings about \dQuote{notches outside hinges}.
     }
   }
 
@@ -821,6 +821,10 @@
       a formula by \I{Andreas Löffler} provided by \I{Andreas Löffler},
       \I{Aidan Lakshman}, and \I{Ivan Krylov}, substantially reducing
       the memory complexity of the original implementation (\PR{18655}).
+
+      \item When \code{Ops} group methods for matrix-\code{"ts"} return a
+      zero-extent matrix, its type is correct now.  E.g., \code{<int> + <dbl>}
+      now returns type \code{"double"}, see also \PR{18972}.
     }
   }
 }
