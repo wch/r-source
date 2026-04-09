@@ -20,10 +20,10 @@ boxplot <- function(x, ...) UseMethod("boxplot")
 
 boxplot.default <-
 function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
-	 notch = FALSE, outline = TRUE, names, plot = TRUE,
+	 notch = FALSE, warnN = TRUE, outline = TRUE, names, plot = TRUE,
 	 border = par("fg"), col = "lightgray", log = "",
 	 pars = list(boxwex = 0.8, staplewex = 0.5, outwex = 0.5),
-	 ann = !add, warnN = TRUE,
+	 ann = !add,
 	 horizontal = FALSE, add = FALSE, at = NULL)
 {
     args <- list(x, ...)
@@ -78,10 +78,13 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
         if(is.null(pars$boxfill) && is.null(args$boxfill)) pars$boxfill <- col
         do.call(bxp,
                 c(list(z, notch = notch, width = width, varwidth = varwidth,
-                       log = log, border = border, pars = pars,
-                       outline = outline, horizontal = horizontal, add = add,
-                       ann = ann, warnN = warnN,
-                       at = at), args[namedargs]),
+                       outline = outline, # notch.frac = 0.5,
+                       warnN = warnN, log = log, border = border,
+                       pars = pars, # frame.plot = axes,
+                       horizontal = horizontal, ann = ann, add = add, at = at
+                       ## show.names = NULL, panel.first = NULL, panel.last = NULL,
+                       ),
+                  args[namedargs]),
                 quote = TRUE)# *not* to eval() calls in labels etc
 	invisible(z)
     }
@@ -131,11 +134,12 @@ boxplot.formula <-
 	    ...)
 }
 
+
 bxp <- function(z, notch = FALSE, width = NULL, varwidth = FALSE,
-                outline = TRUE, notch.frac = 0.5, log = "", border = par("fg"),
+                outline = TRUE, notch.frac = 0.5, warnN = TRUE,
+                log = "", border = par("fg"),
 		pars = NULL, frame.plot = axes, horizontal = FALSE,
-                ann = TRUE, warnN = TRUE,
-		add = FALSE, at = NULL, show.names = NULL,
+                ann = TRUE, add = FALSE, at = NULL, show.names = NULL,
 		panel.first = NULL, panel.last = NULL, ...)
 {
     pars <- as.list(pars)
@@ -152,7 +156,7 @@ bxp <- function(z, notch = FALSE, width = NULL, varwidth = FALSE,
 	}
 	pars[nmsA] <- args
     }
-    bplt <- function(x, wid, stats, out, conf, notch, xlog, i)
+    bplt <- function(x, wid, stats, out, conf, notch, xlog, i) # (notch.frac, warnN, *)
     {
 	## Draw single box plot
         ok <- TRUE
@@ -260,10 +264,10 @@ bxp <- function(z, notch = FALSE, width = NULL, varwidth = FALSE,
 	    plot.window(xlim = xlim, ylim = ylim, log = log, yaxs = pars$yaxs)
     }
     xlog <- (par("ylog") && horizontal) || (par("xlog") && !horizontal)
-	if(!is.null(panel.first)) 
-		if(!inherits(panel.first, "function")) warning("panel.first ignored, it is not a function") 
+	if(!is.null(panel.first))
+		if(!inherits(panel.first, "function")) warning("panel.first ignored, it is not a function")
 		else panel.first()
-	
+
     pcycle <- function(p, def1, def2 = NULL)# or rather NA {to be rep()ed}?
 	rep(if(length(p)) p else if(length(def1)) def1 else def2,
 	    length.out = n)
@@ -326,10 +330,10 @@ bxp <- function(z, notch = FALSE, width = NULL, varwidth = FALSE,
 			notch = notch, xlog = xlog, i = i)
     if(!ok)
 	warning("some notches went outside hinges ('box'): maybe set notch=FALSE")
-	if(!is.null(panel.last)) 
-		if(!inherits(panel.last, "function")) warning("panel.last ignored, it is not a function") 
+	if(!is.null(panel.last))
+		if(!inherits(panel.last, "function")) warning("panel.last ignored, it is not a function")
 		else panel.last()
-	
+
     axes <- is.null(pars$axes)
     if(!axes) { axes <- pars$axes; pars$axes <- NULL }
     if(axes) {
