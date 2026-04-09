@@ -445,7 +445,7 @@ install.packages <-
     ## paths in DSOs are hard-coded.
     if (type == "both") {
         if (type2 == "source")
-            stop("type == \"both\" can only be used on Windows or a CRAN build for macOS")
+            stop("type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)")
         if (!missing(contriburl) || !is.null(available)) type <- type2
     }
 
