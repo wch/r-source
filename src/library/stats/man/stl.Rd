@@ -100,7 +100,7 @@ stl(x, s.window, s.degree = 0,
 
   \code{\link{StructTS}} for different kind of decomposition.
 }
-\examples{\donttest{
+\examples{\dontdiff{% results diff for some LLVM 22
 require(graphics)
 
 plot(stl(nottem, "per"))
