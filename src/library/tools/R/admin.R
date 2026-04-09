@@ -1,7 +1,7 @@
 #  File src/library/tools/R/admin.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -66,11 +66,13 @@ function(dir, outDir, builtStamp=character())
         builtStamp <- format(Sys.time(), "%Y-%m-%d %H:%M:%S",
                              tz = "UTC", usetz = TRUE)
     } else {
-        ## Debian may have passed a timestamp in RFC 822 format,
+        ## Debian may have passed a timestamp in RFC 2822/5322 format,
         ## if it parses use it but as ISO 8601, UTC, no sub-seconds
+        prev <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
         if (!is.na(res <- strptime(builtStamp, "%a, %d %b %Y %T %z", tz="UTC")))
             builtStamp <- format(res, "%Y-%m-%d %H:%M:%S",
                                  tz = "UTC", usetz = TRUE)
+        Sys.setlocale("LC_TIME", prev)
     }
 
     Built <-
