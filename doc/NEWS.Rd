@@ -408,6 +408,12 @@
       \code{"Built"} field is considered even if the package version is
       identical to allow binary package repositories to update binaries
       without the need to increase the package version.
+
+      \item If the timestamp passed as {--built-timestamp} to
+      \code{R CMD INSTALL} is in RFC-822 form (with time-zone offset)
+      it will be converted to ISO UTC form to conform to the format
+      used by \R for purposes described above. (\PR{19037}, thanks to
+      \I{Dirk Eddelbuettel})
     }
   }
 
