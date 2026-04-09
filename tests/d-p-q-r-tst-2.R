@@ -987,5 +987,16 @@ stopifnot(exprs = {
 ## the last 6 values each were  NaN  in  R <= 4.5.0
 
 
+## pnbinom(.., size = Inf)  inside {0, 1} -- PR#16727, remnant
+prob <- 0.999
+M <- .Machine$double.xmax
+x <- M * 2^seq(-4, 0, by = 1/8)# M/16 .... M
+mu <- 5; x. <- c(outer(x, 2^-c(8, 4, 0)))
+Lrg <- c(Inf, M, M/2, M/4, M/8)
+for(sz in Lrg)
+    stopifnot(dnbinom(x, prob=prob, size = sz) == 0, # were NaN partly (before r88183)
+              dnbinom(x., mu=mu,    size = sz) == 0)
+
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
