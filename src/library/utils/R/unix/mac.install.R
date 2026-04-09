@@ -137,6 +137,10 @@
                          sQuote(pkgname), info$fingerprint, info$userid), "\n", sep="")
             flush.console()
         } else {
+            if (isTRUE(str2logical(Sys.getenv("_R_INSTALL_REQUIRE_SIGNED", "FALSE"))))
+                stop(gettextf("Valid signature is required, but package %s could not be successfully verified.",
+                              sQuote(pkgname)))
+
             res <- tools::checkSHA256sums(pkgname, file.path(tmpDir, pkgname))
             if(!quiet && !is.na(res) && res) {
                 cat(gettextf("package %s successfully unpacked and %s sums checked",

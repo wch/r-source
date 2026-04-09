@@ -537,6 +537,7 @@ if(FALSE) {
                             ))
         if (res) errmsg("installing binary package failed")
 
+        sig.ok <- FALSE
         res <- checkSHA256sums(pkg, instdir)
         if(!is.na(res) && res) {
             starsmsg(stars,
@@ -545,6 +546,7 @@ if(FALSE) {
             if (isTRUE(file.exists(sig <- file.path(instdir, "SHA256.sig")))) {
                 res <- verifySHA256signature(pkg, instdir)
                 if(!is.na(res) && res) {
+                    sig.ok <- TRUE
                     info <- attr(res, "result")
                     starsmsg(stars,
                              gettextf("package %s signature verified (%s %s)",
@@ -559,6 +561,10 @@ if(FALSE) {
                               sQuote(pkg), "MD5"))
 	    }
 	}
+        
+        if (isTRUE(config_val_to_logical(Sys.getenv("_R_INSTALL_REQUIRE_SIGNED", "FALSE"))) &&
+            !sig.ok) errmsg(gettextf("Valid signature is required, but package %s could not be successfully verified.",
+                                       sQuote(pkg)))
         
         if (tar_up) {
             starsmsg(stars, sQuote(pkg),
