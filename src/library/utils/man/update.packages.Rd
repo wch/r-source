@@ -1,6 +1,6 @@
 % File src/library/utils/man/update.packages.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{update.packages}
@@ -104,6 +104,11 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   packages that have newer versions on the repositories or, if
   \code{checkBuilt = TRUE}, that were built under an earlier minor
   version of \R (for example built under 3.3.x when running \R 3.4.0).
+  In either case, for binary package types the timestamp of the
+  \code{"Built"} field is also used and a package is considered new if
+  the built timestamp in the repostitory is more recent than the one in
+  the installed package. Timestamps not in ISO format are silently
+  ignored.
   (For binary package types there is no check that the version on the
   repository was built under the current minor version of \R,
   but it is advertised as being suitable for this version.)
@@ -133,8 +138,8 @@ new.packages(lib.loc = NULL, repos = getOption("repos"),
   For \code{old.packages}, \code{NULL} or a matrix with one row per
   package, row names the package names and column names
   \code{"Package"}, \code{"LibPath"}, \code{"Installed"} (the version),
-  \code{"Built"} (the version built under), \code{"ReposVer"} and
-  \code{"Repository"}.
+  \code{"Built"} (the eponymous field in binary packages),
+  \code{"ReposVer"} and \code{"Repository"}.
 
   For \code{new.packages} a character vector of package names,
   \emph{after} any selected \emph{via} \code{ask} have been installed.
