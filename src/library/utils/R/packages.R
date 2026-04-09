@@ -32,7 +32,8 @@ function(contriburl = contrib.url(repos, type), method,
     ## on a system with binaries the default pkgType will contain "binary" or "both" so we take it
     ## as a hint that one of them may be binary and thus we need "Built"
     requiredFields <-
-        c(tools:::.get_standard_repository_db_fields(), "File", if(any(grepl("(binary|both)", type))) "Built")
+        c(tools:::.get_standard_repository_db_fields(), "File", "Published",
+          if(any(grepl("(binary|both)", type))) "Built")
     if (is.null(fields))
 	fields <- requiredFields
     else {
@@ -579,14 +580,17 @@ old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
     update <- NULL
 
+    ## safely attempt to parse a (possibly incomplete) timestamp in UTC
+    .ts <- function(x) if (isTRUE(!is.na(x))) as.POSIXlt(x, optional=TRUE, tz="UTC") else NA
+
     needs.install <- function(repo, inst)
         ## if the repo version is higher, then it's obvious
         ((package_version(repo["Version"]) > package_version(inst["Version"])) ||
          ## otherwise it depends - on equal versions we still need to install if published/built is higher
          (package_version(repo["Version"]) == package_version(inst["Version"]) &&
-          isTRUE(.builtDate(repo["Built"]) > .builtDate(inst["Built"])) ## is FALSE if either is missing
-             ## FIXME: we want to also consider Published so we can override this by
-             ## repo metadata alone, but that's not recorded in the metadata yet
+          (isTRUE(.builtDate(repo["Built"]) > .builtDate(inst["Built"])) || ## new re-built binary
+           isTRUE(.ts(repo["Published"]) > .ts(inst["Published"]))          ## new "invalidated" due to dependency
+          )
          ))
 
     currentR <- minorR <- getRversion()
@@ -679,7 +683,7 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 .instPkgFields <- function(fields) {
     ## to be used in installed.packages() and similar
     requiredFields <-
-        c(tools:::.get_standard_repository_db_fields(), "Built")
+        c(tools:::.get_standard_repository_db_fields(), "Built", "Published")
     if (is.null(fields))
 	fields <- requiredFields
     else {
