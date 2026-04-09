@@ -66,7 +66,7 @@ installed.packages(lib.loc = NULL, priority = NULL,
   \code{"Depends"}, \code{"Imports"}, \code{"LinkingTo"},
   \code{"Suggests"}, \code{"Enhances"},
   \code{"OS_type"}, \code{"License"} and
-  \code{"Built"} (the \R version the package was built under).
+  \code{"Built"}.
   Additional columns can be specified using the \code{fields}
   argument.
 }
