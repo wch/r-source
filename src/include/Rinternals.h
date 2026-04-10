@@ -1258,8 +1258,6 @@ SEXP Rf_findVar(SEXP, SEXP);
 SEXP Rf_findVarInFrame(SEXP, SEXP);
 
 SEXP (PRENV)(SEXP x);
-SEXP (PRVALUE)(SEXP x);  // still in rlang, vctrs
-
 
 SEXP Rf_allocSExp(SEXPTYPE);
 SEXP R_PromiseExpr(SEXP);
