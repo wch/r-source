@@ -5520,7 +5520,7 @@ presence (perhaps using @code{Sys.which}), as well as declared in the
 @samp{SystemRequirements} field.  A package should pass its checks
 without warnings nor errors without the external command being
 present. N.B.: @file{/usr/sbin} and @file{/sbin}@footnote{where
-diffeent, which it is on macOS.} are intended for administrator commands
+different, which it is on macOS.} are intended for administrator commands
 and may not be on the end-user path: examples of commands which packages
 have (wrongly) assumed to be available are @command{sysctl} and
 @command{ping}.
