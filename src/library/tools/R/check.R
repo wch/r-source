@@ -1701,7 +1701,7 @@ add_dummies <- function(dir, Log)
                        "po", "src", "tests", "vignettes",
                        "build",       # used by R CMD build
                        ".aspell",     # used for spell checking packages
-                       ".upstream",   # not used, but reserved for upstream signatures
+                       "upstream",    # not used, but reserved for upstream signatures
                        "java", "tools", "noweb") # common dirs in packages.
             topfiles <- setdiff(topfiles, known)
             if (file.exists(file.path("inst", "AUTHORS")))
