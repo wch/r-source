@@ -1,0 +1,34 @@
+\documentclass[a4paper]{article}
+
+\title{Using objects as chunk options}
+\author{Vincent Goulet and R Core Team}
+
+\begin{document}
+
+\maketitle
+
+The following code chunk checks if a package \textbf{foo} is
+available on the system, and defines two dimensions.
+<<>>=
+hasfoo <- requireNamespace("foo", quietly = TRUE)
+ht <- 5
+wd <- (1 + sqrt(5))/2 * ht
+@
+
+Sweave will evaluate the following code chunk only if the package
+is available (which should normally not be the case).
+<<eval=hasfoo>>=
+foo::foo(42)
+@
+
+We may also redo the boxplot of the \texttt{airquality} dataset
+in proportions approximately equal to the golden ratio.
+\begin{center}
+<<echo=FALSE, fig=TRUE, width=wd, height=ht>>=
+data(airquality, package="datasets")
+library("graphics")
+boxplot(Ozone ~ Month, data = airquality)
+@
+\end{center}
+
+\end{document}

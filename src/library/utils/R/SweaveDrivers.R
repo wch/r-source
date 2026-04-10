@@ -1,7 +1,7 @@
 #   File src/library/utils/R/SweaveDrivers.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -71,8 +71,11 @@ RweaveLatexSetup <-
                     pdf.encoding = grDevices::pdf.options()$encoding,
                     pdf.compress = grDevices::pdf.options()$compress,
                     expand = TRUE, # unused by us, for 'highlight'
-                    concordance = FALSE, figs.only = TRUE)
+                    concordance = FALSE, figs.only = TRUE,
+                    ignore.on.weave = FALSE, ignore = FALSE)
     options$.defaults <- options
+    if (!is.null(dots$weave))
+        dots$ignore.on.weave <- !dots$weave
     options[names(dots)] <- dots
 
     ## to be on the safe side: see if defaults pass the check
@@ -113,7 +116,13 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                             width = width, height = height,
                             res = options$resolution, units = "in")
 
-        if (!(options$engine %in% c("R", "S"))) return(object)
+        ## Just return the object if the chunk is omitted, or for
+        ## engines other than R and S.
+        if (!is.null(options$weave))
+            options$ignore.on.weave <- !options$weave
+        if (options$ignore.on.weave || options$ignore ||
+            !(options$engine %in% c("R", "S")))
+            return(object)
 
         devs <- devoffs <- list()
         if (options$fig && options$eval) {
@@ -548,14 +557,30 @@ RweaveLatexFinish <- function(object, error = FALSE)
     invisible(outputname)
 }
 
-## This is the check function for both RweaveLatex and Rtangle drivers
+## This is the check function for the RweaveLatex driver (only).
+## Options may take their values from objects defined in earlier code
+## chunks.
 RweaveLatexOptions <- function(options)
 {
     defaults <- options[[".defaults"]]
 
-    ## convert a character string to logical
+    ## get the (logical) value of a variable, or convert a character
+    ## string to logical
     c2l <- function(x)
-        if (is.null(x)) FALSE else suppressWarnings(as.logical(x))
+        if (is.logical(x))
+            x
+        else if (is.null(x))
+            FALSE
+        else
+            suppressWarnings(as.logical(get0(x, mode = "logical") %||% x))
+
+    ## get the (numeric) value of a variable, or convert a character
+    ## string to numeric
+    c2n <- function(x)
+        if (is.numeric(x))
+            x
+        else
+            suppressWarnings(as.numeric(get0(x, mode = "numeric") %||% x))
 
     ## numeric
     NUMOPTS <- c("width", "height", "resolution")
@@ -565,19 +590,18 @@ RweaveLatexOptions <- function(options)
     CHAROPTS <- c("results", "prefix.string", "engine", "label",
                   "strip.white", "pdf.version", "pdf.encoding", "grdevice")
 
-
     for (opt in names(options)) {
         if(opt == ".defaults") next
         oldval <- options[[opt]]
         defval <- defaults[[opt]]
         if(opt %in% CHAROPTS || is.character(defval)) {
-        } else if(is.logical(defval))
-            options[[opt]] <- c2l(oldval)
-        else if(opt %in% NUMOPTS || is.numeric(defval))
-            options[[opt]] <- as.numeric(oldval)
-        else if(!is.na(newval <- c2l(oldval)))
+        } else if(is.logical(defval)) {
+            if(!is.logical(oldval)) options[[opt]] <- c2l(oldval)
+        } else if(opt %in% NUMOPTS || is.numeric(defval)) {
+            if(!is.numeric(oldval)) options[[opt]] <- c2n(oldval)
+        } else if(!is.na(newval <- c2l(oldval)))
             options[[opt]] <- newval
-        else if(!is.na(newval <- suppressWarnings(as.numeric(oldval))))
+        else if(!is.na(newval <- c2n(oldval)))
             options[[opt]] <- newval
         if (is.na(options[[opt]]))
             stop(gettextf("invalid value for %s : %s", sQuote(opt), oldval),
@@ -604,7 +628,6 @@ RweaveLatexOptions <- function(options)
         match.arg(options$strip.white, c("true", "false", "all"))
     options
 }
-
 
 RweaveChunkPrefix <- function(options)
 {
@@ -653,13 +676,13 @@ Rtangle <-  function()
          runcode = RtangleRuncode,
          writedoc = RtangleWritedoc,
          finish = RtangleFinish,
-         checkopts = RweaveLatexOptions)
+         checkopts = RtangleOptions)
 }
 
 
 RtangleSetup <-
     function(file, syntax, output = NULL, annotate = TRUE, split = FALSE,
-             quiet = FALSE, drop.evalFALSE = FALSE, ...)
+             quiet = FALSE, drop.evalFALSE = FALSE, chunk.sep = "\n\n", ...)
 {
     dots <- list(...)
     if (is.null(output)) {
@@ -691,12 +714,16 @@ RtangleSetup <-
     options <- list(split = split, prefix = TRUE,
                     prefix.string = prefix.string,
                     engine = "R", eval = TRUE,
-                    show.line.nos = FALSE)
+                    show.line.nos = FALSE,
+                    chunk.sep = if (isTRUE(chunk.sep)) "\n\n" else chunk.sep,
+                    extension = TRUE, ignore.on.tangle = FALSE, ignore = FALSE)
     options$.defaults <- options
+    if (!is.null(dots$tangle))
+        dots$ignore.on.tangle <- !dots$tangle
     options[names(dots)] <- dots
 
     ## to be on the safe side: see if defaults pass the check
-    options <- RweaveLatexOptions(options)
+    options <- RtangleOptions(options)
 
     list(output = output, annotate = annotate, options = options,
          chunkout = list(), quiet = quiet, syntax = syntax,
@@ -719,7 +746,13 @@ RtangleSetup <-
 
 RtangleRuncode <- function(object, chunk, options)
 {
-    if (!(options$engine %in% c("R", "S"))) return(object)
+    ## Just return the object if the chunk is omitted, or for
+    ## engines other than R and S.
+    if (!is.null(options$tangle))
+        options$ignore.on.tangle <- !options$tangle
+    if (options$ignore.on.tangle || options$ignore ||
+        !(options$engine %in% c("R", "S")))
+        return(object)
 
     chunkprefix <- RweaveChunkPrefix(options)
 
@@ -727,20 +760,34 @@ RtangleRuncode <- function(object, chunk, options)
         if(!grepl(.SweaveValidFilenameRegexp, chunkprefix))
             warning("file stem ", sQuote(chunkprefix), " is not portable",
                     call. = FALSE, domain = NA)
-        outfile <- paste(chunkprefix, options$engine, sep = ".")
+        ## Use the engine as default extension.
+        if (isTRUE(options$extension))
+            options$extension <- options$engine
+        ## Use an extension for the filename unless the option
+        ## 'extension' is FALSE.
+        ext <- if (!isFALSE(options$extension)) paste0(".", options$extension)
+        outfile <- paste0(chunkprefix, ext)
         if (!object$quiet) cat(options$chunknr, ":", outfile,"\n")
-        ## [x][[1L]] avoids partial matching of x
-        chunkout <- object$chunkout[chunkprefix][[1L]]
+        ## Use 'outfile' (instead of 'chunkprefix') for the name of
+        ## the list element to avoid clashes in the case where chunks
+        ## share the same label, but with different extensions.
+        ## [x][[1L]] avoids partial matching of x.
+        chunkout <- object$chunkout[outfile][[1L]]
         if (is.null(chunkout)) {
             chunkout <- file(outfile, "w")
             if (!is.null(options$label))
-                object$chunkout[[chunkprefix]] <- chunkout
+                object$chunkout[[outfile]] <- chunkout # see above
         }
     } else
         chunkout <- object$output
 
     showOut <- options$eval || !object$drop.evalFALSE
     if(showOut) {
+        ## First print the chunk separator if the current connection
+        ## object is not used for the first time (it has an attribute)
+        ## and option 'chunk.sep' is not FALSE.
+        if (!is.null(attr(chunkout, "not.first")) && !isFALSE(options$chunk.sep))
+            cat(options$chunk.sep, file = chunkout)
         annotate <- object$annotate
         if (is.logical(annotate) && annotate) {
             cat("###################################################\n",
@@ -764,7 +811,15 @@ RtangleRuncode <- function(object, chunk, options)
         if (!options$show.line.nos) # drop "#line ...." lines
             chunk <- grep("^#line ", chunk, value = TRUE, invert = TRUE)
         if (!options$eval) chunk <- paste("##", chunk)
-        cat(chunk, "\n", file = chunkout, sep = "\n")
+        cat(chunk, file = chunkout, sep = "\n")
+        ## Add an attribute to the connection object (the value is not
+        ## important) to indicate text was written to it at least once.
+        if (options$split)
+        {
+            if (!is.null(options$label))
+                attr(object$chunkout[[outfile]], "not.first") <- TRUE
+        }
+        else attr(object$output, "not.first") <- TRUE
     }
     if (is.null(options$label) && options$split) close(chunkout)
     object
@@ -776,12 +831,11 @@ RtangleWritedoc <- function(object, chunk)
         opts <- sub(paste0(".*", object$syntax$docopt, ".*"),
                     "\\1", chunk[pos[1L]])
         object$options <- SweaveParseOptions(opts, object$options,
-                                             RweaveLatexOptions)
+                                             RtangleOptions)
         chunk[pos[1L]] <- sub(object$syntax$docopt, "", chunk[pos[1L]])
     }
     object
 }
-
 
 RtangleFinish <- function(object, error = FALSE)
 {
@@ -792,3 +846,54 @@ RtangleFinish <- function(object, error = FALSE)
     if (length(object$chunkout))
         for (con in object$chunkout) close(con)
 }
+
+## Check function for the Rtangle driver. Since code chunks are not
+## evaluated on tangling, options may *not* take their values from
+## objects. An invalid value for an option is replaced by its default
+## value, with a warning.
+RtangleOptions <- function(options)
+{
+    defaults <- options[[".defaults"]]
+
+    ## convert a character string to logical
+    c2l <- function(x)
+        if (is.logical(x))
+            x
+        else if (is.null(x))
+            FALSE
+        else
+            suppressWarnings(as.logical(x))
+
+    ## character: largely for safety, but 'label' matters as there
+    ## is no default (and someone uses "F")
+    CHAROPTS <- c("prefix.string", "engine", "label")
+
+    ## character or logical
+    CHARLOGICOPTS <- c("chunk.sep", "extension")
+
+    for (opt in names(options)) {
+        if(opt == ".defaults") next
+        oldval <- options[[opt]]
+        defval <- defaults[[opt]]
+        if(opt %in% CHARLOGICOPTS) {
+            if(!is.logical(oldval) && !is.na(newval <- c2l(oldval)))
+                options[[opt]] <- newval
+        } else if(opt %in% CHAROPTS || is.character(defval)) {
+        } else if(is.logical(defval)) {
+            options[[opt]] <- c2l(oldval)
+        } else if(!is.na(newval <- c2l(oldval)))
+            options[[opt]] <- newval
+        if (is.na(options[[opt]]) && !is.null(defval)) {
+            options[[opt]] <- defval
+            warning(gettextf("invalid value for %s : %s", sQuote(opt), oldval),
+                    "; ",
+                    gettextf("using default value %s", defval),
+                    domain = NA)
+        }
+    }
+
+    if (!is.null(options$chunk.sep) && isTRUE(options$chunk.sep))
+        options$chunk.sep <- defaults$chunk.sep
+    options
+}
+

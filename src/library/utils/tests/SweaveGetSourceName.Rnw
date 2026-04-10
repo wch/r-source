@@ -1,0 +1,10 @@
+\documentclass{article}
+\usepackage{Sweave}
+
+\begin{document}
+
+<<>>=
+message("~~~source: ", SweaveGetSourceName())
+@
+
+\end{document}

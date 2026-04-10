@@ -1,0 +1,15 @@
+This file contains code chunks that would be deemed unnecessary to
+keep in the tangled script. They should be individually ignored using
+chunk options.
+
+<<ignore.on.tangle=TRUE>>=
+x <- 42
+@
+
+<<tangle=FALSE>>=
+x + 2
+@
+
+<<ignore=TRUE>>=
+y <- x + 2
+@

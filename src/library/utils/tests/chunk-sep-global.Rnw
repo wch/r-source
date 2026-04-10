@@ -1,0 +1,15 @@
+Tangling this file will output a script with the header, the chunk
+annotations, and three expressions. The number of blank lines,
+including the one from the header, should be 2 x nchar(chunk.sep) + 1.
+
+<<>>=
+x <- 42
+@
+
+<<>>=
+x + 2
+@
+
+<<>>=
+y <- x + 2
+@

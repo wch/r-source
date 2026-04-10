@@ -1,0 +1,33 @@
+\documentclass[a4paper]{article}
+
+\usepackage{listings}
+
+\title{Extraction of the source name}
+\author{Vincent Goulet and R Core Team}
+
+\begin{document}
+
+\maketitle
+
+This document illustrates usage of the function
+\texttt{SweaveGetSourceName}. The function may simply be used to
+print the name of the file being processed by \texttt{Sweave}.
+<<>>=
+SweaveGetSourceName()
+@
+
+The anticipated main use of the function is to launch
+\texttt{Stangle} inside \texttt{Sweave} without having to hard
+code the name of the file in the \texttt{Stangle} call.
+<<>>=
+FILE <- SweaveGetSourceName()
+Stangle(FILE, quiet = TRUE)
+@
+
+This can be used to build documents that rely on artifacts of the
+\texttt{Stangle} call. For example, we can insert the tangled
+script of this file into the document:
+\lstinputlisting[basicstyle=\small\ttfamily,firstline=3]{%
+  \Sexpr{basename(sub("Rnw$", "R", FILE))}}
+
+\end{document}

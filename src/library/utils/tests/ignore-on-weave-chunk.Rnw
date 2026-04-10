@@ -1,0 +1,14 @@
+This file contains code chunks with invalid or unparsable R code that
+should be ignored on weaving using chunk options.
+
+<<ignore.on.weave=TRUE>>=
+does.not.exist
+@
+
+<<weave=FALSE>>=
+2 a
+@
+
+<<ignore=TRUE>>=
+TRUE <- 2
+@

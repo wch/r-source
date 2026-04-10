@@ -1,0 +1,21 @@
+This file contains code chunks with logical and numerical options that
+take their value from variables defined in previous chunks.
+
+<<a>>=
+doit <- TRUE
+@
+
+<<b, eval=doit>>=
+wd <- 4
+ht <- 5
+@
+
+<<c, fig=TRUE, width=wd, height=ht>>=
+plot(1)
+@
+
+The following chunk verifies that unknown options can use any value
+without error.
+<<foo=bar>>=
+x <- 42
+@
