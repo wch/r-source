@@ -3871,10 +3871,13 @@ function(aar, strict = FALSE)
     if(is.na(aar)) return(out)
     ## <FIXME>
     ## Perhaps better to actually capture warnings?
-    aar <- suppressWarnings(tryCatch(utils:::.read_authors_at_R_field(aar),
-                                     error = identity))
+    aar <-
+        suppressWarnings(tryCatch(utils:::.read_authors_at_R_field(aar,
+                                                                   TRUE),
+                                  error = identity))
+    ## </FIXME>
     if(inherits(aar, "error")) {
-        out$bad_authors_at_R_field <- conditionMessage(aar)
+        out$bad_authors_at_R_field <- trimws(conditionMessage(aar))
     } else {
         ## Check whether we can expand to something non-empty.
         s <- tryCatch(utils:::.format_authors_at_R_field_for_author(aar),

@@ -1768,17 +1768,33 @@ function(x, package = NULL)
 }
 
 .read_authors_at_R_field <-
-function(x)
+function(x, strict = FALSE)
 {
-    out <- if((Encoding(x) == "UTF-8") && !l10n_info()$"UTF-8") {
+    exprs <- if((Encoding(x) == "UTF-8") && !l10n_info()$"UTF-8") {
         con <- file()
         on.exit(close(con))
         writeLines(x, con, useBytes = TRUE)
-        eval(parse(con, encoding = "UTF-8"))
+        parse(con, encoding = "UTF-8")
     } else {
-        eval(str2expression(x))
+        str2expression(x)
     }
 
+    oknms <- c("person", "c", "list", "paste", "paste0", "(")
+    calls <- tools:::.find_calls(exprs, recursive = TRUE)
+    calls <- calls[tools:::.call_names(calls) %notin% oknms]
+    if(length(calls)) {
+        msg <- c("Found the following possibly unsafe calls:",
+                 sprintf("  %s", vapply(calls, deparse1, "")),
+                 sprintf("Please only use calls to %s.",
+                         paste(sQuote(oknms[-length(oknms)]),
+                               collapse = ", ")))
+        if(strict)
+            stop(paste0("  ", msg, collapse = "\n"))
+        else
+            message(paste0(msg, collapse = "\n"))
+    }
+
+    out <- eval(exprs)
     ## Let's by nice ...
     ## Alternatively, we could throw an error.
     if(!inherits(out, "person"))
