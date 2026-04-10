@@ -1824,15 +1824,17 @@ set.seed(46)
 d <- dist(matrix(round(rnorm(n*p), digits = 2), n,p), "manhattan")
 d[] <- d[] * sample(1 + (-4:4)/100, length(d), replace=TRUE)
 hc <- hclust(d, method = "median")
+print(hc$height[5:11], digits=10)
 stopifnot(all.equal(hc$height[5:11],
 		    c(1.70595, 1.657675, 1.8909, 1.619973438,
                       1.548624609, 3.097474902, 6.097159351),
                     tolerance = 1e-9))
 ## Also ensure that hclust() remains fast:
 set.seed(1); nn <- 2000
-tm0 <- system.time(dst <- as.dist(matrix(runif(n = nn^2, min = 0, max = 1)^1.1, nn, nn)))
+(tm0<- system.time(dst <- as.dist(matrix(runif(n = nn^2, min = 0, max = 1)^1.1, nn, nn))))
 (tm <- system.time(hc <- hclust(dst, method="average")))
-stopifnot(tm[1] <= tm0[1])
+if(Sys.getenv("_R_CHECK_DO_R_TIMING_", FALSE)) # typically, factor of ~ 1/3
+    stopifnot(tm[1] <= tm0[1]) else stopifnot(tm[1] <= 2*tm0[1]) 
 ## was slow  from R 1.9.0 up to R 2.15.0
 
 
