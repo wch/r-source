@@ -18,7 +18,7 @@
  *  https://www.R-project.org/Licenses/
  */
 
-/* Internal header, not installed, usied in some standard packages */
+/* Internal header, not installed, used in some base packages */
 
 #ifndef DEFN_H_
 #define DEFN_H_
