@@ -55,6 +55,9 @@
       (GCC 16 has also switched to C++20 as its default.)
 
       Packages can request C++17 if essential.
+
+      \item The Sweave driver \code{Rtangle} no longer puts empty lines
+      at the end of tangled scripts.
     }
   }
 
@@ -339,6 +342,55 @@
       \item \code{hatvalues()} now has a method for \code{nls} (nonlinear
       model) results, prompted by the proposal of \I{Patrice Kiener} and
       \I{Heather Turner} in \PR{18897}.
+
+      \item The Sweave driver \code{RweaveLatex} now allows the value of
+      logical and numerical chunk options (only) to be the name of an
+      object defined in earlier, evaluated code chunks. This is useful
+      to pass computed values to options. For options set this way for
+      weaving purposes, the \code{Rtangle} driver rather uses their
+      default values, with a warning.
+      By \I{Vincent Goulet}.
+      
+      \item The Sweave driver \code{RweaveLatex} gains an option to
+      include unparsable R code or arbitrary text in code chunks. Chunks
+      marked as \code{ignore.on.weave = TRUE} are completely ignored on
+      weaving, i.e., not even parsed. The chunks however remain written
+      out verbatim on tangling.
+
+      Similarly, the driver \code{Rtangle} gains an option to control
+      the extraction of code chunks. Chunks marked as
+      \code{ignore.on.tangle=TRUE} are processed as usual on weaving,
+      but left out of the tangled scripts (or thrown away when
+      \code{split=TRUE}).
+
+      The drivers also support the shorter aliases \code{weave} for
+      \code{!ignore.on.weave}, and \code{tangle} for
+      \code{!ignore.on.tangle}. A further option \code{ignore},
+      available for both drivers, sets \code{ignore.on.weave} and
+      \code{ignore.on.tangle} at once.
+
+      By \I{Vincent Goulet}.      
+
+      \item The Sweave driver \code{Rtangle} now provides an option
+      \code{chunk.sep} to control the separator between code chunks in
+      tangled scripts (with an unchanged default of \code{\\n\\n}).
+      Using \code{check.sep=FALSE} omits the separator (between two
+      chunks when used as a chunk option).
+      By \I{Vincent Goulet}.
+
+      \item The Sweave driver \code{Rtangle} now provides an option
+      \code{extension} to specify the extension, without the leading
+      dot, for the file name of a tangled code chunk when splitting is
+      selected (the option has no effect with \code{split=FALSE}). If
+      \code{TRUE}, the default extension of \code{Rtangle} (usually
+      \file{.R}) is used; if \code{FALSE}, no extension is added to the
+      file name.
+      By \I{Vincent Goulet}.
+
+      \item New function \code{SweaveGetSourceName} in package
+      \pkg{utils} to obtain the name of the file being woven by an
+      \code{Sweave} process launched from the command line.
+      By \I{Vincent Goulet}.
     }
   }
 
