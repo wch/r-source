@@ -1,0 +1,52 @@
+\documentclass[a4paper]{article}
+
+\title{Finer control of weaving and tangling}
+\author{Vincent Goulet and R Core Team}
+
+\begin{document}
+
+\maketitle
+
+The following code chunk contains a deliberate error, say for
+didactic purposes. Using the option \texttt{eval=FALSE} avoids an
+error with Sweave, but the chunk is commented out by Stangle.
+<<main, eval=FALSE>>=
+2 + does.not.exist
+@
+
+With \texttt{ignore.on.weave=TRUE} (or \texttt{weave=FALSE}), the
+following chunk is neither parsed nor evaluated by Sweave (hence
+missing from the PDF file). Therefore, the chunk may contain
+unparsable R code. However, the code is extracted as usual by
+Stangle, without being commented out.
+<<main, ignore.on.weave=TRUE>>=
+2 a
+@
+
+We remove the chunk separator before this next chunk. It will
+appear immediately after the previous one in the tangled script.
+<<main, chunk.sep=FALSE>>=
+runif(5)
+@
+
+Pairing \texttt{ignore.on.weave=TRUE} with the option
+\texttt{extension} allows to keep, in a single source file, R
+code as well as text or code in other programming languages that
+should not be evaluated by Sweave.
+<<hello, extension=sh, prefix=FALSE, ignore.on.weave=TRUE>>=
+#!/bin/sh
+echo "Hello, World!"
+exit 0
+@
+<<README, extension=FALSE, prefix=FALSE, ignore.on.weave=TRUE>>=
+Hello, World!
+@
+
+Finally, a chunk processed normally by Sweave, but ignored by
+Stangle. This is convenient with \texttt{split = TRUE} to avoid
+littering the output directory with unimportant scripts.
+<<ignore.on.tangle=TRUE>>=
+x <- rnorm(10)
+@
+
+\end{document}

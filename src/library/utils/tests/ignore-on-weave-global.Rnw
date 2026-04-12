@@ -1,0 +1,10 @@
+This file contains code chunks with invalid or unparsable R code. They
+should be ignored using global options in the Sweave call.
+
+<<>>=
+does.not.exist
+@
+
+<<>>=
+2 a
+@

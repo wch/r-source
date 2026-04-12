@@ -1,0 +1,15 @@
+This file contains code chunks that would be deemed unnecessary to
+keep in the tangled script. They should all be ignored using global
+options in the Stangle call.
+
+<<>>=
+x <- 42
+@
+
+<<>>=
+x + 2
+@
+
+<<>>=
+y <- x + 2
+@

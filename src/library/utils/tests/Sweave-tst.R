@@ -86,3 +86,40 @@ stopifnot(exprs = {
     tools::Rcmd(c("Sweave", "--help")) == 0L
     tools::Rcmd(c("Sweave", "--pdf", testfile)) == 0L
 })
+
+### ------------------------------------ 6 ----------------------------------
+## invalid or unparsable R code in code chunks ignored with global options
+Sweave("ignore-on-weave-global.Rnw", ignore.on.weave = TRUE)
+Sweave("ignore-on-weave-global.Rnw", ignore = TRUE)
+Sweave("ignore-on-weave-global.Rnw", weave = FALSE)
+
+### ------------------------------------ 7 ----------------------------------
+## invalid or unparsable R code in code chunks ignored with chunk options
+Sweave("ignore-on-weave-chunk.Rnw")
+
+### ------------------------------------ 8 ----------------------------------
+## logical and numeric chunk options may take their values from objects
+## set in previous chunks
+t8 <- SweaveTeX("objs-in-opts.Rnw")
+
+inp <- latexEnv(t8, "Sinput")
+out <- latexEnv(t8, "Soutput")
+## This may have to be updated when the *.Rnw changes:
+stopifnot(exprs = {
+    length(inp) == 4
+    length(out) == 0
+    any(grepl("\\includegraphics", t8))
+})
+
+## This may have to be updated when the *.Rnw changes:
+## check the size of the graphic using Ghostscript
+## (https://stackoverflow.com/a/52644056)
+if (FALSE)
+{
+    psize <- system2("gs", c("-dNOSAFER", "-dQUIET",
+                             paste0("-sFileName=", "vars-in-opts-c.pdf"),
+                             "-c", "'FileName (r) file runpdfbegin 1 1 pdfpagecount {pdfgetpage /MediaBox get {=print ( ) print} forall (\n) print} for quit'"),
+                     stdout = TRUE)
+    psize <- as.numeric(strsplit(psize, " ", fixed = TRUE)[[1L]][c(3, 4)])
+    stopifnot(psize/72 == c(4, 5))
+}

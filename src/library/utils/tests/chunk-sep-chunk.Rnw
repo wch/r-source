@@ -1,0 +1,15 @@
+Tangling this file with \texttt{annotate = FALSE} will output a script
+with the header and three expressions, the second immediately after
+the first.
+
+<<>>=
+x <- 42
+@
+
+<<chunk.sep=FALSE>>=
+x + 2
+@
+
+<<>>=
+y <- x + 2
+@

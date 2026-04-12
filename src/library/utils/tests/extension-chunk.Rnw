@@ -1,0 +1,10 @@
+Tangling this file with 'split = TRUE' will output the scripts
+'<prefix>-foo.sh' and '<prefix>-bar'.
+
+<<foo, extension=sh>>=
+echo "Hello, World!"
+@
+
+<<bar, extension=FALSE>>=
+Simple text file
+@
