@@ -373,7 +373,6 @@ LibExtern SEXP  R_EmptyEnv;	    /* An empty environment at the root of the
 				    	environment tree */
 LibExtern SEXP  R_BaseEnv;	    /* The base environment; formerly R_NilValue */
 LibExtern SEXP	R_BaseNamespace;    /* The (fake) namespace for base */
-LibExtern SEXP	R_NamespaceRegistry;/* Registry for registered namespaces */
 
 LibExtern SEXP	R_Srcref;           /* Current srcref, for debuggers */
 
@@ -381,9 +380,6 @@ LibExtern SEXP	R_Srcref;           /* Current srcref, for debuggers */
 LibExtern SEXP	R_NilValue;	    /* The nil object */
 LibExtern SEXP	R_UnboundValue;	    /* Unbound marker */
 LibExtern SEXP	R_MissingArg;	    /* Missing argument marker */
-LibExtern SEXP	R_InBCInterpreter;  /* To be found in BC interp. state
-				       (marker) */
-LibExtern SEXP	R_CurrentExpression; /* Use current expression (marker) */
 #ifdef __MAIN__
 attribute_hidden
 #else
@@ -1252,6 +1248,14 @@ int (IS_SCALAR)(SEXP x, int type);
 # define ENABLE_LEGACY_NONAPI
 #endif
 #ifdef ENABLE_LEGACY_NONAPI
+
+# ifndef __MAIN__
+extern SEXP R_NamespaceRegistry; /* Registry for registered namespaces */
+extern SEXP R_InBCInterpreter;   /* To be found in BC interp. state
+				    (marker) */
+extern SEXP R_CurrentExpression; /* Use current expression (marker) */
+# endif
+
 SEXP (ATTRIB)(SEXP x);
 void SET_ATTRIB(SEXP x, SEXP v);
 SEXP Rf_findVar(SEXP, SEXP);
