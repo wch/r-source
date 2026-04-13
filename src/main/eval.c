@@ -9420,3 +9420,96 @@ attribute_hidden SEXP do_declare(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     return R_NilValue;
 }
+
+/**
+   Experimental support for S7 and the like
+**/
+
+#define CHECK_TYPE(var, type) do {				\
+    if (TYPEOF(var) != (type))					\
+	error(_("'%s' is not of type %s"), #var, #type);	\
+    } while (0)
+#define CHECK_TYPE_OR_NULL(var, type)			\
+    if ((var) != R_NilValue) CHECK_TYPE(var, type)
+
+// this probably should go in envir.c
+static SEXP DCONS(SEXP x, SEXP y, SEXP sym)
+{
+    SEXP val = CONS(x, y);
+    SET_TYPEOF(val, DOTSXP);
+    SET_TAG(val, sym);
+    return val;
+}
+
+static SEXP lastDot(SEXP dots)
+{
+    while (CDR(dots) != R_NilValue)
+	dots = CDR(dots);
+    return dots;
+}
+
+/* This corresponds to the R function
+
+unmatchArgs <- function(forms, env) {
+    args <- lapply(names(forms), as.name)
+    call <- as.call(c(function(...) get("..."), args))
+    assign("...", eval(call, env), env)
+    invisible(NULL)
+}
+
+except:
+
+- if reuses the ... list, if there is one;
+- it re-promises unevaluated arguments
+- it directly uses evaluated ones
+
+A shallow duplicate for an existing ... list could aldo be used, and
+would correspond to what the R-level implementation would do.
+
+This needs a review to make sure it is doing the right thing with
+respect to reference counts. */
+
+void R_UnmatchArgs(SEXP forms, SEXP env)
+{
+    CHECK_TYPE_OR_NULL(forms, LISTSXP);
+    CHECK_TYPE(env, ENVSXP);
+
+    SEXP dots = R_NilValue;
+    SEXP last = R_NilValue;
+
+    while (forms != R_NilValue) {
+	SEXP sym = TAG(forms);
+	SEXP val = findVarInFrame(env, sym);
+	if (sym == R_DotsSymbol) {
+	    if (val == R_UnboundValue)
+		error(_("'...' used in an incorrect context"));
+	    else if (TYPEOF(val) == DOTSXP) {
+		if (last == R_NilValue)
+		    dots = PROTECT(val);
+		else
+		    SETCDR(last, val);
+		last = lastDot(val);
+	    }
+	}
+	else {
+	    if (TYPEOF(val) == PROMSXP)
+		val = mkPROMISE(val, R_BaseEnv);
+	    else if (val != R_MissingArg && val != R_UnboundValue)
+		val = R_mkEVPROMISE(sym, val);
+	    if (last == R_NilValue) {
+		dots = PROTECT(DCONS(val, R_NilValue, sym));
+		last = dots;
+	    }
+	    else {
+		SETCDR(last, DCONS(val, R_NilValue, sym));
+		last = CDR(last);
+	    }
+	}
+	forms = CDR(forms);
+	R_removeVarFromFrame(sym, env);
+    }
+    if (dots != R_NilValue) {
+	defineVar(R_DotsSymbol, dots, env);
+	UNPROTECT(1); /* dots */
+    }
+}
