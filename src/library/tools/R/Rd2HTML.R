@@ -597,7 +597,11 @@ Rd2HTML <-
 	    return("</p>\n")
 	}
 	## remove indentation (for cleaner/smaller output)
-	if (utils:::getSrcByte(x) == 1L) x <- psub("^\\s+", "", x)
+	if (utils:::getSrcByte(x) == 1L) {
+	    x <- psub("^[[:blank:]]+", "", x)
+	    ## strip blank line
+	    skipNewline <<- linestart # not necessarily for \Sexpr-based Rd
+	}
 	if (isFALSE(inPara) && !isBlankRd(x)) {
 	    x <- paste0("<p>", x)
 	    inPara <<- TRUE
