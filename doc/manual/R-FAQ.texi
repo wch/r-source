@@ -73,7 +73,7 @@ Frequently Asked Questions on R  @*
 @c @html
 @c <h2>Frequently Asked Questions on R</h2>
 @c <h3 style="text-align: center;">Kurt Hornik and the R Core Team</h3>
-@c <hr/>
+@c <hr>
 @c @end html
 @c @end ifhtml
 
