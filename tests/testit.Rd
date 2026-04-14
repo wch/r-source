@@ -68,6 +68,9 @@ foo(\var{x}, \var{y}, ...)
   Georgi Boshnakov's example of generated paragraphs:
   \Sexpr[results=rd]{paste(letters[1:3], collapse="\n\n")}
 
+\Sexpr[results=rd]{"\\\\emph{one}\ntwo"}% first-byte srcref
+  \Sexpr[results=rd]{"\\\\emph{one}\ntwo"}% with indentation
+
   \Sexpr[results=verbatim]{"a
     b\n    c"}
 
