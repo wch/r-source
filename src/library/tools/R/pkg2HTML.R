@@ -1,6 +1,6 @@
 #  File src/library/tools/R/pkg2HTML.R
 #
-#  Copyright (C) 2023-2024 The R Core Team
+#  Copyright (C) 2023-2026 The R Core Team
 #  Part of the R package, https://www.R-project.org
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -200,7 +200,8 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
     writeHTML('<nav class="package" aria-label="Topic Navigation">',
               '<div class="dropdown-menu">',
               sprintf('<img class="toplogo" src="%s" alt="[logo]">',
-                      if (src.type == "installed") staticLogoPath(pkgname, relative = FALSE)
+                      if (src.type == "installed")
+                          staticLogoPath(pkgname, lib.loc = lib.loc, relative = FALSE)
                       else staticLogoPath(pkgdir, relative = FALSE, dir = TRUE)),
               '<h2>Contents</h2>',
               '<ul class="menu">',
