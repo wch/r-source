@@ -1089,8 +1089,11 @@ function(pkg, con, vignetteIndex = NULL)
 		  '<col style="width: 24%;">',
 		  '<col style="width: 50%;">',
 		  '<col style="width: 24%;">',
-                  paste0('<tr><td></td><td><span class="samp">',
-                         iconv(urls, "", "UTF-8"), "</span></td></tr>"),
+                  paste0('<tr><td></td>',
+                         '<td><span class="samp">',
+                         iconv(urls, "", "UTF-8"),
+                         "</span></td>",
+                         "<td></td></tr>"),
                   "</table>")
     }
     html <- c(html, "</div></body></html>")

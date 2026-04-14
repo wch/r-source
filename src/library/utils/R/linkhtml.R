@@ -117,7 +117,8 @@ make.packages.html <-
         cat('<table style="width: 100%;">\n', file = out)
         for (a in nm) {
             if(use_alpha)
-                cat("<tr id=\"pkgs-", a, "\"> <td></td>\n", sep = "", file = out)
+                cat("<tr id=\"pkgs-", a, "\"> <td></td> <td></td> </tr>\n",
+                    file = out, sep = "")
             for (i in pg[first == a]) {
                 title <- packageDescription(i, lib.loc = lib, fields = "Title",
                                             encoding = "UTF-8")
