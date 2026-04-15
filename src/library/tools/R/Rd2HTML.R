@@ -401,11 +401,11 @@ createRedirects <- function(file, Rdobj)
 ### Helper function to find a suitable package logo (logo.png, logo.svg); otherwise return R logo
 
 ## For an installed package, we can use system.file(). This is what is
-## needed for dynamic help. To interpret 'package' as a source
-## directory, specify 'dir = TRUE'
+## needed for dynamic help but also pkg2HTML(package).
+## To interpret 'package' as a source directory, specify 'dir = TRUE'.
 
-
-staticLogoPath <- function(package, relative = FALSE, Rhome = "../../..", dir = FALSE) {
+staticLogoPath <- function(package, lib.loc = NULL,
+                           relative = FALSE, Rhome = "../../..", dir = FALSE) {
     ## This may be called with package="" (e.g., for standalone Rd files)
     if (!nzchar(package)) file <- R.home("doc/html/Rlogo.svg")
     else if (dir) {
@@ -413,8 +413,10 @@ staticLogoPath <- function(package, relative = FALSE, Rhome = "../../..", dir = 
         if (!file.exists(file)) file <- file.path(package, "man", "figures", "logo.svg")
         if (!file.exists(file)) file <- R.home("doc/html/Rlogo.svg")
     } else {
-        file <- system.file("help", "figures", "logo.png", package = package)
-        if (!nzchar(file)) file <- system.file("help", "figures", "logo.svg", package = package)
+        file <- system.file("help", "figures", "logo.png",
+                            package = package, lib.loc = lib.loc)
+        if (!nzchar(file)) file <- system.file("help", "figures", "logo.svg",
+                                               package = package, lib.loc = lib.loc)
         if (!nzchar(file)) file <- R.home("doc/html/Rlogo.svg")
     }
     if (relative) {
