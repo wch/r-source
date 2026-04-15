@@ -1244,9 +1244,6 @@ int (IS_SCALAR)(SEXP x, int type);
 #define error_return(msg)	{ Rf_error(msg);	   return R_NilValue; }
 #define errorcall_return(cl,msg){ Rf_errorcall(cl, msg);   return R_NilValue; }
 
-#ifndef NO_LEGACY_NONAPI
-# define ENABLE_LEGACY_NONAPI
-#endif
 #ifdef ENABLE_LEGACY_NONAPI
 # define ENABLE_LEGACY_NONAPI_FUNS
 # define ENABLE_LEGACY_NONAPI_VARS
