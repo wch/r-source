@@ -1255,9 +1255,6 @@ int (IS_SCALAR)(SEXP x, int type);
 #ifdef ENABLE_LEGACY_NONAPI_VARS
 # ifndef __MAIN__
 extern SEXP R_NamespaceRegistry; /* Registry for registered namespaces */
-extern SEXP R_InBCInterpreter;   /* To be found in BC interp. state
-				    (marker) */
-extern SEXP R_CurrentExpression; /* Use current expression (marker) */
 # endif
 #endif
 
