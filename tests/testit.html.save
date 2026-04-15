@@ -109,6 +109,11 @@ a
 </p>
 <p>c
 </p>
+<p><em>one</em>
+two
+<em>one</em>
+two
+</p>
 <p><code style="white-space: pre;">&#8288;
 [1] "a\n    b\n    c"
 &#8288;</code>
