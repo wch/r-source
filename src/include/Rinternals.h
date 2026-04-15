@@ -1248,14 +1248,20 @@ int (IS_SCALAR)(SEXP x, int type);
 # define ENABLE_LEGACY_NONAPI
 #endif
 #ifdef ENABLE_LEGACY_NONAPI
+# define ENABLE_LEGACY_NONAPI_FUNS
+# define ENABLE_LEGACY_NONAPI_VARS
+#endif
 
+#ifdef ENABLE_LEGACY_NONAPI_VARS
 # ifndef __MAIN__
 extern SEXP R_NamespaceRegistry; /* Registry for registered namespaces */
 extern SEXP R_InBCInterpreter;   /* To be found in BC interp. state
 				    (marker) */
 extern SEXP R_CurrentExpression; /* Use current expression (marker) */
 # endif
+#endif
 
+#ifdef ENABLE_LEGACY_NONAPI_FUNS
 SEXP (ATTRIB)(SEXP x);
 void SET_ATTRIB(SEXP x, SEXP v);
 SEXP Rf_findVar(SEXP, SEXP);
