@@ -1562,6 +1562,7 @@ LibExtern SEXP	R_UnboundValue;	    /* Unbound marker */
 LibExtern SEXP	R_InBCInterpreter;  /* To be found in BC interp. state
 				       (marker) */
 LibExtern SEXP	R_CurrentExpression; /* Use current expression (marker) */
+LibExtern SEXP	R_NamespaceRegistry; /* Registry for registered namespaces */
 
 /* R Home Directory */
 LibExtern char *R_Home;		    /* Root of the R tree */

@@ -373,7 +373,6 @@ LibExtern SEXP  R_EmptyEnv;	    /* An empty environment at the root of the
 				    	environment tree */
 LibExtern SEXP  R_BaseEnv;	    /* The base environment; formerly R_NilValue */
 LibExtern SEXP	R_BaseNamespace;    /* The (fake) namespace for base */
-LibExtern SEXP	R_NamespaceRegistry;/* Registry for registered namespaces */
 
 LibExtern SEXP	R_Srcref;           /* Current srcref, for debuggers */
 
@@ -381,9 +380,6 @@ LibExtern SEXP	R_Srcref;           /* Current srcref, for debuggers */
 LibExtern SEXP	R_NilValue;	    /* The nil object */
 LibExtern SEXP	R_UnboundValue;	    /* Unbound marker */
 LibExtern SEXP	R_MissingArg;	    /* Missing argument marker */
-LibExtern SEXP	R_InBCInterpreter;  /* To be found in BC interp. state
-				       (marker) */
-LibExtern SEXP	R_CurrentExpression; /* Use current expression (marker) */
 #ifdef __MAIN__
 attribute_hidden
 #else
@@ -1248,22 +1244,27 @@ int (IS_SCALAR)(SEXP x, int type);
 #define error_return(msg)	{ Rf_error(msg);	   return R_NilValue; }
 #define errorcall_return(cl,msg){ Rf_errorcall(cl, msg);   return R_NilValue; }
 
-#define ENABLE_LEGACY_NONAPI
+#ifndef NO_LEGACY_NONAPI
+# define ENABLE_LEGACY_NONAPI
+#endif
 #ifdef ENABLE_LEGACY_NONAPI
+# define ENABLE_LEGACY_NONAPI_FUNS
+# define ENABLE_LEGACY_NONAPI_VARS
+#endif
+
+#ifdef ENABLE_LEGACY_NONAPI_VARS
+# ifndef __MAIN__
+extern SEXP R_NamespaceRegistry; /* Registry for registered namespaces */
+# endif
+#endif
+
+#ifdef ENABLE_LEGACY_NONAPI_FUNS
 SEXP (ATTRIB)(SEXP x);
 void SET_ATTRIB(SEXP x, SEXP v);
-SEXP (FORMALS)(SEXP x);
+SEXP Rf_findVar(SEXP, SEXP);
+SEXP Rf_findVarInFrame(SEXP, SEXP);
 
-// used by dplyr magrittr quotedargs
-void SET_PRENV(SEXP x, SEXP v); 
-void SET_PRVALUE(SEXP x, SEXP v);
-void SET_PRCODE(SEXP x, SEXP v); 
-
-/* Promise Access Functions */
-SEXP (PRCODE)(SEXP x);
 SEXP (PRENV)(SEXP x);
-SEXP (PRVALUE)(SEXP x);
-//int  (PRSEEN)(SEXP x);
 
 SEXP Rf_allocSExp(SEXPTYPE);
 SEXP R_PromiseExpr(SEXP);
@@ -1271,29 +1272,18 @@ SEXP R_PromiseExpr(SEXP);
 #define PREXPR(e) R_PromiseExpr(e)
 #endif
 
-SEXP Rf_findVar(SEXP, SEXP);
-SEXP Rf_findVarInFrame(SEXP, SEXP);
-SEXP Rf_findVarInFrame3(SEXP, SEXP, Rboolean); // envir.c
-
 void (SET_OBJECT)(SEXP x, int v); // used by Rcpp (not?), Matrix and more
 
 // temporatily add these declarations and unhide until until BioC catches up
-//int  (NAMED)(SEXP x);      // used in Biostrings
-//void (SET_NAMED)(SEXP x, int v);      // used in Biostrings
 int (IS_S4_OBJECT)(SEXP x); // used in chopsticks, SharedObject
 void (SET_S4_OBJECT)(SEXP x); //used in chopsticks, SharedObject
 void (UNSET_S4_OBJECT)(SEXP x); // used in SharedObject
 SEXP R_data_class(SEXP , Rboolean); // used in chopsticks
 int  (OBJECT)(SEXP x);  // used in dang via tidyCpp, used in SharedObject
-void (SET_TYPEOF)(SEXP x, int v); // used in HilbertVisGUI
 int  (ENVFLAGS)(SEXP x);  // used in GOfuncR
 void (SET_ENVFLAGS)(SEXP x, int v);  // used in GOfuncR
-//int  (LEVELS)(SEXP x);  // used in dang via tidyCpp
-//int  (SETLEVELS)(SEXP x, int v);  // used in dang via tidyCpp
-//SEXP R_lsInternal(SEXP, Rboolean);  // used in rJava in a separate .so file
 SEXP *(STRING_PTR)(SEXP x); // used in matter
-//void *(EXTPTR_PTR)(SEXP);  // used in rJava in a separate .so file
-//SEXP (ENCLOS)(SEXP x);  // used in rJava in a separate .so file
+
 #if ! (defined(CALLED_FROM_DEFN_H) && !defined(__MAIN__) && (defined(COMPILING_R) || ( __GNUC__ && !defined(__INTEL_COMPILER) )) && (defined(COMPILING_R) || !defined(NO_RINLINEDFUNS)))
 void *(DATAPTR)(SEXP x); // used in COMPASS matter SharedObject
 #endif
