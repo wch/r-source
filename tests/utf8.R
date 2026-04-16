@@ -11,7 +11,9 @@ stopifnot(is.na(y[sr]))
 stopifnot(!is.na(y[-sr]))
 ## too large values: originally handled by UTF-8, but not in RFC3629
 ## R >= 3.4.3 conforms to RFC3629
-stopifnot(is.na(intToUtf8(c(0x200000, 0x10FFFF + 1:10))))
+naUtf8 <- function(...) is.na(intToUtf8(...))
+stopifnot(naUtf8(c(0x200000, 0x10FFFF + 1:10)),
+          naUtf8(-1L), naUtf8(-5:-1), naUtf8(-1:-4, multiple=TRUE))
 
 ## next command is quite slow.
 xx <- sapply(y, function(x) tryCatch(utf8ToInt(x),

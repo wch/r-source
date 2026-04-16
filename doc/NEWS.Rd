@@ -317,7 +317,7 @@
       weaving purposes, the \code{Rtangle} driver rather uses their
       default values, with a warning.
       By \I{Vincent Goulet}.
-      
+
       \item The Sweave driver \code{RweaveLatex} gains an option to
       include unparsable R code or arbitrary text in code chunks. Chunks
       marked as \code{ignore.on.weave = TRUE} are completely ignored on
@@ -336,7 +336,7 @@
       available for both drivers, sets \code{ignore.on.weave} and
       \code{ignore.on.tangle} at once.
 
-      By \I{Vincent Goulet}.      
+      By \I{Vincent Goulet}.
 
       \item The Sweave driver \code{Rtangle} now provides an option
       \code{chunk.sep} to control the separator between code chunks in
@@ -844,6 +844,10 @@
       \item When \code{Ops} group methods for matrix-\code{"ts"} return a
       zero-extent matrix, its type is correct now.  E.g., \code{<int> + <dbl>}
       now returns type \code{"double"}, see also \PR{18972}.
+
+      \item \code{intToUtf8(<negative>)} now returns \code{NA} and no
+      longer accesses invalid memory, thanks to \I{Kevin Ushey}'s report
+      with patch in \PR{19052}.
     }
   }
 }
@@ -966,8 +970,9 @@
       to \I{Martin Smith}'s \PR{18921}.
 
       \item \I{Subassigning} \code{"POSIXlt"}, i.e., \code{<tdat>[i] <- val}
-      and \code{<tdat>[[i]] <- val} now rebalance as they should,
-      thanks to \I{Mikael Jagan}'s \PR{18919}.
+      and \code{<tdat>[[i]] <- val} now rebalance as they should;
+      additionally, \code{val} is now converted to the time zone of \code{tdat};
+      thanks mostly to \I{Mikael Jagan}'s \PR{18919}.
 
       \item \code{<POSIXlt>[*]} (re-)setting \code{"balanced"}, fixing
       \PR{18681} comment #7, thanks to \I{Mikael Jagan}.
