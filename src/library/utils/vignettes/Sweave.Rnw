@@ -432,14 +432,14 @@ examples.
 
 \LaTeX{} documents written in most languages other than English
 usually require a special input encoding to support accented
-characters and various symbols beyong those of ASCII. The modern way
+characters and various symbols beyond those of ASCII. The modern way
 to deal with this situation is to use the UTF-8 input encoding and
 compile with Lua\LaTeX{}.
 
 As from \R{} 3.1.0, the UTF-8 encoding is handled preferentially to
 other encodings. Sweave will leave UTF-8 code in that encoding, and
 output in that encoding as well. However, it remains required to tell
-Sweave that a file uses this encoding. This can be done throught
+Sweave that a file uses this encoding. This can be done through
 either the argument \code{encoding} of the function \code{Sweave} or
 the flag \option{--encoding} of \command{R CMD Sweave}, or by
 inserting the comment
