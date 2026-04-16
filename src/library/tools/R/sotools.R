@@ -59,7 +59,7 @@ if(.Platform$OS.type == "windows") {
     }
 }
 
-read_symbols_from_object_file <- function(f)
+read_symbols_from_object_file <- function(f, ignore.stderr = FALSE)
 {
     ## For GCC & LTO, we need a different command, possibly with args
     ## On macOS, the system nm works with LTO objects.
@@ -77,7 +77,7 @@ read_symbols_from_object_file <- function(f)
     f <- file_path_as_absolute(f)
     if(!(file.size(f))) return()
     s <- strsplit(system(sprintf("%s -Pg %s", nm, shQuote(f)),
-                         intern = TRUE),
+                         intern = TRUE, ignore.stderr = ignore.stderr),
                   " +")
     ## Cannot simply rbind() this because elements may have 2-4 entries.
     n <- length(s)

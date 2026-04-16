@@ -331,7 +331,8 @@ rbind_list <- function(args)
 ofile_syms <- function(fname, keep = c("F", "V", "U")) {
     ## this uses nm on Linux/macOS; probably doesn't work on Windows, so bail
     stopifnot(isFALSE(.Platform$OS.type == "windows"))
-    v <- read_symbols_from_object_file(fname)
+    v <- suppressWarnings(read_symbols_from_object_file(fname,
+                                                        ignore.stderr = TRUE))
     if (is.character(v) && nrow(v) == 0) 
         ofile_syms_od(fname, keep)
     else if (is.null(v))
@@ -351,7 +352,8 @@ ofile_syms <- function(fname, keep = c("F", "V", "U")) {
 ofile_syms_od <- function(fpath, keep = c("F", "V", "U")) {
     if (Sys.which("objdump") == "")
         stop("'objdump' is not on the path")
-    v <- system(sprintf("objdump -T %s", fpath), intern = TRUE)
+    v <- suppressWarnings(system(sprintf("objdump -T %s", fpath),
+                                 intern = TRUE, ignore.stderr = TRUE))
     v <- grep("\t", v, value = TRUE)      ## data lines contain a \t
     name <- sub(".*\t.* (.*$)", "\\1", v) ## the name is at the end after the \t
     type <- sub(".* (.*)\t.*", "\\1", v)  ## the type is right before the \t
