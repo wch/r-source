@@ -1,7 +1,7 @@
 #  File src/library/base/R/rle.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -34,16 +34,17 @@ print.rle <- function(x, digits = getOption("digits"), prefix = "", ...)
 {
     if(is.null(digits)) digits <- getOption("digits")
     cat("", "Run Length Encoding\n", "  lengths:", sep=prefix)
-    utils::str(x$lengths)
+    utils::str(x$lengths, ...)
     cat("", "  values :", sep=prefix)
-    utils::str(x$values, digits.d = digits)
+    utils::str(x$values, digits.d = digits, ...)
     invisible(x)
 }
 
+## *not* a method; no need for `...`
 inverse.rle <- function(x, ...)
 {
     if(is.null(le <- x$lengths) ||
-       is.null(v  <- x$values) || length(le) != length(v))
+       is.null(v  <- x$values)  || length(le) != length(v))
         stop("invalid 'rle' structure")
     rep.int(v, le)
 }

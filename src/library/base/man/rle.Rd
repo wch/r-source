@@ -1,6 +1,6 @@
 % File src/library/base/man/rle.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{rle}
@@ -22,7 +22,8 @@ inverse.rle(x, \dots)
 \arguments{
   \item{x}{a vector (atomic, not a list) for \code{rle()};
     an object of class \code{"rle"} for \code{inverse.rle()}.}
-  \item{\dots}{further arguments; ignored here.}
+  \item{\dots}{further arguments; for the \code{print()} method, passed to
+    \code{\link{str}()}; e.g., \code{vec.len = 22}.}
   \item{digits}{number of significant digits for printing, see
     \code{\link{print.default}}.}
   \item{prefix}{character string, prepended to each printed line.}

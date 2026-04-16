@@ -16,6 +16,9 @@
     \itemize{
       \item \code{boxplot()}: when \code{notch=TRUE}, new option \code{warnN=FALSE}
       suppresses warnings about \dQuote{notches outside hinges}.
+
+      \item The \code{print()} method for \code{rle()} now passes \code{...}
+      to \code{str()}.
     }
   }
 
