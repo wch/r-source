@@ -2247,7 +2247,7 @@ always be included @emph{after} @code{LAPACK_LIBS} (and in that order).
 @item SAFE_FFLAGS
 @vindex SAFE_FFLAGS
 A macro containing flags which are needed to circumvent
-over-optimization of FORTRAN code: it is might be @samp{-g -O2
+over-optimization of FORTRAN code: it might be @samp{-g -O2
 -ffloat-store} or @samp{-g -O2 -msse2 -mfpmath=sse} on @cputype{ix86}
 platforms using @command{gfortran}.  Note that this is @strong{not} an
 additional flag to be used as part of @code{PKG_FFLAGS}, but a
@@ -5519,7 +5519,7 @@ Usage of external commands should always be conditional on a test for
 presence (perhaps using @code{Sys.which}), as well as declared in the
 @samp{SystemRequirements} field.  A package should pass its checks
 without warnings nor errors without the external command being
-present. N.B.: @file{/usr/sbin} and @file{/sbin}@footnote{where
+present. @strong{N.B.}: @file{/usr/sbin} and @file{/sbin}@footnote{where
 different, which it is on macOS.} are intended for administrator commands
 and may not be on the end-user path: examples of commands which packages
 have (wrongly) assumed to be available are @command{sysctl} and
