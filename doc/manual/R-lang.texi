@@ -3625,13 +3625,13 @@ environment can be accessed and manipulated with
 @multitable @columnfractions 0.3 0.7
 @item @code{Sys.getenv} @tab OS environment variables
 @findex Sys.getenv
-@item @code{Sys.putenv}                               
+@item @code{Sys.putenv} @tab
 @findex Sys.putenv
 @item @code{Sys.getlocale} @tab System locale         
 @findex Sys.getlocale
-@item @code{Sys.putlocale}                            
+@item @code{Sys.putlocale} @tab
 @findex Sys.putlocale
-@item @code{Sys.localeconv}                           
+@item @code{Sys.localeconv} @tab
 @findex Sys.localeconv
 @item @code{Sys.time} @tab Current time               
 @findex Sys.time
