@@ -17,10 +17,11 @@
 \usepackage{listings}
 
 %% colors inspired by classicthesis.sty
-\usepackage{xcolor}
+\usepackage{color}
 \definecolor{link}{rgb}{0,0.4,0.6}        % liens internes
 \definecolor{url}{rgb}{0.6,0,0}           % liens externes
 \definecolor{citation}{rgb}{0,0.5,0}      % citations
+\definecolor{delim}{rgb}{0.0,0.5,0.5}
 
 %% display noweb markers in color in listings; 'literate' key used to
 %% leave references to chunk 'boxp' alone
@@ -28,8 +29,8 @@
   basicstyle=\small\ttfamily,
   commentstyle=\slshape,
   keywordstyle=\mdseries,
-  moredelim=*[s][\color{teal}]{<<}{>>=},
-  moredelim=[l][\color{teal}]{@},
+  moredelim=*[s][\color{delim}]{<<}{>>=},
+  moredelim=[l][\color{delim}]{@},
   literate={<<boxp>>}{<<boxp>>}8,
   frame=trbl,
 }
