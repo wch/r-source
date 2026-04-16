@@ -26,7 +26,7 @@ Stangle, without being commented out.
 We remove the chunk separator before this next chunk. It will
 appear immediately after the previous one in the tangled script.
 <<main, chunk.sep=FALSE>>=
-runif(5)
+pi
 @
 
 Pairing \texttt{ignore.on.weave=TRUE} with the option
