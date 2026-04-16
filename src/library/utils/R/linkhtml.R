@@ -122,11 +122,17 @@ make.packages.html <-
             for (i in pg[first == a]) {
                 title <- packageDescription(i, lib.loc = lib, fields = "Title",
                                             encoding = "UTF-8")
-                if (is.na(title)) title <- "-- Title is missing --"
+                if(is.na(title))
+                    title <- "-- Title is missing --"
+                else {
+                    title <- gsub("&", "&amp;", title, fixed = TRUE)
+                    title <- gsub("<", "&lt;", title, fixed = TRUE)
+                    title <- gsub(">", "&gt;", title, fixed = TRUE)
+                }
                 cat('<tr style="text-align: left; vertical-align: top;" id="lib-', i, '">\n',
                     '<td style="width: 25%;"><a href="', lib0, '/', i,
                     '/html/00Index.html">', i, "</a></td><td>",
-                    gsub("&", "&amp;", title), "</td></tr>\n",
+                    title, "</td></tr>\n",
                     file = out, sep = "")
                 if (WINDOWS) {
                     npkgs <- npkgs + 1L
