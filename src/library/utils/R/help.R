@@ -118,9 +118,9 @@ print.help_files_with_topic <- function(x, ...) # ...  may contain  msg=FALSE
             out <- paste0('<!DOCTYPE html>\n',
                           '<html>\n',
                           '<head>\n<title>R: help</title>\n',
-                          '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n',
-                          '<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />\n',
-                          '<link rel="stylesheet" type="text/css" href="/doc/html/R.css" />\n',
+                          '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">\n',
+                          '<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">\n',
+                          '<link rel="stylesheet" type="text/css" href="/doc/html/R.css">\n',
                           '</head>\n<body>\n<div class="container">\n\n<hr>\n')
             out <- c(out, '<p>', msg, '</p><br>')
             out <- c(out, '<table style="width: 100%;">\n',

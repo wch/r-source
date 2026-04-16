@@ -141,7 +141,7 @@ httpd <- function(path, query, ...)
         else {
             urls <- paste0('<a href="', base, '/', files, '">', files, '</a>')
             out <- c(out, "<dl>",
-                     paste0("<dd>", mono(iconv(urls, "", "UTF-8")), "</dd>"),
+                     paste0("<dt></dt><dd>", mono(iconv(urls, "", "UTF-8")), "</dd>"),
                      "</dl>")
         }
         out <- c(out, "<hr>\n</div></body></html>")
