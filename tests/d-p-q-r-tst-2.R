@@ -998,5 +998,17 @@ for(sz in Lrg)
               dnbinom(x., mu=mu,    size = sz) == 0)
 
 
+## rmultinom() no longer using LDOUBLE being platform dependent - PR#18693
+. <- 0L
+pr <- c(5,1,1,1,1,1)/10
+set.seed(1)
+(N <- rmultinom(3,4, pr))
+stopifnot(identical(
+    cbind(c(1L,  ., 1L, 2L, .,  .),
+          c(1L, 2L, 1L,  ., .,  .),
+          c(2L,  .,  .,  ., ., 2L)), N))
+## was not at all true, without "long-double", e.g., on M<n> Macs
+
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

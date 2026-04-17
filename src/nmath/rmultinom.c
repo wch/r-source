@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2003-2007     The R Foundation
+ *  Copyright (C) 2003-2026 The R Core Team
+ *  Copyright (C) 2003-2007 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -51,11 +52,11 @@ void rmultinom(int n, double* prob, int K, int* rN)
 {
     int k;
     double pp;
-    LDOUBLE p_tot = 0.;
-    /* This calculation is sensitive to exact values, so we try to
-       ensure that the calculations are as accurate as possible
-       so different platforms are more likely to give the same
-       result. */
+    /* Using Kahan compensated summation for platform-independent accuracy
+       avoids relying on LDOUBLE (long double) which varies across
+       platforms (e.g., 80-bit on x86 vs 64-bit on ARM).		See PR#18693. */
+    double p_tot = 0.,
+ 	   p_comp = 0.; /* Kahan compensation term */
 
 #ifdef MATHLIB_STANDALONE
     if (K < 1) { ML_WARNING(ME_DOMAIN, "rmultinom"); return;}
@@ -71,20 +72,24 @@ void rmultinom(int n, double* prob, int K, int* rN)
     for(k = 0; k < K; k++) {
 	pp = prob[k];
 	if (!R_FINITE(pp) || pp < 0. || pp > 1.) ML_WARN_ret_NAN(k);
-	p_tot += pp;
+	/* Kahan summation: p_tot += pp with compensation */
+	double y = pp - p_comp,
+	    t = p_tot + y;
+	p_comp = (t - p_tot) - y;
+	p_tot = t;
 	rN[k] = 0;
     }
-    if(fabs((double)(p_tot - 1.)) > 1e-7)
-	MATHLIB_ERROR(_("rbinom: probability sum should be 1, but is %g"),
-		      (double) p_tot);
-    if (n == 0) return;
-    if (K == 1 && p_tot == 0.) return;/* trivial border case: do as rbinom */
+    if(fabs(p_tot - 1.) > 1e-7)
+	MATHLIB_ERROR(_("rbinom: probability sum should be 1, but is %g"), p_tot);
+    if(n == 0 ||
+       (K == 1 && p_tot == 0.)) /* trivial border case: do as rbinom */
+	return;
 
     /* Generate the first K-1 obs. via binomials */
 
     for(k = 0; k < K-1; k++) { /* (p_tot, n) are for "remaining binomial" */
 	if(prob[k] != 0.) {
-	    pp = (double)(prob[k] / p_tot);
+	    pp = prob[k] / p_tot;
 	    /* printf("[%d] %.17f\n", k+1, pp); */
 	    rN[k] = ((pp < 1.) ? (int) rbinom((double) n,  pp) :
 		     /*>= 1; > 1 happens because of rounding */
@@ -93,7 +98,11 @@ void rmultinom(int n, double* prob, int K, int* rN)
 	}
 	else rN[k] = 0;
 	if(n <= 0) /* we have all*/ return;
-	p_tot -= prob[k]; /* i.e. = sum(prob[(k+1):K]) */
+	/* Kahan subtraction: p_tot -= prob[k] with compensation */
+	double y = -prob[k] - p_comp,
+	    t = p_tot + y;
+	p_comp = (t - p_tot) - y;
+	p_tot = t;
     }
     rN[K-1] = n;
     return;

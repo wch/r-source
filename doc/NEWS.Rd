@@ -19,6 +19,10 @@
 
       \item The \code{print()} method for \code{rle()} now passes \code{...}
       to \code{str()}.
+
+      \item \code{rmultinom()} now uses \I{Kahan}'s arithmetic instead of
+      \code{LDOUBLE} to avoid platform dependency, thanks to \I{Mauricio Vargas}'
+      proposal in \PR{18693}.
     }
   }
 
@@ -42,10 +46,7 @@
 
   \subsection{Bug Fixes}{
     \itemize{
-      \item \code{intToUtf8(<negative>)} now returns \code{NA} and no
-      longer accesses invalid memory, thanks to \I{Kevin Ushey}'s report
-      with patch in \PR{19052}.
-      % possibly back port
+      \item .
     }
   }
 }
@@ -889,6 +890,10 @@
       \item When \code{Ops} group methods for matrix-\code{"ts"} return a
       zero-extent matrix, its type is correct now.  E.g., \code{<int> + <dbl>}
       now returns type \code{"double"}, see also \PR{18972}.
+
+      \item \code{intToUtf8(<negative>)} now returns \code{NA} and no
+      longer accesses invalid memory, thanks to \I{Kevin Ushey}'s report
+      with patch in \PR{19052}.
     }
   }
 }
