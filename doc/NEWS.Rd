@@ -857,6 +857,10 @@
       accuracy, fulfilling a part of \I{Suharto Anggono}'s wishlist
       \PR{18989}.
 
+      \item When \I{subassigning} \code{"POSIXlt"}, e.g., \code{<dat>[i] <- v},
+      \code{v} is now converted to the time zone of \code{dat}, before
+      being assigned.
+
       \item The \code{"tzcode"} attribute of \code{"POSIXlt"} objects
       should no longer depend on earlier calls, fixing \PR{19005} thanks to
       \I{Ivan Krylov}, a patch by \I{Suharto Anggono} and reports of
@@ -1021,7 +1025,6 @@
 
       \item \I{Subassigning} \code{"POSIXlt"}, i.e., \code{<tdat>[i] <- val}
       and \code{<tdat>[[i]] <- val} now rebalance as they should;
-      additionally, \code{val} is now converted to the time zone of \code{tdat};
       thanks mostly to \I{Mikael Jagan}'s \PR{18919}.
 
       \item \code{<POSIXlt>[*]} (re-)setting \code{"balanced"}, fixing
