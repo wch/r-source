@@ -894,6 +894,10 @@
       \item \code{intToUtf8(<negative>)} now returns \code{NA} and no
       longer accesses invalid memory, thanks to \I{Kevin Ushey}'s report
       with patch in \PR{19052}.
+
+      \item When \code{file.choose()} is terminated with an \command{EOF},
+      it now signals an error rather than returning garbage, thanks to
+      \I{Kevin Ushey}'s report and patch in \PR{19053},
     }
   }
 }
