@@ -1779,7 +1779,7 @@ function(x, strict = FALSE)
         str2expression(x)
     }
 
-    oknms <- c("person", "c", "list", "paste", "paste0", "(")
+    oknms <- c("person", "as.person", "c", "list", "paste", "paste0", "(")
     calls <- tools:::.find_calls(exprs, recursive = TRUE)
     calls <- calls[tools:::.call_names(calls) %notin% oknms]
     if(length(calls)) {
