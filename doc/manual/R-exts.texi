@@ -16308,7 +16308,7 @@ and @code{rN} must point to a length-@code{K} integer vector
 @eqn{n_j=, nj=}@code{rN[j]} is ``filled'' by a random binomial from
 @eqn{Bin(n; \pi_j), Bin(n; prob[j])},
 constrained to @eqn{\sum_{j=1}^K n_j = n, sum(rN[.]) == n}.
-@apifun rmultinom
+@apifun Rf_rmultinom
 
 After calls to @code{dwilcox}, @code{pwilcox} or @code{qwilcox} the
 function @code{wilcox_free()} should be called, and similarly
@@ -16356,49 +16356,49 @@ q = 1-p} which may be advantageous when one of them is close to @eqn{1,
 
 @cindex Gamma function
 @cindex @I{Polygamma} functions
-@apifun gammafn
-@apifun lgammafn
-@apifun digamma
-@apifun trigamma
-@apifun tetragamma
-@apifun pentagamma
-@apifun psigamma
-@apifun dpsifn
-@deftypefun double gammafn (double @var{x})
-@deftypefunx double lgammafn (double @var{x})
-@deftypefunx double digamma (double @var{x})
-@deftypefunx double trigamma (double @var{x})
-@deftypefunx double tetragamma (double @var{x})
-@deftypefunx double pentagamma (double @var{x})
-@deftypefunx double psigamma (double @var{x}, double @var{deriv})
-@deftypefunx void dpsifn (double @var{x}, int @var{n}, int @var{kode}, int @var{m}, double* @var{ans}, int* @var{nz}, int* @var{ierr})
+@apifun Rf_gammafn
+@apifun Rf_lgammafn
+@apifun Rf_digamma
+@apifun Rf_trigamma
+@apifun Rf_tetragamma
+@apifun Rf_pentagamma
+@apifun Rf_psigamma
+@apifun Rf_dpsifn
+@deftypefun double Rf_gammafn (double @var{x})
+@deftypefunx double Rf_lgammafn (double @var{x})
+@deftypefunx double Rf_digamma (double @var{x})
+@deftypefunx double Rf_trigamma (double @var{x})
+@deftypefunx double Rf_tetragamma (double @var{x})
+@deftypefunx double Rf_pentagamma (double @var{x})
+@deftypefunx double Rf_psigamma (double @var{x}, double @var{deriv})
+@deftypefunx void Rf_dpsifn (double @var{x}, int @var{n}, int @var{kode}, int @var{m}, double* @var{ans}, int* @var{nz}, int* @var{ierr})
 The Gamma function, the natural logarithm of its absolute value and
 first four derivatives and the @I{n-th} derivative of Psi, the @I{digamma}
-function, which is the derivative of @code{lgammafn}. In other words,
-@code{digamma(x)} is the same as @code{psigamma(x,0)},
-@code{trigamma(x) == psigamma(x,1)}, etc.
-The underlying workhorse, @code{dpsifn()}, is useful, e.g., when several derivatives of
-@eqn{\log\Gamma=, log Gamma=}@code{lgammafn} are desired.  It computes and
+function, which is the derivative of @code{Rf_lgammafn}. In other words,
+@code{Rf_digamma(x)} is the same as @code{Rf_psigamma(x,0)},
+@code{Rf_trigamma(x) == Rf_psigamma(x,1)}, etc.
+The underlying workhorse, @code{Rf_dpsifn()}, is useful, e.g., when several derivatives of
+@eqn{\log\Gamma=, log Gamma=}@code{Rf_lgammafn} are desired.  It computes and
 returns in @code{ans[]} the length-@var{m} sequence
-@eqn{(-1)^{k+1} / \Gamma(k+1) * \psi^{(k)}(x), (-1)^(k+1) / gamma(k+1) * psi(k;x)} for
+@eqn{(-1)^{k+1} / \Gamma(k+1) * \psi^{(k)}(x), (-1)^(k+1) / Gamma(k+1) * psi(k;x)} for
 @eqn{k = n \ldots n+m-1, k = n ... n+m-1}, where @eqn{\psi^{(k)}(x), psi(k;x)}
 is the @I{k-th} derivative of @eqn{\psi(x), Psi(x)}, i.e.,
-@code{psigamma(x,k)}.  For more details, see the comments in
+@code{Rf_psigamma(x,k)}.  For more details, see the comments in
 @file{src/nmath/polygamma.c}.
 @end deftypefun
 
 @cindex Beta function
-@apifun beta
-@apifun lbeta
-@deftypefun double beta (double @var{a}, double @var{b})
-@deftypefunx double lbeta (double @var{a}, double @var{b})
+@apifun Rf_beta
+@apifun Rf_lbeta
+@deftypefun double Rf_beta (double @var{a}, double @var{b})
+@deftypefunx double Rf_lbeta (double @var{a}, double @var{b})
 The (complete) Beta function and its natural logarithm.
 @end deftypefun
 
-@apifun choose
-@apifun lchoose
-@deftypefun double choose (double @var{n}, double @var{k})
-@deftypefunx double lchoose (double @var{n}, double @var{k})
+@apifun Rf_choose
+@apifun Rf_lchoose
+@deftypefun double Rf_choose (double @var{n}, double @var{k})
+@deftypefunx double Rf_lchoose (double @var{n}, double @var{k})
 The number of combinations of @var{k} items chosen from @var{n} and
 the natural logarithm of its absolute value, generalized to arbitrary real
 @var{n}.  @var{k} is rounded to the nearest integer (with a warning if
@@ -16406,16 +16406,16 @@ needed).
 @end deftypefun
 
 @cindex Bessel functions
-@apifun bessel_i
-@apifun bessel_j
-@apifun bessel_k
-@apifun bessel_y
-@deftypefun double bessel_i (double @var{x}, double @var{nu}, double @var{expo})
-@deftypefunx double bessel_j (double @var{x}, double @var{nu})
-@deftypefunx double bessel_k (double @var{x}, double @var{nu}, double @var{expo})
-@deftypefunx double bessel_y (double @var{x}, double @var{nu})
+@apifun Rf_bessel_i
+@apifun Rf_bessel_j
+@apifun Rf_bessel_k
+@apifun Rf_bessel_y
+@deftypefun double Rf_bessel_i (double @var{x}, double @var{nu}, double @var{expo})
+@deftypefunx double Rf_bessel_j (double @var{x}, double @var{nu})
+@deftypefunx double Rf_bessel_k (double @var{x}, double @var{nu}, double @var{expo})
+@deftypefunx double Rf_bessel_y (double @var{x}, double @var{nu})
 Bessel functions of types I, J, K and Y with index @var{nu}.  For
-@code{bessel_i} and @code{bessel_k} there is the option to return
+@code{Rf_bessel_i} and @code{Rf_bessel_k} there is the option to return
 @w{exp(-@var{x}) I(@var{x}; @var{nu})} or @w{exp(@var{x}) K(@var{x};
 @var{nu})} if @var{expo} is 2. (Use @code{@var{expo} == 1} for unscaled
 values.)
@@ -16428,18 +16428,18 @@ There are a few other numerical utility functions available as entry points.
 
 @apifun R_pow
 @apifun R_pow_di
-@apifun pow1p
+@apifun Rf_pow1p
 @deftypefun double R_pow (double @var{x}, double @var{y})
 @deftypefunx double R_pow_di (double @var{x}, int @var{i})
-@deftypefunx double pow1p (double @var{x}, double @var{y})
+@deftypefunx double Rf_pow1p (double @var{x}, double @var{y})
 @code{R_pow(@var{x}, @var{y})} and @code{R_pow_di(@var{x}, @var{i})}
 compute @code{@var{x}^@var{y}} and @code{@var{x}^@var{i}}, respectively
 using @code{R_FINITE} checks and returning the proper result (the same
 as @R{}) for the cases where @var{x}, @var{y} or @var{i} are 0 or
 missing or infinite or @code{NaN}.
 
-@code{pow1p(@var{x}, @var{y})} computes @code{(1 + @var{x})^@var{y}}, accurately
-even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
+@code{Rf_pow1p(@var{x}, @var{y})} computes @code{(1 + @var{x})^@var{y}},
+accurately even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 @end deftypefun
 
 @apifun log1p
@@ -16453,20 +16453,20 @@ included in @file{Rmath.h}, but is (probably) in @file{math.h} which
 C++98).
 @end deftypefun
 
-@apifun log1pmx
-@deftypefun double log1pmx (double @var{x})
+@apifun Rf_log1pmx
+@deftypefun double Rf_log1pmx (double @var{x})
 Computes @code{log(1 + @var{x}) - @var{x}} (@emph{log 1 @I{@b{p}lus} x @I{@b{m}inus} @b{x}}),
 accurately even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 @end deftypefun
 
-@apifun log1pexp
-@deftypefun double log1pexp (double @var{x})
+@apifun Rf_log1pexp
+@deftypefun double Rf_log1pexp (double @var{x})
 Computes @code{log(1 + exp(@var{x}))} (@emph{log 1 @I{@b{p}lus} @b{exp}}),
 accurately, notably for large @var{x}, e.g., @eqn{x > 720, x > 720}.
 @end deftypefun
 
-@apifun log1mexp
-@deftypefun double log1mexp (double @var{x})
+@apifun Rf_log1mexp
+@deftypefun double Rf_log1mexp (double @var{x})
 Computes @code{log(1 - exp(@var{-x}))} (@emph{log 1 @I{@b{m}inus} @b{exp}}),
 accurately, carefully for two regions of @var{x}, optimally cutting
 off at @eqn{\log 2, log 2} (= 0.693147..), using
@@ -16485,8 +16485,8 @@ included in @file{Rmath.h}, but is (probably) in @file{math.h} which
 C++98).
 @end deftypefun
 
-@apifun lgamma1p
-@deftypefun double lgamma1p (double @var{x})
+@apifun Rf_lgamma1p
+@deftypefun double Rf_lgamma1p (double @var{x})
 Computes @code{log(gamma(@var{x} + 1))} (@emph{log(gamma(1 @I{@b{p}lus} x))}),
 accurately even for small @var{x}, i.e., @eqn{0 < x < 0.5, 0 < x < 0.5}.
 @end deftypefun
@@ -16534,12 +16534,12 @@ in @file{Rmath.h}, but is in @file{math.h} which @file{Rmath.h} includes
 (but see the comments for @code{cospi}).
 @end deftypefun
 
-@apifun logspace_add
-@apifun logspace_sub
-@apifun logspace_sum
-@deftypefun double logspace_add (double @var{logx}, double @var{logy})
-@deftypefunx double logspace_sub (double @var{logx}, double @var{logy})
-@deftypefunx double logspace_sum (const double* @var{logx}, int @var{n})
+@apifun Rf_logspace_add
+@apifun Rf_logspace_sub
+@apifun Rf_logspace_sum
+@deftypefun double Rf_logspace_add (double @var{logx}, double @var{logy})
+@deftypefunx double Rf_logspace_sub (double @var{logx}, double @var{logy})
+@deftypefunx double Rf_logspace_sum (const double* @var{logx}, int @var{n})
 Compute the log of a sum or difference from logs of terms, i.e., ``x +
 y'' as @code{log (exp(@var{logx}) + exp(@var{logy}))} and ``x - y'' as
 @code{log (exp(@var{logx}) - exp(@var{logy}))},
@@ -17038,8 +17038,8 @@ it will usually be taken from the environment variable @env{HOME} if
 this is defined.
 @end deftypefun
 
-@eapifun acopy_string
-@deftypefun {const char *} acopy_string (const char *@var{in})
+@eapifun Rf_acopy_string
+@deftypefun {const char *} Rf_acopy_string (const char *@var{in})
 Return a copy of a string using memory from @code{R_alloc}.
 @end deftypefun
 
@@ -18842,7 +18842,7 @@ void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
     @}
 
     R_RunExitFinalizers();
-    /* clean up after the editor e.g. CleanEd() */
+    /* clean up after the editor e.g. Rf_CleanEd() */
 
     R_CleanTempDir();
 
@@ -18859,7 +18859,7 @@ void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
 @embfun R_CleanTempDir
 @embfun R_SaveGlobalEnv
 @embfun Rf_KillAllDevices
-@embfun CleanEd
+@embfun Rf_CleanEd
 @embfun R_CleanUp
 @embfun fpu_setup
 @comment FIXME need to mention R_RunPendingFinalizers in text
