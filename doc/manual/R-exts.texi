@@ -16547,43 +16547,43 @@ and ``sum_i x[i]'' as @code{log (sum[i = 1:@var{n} exp(@var{logx}[i])] )}
 without causing unnecessary overflows or throwing away too much accuracy.
 @end deftypefun
 
-@apifun imax2
-@apifun imin2
-@apifun fmax2
-@apifun fmin2
-@deftypefun int imax2 (int @var{x}, int @var{y})
-@deftypefunx int imin2 (int @var{x}, int @var{y})
-@deftypefunx double fmax2 (double @var{x}, double @var{y})
-@deftypefunx double fmin2 (double @var{x}, double @var{y})
+@apifun Rf_imax2
+@apifun Rf_imin2
+@apifun Rf_fmax2
+@apifun Rf_fmin2
+@deftypefun int Rf_imax2 (int @var{x}, int @var{y})
+@deftypefunx int Rf_imin2 (int @var{x}, int @var{y})
+@deftypefunx double Rf_fmax2 (double @var{x}, double @var{y})
+@deftypefunx double Rf_fmin2 (double @var{x}, double @var{y})
 Return the larger (@code{max}) or smaller (@code{min}) of two integer or
 double numbers, respectively.  Note that @code{fmax2} and @code{fmin2}
 differ from C99/C++11's @code{fmax} and @code{fmin} when one of the
 arguments is a @code{NaN}: these versions return @code{NaN}.
 @end deftypefun
 
-@deftypefun double sign (double @var{x})
-@apifun sign
+@deftypefun double Rf_sign (double @var{x})
+@apifun Rf_sign
 Compute the @emph{signum} function, where sign(@var{x}) is 1, 0, or
 @math{-1}, when @var{x} is positive, 0, or negative, respectively, and
 @code{NaN} if @code{x} is a @code{NaN}.
 @end deftypefun
 
-@apifun fsign
-@deftypefun double fsign (double @var{x}, double @var{y})
+@apifun Rf_fsign
+@deftypefun double Rf_fsign (double @var{x}, double @var{y})
 Performs ``transfer of sign'' and is defined as @eqn{|x| *
 \hbox{sign}(y), |x| * sign(y)}.
 @end deftypefun
 
-@apifun fprec
-@deftypefun double fprec (double @var{x}, double @var{digits})
+@apifun Rf_fprec
+@deftypefun double Rf_fprec (double @var{x}, double @var{digits})
 Returns the value of @var{x} rounded to @var{digits} @emph{significant}
 decimal digits.
 
 This is the function used by @R{}'s @code{signif()}.
 @end deftypefun
 
-@apifun fround
-@deftypefun double fround (double @var{x}, double @var{digits})
+@apifun Rf_fround
+@deftypefun double Rf_fround (double @var{x}, double @var{digits})
 Returns the value of @var{x} rounded to @var{digits} decimal digits
 (after the decimal point).
 
@@ -16591,8 +16591,8 @@ This is the function used by @R{}'s @code{round()}.  (Note that C99/C++11
 provide a @code{round} function but C++98 need not.)
 @end deftypefun
 
-@apifun ftrunc
-@deftypefun double ftrunc (double @var{x})
+@apifun Rf_ftrunc
+@deftypefun double Rf_ftrunc (double @var{x})
 Returns the value of @var{x} truncated (to an integer value) towards
 zero.
 @end deftypefun
