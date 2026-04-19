@@ -16993,7 +16993,7 @@ of @R{} function @code{findInterval} for details.
 There is also an @code{F77_CALL(interv)()} version of
 @code{findInterval()} with the same arguments, but all pointers.
 @end deftypefun
-@apifun interv
+@forfun interv
 
 A system-independent interface to produce the name of a temporary
 file is provided as
@@ -17049,8 +17049,8 @@ e.g.@: @code{F77_CALL(d1mach)(4)}.  Note that these are emulations of
 the original functions by Fox, Hall and @I{Schryer} on @I{Netlib} at
 @uref{https://netlib.org/slatec/src/} for @acronym{IEC}@tie{}60559 arithmetic
 (required by @R{}).
-@apifun d1mach
-@apifun i1mach
+@forfun d1mach
+@forfun i1mach
 
 @node Linear algebra
 @section Linear algebra
@@ -17068,13 +17068,13 @@ emulate what @R{} does, and are declared as a C/C++ interface in header
 @file{R_ext/Applic.h}.  But they are also often called @emph{via}
 @code{.Fortran()} and from Fortran code.
 
-@apifun dqrqty
-@apifun dqrqy
-@apifun dqrcf
-@apifun dqrrsd
-@apifun dqrxb
-@apifun dqrls
-@apifun dqrdc2
+@forfun dqrqty
+@forfun dqrqy
+@forfun dqrcf
+@forfun dqrrsd
+@forfun dqrxb
+@forfun dqrls
+@forfun dqrdc2
 @example
 void F77_NAME(dqrqty)(double *x, int *n, int *k, double *qraux,
                       double *y, int *ny, double *qty);
