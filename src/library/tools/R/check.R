@@ -3355,8 +3355,8 @@ add_dummies <- function(dir, Log)
         if (length(pdfs)) {
             checkingLog(Log, "sizes of PDF files under 'inst/doc'")
             if (!nzchar(Sys.which(Sys.getenv("R_QPDF", "qpdf")))) {
-                if (as_cran)
-                    warningLog(Log, "'qpdf' is needed for checks on size reduction of PDFs")
+                (if (as_cran) warningLog else infoLog)(Log,
+                    "'qpdf' is needed for checks on size reduction of PDFs")
                 return()
             }
 
