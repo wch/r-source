@@ -3149,6 +3149,9 @@ stopifnot(isErr)
 ## Used to segfault with ASAN due to off-by-one in context stack checks
 
 
+## Check that headers, WRE, and non-API variables are in sync
+tools:::checkAPI()
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -553,3 +553,65 @@ moduleRsyms <- function(repo = FALSE) {
     v <- rbind_list(lapply(mods, oneMod))
     merge(v, Rsyms())
 }
+
+
+##
+## Check that the headers, WRE, and non-API variables are still in sync
+##
+
+checkAPI <- function() {
+    ## need to make sure this works on WIndows before enabling there
+    if(.Platform$OS.type == "windows")
+        return(invisible(NULL))
+
+    ## Check all functions declared in installed headers are in the API.
+    v <- subset(Rdecls(),
+                type == "F" & unmap(name) %notin% unmap(funAPI()$name))
+    if (nrow(v) != 0)
+        stop(sprintf("non-API functions declared in installeed headers:",
+                     paste(v$name, collapse = " ")))
+
+    ## Check all variables declared in installed headers are in the API
+    v <- subset(Rdecls(),
+                type == "V" & name %notin% varAPI()$name)
+    if (nrow(v) != 0)
+        stop(sprintf("non-API variables declared in installed headers:",
+                     paste(v$name, collapse = " ")))
+
+    ## check API functions (except macros and FORTRAN stuff) are in headers
+    v <- subset(funAPI(),
+                unmap(name) %notin% unmap(Rdecls()$name) &
+                apitype != "for" &
+                unmap(name) %in% unmap(Rsyms()$name))
+    if (nrow(v) != 0)
+        stop(sprintf("API funcitons not declared in installed headers: %s",
+                     paste(v$name, collapse = " ")))
+
+    ## check API variables are in headers
+    v <- subset(varAPI(),
+                name %notin% Rdecls()$name &
+                name %in% Rsyms()$name)
+    if (nrow(v) != 0)
+        stop(sprintf("API variables not in declared in installed headers: %s",
+                     paste(v$name, collapse = " ")))
+
+    ## check no declared functions or variables are marked for warnings
+    v <- subset(Rdecls(), name %in% warnNonAPI)
+    if (nrow(v) != 0)
+        stop(sprintf("in API but marked for warnings: %s",
+                     paste(v$name, collapse = " ")))
+
+    ## check no API funs (except emb and hash stuff for now) are in
+    ## nonAPI
+    v <- subset(funAPI(), apitype != "emb" & unmap(name) %in% unmap(nonAPI)) |>
+        subset(! grepl("[Hh]ash", name))
+    if (nrow(v) != 0)
+        stop("API functions listed in nonAPI: %s",
+             paste(v$name, collapse = " "))
+
+    ## check no API vars (except emb for now) are in nonAPI
+    v <- subset(varAPI(), apitype != "emb" & name %in% nonAPI)
+    if (nrow(v) != 0)
+        stop("API variables listed in nonAPI: %s",
+             paste(v$name, collapse = " "))
+}
