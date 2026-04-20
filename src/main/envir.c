@@ -1925,9 +1925,7 @@ SEXP findFun3(SEXP symbol, SEXP rho, SEXP call)
 	}
 	rho = ENCLOS(rho);
     }
-    errorcall_cpy(call,
-                  _("could not find function \"%s\""),
-                  EncodeChar(PRINTNAME(symbol)));
+    R_FunctionNotFoundError(call, symbol);
     /* NOT REACHED */
     return R_UnboundValue;
 }

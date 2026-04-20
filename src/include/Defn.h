@@ -2351,6 +2351,7 @@ SEXP R_makeWarningCondition(SEXP call,
 
 NORET void R_MissingArgError     (SEXP symbol,     SEXP call, const char* subclass);
 NORET void R_MissingArgError_c   (const char *arg, SEXP call, const char* subclass);
+NORET attribute_hidden void R_FunctionNotFoundError(SEXP call, SEXP sym);
 
 SEXP R_makePartialMatchWarningCondition(SEXP call, SEXP argument, SEXP formal);
 

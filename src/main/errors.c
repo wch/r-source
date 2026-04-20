@@ -2799,6 +2799,19 @@ NORET void R_MissingArgError(SEXP symbol, SEXP call, const char* subclass)
 }
 
 
+NORET attribute_hidden void R_FunctionNotFoundError(SEXP call, SEXP sym)
+{
+    if (TYPEOF(sym) != SYMSXP)
+	error(_("not a symbol"));
+    SEXP cond = R_makeErrorCondition(call, "functionNotFoundError", NULL, 1,
+				     _("could not find function \"%s\""),
+				     CHAR(PRINTNAME(sym)));
+    PROTECT(cond);
+    R_setConditionField(cond, 2, "name", sym);
+    R_signalErrorCondition(cond, call);
+    UNPROTECT(1); // not reached
+}
+
 attribute_hidden /* for now */
 void R_setConditionField(SEXP cond, R_xlen_t idx, const char *name, SEXP val)
 {

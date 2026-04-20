@@ -25,6 +25,9 @@
       \item \code{rmultinom()} now uses \I{Kahan}'s arithmetic instead of
       \code{LDOUBLE} to avoid platform dependency, thanks to \I{Mauricio Vargas}'
       proposal in \PR{18693}.
+
+      \item Function not found errors are now signaled error
+      conditions of class \code{functionNotFoundError}.
     }
   }
 
