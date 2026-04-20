@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997--2026  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2025  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1070,7 +1070,7 @@ Rstd_ReadConsole(const char *prompt, unsigned char *buf, int len,
 	    }
 	    return 1;
 	}
-	
+
 	R_ReadlineData rl_data;
 	if (UsingReadline) {
 	    rl_data.readline_gotaline = 0;
@@ -1377,11 +1377,12 @@ Rstd_ShowFiles(int nfile,		/* number of files */
 
 attribute_hidden int Rstd_ChooseFile(int _new, char *buf, int len)
 {
-    size_t namelen;
-    char *bufp;
-    R_ReadConsole("Enter file name: ", (unsigned char *)buf, len, 0);
-    namelen = strlen(buf);
-    bufp = &buf[namelen - 1];
+    if (!R_ReadConsole("Enter file name: ", (unsigned char *)buf, len, 0))
+	return 0;
+    size_t namelen = strlen(buf);
+    if (namelen == 0)
+	return 0;
+    char *bufp = &buf[namelen - 1];
     while (bufp >= buf && isspace((int)*bufp))
 	*bufp-- = '\0';
     return (int) strlen(buf);
