@@ -51,6 +51,7 @@ cumvar(x)
 }
 \references{
   \bibshow{R:Becker+Chambers+Wilks:1988} (\code{cumsum} only.)
+  
   \bibshow{R:Youngs+Cramer:1971} (\code{cumvar} only.)
 }
 \examples{
