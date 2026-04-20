@@ -1,7 +1,7 @@
 #  File src/library/base/R/zzz.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -188,7 +188,7 @@ assign("Tailcall", function(FUN, ...) NULL, envir = .ArgsEnv)
                "tanh", "acosh", "asinh", "atanh",
 	       "cospi", "sinpi", "tanpi",
                "gamma", "lgamma", "digamma", "trigamma",
-               "cumsum", "cumprod", "cummax", "cummin")) {
+               "cumsum", "cumprod", "cummax", "cummin", "cumvar")) {
         body(fx) <- substitute(UseMethod(ff), list(ff=f))
         environment(fx) <- .BaseNamespaceEnv
         assign(f, fx, envir = env)

@@ -1311,7 +1311,7 @@ function(include_group_generics = TRUE)
           "cosh", "sinh", "tanh",
           "acosh", "asinh", "atanh",
           "lgamma", "gamma", "digamma", "trigamma",
-          "cumsum", "cumprod", "cummax", "cummin",
+          "cumsum", "cumprod", "cummax", "cummin", "cumvar",
           ## Group 'Ops':
           "+", "-", "*", "/",
           "^", "%%", "%/%",

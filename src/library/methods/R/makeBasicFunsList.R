@@ -1,7 +1,7 @@
 #  File src/library/methods/R/makeBasicFunsList.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ utils::globalVariables(".addBasicGeneric")
     ## the Math group.
     members <- c("abs", "sign", "sqrt",
 		 "ceiling", "floor", "trunc",
-		 "cummax", "cummin", "cumprod", "cumsum",
+		 "cummax", "cummin", "cumprod", "cumsum", "cumvar",
 		 "exp", "expm1",
 		 "log", "log10", "log2", "log1p",
 		 "cos", "cosh", "sin", "sinh", "tan", "tanh",

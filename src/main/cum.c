@@ -191,6 +191,22 @@ static SEXP icummin(SEXP x, SEXP s)
     return s;
 }
 
+/* cumulative variance by Youngs-Cramer algorithm */
+static SEXP cumvar(SEXP x, SEXP s)
+{
+    LDOUBLE var = 0.; 
+    LDOUBLE sum; 	
+    double *rx = REAL(x), *rs = REAL(s);
+	rs[0] = NA_REAL; /* variance of one (first) element is always NA */
+	sum = rx[0];
+    for (R_xlen_t i = 1 ; i < XLENGTH(x) ; i++) {
+	sum += rx[i];
+	var += (LDOUBLE) pow(((i + 1) * rx[i] - sum), 2.0) / (i * (i + 1)); /* NA and NaN propagated */
+	rs[i] = (double) var / i;
+    }
+    return ISNAN(var) ? handleNaN(x, s) : s;
+}
+
 attribute_hidden SEXP do_cum(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, t, ans;
@@ -219,11 +235,14 @@ attribute_hidden SEXP do_cum(SEXP call, SEXP op, SEXP args, SEXP env)
 	case 4: /* cummin */
 	    errorcall(call, _("'cummin' not defined for complex numbers"));
 	    break;
+	case 5: /* cumvar */
+	    errorcall(call, _("'cumvar' not defined for complex numbers"));
+	    break;
 	default:
 	    errorcall(call, "unknown cumxxx function");
 	}
     } else if( ( isInteger(CAR(args)) || isLogical(CAR(args)) ) &&
-	       PRIMVAL(op) != 2) {
+	       (PRIMVAL(op) != 2 && PRIMVAL(op) != 5)) {
 	PROTECT(t = coerceVector(CAR(args), INTSXP));
 	n = XLENGTH(t);
 	PROTECT(s = allocVector(INTSXP, n));
@@ -269,6 +288,9 @@ attribute_hidden SEXP do_cum(SEXP call, SEXP op, SEXP args, SEXP env)
 	    break;
 	case 4: /* cummin */
 	    return cummin(t,s);
+	    break;
+	case 5: /* cumvar */
+	    return cumvar(t,s);
 	    break;
 	default:
 	    errorcall(call, _("unknown cumxxx function"));

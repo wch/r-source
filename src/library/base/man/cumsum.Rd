@@ -1,6 +1,6 @@
 % File src/library/base/man/cumsum.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cumsum}
@@ -8,19 +8,21 @@
 \alias{cumprod}
 \alias{cummin}
 \alias{cummax}
-\title{Cumulative Sums, Products, and Extremes}
+\alias{cumvar}
+\title{Cumulative Sums, Products, Extremes, and Variance}
 \description{
   Returns a vector whose elements are the cumulative sums, products,
-  minima or maxima of the elements of the argument.
+  minima, maxima, or variances of the elements of the argument.
 }
 \usage{
 cumsum(x)
 cumprod(x)
 cummax(x)
 cummin(x)
+cumvar(x)
 }
 \arguments{
-  \item{x}{a numeric or complex (not \code{cummin} or \code{cummax})
+  \item{x}{a numeric or complex (not \code{cummin}, \code{cummax}, or \code{cumvar})
     object, or an object that can be coerced to one of these.}
 }
 \details{
@@ -29,7 +31,7 @@ cummin(x)
 }
 \value{
   A vector of the same length and type as \code{x} (after coercion),
-  except that \code{cumprod} returns a numeric vector for integer input
+  except that \code{cumprod} and \code{cumvar} return a numeric vector for integer input
   (for consistency with \code{*}).  Names are preserved.
 
   An \code{NA} value in \code{x} causes the corresponding and following
@@ -38,6 +40,8 @@ cummin(x)
   In the complex case with \code{\link{NA}}s, these \code{NA} elements may
   have finite real or imaginary parts, notably for \code{cumsum()},
   fulfilling the identity \code{Im(cumsum(x))} \eqn{\equiv}{=id=} \code{cumsum(Im(x))}.
+  
+  For \code{cumvar} the first element is always \code{NA}.
 }
 \section{S4 methods}{
   \code{cumsum} and \code{cumprod} are S4 generic functions:
@@ -47,11 +51,13 @@ cummin(x)
 }
 \references{
   \bibshow{R:Becker+Chambers+Wilks:1988} (\code{cumsum} only.)
+  \bibshow{R:Youngs+Cramer:1971} (\code{cumvar} only.)
 }
 \examples{
 cumsum(1:10)
 cumprod(1:10)
 cummin(c(3:1, 2:0, 4:2))
 cummax(c(3:1, 2:0, 4:2))
+cumvar(1:10)
 }
 \keyword{arith}

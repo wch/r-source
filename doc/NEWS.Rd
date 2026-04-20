@@ -17,6 +17,8 @@
       \item \code{boxplot()}: when \code{notch=TRUE}, new option \code{warnN=FALSE}
       suppresses warnings about \dQuote{notches outside hinges}.
 
+      \item New function \code{cumvar()} to calculate cumulative variances.
+
       \item The \code{print()} method for \code{rle()} now passes \code{...}
       to \code{str()}.
 

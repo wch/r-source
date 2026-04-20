@@ -1,6 +1,6 @@
 % File src/library/base/man/groupGeneric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{groupGeneric}
@@ -84,7 +84,7 @@
       % do_log()   [arithmetic.c:1011]:if (DispatchGroup("Math", ..))
       % do_signif()[arithmetic.c:1034]:if (DispatchGroup("Math", ..))
 
-      \item \code{cumsum}, \code{cumprod}, \code{cummax}, \code{cummin}
+      \item \code{cumsum}, \code{cumprod}, \code{cummax}, \code{cummin}, \code{cumvar}
       % do_cum()   [cum.c:140]:    if (DispatchGroup("Math", ...))
     }
     Members of this group dispatch on \code{x}.  Most members accept

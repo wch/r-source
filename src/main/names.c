@@ -508,6 +508,7 @@ FUNTAB R_FunTab[] =
 {"cumprod",	do_cum,		2,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"cummax",	do_cum,		3,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"cummin",	do_cum,		4,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"cumvar",	do_cum,		5,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* Type coercion */
 

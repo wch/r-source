@@ -1,6 +1,6 @@
 % File src/library/stats/man/cor.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cor}
@@ -133,6 +133,8 @@ cov2cor(V)
   \code{\link{cov.wt}} for \emph{weighted} covariance computation.
 
   \code{\link{sd}} for standard deviation (vectors).
+  
+  \code{\link{cumvar}} for cumulative variances.
 }
 \examples{
 var(1:10)  # 9.166667
