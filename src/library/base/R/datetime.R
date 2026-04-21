@@ -542,14 +542,11 @@ Math.POSIXt <- function (x, ...)
          domain = NA)
 }
 
+
 .check_tzones <- function(...)
 {
-    tzs <- unique(vapply(list(...),
-                         function(x) {
-                             y <- attr(x, "tzone")
-                             if(is.null(y)) "" else y[1L]
-                         },
-                         ""))
+    tz1 <- function(x) attr(x, "tzone")[1L] %||% ""
+    tzs <- unique(vapply(list(...), tz1, ""))
     tzs <- tzs[nzchar(tzs)]
     if(length(tzs) > 1L)
         warning("'tzone' attributes are inconsistent")
@@ -672,20 +669,25 @@ c.POSIXct <- function(..., recursive = FALSE) {
 ## we need conversion to POSIXct as POSIXlt objects can be in different tz.
 ## To preserve fractional second accuracy, do more than just
 ##   as.POSIXlt(do.call(c, lapply(list(...), as.POSIXct)))
-c.POSIXlt <- function(..., recursive = FALSE) {
+c.POSIXlt <- function(..., recursive = FALSE) { # NB  `recursive` is *not* used nor checked
     x <- lapply(list(...), function(x)
                 if(is.character(x) || is.factor(x)) as.POSIXlt(x) else x)
     ## s:= fractional part of seconds in all of 'x'
     s <- lapply(x, function(x) if(inherits(x, "POSIXlt")) x$sec - floor(x$sec))
-    n <- lengths(x <- lapply(x, as.POSIXct), use.names = FALSE)
-    x <- as.POSIXlt(do.call(c, x))
+    x <- lapply(x, function(x) {
+        if(inherits(x, "POSIXlt")) x$sec <- floor(x$sec)
+        as.POSIXct(x)
+    })
+    n <- lengths(x, use.names = FALSE)
+
+    x <- as.POSIXlt(do.call(c.POSIXct, x))
     for(i in seq_along(s)) if(length(si <- s[[i]]) != (ni <- n[[i]]))
         s[[i]] <- if(is.null(si)) double(ni) else rep_len(si, ni)
     s <- unlist(s, recursive = FALSE, use.names = FALSE)
     i <- which(is.finite(x$sec) & s != 0)
     if(length(i)) {
         bal <- attr(x, "balanced")
-        x$sec[i] <- floor(x$sec[i]) + s[i]
+        x$sec[i] <- x$sec[i] + s[i]
         if(!is.null(bal)) attr(x, "balanced") <- bal
     }
     x
@@ -1349,25 +1351,33 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"))
         ici <- is.character(i)
         nms <- names(x$year)
         if(mj) {
-            tz <- attr(x, "tzone")
-            value <- unCfillPOSIXlt(
-                if(inherits(value, "POSIXlt") && identical(tz, attr(value, "tzone")))
-                    value
-                else as.POSIXlt(as.POSIXct(value), tz = tz[1L]))
+            tz1 <- function(x) attr(x, "tzone")[1L] %||% "" # never NA (?!)
+            tz <- tz1(x)
+            if(is.character(value) || is.factor(value)) value <- as.POSIXlt(value)
+            if(inherits(value, "POSIXlt")) {
+                if(tz1(value) == tz)
+                    value <- unCfillPOSIXlt(value)
+                else {
+                    s <- value$sec - floor(value$sec)
+                    value <- unclass(as.POSIXlt(as.POSIXct(value), tz = tz))
+                    if(length(s) != (n <- length(value$sec))) s <- rep_len(s, n)
+                    if(length(n <- which(is.finite(value$sec) & s != 0)))
+                        value$sec[n] <- floor(value$sec[n]) + s[n]
+                }
+            } else value <- unclass(as.POSIXlt(as.POSIXct(value), tz = tz))
             if(ici) {
                 for(n in names(x))
                     names(x[[n]]) <- nms
             }
             for(n in names(x))
                 x[[n]][i] <- value[[n]]
-        } else {
+        } else { # x[i,j] <- v
             if(ici) {
                 names(x[[j]]) <- nms
             }
             x[[j]][i] <- value
         }
     }
-
     class(x) <- cl
     x
 }
@@ -1596,11 +1606,17 @@ as.list.POSIXlt <- function(x, ...)
             names(x[[n]]) <- nms
     }
 
-    tz <- attr(x, "tzone")
+    tz1 <- function(x) attr(x, "tzone")[1L] %||% "" # never NA (?!)
     value <- unCfillPOSIXlt(
-        if(inherits(value, "POSIXlt") && identical(tz, attr(value, "tzone")))
-            value
-        else as.POSIXlt(as.POSIXct(value), tz = tz[1L]))
+        if((isLt <- inherits(value, "POSIXlt")) && tz1(x) == tz1(value))
+            unclass(value)
+        else {
+            if(isLt) s <- value$sec # save
+            val <- unclass(as.POSIXlt(as.POSIXct(value), tz = attr(x, "tzone")))
+            if(isLt && is.finite(s) && (s1 <- s - floor(s)) != 0)
+                val$sec <- floor(s) + s1
+            val
+        })
     for(n in names(x))
         x[[n]][[i]] <- value[[n]]
 

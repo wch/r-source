@@ -880,6 +880,61 @@ stopifnot(exprs = {
 ## in R <= 4.5.2 when c(<POSIXlt>) worked via POSIXct
 
 
+## c.POSIXlt, [<-.POSIXlt , [[, etc, for far (and very far) future -- PR#18989
+for(thtz in c("UTC", "Europe/Kyiv", "Asia/Kolkata", "Pacific/Auckland"
+              ## , "Asia/Hebron", "Canada/Mountain", "Navajo"
+              )) { # dbg: withAutoprint({
+  x0 <- as.POSIXlt("9999-12-31 23:59:59.99999", tz=thtz)
+  print(x0)
+  xx <- x0; xx$year <- x0$year + c(0L, as.integer(10^(0:9)))
+  xx # length 11
+  cxx <- c(xx) # differs when "large":
+  lrgDT <- function(x) unclass(as.POSIXct(x)) >= 2^53
+  lrg <- lrgDT(xx)
+  ok <- !lrg ## NB: exact [small | large] boundary is between the two years  285426850 + 0:1
+  stopifnot(cxx == xx,
+            cxx - xx == 0,
+            cxx$sec[ok] == xx$sec)
+  ## checking `[` , `[[` , `$<-`
+  for(i in seq_along(xx)) { # dbg: withAutoprint({
+    x <- xx[i]
+    (ff <- c(format(x), format(x, digits = 6, usetz=TRUE)))
+    ep <- 4^-(1:25)
+    x$sec <- 60 - ep # `$<-.POSIXlt`() effectively *removing* "balanced" :
+    (il2d.sec <- round(log2(60 - x$sec))) # -2 -4 .. -46 -Inf -Inf
+    lcx <- as.POSIXlt(as.POSIXct(x)) # lossy
+    if(interactive()) utils:::str.default(lcx) # else print(ff)
+    stopifnot(exprs = {
+        is.null(attr(x, "balanced"))
+        identical(il2d.sec, -2*c(1:23, Inf,Inf))
+        lengths(unclass(lcx)) == length(ep)
+        attr(lcx, "balanced")
+        attr(lcx, "tzone")[1L] == thtz
+        all.equal(x, (bx <- balancePOSIXlt(x)), tolerance = 0)# FIXME? all.equal.POSIXt() currently via as.POSIXct()
+        attr(bx, "balanced")
+        attr(bx, "tzone") == thtz
+        identical(x$sec, bx$sec)
+        lcx == x ; x - lcx == 0 # as Ops currently work via as.POSIXct(), losing ..
+        bx == lcx               # (ditto)
+        (cx <- c(x)) == x  # was all TRUE in R 4.5.3
+    })
+    ##
+    if(ok[i]) stopifnot(cx$sec[1:23] == x$sec[1:23])
+    x25 <- x. <- x
+    x[1:25] <- x25[1:25]
+    for(i in c(7L, 12L, 20:25)) x.[[i]] <- x25[[i]]
+    stopifnot(exprs = {
+        x[25]$sec == 60
+        identical(x, x.)
+        is.na(attr(x, "balanced"))# NA: x[25]$sec == 60
+        all.equal(il2d.sec, log2(60 - x$sec), tolerance = 4*.Machine$double.eps)
+      ! identical(x, x25)
+        attr(x25, "tzone") == thtz
+        attr(x  , "tzone") == thtz
+    })
+  }#) ##  for(i in .....)
+}#) ## for(thtz in ..)
+
 
 
 ## keep at end

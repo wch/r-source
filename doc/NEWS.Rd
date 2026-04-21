@@ -53,7 +53,10 @@
 
   \subsection{Bug Fixes}{
     \itemize{
-      \item .
+      \item For \code{x <-  <large-POSIXlt>}, \code{c(x)}, subsetting
+    (\code{[}, \code{[[}) and subassignment such as \code{x[i] <- val} now
+    work again mostly, thanks to suggestions by \I{Suharto Anggono} in
+    \PR{18989}.
     }
   }
 }
@@ -866,7 +869,7 @@
 
       \item When \I{subassigning} \code{"POSIXlt"}, e.g., \code{<dat>[i] <- v},
       \code{v} is now converted to the time zone of \code{dat}, before
-      being assigned.
+      being assigned, see \PR{18919}.
 
       \item The \code{"tzcode"} attribute of \code{"POSIXlt"} objects
       should no longer depend on earlier calls, fixing \PR{19005} thanks to
