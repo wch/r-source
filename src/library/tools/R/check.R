@@ -3096,6 +3096,24 @@ add_dummies <- function(dir, Log)
                 printLog0(Log, .format_lines_with_indent(out), "\n")
             } else resultLog(Log, "OK")
         }
+        
+        if(!is_base_pkg &&
+           (dir.exists("data") || file.exists("R/sysdata.rda")) &&
+           length(bad <- .check_package_data_namespace_loads("."))) {
+            ## Takes some time, so likely should eventually be
+            ## conditionalized on something like
+            ## _R_CHECK_DATA_NAMESPACE_LOADS_.
+            ## Alternatively, we could try the data load checks with
+            ## a temporary library populated by all (recursive)
+            ## strong dependencies.
+            checkingLog(Log, "namespace references in data files")
+            warningLog(Log)
+            msg <- c(strwrap("Data files with namespace references not in the recursive strong package dependencies:"),
+                     sprintf("  %s: %s", names(bad),
+                             vapply(bad, paste, "", collapse = " ")),
+                     strwrap("See section 'Data in packages' in the 'Writing R Extensions' manual.\n"))
+            printLog0(Log, paste(msg, collapse = "\n"), "\n")
+        }
     }
 
     check_doc_contents <- function()

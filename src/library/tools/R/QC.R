@@ -10455,6 +10455,38 @@ function(x, ...)
             fmt(y)))
 }
 
+### ** .check_package_data_namespace_loads
+
+.check_package_data_namespace_loads <-
+function(dir)
+{
+    dir <- normalizePath(dir)
+    bad <- list()
+    files <- c(Sys.glob(file.path(dir, "data", "*.rda")),
+               Sys.glob(file.path(dir, "data", "*.RData")),
+               Sys.glob(file.path(dir, "data", "*.rdata")),
+               Sys.glob(file.path(dir, "R", "sysdata.rda")))
+    if(!length(files)) return(bad)
+    loads <- lapply(files, namespace_loads_from_file_load)
+    names(loads) <- files
+    loads <- Filter(length, loads)
+    if(!length(loads)) return(bad)
+    basepkgs <- .get_standard_package_names()$base    
+    available <- utils::available.packages()
+    db <- .read_description(file.path(dir, "DESCRIPTION"))
+    package <- db["Package"]
+    available <-
+        rbind(available[available[, "Package"] != package, ,
+                        drop = FALSE],
+              db[colnames(available)])
+    depends <- package_dependencies(package, available,
+                                    recursive = TRUE)[[1L]]
+    bad <- Filter(length,
+                  lapply(loads, setdiff, c(package, depends, basepkgs)))
+    names(bad) <- .file_path_relative_to_dir(names(bad), dir)
+    bad
+}
+
 ### ** .bad_DESCRIPTION_URL_field_parts
 
 .bad_DESCRIPTION_URL_field_parts <-
