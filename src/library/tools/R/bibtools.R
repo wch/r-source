@@ -121,7 +121,7 @@ function(dir, pkg)
         bib <- if(file.exists(path <- file.path(d, "REFERENCES.rds")))
             readRDS(path)
         else if(file.exists(path <- file.path(d, "REFERENCES.R")))
-            utils::readCitationFile(path, list(Encoding = "UTF-8"))
+            .read_bibentries(path)
         else if(file.exists(path <- file.path(d, "REFERENCES.bib")))
             `names<-`(bibtex::read.bib(path), NULL)
         if(!is.null(bib)) {
@@ -160,7 +160,33 @@ function(file, text)
 
 .read_bibentries <-
 function(file)
-    utils::readCitationFile(file, list(Encoding = "UTF-8"))
+{
+    exprs <- .parse_CITATION_file(file, "UTF-8")
+    oknms_from_base <-
+        c("c", "list", "paste", "paste0", "(")
+    oknms_from_utils <-
+        c("bibentry", "person", "as.person")
+    oknms <- c(oknms_from_utils, oknms_from_base)
+    env <- new.env(parent = emptyenv())
+    for(n in oknms_from_base)
+        assign(n, get(n, baseenv()), env)
+    for(n in oknms_from_utils)
+        assign(n, get(n, getNamespace("utils")), env)
+    fun <- function(e) {
+        msg <- c("Found the following non-standard call:",
+                 sprintf("  %s", deparse1(e$call)),
+                 strwrap(sprintf("Please only use calls to %s.", 
+                                 paste(sQuote(oknms[-length(oknms)]),
+                                       collapse = ", "))))
+        msg <- paste(msg, collapse = "\n")
+        stop(msg, call. = FALSE)
+        ## Alternatively,
+        ##   warning(msg, call. = FALSE)
+        ##   return(utils::bibentry())
+    }
+    tryCatch(do.call(c, lapply(exprs, eval, env)),
+             functionNotFoundError = fun)
+}
 
 .dump_bibentries <-
 function(bib, con = stdout())
