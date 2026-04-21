@@ -138,9 +138,8 @@
       \item \code{"\%*\%"}
       % do_matprod [array.c:1251]: if (DispatchGroup("matrixOps", ...))
     }
-    This group currently contains the matrix multiply \code{\%*\%} binary operator
-    only, where at least \code{\link{crossprod}()} and \code{tcrossprod()}
-    are meant to follow.
+    This group currently contains the matrix multiply \code{\%*\%}
+    binary operator, \code{\link{crossprod}()} and \code{tcrossprod()}.
     Members of the group have the same dispatch semantics (using \emph{both} arguments)
     as the \code{Ops} group.
 
