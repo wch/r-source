@@ -30,6 +30,9 @@
       of class \code{objectNotFoundError}. \emph{Function not found}
       errors signal conditions of the subclass
       \code{functionNotFoundError}.
+
+      \item Condition classes used internally for signaling some errors
+      are now documented in \code{?conditions}.
     }
   }
 

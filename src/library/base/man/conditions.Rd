@@ -30,6 +30,14 @@
 \alias{suspendInterrupts}
 \alias{allowInterrupts}
 \alias{globalCallingHandlers}
+\alias{objectNotFoundError}
+\alias{functionNotFoundError}
+\alias{missingArgError}
+\alias{notSubsettableError}
+\alias{MissingSubscriptError}
+\alias{subscriptOutOfBoundsError}
+\alias{stackOverflowError}
+\alias{parseError}
 
 \alias{.signalSimpleWarning}
 \alias{.handleSimpleError}
@@ -258,6 +266,20 @@ allowInterrupts(expr)
    \code{.signalSimpleWarning}, \code{.handleSimpleError}, and
    \code{.tryResumeInterrupt} are used internally and should not be
    called directly.
+
+   Some condition classes used to signal errors internally:
+   \itemize{
+     \item \code{objectNotFoundError}, with fields \code{name} and,
+     \code{mode}, and subclass \code{functionNotFoundError}.
+     \item \code{missingArgError}, with field \code{name}.
+     \item \code{notSubsettableError}, with field \code{object}.
+     \item \code{MissingSubscriptError}, with field \code{name}.
+     \item \code{subscriptOutOfBoundsError}, with fields \code{object},
+     \code{subscript}, and \code{index}.
+     \item \code{stackOverflowError}, with subclasses for different
+     stacks.
+     \item \code{parseError}, with a number of subclasses.
+  }
 }
 
 \references{The \code{tryCatch} mechanism is similar to Java

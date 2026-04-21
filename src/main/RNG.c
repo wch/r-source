@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2025  The R Core Team
+ *  Copyright (C) 1997--2026  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -352,7 +352,8 @@ static bool GetRNGkind(SEXP seeds)
     if (seeds == R_UnboundValue) return TRUE;
     if (!isInteger(seeds)) {
 	if (seeds == R_MissingArg) /* How can this happen? */
-	    R_MissingArgError_c(".Random.seed", R_CurrentExpression, "getRNGError");
+	    R_MissingArgError(R_SeedsSymbol, R_CurrentExpression,
+			      "getRNGError");
 	warning(_("'.Random.seed' is not an integer vector but of type '%s', so ignored"),
 		R_typeToChar(seeds));
 	goto invalid;

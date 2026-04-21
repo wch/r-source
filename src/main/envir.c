@@ -2616,7 +2616,7 @@ SEXP R_getVarEx(SEXP sym, SEXP rho, Rboolean inherits, SEXP ifnotfound)
 
     SEXP val = inherits ? R_findVar(sym, rho) : R_findVarInFrame(rho, sym);
     if (val == R_MissingArg)
-	R_MissingArgError_c(EncodeChar(PRINTNAME(sym)), getLexicalCall(rho), "getVarExError");
+	R_MissingArgError(sym, getLexicalCall(rho), "getVarExError");
     else if (val == R_UnboundValue)
 	return ifnotfound;
     else if (TYPEOF(val) == PROMSXP) {
