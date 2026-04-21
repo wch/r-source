@@ -1779,22 +1779,32 @@ function(x, strict = FALSE)
         str2expression(x)
     }
 
-    oknms <- c("person", "as.person", "c", "list", "paste", "paste0", "(")
-    calls <- tools:::.find_calls(exprs, recursive = TRUE)
-    calls <- calls[tools:::.call_names(calls) %notin% oknms]
-    if(length(calls)) {
-        msg <- c("Found the following possibly unsafe calls:",
-                 sprintf("  %s", vapply(calls, deparse1, "")),
-                 sprintf("Please only use calls to %s.",
-                         paste(sQuote(oknms[-length(oknms)]),
-                               collapse = ", ")))
+    oknms_from_base <-
+        c("c", "list", "paste", "paste0", "(")
+    oknms_from_utils <-
+        c("person", "as.person")
+    oknms <- c(oknms_from_utils, oknms_from_base)
+    env <- new.env(parent = emptyenv())
+    for(n in oknms_from_base)
+        assign(n, get(n, baseenv()), env)
+    for(n in oknms_from_utils)
+        assign(n, get(n, getNamespace("utils")), env)
+    fun <- function(e) {
+        msg <- c("Found the following non-standard call:",
+                 sprintf("  %s", deparse1(e$call)),
+                 strwrap(sprintf("Please only use calls to %s.", 
+                                 paste(sQuote(oknms[-length(oknms)]),
+                                       collapse = ", "))))
+        msg <- paste(msg, collapse = "\n")
         if(strict)
-            stop(paste0("  ", msg, collapse = "\n"))
-        else
-            message(paste0(msg, collapse = "\n"))
+            stop(msg, call. = FALSE)
+        else {
+            message(msg)
+            return(person())
+        }
     }
-
-    out <- eval(exprs)
+    out <- tryCatch(eval(exprs, env),
+                    functionNotFoundError = fun)
     ## Let's by nice ...
     ## Alternatively, we could throw an error.
     if(!inherits(out, "person"))
