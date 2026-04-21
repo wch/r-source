@@ -10471,8 +10471,11 @@ function(dir)
     names(loads) <- files
     loads <- Filter(length, loads)
     if(!length(loads)) return(bad)
-    basepkgs <- .get_standard_package_names()$base    
-    available <- utils::available.packages()
+    basepkgs <- .get_standard_package_names()$base
+    repos <- getOption("repos")
+    if(any(repos == "@CRAN@"))
+        repos <- .get_standard_repository_URLs()
+    available <- utils::available.packages(repos = repos)
     db <- .read_description(file.path(dir, "DESCRIPTION"))
     package <- db["Package"]
     available <-
