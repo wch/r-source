@@ -1925,7 +1925,7 @@ SEXP findFun3(SEXP symbol, SEXP rho, SEXP call)
 	}
 	rho = ENCLOS(rho);
     }
-    R_FunctionNotFoundError(call, symbol);
+    R_FunctionNotFoundError(symbol, call);
     /* NOT REACHED */
     return R_UnboundValue;
 }
@@ -2477,11 +2477,10 @@ attribute_hidden SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
     case 1: // have get(.)
 	if (rval == R_UnboundValue) {
 	    if (gmode == ANYSXP)
-		error(_("object '%s' not found"), EncodeChar(PRINTNAME(t1)));
+		R_ObjectNotFoundError(t1, R_CurrentExpression, NULL);
 	    else
-		error(_("object '%s' of mode '%s' was not found"),
-		      CHAR(PRINTNAME(t1)),
-		      CHAR(STRING_ELT(CADDR(args), 0))); /* ASCII */
+		R_ObjectNotFoundError(t1, R_CurrentExpression,
+				      CHAR(STRING_ELT(CADDR(args), 0))); /* ASCII */
 	}
 
 #     define GET_VALUE(rval) do {				\
@@ -2633,7 +2632,7 @@ SEXP R_getVar(SEXP sym, SEXP rho, Rboolean inherits)
 {
     SEXP val = R_getVarEx(sym, rho, inherits, R_UnboundValue);
     if (val == R_UnboundValue)
-	error(_("object '%s' not found"), EncodeChar(PRINTNAME(sym)));
+	R_ObjectNotFoundError(sym, R_CurrentExpression, NULL);
     return val;
 }
 
@@ -4330,7 +4329,7 @@ static SEXP getVarValInFrame(SEXP rho, SEXP sym, int unbound_ok)
 {
     SEXP val = R_findVarInFrame(rho, sym);
     if (! unbound_ok && val == R_UnboundValue)
-	error(_("object '%s' not found"), EncodeChar(PRINTNAME(sym)));
+	R_ObjectNotFoundError(sym, R_CurrentExpression, NULL);
     if (TYPEOF(val) == PROMSXP) {
 	PROTECT(val);
 	val = eval(val, R_EmptyEnv);

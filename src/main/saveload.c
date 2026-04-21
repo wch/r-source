@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2025  The R Core Team
+ *  Copyright (C) 1997--2026  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2079,7 +2079,7 @@ attribute_hidden SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_TAG(t, installTrChar(STRING_ELT(CAR(args), j)));
 	tmp = R_findVar(TAG(t), source);
 	if (tmp == R_UnboundValue)
-	    error(_("object '%s' not found"), EncodeChar(PRINTNAME(TAG(t))));
+	    R_ObjectNotFoundError(TAG(t),  R_CurrentExpression, NULL);
 	if(ep && TYPEOF(tmp) == PROMSXP) {
 	    PROTECT(tmp);
 	    tmp = eval(tmp, source);
@@ -2414,7 +2414,7 @@ attribute_hidden SEXP do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 	SETCAR(t, R_findVar(TAG(t), source));
 	tmp = R_findVar(TAG(t), source);
 	if (tmp == R_UnboundValue)
-	    error(_("object '%s' not found"), EncodeChar(PRINTNAME(TAG(t))));
+	    R_ObjectNotFoundError(TAG(t), R_CurrentExpression, NULL);
 	if(ep && TYPEOF(tmp) == PROMSXP) {
 	    PROTECT(tmp);
 	    tmp = eval(tmp, source);

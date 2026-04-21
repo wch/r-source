@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2025	The R Core Team.
+ *  Copyright (C) 1998--2026	The R Core Team.
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1174,9 +1174,7 @@ SEXP eval(SEXP e, SEXP rho)
 	else
 	    tmp = R_findVar(e, rho);
 	if (tmp == R_UnboundValue)
-	    errorcall_cpy(getLexicalCall(rho),
-			  _("object '%s' not found"),
-			  EncodeChar(PRINTNAME(e)));
+	    R_ObjectNotFoundError(e, getLexicalCall(rho), NULL);
 	else if (tmp == R_MissingArg) {
 	    /* the error signaled here for a missing ..d matches the one
 	       signaled in getvar() for byte compiled code, but ...elt()
@@ -2591,8 +2589,8 @@ static SEXP EnsureLocal(SEXP symbol, SEXP rho, R_varloc_t *ploc)
     }
 
     vl = eval(symbol, ENCLOS(rho));
-    if (vl == R_UnboundValue)
-	error(_("object '%s' not found"), EncodeChar(PRINTNAME(symbol)));
+    if (vl == R_UnboundValue) // can this really happen?
+	R_ObjectNotFoundError(symbol, R_CurrentExpression, NULL);
 
     PROTECT(vl = shallow_duplicate(vl));
     defineVar(symbol, vl, rho);
@@ -5780,9 +5778,7 @@ static R_INLINE SEXP GET_BINDING_CELL_CACHE(SEXP symbol, SEXP rho,
 
 NORET static void UNBOUND_VARIABLE_ERROR(SEXP symbol, SEXP rho)
 {
-    errorcall_cpy(getLexicalCall(rho),
-		  _("object '%s' not found"),
-		  EncodeChar(PRINTNAME(symbol)));
+    R_ObjectNotFoundError(symbol, getLexicalCall(rho), NULL);
 }
 
 static R_INLINE SEXP FIND_VAR_NO_CACHE(SEXP symbol, SEXP rho, SEXP cell)

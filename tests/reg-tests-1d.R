@@ -862,7 +862,7 @@ stopifnot(identical(one, 1)) # i.e., 'one <<- 2' was *not* evaluated
 ## all the expressions were evaluated in R <= 3.4.x
 (et <- tryCid(stopifnot(0 < 1:10, is.numeric(..vaporware..), stop("FOO!"))))
 stopifnot(exprs = {
-    inherits(et, "simpleError")
+    inherits(et, "objectNotFoundError")
     ## condition call now *does* contain 'stopifnot':
     ## !grepl("^stopifnot", deparse(conditionCall(et), width.cutoff=500))
     grepl("'..vaporware..'", conditionMessage(et))

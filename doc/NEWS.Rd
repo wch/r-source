@@ -26,8 +26,10 @@
       \code{LDOUBLE} to avoid platform dependency, thanks to \I{Mauricio Vargas}'
       proposal in \PR{18693}.
 
-      \item Function not found errors are now signaled error
-      conditions of class \code{functionNotFoundError}.
+      \item \emph{Object not found} errors now signal error conditions
+      of class \code{objectNotFoundError}. \emph{Function not found}
+      errors signal conditions of the subclass
+      \code{functionNotFoundError}.
     }
   }
 

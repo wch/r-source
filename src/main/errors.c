@@ -2798,18 +2798,54 @@ NORET void R_MissingArgError(SEXP symbol, SEXP call, const char* subclass)
     R_MissingArgError_c(CHAR(PRINTNAME(symbol)), call, subclass);
 }
 
-
-NORET attribute_hidden void R_FunctionNotFoundError(SEXP call, SEXP sym)
+NORET attribute_hidden void R_ObjectNotFoundError(SEXP sym, SEXP call,
+						  const char *mode)
 {
     if (TYPEOF(sym) != SYMSXP)
 	error(_("not a symbol"));
-    SEXP cond = R_makeErrorCondition(call, "functionNotFoundError", NULL, 1,
-				     _("could not find function \"%s\""),
-				     CHAR(PRINTNAME(sym)));
+    if (call == R_CurrentExpression)
+	call = getCurrentCall();
+    PROTECT(call);
+    SEXP cond;
+    if (mode == NULL) {
+	cond = R_makeErrorCondition(call,
+				    "objectNotFoundError", NULL, 2,
+				    _("object '%s' not found"),
+				    EncodeChar(PRINTNAME(sym)));
+	mode = "any";
+    }
+    else {
+	cond = R_makeErrorCondition(call,
+				    "objectNotFoundError", NULL, 2,
+				    _("object '%s' of mode '%s' was not found"),
+				    EncodeChar(PRINTNAME(sym)),
+				    mode);
+    }
     PROTECT(cond);
     R_setConditionField(cond, 2, "name", sym);
+    R_setConditionField(cond, 3, "mode", mkString(mode));
     R_signalErrorCondition(cond, call);
-    UNPROTECT(1); // not reached
+    UNPROTECT(2); // not reached
+}
+
+NORET attribute_hidden void R_FunctionNotFoundError(SEXP sym, SEXP call)
+{
+    if (TYPEOF(sym) != SYMSXP)
+	error(_("not a symbol"));
+    if (call == R_CurrentExpression)
+	call = getCurrentCall();
+    PROTECT(call);
+    SEXP cond = R_makeErrorCondition(call,
+				     "objectNotFoundError",
+				     "functionNotFoundError",
+				     2,
+				     _("could not find function \"%s\""),
+				     EncodeChar(PRINTNAME(sym)));
+    PROTECT(cond);
+    R_setConditionField(cond, 2, "name", sym);
+    R_setConditionField(cond, 3, "mode", mkString("function"));
+    R_signalErrorCondition(cond, call);
+    UNPROTECT(2); // not reached
 }
 
 attribute_hidden /* for now */
