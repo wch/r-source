@@ -3149,6 +3149,12 @@ stopifnot(isErr)
 ## Used to segfault with ASAN due to off-by-one in context stack checks
 
 
+## out of bounds errors for arrays should include the subscript number
+stopifnot(identical(tryCatch(matrix(1:6, nrow = 2)[3, 1],
+                             error = identity)$subscript,
+                    1L))
+
+
 ## Check that headers, WRE, and non-API variables are in sync
 tools:::checkAPI()
 
