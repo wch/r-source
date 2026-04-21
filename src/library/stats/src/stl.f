@@ -69,16 +69,17 @@ c     robustness weights when there were no robustness iterations:
       return
       end
 
-      subroutine stless(y,n,len,ideg,njump,userw,rw,ys,res)
+      subroutine stless(y, n,len,ideg,njump, userw, rw,ys,res)
 
 c     implicit none
 c Arg
       integer n, len, ideg, njump
+      logical userw
       double precision y(n), rw(n), ys(n), res(n)
 c Var
       integer newnj, nleft, nright, nsh, k, i, j
       double precision delta
-      logical ok, userw
+      logical ok
 
       if(n .lt. 2) then
          ys(1) = y(1)
