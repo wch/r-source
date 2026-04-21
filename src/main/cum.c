@@ -201,8 +201,8 @@ static SEXP cumvar(SEXP x, SEXP s)
 	sum = rx[0];
     for (R_xlen_t i = 1 ; i < XLENGTH(x) ; i++) {
 	sum += rx[i];
-	var += (LDOUBLE) pow(((i + 1) * rx[i] - sum), 2.0) / (i * (i + 1)); /* NA and NaN propagated */
-	rs[i] = (double) var / i;
+	var += (LDOUBLE) (pow(((i + 1) * rx[i] - sum), 2.0) / (i * (i + 1))); /* NA and NaN propagated */
+	rs[i] = (double) (var / i);
     }
     return ISNAN(var) ? handleNaN(x, s) : s;
 }
