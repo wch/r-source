@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2016 The R Core Team.
+ *  Copyright (C) 2000-2026 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +25,7 @@
    For use by alternative front-ends and packages which need to share
    the R event loop (on Unix-alikes).
 
-   Not part of the API and subject to change without notice.
+   Part of the embedding API and subject to change without notice.
 
    NB: HAVE_SYS_SELECT_H should be checked and defined before this is
    included.

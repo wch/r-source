@@ -93,7 +93,7 @@ const char *R_ExpandFileNameUTF8(const char *);
 void	setIVector(int*, int, int);
 void	setRVector(double*, int, double);
 */
-/* Not API */
+/* Experimental API */
 Rboolean StringFalse(const char *); // used by iotools
 Rboolean StringTrue(const char *); // used by iotools
 Rboolean isBlankString(const char *); // used by iotools and openxlsx2
@@ -122,7 +122,7 @@ int findInterval(double *xt, int n, double x,
 int findInterval2(double *xt, int n, double x,
 		  Rboolean rightmost_closed,  Rboolean all_inside, Rboolean left_open,
 		  int ilo, int *mflag);
-/* Removed in 4.5.0, but still API according too WRE */
+/* Removed in 4.5.0, but still API according to WRE */
 #ifdef R_RS_H
 // Was Rboolean*, but that is not possible in Fortran.
 int F77_SUB(interv)(double *xt, int *n, double *x,

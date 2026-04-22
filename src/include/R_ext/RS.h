@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2025 The R Core Team.
+ *  Copyright (C) 1999-2026 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -44,7 +44,7 @@ extern "C" {
 
 /* S Like Memory Management */
 
-/* not of themselves API */
+/* experimental API */
 extern void *R_chk_calloc(R_SIZE_T, R_SIZE_T);
 extern void *R_chk_realloc(void *, R_SIZE_T);
 extern void R_chk_free(void *);

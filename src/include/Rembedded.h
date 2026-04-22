@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2006-2023  The R Core Team.
+ *  Copyright (C) 2006-2026  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
  *  https://www.R-project.org/Licenses/
  */
 
-/* A header for use with alternative front-ends. Not formally part of
- * the API so subject to change without notice. */
+/* A header for use with alternative front-ends. Part of the
+ * experimental embedding API so subject to change without notice. */
 
 #ifndef REMBEDDED_H_
 #define REMBEDDED_H_

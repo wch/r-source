@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2025 The R Core Team.
+ *  Copyright (C) 2001-2026 The R Core Team.
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -22,7 +22,7 @@
  */
 
 /* 
-   Not part of the API, subject to change at any time.
+   Part of the experimental API, subject to change at any time.
 */
 
 #ifndef R_CALLBACKS_H

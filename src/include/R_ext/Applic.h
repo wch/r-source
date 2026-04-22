@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2025   The R Core Team
+ *  Copyright (C) 1998-2026   The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -143,7 +143,7 @@ void fdhess(int n, double *x, double fval, fcn_p fun, void *state,
 	    double *typx);
 #endif
 
-/* Also used in packages nlme, pcaPP */
+/* Also used in packages nlme, pcaPP. Part of the experimental API. */
 void optif9(int nr, int n, double *x,
 	    fcn_p fcn, fcn_p d1fcn, d2fcn_p d2fcn,
 	    void *state, double *typsiz, double fscale, int method,

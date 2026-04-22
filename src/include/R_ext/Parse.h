@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2006 R Core Team
+ *  Copyright (C) 1998-2026 R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 /* NOTE:
    This file exports a part of the current internal parse interface.
    It is subject to change at any minor (x.y.0) version of R.
-   So not API.
+   Part of the experimental API.
  */
 
 #ifndef R_EXT_PARSE_H_

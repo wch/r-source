@@ -22,9 +22,9 @@
  *  https://www.R-project.org/Licenses/
  */
 
-/* This file is installed and available to packages, but only a small
-   part of the contents is within the API.  See chapter 6 of 'Writing
-   R Extensions'.
+/* This file is installed and available to packages. Some entry points
+   and variables are experimental and subject to change on short
+   notice.  See chapter 6 of 'Writing R Extensions'.
  */
 
 #ifndef R_INTERNALS_H_
@@ -1173,18 +1173,10 @@ enum {SORTED_DECR_NA_1ST = -2,
 			    sorted == SORTED_DECR_NA_1ST)
 
 
-/* ====================== public but non-API entry points =================
-
-   "not documented and subject to change without notice."
-
-   and that includes possible removal.
- */
+/* ====================== experimental API entry points ================= */
 
     
-/* Experimental C interface for experimental hash table support
-
-   Not in the API (at least not yet) but declared here to allow some
-   experimenting */
+/* Experimental C interface for experimental hash table support */
 
 /* try to allow some type checking */
 typedef struct { SEXP cell; } R_hashtab_type;
@@ -1229,18 +1221,10 @@ R_xlen_t R_ncol(SEXP x);
 // used by BioC::matter; marked as @eapifun for now
 SEXP R_tryWrap(SEXP);
 
-/* Rest of this file
-   Stuff that is not API and probably should not be but is getting used.
- */
-
 const char *R_curErrorBuf(void); // used by Rserve
 int (IS_SCALAR)(SEXP x, int type);
 
-/* used in a couple of packages but should probably be dropped 
-   error_return: grr rJava rbedrock
-   errorcall_return: formerly Runuran(with call=NULL)
-*/
-				/* match(.) NOT reached : for -Wall */
+/* formerly used in a couple of packages but should probably be dropped */
 #define error_return(msg)	{ Rf_error(msg);	   return R_NilValue; }
 #define errorcall_return(cl,msg){ Rf_errorcall(cl, msg);   return R_NilValue; }
 
