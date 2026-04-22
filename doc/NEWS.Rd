@@ -57,7 +57,7 @@
   \subsection{Bug Fixes}{
     \itemize{
       \item For \code{x <-  <large-POSIXlt>}, \code{c(x)}, subsetting
-    (\code{[}, \code{[[}) and subassignment such as \code{x[i] <- val} now
+    (\code{[}, \code{[[}) and \I{subassignment} such as \code{x[i] <- val} now
     work again mostly, thanks to suggestions by \I{Suharto Anggono} in
     \PR{18989}.
     }
