@@ -14633,7 +14633,7 @@ and @code{R_EmptyEnv}.
 @apivar R_BaseNamespace
 @apivar R_EmptyEnv
 
-@apifun R_ParseVector
+@eapifun R_ParseVector
 @code{R_ParseVector} is essentially the code used to implement
 @code{parse(text=)} at @R{} level.  The first argument is a character
 vector (corresponding to @code{text}) and the second the maximal
