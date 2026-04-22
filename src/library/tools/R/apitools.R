@@ -573,14 +573,14 @@ checkAPI <- function() {
     v <- subset(Rdecls(),
                 type == "F" & unmap(name) %notin% unmap(funAPI()$name))
     if (nrow(v) != 0)
-        stop(sprintf("non-API functions declared in installeed headers:",
+        stop(sprintf("non-API functions declared in installed headers: %s",
                      paste(v$name, collapse = " ")))
 
     ## Check all variables declared in installed headers are in the API
     v <- subset(Rdecls(),
                 type == "V" & name %notin% varAPI()$name)
     if (nrow(v) != 0)
-        stop(sprintf("non-API variables declared in installed headers:",
+        stop(sprintf("non-API variables declared in installed headers: %s",
                      paste(v$name, collapse = " ")))
 
     ## check API functions (except macros and FORTRAN stuff) are in headers
