@@ -36,7 +36,6 @@
 \alias{notSubsettableError}
 \alias{MissingSubscriptError}
 \alias{subscriptOutOfBoundsError}
-\alias{stackOverflowError}
 \alias{parseError}
 
 \alias{.signalSimpleWarning}
