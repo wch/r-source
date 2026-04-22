@@ -15318,8 +15318,8 @@ compilers/loaders when using @R{} as a shared library) not exported.
 @end table
 
 As of @R{} 4.6.0 there should no longer be any entry points or variables
-declared in installed header files that are not part of the one of the
-API groups.
+declared in installed header files that are not part of one of the API
+groups.
 
 @comment FIXME be more explicit as: ask on the R-devel mailing list or
 @comment post a WISHLIST PR
