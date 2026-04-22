@@ -740,20 +740,21 @@ static int PackFlags(int type, int levs, int isobj, int hasattr, int hastag)
     /* Also make sure the HASHASH bit of CHARSXP is not written out. */
     if (type == CHARSXP)
 	levs &= (~(CACHED_MASK | HASHASH_MASK));
-    else switch (type) {
-    case LGLSXP:
-    case INTSXP:
-    case REALSXP:
-    case CPLXSXP:
-    case STRSXP:
-    case VECSXP:
-    case EXPRSXP:
-    case RAWSXP:
-	levs &= ~GROWABLE_MASK;
-	break;
-    default:
-	break;
-    }
+    else
+	switch (type) {
+        case LGLSXP:
+        case INTSXP:
+        case REALSXP:
+        case CPLXSXP:
+        case STRSXP:
+        case VECSXP:
+        case EXPRSXP:
+        case RAWSXP:
+            levs &= ~GROWABLE_MASK;
+            break;
+        default:
+            break;
+        }
     val = type | ENCODE_LEVELS(levs);
     if (isobj) val |= IS_OBJECT_BIT_MASK;
     if (hasattr) val |= HAS_ATTR_BIT_MASK;
