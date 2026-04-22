@@ -15294,11 +15294,18 @@ Entry points which are documented in this manual and declared in an
 installed header file.  These can be used in distributed packages and
 ideally will only be changed after deprecation. @xref{API index}.
 
-@item public
-Entry points declared in an installed header file that are exported on
-all @R{} platforms but are not documented and subject to change without
-notice. Do not use these in distributed code. Their declarations will
-eventually be moved out of installed header files.
+@item experimental
+Entry points declared in an installed header file that are part of an
+experimental API, such as @file{R_ext/Altrep.h}. These are subject to
+change, so package authors wishing to use these should be prepared to
+adapt. @xref{Experimental API index}.
+@eapihdr R_ext/Altrep.h
+
+@item embedding
+Entry points intended primarily for embedding and creating new
+front-ends. It is not clear that this needs to be a separate category,
+but it may be useful to keep it separate for now. @xref{Embedding API
+index}.
 
 @item private
 Entry points that are used when building @R{} and exported on all @R{}
@@ -15308,20 +15315,11 @@ Do not use these in distributed code.
 @item hidden
 Entry points that are where possible (Windows and some modern Unix-alike
 compilers/loaders when using @R{} as a shared library) not exported.
-
-@item experimental
-Entry points declared in an installed header file that are part of an
-experimental API, such as @file{R_ext/Altrep.h}. These are subject to
-change, so package authors wishing to use these should be prepared to
-adapt. @xref{Experimental API index}.
-
-@item embedding
-Entry points intended primarily for embedding and creating new
-front-ends. It is not clear that this needs to be a separate category
-but it may be useful to keep it separate for now. @xref{Embedding API
-index}.
 @end table
-@eapihdr R_ext/Altrep.h
+
+As of @R{} 4.6.0 there should no longer be any entry points or variables
+declared in installed header files that are not part of the one of the
+API groups.
 
 @comment FIXME be more explicit as: ask on the R-devel mailing list or
 @comment post a WISHLIST PR
