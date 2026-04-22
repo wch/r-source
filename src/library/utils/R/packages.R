@@ -543,12 +543,16 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     ## preferred - install.packages will sort that out.
     pkg.src <- row.names(av.src)
     pkg.bin <- row.names(av.bin)
+    if (length(setdiff(pkg.bin, pkg.src))) {
+        warning("Some listed binary packages have no source")
+        pkg.bin <- intersect(pkg.bin,pkg.src)
+    }
     bin.ver <- av.bin[pkg.bin, "Version"]
     src.ver <- av.src[pkg.bin, "Version"]
     use.bin <- pkg.bin[as.numeric_version(bin.ver) >= as.numeric_version(src.ver)]
     use.bin <- use.bin[!is.na(use.bin)]
     use.src <- pkg.src[pkg.src %notin% use.bin]
-    rbind(av.src[use.src,], av.bin[use.bin, ])
+    rbind(av.src[use.src, , drop = FALSE], av.bin[use.bin, , drop = FALSE])
 }
 
 old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
