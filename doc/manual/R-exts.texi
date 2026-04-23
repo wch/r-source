@@ -1544,7 +1544,9 @@ references to the namespaces of packages that were used to create them.
 Preferably there should be no such references in data files, and in any
 case they should only be to packages listed in the @code{Depends} and
 @code{Imports} fields, as otherwise it may be impossible to install the
-package.  To check for such references, load all the images into a
+package.  To check for such references, use
+@code{tools:::namespace_loads_from_file_load()} on all image datasets,
+or load all the images into a
 vanilla @R{} session, run @code{str()} on all the datasets, and look at
 the output of @code{loadedNamespaces()}.
 
