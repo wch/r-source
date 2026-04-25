@@ -3776,7 +3776,7 @@ attribute_hidden SEXP evalListKeepMissing(SEXP el, SEXP rho)
 /* form below because it is does not cause growth of the pointer */
 /* protection stack, and because it is a little more efficient. */
 
-attribute_hidden SEXP promiseArgs(SEXP el, SEXP rho)
+static SEXP promiseArgsEx(SEXP el, SEXP rho, Rboolean forward)
 {
     SEXP ans, h, tail;
 
@@ -3820,7 +3820,18 @@ attribute_hidden SEXP promiseArgs(SEXP el, SEXP rho)
 	    COPY_TAG(tail, el);
 	}
 	else {
-	    SETCDR(tail, CONS(mkPROMISE(CAR(el), rho), R_NilValue));
+	    if (forward && TYPEOF(CAR(el)) == SYMSXP) {
+		SEXP val = findVar(CAR(el), rho);
+		if (TYPEOF(val) == PROMSXP)
+		    // repromise, or forward, argument to help with substitute()
+		    SETCDR(tail, CONS(mkPROMISE(val, rho), R_NilValue));
+		else if (val == R_MissingArg)
+		    SETCDR(tail, CONS(R_MissingArg, R_NilValue));
+		else
+		    SETCDR(tail, CONS(mkPROMISE(CAR(el), rho), R_NilValue));
+	    }
+	    else
+		SETCDR(tail, CONS(mkPROMISE(CAR(el), rho), R_NilValue));
 	    tail = CDR(tail);
 	    COPY_TAG(tail, el);
 	}
@@ -3830,6 +3841,11 @@ attribute_hidden SEXP promiseArgs(SEXP el, SEXP rho)
     ans = CDR(ans);
     DECREMENT_REFCNT(ans);
     return ans;
+}
+
+attribute_hidden SEXP promiseArgs(SEXP el, SEXP rho)
+{
+    return promiseArgsEx(el, rho, FALSE);
 }
 
 
@@ -9508,4 +9524,35 @@ void R_UnmatchArgs(SEXP forms, SEXP env)
 	defineVar(R_DotsSymbol, dots, env);
 	UNPROTECT(1); /* dots */
     }
+}
+
+SEXP R_DispatchClosure(SEXP generic, SEXP mname, SEXP method,
+		       SEXP rho, SEXP callrho)
+{
+    CHECK_TYPE(generic, CLOSXP);
+    CHECK_TYPE(mname, SYMSXP);
+    CHECK_TYPE(method, CLOSXP);
+    CHECK_TYPE(rho, ENVSXP);
+    CHECK_TYPE_OR_NULL(callrho, ENVSXP); // ignored for now
+
+    SEXP call = PROTECT(LCONS(mname, R_NilValue));
+    for (SEXP f = FORMALS(generic), a = call; f != R_NilValue; f = CDR(f)) {
+	SEXP sym = TAG(f);
+	if (sym == R_DotsSymbol) {
+	    if (R_DotsExist(rho)) {
+		SETCDR(a, CONS(sym, R_NilValue));
+		a = CDR(a);
+	    }
+	}
+	else {
+	    SETCDR(a, CONS(sym, R_NilValue));
+	    SET_TAG(CDR(a), sym);
+	    a = CDR(a);
+	}
+    }
+
+    SEXP pargs = PROTECT(promiseArgsEx(CDR(call), rho, TRUE));
+    SEXP val = applyClosure(call, method, pargs, rho, R_NilValue, TRUE);
+    UNPROTECT(2); // call, pargs
+    return val;
 }
