@@ -12651,7 +12651,7 @@ Here is a small example of creating an @R{} numeric vector in C code:
 
     SEXP ab;
       ....
-    ab = PROTECT(RF_allocVector(REALSXP, 2));
+    ab = PROTECT(Rf_allocVector(REALSXP, 2));
     REAL(ab)[0] = 123.45;
     REAL(ab)[1] = 67.89;
     UNPROTECT(1);
@@ -14229,7 +14229,7 @@ the definition of @code{do_docall} in @file{src/main/coerce.c}.
 
 @example
     SEXP s, t;
-    t = s = PROTECT(RF_allocLang(3));
+    t = s = PROTECT(Rf_allocLang(3));
     SETCAR(t, Rf_install("print")); t = CDR(t);
     SETCAR(t,  CAR(a)); t = CDR(t);
     SETCAR(t, Rf_ScalarInteger(digits));
