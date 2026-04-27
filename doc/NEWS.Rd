@@ -38,7 +38,9 @@
 
   \subsection{Installation}{
     \itemize{
-      \item .
+      \item Building R, e.g., on Ubuntu 26.04, using \command{--package-metadata}
+        needs to use a different \command{sed} separator than \code{:},
+	fixing \PR{19060}, thanks to \I{Jeroen Ooms} and \I{Dirk Eddelbuettel}.
     }
   }
 
@@ -57,9 +59,12 @@
   \subsection{Bug Fixes}{
     \itemize{
       \item For \code{x <-  <large-POSIXlt>}, \code{c(x)}, subsetting
-    (\code{[}, \code{[[}) and \I{subassignment} such as \code{x[i] <- val} now
-    work again mostly, thanks to suggestions by \I{Suharto Anggono} in
-    \PR{18989}.
+      (\code{[}, \code{[[}) and \I{subassignment} such as \code{x[i] <- val} now
+      work again mostly, thanks to suggestions by \I{Suharto Anggono} in
+      \PR{18989}.
+
+      \item \code{cut(1:11, {})} now signals an error for the invalid
+      \code{breaks}, fixing \PR{19060}, thanks to \I{Kevin Ushey}.
     }
   }
 }
@@ -874,7 +879,7 @@
       \code{v} is now converted to the time zone of \code{dat}, before
       being assigned, see \PR{18919}.
 
-      \item The \code{"tzcode"} attribute of \code{"POSIXlt"} objects
+      \item The \code{"tzone"} attribute of \code{"POSIXlt"} objects
       should no longer depend on earlier calls, fixing \PR{19005} thanks to
       \I{Ivan Krylov}, a patch by \I{Suharto Anggono} and reports of
       \dQuote{\I{Non-deterministic POSIXlt tzone in Europe/London ..}} on

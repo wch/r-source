@@ -1238,7 +1238,8 @@ for(nr in 0:2) {
 gp  <- getVaW(pbinom(1234560:1234570, 9876543.2, 1/8))
 (gdp <- getVaW(dpois(9876543 + (2:8)/10, 1e7)))
 stopifnot(exprs = {
-    identical(gd, structure(rep(NaN, 11), warning = "NaNs produced"))
+    !englishMsgs ||
+        identical(gd, structure(rep(NaN, 11), warning = "NaNs produced"))
     identical(gd, gp)
     identical(gdp, structure(rep(0,7), # only *last* warning:
                              warning = "non-integer x = 9876543.800000"))
@@ -1252,7 +1253,9 @@ t0 <- getVaW(terms(y ~ a+b, abb = 1))
 t1 <- getVaW(terms(y ~ a+b, neg.out = 0))
 t2 <- getVaW(terms(y ~ a+b, abb=NA, neg.out=NA))
 stopifnot(exprs = {
+    !englishMsgs ||
     identical(t0, structure(tt, warning = "setting 'abb' in terms.formula() is deprecated"))
+    !englishMsgs ||
     identical(t1, structure(tt, warning = "setting 'neg.out' in terms.formula() is deprecated"))
     identical(t2, t1)
 })
@@ -3157,6 +3160,13 @@ stopifnot(identical(tryCatch(matrix(1:6, nrow = 2)[3, 1],
 
 ## Check that headers, WRE, and non-API variables are in sync
 tools:::checkAPI()
+## New functionality, takes a few secs
+
+
+## cut(*, <empty breaks>) -- PR#19057
+assertErrV( cut(1:3, {}) )
+## gave an <NA> vector w/ bizarre levels in R <= 4.6.0
+
 
 
 ## keep at end
