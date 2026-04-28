@@ -33,10 +33,6 @@
 
       \item Condition classes used internally for signaling some errors
       are now documented in \code{?conditions}.
-
-      \item The \LaTeX class \samp{jss} bundled in
-      \file{share/texmf/tex/latex/jss.cls} has been updated
-      to work with \samp{hyperref} version 7.01q (2026/04/24).
     }
   }
 
@@ -71,6 +67,19 @@
       \code{breaks}, fixing \PR{19060}, thanks to \I{Kevin Ushey}.
     }
   }
+}
+
+
+\section{\Rlogo Changes in R 4.6.0 patched}{
+
+  \subsection{New Features}{
+    \itemize{
+      \item The \LaTeX class \samp{jss} bundled in
+      \file{share/texmf/tex/latex/jss.cls} has been updated
+      to work with \samp{hyperref} version 7.01q (2026/04/24).
+    }
+  }
+
 }
 
 \section{\Rlogo Changes in R 4.6.0}{
