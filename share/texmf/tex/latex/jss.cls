@@ -1,8 +1,8 @@
 %%
 %% This is file `jss.cls',
-\def\fileversion{3.4}
+\def\fileversion{3.6}
 \def\filename{jss}
-\def\filedate{2023/03/05}
+\def\filedate{2026/04/28}
 %%
 %% Package `jss' to use with LaTeX2e for JSS publications (https://www.jstatsoft.org/)
 %% License: GPL-2 | GPL-3
@@ -253,6 +253,7 @@
 %% required packages
 \RequirePackage{hyperref}
 %% new \maketitle
+\newcommand{\centerheader}[1]{\null\hfill#1\hfill\null}
 \def\@myoddhead{
   {\color{white} JSS}\\[-1.42cm]
   \hspace{-2em} \includegraphics[height=23mm,keepaspectratio]{jsslogo} \hfill
@@ -287,9 +288,9 @@
 
     \thispagestyle{empty}
     \if@nojss
-      \markboth{\centerline{\@Shorttitle}}{\centerline{\@Hyperauthor}}
+      \markboth{\centerheader{\@Shorttitle}}{\centerheader{\@Hyperauthor}}
     \else
-      \markboth{\centerline{\@Shorttitle}}{\centerline{\@Hypersubject}}
+      \markboth{\centerheader{\@Shorttitle}}{\centerheader{\@Hypersubject}}
     \fi
     \pagestyle{myheadings}
   }
@@ -310,13 +311,13 @@
    \setcounter{footnote}{0}
 
    \if@noheadings
-    %% \markboth{\centerline{\@Shorttitle}}{\centerline{\@Hypersubject}}
+    %% \markboth{\centerheader{\@Shorttitle}}{\centerheader{\@Hypersubject}}
     \else
      \thispagestyle{empty}
       \if@nojss
-        \markboth{\centerline{\@Shorttitle}}{\centerline{\@Hyperauthor}}
+        \markboth{\centerheader{\@Shorttitle}}{\centerheader{\@Hyperauthor}}
       \else
-        \markboth{\centerline{\@Shorttitle}}{\centerline{\@Hypersubject}}
+        \markboth{\centerheader{\@Shorttitle}}{\centerheader{\@Hypersubject}}
       \fi
      \pagestyle{myheadings}
    \fi
@@ -467,7 +468,7 @@
 \if@notitle
   %% \AtBeginDocument{\maketitle}
 \else
-  \@ifundefined{AddToHook}{\AtBeginDocument{\maketitle}}{\AddToHook{begindocument}[maketitle]{\maketitle}}
+  \@ifundefined{AddToHook}{\AtBeginDocument{\maketitle}}{\AddToHook{begindocument/end}[maketitle]{\maketitle}}
 \fi
 %% commands
 \newcommand\code{\bgroup\@makeother\_\@makeother\~\@makeother\$\@codex}
