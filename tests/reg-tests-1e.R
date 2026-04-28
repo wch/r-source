@@ -3168,6 +3168,20 @@ assertErrV( cut(1:3, {}) )
 ## gave an <NA> vector w/ bizarre levels in R <= 4.6.0
 
 
+## Tailcall in non-tail position: jump, like return()
+stopifnot((function() 1 + Tailcall(log, 1))() == 0)
+
+## Tailcall stops at context in .Internal(eval()) for now, like return()
+local({
+    f <- function(x) {
+        e <- environment()
+        g <- function(x) evalq(Tailcall(identity, x), e)
+        g(x)
+        "B"
+    }
+    stopifnot(identical(f("A"), "B"))
+})
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -3014,33 +3014,6 @@ NORET attribute_hidden SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
     findcontext(CTXT_BROWSER | CTXT_FUNCTION, rho, v);
 }
 
-static Rboolean checkTailPosition(SEXP call, SEXP code, SEXP rho)
-{
-    /* Could allow for switch() as well.
-
-       Ideally this should check that functions are from base;
-       pretty safe bet for '{' and 'if'.
-
-       Constructed code containing the call in multiple places could
-       produce false positives.
-
-       All this would be best done at compile time. */
-    if (call == code)
-	return TRUE;
-    else if (TYPEOF(code) == LANGSXP) {
-	if (CAR(code) == R_BraceSymbol) {
-	    while (CDR(code) != R_NilValue)
-		code = CDR(code);
-	    return checkTailPosition(call, CAR(code), rho);
-	}
-	else if (CAR(code) == R_IfSymbol)
-	    return checkTailPosition(call, CADDR(code), rho) ||
-		checkTailPosition(call, CADDDR(code), rho);
-	else return FALSE;
-    }
-    else return FALSE;
-}
-
 attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #ifdef SUPPORT_TAILCALL
@@ -3077,21 +3050,29 @@ attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(expr);
     PROTECT(env);
 
-    /* A jump should only be used if there are no on.exit expressions
-       and the call is in tail position. Determining tail position
-       accurately in the AST interprester would be expensive, so this
-       is an approximation for now. The compiler could do a better
-       job, and eventually we may want to only jump from a compiled
-       call.  The JIT could be taught to always compile functions
-       containing Tailcall/Exec calls. */
-    Rboolean jump_OK =
-	(R_GlobalContext->conexit == R_NilValue &&
-	 R_GlobalContext->callflag & CTXT_FUNCTION &&
-	 R_GlobalContext->cloenv == rho &&
-	 TYPEOF(R_GlobalContext->callfun) == CLOSXP &&
-	 checkTailPosition(call, BODY_EXPR(R_GlobalContext->callfun), rho));
+    RCNTXT *target = NULL;
+    int mask = CTXT_BROWSER | CTXT_FUNCTION;
+    for (RCNTXT *cptr = R_GlobalContext;
+         cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
+         cptr = cptr->nextcontext) {
+	if (cptr->conexit != R_NilValue || cptr->cend != NULL)
+	    break; // don't jump if there is clean-up code on the stack
+        else if ((cptr->callflag & mask) &&
+		 // like do_return don't check for a CLOSXP for now
+		 // TYPEOF(cptr->callfun) == CLOSXP &&
+		 cptr->cloenv == rho) {
+            target = cptr;
+            break;
+        }
+    }
 
-    if (jump_OK) {
+    /* Ordinarily Tailcall/Exec will only be used in tail position in
+       a closure. Used in non-tail position it can be viewed as
+       invoking the continuation for the closure call, similar to
+       calling return(). So this no longer tries to prevent use in
+       non-tail position. */
+
+    if (target != NULL) {
 	/* computing the function before the jump allows the idiom
 	   Tailcall(sys.function(), ...) to be used */
 	SEXP fun = CAR(expr);
@@ -3113,10 +3094,11 @@ attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SET_VECTOR_ELT(val, 2, env);
 	SET_VECTOR_ELT(val, 3, fun);
 
-	R_jumpctxt(R_GlobalContext, CTXT_FUNCTION, val);
+	R_jumpctxt(target, CTXT_FUNCTION, val);
     }
     else {
 	/**** maybe have an optional diagnostic about why no tail call? */
+	/**** or even signal an error as return() does? */
 	SEXP val = eval(expr, rho);
 	UNPROTECT(2); /* expr, rho */
 	return val;
