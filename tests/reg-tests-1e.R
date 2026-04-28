@@ -3182,6 +3182,14 @@ local({
     stopifnot(identical(f("A"), "B"))
 })
 
+## Tailcall handles substitute() missing args in caller like S3 dispatch
+local({
+    f <- function(x) Tailcall(function(y) substitute(y), x)
+    stopifnot(identical(f(1 + 2), quote(1 + 2)))
+    g <- function(x) Tailcall(function(y = 1) y, x)
+    stopifnot(g() == 1)
+})
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

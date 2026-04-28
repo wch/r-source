@@ -2185,6 +2185,7 @@ static R_INLINE Rboolean is_exec_continuation(SEXP val)
 
 static SEXP applyClosure_core(SEXP, SEXP, SEXP, SEXP, SEXP, Rboolean);
 
+static SEXP promiseArgsEx(SEXP, SEXP, Rboolean);
 static R_INLINE SEXP handle_exec_continuation(SEXP val)
 {
     while (is_exec_continuation(val)) {
@@ -2194,7 +2195,7 @@ static R_INLINE SEXP handle_exec_continuation(SEXP val)
 	SEXP op = PROTECT(VECTOR_ELT(val, 3));
 
 	if (TYPEOF(op) == CLOSXP) {
-	    SEXP arglist = PROTECT(promiseArgs(CDR(call), rho));
+	    SEXP arglist = PROTECT(promiseArgsEx(CDR(call), rho, TRUE));
 	    SEXP suppliedvars = R_NilValue;
 	    val = applyClosure_core(call, op, arglist, rho, suppliedvars, TRUE);
 # ifdef ADJUST_ENVIR_REFCNTS
