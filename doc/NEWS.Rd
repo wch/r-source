@@ -5,6 +5,19 @@
 \title{R News}
 \encoding{UTF-8}
 
+
+\section{\Rlogo Changes in R 4.6.0 patched}{
+
+  \subsection{New Features}{
+    \itemize{
+      \item The \LaTeX class \samp{jss} bundled in
+      \file{share/texmf/tex/latex/jss.cls} has been updated
+      to work with \samp{hyperref} version 7.01q (2026/04/24).
+    }
+  }
+
+}
+
 \section{\Rlogo Changes in R 4.6.0}{
 
   \subsection{Significant User-Visible Changes}{
@@ -815,7 +828,7 @@
       \code{v} is now converted to the time zone of \code{dat}, before
       being assigned, see \PR{18919}.
 
-      \item The \code{"tzcode"} attribute of \code{"POSIXlt"} objects
+      \item The \code{"tzone"} attribute of \code{"POSIXlt"} objects
       should no longer depend on earlier calls, fixing \PR{19005} thanks to
       \I{Ivan Krylov}, a patch by \I{Suharto Anggono} and reports of
       \dQuote{\I{Non-deterministic POSIXlt tzone in Europe/London ..}} on
