@@ -64,7 +64,7 @@
       \PR{18989}.
 
       \item \code{cut(1:11, {})} now signals an error for the invalid
-      \code{breaks}, fixing \PR{19060}, thanks to \I{Kevin Ushey}.
+      \code{breaks}, fixing \PR{19057}, thanks to \I{Kevin Ushey}.
 
       \item \code{abbreviate(<non-ASCII>)} now works better, using
       \code{iswlower()} and \code{*upper()} to treat \dQuote{wide}
