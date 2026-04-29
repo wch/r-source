@@ -15,7 +15,7 @@
 #  https://www.R-project.org/Licenses/
 
 # Statlib code by John Chambers, Bell Labs, 1994
-# Changes Copyright (C) 1998-2025 The R Core Team
+# Changes Copyright (C) 1998-2026 The R Core Team
 
 
 ## As from R 2.4.0, row.names can be either character or integer.
@@ -254,6 +254,7 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE, ...,
 	    row.names <- character()
 	else if(length(row.names <- names(x)) != nrows || anyDuplicated(row.names))
 	    row.names <- .set_row_names(nrows)
+        else if(anyNA(row.names)) stop("row names contain missing values")
     }
     else if(!(is.character(row.names) || is.integer(row.names)) || length(row.names) != nrows)
 	stop(gettextf("'row.names' is not a character or integer vector of length %d", nrows),

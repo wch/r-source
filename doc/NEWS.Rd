@@ -70,6 +70,11 @@
       \code{iswlower()} and \code{*upper()} to treat \dQuote{wide}
       characters, thanks to \I{Kevin}'s \PR{19058}.
 
+      \item In an \R installation without \acronym{NLS}, e.g., from
+      \command{--disable-nls} configuration, the C \code{ngettext()}
+      replacement now also keeps plural for \dQuote{0 things}, thanks to
+      \I{Michael Chirico}'s \PR{19065}.
+
       \item \code{as.data.frame.vector(<row.names_w/_NA>)} now signals
       the same error as \code{data.frame()}, fixing \I{Hervé Pagès}'
       \PR{19059}.

@@ -3191,6 +3191,20 @@ local({
 })
 
 
+## In a  --disable-nls configuration, "0 things" should remain plural; PR#19065
+mE <- tryCid( sin() )
+stopifnot(inherits(mE, "error"))
+if(englishMsgs)
+    stopifnot(grepl("0 arguments passed to 'sin'", conditionMessage(mE)))
+## gave "0 argument passed .." in R <= 4.6.0 (--disable-nls)
+
+
+## as.data.frame.vector() with NA rownames -- PR#19059
+assertErrV( as.data.frame(setNames(11:12, c("a", NA))) )
+## gave a data frame with `NA` in row names, in R <= 4.6.0
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
