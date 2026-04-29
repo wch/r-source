@@ -69,6 +69,10 @@
       \item \code{abbreviate(<non-ASCII>)} now works better, using
       \code{iswlower()} and \code{*upper()} to treat \dQuote{wide}
       characters, thanks to \I{Kevin}'s \PR{19058}.
+
+      \item \code{as.data.frame.vector(<row.names_w/_NA>)} now signals
+      the same error as \code{data.frame()}, fixing \I{Hervé Pagès}'
+      \PR{19059}.
     }
   }
 }

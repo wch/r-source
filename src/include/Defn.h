@@ -855,7 +855,7 @@ R_xlen_t  (XTRUELENGTH)(SEXP x);
 
 #ifdef USE_RINTERNALS
 
-/* Test macros with function versions above */
+/* Test macros with function versions in  Rinternals.h , included above  */
 #undef isNull
 #define isNull(s)	(TYPEOF(s) == NILSXP)
 #undef isSymbol
@@ -877,7 +877,7 @@ R_xlen_t  (XTRUELENGTH)(SEXP x);
 
 /* macro version of R_CheckStack */
 #define R_CheckStack() do {						\
-	NORET void R_SignalCStackOverflow(intptr_t);				\
+	NORET void R_SignalCStackOverflow(intptr_t);			\
 	int dummy;							\
 	intptr_t usage = R_CStackDir * (R_CStackStart - (uintptr_t)&dummy); \
 	if(R_CStackLimit != (uintptr_t)(-1) && usage > ((intptr_t) R_CStackLimit)) \
@@ -998,7 +998,7 @@ extern void R_WaitEvent(void);
 # define FILESEP     "/"
 #endif /* Win32 */
 
-/* F77_SYMBOL was a minimal version of F77_SUB from RS.h, 
+/* F77_SYMBOL was a minimal version of F77_SUB from RS.h,
    used in main/util.c and main/registration.c
    F77_QSYMBOL is unused
 #ifdef HAVE_F77_UNDERSCORE
@@ -2019,7 +2019,7 @@ int R_XDRDecodeInteger(void *buf);
 # define yylval			Rf_yylval
 # define yynerrs		Rf_yynerrs
 # define yyparse		Rf_yyparse
-        
+
 /* Platform Dependent Gui Hooks */
 
 #define	R_CONSOLE	1
@@ -2528,7 +2528,7 @@ extern const char *locale2charset(const char *);
 # else /* not NLS */
 #  define _(String) (String)
 #  define N_(String) String
-#  define ngettext(String, StringP, N) (N > 1 ? StringP: String)
+#  define ngettext(String, StringP, N) (N != 1 ? StringP: String)
 # endif
 #endif
 
