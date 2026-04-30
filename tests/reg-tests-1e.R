@@ -3190,6 +3190,11 @@ local({
     stopifnot(g() == 1)
 })
 
+## Tailcall handles parent.frame() like caller
+f <- function() Tailcall(function() parent.frame())
+e <- f()
+stopifnot(identical(e, .GlobalEnv))
+
 
 ## In a  --disable-nls configuration, "0 things" should remain plural; PR#19065
 mE <- tryCid( sin() )

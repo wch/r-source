@@ -2183,7 +2183,7 @@ static R_INLINE Rboolean is_exec_continuation(SEXP val)
 	    VECTOR_ELT(val, 0) == R_exec_token);
 }
 
-static SEXP applyClosure_core(SEXP, SEXP, SEXP, SEXP, SEXP, Rboolean);
+static SEXP applyClosure_core(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, Rboolean);
 
 static SEXP promiseArgsEx(SEXP, SEXP, Rboolean);
 static R_INLINE SEXP handle_exec_continuation(SEXP val)
@@ -2195,9 +2195,18 @@ static R_INLINE SEXP handle_exec_continuation(SEXP val)
 	SEXP op = PROTECT(VECTOR_ELT(val, 3));
 
 	if (TYPEOF(op) == CLOSXP) {
+	    SEXP callrho = R_GlobalEnv;
+	    for (RCNTXT *cptr = R_GlobalContext;
+		 cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
+		 cptr = cptr->nextcontext)
+		if (cptr->callflag & CTXT_FUNCTION) {
+		    callrho = cptr->cloenv;
+		    break;
+		}
 	    SEXP arglist = PROTECT(promiseArgsEx(CDR(call), rho, TRUE));
 	    SEXP suppliedvars = R_NilValue;
-	    val = applyClosure_core(call, op, arglist, rho, suppliedvars, TRUE);
+	    val = applyClosure_core(call, op, arglist, rho, suppliedvars,
+				    callrho, TRUE);
 # ifdef ADJUST_ENVIR_REFCNTS
 	    R_CleanupEnvir(rho, val);
 # endif
@@ -2289,7 +2298,8 @@ static SEXP make_applyClosure_env(SEXP call, SEXP op, SEXP arglist, SEXP rho,
 
 /* Apply SEXP op of type CLOSXP to actuals */
 static SEXP applyClosure_core(SEXP call, SEXP op, SEXP arglist, SEXP rho,
-			      SEXP suppliedvars, Rboolean unpromise)
+			      SEXP suppliedvars, SEXP sysparent,
+			      Rboolean unpromise)
 {
     SEXP newrho = make_applyClosure_env(call, op, arglist, rho, suppliedvars);
     PROTECT(newrho);
@@ -2297,11 +2307,11 @@ static SEXP applyClosure_core(SEXP call, SEXP op, SEXP arglist, SEXP rho,
     /*  If we have a generic function we need to use the sysparent of
 	the generic as the sysparent of the method because the method
 	is a straight substitution of the generic.  */
+    if (sysparent == R_NilValue)
+	sysparent = (R_GlobalContext->callflag == CTXT_GENERIC) ?
+	    R_GlobalContext->sysparent : rho;
 
-    SEXP val = R_execClosure(call, newrho,
-			     (R_GlobalContext->callflag == CTXT_GENERIC) ?
-			     R_GlobalContext->sysparent : rho,
-			     rho, arglist, op);
+    SEXP val = R_execClosure(call, newrho, sysparent, rho, arglist, op);
 #ifdef ADJUST_ENVIR_REFCNTS
     Rboolean is_getter_call =
 	(CADR(call) == R_TmpvalSymbol && ! R_isReplaceSymbol(CAR(call)));
@@ -2321,7 +2331,7 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho,
 		  SEXP suppliedvars, Rboolean unpromise)
 {
     SEXP val = applyClosure_core(call, op, arglist, rho,
-				 suppliedvars, unpromise);
+				 suppliedvars, R_NilValue, unpromise);
 #ifdef SUPPORT_TAILCALL
     val = handle_exec_continuation(val);
 #endif
@@ -3030,7 +3040,8 @@ attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	REPROTECT(args = evalListKeepMissing(args, rho), api);
 	expr = CAR(args);
         if (expr == R_MissingArg)
-	    R_MissingArgError(install("expr"), getLexicalCall(rho), "tailcallError");
+	    R_MissingArgError(install("expr"),
+			      getLexicalCall(rho), "tailcallError");
 	if (TYPEOF(expr) == EXPRSXP && XLENGTH(expr) == 1)
 	    expr = VECTOR_ELT(expr, 0);
 	if (TYPEOF(expr) != LANGSXP)
@@ -3043,7 +3054,8 @@ attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
     else { // tailcall
 	/* could do argument matching here */
 	if (args == R_NilValue || CAR(args) == R_MissingArg)
-	    R_MissingArgError(install("FUN"), getLexicalCall(rho), "tailcallRecError");
+	    R_MissingArgError(install("FUN"),
+			      getLexicalCall(rho), "tailcallRecError");
 	expr = LCONS(CAR(args), CDR(args));
 	env = rho;
     }
