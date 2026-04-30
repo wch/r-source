@@ -256,6 +256,7 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE, ...,
 	    row.names <- .set_row_names(nrows)
         else if(anyNA(row.names)) stop("row names contain missing values")
     }
+    else if(anyNA(row.names)) stop("row names contain missing values")
     else if(!(is.character(row.names) || is.integer(row.names)) || length(row.names) != nrows)
 	stop(gettextf("'row.names' is not a character or integer vector of length %d", nrows),
              domain = NA)
@@ -453,20 +454,23 @@ data.frame <-
     object <- as.list(substitute(list(...)))[-1L]
     mirn <- missing(row.names) # record before possibly changing
     mrn  <- is.null(row.names) # missing or NULL
+    fixRN <- function(rownms) {
+        if(is.object(rownms) || !is.integer(rownms))
+            rownms <- as.character(rownms)
+        if(anyNA(rownms))
+            stop("row names contain missing values")
+        if(anyDuplicated(rownms))
+            stop(gettextf("duplicate row.names: %s",
+                          paste(unique(rownms[duplicated(rownms)]),
+                                collapse = ", ")),
+                 domain = NA)
+        ## else return
+        rownms
+    }
     x <- list(...)
     n <- length(x)
     if(n < 1L) {
-        if(!mrn) {
-            if(is.object(row.names) || !is.integer(row.names))
-                row.names <- as.character(row.names)
-            if(anyNA(row.names))
-                stop("row names contain missing values")
-            if(anyDuplicated(row.names))
-                stop(gettextf("duplicate row.names: %s",
-                              paste(unique(row.names[duplicated(row.names)]),
-                                    collapse = ", ")),
-                     domain = NA)
-        } else row.names <- integer()
+        row.names <- if(!mrn) fixRN(row.names) else integer()
 	return(structure(list(), names = character(),
                          row.names = row.names,
 			 class = "data.frame"))
@@ -575,16 +579,7 @@ data.frame <-
     if(is.null(row.names))
         attr(value, "row.names") <- .set_row_names(nr) #seq_len(nr)
     else {
-        if(is.object(row.names) || !is.integer(row.names))
-            row.names <- as.character(row.names)
-        if(anyNA(row.names))
-            stop("row names contain missing values")
-        if(anyDuplicated(row.names))
-            stop(gettextf("duplicate row.names: %s",
-                          paste(unique(row.names[duplicated(row.names)]),
-                                collapse = ", ")),
-                 domain = NA)
-        row.names(value) <- row.names
+        row.names(value) <- fixRN(row.names)
     }
     value
 }

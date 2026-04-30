@@ -3205,7 +3205,10 @@ if(englishMsgs)
 
 
 ## as.data.frame.vector() with NA rownames -- PR#19059
-assertErrV( as.data.frame(setNames(11:12, c("a", NA))) )
+e1 <- tryCid( as.data.frame(setNames(11:12, c("a", NA))) ) ## and the same, explicitly:
+e2 <- tryCid( as.data.frame(         11:12, c("a", NA))  )
+writeLines(as.character(e1))
+stopifnot(identical(e1$message, e2$message), identical(class(e1), class(e2)))
 ## gave a data frame with `NA` in row names, in R <= 4.6.0
 
 

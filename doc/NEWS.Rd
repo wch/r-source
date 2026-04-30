@@ -77,7 +77,9 @@
 
       \item \code{as.data.frame.vector(<row.names_w/_NA>)} now signals
       the same error as \code{data.frame()}, fixing \I{Hervé Pagès}'
-      \PR{19059}.
+      \PR{19059}.  From \I{Suharto Anggono}'s \code{#c4}, it gives the same
+      error also when \code{row.names = RN} explicitly, where \code{RN} has
+      \code{NA}s.
     }
   }
 }
