@@ -80,6 +80,8 @@ Sweave(f <- "Sexpr-verb-ex.Rnw")
 tools::texi2pdf(sub("Rnw$","tex", f))# used to fail
 
 ### ------------------------------------ 5 ----------------------------------
+## test PDF conversion of jss.cls including toBibtex(citation())
+stopifnot(tools::Rcmd(c("Sweave", "--pdf", "jss.Rnw")) == 0)
 ## render the installed Rnw file from example(Sweave), using R CMD Sweave
 testfile <- system.file("Sweave", "Sweave-test-1.Rnw", package = "utils")
 stopifnot(exprs = {

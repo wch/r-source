@@ -1,0 +1,14 @@
+\documentclass[nojss]{jss}
+\Abstract{\citet{R}}
+
+\begin{document}
+
+<<bib, echo=FALSE>>=
+mybibentry <- citation()
+mybibentry$key <- "R"
+mybibentry$note <- R.version.string
+writeLines(toBibtex(mybibentry), "jss.bib")
+@
+\bibliography{jss}
+
+\end{document}
