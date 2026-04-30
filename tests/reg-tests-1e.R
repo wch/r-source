@@ -3209,6 +3209,31 @@ assertErrV( as.data.frame(setNames(11:12, c("a", NA))) )
 ## gave a data frame with `NA` in row names, in R <= 4.6.0
 
 
+## abbreviate(<non-ASCII>) -- PR#19058
+ch1 <- intToUtf8(c(112L, 345L, 237L, 115:116, 345L, 101L, 353L, 101L, 107L))
+lcct <- Sys.getlocale("LC_CTYPE") # saved
+Sys.getlocale() # just for info ..
+for(loc in c("C", if(onWindows) c("", "English_US.utf8") else "C.UTF-8")) {
+                      ## Windows: "" means 'the implementation-defined native environment'
+    locW <- getVaW(lc <- Sys.setlocale("LC_CTYPE", loc))# warning on Windows & some server Linux, incl docker/podman.
+    cat("Warning?", attr(locW, "warning") %||% "No; all fine", "\n")
+    if(!is.null(lc) && nzchar(lc)) { # when Sys.setlocale() worked supposedly
+        cat("\n", lc, ": ", sep="")
+        suppressWarnings(a1 <- abbreviate(ch1)) # FIXME - should it warn even when "correct"?
+        ## In abbreviate("přístřešek") : abbreviate used with non-ASCII chars
+        print(a1) # correctly "přst" *in* case
+        print(hasUTF8 <- grepl("utf-?8$", print(Sys.getlocale("LC_CTYPE")), ignore.case=TRUE))
+        stopifnot(identical(ch1, names(a1)),
+                  identical(c(112L, 345L, if(hasUTF8 || grepl("macOS", osVersion))
+                                               c(115L, if(onWindows) 345L else 116L)
+                                          else c(345L, 353L)),
+                            print(utf8ToInt(a1))))
+    }
+}
+if(!is.null(lc <- lcct) && nzchar(lc)) Sys.setlocale("LC_CTYPE", lc) # revert
+## <chars>(a1)[3:4] were different in R <= 4.6.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

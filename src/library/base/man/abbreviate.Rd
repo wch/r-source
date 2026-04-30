@@ -1,6 +1,6 @@
 % File src/library/base/man/abbreviate.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2026 R Core Team
 % Copyright 2008-2016 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -66,14 +66,17 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   attached to the returned value as a \code{\link{names}} attribute: no
   other attributes are retained.
 
-  If a input element contains non-ASCII characters, the corresponding
+  If an input element contains non-ASCII characters, the corresponding
   value will be in UTF-8 and marked as such (see \code{\link{Encoding}}).
 }
 \section{Warning}{
   If \code{use.classes} is true (the default), this is really only
   suitable for English, and prior to \R 3.3.0 did not work correctly
   with non-ASCII characters in multibyte locales.  It will warn if used
-  with non-ASCII characters (and required to reduce the length).  It is
+  with non-ASCII characters (and required to reduce the length).  Note that
+  the result may depend on \code{\link{Sys.getlocale}("LC_CTYPE")}, and
+  e.g., for the \code{"C"} locale currently may depend on the platform,
+  at least macOS behaving differently.  It is
   unlikely to work well with inputs not in the Unicode Basic Multilingual
   Plane nor on (rare) platforms where wide characters are not encoded in
   Unicode.
