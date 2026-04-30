@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2025  The R Core Team
+ *  Copyright (C) 1997-2026  The R Core Team
  *  Copyright (C) 2003-2023  The R Foundation
  *  Copyright (C) 1995,1996  Robert Gentleman, Ross Ihaka
  *
@@ -1165,7 +1165,7 @@ static SEXP coerceSymbol(SEXP v, SEXPTYPE type)
     else if (type == STRSXP)
 	rval = ScalarString(PRINTNAME(v));
     else
-	warning(_("'%s' object cannot be coerced to type '%s'"),
+	error(_("'%s' object cannot be coerced to type '%s'"),
 		"symbol", type2char(type));
     return rval;
 }
@@ -1448,13 +1448,11 @@ SEXP asCharacterFactor(SEXP x)
 
 attribute_hidden SEXP do_asatomic(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, x;
-
-    int type = STRSXP, op0 = PRIMVAL(op);
-    char *name = NULL /* -Wall */;
-
     check1arg(args, call, "x");
-    switch(op0) {
+
+    char *name = NULL /* -Wall */;
+    int type = STRSXP;
+    switch(PRIMVAL(op)) {
     case 0:
 	name = "as.character"; break;
     case 1:
@@ -1474,6 +1472,7 @@ attribute_hidden SEXP do_asatomic(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* DispatchOrEval internal generic: as.complex */
     /* DispatchOrEval internal generic: as.logical */
     /* DispatchOrEval internal generic: as.raw */
+    SEXP ans;
     if (DispatchOrEval(call, op, name, args, rho, &ans, 0, 1))
 	return(ans);
 
@@ -1481,7 +1480,7 @@ attribute_hidden SEXP do_asatomic(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* run the generic internal code */
 
     checkArity(op, args);
-    x = CAR(args);
+    SEXP x = CAR(args);
     if(TYPEOF(x) == type) {
 	if(ATTRIB(x) == R_NilValue) return x;
 	ans = MAYBE_REFERENCED(x) ? duplicate(x) : x;

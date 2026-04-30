@@ -3237,6 +3237,12 @@ if(!is.null(lc <- lcct) && nzchar(lc)) Sys.setlocale("LC_CTYPE", lc) # revert
 ## <chars>(a1)[3:4] were different in R <= 4.6.0
 
 
+## <symbol> -> <logical> etc via C level coerceSymbol() -- PR#19054
+assertErrV( all(quote(symbool)) )
+assertErrV( any(quote(symbool)) )
+## gave warnings but then TRUE or FALSE in R <= 4.6.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

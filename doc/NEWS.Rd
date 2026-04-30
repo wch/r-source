@@ -77,9 +77,15 @@
 
       \item \code{as.data.frame.vector(<row.names_w/_NA>)} now signals
       the same error as \code{data.frame()}, fixing \I{Hervé Pagès}'
-      \PR{19059}.  From \I{Suharto Anggono}'s \code{#c4}, it gives the same
+      \PR{19059}.  From \I{Suharto Anggono}'s comment #c4, it gives the same
       error also when \code{row.names = RN} explicitly, where \code{RN} has
       \code{NA}s.
+
+      \item \code{all(<symbol>)} signal an error now, as other such
+      coercions; previously, the coercion of the symbol to logical resulted
+      in \code{NULL} internally, raised a warning, and could access illegal
+      memory; thanks to \I{Kevin Ushey}'s \PR{19054}.
+
     }
   }
 }
@@ -1599,7 +1605,7 @@
       %% There are claims that the Green Hills compiler can.
       %% In C++ rhis was confirmed as undefined behaviour in
       %% https://cplusplus.github.io/CWG/issues/1766.html
-      %% Some versiins of UBSAN caan check it with -fsanitize=enum
+      %% Some versions of UBSAN can check it with -fsanitize=enum
 
       If there were a platform which used an underlying type of a
       different size this would be an \abbr{ABI}-breaking change (but we are
@@ -4968,7 +4974,7 @@
 
       \item Improved determination of the correct translation domain in
       non-base packages, addressing the combination of \PR{18092} and
-      \PR{17998} (\code{#c6}) with reports and \emph{augmented} patch
+      \PR{17998} (\samp{#c6}) with reports and \emph{augmented} patch
       #2904 by \I{Suharto Anggono}.
 
       Note that \code{"R-base"} is no longer the default domain e.g.,
