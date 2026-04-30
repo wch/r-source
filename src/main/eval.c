@@ -3025,6 +3025,25 @@ NORET attribute_hidden SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
     findcontext(CTXT_BROWSER | CTXT_FUNCTION, rho, v);
 }
 
+#ifdef SUPPORT_TAILCALL
+static RCNTXT *getTailcallTarget(SEXP rho, int mask)
+{
+    for (RCNTXT *cptr = R_GlobalContext;
+         cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
+         cptr = cptr->nextcontext) {
+	if (cptr->conexit != R_NilValue || cptr->cend != NULL)
+	    break; // don't jump if there is clean-up code on the stack
+        else if ((cptr->callflag & mask) &&
+		 // like do_return don't check for a CLOSXP for now
+		 // TYPEOF(cptr->callfun) == CLOSXP &&
+		 cptr->cloenv == rho) {
+            return cptr;
+        }
+    }
+    return NULL;
+}
+#endif
+
 attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 #ifdef SUPPORT_TAILCALL
@@ -3063,21 +3082,8 @@ attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(expr);
     PROTECT(env);
 
-    RCNTXT *target = NULL;
     int mask = CTXT_BROWSER | CTXT_FUNCTION;
-    for (RCNTXT *cptr = R_GlobalContext;
-         cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
-         cptr = cptr->nextcontext) {
-	if (cptr->conexit != R_NilValue || cptr->cend != NULL)
-	    break; // don't jump if there is clean-up code on the stack
-        else if ((cptr->callflag & mask) &&
-		 // like do_return don't check for a CLOSXP for now
-		 // TYPEOF(cptr->callfun) == CLOSXP &&
-		 cptr->cloenv == rho) {
-            target = cptr;
-            break;
-        }
-    }
+    RCNTXT *target = getTailcallTarget(rho, mask);
 
     /* Ordinarily Tailcall/Exec will only be used in tail position in
        a closure. Used in non-tail position it can be viewed as
@@ -3107,7 +3113,7 @@ attribute_hidden SEXP do_tailcall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SET_VECTOR_ELT(val, 2, env);
 	SET_VECTOR_ELT(val, 3, fun);
 
-	R_jumpctxt(target, CTXT_FUNCTION, val);
+	R_jumpctxt(target, mask, val);
     }
     else {
 	/**** maybe have an optional diagnostic about why no tail call? */
@@ -9549,5 +9555,33 @@ SEXP R_DispatchClosure(SEXP generic, SEXP mname, SEXP method,
     SEXP pargs = PROTECT(promiseArgsEx(CDR(call), rho, TRUE));
     SEXP val = applyClosure(call, method, pargs, rho, R_NilValue, TRUE);
     UNPROTECT(2); // call, pargs
+    return val;
+}
+
+SEXP R_TailCall(SEXP call, SEXP fun, SEXP rho, SEXP callrho)
+{
+    CHECK_TYPE(call, LANGSXP);
+    CHECK_TYPE(rho, ENVSXP);
+    CHECK_TYPE_OR_NULL(callrho, ENVSXP);
+
+#ifdef SUPPORT_TAILCALL
+    int mask = CTXT_BROWSER | CTXT_FUNCTION;
+    RCNTXT *target = getTailcallTarget(callrho, mask);
+    if (target != NULL) {
+        PROTECT(fun);
+        SEXP val = allocVector(VECSXP, 4);
+        UNPROTECT(1); /* fun */
+        SET_VECTOR_ELT(val, 0, R_exec_token);
+        SET_VECTOR_ELT(val, 1, call);
+        SET_VECTOR_ELT(val, 2, rho);
+        SET_VECTOR_ELT(val, 3, fun);
+        R_jumpctxt(target, mask, val);
+    }
+#endif
+
+    // still here, so no target found; just use eval()
+    SEXP newcall = PROTECT(LCONS(fun, CDR(call)));
+    SEXP val = eval(newcall, rho);
+    UNPROTECT(1); // newcall
     return val;
 }
