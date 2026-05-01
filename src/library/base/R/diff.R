@@ -20,13 +20,12 @@ diff <- function(x, ...) UseMethod("diff")
 
 diff.default <- function(x, lag = 1L, differences = 1L, ...)
 {
-    ismat <- is.matrix(x)
     if (length(lag) != 1L || length(differences) != 1L ||
         lag < 1L || differences < 1L)
 	stop("'lag' and 'differences' must be integers >= 1")
     r <- unclass(x)  # don't want class-specific subset methods
     i1 <- -seq_len(lag)
-    if (ismat)
+    if (is.matrix(x))
 	for (i in seq_len(differences))
 	    r <- r[i1, , drop = FALSE] -
 		r[seq_len(max(nrow(r) - lag, 0L)), , drop = FALSE] ## `dim<-`(r[...], <dim>) not nice

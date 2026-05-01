@@ -36,7 +36,8 @@ x \%/\% y
 }
 \arguments{
   \item{x, y}{numeric or complex vectors or objects which can be
-    coerced to such, or other objects for which methods have been written.}
+    coerced to such, notably \code{\link{array}}s including matrices,
+    or other objects for which methods have been written.}
 }
 \value{
   Unary \code{+} and unary \code{-} return a numeric or complex vector.

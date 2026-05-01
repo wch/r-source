@@ -63,7 +63,7 @@ geterrmessage()
 \seealso{
   \code{\link{warning}}, \code{\link{try}} to catch errors and retry,
   and \code{\link{options}} for setting error handlers.
-  \code{\link{stopifnot}} for validity testing.  \code{tryCatch}
+  \code{\link{stopifnot}} for validity testing.  \code{\link{tryCatch}}
   and \code{withCallingHandlers} can be used to establish custom handlers
   while executing an expression.
 

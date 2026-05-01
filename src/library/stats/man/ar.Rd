@@ -91,7 +91,8 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
 \details{
   For definiteness, note that the AR coefficients have the sign in
 
-  \deqn{x_t - \mu = a_1(x_{t-1} - \mu) + \cdots +  a_p(x_{t-p} - \mu) + e_t}{x[t] - m = a[1]*(x[t-1] - m) + \dots +  a[p]*(x[t-p] - m) + e[t]}
+  \deqn{x_t - \mu = a_1(x_{t-1} - \mu) + \cdots +  a_p(x_{t-p} - \mu) + e_t}{%
+        x[t] - m  = a[1]*(x[t-1] - m)  + \dots  +  a[p]*(x[t-p] - m) + e[t]}
 
   \code{ar} is just a wrapper for the functions \code{ar.yw},
   \code{ar.burg}, \code{\link{ar.ols}} and \code{ar.mle}.
@@ -179,7 +180,7 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
 
 \references{
   \bibinfo{R:Brockwell+Davis:1991}{footer}{Section 11.4.}
-  \bibinfo{R:Brockwell+Davis:1996}{footer}{Sections 5.1 and 7.6.}    
+  \bibinfo{R:Brockwell+Davis:1996}{footer}{Sections 5.1 and 7.6.}
   \bibshow{*, R:Whittle:1963}
 }
 

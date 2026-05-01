@@ -11,7 +11,7 @@ structure(.Data, \dots)
 \alias{structure}
 \arguments{
   \item{.Data}{an object which will have
-    various attributes attached to it.  From \R 4.6.0, this must not be
+    various attributes attached to it.  From \R 4.5.0, this must not be
     \code{\link{NULL}} (previously deprecated for years), nor any
     \code{\link{symbol}} or \code{\link{primitive}} function.}
   \item{\dots}{attributes, specified in \code{tag = value}

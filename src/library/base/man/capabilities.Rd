@@ -1,11 +1,11 @@
 % File src/library/base/man/capabilities.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2021 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{capabilities}
-\alias{capabilities}
 \title{Report Capabilities of this Build of R}
+\alias{capabilities}
 \description{
   Report on the optional features which have been compiled into this
   build of \R.
@@ -125,6 +125,9 @@ capabilities(what = NULL,
     3.3.0 always true for Unix-alikes, and as from \R 4.2.0 true on Windows.}
 }
 \seealso{
+  \code{\link{.Machine}$sizeof.pointer == 8} for 64-bit builds of \R
+  entails the capability of \link{long vector}s, now in all builds
+  of \R.
   \code{\link{.Platform}}, \code{\link{extSoftVersion}}, and
   \code{\link{grSoftVersion}} (and links there)
   for availability of capabilities \emph{external} to \R but

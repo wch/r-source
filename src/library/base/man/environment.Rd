@@ -1,6 +1,6 @@
 % File src/library/base/man/environment.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2012, 2025 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{environment}

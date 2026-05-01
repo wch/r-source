@@ -114,7 +114,7 @@ stopifnot(identical(sort(ux), sort(u2)))
 length(unique(sample(100, 100, replace = TRUE)))
 ## approximately 100(1 - 1/e) = 63.21
 
-unique(iris)
+unique(warpbreaks)
 }
 \keyword{manip}
 \keyword{logic}

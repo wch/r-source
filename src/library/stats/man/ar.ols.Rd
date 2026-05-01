@@ -11,14 +11,13 @@ ar.ols(x, aic = TRUE, order.max = NULL, na.action = na.fail,
        demean = TRUE, intercept = demean, series, \dots)
 }
 \arguments{
-  \item{x}{A univariate or multivariate time series.}
+  \item{x}{a univariate or multivariate time series.}
 
-  \item{aic}{Logical flag.  If \code{TRUE} then the Akaike Information
+  \item{aic}{\code{\link{logical}} indicating if the Akaike Information
     Criterion is used to choose the order of the autoregressive
-    model. If \code{FALSE}, the model of order \code{order.max} is
+    model.  If \code{FALSE}, the model of order \code{order.max} is
     fitted.}
-
-  \item{order.max}{Maximum order (or order) of model to fit. Defaults
+  \item{order.max}{maximum order (or order) of model to fit. Defaults
     to \eqn{10\log_{10}(N)}{10*log10(N)} where \eqn{N} is the number
     of observations.}
 
@@ -44,7 +43,8 @@ ar.ols(x, aic = TRUE, order.max = NULL, na.action = na.fail,
   some of the series are non-stationary and/or co-integrated.
   For definiteness, note that the AR coefficients have the sign in
 
-  \deqn{x_t - \mu = a_0 + a_1(x_{t-1} - \mu) + \cdots + a_p(x_{t-p} - \mu) + e_t}{(x[t] - m) = a[0] + a[1]*(x[t-1] - m) + \dots +  a[p]*(x[t-p] - m) + e[t]}
+  \deqn{x_t - \mu = a_0 + a_1(x_{t-1} - \mu) + \cdots + a_p(x_{t-p} - \mu) + e_t}{%
+       (x[t] - m) = a[0] + a[1]*(x[t-1] - m) + \dots +  a[p]*(x[t-p] - m) + e[t]}
 
   where \eqn{a_0}{a[0]} is zero unless \code{intercept} is true, and
   \eqn{\mu}{m} is the sample mean if \code{demean} is true, zero

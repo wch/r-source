@@ -1,6 +1,6 @@
 % File src/library/base/man/library.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2025 R Core Team
 % Distributed under GPL 2 or later
 
 \name{library}
@@ -90,6 +90,9 @@ conflictRules(pkg, mask.ok = NULL, exclude = NULL)
   \code{\link{suppressPackageStartupMessages}}: this will suppress all
   messages from \R itself but not necessarily all those from package
   authors.
+
+  When both \code{verbose} and \code{quietly} are true, a
+  \code{\link{message}} is produced - once per caller running.
 
   If \code{library} is called with no \code{package} or \code{help}
   argument, it lists all available packages in the libraries specified

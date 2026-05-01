@@ -1,7 +1,7 @@
 % File src/library/base/man/norm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2010--2015, 2023 R Core Team
-% Copyright 2010--2012 The R Foundation
+% Copyright 2010-2023 R Core Team
+% Copyright 2010-2012 The R Foundation
 % Distributed under GPL 2 or later
 
 \name{norm}
