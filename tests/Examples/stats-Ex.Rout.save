@@ -13142,7 +13142,7 @@ ppr(formula = log(perm) ~ area1 + peri1 + shape, data = rock,
 
 Goodness of fit:
  2 terms  3 terms  4 terms  5 terms 
-8.737806 5.289517 4.745799 4.490378 
+8.737805 5.289516 4.745798 4.490377 
 > # Call:
 > # ppr.formula(formula = log(perm) ~ area1 + peri1 + shape, data = rock,
 > #     nterms = 2, max.terms = 5)
@@ -13158,17 +13158,17 @@ ppr(formula = log(perm) ~ area1 + peri1 + shape, data = rock,
 
 Goodness of fit:
  2 terms  3 terms  4 terms  5 terms 
-8.737806 5.289517 4.745799 4.490378 
+8.737805 5.289516 4.745798 4.490377 
 
 Projection direction vectors ('alpha'):
-      term 1      term 2     
-area1  0.34357179  0.37071027
-peri1 -0.93781471 -0.61923542
-shape  0.04961846  0.69218595
+      term 1     term 2    
+area1  0.3435718  0.3707103
+peri1 -0.9378147 -0.6192354
+shape  0.0496185  0.6921859
 
 Coefficients of ridge terms ('beta'):
    term 1    term 2 
-1.6079271 0.5460971 
+1.6079272 0.5460972 
 > # .....  (same as above)
 > # .....
 > #

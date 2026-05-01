@@ -16,6 +16,13 @@
     }
   }
 
+  \section{\Rlogo Changes in R 4.6.0 patched}{
+    \subsection{Bug Fixes}{
+      \itemize{
+	\item .
+      }
+    }
+  }
 }
 
 \section{\Rlogo Changes in R 4.6.0}{

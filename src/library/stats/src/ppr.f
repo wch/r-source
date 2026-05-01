@@ -842,9 +842,9 @@ c         {even though they need not, e.g., {maxit, conv, fdel, cjeps, mitcj}
 
       data df, gcvpen, ismethod, trace /4d0, 1d0, 0, .false./
       data ifl,maxit, conv, mitone, cutmin, fdel
-     &    / 6,  20,   .005,   20,     0.1,  0.02/
-      data span,alpha, big,   cjeps, mitcj, lf
-     &    / 0.0, 0.0, 1.0e20, 0.001,   1,   2 /
+     &    / 6,  20,  .005_8,   20,   0.1_8, 0.02_8 /
+      data span,alpha, big,   cjeps,  mitcj, lf
+     &    / 0.0, 0.0, 1.0e20, 0.001_8,   1,   2 /
       end
 
       subroutine setppr(span1, alpha1, optlevel, ism, df1, gcvpen1)
@@ -1258,7 +1258,8 @@ c-- Recompute fitted values smo(j) as weighted mean for non-unique x(.) values:
       double precision spans(3),    big,sml,eps
       common /spans/ spans /consts/ big,sml,eps
 
-      data spans, big,sml,eps /0.05,0.2,0.5, 1.0e20,1.0e-7,1.0e-3/
+      data spans,               big,  sml,  eps
+     &  /0.05_8, 0.2_8, 0.5, 1.0e20,1.0e-7,1.0e-3/
       end
 c---------------------------------------------------------------
 c
@@ -1383,7 +1384,7 @@ c
 c     tol for 'spar' estimation:
       param(3) = 1d-2
 c     'eps' (~= 2^-12 = sqrt(2^-24) ?= sqrt(machine eps)) in ./sbart.c :
-      param(4) = .000244
+      param(4) = .000244_8
 
       ier = 1
       call rbart(gcvpen,df1,dx,dy,dw,0.0d0,n,knot,nk,coef,dsmo,lev,
