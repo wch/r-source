@@ -16,11 +16,10 @@
     }
   }
 
-  \section{\Rlogo Changes in R 4.6.0 patched}{
-    \subsection{Bug Fixes}{
-      \itemize{
-	\item .
-      }
+  \subsection{Bug Fixes}{
+    \itemize{
+      \item \code{cut(1:11, {})} now signals an error for the invalid
+      \code{breaks}, fixing \PR{19057}, thanks to \I{Kevin Ushey}.
     }
   }
 }
@@ -1527,7 +1526,7 @@
       %% There are claims that the Green Hills compiler can.
       %% In C++ rhis was confirmed as undefined behaviour in
       %% https://cplusplus.github.io/CWG/issues/1766.html
-      %% Some versiins of UBSAN caan check it with -fsanitize=enum
+      %% Some versions of UBSAN can check it with -fsanitize=enum
 
       If there were a platform which used an underlying type of a
       different size this would be an \abbr{ABI}-breaking change (but we are
@@ -4896,7 +4895,7 @@
 
       \item Improved determination of the correct translation domain in
       non-base packages, addressing the combination of \PR{18092} and
-      \PR{17998} (\code{#c6}) with reports and \emph{augmented} patch
+      \PR{17998} (\samp{#c6}) with reports and \emph{augmented} patch
       #2904 by \I{Suharto Anggono}.
 
       Note that \code{"R-base"} is no longer the default domain e.g.,
