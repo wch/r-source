@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-04-05 r89793) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-04-30 r89988) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin25.3.0
 
@@ -564,8 +564,8 @@ Survived 1st 2nd 3rd Crew
 > ## Very similar to the example in ?boxplot
 > mat <- cbind(Uni05 = (1:100)/21, Norm = rnorm(100),
 +              T5 = rt(100, df = 5), Gam2 = rgamma(100, shape = 2))
-> boxplot(mat, main = "boxplot.matrix(...., main = ...)",
-+         notch = TRUE, col = 1:4)
+> boxplot(mat, main = "boxplot.matrix(*, main = \"...\", notch = TRUE, col = 2:5)",
++         notch = TRUE, col = 2:5)
 > 
 > 
 > 

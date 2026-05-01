@@ -31,7 +31,7 @@
 ## Very similar to the example in ?boxplot
 mat <- cbind(Uni05 = (1:100)/21, Norm = rnorm(100),
              T5 = rt(100, df = 5), Gam2 = rgamma(100, shape = 2))
-boxplot(mat, main = "boxplot.matrix(...., main = ...)",
-        notch = TRUE, col = 1:4)
+boxplot(mat, main = "boxplot.matrix(*, main = \"...\", notch = TRUE, col = 2:5)",
+        notch = TRUE, col = 2:5)
 }
 \keyword{hplot}
