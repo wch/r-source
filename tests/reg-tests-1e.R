@@ -3171,7 +3171,7 @@ assertErrV( cut(1:3, {}) )
 ## Tailcall in non-tail position: jump, like return()
 stopifnot((function() 1 + Tailcall(log, 1))() == 0)
 
-## Tailcall stops at context in .Internal(eval()) for now, like return()
+## Tailcall does not stop at context in .Internal(eval()), unlike return()
 local({
     f <- function(x) {
         e <- environment()
@@ -3179,7 +3179,7 @@ local({
         g(x)
         "B"
     }
-    stopifnot(identical(f("A"), "B"))
+    stopifnot(identical(f("A"), "A"))
 })
 
 ## Tailcall handles substitute() missing args in caller like S3 dispatch

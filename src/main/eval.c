@@ -3034,8 +3034,13 @@ static RCNTXT *getTailcallTarget(SEXP rho, int mask)
 	if (cptr->conexit != R_NilValue || cptr->cend != NULL)
 	    break; // don't jump if there is clean-up code on the stack
         else if ((cptr->callflag & mask) &&
-		 // like do_return don't check for a CLOSXP for now
-		 // TYPEOF(cptr->callfun) == CLOSXP &&
+		 // Look for a closure call with cloenv rho. This
+		 // means skipping eval() calls, in contrast to
+		 // do_return. An alternative would be to not jumb if
+		 // an eval() call with ehvironment rhop is on the
+		 // stack. Jumping to an eval call would confuse
+		 // reference counting on rho.
+		 TYPEOF(cptr->callfun) == CLOSXP &&
 		 cptr->cloenv == rho) {
             return cptr;
         }
