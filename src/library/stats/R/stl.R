@@ -1,7 +1,7 @@
 #  File src/library/stats/R/stl.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@ stl <- function(x, s.window,
 		s.degree = 0,
 		t.window = NULL, t.degree = 1,
 		l.window = nextodd(period), l.degree = t.degree,
-		s.jump = ceiling(s.window/10),
-		t.jump = ceiling(t.window/10),
-		l.jump = ceiling(l.window/10),
+		s.jump = max(1, ceiling(s.window/10)),
+		t.jump = max(1, ceiling(t.window/10)),
+		l.jump = max(1, ceiling(l.window/10)),
 		robust = FALSE,
 		inner = if(robust)  1 else 2,
 		outer = if(robust) 15 else 0,
@@ -30,13 +30,13 @@ stl <- function(x, s.window,
 {
     nextodd <- function(x){
 	x <- round(x)
-	if(x%%2==0) x <- x+1
-	as.integer(x)
+	as.integer(if(x%%2 == 0) x+1 else x)
     }
+    win.check <- function(k) max(3L, nextodd(k)) # as the Fortran/C  code did forever
     deg.check <- function(deg) {
 	degname <- deparse1(substitute(deg))
 	deg <- as.integer(deg)
-	if(deg < 0 || deg > 1) stop(gettextf("%s must be 0 or 1", degname), domain = NA)
+	if(deg < 0L || deg > 1L) stop(gettextf("%s must be 0 or 1", degname), domain = NA)
 	deg
     }
     x <- na.action(as.ts(x))
@@ -59,36 +59,38 @@ stl <- function(x, s.window,
     s.degree <- deg.check(s.degree)
     t.degree <- deg.check(t.degree)
     l.degree <- deg.check(l.degree)
-    if(is.null(t.window))
-	t.window <- nextodd(ceiling( 1.5 * period / (1- 1.5/s.window)))
+
+    t.window <- win.check(    # use the specified    's.window'  back-compatibly:
+        t.window %||% ceiling(1.5 * period / (1 - 1.5/s.window)))
+    s.window <- win.check(s.window)
+    l.window <- win.check(l.window)
     storage.mode(x) <- "double"
     z <- .Fortran(C_stl, x, n,
 		  as.integer(period),
-		  as.integer(s.window),
-		  as.integer(t.window),
-		  as.integer(l.window),
+		  s.window, t.window, l.window,
 		  s.degree, t.degree, l.degree,
-		  nsjump = as.integer(s.jump),
-		  ntjump = as.integer(t.jump),
-		  nljump = as.integer(l.jump),
+		  nsjump = max(1L, as.integer(s.jump)),
+		  ntjump = max(1L, as.integer(t.jump)),
+		  nljump = max(1L, as.integer(l.jump)),
 		  ni = as.integer(inner),
 		  no = as.integer(outer),
 		  weights = double(n),
 		  seasonal = double(n),
 		  trend = double(n),
-		  double((n+2*period)*5))
+                  double((n+2*period)*5))
     if(periodic) {
 	## make seasonal part exactly periodic
 	which.cycle <- cycle(x)
 	z$seasonal <- tapply(z$seasonal, which.cycle, mean)[which.cycle]
     }
-    remainder <- as.vector(x) - z$seasonal - z$trend
-    y <- cbind(seasonal = z$seasonal, trend = z$trend, remainder = remainder)
+    y <- cbind(seasonal = z$seasonal,
+               trend    = z$trend,
+               remainder = as.vector(x) - z$seasonal - z$trend)
     res <- list(time.series = ts(y, start = start(x), frequency = period),
 		weights = z$weights, call = match.call(),
 		win = c(s = s.window, t = t.window, l = l.window),
 		deg = c(s = s.degree, t = t.degree, l = l.degree),
-		jump = c(s = s.jump, t = t.jump, l = l.jump),
+		jump= c(s = z$nsjump, t = z$ntjump, l = z$nljump),
 		inner = z$ni, outer = z$no)
     class(res) <- "stl"
     res
@@ -116,9 +118,12 @@ summary.stl <- function(object, digits = max(3L, getOption("digits") - 3L), ...)
     print(rbind(format(iqr, digits = max(2L, digits)),
 		"   %" = format(round(100 * iqr / iqr["data"], 1))),
 	  quote = FALSE)
-    cat("\n Weights:")
-    if(all(object$weights == 1)) cat(" all == 1\n")
-    else { cat("\n"); print(summary(object$weights, digits = digits, ...)) }
+    if(object$outer > 0L) { # had outer | robustness iterations
+        cat("\n Weights")
+        if(all(object$weights == 1)) cat(": all == 1\n")
+        else { cat(" from", object$outer, "robustness iterations:\n")
+            print(summary(object$weights, digits = digits, ...)) }
+    }
     cat("\n Other components: ")
     str(object[-seq_len(3L)], give.attr = FALSE)
     invisible(object)

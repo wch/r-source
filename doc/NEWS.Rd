@@ -58,13 +58,11 @@
 
   \subsection{Bug Fixes}{
     \itemize{
-      \item For \code{x <-  <large-POSIXlt>}, \code{c(x)}, subsetting
-      (\code{[}, \code{[[}) and \I{subassignment} such as \code{x[i] <- val} now
-      work again mostly, thanks to suggestions by \I{Suharto Anggono} in
-      \PR{18989}.
-
-      \item \code{cut(1:11, {})} now signals an error for the invalid
-      \code{breaks}, fixing \PR{19057}, thanks to \I{Kevin Ushey}.
+      \item For \code{x <-  <large-POSIXlt>}, for some boundary cases
+      with \code{x$sec - floor(x$sec)} close to 1, \code{c(x)} could
+      become one second ahead of \code{x} in \R 4.6.0;  \I{subassignments}
+      such as \code{x[i] <- val} have improved, thanks to suggestions by
+      \I{Suharto Anggono} in \PR{18989}.
 
       \item \code{abbreviate(<non-ASCII>)} now works better, using
       \code{iswlower()} and \code{*upper()} to treat \dQuote{wide}
@@ -81,11 +79,10 @@
       error also when \code{row.names = RN} explicitly, where \code{RN} has
       \code{NA}s.
 
-      \item \code{all(<symbol>)} signal an error now, as other such
-      coercions; previously, the coercion of the symbol to logical resulted
+      \item \code{all(<symbol>)} signals an error now, as some similar
+      coercions; previously, the coercion of the symbol resulted
       in \code{NULL} internally, raised a warning, and could access illegal
       memory; thanks to \I{Kevin Ushey}'s \PR{19054}.
-
     }
   }
 }
@@ -100,7 +97,18 @@
       to work with \samp{hyperref} version 7.01q (2026/04/24).
     }
   }
+  \subsection{Bug Fixes}{
+    \itemize{
+      \item \code{cut(1:11, {})} now signals an error for the invalid
+      \code{breaks}, fixing \PR{19057}, thanks to \I{Kevin Ushey}.
 
+      \item \code{stl()} now checks its 3 x 3 tuning parameters on the R level;
+      \code{stl(*, s.window = 0)} now \dQuote{works} instead dumping core,
+      \code{stl(*, s.window = 1)} \dQuote{works} correctly, too.  Also, the
+      \code{summary()} method mentions the robustness \code{weights} only
+      if any robustness iterations happened.
+    }
+  }
 }
 
 \section{\Rlogo Changes in R 4.6.0}{
