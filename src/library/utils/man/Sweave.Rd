@@ -50,7 +50,7 @@ Stangle(file, driver = Rtangle(),
   \code{Sweave} combines the documentation and code chunks (or
   their output) into a single document.  \code{Stangle} extracts only
   the code from the Sweave file creating an \R source file that can be
-  run using \code{\link{source}}.  (Code inside \code{\\Sexpr\{\}}
+  run using \code{\link{source}}.  (Code inside \verb{\Sexpr{}}
   statements is ignored by \code{Stangle}.)
   
   \code{Stangle} is just a wrapper to \code{Sweave} specifying a
@@ -86,7 +86,7 @@ Stangle(file, driver = Rtangle(),
   \code{SweaveSyntaxNoweb} (with \code{extension = "[.][rsRS]nw$"}) and
   \code{SweaveSyntaxLatex} (with \code{extension = "[.][rsRS]tex$"}) are
   supplied, but users or packages can supply others with names matching
-  the pattern \code{SweaveSyntax.*}.
+  the pattern \samp{SweaveSyntax.*}.
 }
 
 \author{

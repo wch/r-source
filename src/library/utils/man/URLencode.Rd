@@ -23,7 +23,7 @@ URLdecode(URL)
 }
 \details{
   Characters in a URL other than the English alphanumeric characters and
-  \samp{- _ . ~} should be encoded as \code{\%}
+  \samp{- _ . ~} should be encoded as \samp{\%}
   plus a two-digit hexadecimal representation, and any single-byte
   character can be so encoded. (Multi-byte characters are encoded
   byte-by-byte.)  The standard refers to this as \sQuote{percent-encoding}.
@@ -35,7 +35,7 @@ URLdecode(URL)
   not for \samp{http://} ones.
 
   An \sQuote{apparently already-encoded URL} is one containing
-  \code{\%xx} for two hexadecimal digits.
+  \samp{\%xx} for two hexadecimal digits.
 }
 \value{
   A character vector.

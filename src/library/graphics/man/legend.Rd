@@ -160,7 +160,7 @@ legend(x, y = NULL, legend, fill = NULL, col = par("col"),
   }
   \item{text}{a list with components
     \describe{
-      \item{\code{x, y}}{numeric vectors of length \code{length(legend)},
+      \item{\code{x}, \code{y}}{numeric vectors of length \code{length(legend)},
         giving the x and y coordinates of the legend's text(s).}
     }
   }

@@ -66,7 +66,7 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
   transferring zip files between machines (even across continents), so
   we chose not to restore them by default.
 
-  The internal method now follows \code{unzip 6.00} in how it handles
+  The internal method now follows \command{unzip 6.00} in how it handles
   extracted file paths which contain \code{"../"}.
 }
 

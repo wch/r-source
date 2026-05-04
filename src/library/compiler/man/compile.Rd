@@ -89,7 +89,7 @@ setCompilerOptions(...)
   are installed.  This requires that the package uses lazy loading as
   compilation occurs as functions are written to the lazy loading data
   base. This can also be enabled by starting \R with the environment
-  variable \code{_R_COMPILE_PKGS_} set to a positive integer value.
+  variable \env{_R_COMPILE_PKGS_} set to a positive integer value.
   This should not be enabled outside package installation, because it
   causes any serialized function to be compiled, which comes with
   time and space overhead. \code{R_COMPILE_PKGS} can be used, instead,

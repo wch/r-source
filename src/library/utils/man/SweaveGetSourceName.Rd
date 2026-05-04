@@ -19,8 +19,8 @@ SweaveGetSourceName()
   \code{Sweave} or \code{Stangle} when the tool is invoked from the
   command line through either:
   \enumerate{
-    \item an expression passed to \code{R -e} or \code{Rscript -e};
-    \item \code{R CMD Sweave} or \code{R CMD Stangle}.
+    \item an expression passed to \command{R -e} or \command{Rscript -e};
+    \item \command{R CMD Sweave} or \command{R CMD Stangle}.
   }
 
   In the first scenario, the filename must be the first, unnamed
