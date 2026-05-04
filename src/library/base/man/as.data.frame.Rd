@@ -1,6 +1,6 @@
 % File src/library/base/man/as.data.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{as.data.frame}
@@ -37,7 +37,7 @@ as.data.frame(x, row.names = NULL, optional = FALSE, \dots)
               make.names = TRUE, \dots,
               stringsAsFactors = FALSE)
 
-as.data.frame.vector(x, row.names = NULL, optional = FALSE, \dots,
+as.data.frame.vector(x, row.names = NULL, optional = FALSE, validRN = TRUE, \dots,
                      nm = deparse1(substitute(x)))
 
 is.data.frame(x)
@@ -74,6 +74,11 @@ is.data.frame(x)
     \code{make.names=NA} will use \dQuote{automatic} row names and a
     \code{FALSE} value will signal an error for invalid row names.}
   %% *.vector():
+  \item{validRN}{a \code{\link{logical}} indicating if row names should be
+    checked to be valid; currently only checks if the row contain no
+    \code{\link{NA}}s.  This was implicitly \code{FALSE} in \R version
+    before 4.7.0.  Setting it to \code{FALSE} may still be necessary during
+    dataframe construction.}
   \item{nm}{a \code{\link{character}} string to be used as column name.}
 }
 \value{

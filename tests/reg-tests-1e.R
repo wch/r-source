@@ -3210,6 +3210,11 @@ e2 <- tryCid( as.data.frame(         11:12, c("a", NA))  )
 writeLines(as.character(e1))
 stopifnot(identical(e1$message, e2$message), identical(class(e1), class(e2)))
 ## gave a data frame with `NA` in row names, in R <= 4.6.0
+dftN <- as.data.frame(tab <- table(ff <- penguins$sex, useNA = "ifany"))
+stopifnot(identical(3:2, dim(dftN)),
+          identical(structure(c(1:2, NA), levels = levels(ff), class = "factor"),
+                    dftN[,"Var1"]))
+## as.DF(<tab_w_NA>) failed after first fix ..
 
 
 ## abbreviate(<non-ASCII>) -- PR#19058

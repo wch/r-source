@@ -244,7 +244,7 @@ as.data.frame.list <-
     x
 }
 
-as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE, ...,
+as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE, validRN = TRUE, ...,
 				 nm = deparse1(substitute(x)))
 {
     force(nm)
@@ -254,9 +254,9 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE, ...,
 	    row.names <- character()
 	else if(length(row.names <- names(x)) != nrows || anyDuplicated(row.names))
 	    row.names <- .set_row_names(nrows)
-        else if(anyNA(row.names)) stop("row names contain missing values")
+        else if(validRN && anyNA(row.names)) stop("row names contain missing values")
     }
-    else if(anyNA(row.names)) stop("row names contain missing values")
+    else if(validRN && anyNA(row.names)) stop("row names contain missing values")
     else if(!(is.character(row.names) || is.integer(row.names)) || length(row.names) != nrows)
 	stop(gettextf("'row.names' is not a character or integer vector of length %d", nrows),
              domain = NA)
@@ -484,9 +484,9 @@ data.frame <-
     for(i in seq_len(n)) {
         ## do it this way until all as.data.frame methods have been updated
 	xi <- if(is.character(x[[i]]) || is.list(x[[i]]))
-		  as.data.frame(x[[i]], optional = TRUE,
+		  as.data.frame(x[[i]], optional = TRUE, validRN = FALSE,
 				stringsAsFactors = stringsAsFactors)
-	      else as.data.frame(x[[i]], optional = TRUE)
+	      else as.data.frame(x[[i]], optional = TRUE, validRN = FALSE)
 
         nrows[i] <- .row_names_info(xi) # signed for now
 	ncols[i] <- length(xi)

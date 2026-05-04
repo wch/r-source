@@ -33,6 +33,12 @@
 
       \item Condition classes used internally for signaling some errors
       are now documented in \code{?conditions}.
+
+      \item The \code{as.data.frame()} methods for atomic \code{vector}
+      classes get an optional switch \code{validRN}, with default true to
+      fix \PR{19059} and false for some back compatibility, still
+      allowing data frames in construction to contain \code{NA}s in row
+      names.
     }
   }
 

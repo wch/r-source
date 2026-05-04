@@ -31,18 +31,18 @@
   They are replaced typically by \code{\link{as.data.frame}()} or possibly \code{as.data.frame.vector()}.
 }
 \usage{
-as.data.frame.raw     (x, row.names=NULL, optional=FALSE, ..., nm=deparse1(substitute(x)))
-as.data.frame.logical (x, row.names=NULL, optional=FALSE, ..., nm=deparse1(substitute(x)))
-as.data.frame.integer (x, row.names=NULL, optional=FALSE, ..., nm=deparse1(substitute(x)))
-as.data.frame.numeric (x, row.names=NULL, optional=FALSE, ..., nm=deparse1(substitute(x)))
-as.data.frame.complex (x, row.names=NULL, optional=FALSE, ..., nm=deparse1(substitute(x)))
-as.data.frame.factor  (x, row.names=NULL, optional=FALSE, ..., nm=deparse1(substitute(x)))
-as.data.frame.ordered (x, row.names=NULL, optional=FALSE, ..., nm=deparse1(substitute(x)))
-as.data.frame.Date    (x, row.names=NULL, optional=FALSE, ..., nm=deparse1(substitute(x)))
-as.data.frame.difftime(x, row.names=NULL, optional=FALSE, ..., nm=deparse1(substitute(x)))
-as.data.frame.POSIXct (x, row.names=NULL, optional=FALSE, ..., nm=deparse1(substitute(x)))
-as.data.frame.noquote (x, row.names=NULL, optional=FALSE, ..., nm=deparse1(substitute(x)))
-as.data.frame.numeric_version(x, row.names=NULL, optional=FALSE, ...,
+as.data.frame.raw     (x, row.names=NULL, optional=FALSE, validRN=TRUE, ..., nm=deparse1(substitute(x)))
+as.data.frame.logical (x, row.names=NULL, optional=FALSE, validRN=TRUE, ..., nm=deparse1(substitute(x)))
+as.data.frame.integer (x, row.names=NULL, optional=FALSE, validRN=TRUE, ..., nm=deparse1(substitute(x)))
+as.data.frame.numeric (x, row.names=NULL, optional=FALSE, validRN=TRUE, ..., nm=deparse1(substitute(x)))
+as.data.frame.complex (x, row.names=NULL, optional=FALSE, validRN=TRUE, ..., nm=deparse1(substitute(x)))
+as.data.frame.factor  (x, row.names=NULL, optional=FALSE, validRN=TRUE, ..., nm=deparse1(substitute(x)))
+as.data.frame.ordered (x, row.names=NULL, optional=FALSE, validRN=TRUE, ..., nm=deparse1(substitute(x)))
+as.data.frame.Date    (x, row.names=NULL, optional=FALSE, validRN=TRUE, ..., nm=deparse1(substitute(x)))
+as.data.frame.difftime(x, row.names=NULL, optional=FALSE, validRN=TRUE, ..., nm=deparse1(substitute(x)))
+as.data.frame.POSIXct (x, row.names=NULL, optional=FALSE, validRN=TRUE, ..., nm=deparse1(substitute(x)))
+as.data.frame.noquote (x, row.names=NULL, optional=FALSE, validRN=TRUE, ..., nm=deparse1(substitute(x)))
+as.data.frame.numeric_version(x, row.names=NULL, optional=FALSE, validRN=TRUE, ...,
                               nm=deparse1(substitute(x)))
 }
 
