@@ -1063,7 +1063,7 @@ extensions': what those are is hard to track down.
 For the use of C++ in @R{} packages,
 @pxref{, , , R-exts, Writing R Extensions}.
 
-@uref{https://en.cppreference.com/w/cpp/compiler_support.html} indicates
+@uref{https://en.cppreference.com/cpp/compiler_support} indicates
 which versions of common compilers support (parts of) which C++
 standards.
 

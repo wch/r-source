@@ -2995,7 +2995,7 @@ of @code{__cplusplus}.
 @c @I{LLVM} clang 14, 15 default to C++14, 16-22 to C++17
 @c g++ 11-15 default to C++17, g++20 to C++20.
 
-The webpage @uref{https://en.cppreference.com/w/cpp/compiler_support.html}
+The webpage @uref{https://en.cppreference.com/cpp/compiler_support}
 gives some information on which compiler versions are known to support
 recent C++ features.
 
@@ -3038,7 +3038,7 @@ Code needing C++20 or later features can check for their presence @emph{via}
 `SD-6 feature tests'@footnote{See
 @uref{https://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations}
 or
-@uref{https://en.cppreference.com/w/cpp/experimental/feature_test.html}.}
+@uref{https://en.cppreference.com/cpp/experimental/feature_test}.}
 
 @c Ubuntu LTS releases now have 10 years of support even if announced
 @c with 8 years.
@@ -3178,7 +3178,7 @@ the formerly deprecated meaning of function declarations with an empty
 parameter list to now mean no parameters.@footnote{The latter has been
 implemented in @command{gcc} but not currently in @I{LLVM} nor Apple
 @command{clang}.}(There are many other additions: see for example
-@uref{https://en.cppreference.com/w/c/23.html}.)
+@uref{https://en.cppreference.com/c/23}.)
 
 As from @R{} 4.5.0, @R{}'s @command{configure} script chooses a compiler
 option which selects C23 if one is available.  Some compilers (including
@@ -3442,7 +3442,7 @@ of @command{file} if available@footnote{A suitable @command{file.exe} is
 part of the Windows toolset: it checks for @command{gfile} if a suitable
 @command{file} is not found: the latter is available in the @I{OpenCSW}
 collection for Solaris at @uref{https://www.opencsw.org/}.  The source
-repository is @uref{http://ftp.astron.com/pub/file/}.}.  (There may be
+repository is @uref{https://astron.com/pub/file/}.}.  (There may be
 rare false positives.)
 
 @item
@@ -5981,7 +5981,7 @@ Alpine Linux, use other implementations such as @code{musl} --- see
 However, some common errors are worth pointing out here.  It can be
 helpful to look up functions at
 @uref{https://cplusplus.com/reference/} or
-@uref{https://en.cppreference.com/w/} and compare what is defined in the
+@uref{https://en.cppreference.com/} and compare what is defined in the
 various standards.
 
 More care is needed for functions such as @code{mallinfo} which are not
@@ -6615,7 +6615,7 @@ the default of GCC 15, and @R{} will default to it if available from
 @R{} 4.5.0.
 
 @c Some of the more significant changes are
-@c https://en.cppreference.com/w/c/23.html
+@c https://en.cppreference.com/c/23
 
 @itemize
 

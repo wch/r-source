@@ -261,7 +261,8 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL)
     Source code at \url{https://www-cs-faculty.stanford.edu/~knuth/taocp.html}.}
   \bibinfo{R:L_Ecuyer+Simard:2007}{footer}{
     The \I{TestU01} C library is available from
-    \url{https://simul.iro.umontreal.ca/testu01/tu01.html} or also
+    %% Does not work as of 2026-04-30:
+    %% \url{https://simul.iro.umontreal.ca/testu01/tu01.html} or also
     \url{https://github.com/umontreal-simul/TestU01-2009}.
   }
   \bibinfo{R:Matsumoto+Nishimura:1998}{footer}{
