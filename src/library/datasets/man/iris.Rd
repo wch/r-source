@@ -27,8 +27,8 @@ iris3
   \code{iris3} gives the same data arranged as a 3-dimensional array
   of size 50 by 4 by 3, as once provided by S-PLUS.  The first dimension
   gives the case number within the species subsample, the second the
-  measurements with names \code{Sepal L.}, \code{Sepal W.},
-  \code{Petal L.}, and \code{Petal W.}, and the third the species.
+  measurements with names \samp{Sepal L.}, \samp{Sepal W.},
+  \samp{Petal L.}, and \samp{Petal W.}, and the third the species.
 }
 \source{
   \bibcitet{R:Fisher:1936}.

@@ -38,26 +38,26 @@ penguins_raw
   \describe{
     \item{\code{Species}}{\code{character}}
     \item{\code{Island}}{\code{character}}
-    \item{\code{Culmen Length (mm)}}{\code{numeric}, bill length}
-    \item{\code{Culmen Depth (mm)}}{\code{numeric}, bill depth}
-    \item{\code{Flipper Length (mm)}}{\code{numeric}, flipper length}
-    \item{\code{Body Mass (g)}}{\code{numeric}, body mass}
+    \item{\samp{Culmen Length (mm)}}{\code{numeric}, bill length}
+    \item{\samp{Culmen Depth (mm)}}{\code{numeric}, bill depth}
+    \item{\samp{Flipper Length (mm)}}{\code{numeric}, flipper length}
+    \item{\samp{Body Mass (g)}}{\code{numeric}, body mass}
     \item{\code{Sex}}{\code{character}}
-    \item{\code{Date Egg}}{\code{\link{Date}}, when study nest observed with 1 egg.
+    \item{\samp{Date Egg}}{\code{\link{Date}}, when study nest observed with 1 egg.
       The year component is the \code{year} column in \code{penguins}}
   }
 
   There are 9 further columns in \code{penguins_raw}:
   \describe{
     \item{\code{studyName}}{\code{character}, expedition during which the data was collected}
-    \item{\code{Sample Number}}{\code{numeric}, continuous numbering sequence for each sample}
+    \item{\samp{Sample Number}}{\code{numeric}, continuous numbering sequence for each sample}
     \item{\code{Region}}{\code{character}, the region of Palmer \acronym{LTER} sampling grid}
     \item{\code{Stage}}{\code{character}, denoting reproductive stage at sampling}
-    \item{\code{Individual ID}}{\code{character}, unique ID for each individual in dataset}
-    \item{\code{Clutch Completion}}{\code{character}, 
+    \item{\samp{Individual ID}}{\code{character}, unique ID for each individual in dataset}
+    \item{\samp{Clutch Completion}}{\code{character}, 
       if the study nest was observed with a full clutch, i.e., 2 eggs}
-    \item{\code{Delta 15 N (o/oo)}}{\code{numeric}, the ratio of stable isotopes 15N:14N}
-    \item{\code{Delta 13 C (o/oo)}}{\code{numeric}, the ratio of stable isotopes 13C:12C}
+    \item{\samp{Delta 15 N (o/oo)}}{\code{numeric}, the ratio of stable isotopes 15N:14N}
+    \item{\samp{Delta 13 C (o/oo)}}{\code{numeric}, the ratio of stable isotopes 13C:12C}
     \item{\code{Comments}}{\code{character}, additional relevant information}
   }
 }

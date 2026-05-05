@@ -55,10 +55,10 @@ state.x77
         \item{\code{Income}}{per capita income (1974)}
         \item{\code{Illiteracy}}{illiteracy (1970, percent of
           population)}
-        \item{\code{Life Exp}}{life expectancy in years (1969--71)}
+        \item{\samp{Life Exp}}{life expectancy in years (1969--71)}
         \item{\code{Murder}}{murder and non-negligent manslaughter rate
           per 100,000 population (1976)}
-        \item{\code{HS Grad}}{percent high-school graduates (1970)}
+        \item{\samp{HS Grad}}{percent high-school graduates (1970)}
         \item{\code{Frost}}{mean number of days with minimum
           temperature below freezing (1931--1960) in capital or large
           city}

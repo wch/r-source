@@ -67,9 +67,9 @@
   \code{generic.class}.  The S3 method name is followed by an asterisk
   \code{*} if the method definition is not exported from the package
   namespace in which the method is defined.  S4 method signatures are
-  printed as \code{generic,class-method}; S4 allows for multiple
+  printed as \samp{generic,class-method}; S4 allows for multiple
   dispatch, so there may be several classes in the signature
-  \code{generic,A,B-method}.
+  \samp{generic,A,B-method}.
 
   When invoked with the \code{class} argument, \code{"byclass"} is
   \code{TRUE}, and the \code{print} method by default displays the names

@@ -48,8 +48,8 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
   The default internal method is a minimal implementation, principally
   designed for Windows' users to be able to unpack Windows binary
   packages without external software.  It does not (for example) support
-  Unicode filenames as introduced in \command{zip 3.0}: for that use
-  \code{unzip = "unzip"} with \command{unzip 6.00} or later.  It does
+  Unicode filenames as introduced in \command{zip} 3.0: for that use
+  \code{unzip = "unzip"} with \command{unzip} 6.00 or later.  It does
   have some support for \command{bzip2} compression and > 2GB zip files
   (but not >= 4GB files pre-compression contained in a zip file: like
   many builds of \command{unzip} it may truncate these, in \R's case
@@ -59,14 +59,14 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
   with \code{list = TRUE} is unknown (on Windows it can even depend on
   the current locale) and the return values could be \code{NA} or
   expressed in the wrong time zone or misinterpreted (the latter being
-  far less likely as from \command{unzip 6.00}).
+  far less likely as from \command{unzip} 6.00).
 
   File times in zip files are stored in the style of MS-DOS, as local times
   to an accuracy of 2 seconds.  This is not very useful when
   transferring zip files between machines (even across continents), so
   we chose not to restore them by default.
 
-  The internal method now follows \command{unzip 6.00} in how it handles
+  The internal method now follows \command{unzip} 6.00 in how it handles
   extracted file paths which contain \code{"../"}.
 }
 

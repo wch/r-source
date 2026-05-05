@@ -45,8 +45,8 @@
   \sQuote{significance stars} if \code{signif.stars} is \code{TRUE}.
   The \code{coefficients} component of the result gives the estimated
   coefficients and their estimated standard errors, together with their
-  ratio.  This third column is labelled \code{t ratio} if the
-  dispersion is estimated, and \code{z ratio} if the dispersion is known
+  ratio.  This third column is labelled \samp{t ratio} if the
+  dispersion is estimated, and \samp{z ratio} if the dispersion is known
   (or fixed by the family).  A fourth column gives the two-tailed
   p-value corresponding to the t or z ratio based on a Student t or
   Normal reference distribution.  (It is possible that the dispersion is

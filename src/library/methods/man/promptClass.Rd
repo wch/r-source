@@ -82,7 +82,7 @@ promptClass(clName, filename = NULL, type = "class",
   \code{\link{promptMethods}} for documentation of method definitions.
 
   For processing of the edited documentation, either use
-  \code{R CMD \link{Rdconv}},
+  \command{R CMD \link{Rdconv}},
   or include the edited file in the \file{man} subdirectory of a
   package.
 }

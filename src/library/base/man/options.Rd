@@ -87,7 +87,7 @@ getOption(x, default = NULL)
 
     \item{\code{catch.script.errors}:}{logical, false by default.  If
       true \emph{and} \code{\link{interactive}()} is false, e.g., when an
-      \R script is run by \code{R CMD \link{BATCH} <script>.R}, then
+      \R script is run by \command{R CMD \link{BATCH} <script>.R}, then
       errors do \emph{not} stop execution of the script.  Rather evaluation
       continues after printing the error (and jumping to top level).
       Also, \code{\link{traceback}()} would provide info about the error.
