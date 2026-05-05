@@ -5161,14 +5161,21 @@ components.  Intel users want the @code{darwin20} components: the
 
 Or this can be done manually, by for example
 @example
-curl -OL https://mac.r-project.org/bin/darwin23/arm64/pcre2-10.44-darwin.23-arm64.tar.xz
-sudo tar -xvzf pcre2-10.44-darwin.23-arm64.tar.gz -C /
-curl -OL https://mac.r-project.org/bin/darwin23/arm64/xz-5.6.3-darwin.23-arm64.tar.xz
-sudo tar -xvzf xz-5.6.3-darwin.23-arm64.tar.xz -C /
+curl -OL https://mac.r-project.org/bin/darwin23/arm64/pcre2-10.47-darwin.23-arm64.tar.xz
+sudo tar -xvzf pcre2-10.47-darwin.23-arm64.tar.gz -C /
+curl -OL https://mac.r-project.org/bin/darwin23/arm64/xz-5.8.3-darwin.23-arm64.tar.xz
+sudo tar -xvzf xz-5.8.3-darwin.23-arm64.tar.xz -C /
 @end example
 @noindent
 (@command{sudo} is not needed if your account owns @file{/opt/R/arm64} or
 @file{/opt/R/x86_64} as appropriate.)
+
+Downloading these components in a browser can be problematical: if you
+run into problems try removing extended attributes before
+un-@code{tar}-ing by e.g.
+@example
+xattr -c pcre2-10.47-darwin.23-arm64.tar.gz
+@end example
 
 Messages like @samp{opt/R/: Can't restore time} should be ignored.
 @end itemize
