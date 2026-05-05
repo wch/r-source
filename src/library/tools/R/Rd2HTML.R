@@ -225,8 +225,10 @@ topic2url <- function(x)
     else
         vapply(x, urlify, "", reserved = TRUE) # to vectorize (used in toHTML.R)
 }
-topic2filename <- function(x)
-    gsub("%", "+", utils::URLencode(x, reserved = TRUE))
+topic2filename <- function(x) {
+    s <- utils::URLencode(x, reserved = TRUE)
+    gsub("%", "+", gsub(".", "%2e", s, fixed = TRUE))
+}
 ## The next few are for generating URL fragment ids
 string2id <- function(x)
     gsub("%", "+", utils::URLencode(x, reserved = TRUE))
