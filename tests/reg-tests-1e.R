@@ -3232,7 +3232,7 @@ for(loc in c("C", if(onWindows) c("", "English_US.utf8") else "C.UTF-8")) {
         print(a1) # correctly "přst" *in* case
         print(hasUTF8 <- grepl("utf-?8$", print(Sys.getlocale("LC_CTYPE")), ignore.case=TRUE))
         stopifnot(identical(ch1, names(a1)),
-                  identical(c(112L, 345L, if(hasUTF8 || onWindows || grepl("macOS", osVersion))
+                  identical(c(112L, 345L, if(hasUTF8 || onWindows || grepl("macOS", osVersion) || grepl("musl", R.version$os))
                                                c(115L, 116L) # also: if(onWindows) 345L else 116L
                                           else c(345L, 353L)),
                             print(utf8ToInt(a1))))
