@@ -1000,7 +1000,7 @@ function(con)
     ## (Note that warnings are ignored for now.)
     ## MiKTeX does not give usage, so '(There were n error messages)' is
     ## last.
-    pos <- grep("^(Warning|You|\\(There)", lines)
+    pos <- grep("^(Warning|You've|\\(There)", lines)
     if(!really_has_errors || !length(pos) ) return(character())
     ind <- seq.int(from = 3L, length.out = pos[1L] - 3L)
     lines[ind]
