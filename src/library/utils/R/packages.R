@@ -252,6 +252,20 @@ available_packages_filters_db$R_version <-
 function(db)
 {
     ## Ignore packages which don't fit our version of R.
+    
+    ## Compare current R version to given R version dependency which may
+    ## also be an SVN revision.
+    cmp <- function(o, v) {
+        y <- logical(length(v))
+        i <- startsWith(v, "r")
+        if(length(p <- which(i)))
+            y[p] <- do.call(o, list(as.numeric(R.version[["svn rev"]]),
+                                    as.numeric(substring(v[p], 2L))))
+        if(length(p <- which(!i)))
+            y[p] <- do.call(o, list(getRversion(), v[p]))
+        y
+    }
+    
     depends <- db[, "Depends"]
     depends[is.na(depends)] <- ""
     ## Collect the (versioned) R depends entries.
@@ -268,13 +282,11 @@ function(db)
     ## Extract ops.
     ops <- substring(x, 3L, end)
     ## Split target versions according to ops.
-    v_t <- split(substring(x, end + 1L, nchar(x) - 1L), ops)
-    ## Current R version.
-    v_c <- getRversion()
+    ver <- split(substring(x, end + 1L, nchar(x) - 1L), ops)
     ## Compare current to target grouped by op.
     res <- logical(length(x))
-    for(op in names(v_t))
-        res[ops == op] <- do.call(op, list(v_c, v_t[[op]]))
+    for(op in names(ver))
+        res[ops == op] <- cmp(op, ver[[op]])
     ## And assemble test results according to the rows of db.
     pos <- pos[!vapply(split(res, rep.int(seq_along(lens), lens)), all,
                        NA)]
