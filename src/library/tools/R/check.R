@@ -6949,7 +6949,7 @@ add_dummies <- function(dir, Log)
                         ver <- R.version
                         if (ver$status %in% c("", "Patched")) FALSE
                         else !do.call(depends$op,
-                                      list(ver[["svn rev"]],
+                                      list(as.numeric(ver[["svn rev"]]),
                                            as.numeric(sub("^r", "", depends$version))))
                     }
                     if(status != 0L)  break
