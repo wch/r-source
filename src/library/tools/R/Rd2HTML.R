@@ -244,7 +244,8 @@ topic2href <- function(x, destpkg = NULL, hooks = list())
         if(!length(s <- FUN(destpkg)) || (s == "#"))
             "#"
         else
-            sprintf("%s#%s", s, topic2id(x))
+            structure(sprintf("%s#%s", s, topic2id(x)),
+                      .class = attr(s, ".class"))
     }
 }
 
@@ -690,7 +691,8 @@ Rd2HTML <-
             enterPara(doParas)
             savePara <- inPara
             inPara <<- NA
-            if (!no_links) of0('<a href="', htmlfile, '">')
+            a_class <- sprintf('class="%s" ', attr(htmlfile, ".class"))
+            if (!no_links) of0('<a ', a_class, 'href="', htmlfile, '">')
             writeContent(block, tag)
             if (!no_links) of1('</a>')
             inPara <<- savePara
