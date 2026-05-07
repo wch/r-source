@@ -91,7 +91,7 @@ questions about R.
 @section Legalese
 
 Copyright @copyright{} 1998--2020 @I{Kurt Hornik} @*
-@Rcopyright{2021}
+@Rcopyright{2026}
 
 This document is free software; you can redistribute it and/or modify it
 under the terms of the @acronym{GNU} General Public License as published
@@ -214,7 +214,7 @@ modify the R source code archive, currently consisting of
 @I{Robert Gentleman},
 @I{Kurt Hornik},
 @I{Ross Ihaka},
-@I{Tomas Kalibera},
+@I{Mikael Jagan},
 @I{Michael Lawrence},
 @I{Uwe Ligges},
 @I{Thomas Lumley},
@@ -230,15 +230,16 @@ modify the R source code archive, currently consisting of
 @I{Simon Urbanek},
 @end display
 @noindent
-plus 
-@I{Heiner Schwarte} up to October 1999, 
-@I{Guido Masarotto} up to June 2003, 
-@I{Stefano Iacus} up to July 2014, 
-@I{Seth Falcon} up to August 2015, 
-@I{Duncan Murdoch} up to September 2017, 
+plus
+@I{Heiner Schwarte} up to October 1999,
+@I{Guido Masarotto} up to June 2003,
+@I{Stefano Iacus} up to July 2014,
+@I{Seth Falcon} up to August 2015,
+@I{Duncan Murdoch} up to September 2017,
 @I{Martin Morgan} up to June 2021,
-@I{Douglas Bates} up to March 2024, and 
-@I{Friedrich Leisch} up to April 2024.
+@I{Douglas Bates} up to March 2024,
+@I{Friedrich Leisch} up to April 2024, and
+@I{Tomas Kalibera} up to March 2026.
 
 R has a home page at @url{https://www.R-project.org/}.  It is
 @url{https://www.gnu.org/philosophy/free-sw.html, free software}
@@ -272,15 +273,15 @@ platforms including @var{cpu}-linux-gnu for the @I{i386},
 @c i386-freebsd,
 @c but all recent reports are on x86_64
 @c </COMMENT>
-@c hppa-hp-hpux, 
+@c hppa-hp-hpux,
 @c mips-sgi-irix,
 @c </FIXME>
 @I{i386-pc-solaris},
 @I{rs6000-ibm-aix},
-@I{sparc-sun-solaris}, 
+@I{sparc-sun-solaris},
 @I{x86_64-apple-darwin},
-@I{aarch64-apple-darwin}, 
-@I{x86_64-unknown-freebsd} and 
+@I{aarch64-apple-darwin},
+@I{x86_64-unknown-freebsd} and
 @I{x86_64-unknown-openbsd}.
 
 @c and according to @email{jlindsey@@luc.ac.be, Jim Lindsey} also on
@@ -290,7 +291,7 @@ If you know about other platforms, please drop us a note.
 
 @node What is the current version of R?
 @section What is the current version of R?
- 
+
 R uses a `major.minor.patchlevel' numbering scheme.  Based on this,
 there are the current release version of R (`r-release') as well as two
 development versions of R, a patched version of the current release
@@ -568,7 +569,7 @@ Books on R by R Core Team members include
 
 @quotation
 @I{John M. Chambers} (2008),
-``Software for Data Analysis: Programming with R''.  
+``Software for Data Analysis: Programming with R''.
 @I{Springer}, New York, ISBN 978-0-387-75935-7,
 @url{https://johnmchambers.su.domains/Rbook/}.
 
@@ -611,8 +612,8 @@ Examples''.
 @end quotation
 
 Last, but not least, Ross' and Robert's experience in designing and
-implementing R is described in @I{Ihaka} & @I{Gentleman} (1996), 
-``R: A Language for Data Analysis and Graphics'', 
+implementing R is described in @I{Ihaka} & @I{Gentleman} (1996),
+``R: A Language for Data Analysis and Graphics'',
 @emph{Journal of Computational and Graphical Statistics}, @strong{5}, 299--314
 (@doi{10.1080/10618600.1996.10474713}).
 
@@ -657,10 +658,10 @@ A moderated list for announcements on the availability of new or
 enhanced contributed packages.
 @item R-help
 The `main' R mailing list, for discussion about problems and solutions
-encountered using R, including using R packages in the standard R distribution 
-and on CRAN;  announcements (not covered by `R-announce' or `R-packages'); 
-the availability of new functionality for R and documentation of R; 
-and for posting nice examples and benchmarks. 
+encountered using R, including using R packages in the standard R distribution
+and on CRAN;  announcements (not covered by `R-announce' or `R-packages');
+the availability of new functionality for R and documentation of R;
+and for posting nice examples and benchmarks.
 @c about the development of R and the availability of new code.
 @c enhancements and patches to the source code and documentation of R,
 @c comparison and compatibility with S and @SPLUS{}, and for the posting of
@@ -898,7 +899,7 @@ This is also called the ``@emph{White Book}'', and introduced S version
 3, which added structures to facilitate statistical modeling in S.
 
 @item
-@I{John M. Chambers} (1998), 
+@I{John M. Chambers} (1998),
 ``Programming with Data,''
 New York: @I{Springer},
 ISBN 0-387-98503-4
@@ -1016,7 +1017,7 @@ R> cube(2)
 @c jackknife.S.lm <- function(lmobj) @{
 @c   n <- length(resid(lmobj))
 @c   jval <- sapply(1:n,
-@c                  function(i, lmobj) coef(update(lmobj, subset = -i)), 
+@c                  function(i, lmobj) coef(update(lmobj, subset = -i)),
 @c                  lmobj = lmobj)
 @c   (n - 1) * (n - 1) * var(jval) / n
 @c @}
@@ -1411,8 +1412,8 @@ and @code{$} allow partial matches).  In S, @code{[} allows partial
 matches.
 
 @item
-S has a two-argument version of @code{atan} and no @code{atan2}.  A call 
-in S such as @code{atan(x1, x2)} is equivalent to R's @code{atan2(x1, 
+S has a two-argument version of @code{atan} and no @code{atan2}.  A call
+in S such as @code{atan(x1, x2)} is equivalent to R's @code{atan2(x1,
 x2)}.  However, beware of named arguments since S's @code{atan(x = a, y
 = b)} is equivalent to R's @code{atan2(y = a, x = b)} with the meanings
 of @code{x} and @code{y} interchanged.  (R used to have undocumented
@@ -1445,9 +1446,9 @@ handling of line types, more convenient color handling (via palettes),
 gamma correction for color, and, most importantly, mathematical
 annotation in plot texts, via input expressions reminiscent of @TeX{}
 constructs.  See the help page for @code{plotmath}, which features an
-impressive on-line example.  More details can be found in 
+impressive on-line example.  More details can be found in
 @I{Paul Murrell} and @I{Ross Ihaka} (2000),
-``An Approach to Providing Mathematical Annotation in Plots'', 
+``An Approach to Providing Mathematical Annotation in Plots'',
 @emph{Journal of Computational and Graphical Statistics}, @strong{9}, 582--599
 (@doi{10.1080/10618600.2000.10474900}).
 
@@ -1536,7 +1537,7 @@ interaction.
 Formally defined methods and classes for R objects, plus other
 programming tools, as described in the Green Book.
 @item parallel
-Support for parallel computation, including by forking and by sockets, 
+Support for parallel computation, including by forking and by sockets,
 and random-number generation (added in R 2.14.0).
 @item splines
 Regression spline functions and classes.
@@ -1652,7 +1653,7 @@ genomic data.  Most Bioconductor components are distributed as R add-on
 packages.  Initially most of the
 @url{https://bioconductor.org/packages/release/BiocViews.html#___Software,
 Bioconductor software packages}
-focused primarily on DNA microarray data analysis.  As the 
+focused primarily on DNA microarray data analysis.  As the
 project has matured, the functional scope of the software packages
 broadened to include the analysis of all types of genomic data, such as
 SAGE, sequence, or SNP data.  In addition, there are metadata
@@ -1738,7 +1739,7 @@ library()
 @end example
 
 @noindent
-at the R prompt.  
+at the R prompt.
 
 This produces something like
 
@@ -2190,7 +2191,7 @@ we obtain:
 
 @example
 R> test1()
-3 3.14 
+3 3.14
 R> test2()
 3 3.141593
 @end example
@@ -2758,7 +2759,7 @@ region.  You can adjust the value of the @code{0.25} offset as required
 to move the axis labels up or down relative to the x axis.  See
 @code{?par} for more information.
 
-Also see Figure 1 and associated code in 
+Also see Figure 1 and associated code in
 @I{Paul Murrell} (2003),
 ``Integrating grid Graphics Output with Base Graphics Output'',
 @emph{R News}, @strong{3/2}, 7--12.
@@ -2830,10 +2831,10 @@ Course with Examples in R}, @I{Richard M. Heiberger} and @I{Burt Holland}
 This appendix is a free download from
 @url{https://link.springer.com/content/pdf/bbm:978-1-4939-2122-5/1.pdf}.
 
-For more information, see e.g.@: 
-@I{David Goldberg} (1991), 
+For more information, see e.g.@:
+@I{David Goldberg} (1991),
 ``What Every Computer Scientist Should Know About Floating-Point Arithmetic'',
-@I{@emph{ACM Computing Surveys}}, @strong{23/1}, 5--48, 
+@I{@emph{ACM Computing Surveys}}, @strong{23/1}, 5--48,
 also available via
 @c As of 2020-09-25, redirects to https without valid certificate ...
 @c @url{http://www.validlab.com/goldberg/paper.pdf}.
@@ -2927,7 +2928,7 @@ for(i in 1:100) @{
 @node Why are p-values not displayed when using lmer()?
 @section Why are @math{p}-values not displayed when using @code{lmer()}?
 
-Doug Bates has kindly provided an extensive response in a post to the 
+Doug Bates has kindly provided an extensive response in a post to the
 r-help list, which can be reviewed at
 @uref{https://stat.ethz.ch/pipermail/r-help/2006-May/094765.html}.
 
@@ -2953,7 +2954,7 @@ Disable line art smoothing.
 @item Preview (macOS)
 There is an option in Preferences to enable/disable anti-aliasing of
 text and line art.
-Disable this option. 
+Disable this option.
 @item @I{GSview} (cross platform)
 There are settings for Text Alpha and Graphics Alpha.
 Change Graphics Alpha from 4 bits to 1 bit to disable graphic
@@ -3079,8 +3080,8 @@ package) automate the process somewhat.
 @node How do I access the source code for a function?
 @section How do I access the source code for a function?
 
-In most cases, typing the name of the function will print its source 
-code. However, code is sometimes hidden in a namespace, or compiled.  For 
+In most cases, typing the name of the function will print its source
+code. However, code is sometimes hidden in a namespace, or compiled.  For
 a complete overview on how to access source code, see @I{Uwe Ligges} (2006),
 ``Help Desk: Accessing the sources'', @emph{R News}, @strong{6/4},
 43--45 (@url{https://CRAN.R-project.org/doc/Rnews/Rnews_2006-4.pdf}).
@@ -3374,7 +3375,7 @@ bugs new-to-old'' or the search facility on
 @url{https://bugs.R-project.org/}.  Second, consult
 @url{https://svn.R-project.org/R/trunk/doc/NEWS.Rd}, which
 records changes that will appear in the @emph{next} release of R,
-including bug fixes that do not appear on the Bug Tracker.  
+including bug fixes that do not appear on the Bug Tracker.
 Third, if possible try the current r-patched or r-devel version of R.
 If a bug has already been reported or fixed, please do not submit
 further bug reports on it.  Finally, check carefully whether the bug is
@@ -3389,7 +3390,7 @@ For reports on R this will open the R Bugzilla page at
 the package's bug tracker Web page or help you compose an email to the
 maintainer.  Since 2016, only ``members'' (including all who have
 previously submitted bugs) can submit new bugs on the R Bugzilla.  See
-``Where to submit bug reports and patches'' on 
+``Where to submit bug reports and patches'' on
 @uref{https://www.r-project.org/bugs.html, Bug Reporting in R} for more
 information.
 
@@ -3415,9 +3416,9 @@ or to the translation team as listed at
 Of course, many many thanks to Robert and Ross for the R system, and to
 the package writers and porters for adding to it.
 
-Special thanks go to 
-@I{Doug Bates}, 
-@I{Peter Dalgaard}, 
+Special thanks go to
+@I{Doug Bates},
+@I{Peter Dalgaard},
 @I{Paul Gilbert},
 @I{Stefano Iacus},
 @I{Fritz Leisch},
@@ -3425,7 +3426,7 @@ Special thanks go to
 @I{Thomas Lumley},
 @I{Martin Maechler},
 @I{Brian D. Ripley},
-@I{Anthony Rossini}, and 
+@I{Anthony Rossini}, and
 @I{Andreas Weingessel}
 for their comments which helped me improve this @acronym{FAQ}.
 
