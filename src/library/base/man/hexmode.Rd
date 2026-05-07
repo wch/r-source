@@ -15,6 +15,7 @@
 \alias{&.hexmode}
 %% FIXME: xor() is not generic (yet?).
 %% \alias{xor.hexmode}
+\alias{c.hexmode}
 \alias{hexmode}
 \description{
   Integers which are displayed in hexadecimal (short \sQuote{hex}) format,

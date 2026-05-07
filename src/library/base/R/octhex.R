@@ -152,3 +152,11 @@ as.hexmode <- function(x)
 `|.hexmode` <- function(a, b) as.hexmode(bitwOr(as.hexmode(a), as.hexmode(b)))
 ## FIXME: xor() is not generic (yet?).
 ## xor.hexmode <- function(a, b) as.hexmode(bitwXor(as.hexmode(a), as.hexmode(b)))
+
+c.octmode <- function(...)
+    `class<-`(unlist(lapply(list(...), as.octmode), recursive = FALSE),
+              "octmode")
+
+c.hexmode <- function(...)
+    `class<-`(unlist(lapply(list(...), as.hexmode), recursive = FALSE),
+              "hexmode")

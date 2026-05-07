@@ -15,6 +15,7 @@
 \alias{&.octmode}
 %% FIXME: xor() is not generic (yet?).
 %% \alias{xor.octmode}
+\alias{c.octmode}
 \alias{octmode}
 \description{
   Integers which are displayed in octal (base-8 number system) format, with as
