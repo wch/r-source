@@ -18,6 +18,7 @@ if(!(UTF8 || LATIN1OR9) ||
     q("no")
 }
 
+options(warn = 1)
 assertErrV  <- function(...) tools::assertError  (..., verbose=TRUE)
 assertWarnV <- function(...) tools::assertWarning(..., verbose=TRUE)
 #
@@ -390,9 +391,10 @@ stopifnot(identical(iconv(list(r16), "UTF-16", "UTF-8", sub="byte"),
 
 
 ## Using a __unicode__ decimal mark is fine :
-op <- options(OutDec = "·", scipen = 1)
+op <- options(OutDec = "\u00b7", scipen = 1)
 x <- pi* 10^(-6:5)
 fx <- sapply(x, format)
+## with prettyNum warnings if LATIN1OR9: "...more than one character wide..."
 print(fx, width=88, quote=FALSE) # 3·141593e-06 0·00003141593 0·0003141593 ....
 options(OutDec = ".") # back to normal
 stopifnot(grepl("·", fx, fixed=TRUE),
