@@ -882,7 +882,7 @@ stopifnot(exprs = {
 
 ## c.POSIXlt, [<-.POSIXlt , [[, etc, for far (and very far) future -- PR#18989
 for(thtz in c("UTC", "Europe/Kyiv", "Asia/Kolkata", "Pacific/Auckland"
-              ## , "Asia/Hebron", "Canada/Mountain", "Navajo"
+            , "Asia/Hebron", "Canada/Mountain", "Navajo"
               )) { # dbg: withAutoprint({
   x0 <- as.POSIXlt("9999-12-31 23:59:59.99999", tz=thtz)
   print(x0)
@@ -934,6 +934,17 @@ for(thtz in c("UTC", "Europe/Kyiv", "Asia/Kolkata", "Pacific/Auckland"
     })
   }#) ##  for(i in .....)
 }#) ## for(thtz in ..)
+
+
+## PR#19038:- wrong as.POSIXct(x) for POSIXlt object x  w/ x$year close to integer.max
+x <- as.POSIXlt(c("1900-01-01", "1900-01-01"), tz="UTC")
+x$year <- .Machine$integer.max - (1900:1899)
+print(as.vector(as.POSIXct(x)), 17) # 2nd value was negative
+(d_sec <- diff(as.vector(ctx <- as.POSIXct(x))))
+(d_sU  <- diff(as.vector(ctU <- as.POSIXct(x, tz="Etc/UTC"))))
+stopifnot(d_sec == 365*24*3600,
+          identical(d_sec, d_sU))
+## the negative value stemming from C level integer addition overflow
 
 
 

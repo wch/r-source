@@ -323,8 +323,8 @@ static double mkdate00 (stm *tm)
 	return NA_REAL;
     }
 
-    int day = tm->tm_mday - 1,	/* not ok if it's NA_INTEGER */
-	year0 = 1900 + tm->tm_year;
+    int day = tm->tm_mday - 1, /* checked for NA above */
+	year0 = tm->tm_year;
     double excess = 0.0;
     if (year0 >= 400) {
 	excess = (int)(year0/400) - 1;
@@ -333,6 +333,7 @@ static double mkdate00 (stm *tm)
 	excess = -1 - (int)(-year0/400);
 	year0 -= (int)(excess * 400);
     }
+    year0 += 1900;
 
     for(int i = 0; i < tm->tm_mon; i++) day += month_days[i];
     if (tm->tm_mon > 1 && isleap(year0)) day++;

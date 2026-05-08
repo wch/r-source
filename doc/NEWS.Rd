@@ -92,6 +92,11 @@
 
       \item \code{.leap.seconds} again has no \code{"tzone"} attribute, as
       in earlier \R versions, fixing \PR{19072} thanks to \I{Suharto Anggono}.
+
+      \item \code{as.POSIXct(x)} for \code{POSIXlt} object \code{x} with
+      \code{.Machine$integer.max - x$year < 1900} no longer suffers from C
+      level integer overflow, thanks to \I{Suharto Anggono}'s patch for
+      \PR{19038}.
     }
   }
 }
