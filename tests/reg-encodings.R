@@ -2,9 +2,11 @@
 
 str(INFO <- l10n_info())
 UTF8 <- INFO[["UTF-8"]]
+osType <- .Platform$OS.type
+onWindows <- osType == "windows"
 LATIN1OR9 <- !UTF8 && (
     INFO[["Latin-1"]] ||
-    switch(.Platform$OS.type,
+    switch(osType,
            windows = identical(INFO[["codepage"]], 28605L),
            unix = tolower(gsub("-", "", INFO[["codeset"]], fixed = TRUE)) == "iso885915")
 )
@@ -14,6 +16,19 @@ if(!(UTF8 || LATIN1OR9) ||
     ## l10n_info() would report Latin-1 when that is the code page
     message("SKIPPED: these tests need a UTF-8 or Latin-1 or Latin-9 locale")
     q("no")
+}
+
+assertErrV  <- function(...) tools::assertError  (..., verbose=TRUE)
+assertWarnV <- function(...) tools::assertWarning(..., verbose=TRUE)
+#
+##' Get value of `expr` and keep warning as attribute (if there is one)
+getVaW <- function(expr, obj=FALSE) {
+    W <- NULL
+    withCallingHandlers(val <- expr,
+                        warning = function(w) {
+                            W <<- if(obj) w else conditionMessage(w)
+                            invokeRestart("muffleWarning") })
+    structure(val %||% quote(._NULL_()), warning = W) # NULL cannot have attr.
 }
 
 
@@ -331,7 +346,7 @@ stopifnot(grepl("chr \"J.*reskog\"", .tmp))
 
 ## source() with multiple encodings -- moved from reg-tests-1e.R
 writeLines('x <- "fa\xE7ile"', tf <- tempfile(), useBytes = TRUE)
-tools::assertError(source(tf, encoding = "UTF-8"))
+assertErrV(source(tf, encoding = "UTF-8"))
 source(tf, encoding = c("UTF-8", "latin1"))
 ## in R 4.2.{0,1} gave Warning (that would now be an error):
 ##   'length(x) = 2 > 1' in coercion to 'logical(1)'
@@ -383,3 +398,29 @@ options(OutDec = ".") # back to normal
 stopifnot(grepl("·", fx, fixed=TRUE),
           identical(sub("·", ".", fx), sapply(x, format)))
 options(op)
+
+
+## abbreviate(<non-ASCII>) -- PR#19058
+ch1 <- intToUtf8(c(112L, 345L, 237L, 115:116, 345L, 101L, 353L, 101L, 107L))
+lcct <- Sys.getlocale("LC_CTYPE") # saved
+Sys.getlocale() # just for info ..
+for(loc in c("C", if(onWindows) c("", "English_US.utf8") else "C.UTF-8")) {
+                      ## Windows: "" means 'the implementation-defined native environment'
+    locW <- getVaW(lc <- Sys.setlocale("LC_CTYPE", loc))# warning on Windows & some server Linux, incl docker/podman.
+    cat("Warning?", attr(locW, "warning") %||% "No; all fine", "\n")
+    if(!is.null(lc) && nzchar(lc)) { # when Sys.setlocale() worked supposedly
+        cat("\n", lc, ": ", sep="")
+        suppressWarnings(a1 <- abbreviate(ch1)) # FIXME - should it warn even when "correct"?
+        ## In abbreviate("přístřešek") : abbreviate used with non-ASCII chars
+        print(a1) # correctly "přst" *in* case
+        print(hasUTF8 <- grepl("utf-?8$", print(Sys.getlocale("LC_CTYPE")), ignore.case=TRUE))
+        stopifnot(identical(ch1, names(a1)),
+                  identical(c(112L, 345L, if(hasUTF8 || onWindows || grepl("macOS", osVersion) ||
+                                             grepl("musl", R.version$os))
+                                               c(115L, 116L)
+                                          else c(345L, 353L)),
+                            print(utf8ToInt(a1))))
+    }
+}
+if(!is.null(lc <- lcct) && nzchar(lc)) Sys.setlocale("LC_CTYPE", lc) # revert
+## <chars>(a1)[3:4] were different in R <= 4.6.0
