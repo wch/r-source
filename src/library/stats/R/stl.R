@@ -76,8 +76,9 @@ stl <- function(x, s.window,
 		  no = as.integer(outer),
 		  weights = double(n),
 		  seasonal = double(n),
-		  trend = double(n),
-                  double((n+2*period)*5))
+		  trend = double(n)
+                  ## now in C: , double((n+2*period)*5)
+                  )
     if(periodic) {
 	## make seasonal part exactly periodic
 	which.cycle <- cycle(x)

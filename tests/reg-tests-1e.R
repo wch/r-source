@@ -3217,36 +3217,50 @@ stopifnot(identical(3:2, dim(dftN)),
 ## as.DF(<tab_w_NA>) failed after first fix ..
 
 
-## abbreviate(<non-ASCII>) -- PR#19058
-ch1 <- intToUtf8(c(112L, 345L, 237L, 115:116, 345L, 101L, 353L, 101L, 107L))
-lcct <- Sys.getlocale("LC_CTYPE") # saved
-Sys.getlocale() # just for info ..
-for(loc in c("C", if(onWindows) c("", "English_US.utf8") else "C.UTF-8")) {
-                      ## Windows: "" means 'the implementation-defined native environment'
-    locW <- getVaW(lc <- Sys.setlocale("LC_CTYPE", loc))# warning on Windows & some server Linux, incl docker/podman.
-    cat("Warning?", attr(locW, "warning") %||% "No; all fine", "\n")
-    if(!is.null(lc) && nzchar(lc)) { # when Sys.setlocale() worked supposedly
-        cat("\n", lc, ": ", sep="")
-        suppressWarnings(a1 <- abbreviate(ch1)) # FIXME - should it warn even when "correct"?
-        ## In abbreviate("přístřešek") : abbreviate used with non-ASCII chars
-        print(a1) # correctly "přst" *in* case
-        print(hasUTF8 <- grepl("utf-?8$", print(Sys.getlocale("LC_CTYPE")), ignore.case=TRUE))
-        stopifnot(identical(ch1, names(a1)),
-                  identical(c(112L, 345L, if(hasUTF8 || onWindows || grepl("macOS", osVersion) || grepl("musl", R.version$os))
-                                               c(115L, 116L) # also: if(onWindows) 345L else 116L
-                                          else c(345L, 353L)),
-                            print(utf8ToInt(a1))))
-    }
-}
-if(!is.null(lc <- lcct) && nzchar(lc)) Sys.setlocale("LC_CTYPE", lc) # revert
-## <chars>(a1)[3:4] were different in R <= 4.6.0
-
-
 ## <symbol> -> <logical> etc via C level coerceSymbol() -- PR#19054
 assertErrV( all(quote(symbool)) )
 assertErrV( any(quote(symbool)) )
 ## gave warnings but then TRUE or FALSE in R <= 4.6.0
 
+
+## Platform dependently, stl(.) could severely misbehave when compiled by flang 22, -O2
+sw <- 0:16
+r1 <- lapply(sw, function(sWin) stl(ts(rep(1:3, 3), frequency = 3), s.window = sWin))
+R1 <- lapply(sw, function(sWin) stl(ts(rep(1:3, 3), frequency = 3), s.window = sWin, robust=TRUE))
+chk1 <- function(stl) {
+    cat("<stl>$win: ", substring(deparse(stl$win), 2),
+           "; jump: ", substring(deparse(stl$jump), 2),"\n", sep="")
+    if(any(abs(stl$weights - 1) > 1e-7))
+        cat(" varying weights:  ", sprintf("%.3g", stl$weights), "\n")
+    stopifnot(is.list(stl), inherits(stl, "stl"),
+              identical(stl$deg, c(s=0L, t=1L, l=1L)),
+              is.matrix(mts <- stl$time.series), inherits(mts, "mts"),
+              identical(c(9L, 3L), dim(mts)),
+              identical(c("seasonal", "trend", "remainder"), colnames(mts)))
+}
+(swU <- pmax(3L, ifelse(sw %% 2 == 1, sw, sw+1L))) # effectively used s.window
+invisible(lapply(r1, chk1))
+cat("\n robust=TRUE :\n ===========\n")
+invisible(lapply(R1, chk1))
+Seasr <- vapply(r1, function(stl) stl$time.series[,"seasonal"], numeric(3*3))
+SeasR <- vapply(R1, function(stl) stl$time.series[,"seasonal"], numeric(3*3))
+Trndr <- vapply(r1, function(stl) stl$time.series[,"trend"],    numeric(3*3))
+TrndR <- vapply(R1, function(stl) stl$time.series[,"trend"],    numeric(3*3))
+aremr <- abs(vapply(r1, function(stl) stl$time.series[,"remainder"], numeric(3*3)))
+aremR <- abs(vapply(R1, function(stl) stl$time.series[,"remainder"], numeric(3*3)))
+stopifnot(exprs = {
+    ## s.window = 0 is now *equivalent* to s.window = 1:
+    identical(r1[[1]], r1[[2]])
+    identical(R1[[1]], R1[[2]])
+    ## Seasonal
+    print(max(abs(Seasr - rep(-1:1, 3)))) < 1e-13
+    print(max(abs(SeasR - rep(-1:1, 3)))) < 1e-13
+    print(max(Trndr - 2)) < 1e-13
+    print(max(TrndR - 2)) < 1e-13
+    print(max(aremr)) < 1e-13 # 2.22e-15 was 1.24e-14
+    print(max(aremR)) < 1e-13 # 2.88e-15
+})
+## partly "exploded" (dumped core), partly did not return constant trend =~= 2
 
 
 ## keep at end

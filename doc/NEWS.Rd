@@ -113,6 +113,10 @@
       \code{stl(*, s.window = 1)} \dQuote{works} correctly, too.  Also, the
       \code{summary()} method mentions the robustness \code{weights} only
       if any robustness iterations happened.
+
+      Further, \code{stl()} is now based on C code, translated from previous
+      Fortran, triggered by a \I{flang 22} compiler optimization bug
+      (\command{-O2}).
     }
   }
 }

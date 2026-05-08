@@ -278,7 +278,7 @@ static const R_FortranMethodDef FortEntries[] = {
     {"hcass2", (DL_FUNC) &F77_NAME(hcass2),  6},
     {"kmns",   (DL_FUNC) &F77_NAME(kmns),   17},
     {"eureka", (DL_FUNC) &F77_NAME(eureka),  6},
-    {"stl",    (DL_FUNC) &F77_NAME(stl),    18},
+    {"stl",    (DL_FUNC) &F77_NAME(stl),    17},
     {NULL, NULL, 0}
 };
 

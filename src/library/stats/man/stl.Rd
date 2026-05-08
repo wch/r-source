@@ -90,6 +90,7 @@ stl(x, s.window, s.degree = 0,
   \item{no}{number of \bold{o}uter robustness iterations}
 }
 \author{B.D. Ripley;
+  C code via \command{f2c} and much cleanup by M. Maechler;
   Fortran code by \bibcitet{R:Cleveland+Cleveland+McRae:1990} from
   \file{netlib}.}
 \references{
