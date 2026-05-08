@@ -154,11 +154,12 @@
   platforms ignore them (as required by POSIX).  This is detected and
   corrected for at build time, so \code{"POSIXct"} times used by \R do
   not include leap seconds on any platform.
+  Note that \code{.leap.seconds} has \emph{no} \code{"tzone"} attribute on
+  purpose, see also the \sQuote{Examples}.
 
-  Using \code{\link{c}} on \code{"POSIXlt"} objects regularizes the
-  \code{"tzone"} and sets it to the current time zone if it was unset,
-  and on \code{"POSIXct"} objects drops \code{"tzone"}
-  attributes if they are not all the same.
+  Unless they are all marked with the same time zone, using \code{\link{c}}
+  on \code{"POSIXlt"} objects converts them to the current time zone, and
+  on \code{"POSIXct"} objects drops the \code{"tzone"} attributes.
 
   A few times have specific issues.  First, the leap seconds are ignored,
   and real times such as \code{"2005-12-31 23:59:60"} are (probably)

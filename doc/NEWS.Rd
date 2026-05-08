@@ -89,6 +89,9 @@
       coercions; previously, the coercion of the symbol resulted
       in \code{NULL} internally, raised a warning, and could access illegal
       memory; thanks to \I{Kevin Ushey}'s \PR{19054}.
+
+      \item \code{.leap.seconds} again has no \code{"tzone"} attribute, as
+      in earlier \R versions, fixing \PR{19072} thanks to \I{Suharto Anggono}.
     }
   }
 }

@@ -1,7 +1,7 @@
 #  File src/library/base/R/zdatetime.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2017 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,5 +28,5 @@
           "2012-6-30", "2015-6-30", "2016-12-31")
     .leap.seconds <- strptime(paste(.leap.seconds , "23:59:60"),
                               "%Y-%m-%d %H:%M:%S", tz = "UTC")
-    c(as.POSIXct(.leap.seconds, "GMT")) # lose the timezone attribute
+    `attr<-`(as.POSIXct(.leap.seconds), "tzone", NULL) # lose the timezone attribute
 })

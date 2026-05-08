@@ -3263,6 +3263,12 @@ stopifnot(exprs = {
 ## partly "exploded" (dumped core), partly did not return constant trend =~= 2
 
 
+## PR#19072
+stopifnot(identical(attributes(.leap.seconds), list(class = c("POSIXct", "POSIXt")))
+## .leap.seconds have no "tzone" attribute (as in R < 4.1.0)
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
