@@ -38,18 +38,22 @@
 // R_alloc() ..
 #include <R_ext/Memory.h>
 
-void stlstp_(double *y, int n, int np, int ns, int nt, int nl,
+#include "ts.h" // for F77_NAME(stl)
+
+static
+void stlstp(double *y, int n, int np, int ns, int nt, int nl,
 	     int isdeg, int itdeg, int ildeg, int nsjump, int ntjump, int nljump,
 	     int niter,
 	     bool use_rw, double *rw,
 	     double *season, double *trend, double *work);
 
-void stlrwt_(double *, int n, double *, double *);
+static
+void stlrwt(double *, int n, double *, double *);
 
 
 /* Called from R -- for now via .Fortran(C_stl, ...)
  *                 "for now": to switch between *.c and *.f */
-void stl_(double *y, int *n, // n = length(y)
+void F77_NAME(stl)(double *y, int *n, // n = length(y)
 	  int *np, /* period */
 	  int *ns, /* s.window  \    */
 	  int *nt, /* t.window   > = spans for 's', 't' and 'l' smoother */
@@ -83,11 +87,12 @@ void stl_(double *y, int *n, // n = length(y)
     int nperiod = imax2(2,*np),
 	niter = *ni;
 
+    // This is not large so could simply use automatic allocation.
     double *work = (double *) R_alloc(5*(*n + 2*nperiod), sizeof(double));
 
     /* --- outer loop -- do *no robustness iterations --------------------- */
     for(int k = 0; /* do stlstp_() in *any* case */; ) { /* L100: */
-	stlstp_(y, *n, nperiod, newns, newnt, newnl,
+	stlstp(y, *n, nperiod, newns, newnt, newnl,
 		*isdeg, *itdeg, *ildeg,
 		*nsjump, *ntjump, *nljump,
 		niter, use_rw, rw,
@@ -99,7 +104,7 @@ void stl_(double *y, int *n, // n = length(y)
 	for (int i = 0; i < *n; ++i) {
 	    work[i] = trend[i] + season[i];
 	}
-	stlrwt_(y, *n, work, rw);
+	stlrwt(y, *n, work, rw);
 	use_rw = true;
     } /* --- end Loop -- L10: ------------------ */
 
@@ -112,13 +117,15 @@ void stl_(double *y, int *n, // n = length(y)
 } /* stl_ */
 
 
-bool stlest_(const double y[], int n, int len, int ideg,
+static
+bool stlest(const double y[], int n, int len, int ideg,
 	     double xs, double *ys,
 	     int nleft, int nright,
 	     double *w,
 	     bool use_rw, const double rw[]);
 
-void stless_(double *y, int n, int len, int ideg, int njump,
+static
+void stless(double *y, int n, int len, int ideg, int njump,
 	     bool use_rw, double *rw, double *ys, double *res)
 {
     if (n < 2) {
@@ -135,7 +142,7 @@ void stless_(double *y, int n, int len, int ideg, int njump,
 	nright = n;
 	// Fortran:   do i = 1,n,newnj
 	for (int i = 0; i < n; i += newnj) {
-	    ok = stlest_(y, n, len, ideg, (double) (i+1), &ys[i],
+	    ok = stlest(y, n, len, ideg, (double) (i+1), &ys[i],
 			 nleft, nright,
 			 res, use_rw, rw);
 	    if (! ok) {
@@ -152,7 +159,7 @@ void stless_(double *y, int n, int len, int ideg, int njump,
 		    ++nleft;
 		    ++nright;
 		}
-		ok = stlest_(y, n, len, ideg, (double) (i+1), &ys[i],
+		ok = stlest(y, n, len, ideg, (double) (i+1), &ys[i],
 			     nleft, nright,
 			     res, use_rw, rw);
 		if (! ok) {
@@ -173,7 +180,7 @@ void stless_(double *y, int n, int len, int ideg, int njump,
 		    nleft = i+1 - nsh + 1;
 		    nright = len + i+1 - nsh;
 		}
-		ok = stlest_(y, n, len, ideg, (double) (i+1), &ys[i],
+		ok = stlest(y, n, len, ideg, (double) (i+1), &ys[i],
 			     nleft, nright,
 			     res, use_rw, rw);
 		if (! ok) {
@@ -192,7 +199,7 @@ void stless_(double *y, int n, int len, int ideg, int njump,
 	}
 	int k = (n - 1) / newnj * newnj; // now 0-based
 	if (k != n - 1) {
-	    ok = stlest_(y, n, len, ideg, (double) n, &ys[n-1],
+	    ok = stlest(y, n, len, ideg, (double) n, &ys[n-1],
 			 nleft, nright,
 			 res, use_rw, rw);
 	    if (! ok) {
@@ -209,7 +216,8 @@ void stless_(double *y, int n, int len, int ideg, int njump,
     return;
 } // stless_
 
-bool stlest_(const double y[], int n, int len, int ideg,
+static
+bool stlest(const double y[], int n, int len, int ideg,
 	     double xs, double *ys,
 	     int nleft, int nright,
 	     double *w,
@@ -278,7 +286,8 @@ bool stlest_(const double y[], int n, int len, int ideg,
 } /* stlest_ */
 
 
-void stlma_(double *x, int n, int len, double *ave)
+static
+void stlma(double *x, int n, int len, double *ave)
 {
 /* Moving Average (aka "running mean")
  ave(i) := mean(x{j}, j = max(1,i-k),..., min(n, i+k))
@@ -301,21 +310,23 @@ void stlma_(double *x, int n, int len, double *ave)
     return;
 } /* stlma_ */
 
-void stlfts_(double *x, int n, int np,
+void stlfts(double *x, int n, int np,
 	     double *trend, double *work)
 {
-    stlma_(x,     n,                  np, trend);
-    stlma_(trend, n - np + 1,         np, work);
-    stlma_(work , n - (np << 1) + 2,   3, trend);
+    stlma(x,     n,                  np, trend);
+    stlma(trend, n - np + 1,         np, work);
+    stlma(work , n - (np << 1) + 2,   3, trend);
     return;
 }
 
-void stlss_(const double y[], int n, int np, int ns, int isdeg, int nsjump,
+static
+void stlss(const double y[], int n, int np, int ns, int isdeg, int nsjump,
 	    bool use_rw, const double rw[],
 	    /* ---> result: */ double *season, /* [1:(n+2*np)] */
 	    double *work1, double *work2, double *work3, double *work4);
 
-void stlstp_(double *y, int n, int np, int ns, int nt, int nl,
+static
+void stlstp(double *y, int n, int np, int ns, int nt, int nl,
 	     int isdeg, int itdeg, int ildeg, int nsjump, int ntjump, int nljump,
 	     int niter,
 	     bool use_rw, double *rw,
@@ -331,23 +342,24 @@ void stlstp_(double *y, int n, int np, int ns, int nt, int nl,
     for (int j = 1; j <= niter; ++j) { /* Do  niter  "inner" iterations : -------------*/
 	for (i = 0; i < n; ++i)
 	    work[i] = y[i] - trend[i];
-	stlss_(work, n, np, ns, isdeg, nsjump, use_rw, rw,
+	stlss(work, n, np, ns, isdeg, nsjump, use_rw, rw,
 	       work2, work3, work4, work5, season);
-	stlfts_(work2, n2p, np, work3, work);
-	stless_(work3, n, nl, ildeg, nljump, /* use_rw = */ false,
+	stlfts(work2, n2p, np, work3, work);
+	stless(work3, n, nl, ildeg, nljump, /* use_rw = */ false,
 		work4, work, work5);
 	for (i = 0; i < n; ++i)
 	    season[i] = work2[np + i] - work[i];
 	for (i = 0; i < n; ++i)
 	    work[i] = y[i] - season[i];
-	stless_(work, n, nt, itdeg, ntjump, use_rw, rw, trend, work3);
+	stless(work, n, nt, itdeg, ntjump, use_rw, rw, trend, work3);
     }
     return;
 } // stlstp_
 
-void psort_(double *a, int n, int *ind, int ni);
+static void psort(double *a, int n, int *ind, int ni);
 
-void stlrwt_(double *y, int n, double *fit, double *rw)
+static
+void stlrwt(double *y, int n, double *fit, double *rw)
 {
 /* Robustness Weights
        rw_i := B( |y_i - fit_i| / (6 M) ),   i = 1,2,...,n
@@ -360,7 +372,7 @@ void stlrwt_(double *y, int n, double *fit, double *rw)
     int mid[2];
     mid[0] = n / 2 + 1; // 1-indexing also in psort()
     mid[1] = n - mid[0] + 1;
-    psort_(rw, n, mid, 2);
+    psort(rw, n, mid, 2);
     double
 	cmad = (rw[mid[0]-1] + rw[mid[1]-1]) * 3., /* = 6 * MAD */
 	c9 = cmad * .999,
@@ -382,7 +394,8 @@ void stlrwt_(double *y, int n, double *fit, double *rw)
 
 
 /* called by stlstp() at the beginning of each (inner) iteration */
-void stlss_(const double y[], int n, int np, int ns, int isdeg, int nsjump,
+static
+void stlss(const double y[], int n, int np, int ns, int isdeg, int nsjump,
 	    bool use_rw, const double rw[],
 	    /* ---> result: */ double *season, /* [1:(n+2*np)] */
 	    double *work1, double *work2, double *work3, double *work4)
@@ -397,16 +410,16 @@ void stlss_(const double y[], int n, int np, int ns, int isdeg, int nsjump,
 		work3[i] = rw[i * np + j];
 	    }
 	}
-	stless_(work1, k, ns, isdeg, nsjump, use_rw, work3, &work2[1], work4);
+	stless(work1, k, ns, isdeg, nsjump, use_rw, work3, &work2[1], work4);
 	int nleft, nright = imin2(ns,k);
-	bool ok = stlest_(work1, k, ns, isdeg, 0., work2,
+	bool ok = stlest(work1, k, ns, isdeg, 0., work2,
 			  1, nright,
 			  work4, use_rw, work3);
 	if (! ok) {
 	    work2[0] = work2[1];
 	}
 	nleft = imax2(1, k - ns + 1);
-	ok = stlest_(work1, k, ns, isdeg, (double) (k + 1), &work2[k + 1],
+	ok = stlest(work1, k, ns, isdeg, (double) (k + 1), &work2[k + 1],
 		     nleft, k,
 		     work4, use_rw, work3);
 	if (! ok) {
@@ -421,7 +434,8 @@ void stlss_(const double y[], int n, int np, int ns, int isdeg, int nsjump,
 
 
 /* Partial Sorting ; used for Median (MAD) computation only */
-void psort_(double *a, int n, int *ind, int ni)
+static
+void psort(double *a, int n, int *ind, int ni)
 {
     if (n < 0 || ni < 0) {
 	return;
