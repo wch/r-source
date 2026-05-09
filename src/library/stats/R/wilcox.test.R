@@ -168,8 +168,10 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 function(x, mu, n = length(x), digits.rank)
 {
     x <- x - mu
+    if(is.finite(digits.rank))
+        x <- signif(x, digits.rank)
     i <- (x == 0)
-    r <- rank(abs(if(is.finite(digits.rank)) signif(x, digits.rank) else x))
+    r <- rank(abs(x))
     TIES <- length(r) != length(unique(r))
     ZERO <- any(i)
     STATISTIC <- c("V" = sum(r[x > 0]))
@@ -180,12 +182,14 @@ function(x, mu, n = length(x), digits.rank)
 function(x, mu, n = length(x), digits.rank)
 {
     x <- x - mu
+    if(is.finite(digits.rank))
+        x <- signif(x, digits.rank)
     ZERO <- any(x == 0)
     if(ZERO) {
         x <- x[x != 0]
         n <- length(x)
     }
-    r <- rank(abs(if(is.finite(digits.rank)) signif(x, digits.rank) else x))
+    r <- rank(abs(x))
     TIES <- length(r) != length(unique(r))
     STATISTIC <- c("V" = sum(r[x > 0]))
     MEAN <-  n * (n + 1) / 4
