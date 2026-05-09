@@ -94,6 +94,9 @@ foo(\var{x}, \var{y}, ...)
   This should not start a new paragraph:
   \eqn{\frac{1}{n-1}}{
              1/(n-1)}.
+
+  Simple 1-arg case with basic substitution in plain text (and legacy HTML):
+  \eqn{0 \le \code{x} \leq 1}
 }
 \section{\verb{\deqn}}{
   1-arg form, centered also in text conversion:

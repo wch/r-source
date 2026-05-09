@@ -87,6 +87,9 @@ _V_a_l_u_e:
 
      This should not start a new paragraph: 1/(n-1).
 
+     Simple 1-arg case with basic substitution in plain text (and
+     legacy HTML): 0 <= 'x' <=q 1
+
 \_d_e_q_n:
 
      1-arg form, centered also in text conversion:
