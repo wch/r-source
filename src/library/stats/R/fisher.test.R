@@ -72,8 +72,9 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
                                    c("two.sided", "less", "greater"))
         if(length(alternative) > 1L || is.na(alternative))
             stop("alternative must be \"two.sided\", \"less\" or \"greater\"")
-        if(!((length(conf.level) == 1L) && is.finite(conf.level) &&
-             (conf.level > 0) && (conf.level < 1)))
+        if(!missing(conf.level) &&
+           (length(conf.level) != 1 || !is.finite(conf.level) ||
+            conf.level < 0 || conf.level > 1))
             stop("'conf.level' must be a single number between 0 and 1")
         if(!missing(or) && (length(or) > 1L || is.na(or) || or < 0))
             stop("'or' must be a single number between 0 and Inf")

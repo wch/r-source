@@ -47,8 +47,9 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
         stop ("'p' must be a single number between 0 and 1")
     alternative <- match.arg(alternative)
 
-    if(!((length(conf.level) == 1L) && is.finite(conf.level) &&
-         (conf.level > 0) && (conf.level < 1)))
+    if(!missing(conf.level) &&
+       (length(conf.level) != 1 || !is.finite(conf.level) ||
+        conf.level < 0 || conf.level > 1))
         stop("'conf.level' must be a single number between 0 and 1")
 
     PVAL <- switch(alternative,
