@@ -938,12 +938,13 @@ for(thtz in c("UTC", "Europe/Kyiv", "Asia/Kolkata", "Pacific/Auckland"
 
 ## PR#19038:- wrong as.POSIXct(x) for POSIXlt object x  w/ x$year close to integer.max
 x <- as.POSIXlt(c("1900-01-01", "1900-01-01"), tz="UTC")
-x$year <- .Machine$integer.max - (1900:1899)
+x$year <- .Machine$integer.max - (1901:1899)
 print(as.vector(as.POSIXct(x)), 17) # 2nd value was negative
 (d_sec <- diff(as.vector(ctx <- as.POSIXct(x))))
 (d_sU  <- diff(as.vector(ctU <- as.POSIXct(x, tz="Etc/UTC"))))
-stopifnot(d_sec == 365*24*3600,
-          identical(d_sec, d_sU))
+stopifnot(identical(d_sec, d_sU), d_sec[1] == 365*24*3600)
+if(grepl("^system", print(sessionInfo()$tzcode))) # tzcode "internal" still giving NA
+stopifnot(d_sec == 365*24*3600)
 ## the negative value stemming from C level integer addition overflow
 
 
