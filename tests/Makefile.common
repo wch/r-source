@@ -125,13 +125,19 @@ test-out = $(test-out-strict) $(test-out-sloppy) $(test-out-demo) $(test-out-gct
 	@if test -f $(srcdir)/$@.save ; then \
 	  $(ECHO) $(ECHO_N) \
 	    "  comparing '$@' to '$(srcdir)/$@.save' ...$(ECHO_C)" >> $@.log; \
-	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) >> $@.log \
-	    || (cat $@.log && rm $@.log && exit 1) || exit 1; \
-	  mv $@.fail $@; \
-	  $(ECHO) "$(ECHO_T) OK" >> $@.log; \
-	else \
-	  mv $@.fail $@; \
+	  out=`$(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF)`; \
+	  val=$${?}; \
+	  test $${?} -eq 0 || \
+	    ($(ECHO) $${out} >> $@.log && cat $@.log && rm $@.log && exit 1) || \
+	    exit 1; \
+	  if test -n "$${out}"; then \
+	    $(ECHO) "$(ECHO_T) NOTE" >> $@.log; \
+	    $(ECHO) "$${out}" >> $@.log; \
+	  else \
+	    $(ECHO) "$(ECHO_T) OK" >> $@.log; \
+	  fi \
 	fi
+	@mv $@.fail $@
 	@cat $@.log; rm $@.log
 
 reg-plot.Rout: reg-plot.R
