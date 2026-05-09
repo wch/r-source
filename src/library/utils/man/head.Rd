@@ -119,7 +119,7 @@ tail(x, \dots)
 }
 \note{
   For array inputs the output of \code{tail} when \code{keepnums} is \code{TRUE},
-  any dimnames vectors added for dimensions \code{>2} are the original
+  any dimnames vectors added for dimensions \eqn{>2} are the original
   numeric indices in that dimension \emph{as character vectors}.  This
   means that, e.g., for 3-dimensional array \code{arr},
   \code{tail(arr, c(2,2,-1))[ , , 2]} and

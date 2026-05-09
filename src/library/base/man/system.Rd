@@ -88,7 +88,7 @@ system(command, intern = FALSE,
   Unix-alikes pass the command line to a shell (normally \file{/bin/sh},
   and POSIX requires that shell), so \code{command} can be anything the
   shell regards as executable, including shell scripts, and it can
-  contain multiple commands separated by \code{;}.
+  contain multiple commands separated by \samp{;}.
 
   On Windows, \code{system} does not use a shell and there is a separate
   function \code{shell} which passes command lines to a shell.

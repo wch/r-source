@@ -24,7 +24,7 @@
 \arguments{
   \item{new}{a character vector with the locations of \R library
     trees.  Tilde expansion (\code{\link{path.expand}}) is done, and if
-    any element contains one of \code{*?[}, globbing is done where
+    any element contains one of \samp{*?[}, globbing is done where
     supported by the platform: see \code{\link{Sys.glob}}.}
   \item{include.site}{a logical value indicating whether the value of
     \code{.Library.site} should be included in the new set of library
@@ -109,7 +109,7 @@
   For consistency, the paths are always normalized by
   \code{\link{normalizePath}(winslash = "/")}.
 
-  \env{LOCALAPPDATA} (usually \code{C:\\Users\\username\\AppData\\Local}) on
+  \env{LOCALAPPDATA} (usually \file{C:\\Users\\username\\AppData\\Local}) on
   Windows is a hidden directory and may not be viewed by some software. It
   may be opened by \code{shell.exec(Sys.getenv("LOCALAPPDATA"))}.
 }

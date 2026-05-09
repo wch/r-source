@@ -163,7 +163,7 @@
     \code{group(langle, list(x, y), rangle)} \tab special delimiters \cr
   }
 
-  The supported \sQuote{scalable delimiters} are \code{| ( [ \{}
+  The supported \sQuote{scalable delimiters} are \samp{| ( [ \{}
   and their right-hand versions.
   \code{"."} is equivalent to \code{""}: the corresponding delimiter
   will be omitted. Delimiter \code{||} is supported but has the same

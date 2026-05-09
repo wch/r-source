@@ -30,9 +30,9 @@ dirname(path)
   from the result.
 }
 \section{Behaviour on Windows}{
-  On Windows this will accept either \code{\\} or \code{/} as the path
-  separator, but \code{dirname} will return a path using \code{/}
-  (except if on a network share, when the leading \code{\\\\} will be
+  On Windows this will accept either \samp{\\} or \samp{/} as the path
+  separator, but \code{dirname} will return a path using \samp{/}
+  (except if on a network share, when the leading \samp{\\\\} will be
   preserved).  Expect these only to be able to handle complete
   paths, and not for example just a network share or a drive.
 

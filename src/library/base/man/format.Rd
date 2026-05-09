@@ -50,7 +50,7 @@ format(x, \dots)
 
   \item{nsmall}{the minimum number of digits to the right of the decimal
     point in formatting real/complex numbers in non-scientific formats.
-    Allowed values are \code{0 <= nsmall <= 20}.}
+    Allowed values are \eqn{0 \le \code{nsmall} \le 20}.}
 
   \item{justify}{should a \emph{character} vector be left-justified (the
     default), right-justified, centred or left alone.  Can be abbreviated.}

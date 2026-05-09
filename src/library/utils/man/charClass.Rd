@@ -30,7 +30,7 @@ charClass(x, class)
     \item{\code{"alpha"}}{Alphabetic.}
     \item{\code{"blank"}}{Space or tab.}
     \item{\code{"cntrl"}}{Control characters.}
-    \item{\code{"digit"}}{Digits \code{0-9}.}
+    \item{\code{"digit"}}{Digits \samp{0-9}.}
     \item{\code{"graph"}}{Graphical characters (printable characters
       except whitespace).}
     \item{\code{"lower"}}{Lower-case alphabetic.}
@@ -41,7 +41,7 @@ charClass(x, class)
       feeds and carriage returns.  Some OSes include non-breaking
       spaces, some exclude them.}
     \item{\code{"upper"}}{Upper-case alphabetic.}
-    \item{\code{"xdigit"}}{Hexadecimal character, one of \code{0-9A-fa-f}.}
+    \item{\code{"xdigit"}}{Hexadecimal character, one of \samp{0-9A-fa-f}.}
   }
 
   Alphabetic characters contain all lower- and upper-case ones and some

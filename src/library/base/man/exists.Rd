@@ -76,10 +76,10 @@ get0(x, envir = pos.to.env(-1L), mode = "any", inherits = TRUE,
   }
 }
 \value{
-  \code{exists():} Logical, true if and only if an object of the correct
+  \code{exists()}: Logical, true if and only if an object of the correct
   name and mode is found.
 
-  \code{get0():} The object---as from \code{\link{get}(x, *)}---
+  \code{get0()}: The object---as from \code{\link{get}(x, *)}---
   if \code{exists(x, *)} is true, otherwise \code{ifnotfound}.
 }
 \references{

@@ -38,7 +38,7 @@ Sys.which(names)
   values in \code{names} have missing return values.
 
   On Windows the paths will be short paths (8+3 components, no spaces)
-  with \code{\\} as the path delimiter.
+  with \samp{\\} as the path delimiter.
 }
 \note{
   Except on Windows this calls the system command \command{which}: since

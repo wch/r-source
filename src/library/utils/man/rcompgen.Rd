@@ -113,7 +113,7 @@ findMatches(pattern, values, fuzzy, backtick)
   \item{quotes}{ Logical flag. Enables completion in \R code when inside
     quotes.  This normally leads to filename completion, but can be
     otherwise depending on context (for example, when the open quote is
-    preceded by \code{?}), help completion is invoked.  Setting this to
+    preceded by \samp{?}), help completion is invoked.  Setting this to
     \code{FALSE} relegates completion to the underlying completion
     front-end, which may do its own processing (for example,
     \code{readline} on Unix-alikes will do filename completion).  }
@@ -180,15 +180,15 @@ findMatches(pattern, values, fuzzy, backtick)
       namespaces is attempted when a token is preceded by the \code{::}
       or \code{:::} operators.  Additionally, the basic completion
       mechanism is extended to include all loaded namespaces, i.e.,
-      \code{foopkg::} becomes a valid completion of \code{foo} if
+      \samp{foopkg::} becomes a valid completion of \samp{foo} if
       \code{"foopkg"} is a loaded namespace.
 
       The completion of package namespaces applies only to already
       loaded namespaces, i.e.\sspace{}if \pkg{MASS} is not loaded,
-      \code{MAS} will not complete to \code{MASS::}.  However, attempted
+      \samp{MAS} will not complete to \samp{MASS::}.  However, attempted
       completion \emph{inside} an apparent namespace will attempt to
       load the namespace if it is not already loaded,
-      e.g.\sspace{}trying to complete on \code{MASS::fr} will load
+      e.g.\sspace{}trying to complete on \samp{MASS::fr} will load
       \pkg{MASS} if it is not already loaded.
     }
 
@@ -237,11 +237,11 @@ findMatches(pattern, values, fuzzy, backtick)
       completions are often buried in a bunch of other possibilities.
       However, recall that basic completion is suppressed for blank
       tokens.  This can be useful to list possible arguments of a
-      function.  For example, trying to complete \code{seq([TAB]} and
-      \code{seq(from = 1, [TAB])} will both list only the arguments of
+      function.  For example, trying to complete \samp{seq([TAB]} and
+      \samp{seq(from = 1, [TAB])} will both list only the arguments of
       \code{seq} (or any of its methods), whereas trying to complete
-      \code{seq(length[TAB]} will list both the \code{length.out}
-      argument and the \code{length(} function as possible completions.
+      \samp{seq(length[TAB]} will list both the \code{length.out}
+      argument and the \samp{length(} function as possible completions.
       Note that no attempt is made to remove arguments already supplied,
       as that would incur a further speed penalty.
     }

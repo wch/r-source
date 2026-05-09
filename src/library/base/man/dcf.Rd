@@ -60,8 +60,8 @@ write.dcf(x, file = "", append = FALSE, useBytes = FALSE,
     Fields may appear more than once in a record.
     \item Regular lines start with a non-whitespace character.
     \item Regular lines are of form \code{tag:value}, i.e., have a name
-    tag and a value for the field, separated by \code{:} (only the first
-    \code{:} counts).  The value can be empty (i.e., whitespace only).
+    tag and a value for the field, separated by \samp{:} (only the first
+    \samp{:} counts).  The value can be empty (i.e., whitespace only).
     \item Lines starting with whitespace are continuation lines (to the
     preceding field) if at least one character in the line is
     non-whitespace.  Continuation lines where the only non-whitespace

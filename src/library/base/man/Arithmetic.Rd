@@ -53,7 +53,7 @@ x \%/\% y
   \code{-} for subtraction, \code{*} for multiplication, \code{/} for
   division and \code{^} for exponentiation.
 
-  \code{\%\%} indicates \code{x mod y} (\dQuote{x modulo y}), i.e.,
+  \code{\%\%} indicates \code{x} mod \code{y} (\dQuote{x modulo y}), i.e.,
   computes the \sQuote{remainder} \code{r <- x \%\% y}, and
   \code{\%/\%} indicates integer division, where \R uses \dQuote{floored}
   integer division, i.e., \code{q <- x \%/\% y := floor(x/y)}, as promoted

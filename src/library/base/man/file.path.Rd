@@ -26,7 +26,7 @@ file.path(\dots, fsep = .Platform$file.sep)
 
   Trailing path separators are invalid for Windows file paths apart from
   \file{/} and \file{d:/} (although some functions/utilities do accept
-  them), so a trailing \code{/} or \code{\\} is removed there.
+  them), so a trailing \samp{/} or \samp{\\} is removed there.
 }
 \value{
   A character vector of the arguments concatenated term-by-term and
@@ -42,7 +42,7 @@ file.path(\dots, fsep = .Platform$file.sep)
   \code{\link{basename}}, \code{\link{normalizePath}}, \code{\link{path.expand}}.
 }
 \note{
-  The components are by default separated by \code{/}
-  (not \code{\\}) on Windows.
+  The components are by default separated by \samp{/}
+  (not \samp{\\}) on Windows.
 }
 \keyword{file}

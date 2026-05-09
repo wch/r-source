@@ -20,8 +20,8 @@ trimws(x, which = c("both", "left", "right"), whitespace = "[ \\t\\r\\n]")
   Internally, \code{\link{sub}(re, "", *, perl = TRUE)}, i.e., PCRE
   library regular expressions are used.
   For portability, the default \sQuote{whitespace} is the character class
-  \code{[ \\t\\r\\n]} (space, horizontal tab, carriage return,
-  newline).  Alternatively, \code{[\\h\\v]} is a good (PCRE)
+  \samp{[ \\t\\r\\n]} (space, horizontal tab, carriage return,
+  newline).  Alternatively, \samp{[\\h\\v]} is a good (PCRE)
   generalization to match all Unicode horizontal and vertical white
   space characters, see also \url{https://www.pcre.org}.
 }

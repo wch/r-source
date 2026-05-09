@@ -37,7 +37,7 @@
   Wildcards will only be expanded if the system supports it.  Most
   systems will support not only \file{*} and \file{?} but also character
   classes such as \file{[a-z]} (see the \command{man} pages for the system
-  call \code{glob} on your OS).  The metacharacters \code{* ? [} can
+  call \code{glob} on your OS).  The metacharacters \samp{* ? [} can
   occur in Unix filenames, and this makes it difficult to use
   \code{unlink} to delete such files (see \code{\link{file.remove}}),
   although escaping the metacharacters by backslashes usually works.  If
