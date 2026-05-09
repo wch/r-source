@@ -8251,9 +8251,15 @@ for x = 0, 1, 2, ... .
 @end cartouche
 @end quotation
 
+This substituted @code{\ldots}, as it would @code{\dots}.
+Text conversion also handles the basic relational symbols
+@code{\ge} and @code{\le} (or @code{\geq} and @code{\leq}),
+so the 1-argument form suffices for, e.g., @code{\eqn@{0 < p \le 1@}}.
+
 In legacy @HTML{} help, Greek letters (both cases) will be rendered if preceded by a
-backslash, @code{\dots} and @code{\ldots} will be rendered as ellipses
-and @code{\sqrt}, @code{\ge} and @code{\le} as mathematical symbols.
+backslash, @code{\dots} and @code{\ldots} will be rendered as ellipses,
+and @code{\sqrt}, @code{\ge} and @code{\le} (or @code{\geq} and @code{\leq})
+as mathematical symbols.
 
 Note that only basic @LaTeX{} can be used, there being no provision to
 specify @LaTeX{} style files, but @abbr{AMS} extensions are supported

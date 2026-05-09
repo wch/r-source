@@ -109,8 +109,13 @@
       \item The \LaTeX class \samp{jss} bundled in
       \file{share/texmf/tex/latex/jss.cls} has been updated
       to work with \samp{hyperref} version 7.01q (2026/04/24).
+
+      \item Plain-text (and legacy HTML) conversion for a simple Rd
+      \verb{\eqn{}} now handles \verb{\geq} and \verb{\leq} in addition
+      to \verb{\ge} and \verb{\le} (\PR{19070}).
     }
   }
+
   \subsection{Bug Fixes}{
     \itemize{
       \item \code{cut(1:11, {})} now signals an error for the invalid
