@@ -39,7 +39,7 @@
             repos <- c(CRAN = "@CRAN@", repos)
     }
     if(all(repos == "@CRAN@") && !interactive())
-        repos <- tools:::.get_standard_repository_URLs()
+        repos <- c(CRAN = "https://cloud.R-project.org")
 
     ## Set default options() related to functionality in 'utils' pkg
     op.utils <-
