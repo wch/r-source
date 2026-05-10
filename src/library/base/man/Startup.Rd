@@ -118,9 +118,9 @@
 
   Lines in a site or user environment file should be either comment
   lines starting with \samp{#}, or lines of the form
-  \samp{\var{name}=\var{value}}. The latter sets the environmental
-  variable \samp{\var{name}} to \samp{\var{value}}, overriding an
-  existing value.  If \samp{\var{value}} contains an expression of the
+  \code{\var{name}=\var{value}}. The latter sets the environmental
+  variable \code{\var{name}} to \code{\var{value}}, overriding an
+  existing value.  If \code{\var{value}} contains an expression of the
   form \samp{${foo-bar}}, the value is that of the environmental
   variable \samp{foo} if that is set, otherwise \samp{bar}.  For
   \samp{${foo:-bar}}, the value is that of \samp{foo} if that is set to
@@ -130,8 +130,8 @@
   \samp{${foo-${bar-blah}}}).  Note that the braces are essential: for
   example \samp{$HOME} will not be interpreted.
 
-  Leading and trailing white space in \samp{\var{value}} are stripped.
-  \samp{\var{value}} is then processed in a similar way to a Unix shell:
+  Leading and trailing white space in \code{\var{value}} are stripped.
+  \code{\var{value}} is then processed in a similar way to a Unix shell:
   in particular (single or double) quotes not preceded by backslash
   are removed and backslashes are removed except inside such quotes.
 
