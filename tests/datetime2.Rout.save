@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-03-21 r84017) -- "Unsuffered Consequences"
-Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin22.1.0 (64-bit)
+R Under development (unstable) (2026-05-09 r90031) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin25.4.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -17,8 +17,9 @@ Type 'q()' to quit R.
 
 > ### Tests of often platform-dependent features of the POSIX[cl]t implementation.
 > 
-> ### Expect differences, especially with 32-bit time_t and platforms
+> ### Expect differences, historically with 32-bit time_t and platforms
 > ### without tm_zone/tm_gmtoff.
+> ### Please use the R-internal version for .Rout.save.
 > 
 > z <- ISOdate(1890:1912, 1, 10, tz="UTC")
 > ## Rome changed to CET for 1894
@@ -485,11 +486,11 @@ attr(,"balanced")
 > x3 <- strptime("2022-01-01", "%Y-%m-%d", tz = "Australia/Adelaide")
 > format(as.POSIXct(x3), "%a, %d %b %Y %H:%M:%S %z") # +10h30m
 [1] "Sat, 01 Jan 2022 00:00:00 +1030"
-> # macOS' strftime prints the next two wrong.
-> # Liberia does/did not have DST, so second abbreviation may be repeat or empty
+> # macOS' strftime printed the next two wrong.
+> # Liberia does/did not have DST
 > x4 <- strptime("1971-01-01", "%Y-%m-%d", tz = "Africa/Monrovia")
 > y4 <- as.POSIXct(x4)
-> str(unclass(as.POSIXlt(y4))) # correct gmtoff, printed wrong on macOS
+> str(unclass(as.POSIXlt(y4))) # correct gmtoff, printed wrong  as -44m
 List of 11
  $ sec   : num 0
  $ min   : int 0
@@ -504,7 +505,8 @@ List of 11
  $ gmtoff: int -2670
  - attr(*, "tzone")= chr [1:3] "Africa/Monrovia" "GMT" "   "
  - attr(*, "balanced")= logi TRUE
-> format(y4, "%a, %d %b %Y %H:%M:%S %z") # -44m, should be -00:44:30
+> # glibc prints an abbreviation for DST.
+> format(y4, "%a, %d %b %Y %H:%M:%S %z")
 [1] "Fri, 01 Jan 1971 00:00:00 -0044"
 > ## timezones in 1900 might not be supported
 > x5 <- strptime("1900-03-01", "%Y-%m-%d", tz = "Europe/Paris")
@@ -528,5 +530,5 @@ List of 11
 [1] "Thu, 01 Mar 1900 00:00:00 +0009"
 > 
 > cat('Time elapsed: ', proc.time(),'\n')
-Time elapsed:  0.141 0.032 0.17 0.001 0 
+Time elapsed:  0.113 0.03 0.154 0.005 0.007 
 > 

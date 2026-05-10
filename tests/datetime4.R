@@ -1,6 +1,7 @@
 ### more date-time tests where the output is to be checked.
 
 ## Expect differences, especially for platforms without tm_zone/tm_gmtoff.
+## Please use the R-internal version for .Rout.save
 
 options(warn = 1L)
 
@@ -35,7 +36,7 @@ str(unclass(x4)) # abbreviations may be numbers.
 # Kiribati does/did not have DST, so second abbreviation may be repeat or empty
 x5 <- strptime("2022-07-01", "%Y-%m-%d", tz ="Pacific/Kiritimati")
 x5
-str(unclass(x5)) # does not have DST, hence no DST abbreviation on some platforms
+str(unclass(x5)) # does not have DST, hence no DST abbreviation except on glibc
 
 ## edge of range and out of range offsets
 strptime("2022-01-01 +1400", "%Y-%m-%d %z", tz = "UTC")

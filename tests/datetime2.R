@@ -1,7 +1,8 @@
 ### Tests of often platform-dependent features of the POSIX[cl]t implementation.
 
-### Expect differences, especially with 32-bit time_t and platforms
+### Expect differences, historically with 32-bit time_t and platforms
 ### without tm_zone/tm_gmtoff.
+### Please use the R-internal version for .Rout.save.
 
 z <- ISOdate(1890:1912, 1, 10, tz="UTC")
 ## Rome changed to CET for 1894
@@ -137,12 +138,13 @@ format(x2, "%a, %d %b %Y %H:%M:%S %Z")
 ## offsets not in whole hours:
 x3 <- strptime("2022-01-01", "%Y-%m-%d", tz = "Australia/Adelaide")
 format(as.POSIXct(x3), "%a, %d %b %Y %H:%M:%S %z") # +10h30m
-# macOS' strftime prints the next two wrong.
-# Liberia does/did not have DST, so second abbreviation may be repeat or empty
+# macOS' strftime printed the next two wrong.
+# Liberia does/did not have DST
 x4 <- strptime("1971-01-01", "%Y-%m-%d", tz = "Africa/Monrovia")
 y4 <- as.POSIXct(x4)
-str(unclass(as.POSIXlt(y4))) # correct gmtoff, printed wrong on macOS
-format(y4, "%a, %d %b %Y %H:%M:%S %z") # -44m, should be -00:44:30
+str(unclass(as.POSIXlt(y4))) # correct gmtoff, printed wrong  as -44m
+# glibc prints an abbreviation for DST.
+format(y4, "%a, %d %b %Y %H:%M:%S %z")
 ## timezones in 1900 might not be supported
 x5 <- strptime("1900-03-01", "%Y-%m-%d", tz = "Europe/Paris")
 y5 <- as.POSIXct(x5)
