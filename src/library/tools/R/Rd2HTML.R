@@ -113,6 +113,7 @@ vhtmlify <- function(x, inEqn = FALSE) { # code version
         x <- psub("\\\\(dots|ldots)", "&hellip;", x)
         x <- psub("\\\\leq?", "&le;", x)
         x <- psub("\\\\geq?", "&ge;", x)
+        x <- psub("\\\\neq?", "&ne;", x)
         x <- fsub("\\infty", "&infin;", x)
         x <- fsub("\\sqrt", "&radic;", x)
     }

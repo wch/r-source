@@ -533,6 +533,7 @@ Rd2txt <-
         x <- psub("\\\\(dots|ldots)", "...", x)
         x <- psub("\\\\leq?", "<=", x)
         x <- psub("\\\\geq?", ">=", x)
+        x <- psub("\\\\neq?", "!=", x)
         x <- fsub("\\infty", "Inf", x)
         ## FIXME: are these needed?
         x <- psub("\\\\(bold|strong|emph|var)\\{([^}]*)\\}", "\\2", x)

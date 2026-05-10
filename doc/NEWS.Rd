@@ -111,8 +111,8 @@
       to work with \samp{hyperref} version 7.01q (2026/04/24).
 
       \item Plain-text (and legacy HTML) conversion for a simple Rd
-      \verb{\eqn{}} now handles \verb{\geq} and \verb{\leq} in addition
-      to \verb{\ge} and \verb{\le} (\PR{19070}).
+      \verb{\eqn{}} now handles \verb{\geq}, \verb{\leq}, \verb{\neq}
+      and \verb{\ne} in addition to \verb{\ge} and \verb{\le} (\PR{19070}).
     }
   }
 
