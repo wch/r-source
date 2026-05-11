@@ -91,6 +91,15 @@ R_tzsetwall
 # include <unistd.h> // for access, read, close
 #endif
 
+// C23 is not required to build R
+#if defined __STDC_VERSION__ && __STDC_VERSION__ > 202000L
+// C23 so bool is a keyword
+#else
+# include <stdbool.h>
+// stdbool.h is C99, so available everywhere.
+#endif
+
+
 #include "datetime.h"
 #define tzname R_tzname
 
