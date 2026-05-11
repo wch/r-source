@@ -1745,9 +1745,6 @@ attribute_hidden SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for (i = 0; i < n; i++) pp[i] = INTEGER(perm)[i] - 1;
 	    UNPROTECT(1);
 	}
-        bool skip = true;
-        for (i = 0; i < n; i++) if (pp[i] != i) {skip = false; break;}
-        if (skip) {UNPROTECT(1); return(a);}
     }
 
     R_xlen_t *iip = (R_xlen_t *) R_alloc((size_t) n, sizeof(R_xlen_t));
