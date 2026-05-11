@@ -39,6 +39,9 @@
       fix \PR{19059} and false for some back compatibility, still
       allowing data frames in construction to contain \code{NA}s in row
       names.
+
+      \item \code{tools::Rd2txt()} now replaces \samp{---} and \samp{--}
+      by Unicode dashes when the output encoding is UTF-8.
     }
   }
 

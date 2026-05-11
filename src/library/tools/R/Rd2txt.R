@@ -48,6 +48,7 @@ Rd2txt_options <- local({
         else {
             if (is.list(args[[1L]])) args <- args[[1L]]
             result <- opts[names(args)]
+            names(result) <- names(args)
             opts[names(args)] <<- args
             invisible(result)
         }
@@ -459,7 +460,11 @@ Rd2txt <-
     	linestart <<- TRUE
     }
 
-    if(!isFALSE(getOption("useFancyQuotes")) && asUTF8) {
+    unicode_symbols <- asUTF8 &&
+        ## disable in title (see .Rd_get_text) to match existing *-Ex.Rout.save
+        !isFALSE(Rd2txt_options()$unicode_symbols)
+
+    if(unicode_symbols && !isFALSE(getOption("useFancyQuotes"))) {
     	LSQM <- "\u2018"                # Left single quote
     	RSQM <- "\u2019"                # Right single quote
     	LDQM <- "\u201c"                # Left double quote
@@ -486,9 +491,13 @@ Rd2txt <-
         } else header
     }
 
-    ## FIXME: replace by Unicode symbols ("\u2014", "\u2013") when possible
     unescape <- function(x) {
-        x <- psub("(---|--)", "-", x)
+        if (unicode_symbols) {
+            x <- fsub("---", "\u2014", x)
+            x <- fsub("--",  "\u2013", x)
+        } else {
+            x <- psub("(---|--)", "-", x)
+        }
         x
     }
 
