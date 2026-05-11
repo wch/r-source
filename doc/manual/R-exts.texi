@@ -5522,13 +5522,12 @@ presence (perhaps using @code{Sys.which}), as well as declared in the
 @samp{SystemRequirements} field.  A package should pass its checks
 without warnings nor errors without the external command being
 present. @strong{N.B.}: @file{/usr/sbin} and @file{/sbin}@footnote{where
-different, which it is on macOS.} are intended for administrator commands
-and may not be on the end-user path: examples of commands which packages
-have (wrongly) assumed to be available are @command{sysctl} and
-@command{ping}.
-Commands with simple English names (such as @command{go} and
-@command{ping}) should be checked (maybe @emph{via} @option{--version})
-that they are the intended command.
+different, which it is on macOS.} are intended for administrator
+commands and may not be on the end-user path: examples of commands which
+packages have (wrongly) assumed to be available are @command{sysctl},
+@command{sha1sum} and @command{ping}.  Commands with simple English
+names (such as @command{go} and @command{ping}) should be checked (maybe
+@emph{via} @option{--version}) that they are the intended command.
 
 An external command can be a (possibly optional) requirement for an
 imported or suggested package but needed for examples, tests or
