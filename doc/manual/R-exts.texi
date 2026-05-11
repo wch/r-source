@@ -5771,8 +5771,8 @@ See @uref{https://ghostscript.readthedocs.io/en/latest/VectorDevices.html} for
 more such and consider all the options for image downsampling).  There
 have been examples in @acronym{CRAN} packages for which current versions
 of Ghostscript produced much bigger reductions than earlier ones (e.g.@:
-at the upgrades from @code{9.50} to @code{9.52}, from @code{9.55} to
-@code{9.56} and then to @code{10.00.0}).
+at the upgrades from @code{9.56} to @code{10.00.0} and from
+@code{10.06.0} to @code{10.07.0}).
 
 We come across occasionally large PDF files containing excessively
 complicated figures using PDF vector graphics: such figures are often
