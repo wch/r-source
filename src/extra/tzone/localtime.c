@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Modifications copyright (C) 2007-2023  The R Core Team
+ *  Modifications copyright (C) 2007-2026  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,11 +19,11 @@
 
 
 /*
-Added 2007-12-30, priginally for use on Windows.  Derived from 
+Added 2007-12-30, originally for use on Windows.  Derived from
 http://www.iana.org/time-zones at that time.
 protoize-d in 2008
 Some updates in 2013
-Some changes mergged from tzcode2015f to avoid clang warnings.
+Some changes merged from tzcode2015f to avoid clang warnings.
 Lots of casts (even 2022f needs casts).
 
 The original version of this file stated
@@ -311,8 +311,8 @@ static struct state	gmtmem;
 #endif /* !defined TZ_STRLEN_MAX */
 
 static char		lcl_TZname[TZ_STRLEN_MAX + 1];
-static int		lcl_is_set;
-static int		gmt_is_set;
+static bool		lcl_is_set;
+static bool		gmt_is_set;
 
 char * tzname[2] = {
     wildabbr,
@@ -434,7 +434,7 @@ tzload(const char * name, struct state * const sp, const int doextend)
     ssize_t nread;
     typedef union {
 	struct tzhead  tzhead;
-	char  buf[2 * sizeof(struct tzhead) + 
+	char  buf[2 * sizeof(struct tzhead) +
 		  2 * sizeof *sp + 4 * TZ_MAX_TIMES];
     } u_t;
 
@@ -447,7 +447,7 @@ tzload(const char * name, struct state * const sp, const int doextend)
 	name = getTZinfo();
 	if( strcmp(name, "unknown") == 0 ) name = TZDEFAULT;
     }
-	
+
     {
 	int  doaccess;
 	/*
@@ -650,7 +650,7 @@ tzload(const char * name, struct state * const sp, const int doextend)
 	    while (i < ts.timecnt &&
 		   sp->timecnt < TZ_MAX_TIMES) {
 		sp->ats[sp->timecnt] = ts.ats[i];
-		sp->types[sp->timecnt] = 
+		sp->types[sp->timecnt] =
 		    (unsigned char)(sp->typecnt + ts.types[i]);
 		++sp->timecnt;
 		++i;
@@ -1269,8 +1269,8 @@ gmtload(struct state * const sp)
 void
 R_tzsetwall(void)
 {
-    if (lcl_is_set < 0) return;
-    lcl_is_set = -1;
+    if (!lcl_is_set) return;
+    lcl_is_set = false;
 
     if (tzload((char *) NULL, lclptr, TRUE) != 0) gmtload(lclptr);
     settzname();
@@ -1287,7 +1287,7 @@ tzset(void)
 	return;
     }
 
-    if (lcl_is_set > 0 && strcmp(lcl_TZname, name) == 0)
+    if (lcl_is_set && strcmp(lcl_TZname, name) == 0)
 	return;
     lcl_is_set = strlen(name) < sizeof lcl_TZname;
     /* R change: was strcpy before. */
@@ -1427,7 +1427,7 @@ gmtsub(const time_t *const timep, const int_fast32_t offset, stm *const tmp)
     stm * result;
 
     if (!gmt_is_set) {
-	gmt_is_set = TRUE;
+	gmt_is_set = true;
 	gmtload(gmtptr);
     }
     result = timesub(timep, offset, gmtptr, tmp);
@@ -1464,13 +1464,13 @@ static stm *
 timesub(const time_t *const timep, const int_fast32_t offset,
 	const struct state *const sp, stm *const tmp)
 {
-    const struct lsinfo *	lp;
-    time_t			tdays;
+    const struct lsinfo *lp;
+    time_t		tdays;
     int			idays;	/* unsigned would be so 2003 */
-    int_fast64_t		rem;
-    int				y;
+    int_fast64_t	rem;
+    int			y;
     const int *		ip;
-    int_fast64_t		corr;
+    int_fast64_t	corr;
     int			hit;
     int			i;
 
@@ -1945,7 +1945,7 @@ time1(stm *const tmp,
     /* R change.  This appears to be required by POSIX (it says
        the setting is used 'initially') and is documented for
        Solaris.
-	
+
        Try unknown DST setting, if it was set.
     */
     if (tmp->tm_isdst >= 0) {
@@ -1954,7 +1954,7 @@ time1(stm *const tmp,
 	t = time2(tmp, funcp, offset, &okay);
 	if (okay) return t;
     }
-	
+
     /*
     ** We're supposed to assume that somebody took a time of one type
     ** and did some math on it that yielded a "struct tm" that's bad.
