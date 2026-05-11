@@ -122,15 +122,7 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
 
   \code{Rd2txt} will use directional quotes (see \code{\link{sQuote}})
   if option \code{"useFancyQuotes"} is true (usually the default,
-  see \code{\link{sQuote}}) and
-#ifdef unix
-  the current encoding is UTF-8.
-#endif
-#ifdef windows
-  the current encoding is UTF-8 or a single-byte encoding (except C).
-  (Directional quotes are not attempted in East Asian locales as they are
-  usually double-width, which looks wrong with English text.)
-#endif
+  see \code{\link{sQuote}}) and the output encoding is UTF-8.
 
   Various aspects of formatting by \code{Rd2txt} are controlled by the
   \code{options} argument, documented with the \code{\link{Rd2txt_options}}

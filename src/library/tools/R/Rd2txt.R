@@ -342,10 +342,9 @@ Rd2txt <-
     }
 
     ## for efficiency
-    li <- l10n_info()
-    WriteLines <-
-        if(outputEncoding == "UTF-8" ||
-           (outputEncoding == "" && li[["UTF-8"]])) {
+    asUTF8 <- outputEncoding == "UTF-8" ||
+        (outputEncoding == "" && l10n_info()[["UTF-8"]])
+    WriteLines <- if(asUTF8) {
         function(x, con, outputEncoding, ...)
             writeLines(x, con, useBytes = TRUE, ...)
     } else {
@@ -460,15 +459,7 @@ Rd2txt <-
     	linestart <<- TRUE
     }
 
-    ## See the comment in ?Rd2txt as to why we do not attempt fancy quotes
-    ## in Windows CJK locales -- and in any case they would need more work
-    ## This covers the common single-byte locales and Thai (874)
-    use_fancy_quotes <-
-        (.Platform$OS.type == "windows" &&
-         ((li$codepage >= 1250 && li$codepage <= 1258) || li$codepage == 874)) ||
-        li[["UTF-8"]]
-
-    if(!isFALSE(getOption("useFancyQuotes")) && use_fancy_quotes) {
+    if(!isFALSE(getOption("useFancyQuotes")) && asUTF8) {
     	LSQM <- "\u2018"                # Left single quote
     	RSQM <- "\u2019"                # Right single quote
     	LDQM <- "\u201c"                # Left double quote
