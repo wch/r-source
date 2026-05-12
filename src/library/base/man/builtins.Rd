@@ -25,7 +25,7 @@
 
   \code{builtins(TRUE)} returns an unsorted list of the names of internal
   functions, that is those which can be accessed as
-  \code{.Internal(\var{foo}(args ...))} for \var{foo} in the list.
+  \code{.Internal(\var{foo}(...))} for \var{foo} in the list.
 }
 \value{
   A character vector.

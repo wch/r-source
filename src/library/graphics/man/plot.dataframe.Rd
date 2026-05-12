@@ -37,7 +37,7 @@
 
   In case a \code{formula} is provided, the \code{\link{plot.formula}}
   method is called, allowing a simpler invocation of the formula method
-  using the \code{\link[base:pipeOp]{pipe operator}}.
+  using the \link[base:pipeOp]{pipe operator}.
 }
 \seealso{
   \code{\link{data.frame}}

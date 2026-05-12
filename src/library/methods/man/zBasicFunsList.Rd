@@ -10,7 +10,7 @@
   A named list providing instructions for turning builtin and special
   functions into generic functions.
 
-  Functions in R that are defined as \code{.Primitive(<name>)} are not
+  Functions in R that are defined as \code{.Primitive(\var{name})} are not
   suitable for formal methods, because they lack the basic reflectance
   property.  You can't find the argument list for these functions by
   examining the function object itself.

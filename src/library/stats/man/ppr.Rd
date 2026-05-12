@@ -88,7 +88,7 @@ ppr(x, \dots)
   \item{span}{
     super smoother span control (see \code{\link{supsmu}}).  The default, \code{0},
     results in automatic span selection by local cross validation. \code{span}
-    can also take a value in \code{(0, 1]}.
+    can also take a value in \eqn{(0, 1]}.
   }
   \item{df}{
     if \code{sm.method} is \code{"spline"} specifies the smoothness of

@@ -46,7 +46,7 @@ is.integer(x)
   imaginary parts of complex numbers are discarded (with a warning).
   Character strings containing optional whitespace followed by either a
   decimal representation or a hexadecimal representation (starting with
-  \code{0x} or \code{0X}) can be converted, as well as any allowed by
+  \samp{0x} or \samp{0X}) can be converted, as well as any allowed by
   the platform for real numbers.  Like \code{\link{as.vector}} it strips
   attributes including names.  (To ensure that an object \code{x} is of
   integer type without stripping attributes, use

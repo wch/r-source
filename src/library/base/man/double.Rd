@@ -57,7 +57,7 @@ as.single(x, \dots)
   attributes, use \code{\link{storage.mode}}.)  Character strings
   containing optional whitespace followed by either a decimal
   representation or a hexadecimal representation (starting with
-  \code{0x} or \code{0X}) can be converted, as can special values such
+  \samp{0x} or \samp{0X}) can be converted, as can special values such
   as \code{"NA"}, \code{"NaN"}, \code{"Inf"} and \code{"infinity"},
   irrespective of case.
 

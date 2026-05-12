@@ -194,12 +194,12 @@ prettyNum(x, big.mark = "",   big.interval = 3L,
   numbers, use \code{\link{format}}.
 
   \code{prettyNum} is the utility function for prettifying \code{x}.
-  \code{x} can be complex (or \code{\link{format}(<complex>)}), here.  If
+  \code{x} can be complex (or \code{\link{format}(\var{complex})}), here.  If
   \code{x} is not a character, \code{format(x[i], ...)} is applied to
   each element, and then it is left unchanged if all the other arguments
   are at their defaults.  Use the \code{input.d.mark} argument for
   \code{prettyNum(x)} when \code{x} is a \code{character} vector not
-  resulting from something like \code{format(<number>)} with a period as
+  resulting from something like \code{format(\var{number})} with a period as
   decimal mark.
 
   Because \code{\link{gsub}} is used to insert the \code{big.mark}

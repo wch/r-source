@@ -96,7 +96,7 @@ postscript(file = if(onefile) "Rplots.ps" else "Rplot\%03d.ps",
   }
   \item{colormodel}{a character string describing the color model:
     currently allowed values as \code{"srgb"}, \code{"srgb+gray"},
-    \code{"rgb"}, \code{"rgb-nogray"}, \code{"gray"} (or \code{"grey")} and
+    \code{"rgb"}, \code{"rgb-nogray"}, \code{"gray"} (or \code{"grey"}) and
     \code{"cmyk"}.  Defaults to \code{"srgb"}.  See section
     \sQuote{Color models}.}
   \item{useKerning}{logical.  Should kerning corrections be included in

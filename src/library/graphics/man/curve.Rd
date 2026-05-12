@@ -62,7 +62,7 @@ curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
 
   What happens when neither \code{from}/\code{to} nor \code{xlim}
   specifies both x-limits is a complex story.  For
-  \code{plot(<function>)} and for \code{curve(add = FALSE)} the defaults
+  \code{plot(\var{function})} and for \code{curve(add = FALSE)} the defaults
   are \eqn{(0, 1)}.  For \code{curve(add = NA)} and \code{curve(add =
   TRUE)} the defaults are taken from the x-limits used for the previous
   plot.  (This differs from versions of \R prior to 2.14.0.)

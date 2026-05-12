@@ -26,8 +26,8 @@
   are either a decimal or hexadecimal constant optionally followed by
   \code{L}.
 
-  Hexadecimal constants start with \code{0x} or \code{0X} followed by
-  a non-empty sequence from \code{0-9 a-f A-F .} which is interpreted as a
+  Hexadecimal constants start with \samp{0x} or \samp{0X} followed by
+  a non-empty sequence from \samp{0-9 a-f A-F .} which is interpreted as a
   hexadecimal number, optionally followed by a binary exponent.  A binary
   exponent consists of a \code{P} or \code{p} followed by an optional
   plus or minus sign followed by a non-empty sequence of (decimal)

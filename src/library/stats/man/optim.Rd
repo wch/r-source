@@ -102,8 +102,8 @@ optimHess(par, fn, gr = NULL, \dots, control = list())
   in getting to a good value on a very rough surface.
 
   Method \code{"Brent"} is for one-dimensional problems only, using
-  \code{\link{optimize}(<ff>, lower, upper, tol = control$reltol)} where
-  \code{<ff>} is \code{function(par) fn(par, ...)/control$fnscale}.  It can
+  \code{\link{optimize}(\var{ff}, lower, upper, tol = control$reltol)} where
+  \code{\var{ff}} is \code{function(par) fn(par, ...)/control$fnscale}.  It can
   be useful in cases when
   \code{optim()} is used inside other functions where only \code{method}
   can be specified, such as in \code{\link{mle}} from package \pkg{stats4}.

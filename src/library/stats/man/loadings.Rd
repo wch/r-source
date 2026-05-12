@@ -33,8 +33,8 @@ loadings(x, \dots)
     loading, and the variables are printed in the order of the factor
     they are assigned to, then those unassigned.}
   \item{\dots}{further arguments for other methods; for \code{factanal}
-    printing, notably passed to \code{print(<loadings>, ...)}, hence, e.g.,
-    \code{cutoff = <frac>}; ignored for \code{loadings}.}
+    printing, notably passed to \code{print(\var{loadings}, ...)}, hence, e.g.,
+    \code{cutoff = \var{frac}}; ignored for \code{loadings}.}
 }
 
 \details{

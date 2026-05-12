@@ -88,8 +88,8 @@ as.POSIXlt(x, tz = "", \dots)
   specifications are locale-specific, and you may need to set the
   \code{LC_TIME} category appropriately \emph{via}
   \code{\link{Sys.setlocale}}.  This most often affects the use of
-  \code{\%a}, \code{\%A} (weekday names),
-  \code{\%b}, \code{\%B} (month names) and \code{\%p} (AM/PM).
+  \samp{\%a}, \samp{\%A} (weekday names),
+  \samp{\%b}, \samp{\%B} (month names) and \samp{\%p} (AM/PM).
 
   Logical \code{NA}s can be converted to either of the classes, but no
   other logical vectors can be.

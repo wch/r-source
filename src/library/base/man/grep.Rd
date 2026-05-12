@@ -278,7 +278,7 @@ gregexec(pattern, text, ignore.case = FALSE, perl = FALSE,
 \note{
   Aspects will be platform-dependent as well as locale-dependent: for
   example the implementation of character classes (except
-  \code{[:digit:]} and \code{[:xdigit:]}).  One can expect results to be
+  \samp{[:digit:]} and \samp{[:xdigit:]}).  One can expect results to be
   consistent for ASCII inputs and when working in UTF-8 mode (when most
   platforms will use Unicode character tables, although those are
   updated frequently and subject to some degree of interpretation -- is

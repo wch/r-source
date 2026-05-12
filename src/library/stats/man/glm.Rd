@@ -262,7 +262,7 @@ glm.fit(x, y, weights = rep.int(1, nobs),
   \item{call}{the matched call.}
   \item{formula}{the formula supplied.}
   \item{terms}{the \code{\link{terms}} object used.}
-  \item{data}{the \code{data argument}.}
+  \item{data}{the \code{data} argument.}
   \item{offset}{the offset vector used.}
   \item{control}{the value of the \code{control} argument used.}
   \item{method}{the name of the fitter function used (when provided as a

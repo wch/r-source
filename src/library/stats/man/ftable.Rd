@@ -36,8 +36,8 @@ ftable(x, \dots)
   \item{perm}{a permutation of \code{1:nvar} defining the permutation of
     the result which is \code{\link{aperm}(*, perm)}.}
   \item{named.dim}{a \code{\link{logical}} indicating if \code{as.table(x)}
-    should return a result with \emph{named} \code{\link{dim}(<result>)};
-    while this was happening in \R versions up to \code{4.5.z} this seems
+    should return a result with \emph{named} \code{\link{dim}(\var{result})};
+    while this was happening in \R versions up to 4.5.z this seems
     superfluous as the \code{\link{dimnames}(*)} are already named, as for
     most \code{\link{table}}s.}
 }
