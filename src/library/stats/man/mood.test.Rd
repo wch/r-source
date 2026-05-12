@@ -40,8 +40,9 @@ mood.test(x, \dots)
 }
 \details{
   The underlying model is that the two samples are drawn from
-  \eqn{f(x-l)} and \eqn{f((x-l)/s)/s}, respectively, where \eqn{l} is a
-  common location parameter and \eqn{s} is a scale parameter.
+  distribution functions \eqn{F((t-m)/s)} and \eqn{F(t-m)},
+  respectively, where \eqn{m} is a common location parameter and \eqn{s}
+  is a scale parameter. 
 
   The null hypothesis is \eqn{s = 1}.
 

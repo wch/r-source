@@ -49,8 +49,9 @@ ansari.test(x, \dots)
 }
 \details{
   Suppose that \code{x} and \code{y} are independent samples from
-  distributions with densities \eqn{f((t-m)/s)/s} and \eqn{f(t-m)},
-  respectively, where \eqn{m} is an unknown nuisance parameter and
+  distributions with continuous distribution functions \eqn{F((t-m)/s)}
+  and \eqn{F(t-m)} respectively, where \eqn{F(0) = 1/2}, \eqn{m} is an
+  unknown nuisance parameter and
   \eqn{s}, the ratio of scales, is the parameter of interest.  The
   \I{Ansari}-\I{Bradley} test is used for testing the null that \eqn{s} equals
   1, the two-sided alternative being that \eqn{s \ne 1}{s != 1} (the
