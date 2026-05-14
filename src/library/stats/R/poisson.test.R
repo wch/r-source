@@ -120,7 +120,7 @@ poisson.test <- function(x, T = 1, r = 1, alternative =
             else
                 qgamma(alpha, x)
         }
-        ## Determine p s.t. Prob(B(n,p) <= x) = alpha.
+        ## Determine p s.t. Prob(Pois(m) <= x) = alpha.
         ## Use that for x < n,
         ##   Prob(Pois(m) <= x) = 1 - pgamma(m, x + 1).
 
