@@ -1,6 +1,6 @@
 % File src/library/base/man/strptime.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{strptime}
@@ -137,7 +137,8 @@ strptime(x, format, tz = "")
     \item{\code{\%H}}{Hours as decimal number (00--23).  As a special
       exception strings such as \samp{24:00:00} are accepted for input,
       since ISO 8601 allows these.}
-    \item{\code{\%I}}{Hours as decimal number (01--12).}
+    \item{\code{\%I}}{Hours as decimal number (01--12). Ambiguous unless
+      used in conjunction with \code{\%p}.}
     \item{\code{\%j}}{Day of year as decimal number (001--366):  For
       input, 366 is only valid in a leap year.}
     \item{\code{\%m}}{Month as decimal number (01--12).}
