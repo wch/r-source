@@ -78,15 +78,13 @@
   \code{\link{weekdays}} for convenience extraction functions.
 
   Methods with extra arguments and documentation:
-  \describe{
-    \item{\code{\link{Ops.Date}}}{for operators on \code{"Date"} objects.}
-
-    \item{\code{\link{format.Date}}}{for conversion to and from character strings.}
-
-    \item{\code{\link{axis.Date}}}{and \code{\link{hist.Date}} for plotting.}
-
-    \item{\code{\link{seq.Date}}}{, \code{\link{cut.Date}}, and
-      \code{\link{round.Date}} for utility operations.}
+  \itemize{
+    \item \code{\link{Ops.Date}} for operators on \code{"Date"} objects.
+    \item \code{\link{format.Date}} for conversion to and from character
+    strings.
+    \item \code{\link{axis.Date}} and \code{\link{hist.Date}} for plotting.
+    \item \code{\link{seq.Date}}, \code{\link{cut.Date}} and
+    \code{\link{round.Date}} for utility operations.
   }
   \code{\link{DateTimeClasses}} for date-time classes.
 }
