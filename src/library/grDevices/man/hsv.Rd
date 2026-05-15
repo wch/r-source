@@ -22,7 +22,7 @@ hsv(h = 1, s = 1, v = 1, alpha)
     alpha transparency channel (0 means transparent and 1 means opaque).}
 }
 \details{
-  Semi-transparent colors (\code{0 < alpha < 1}) are supported only on
+  Semi-transparent colors (\eqn{0 < \code{alpha} < 1}) are supported only on
   some devices: see \code{\link{rgb}}.
 }
 \value{

@@ -24,7 +24,7 @@ n2mfrow(nr.plots, asp = 1)
 \value{
   A length-two integer vector \code{(nr, nc)} giving the positive number of rows
   and columns, fulfilling \code{nr * nc >= nr.plots}, and currently, for
-  \code{asp = 1}, \code{nr >= nc >= 1}.
+  \code{asp = 1}, \code{nr >= nc} and \code{nr >= 1}.
 }
 \note{
   Conceptually, this is a quadratic integer optimization problem, with

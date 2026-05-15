@@ -67,7 +67,7 @@ setTxtProgressBar(pb, value, title = NULL, label = NULL)
   When such progress bars are used, e.g., from a function in a package,
   the caller should typically ensure that the corresponding calls
   (typically to \code{txtProgressBar()}, \code{setTxtProgressBar()} and
-  \code{close(<progBar>)}) should only happen as \code{if(prog) <FUN>(..)},
+  \code{close(\var{progBar})}) should only happen as \code{if(prog) <FUN>(..)},
   where, previously, \code{prog <- interactive() && !getOption("quiet", FALSE)},
   see, e.g., functions \code{ginla} or \code{gam.mh} from recommended package
   \CRANpkg{mgcv}.

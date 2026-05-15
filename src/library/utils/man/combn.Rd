@@ -30,7 +30,7 @@ combn(x, m, FUN = NULL, simplify = TRUE, \dots)
     to an \code{\link{array}} (typically a \code{\link{matrix}}); if
     FALSE, the function returns a \code{\link{list}}.  Note that when
     \code{simplify = TRUE} as by default, the dimension of the result is
-    simply determined from \code{FUN(\var{1st combination})} (for
+    simply determined from \code{FUN(\var{1st_combination})} (for
     efficiency reasons).  This will badly fail if \code{FUN(u)} is not of
     constant length.}
   \item{\dots}{optionally, further arguments to \code{FUN}.}

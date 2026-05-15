@@ -13,7 +13,7 @@
   object.
 }
 \details{
-  The object itself is simply the result of \code{\link{terms.formula}(<formula>)}.
+  The object itself is simply the result of \code{\link{terms.formula}(\var{formula})}.
   It has a number of attributes
   and they are used to construct the model frame:
 

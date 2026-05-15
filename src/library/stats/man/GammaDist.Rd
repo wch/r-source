@@ -128,9 +128,9 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   \bibcitet{R:Best+Roberts:1975} plus a final Newton step to improve the
   approximation.
 
-  \code{rgamma} for \code{shape >= 1} uses
+  \code{rgamma} for \eqn{\code{shape} \ge 1} uses
   \bibcitet{R:Ahrens+Dieter:1982a}
-  and for \code{0 < shape < 1} uses
+  and for \eqn{0 < \code{shape} < 1} uses
   \bibcitet{R:Ahrens+Dieter:1974}.
 }
 \references{

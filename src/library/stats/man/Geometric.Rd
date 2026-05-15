@@ -26,7 +26,8 @@ rgeom(n, prob)
   \item{p}{vector of probabilities.}
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
-  \item{prob}{probability of success in each trial. \code{0 < prob <= 1}.}
+  \item{prob}{probability of success in each trial.
+    \eqn{0 < \code{prob} \le 1}.}
   \item{log, log.p}{logical; if \code{TRUE}, probabilities
     are given as logarithms.}
   \item{lower.tail}{logical; if \code{TRUE} (default), probabilities are

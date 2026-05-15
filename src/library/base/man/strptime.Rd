@@ -45,7 +45,7 @@ strptime(x, format, tz = "")
     \code{"\%OS<n>"} instead of \code{"\%S"} in the format, see also
     \sQuote{Details}.}
   \item{\dots}{further arguments to be passed from or to other methods; for
-    \code{strftime()}, notably \code{digits}, passed to \code{format(<POSIXlt>)}.}
+    \code{strftime()}, notably \code{digits}, passed to \code{format(\var{POSIXlt})}.}
   \item{usetz}{logical.  Should the time zone abbreviation be appended
     to the output?  This is used in printing times, and more reliable
     than using \code{"\%Z"}.}
@@ -255,7 +255,7 @@ strptime(x, format, tz = "")
   Note that the precedence is \code{format=".. \%OSn .."} \eqn{\ll}{>>}
   \code{digits = n}, the latter initialized by default from
   \code{getOption("digits.secs")}.
-  Currently, for output (\code{strftime()} and \code{format(<POSIX.t>)}),
+  Currently, for output (\code{strftime()} and \code{format(\var{POSIXt})}),
   only \emph{one} "\%OS" occurrence is handled (per format string).
   \cr
   Further, for \code{strptime} \code{\%OS} will input seconds including

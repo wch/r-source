@@ -25,7 +25,7 @@ capture.output(\dots, file = NULL, append = FALSE,
   \item{type, split}{are passed to \code{\link{sink}()}, see there.}
 }
 \details{
-  It works via \code{\link{sink}(<file connection>)} and hence the \R code
+  It works via \code{\link{sink}(\var{file_connection})} and hence the \R code
   in \code{dots} must \emph{not} interfere with the connection (e.g., by
   calling \code{\link{closeAllConnections}()}).
 

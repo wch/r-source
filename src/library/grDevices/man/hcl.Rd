@@ -50,7 +50,7 @@ The RGB values produced by this function correspond to the \abbr{sRGB}
 color space used on most PC computer displays.  There are other
 packages which provide more general color space facilities.
 
-  Semi-transparent colors (\code{0 < alpha < 1}) are supported only on
+  Semi-transparent colors (\eqn{0 < \code{alpha} < 1}) are supported only on
   some devices: see \code{\link{rgb}}.
 }
 \value{

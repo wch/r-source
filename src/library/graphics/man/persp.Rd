@@ -56,7 +56,7 @@ persp(x, \dots)
     the coordinates are scaled so that aspect ratios are retained.
     This is useful for rendering things like DEM information.}
   \item{expand}{a expansion factor applied to the \code{z}
-    coordinates. Often used with \code{0 < expand < 1} to shrink the
+    coordinates. Often used with \eqn{0 < \code{expand} < 1} to shrink the
     plotting box in the \code{z} direction.}
   \item{col}{the color(s) of the surface facets.  Transparent colours are
     ignored.  This is recycled to the \eqn{(nx-1)(ny-1)} facets.}

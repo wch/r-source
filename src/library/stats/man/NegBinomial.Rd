@@ -30,7 +30,8 @@ rnbinom(n, size, prob, mu)
   \item{size}{target for number of successful trials, or dispersion
     parameter (the shape parameter of the gamma mixing distribution).
     Must be strictly positive, need not be integer.}
-  \item{prob}{probability of success in each trial. \code{0 < prob <= 1}.}
+  \item{prob}{probability of success in each trial.
+    \eqn{0 < \code{prob} \le 1}.}
   \item{mu}{alternative parametrization via mean: see \sQuote{Details}.}
   \item{log, log.p}{logical; if \code{TRUE}, probabilities
     are given as logarithms.}

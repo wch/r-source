@@ -41,7 +41,7 @@ rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)
   In this case the first three columns of \code{red} are taken to be
   the \code{red}, \code{green} and \code{blue} values.
 
-  Semi-transparent colors (\code{0 < alpha < 1}) are supported only on
+  Semi-transparent colors (\eqn{0 < \code{alpha} < 1}) are supported only on
   some devices: at the time of writing on the \code{\link{pdf}},
   \code{windows}, \code{quartz} and \code{X11(type = "cairo")} devices and
   associated bitmap devices (\code{jpeg}, \code{png}, \code{bmp},

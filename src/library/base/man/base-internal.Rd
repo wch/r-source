@@ -234,7 +234,7 @@ lazyLoadDBfetch(key, file, compressed, hook)
   \code{\link{row.names}} can be stored internally in compact form.
   \code{.set_row_names(n)} generates that form for automatic row names
   of length \code{n}, to be assigned to
-  \code{attr(<a data frame>, "row.names")}.  \code{.row_names_info}
+  \code{attr(\var{a_data_frame}, "row.names")}.  \code{.row_names_info}
   gives information on the internal form of the row names for a data
   frame: for details of what information see the argument \code{type}.
 
