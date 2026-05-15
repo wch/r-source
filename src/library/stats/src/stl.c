@@ -481,6 +481,8 @@ L173:
 	goto L174;
     }
 L10:
+    ; // According to PR##19073, this is invalid before C23.
+      // Some compilers do accept it as C17 (e.g. GCC 15, Apple clang 21).
     int k = i, l = j,
 	ij = (i + j) / 2;
     double t = a[ij];
