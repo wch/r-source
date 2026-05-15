@@ -55,6 +55,71 @@ Rd2txt_options <- local({
     }
 })
 
+math_replacements <- matrix(c(
+    "Alpha",   "\u391",  "Alpha",   "&Alpha;",
+    "Beta",    "\u392",  "Beta",    "&Beta;",
+    "Gamma",   "\u393",  "Gamma",   "&Gamma;",
+    "Delta",   "\u394",  "Delta",   "&Delta;",
+    "Epsilon", "\u395",  "Epsilon", "&Epsilon;",
+    "Zeta",    "\u396",  "Zeta",    "&Zeta;",
+    "Eta",     "\u397",  "Eta",     "&Eta;",
+    "Theta",   "\u398",  "Theta",   "&Theta;",
+    "Iota",    "\u399",  "Iota",    "&Iota;",
+    "Kappa",   "\u39a",  "Kappa",   "&Kappa;",
+    "Lambda",  "\u39b",  "Lambda",  "&Lambda;",
+    "Mu",      "\u39c",  "Mu",      "&Mu;",
+    "Nu",      "\u39d",  "Nu",      "&Nu;",
+    "Xi",      "\u39e",  "Xi",      "&Xi;",
+    "Omicron", "\u39f",  "Omicron", "&Omicron;",
+    "Pi",      "\u3a0",  "Pi",      "&Pi;",
+    "Rho",     "\u3a1",  "Rho",     "&Rho;",
+    "Sigma",   "\u3a3",  "Sigma",   "&Sigma;",
+    "Tau",     "\u3a4",  "Tau",     "&Tau;",
+    "Upsilon", "\u3a5",  "Upsilon", "&Upsilon;",
+    "Phi",     "\u3a6",  "Phi",     "&Phi;",
+    "Chi",     "\u3a7",  "Chi",     "&Chi;",
+    "Psi",     "\u3a8",  "Psi",     "&Psi;",
+    "Omega",   "\u3a9",  "Omega",   "&Omega;",
+    "alpha",   "\u3b1",  "alpha",   "&alpha;",
+    "beta",    "\u3b2",  "beta",    "&beta;",
+    "gamma",   "\u3b3",  "gamma",   "&gamma;",
+    "delta",   "\u3b4",  "delta",   "&delta;",
+    "epsilon", "\u3b5",  "epsilon", "&epsilon;",
+    "zeta",    "\u3b6",  "zeta",    "&zeta;",
+    "eta",     "\u3b7",  "eta",     "&eta;",
+    "theta",   "\u3b8",  "theta",   "&theta;",
+    "iota",    "\u3b9",  "iota",    "&iota;",
+    "kappa",   "\u3ba",  "kappa",   "&kappa;",
+    "lambda",  "\u3bb",  "lambda",  "&lambda;",
+    "mu",      "\u3bc",  "mu",      "&mu;",
+    "nu",      "\u3bd",  "nu",      "&nu;",
+    "xi",      "\u3be",  "xi",      "&xi;",
+    "omicron", "\u3bf",  "omicron", "&omicron;",
+    "pi",      "\u3c0",  "pi",      "&pi;",
+    "rho",     "\u3c1",  "rho",     "&rho;",
+    "sigma",   "\u3c3",  "sigma",   "&sigma;",
+    "tau",     "\u3c4",  "tau",     "&tau;",
+    "upsilon", "\u3c5",  "upsilon", "&upsilon;",
+    "phi",     "\u3c6",  "phi",     "&phi;",
+    "chi",     "\u3c7",  "chi",     "&chi;",
+    "psi",     "\u3c8",  "psi",     "&psi;",
+    "omega",   "\u3c9",  "omega",   "&omega;",
+    "sum",     "\u2211", "sum",     "&sum;",
+    "prod",    "\u220f", "prod",    "&prod;",
+    "sqrt",    "\u221a", "sqrt",    "&radic;",
+    "dots",    "\u2026", "...",     "&hellip;",
+    "ldots",   "\u2026", "...",     "&hellip;",
+    "le",      "\u2264", "<=",      "&le;",
+    "leq",     "\u2264", "<=",      "&le;",
+    "ge",      "\u2265", ">=",      "&ge;",
+    "geq",     "\u2265", ">=",      "&ge;",
+    "ne",      "\u2260", "!=",      "&ne;",
+    "neq",     "\u2260", "!=",      "&ne;",
+    "infty",   "\u221e", "Inf",     "&infin;",
+    "left",    "",       "",        "",
+    "right",   "",       "",        ""
+), ncol = 4, byrow = TRUE, dimnames = list(NULL, c("name", "fancy", "ascii", "html")))
+
 transformMethod <- function(i, blocks, Rdfile) {
     editblock <- function(block, newtext)
     	list(tagged(newtext,
@@ -529,13 +594,14 @@ Rd2txt <-
     }
 
     txt_eqn <- function(x) {
-        x <- psub("\\\\(Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega|alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega|sum|prod|sqrt)", "\\1", x)
-        x <- psub("\\\\(dots|ldots)", "...", x)
-        x <- psub("\\\\(left|right)", "", x)
-        x <- psub("\\\\leq?", "<=", x)
-        x <- psub("\\\\geq?", ">=", x)
-        x <- psub("\\\\neq?", "!=", x)
-        x <- fsub("\\infty", "Inf", x)
+        replacement <- if (unicode_symbols) "fancy" else "ascii"
+        rx <- paste0("\\\\(",
+                     paste(math_replacements[,"name"], collapse = "|"),
+                     ")(?![a-zA-Z])")
+        m <- gregexec(rx, x, perl = TRUE)
+        ii <- lapply(regmatches(x, m),
+                     function(mm) if (length(mm)) match(mm[2,], math_replacements[,"name"]))
+        regmatches(x, gregexpr(rx, x, perl = TRUE)) <- lapply(ii, function(i) math_replacements[i, replacement])
         ## FIXME: are these needed?
         x <- psub("\\\\(bold|strong|emph|var)\\{([^}]*)\\}", "\\2", x)
         x <- psub("\\\\(code|samp)\\{([^}]*)\\}", "'\\2'", x)

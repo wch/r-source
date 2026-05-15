@@ -109,14 +109,13 @@ vhtmlify <- function(x, inEqn = FALSE) { # code version
     x <- fsub('"\\{"', '"{"', x)
     ## http://htmlhelp.com/reference/html40/entities/symbols.html
     if(inEqn) {
-        x <- psub("\\\\(Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega|alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega|sum|prod)", "&\\1;", x)
-        x <- psub("\\\\(dots|ldots)", "&hellip;", x)
-        x <- psub("\\\\(left|right)", "", x)
-        x <- psub("\\\\leq?", "&le;", x)
-        x <- psub("\\\\geq?", "&ge;", x)
-        x <- psub("\\\\neq?", "&ne;", x)
-        x <- fsub("\\infty", "&infin;", x)
-        x <- fsub("\\sqrt", "&radic;", x)
+        rx <- paste0("\\\\(",
+                     paste(math_replacements[,"name"], collapse = "|"),
+                     ")(?![a-zA-Z])")
+        m <- gregexec(rx, x, perl = TRUE)
+        ii <- lapply(regmatches(x, m),
+                     function(mm) if (length(mm)) match(mm[2,], math_replacements[,"name"]))
+        regmatches(x, gregexpr(rx, x, perl = TRUE)) <- lapply(ii, function(i) math_replacements[i, "html"])
     }
     x
 }
