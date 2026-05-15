@@ -593,7 +593,7 @@ Rd2HTML <-
 
     addParaBreaks <- function(x) {
 	if (isTRUE(inPara) && #isBlankLineRd(x)
-	    linestart && grepl("^[[:blank:]]*\n", x)) {
+	    linestart && grepl("^[[:space:]]*\n", x, perl = TRUE)) {
 	    inPara <<- FALSE
 	    return("</p>\n")
 	}
@@ -603,7 +603,7 @@ Rd2HTML <-
 	    ## strip blank line
 	    skipNewline <<- linestart # not necessarily for \Sexpr-based Rd
 	}
-	if (isFALSE(inPara) && !isBlankRd(x)) {
+	if (isFALSE(inPara) && !grepl("^[[:space:]]*$", x, perl = TRUE)) {
 	    x <- paste0("<p>", x)
 	    inPara <<- TRUE
 	}
