@@ -3268,6 +3268,25 @@ stopifnot(identical(attributes(.leap.seconds), list(class = c("POSIXct", "POSIXt
 ## .leap.seconds have no "tzone" attribute (as in R < 4.1.0)
 
 
+## zapsmall(x, digits = Inf)  should return x even when that contains +/-Inf
+zapEx <- function(x) rbind(x = x,
+          z    = zapsmall(x, 50),             zd_4 = zapsmall(x, 50, min.d = -444),
+          zdI  = zapsmall(x, 50, min.d = -Inf), zI = zapsmall(x, Inf),
+          zIdI = zapsmall(x, Inf,min.d = -Inf))
+x2 <- pi * 100^(-2:2)/10; xI <- c(x2, Inf); Ix <- c(-Inf, x2); xII <- c(Ix, Inf)
+stopifnot(exprs = {
+    zapEx(x2) == rep(x2, each = 6)
+    is.finite(t(print(zapEx(xI)))) == is.finite(xI)
+    is.finite(t(      zapEx(Ix ))) == is.finite(Ix)
+    is.finite(t(z <-  zapEx(xII))) == is.finite(xII)
+    !anyNA(z)
+    identical(z["zI" , ], xII)
+    identical(z["zIdI",], xII)
+    identical(z["zd_4",], z["zdI",])
+})
+## the last two rows of z[,] were all NaN in R <= 4.6.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -99,7 +99,9 @@
       \item \code{as.POSIXct(x)} for \code{POSIXlt} object \code{x} with
       \code{.Machine$integer.max - x$year < 1900} no longer suffers from C
       level integer overflow, thanks to \I{Suharto Anggono}'s patch for
-      \PR{19038}.
+      \PR{19038}.  Currently, this does not apply when the
+      \code{"internal"} code for date-time conversion and printing is in
+      use, as e.g., on Windows and macOS.
     }
   }
 }
@@ -133,6 +135,10 @@
       Further, \code{stl()} is now based on C code, translated from previous
       Fortran, triggered by a \I{flang 22} compiler optimization bug
       (\command{-O2}).
+
+      \item Border case \code{zapsmall(x, digits=Inf)} where \code{x} has an
+      \code{Inf} entry, no longer returns all \code{NaN} but rather \code{x}.
+      Help page improved, also with more non-default examples.
     }
   }
 }
