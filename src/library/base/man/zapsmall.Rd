@@ -33,7 +33,7 @@ zapsmall(x, digits = getOption("digits"),
     Using \code{min.d = -324} or smaller provides scale invariance,
     whereas the default \code{min.d = 0} is back compatible with S and
     \R versions before 4.4.0 where, it was implicitly hardwired to \code{0}
-    with the intuition that e.g., \code{4} should never be zapped to code{0}.}
+    with the intuition that e.g., \code{4} should never be zapped to \code{0}.}
 }
 \references{
   \bibshow{R:Chambers:1998}
