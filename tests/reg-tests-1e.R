@@ -3287,6 +3287,68 @@ stopifnot(exprs = {
 ## the last two rows of z[,] were all NaN in R <= 4.6.0
 
 
+### wilcox.test(x, exact=FALSE, correct = k), k >= 1  had been missing '* dnorm(z)'
+##
+## all possible 'correct = *' settings { correct = 0  <===>  correct = TRUE } :
+corrs <- list(FALSE, TRUE, 1L, 2L, 3L)
+names(corrs) <- vapply(corrs, as.character, "")
+##
+##' Compute exact and asymptotic (_incl_ Edgeworth corrections) Wilcoxon test p-values
+##' (also to be used in further changes, incl  2-sample test)
+wilcoxAsymp <- function(x, y = NULL, xO = 100* max(abs(x)), yO = Inf,
+                      debug = getOption("verbose"), ...) {
+    P <- if(debug) print else identity
+    xo <- c(x, xO)
+    if(is.null(y) || !length(y)) { ##---------- 1-sample  : *_one_pval_asymp() ----------------------
+        ## 'X' := eXact
+        pv1X  <- P(wilcox.test(x , exact=TRUE, ...))$p.value
+        pv1Xo <- P(wilcox.test(xo, exact=TRUE, ...))$p.value
+        L1. <- lapply(corrs, function(cr) wilcox.test(x , exact=FALSE, correct = cr, ...))
+        L1o <- lapply(corrs, function(cr) wilcox.test(xo, exact=FALSE, correct = cr, ...))
+        list(pval    = c(vapply(L1., `[[`, 0.1, "p.value"), Xact = pv1X),
+             pvalOut = c(vapply(L1o, `[[`, 0.1, "p.value"), Xact = pv1Xo))
+    }
+    else { ##-------------- 2-sample  (x, y) : *_two_pval_asymp() ------------------------
+        yo <- c(y, yO)
+        pv2X  <- P(wilcox.test(x , y , exact=TRUE, ...))$p.value
+        pv2Xo <- P(wilcox.test(xo, yo, exact=TRUE, ...))$p.value
+        L2. <- lapply(corrs, function(cr) wilcox.test(x , y , exact=FALSE, correct = cr, ...))
+        L2o <- lapply(corrs, function(cr) wilcox.test(xo, yo, exact=FALSE, correct = cr, ...))
+        list(pval    = c(vapply(L2., `[[`, 0.1, "p.value"), Xact = pv2X ),
+             pvalOut = c(vapply(L2o, `[[`, 0.1, "p.value"), Xact = pv2Xo))
+    }
+} ## {wilcoxAsymp}
+## Simulated, rounded and shifted from  t_3 and t_4 :
+x20 <- c(-231, -150, -143, -101, -82,    -76, -56, -40, -29, -20,
+           15,   41,   45,   61,  69,     86,  98, 144, 163, 219)
+y20 <- c(-216, -146, -137, -125, -116,  -108, -35, -32, -31,   6,
+           65,   92,   95,   98,  102,   128, 130, 134, 178, 190) + 0.5
+## chosen to have no ties (correct=* is not used with ties):
+stopifnot(anyDuplicated(rank(abs(  x20     ))) == 0,
+          anyDuplicated(rank(abs(c(x20,y20)))) == 0)
+roundM <- function(x, dig = 4)
+    round(x, digits = max(1, dig + round( - log10(min(abs(x))))))
+mkM <- function(c1, c2, m) `dimnames<-`(cbind(c1,c2, deparse.level=0L), dimnames(m))
+Ax1 <- wilcoxAsymp(x20)
+(mA1 <- sapply(Ax1, roundM))
+trA1 <- mkM(c(0.9405, 0.9553, 0.9563, 0.9564, 0.9563, 0.9563),
+            c(0.6639, 0.6766, 0.6826, 0.6833, 0.6827, 0.6827), mA1)
+(dA1 <- t(t(A <- simplify2array(Ax1))[, -6] - A["Xact",]) |> signif(digits=3))
+trd1 <- mkM(c(-0.0158, -0.000987, -9.29e-06, 0.000115, -9.95e-06),
+            c(-0.0188, -0.0061,   -9.17e-05, 0.000596, -5.14e-05), dA1)
+Ay1 <- wilcoxAsymp(y20)
+sapply(Ay1, roundM)
+(dAy1 <- t(t(A <- simplify2array(Ay1))[, -6] - A["Xact",]) |> signif(digits=3))
+trdy1 <- mkM(c(-0.0196, -0.00566, -7.8e-05, 0.000602, -5.26e-05),
+             c(-0.0187, -0.00784, -2e-04,   0.000569, -5.62e-05), dAy1)
+stopifnot(exprs = {
+    all.equal(trA1,  mA1, tolerance = 1e-14)
+    all.equal(trd1,  dA1, tolerance = 1e-14)
+    all.equal(trdy1,dAy1, tolerance = 1e-14)
+})
+## The 'correct = 1 | 2 | 3' did *not* improve the p values..
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

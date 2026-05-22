@@ -1,7 +1,7 @@
 #  File src/library/stats/R/wilcox.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -355,7 +355,7 @@ function(x, n, z, alternative, conf.level)
 .wilcox_test_one_pval_asymp <-
 function(STAT, n, alternative, correct)
 {
-    z <- STAT$statistic - STAT$ex
+    z <- `names<-`(STAT$statistic, NULL) - STAT$ex
     ## Edgeworth approximations only work if there are no ties (or
     ## zeroes).
     if((correct > 0) && (STAT$ties || STAT$zero))
@@ -390,7 +390,7 @@ function(STAT, n, alternative, correct)
             e <- e + 35 * l4^2 / 40320 * z *
                 (z^6 - 21 * z^4 + 105 * z^2 - 105)
         }
-        if(lower.tail) y - e else y + e
+        y + (if(lower.tail) - e else e) * dnorm(z)
     }
     switch(alternative,
            "less" = F(z),
@@ -440,7 +440,7 @@ function(x, n, alternative, conf.level, correct,
         Wmumax <- if(!is.finite(Wmumin)) NA else W(mumax) # if(): warn only once
     }
     if(n == 0 || !is.finite(Wmumax)) { # incl. "all zero / ties" warning above
-        ## FIXME: in the one-sides cases this gives (-Inf, NaN) and
+        ## FIXME: in the one-side cases this gives (-Inf, NaN) and
         ## (NaN, Inf): is this really what we want?
         CONF.INT <-
             structure(c(if(alternative == "less"   ) -Inf else NaN,
@@ -554,7 +554,7 @@ function(x, y, mu, n.x = length(x), n.y = length(y), digits.rank)
 .wilcox_test_two_pval_exact <-
 function(STAT, n.x, n.y, alternative)
 {
-    q <- STAT$statistic
+    q <- `names<-`(STAT$statistic, NULL)
     z <- STAT$z
     switch(alternative,
            "two.sided" = {
@@ -700,7 +700,7 @@ function(x, y, n.x, n.y, z, alternative, conf.level)
 .wilcox_test_two_pval_asymp <-
 function(STAT, n.x, n.y, alternative, correct)
 {
-    z <- STAT$statistic - STAT$ex
+    z <- `names<-`(STAT$statistic, NULL) - STAT$ex
     ## Edgeworth approximations only work if there are no ties.
     if((correct > 0) && STAT$ties)
         correct <- 0
