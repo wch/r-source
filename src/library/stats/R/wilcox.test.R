@@ -373,29 +373,31 @@ function(STAT, n, alternative, correct)
         if(correct < 1) return(y)
         ## Edgeworth expansion given in Fellingham and Stoker (1964),
         ## <doi:10.1080/01621459.1964.10480738>
-        n4 <- 12 * (3 * n^2 + 3 * n - 1)
-        d4 <- 5 * n * (n + 1) * (2 * n + 1)
-        l4 <- - n4 / d4
-        n6 <- 576 * (3 * n^4 + 6 * n^2 - 3 * n + 1)
-        d6 <- 7 * (n * (n + 1) * (2 * n + 1))^2
-        l6 <- n6 / d6
+        n4 <- (n + 1)* 3 * n - 1 # shorten: 1/4! = 1/24 from below: (12 / 5) / 24 == 1 / 10
+        d4 <- 10 * (nn2n <- n * (n + 1) * (2 * n + 1))
+        la4 <- - n4 / d4 # = \lambda_4 / 4!
         ## \frac{\lambda_4}{4!} H_3(z)
-        e <- l4 / 24 * z * (z^2 - 3)
-        if(correct > 1) {
+        z2 <- z^2
+        e <- la4 * z * (z2 - 3)
+        if(correct > 1) { # shorten: 1/6! * 576 / 7 = 576 / (7 * 720) = 4 / 35
+                                  ## ___ paper has N^3, R-code{orig} n^2  : which is correct ?
+            n6 <- 4 * (3 * n^4 + 6 * n^3 - 3 * n + 1)
+            d6 <- 35 * nn2n^2
+            la6 <- n6 / d6 # = \lambda_6 / 6!
             ## \frac{\lambda_6}{6!} H_5(z)
-            e <- e + l6 / 720 * z * (z^4 - 10 * z^2 + 15)
+            e <- e + la6 * z * ((z2 - 10) * z2 + 15)
         }
         if(correct > 2) {
-            ## \frac{35 \lambda_4^2}{8!} H_7(z)
-            e <- e + 35 * l4^2 / 40320 * z *
-                (z^6 - 21 * z^4 + 105 * z^2 - 105)
+            ## \frac{35 \lambda_4^2}{8!} H_7(z) = 35 * (4!*la4)^2 / 8! * H()
+            ## = la4^2 * H() * 35 * 4! *4! / 8! = la4^2 * H() * 35 * 24 / 5*6*7*8 = la4^2 * H() / 2
+            e <- e + la4^2 / 2 * z * (((z2 - 21) * z2 + 105) * z2 - 105)
         }
         y + (if(lower.tail) - e else e) * dnorm(z)
     }
     switch(alternative,
            "less" = F(z),
            "greater" = F(z, lower.tail = FALSE),
-           "two.sided" = 2 * min(p <- F(z), 1 - p))
+           "two.sided" = 2 * min(p <- F(z), if(p < 0.99999) 1 - p else F(z, lower.tail=FALSE)))
 }
 
 .wilcox_test_one_cint_asymp <-

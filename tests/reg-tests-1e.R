@@ -3331,22 +3331,28 @@ roundM <- function(x, dig = 4)
 mkM <- function(c1, c2, m) `dimnames<-`(cbind(c1,c2, deparse.level=0L), dimnames(m))
 Ax1 <- wilcoxAsymp(x20)
 (mA1 <- sapply(Ax1, roundM))
-trA1 <- mkM(c(0.9405, 0.9553, 0.9563, 0.9564, 0.9563, 0.9563),
-            c(0.6639, 0.6766, 0.6826, 0.6833, 0.6827, 0.6827), mA1)
+trA1 <- mkM(c(0.9405, 0.9553, 0.9563, 0.9565, 0.9563, 0.9563),
+            c(0.6639, 0.6766, 0.6826, 0.6834, 0.6827, 0.6827), mA1)
 (dA1 <- t(t(A <- simplify2array(Ax1))[, -6] - A["Xact",]) |> signif(digits=3))
-trd1 <- mkM(c(-0.0158, -0.000987, -9.29e-06, 0.000115, -9.95e-06),
-            c(-0.0188, -0.0061,   -9.17e-05, 0.000596, -5.14e-05), dA1)
+trd1 <- mkM(c(-0.0158, -0.000987, -9.29e-06, 0.000127, 1.79e-06),
+            c(-0.0188, -0.0061,   -9.17e-05, 0.000658, 1.08e-05), dA1)
 Ay1 <- wilcoxAsymp(y20)
 sapply(Ay1, roundM)
 (dAy1 <- t(t(A <- simplify2array(Ay1))[, -6] - A["Xact",]) |> signif(digits=3))
-trdy1 <- mkM(c(-0.0196, -0.00566, -7.8e-05, 0.000602, -5.26e-05),
-             c(-0.0187, -0.00784, -2e-04,   0.000569, -5.62e-05), dAy1)
+trdy1 <- mkM(c(-0.0196, -0.00566, -7.8e-05, 0.000666, 1.16e-5),
+             c(-0.0187, -0.00784, -2.0e-04, 0.000638, 1.32e-5), dAy1)
+Ay1P <- wilcoxAsymp(y20 + 66)
+sapply(Ay1P, roundM)
+(dAy1P <- t(t(A <- simplify2array(Ay1P))[, -6] - A["Xact",]) |> signif(digits=3))
+trd1P <- mkM(c(.00149, .00245, 2.64e-4, 2.04e-5, 3.86e-5),
+             c(.00161, .00215, 2.14e-4, 9.52e-5, 3.11e-5), dAy1P)
 stopifnot(exprs = {
     all.equal(trA1,  mA1, tolerance = 1e-14)
     all.equal(trd1,  dA1, tolerance = 1e-14)
     all.equal(trdy1,dAy1, tolerance = 1e-14)
+    all.equal(trd1P,dAy1P,tolerance = 1e-14)
 })
-## The 'correct = 1 | 2 | 3' did *not* improve the p values..
+## The 'correct = 1 | 2 | 3' did *not* improve the p values in R 4.6.0
 
 
 
