@@ -109,7 +109,7 @@
   the vector elements assigned into must correspond to existing rows in the
   data frame.  If subassignment is used to add a non-existing column, the
   column will be added as described above, with unassigned elements set
-  to \code{NA}, see \manual{R-lang}{Subset-assignment} for a rationale.
+  to \code{NA}, see \manual{R-lang}{Subset assignment} for a rationale.
 }
 \section{Coercion}{
   The story over when replacement values are coerced is a complicated
