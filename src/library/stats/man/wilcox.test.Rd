@@ -20,7 +20,8 @@ wilcox.test(x, \dots)
             alternative = c("two.sided", "less", "greater"),
             mu = 0, paired = FALSE, exact = NULL, correct = TRUE,
             conf.int = FALSE, conf.level = 0.95,
-            tol.root = 1e-4, digits.rank = Inf, \dots)
+            tol.root = 1e-4, digits.rank = 7L, digits.zap = digits.rank,
+            \dots)
 
 \method{wilcox.test}{formula}(formula, data, subset, na.action = na.pass, \dots)
 }
@@ -50,6 +51,13 @@ wilcox.test(x, \dots)
   \item{digits.rank}{a number; if finite, \code{\link{rank}(\link{signif}(r, digits.rank))}
     will be used to compute ranks for the test statistic instead of (the
     default) \code{rank(r)}.}
+  \item{digits.zap}{a number, preferably finite; to check if values of
+    differences \code{d} are zero, instead of \code{d == 0}, the \dQuote{zapped} values
+    \code{\link{zapsmall}(d, digits.zap, mFUN= min_Q3, min.d= -324)} are
+    compared to zero, where \preformatted{
+      min_Q3 <- function(x, ina) { x <- abs(x[is.finite(x)])
+        if(length(x <- x[x > 0])) quantile(x, .75, names=FALSE) else 0 } }
+  }
   \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs}
     is a numeric variable giving the data values and \code{rhs} either
     \code{1} for a one-sample or paired test or a factor
@@ -223,7 +231,14 @@ wilcox.test(x, y, alternative = "greater",
             exact = FALSE, correct = FALSE) # H&W large sample
                                             # approximation
 
-wilcox.test(rnorm(10), rnorm(10, 2), conf.int = TRUE)
+## Confidence intervals ----------------
+## 2 sample:
+set.seed(12); Z1 <- rnorm(10); Z2 <- rnorm(10, 2)
+wilcox.test(Z1, Z2,  conf.int = TRUE)
+wilcox.test(Z1, Z2,  conf.int = TRUE, exact=FALSE)
+## 1 sample:
+wilcox.test(  -2:12,        conf.int = TRUE, exact=TRUE)
+wilcox.test(c(-2:11, 1000), conf.int = TRUE, exact=FALSE)# robust
 
 ## Formula interface -- NB: boxplot notches <~~> test for median equality:
 boxplot(Ozone ~ Month, data = airquality, notch = TRUE, warnN = FALSE)
@@ -231,8 +246,8 @@ wilcox.test(Ozone ~ Month, data = airquality,
             subset = Month \%in\% c(5, 8))
 
 ## accuracy in ties determination via 'digits.rank':
-wilcox.test( 4:2,      3:1,     paired=TRUE) 
-wilcox.test((4:2)/10, (3:1)/10, paired=TRUE) 
+wilcox.test( 4:2,      3:1,     paired=TRUE)
+wilcox.test((4:2)/10, (3:1)/10, paired=TRUE)
 wilcox.test((4:2)/10, (3:1)/10, paired=TRUE, digits.rank = 9) # same ties as (4:2, 3:1)
 }
 \keyword{htest}

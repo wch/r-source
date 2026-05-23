@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-05-03 r89994) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-05-22 r90067) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin25.3.0
 
@@ -19157,18 +19157,61 @@ alternative hypothesis: true location shift is greater than 0
 
 >                                             # approximation
 > 
-> wilcox.test(rnorm(10), rnorm(10, 2), conf.int = TRUE)
+> ## Confidence intervals ----------------
+> ## 2 sample:
+> set.seed(12); Z1 <- rnorm(10); Z2 <- rnorm(10, 2)
+> wilcox.test(Z1, Z2,  conf.int = TRUE)
 
 	Wilcoxon rank sum exact test
 
-data:  rnorm(10) and rnorm(10, 2)
-W = 7, p-value = 0.0004871
+data:  Z1 and Z2
+W = 4, p-value = 0.0001299
 alternative hypothesis: true location shift is not equal to 0
 95.7 percent confidence interval:
- -3.024352 -1.348555
+ -3.218076 -1.494576
 sample estimates:
 difference in location 
-             -2.262424 
+             -2.234911 
+
+> wilcox.test(Z1, Z2,  conf.int = TRUE, exact=FALSE)
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  Z1 and Z2
+W = 4, p-value = 0.0005828
+alternative hypothesis: true location shift is not equal to 0
+95 percent confidence interval:
+ -3.218063 -1.494623
+sample estimates:
+difference in location 
+             -2.238656 
+
+> ## 1 sample:
+> wilcox.test(  -2:12,        conf.int = TRUE, exact=TRUE)
+
+	Wilcoxon signed rank exact test
+
+data:  -2:12
+V = 112, p-value = 0.0007324
+alternative hypothesis: true location is not equal to 0
+95.6 percent confidence interval:
+ 2.5 7.5
+sample estimates:
+(pseudo)median 
+             5 
+
+> wilcox.test(c(-2:11, 1000), conf.int = TRUE, exact=FALSE)# robust
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  c(-2:11, 1000)
+V = 98, p-value = 0.004708
+alternative hypothesis: true location is not equal to 0
+95 percent confidence interval:
+ 2.000036 8.500017
+sample estimates:
+(pseudo)median 
+      5.000039 
 
 > 
 > ## Formula interface -- NB: boxplot notches <~~> test for median equality:
@@ -19184,7 +19227,7 @@ alternative hypothesis: true location shift is not equal to 0
 
 > 
 > ## accuracy in ties determination via 'digits.rank':
-> wilcox.test( 4:2,      3:1,     paired=TRUE) 
+> wilcox.test( 4:2,      3:1,     paired=TRUE)
 
 	Wilcoxon signed rank exact test
 
@@ -19192,7 +19235,7 @@ data:  4:2 and 3:1
 V = 6, p-value = 0.25
 alternative hypothesis: true location shift is not equal to 0
 
-> wilcox.test((4:2)/10, (3:1)/10, paired=TRUE) 
+> wilcox.test((4:2)/10, (3:1)/10, paired=TRUE)
 
 	Wilcoxon signed rank exact test
 

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-03-05 r89546) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-05-22 r90067) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -16,9 +16,9 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > #### Some examples of the KS and Wilcoxon tests
-> 
+>
 > ### ------ Kolmogorov Smirnov (KS) --------------
-> 
+>
 > ## unrealistic one of PR#14561
 > ds1 <- c(1.7,2,3,3,4,4,5,5,6,6)
 > ks.test(ds1, "pnorm", mean = 3.3, sd = 1.55216)
@@ -33,7 +33,7 @@ Warning message:
 In ks.test.default(ds1, "pnorm", mean = 3.3, sd = 1.55216) :
   ties should not be present for the one-sample Kolmogorov-Smirnov test
 > # how on earth can sigma = 1.55216 be known?
-> 
+>
 > # R >= 2.14.0 allows the equally invalid
 > ks.test(ds1, "pnorm", mean = 3.3, sd = 1.55216, exact = TRUE)
 
@@ -46,7 +46,7 @@ alternative hypothesis: two-sided
 Warning message:
 In ks.test.default(ds1, "pnorm", mean = 3.3, sd = 1.55216, exact = TRUE) :
   ties should not be present for the one-sample Kolmogorov-Smirnov test
-> 
+>
 > ## Try out the effects of rounding
 > set.seed(123)
 > ds2 <- rnorm(1000)
@@ -112,208 +112,649 @@ alternative hypothesis: two-sided
 Warning message:
 In ks.test.default(round(ds2, 1), "pnorm", exact = TRUE) :
   ties should not be present for the one-sample Kolmogorov-Smirnov test
-> 
-> 
-> ### ------ Wilkoxon (Mann Whitney) --------------
-> 
-> options(nwarnings = 1000)
-> (alts <- setNames(, eval(formals(stats:::wilcox.test.default)$alternative)))
-  two.sided        less     greater 
-"two.sided"      "less"   "greater" 
-> x0 <- 0:4
-> (x.set <- list(s0 = lapply(x0, function(m) 0:m),
-+                s. = lapply(x0, function(m) c(1e-9, seq_len(m)))))
-$s0
-$s0[[1]]
-[1] 0
-
-$s0[[2]]
-[1] 0 1
-
-$s0[[3]]
-[1] 0 1 2
-
-$s0[[4]]
-[1] 0 1 2 3
-
-$s0[[5]]
-[1] 0 1 2 3 4
-
-
-$s.
-$s.[[1]]
-[1] 1e-09
-
-$s.[[2]]
-[1] 1e-09 1e+00
-
-$s.[[3]]
-[1] 1e-09 1e+00 2e+00
-
-$s.[[4]]
-[1] 1e-09 1e+00 2e+00 3e+00
-
-$s.[[5]]
-[1] 1e-09 1e+00 2e+00 3e+00 4e+00
-
-
-> stats <- setNames(nm = c("statistic", "p.value", "conf.int", "estimate"))
-> 
-> ## Even with  conf.int = TRUE, do not want errors :
-> RR <-
-+     lapply(x.set, ## for all data sets
-+            function(xs)
-+                lapply(alts, ## for all three alternatives
-+                       function(alt)
-+                           lapply(xs, function(x)
-+                               ## try(
-+                               wilcox.test(x, exact=TRUE, conf.int=TRUE, alternative = alt)
-+                               ## )
-+                               )))
-> length(ww <- warnings()) # 52 (or 43 for x0 <- 0:3)
-[1] 1
-> unique(ww) # 4 different ones
-Warning message:
+> summary(w1 <- warnings())
+1 identical warnings:
 In ks.test.default(round(ds2, 1), "pnorm", exact = TRUE) :
   ties should not be present for the one-sample Kolmogorov-Smirnov test
-> 
-> cc <- lapply(RR, function(A) lapply(A, function(bb) lapply(bb, class)))
-> table(unlist(cc))
-
-htest 
-   30 
-> ## in R <= 3.3.1,  with try( .. ) above, we got
+> 
+>
+> ### ------ Wilcoxon (Mann Whitney) --------------
+>
+> options(nwarnings = 1000)
+> (alts <- setNames(, eval(formals(stats:::wilcox.test.default)$alternative)))
+  two.sided        less     greater
+"two.sided"      "less"   "greater"
+> x0 <- setNames(0:4, paste0("n_", 1L + 0:4))
+> str(x.set <- list(s0 = lapply(x0, function(m) 0:m),
++                   s. = lapply(x0, function(m) c(1e-9, seq_len(m)))))
+List of 2
+ $ s0:List of 5
+  ..$ n_1: int 0
+  ..$ n_2: int [1:2] 0 1
+  ..$ n_3: int [1:3] 0 1 2
+  ..$ n_4: int [1:4] 0 1 2 3
+  ..$ n_5: int [1:5] 0 1 2 3 4
+ $ s.:List of 5
+  ..$ n_1: num 1e-09
+  ..$ n_2: num [1:2] 1e-09 1e+00
+  ..$ n_3: num [1:3] 1e-09 1e+00 2e+00
+  ..$ n_4: num [1:4] 1e-09 1e+00 2e+00 3e+00
+  ..$ n_5: num [1:5] 1e-09 1e+00 2e+00 3e+00 4e+00
+> stats <- setNames(nm = c("statistic", "p.value", "conf.int", "estimate"))
+> dig.r <- c(Inf, 20, 15, 10, 7, 5); names(dig.r) <- paste0("d.rank=", dig.r)
+> RL <- lapply(dig.r, function(dig.rank)
++              lapply(x.set, ## for all data sets
++                     function(xs)
++                         lapply(alts, ## for all three alternatives
++                                function(alt)
++                                    lapply(xs, function(x)
++                                        ## try( nolonger: Even with  conf.int = TRUE, do not want errors :
++                                        wilcox.test(x, exact=TRUE, conf.int=TRUE, alternative = alt,
++                                                    digits.rank = dig.rank)
++                                        ## )
++                                        ))))
+> length(ww <- warnings()) # 1 ; was 52 (or 43 for x0 <- 0:3)
+[1] 1
+> if(!identical(w1, ww)) # typically they *are* identical ==> no new warnings
++     summary(ww)
+> ## unique(ww) # (were 4 different ones)
+>
+> ## RL is very nested tree of "htest" results
+> str(RL, max.level = 2)
+List of 6
+ $ d.rank=Inf:List of 2
+  ..$ s0:List of 3
+  ..$ s.:List of 3
+ $ d.rank=20 :List of 2
+  ..$ s0:List of 3
+  ..$ s.:List of 3
+ $ d.rank=15 :List of 2
+  ..$ s0:List of 3
+  ..$ s.:List of 3
+ $ d.rank=10 :List of 2
+  ..$ s0:List of 3
+  ..$ s.:List of 3
+ $ d.rank=7  :List of 2
+  ..$ s0:List of 3
+  ..$ s.:List of 3
+ $ d.rank=5  :List of 2
+  ..$ s0:List of 3
+  ..$ s.:List of 3
+> str(RL[["d.rank=7"]]$s.$two.sided, max.level = 1) # 5 x {list of 9, class "htest"}
+List of 5
+ $ n_1:List of 9
+  ..- attr(*, "class")= chr "htest"
+ $ n_2:List of 9
+  ..- attr(*, "class")= chr "htest"
+ $ n_3:List of 9
+  ..- attr(*, "class")= chr "htest"
+ $ n_4:List of 9
+  ..- attr(*, "class")= chr "htest"
+ $ n_5:List of 9
+  ..- attr(*, "class")= chr "htest"
+> str(RL[["d.rank=7"]]$s.$two.sided [1:2], give.attr = FALSE)
+List of 2
+ $ n_1:List of 9
+  ..$ statistic  : Named num 1
+  ..$ parameter  : NULL
+  ..$ p.value    : num 1
+  ..$ null.value : Named num 0
+  ..$ alternative: chr "two.sided"
+  ..$ method     : chr "Wilcoxon signed rank exact test"
+  ..$ data.name  : chr "x"
+  ..$ conf.int   : num [1:2] -Inf Inf
+  ..$ estimate   : Named num 1e-09
+ $ n_2:List of 9
+  ..$ statistic  : Named num 2
+  ..$ parameter  : NULL
+  ..$ p.value    : num 1
+  ..$ null.value : Named num 0
+  ..$ alternative: chr "two.sided"
+  ..$ method     : chr "Wilcoxon signed rank exact test"
+  ..$ data.name  : chr "x"
+  ..$ conf.int   : num [1:2] 1e-09 Inf
+  ..$ estimate   : Named num 0.5
+>
+> cc <- lapply(RL, function(A) lapply(A, function(B) lapply(B, function(bb) lapply(bb, class))))
+> ##N table(unlist(cc))
+> ## in R <= 3.3.1,  with try( .. ) above and only digits.rank=Inf, we got
 > ## htest try-error
 > ##    23         7
-> uc <- unlist(cc[["s0"]]); noquote(names(uc)[uc != "htest"]) ## these 7 cases :
-character(0)
+> stopifnot(identical("htest", unique(unlist(cc))))
+> ##N uc <- unlist(cc[["s0"]]); noquote(names(uc)[uc != "htest"]) ## these 7 cases :
 > ## two.sided1 two.sided2 two.sided3
 > ## less1      less2
 > ## greater1   greater2
-> 
+>
 > ##--- How close are the stats of  (0:m)  to those of  (eps, 1:m) ------------
-> 
-> ## a version that still works with above try(.) and errors there:
-> getC <- function(L, C) if(inherits(L,"try-error")) c(L) else L[[C]]
+>
+> ## Contained errors in older versions:
 > stR <- lapply(stats, function(COMP)
-+            lapply(RR, function(A)
-+                lapply(A, function(bb)
-+                    lapply(bb, getC, C=COMP) )))
++            lapply(RL, function(A)
++                lapply(A, function(B)
++                    lapply(B, function(bb)
++                        lapply(bb, `[[`, COMP) ))))
+> if(interactive()) {
++     str(stR, max.level = 2)
++     str(stR$p.value$`d.rank=7`, give.attr = FALSE)
++ }
 > 
-> ## a) P-value
-> pv <- stR[["p.value"]]
-> ## only the first is NaN, all others in [0,1]:
-> sapply(pv$s0, unlist)
-     two.sided less greater
-[1,]     1.000    1  1.0000
-[2,]     1.000    1  0.5000
-[3,]     0.500    1  0.2500
-[4,]     0.250    1  0.1250
-[5,]     0.125    1  0.0625
-> sapply(pv$s., unlist) # not really close, but ..
-     two.sided less greater
-[1,]    1.0000    1 0.50000
-[2,]    0.5000    1 0.25000
-[3,]    0.2500    1 0.12500
-[4,]    0.1250    1 0.06250
-[5,]    0.0625    1 0.03125
+> ## short cut & speedup:
+> unList <- function(x) .Internal(unlist(x, FALSE,  TRUE))
+> ##                                        recurs. use.nms
+> ## a) P-value s
+> pv <- stR$p.value
+>
+> str(apv <- simplify2array(
++         lapply(pv, \(L0) simplify2array(
++                              lapply(L0, \(L) simplify2array(lapply(L, unList))))))
++     )
+ num [1:5, 1:3, 1:2, 1:6] 1 1 0.5 0.25 0.125 1 1 1 1 1 ...
+ - attr(*, "dimnames")=List of 4
+  ..$ : chr [1:5] "n_1" "n_2" "n_3" "n_4" ...
+  ..$ : chr [1:3] "two.sided" "less" "greater"
+  ..$ : chr [1:2] "s0" "s."
+  ..$ : chr [1:6] "d.rank=Inf" "d.rank=20" "d.rank=15" "d.rank=10" ...
+> ## num [1:5, 1:3, 1:2, 1:6] 1 1 0.5 0.25 0.125 ...
+> ## - attr(*, "dimnames")=List of 4
+> ##  ..$ : chr [1:5] "n_1" "n_2" "n_3" "n_4" ...
+> ##  ..$ : chr [1:3] "two.sided" "less" "greater"
+> ##  ..$ : chr [1:2] "s0" "s."
+> ##  ..$ : chr [1:6] "d.rank=Inf" "d.rank=20" "d.rank=15" "d.rank=10" ...
+> object.size(apv) 				# 3144 bytes
+3144 bytes
+> object.size(dpv <- as.data.frame.table(apv))	# 8176 bytes
+8176 bytes
+> str(dpv)
+'data.frame':	180 obs. of  5 variables:
+ $ Var1: Factor w/ 5 levels "n_1","n_2","n_3",..: 1 2 3 4 5 1 2 3 4 5 ...
+ $ Var2: Factor w/ 3 levels "two.sided","less",..: 1 1 1 1 1 2 2 2 2 2 ...
+ $ Var3: Factor w/ 2 levels "s0","s.": 1 1 1 1 1 1 1 1 1 1 ...
+ $ Var4: Factor w/ 6 levels "d.rank=Inf","d.rank=20",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ Freq: num  1 1 0.5 0.25 0.125 1 1 1 1 1 ...
+> str(ps. <- apv[,,"s.",])
+ num [1:5, 1:3, 1:6] 1 0.5 0.25 0.125 0.0625 1 1 1 1 1 ...
+ - attr(*, "dimnames")=List of 3
+  ..$ : chr [1:5] "n_1" "n_2" "n_3" "n_4" ...
+  ..$ : chr [1:3] "two.sided" "less" "greater"
+  ..$ : chr [1:6] "d.rank=Inf" "d.rank=20" "d.rank=15" "d.rank=10" ...
+> str(ps0 <- apv[,,"s0",])
+ num [1:5, 1:3, 1:6] 1 1 0.5 0.25 0.125 1 1 1 1 1 ...
+ - attr(*, "dimnames")=List of 3
+  ..$ : chr [1:5] "n_1" "n_2" "n_3" "n_4" ...
+  ..$ : chr [1:3] "two.sided" "less" "greater"
+  ..$ : chr [1:6] "d.rank=Inf" "d.rank=20" "d.rank=15" "d.rank=10" ...
+> (epsC <- .Machine$double.eps) # 2.2e-16
+[1] 2.220446e-16
+> allEQ <- function(x,y) all.equal(x, y, tolerance = 8*epsC)
+> stopifnot(exprs = {
++     0 <= unlist(apv) ; unlist(apv) <= 1 # (no NA, ..)
++     ## ps0 does *not* vary with digits.rank :
++     identical(dim(print(ups0 <- drop(unique(ps0, MARGIN = 3)))), c(5L, 3L))
++     is.function(uNam <- function(x) `names<-`(x, NULL))
++     allEQ(uNam(ups0[,"two.sided"]), c(1, 2^(0:-3)))
++     allEQ(uNam(ups0[, "greater" ]), 2^(0:-4))
++     allEQ(uNam(ups0[,  "less"   ]), c(1,1,1,1,1))
++     ## NB: This has changed from R 4.6.0 (now using digits.zap = digits.rank):
++     ## ps., eps=1e-9: two possible results, boundary for 1e-9 between digits.rank = 7 and 10
++     identical(dim(print(ups. <- unique(ps., MARGIN = 3))), c(5L, 3L, 2L))
++     allEQ(ps.[,,"d.rank=Inf"], ps.[,,"d.rank=10"])
++     is.function(uNam <- function(x) `dimnames<-`(x, NULL))
++     allEQ(uNam(ups.[,"two.sided", ]), 2^cbind(0:-4, c(0L,0:-3)))
++     allEQ(uNam(ups.[, "greater" , ]), cbind(2^-(1:5), 2^-c(1,1:4)))
++     allEQ(uNam(ups.[,  "less"   , ]), cbind(1, rep(1, 5)))
++ })
+    two.sided less greater
+n_1     1.000    1  1.0000
+n_2     1.000    1  0.5000
+n_3     0.500    1  0.2500
+n_4     0.250    1  0.1250
+n_5     0.125    1  0.0625
+, , d.rank=Inf
+
+    two.sided less greater
+n_1    1.0000    1 0.50000
+n_2    0.5000    1 0.25000
+n_3    0.2500    1 0.12500
+n_4    0.1250    1 0.06250
+n_5    0.0625    1 0.03125
+
+, , d.rank=7
+
+    two.sided less greater
+n_1     1.000    1  0.5000
+n_2     1.000    1  0.5000
+n_3     0.500    1  0.2500
+n_4     0.250    1  0.1250
+n_5     0.125    1  0.0625
+
 > 
-> pv$s0$two.sided[1] <-  1 ## artificially
-> stopifnot(all.equal(pv$s0, pv$s., tolerance = 0.5 + 1e-6), # seen 0.5
-+ 	  ## "less" are close:
-+ 	  all.equal(unlist(pv[[c("s0","less")]]),
-+ 		    unlist(pv[[c("s.","less")]]),
-+                     tolerance = 0.03),
-+ 	  0 <= unlist(pv), unlist(pv) <= 1) # <- no further NA ..
-> ## b)
-> sapply(stR[["statistic"]], unlist)
-            s0 s.
-two.sided.V  0  1
-two.sided.V  2  3
-two.sided.V  5  6
-two.sided.V  9 10
-two.sided.V 14 15
-less.V       0  1
-less.V       2  3
-less.V       5  6
-less.V       9 10
-less.V      14 15
-greater.V    0  1
-greater.V    2  3
-greater.V    5  6
-greater.V    9 10
-greater.V   14 15
-> ## Conf.int.:
-> ## c)
-> sapply(stR[["estimate" ]], unlist)
-                          s0      s.
-two.sided.(pseudo)median 0.0 1.0e-09
-two.sided.(pseudo)median 0.5 5.0e-01
-two.sided.(pseudo)median 1.0 1.0e+00
-two.sided.(pseudo)median 1.5 1.5e+00
-two.sided.(pseudo)median 2.0 2.0e+00
-less.(pseudo)median      0.0 1.0e-09
-less.(pseudo)median      0.5 5.0e-01
-less.(pseudo)median      1.0 1.0e+00
-less.(pseudo)median      1.5 1.5e+00
-less.(pseudo)median      2.0 2.0e+00
-greater.(pseudo)median   0.0 1.0e-09
-greater.(pseudo)median   0.5 5.0e-01
-greater.(pseudo)median   1.0 1.0e+00
-greater.(pseudo)median   1.5 1.5e+00
-greater.(pseudo)median   2.0 2.0e+00
-> ## d) confidence interval
+> 
+> ## b) Statistic - Estimate
+> 
+> (astat <- simplify2array(
++      lapply(stR[["statistic"]],
++             \(L0) simplify2array(
++                       lapply(L0, \(L) simplify2array(sapply(L, unList)))))))
+, , s0, d.rank=Inf
+
+      two.sided less greater
+n_1.V         0    0       0
+n_2.V         2    2       2
+n_3.V         5    5       5
+n_4.V         9    9       9
+n_5.V        14   14      14
+
+, , s., d.rank=Inf
+
+      two.sided less greater
+n_1.V         1    1       1
+n_2.V         3    3       3
+n_3.V         6    6       6
+n_4.V        10   10      10
+n_5.V        15   15      15
+
+, , s0, d.rank=20
+
+      two.sided less greater
+n_1.V         0    0       0
+n_2.V         2    2       2
+n_3.V         5    5       5
+n_4.V         9    9       9
+n_5.V        14   14      14
+
+, , s., d.rank=20
+
+      two.sided less greater
+n_1.V         1    1       1
+n_2.V         3    3       3
+n_3.V         6    6       6
+n_4.V        10   10      10
+n_5.V        15   15      15
+
+, , s0, d.rank=15
+
+      two.sided less greater
+n_1.V         0    0       0
+n_2.V         2    2       2
+n_3.V         5    5       5
+n_4.V         9    9       9
+n_5.V        14   14      14
+
+, , s., d.rank=15
+
+      two.sided less greater
+n_1.V         1    1       1
+n_2.V         3    3       3
+n_3.V         6    6       6
+n_4.V        10   10      10
+n_5.V        15   15      15
+
+, , s0, d.rank=10
+
+      two.sided less greater
+n_1.V         0    0       0
+n_2.V         2    2       2
+n_3.V         5    5       5
+n_4.V         9    9       9
+n_5.V        14   14      14
+
+, , s., d.rank=10
+
+      two.sided less greater
+n_1.V         1    1       1
+n_2.V         3    3       3
+n_3.V         6    6       6
+n_4.V        10   10      10
+n_5.V        15   15      15
+
+, , s0, d.rank=7
+
+      two.sided less greater
+n_1.V         0    0       0
+n_2.V         2    2       2
+n_3.V         5    5       5
+n_4.V         9    9       9
+n_5.V        14   14      14
+
+, , s., d.rank=7
+
+      two.sided less greater
+n_1.V         1    1       1
+n_2.V         2    2       2
+n_3.V         5    5       5
+n_4.V         9    9       9
+n_5.V        14   14      14
+
+, , s0, d.rank=5
+
+      two.sided less greater
+n_1.V         0    0       0
+n_2.V         2    2       2
+n_3.V         5    5       5
+n_4.V         9    9       9
+n_5.V        14   14      14
+
+, , s., d.rank=5
+
+      two.sided less greater
+n_1.V         1    1       1
+n_2.V         2    2       2
+n_3.V         5    5       5
+n_4.V         9    9       9
+n_5.V        14   14      14
+
+>
+> (aEst <- simplify2array(
++      lapply(stR[["estimate"]],
++             \(L0) simplify2array(
++                       lapply(L0, \(L) simplify2array(lapply(L, unList)))))))
+, , s0, d.rank=Inf
+
+                   two.sided less greater
+n_1.(pseudo)median       0.0  0.0     0.0
+n_2.(pseudo)median       0.5  0.5     0.5
+n_3.(pseudo)median       1.0  1.0     1.0
+n_4.(pseudo)median       1.5  1.5     1.5
+n_5.(pseudo)median       2.0  2.0     2.0
+
+, , s., d.rank=Inf
+
+                   two.sided    less greater
+n_1.(pseudo)median   1.0e-09 1.0e-09 1.0e-09
+n_2.(pseudo)median   5.0e-01 5.0e-01 5.0e-01
+n_3.(pseudo)median   1.0e+00 1.0e+00 1.0e+00
+n_4.(pseudo)median   1.5e+00 1.5e+00 1.5e+00
+n_5.(pseudo)median   2.0e+00 2.0e+00 2.0e+00
+
+, , s0, d.rank=20
+
+                   two.sided less greater
+n_1.(pseudo)median       0.0  0.0     0.0
+n_2.(pseudo)median       0.5  0.5     0.5
+n_3.(pseudo)median       1.0  1.0     1.0
+n_4.(pseudo)median       1.5  1.5     1.5
+n_5.(pseudo)median       2.0  2.0     2.0
+
+, , s., d.rank=20
+
+                   two.sided    less greater
+n_1.(pseudo)median   1.0e-09 1.0e-09 1.0e-09
+n_2.(pseudo)median   5.0e-01 5.0e-01 5.0e-01
+n_3.(pseudo)median   1.0e+00 1.0e+00 1.0e+00
+n_4.(pseudo)median   1.5e+00 1.5e+00 1.5e+00
+n_5.(pseudo)median   2.0e+00 2.0e+00 2.0e+00
+
+, , s0, d.rank=15
+
+                   two.sided less greater
+n_1.(pseudo)median       0.0  0.0     0.0
+n_2.(pseudo)median       0.5  0.5     0.5
+n_3.(pseudo)median       1.0  1.0     1.0
+n_4.(pseudo)median       1.5  1.5     1.5
+n_5.(pseudo)median       2.0  2.0     2.0
+
+, , s., d.rank=15
+
+                   two.sided    less greater
+n_1.(pseudo)median   1.0e-09 1.0e-09 1.0e-09
+n_2.(pseudo)median   5.0e-01 5.0e-01 5.0e-01
+n_3.(pseudo)median   1.0e+00 1.0e+00 1.0e+00
+n_4.(pseudo)median   1.5e+00 1.5e+00 1.5e+00
+n_5.(pseudo)median   2.0e+00 2.0e+00 2.0e+00
+
+, , s0, d.rank=10
+
+                   two.sided less greater
+n_1.(pseudo)median       0.0  0.0     0.0
+n_2.(pseudo)median       0.5  0.5     0.5
+n_3.(pseudo)median       1.0  1.0     1.0
+n_4.(pseudo)median       1.5  1.5     1.5
+n_5.(pseudo)median       2.0  2.0     2.0
+
+, , s., d.rank=10
+
+                   two.sided    less greater
+n_1.(pseudo)median   1.0e-09 1.0e-09 1.0e-09
+n_2.(pseudo)median   5.0e-01 5.0e-01 5.0e-01
+n_3.(pseudo)median   1.0e+00 1.0e+00 1.0e+00
+n_4.(pseudo)median   1.5e+00 1.5e+00 1.5e+00
+n_5.(pseudo)median   2.0e+00 2.0e+00 2.0e+00
+
+, , s0, d.rank=7
+
+                   two.sided less greater
+n_1.(pseudo)median       0.0  0.0     0.0
+n_2.(pseudo)median       0.5  0.5     0.5
+n_3.(pseudo)median       1.0  1.0     1.0
+n_4.(pseudo)median       1.5  1.5     1.5
+n_5.(pseudo)median       2.0  2.0     2.0
+
+, , s., d.rank=7
+
+                   two.sided    less greater
+n_1.(pseudo)median   1.0e-09 1.0e-09 1.0e-09
+n_2.(pseudo)median   5.0e-01 5.0e-01 5.0e-01
+n_3.(pseudo)median   1.0e+00 1.0e+00 1.0e+00
+n_4.(pseudo)median   1.5e+00 1.5e+00 1.5e+00
+n_5.(pseudo)median   2.0e+00 2.0e+00 2.0e+00
+
+, , s0, d.rank=5
+
+                   two.sided less greater
+n_1.(pseudo)median       0.0  0.0     0.0
+n_2.(pseudo)median       0.5  0.5     0.5
+n_3.(pseudo)median       1.0  1.0     1.0
+n_4.(pseudo)median       1.5  1.5     1.5
+n_5.(pseudo)median       2.0  2.0     2.0
+
+, , s., d.rank=5
+
+                   two.sided    less greater
+n_1.(pseudo)median   1.0e-09 1.0e-09 1.0e-09
+n_2.(pseudo)median   5.0e-01 5.0e-01 5.0e-01
+n_3.(pseudo)median   1.0e+00 1.0e+00 1.0e+00
+n_4.(pseudo)median   1.5e+00 1.5e+00 1.5e+00
+n_5.(pseudo)median   2.0e+00 2.0e+00 2.0e+00
+
+> str(aEst)
+ num [1:5, 1:3, 1:2, 1:6] 0 0.5 1 1.5 2 0 0.5 1 1.5 2 ...
+ - attr(*, "dimnames")=List of 4
+  ..$ : chr [1:5] "n_1.(pseudo)median" "n_2.(pseudo)median" "n_3.(pseudo)median" "n_4.(pseudo)median" ...
+  ..$ : chr [1:3] "two.sided" "less" "greater"
+  ..$ : chr [1:2] "s0" "s."
+  ..$ : chr [1:6] "d.rank=Inf" "d.rank=20" "d.rank=15" "d.rank=10" ...
+>  ## num [1:5, 1:3, 1:2, 1:6] 0 0.5 1 1.5 2 0 0.5 1 1.5 2 ...
+>  ## - attr(*, "dimnames")=List of 4
+>  ##  ..$ : chr [1:5] "n_1.(pseudo)median" "n_2.(pseudo)median" "n_3.(pseudo)median" "n_4.(pseudo)median" ...
+>  ##  ..$ : chr [1:3] "two.sided" "less" "greater"
+>  ##  ..$ : chr [1:2] "s0" "s."
+>  ##  ..$ : chr [1:6] "d.rank=Inf" "d.rank=20" "d.rank=15" "d.rank=10" ...
+> 
+> ## Confidence Interval :
+> ## c)  C.I. extraction
+> CI <- stR[["conf.int"]]
+> str(CI, max.level = 2)
+List of 6
+ $ d.rank=Inf:List of 2
+  ..$ s0:List of 3
+  ..$ s.:List of 3
+ $ d.rank=20 :List of 2
+  ..$ s0:List of 3
+  ..$ s.:List of 3
+ $ d.rank=15 :List of 2
+  ..$ s0:List of 3
+  ..$ s.:List of 3
+ $ d.rank=10 :List of 2
+  ..$ s0:List of 3
+  ..$ s.:List of 3
+ $ d.rank=7  :List of 2
+  ..$ s0:List of 3
+  ..$ s.:List of 3
+ $ d.rank=5  :List of 2
+  ..$ s0:List of 3
+  ..$ s.:List of 3
+>
+> if(FALSE) { # printing chCI below is much nicer
++   str(aCI <- simplify2array(lapply(CI,
++                      function(A) simplify2array(lapply(A,
++                              function(B) simplify2array(lapply(B,
++                                         function(C) t(simplify2array(C)))))))))
++   ##  num [1:5, 1:2, 1:3, 1:2, 1:6] 0 0 0 0 0 ...
++   ## - attr(*, "dimnames")=List of 5
++   ##  ..$ : chr [1:5] "n_1" "n_2" "n_3" "n_4" ...
++   ##  ..$ : NULL
++   ##  ..$ : chr [1:3] "two.sided" "less" "greater"
++   ##  ..$ : chr [1:2] "s0" "s."
++   ##  ..$ : chr [1:6] "d.rank=Inf" "d.rank=20" "d.rank=15" "d.rank=10" ...
++   aCI # has *lost* the conf.level which is varying !!
++ }
+> 
+> ## d) confidence interval __printing__
 > formatCI <- function(ci)
 +     sprintf("[%g, %g] (%g%%)", ci[[1]], ci[[2]],
 + 	    round(100*attr(ci,"conf.level")))
 > nx <- length(x0)
-> noquote(vapply(stR[["conf.int"]], function(ss)
-+     vapply(ss, function(alt) vapply(alt, formatCI, ""), character(nx)),
-+     matrix("", nx, length(alts))))
-, , s0
+> Fval <- array("", dim = c(nx, length(alts), length(x.set)))
+> (chCI <- noquote(vapply(CI, function(D)
++     vapply(D, function(ss)
++         vapply(ss, function(alt) vapply(alt, formatCI, ""), character(nx)),
++         Fval[,,1]),
++     Fval)
++     ))
+, , s0, d.rank=Inf
 
-     two.sided       less               greater         
-[1,] [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%) 
-[2,] [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%) 
-[3,] [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%) 
-[4,] [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%) 
-[5,] [0, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
+    two.sided       less               greater
+n_1 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_2 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_3 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_4 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_5 [0, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
 
-, , s.
+, , s., d.rank=Inf
 
-     two.sided          less               greater           
-[1,] [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
-[2,] [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
-[3,] [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
-[4,] [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
-[5,] [-Inf, Inf] (100%) [-Inf, 4] (97%)    [1e-09, Inf] (97%)
+    two.sided          less               greater
+n_1 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_2 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_3 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_4 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_5 [-Inf, Inf] (100%) [-Inf, 4] (97%)    [1e-09, Inf] (97%)
 
-> 
-> 
+, , s0, d.rank=20
+
+    two.sided       less               greater
+n_1 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_2 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_3 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_4 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_5 [0, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
+
+, , s., d.rank=20
+
+    two.sided          less               greater
+n_1 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_2 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_3 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_4 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_5 [-Inf, Inf] (100%) [-Inf, 4] (97%)    [1e-09, Inf] (97%)
+
+, , s0, d.rank=15
+
+    two.sided       less               greater
+n_1 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_2 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_3 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_4 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_5 [0, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
+
+, , s., d.rank=15
+
+    two.sided          less               greater
+n_1 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_2 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_3 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_4 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_5 [-Inf, Inf] (100%) [-Inf, 4] (97%)    [1e-09, Inf] (97%)
+
+, , s0, d.rank=10
+
+    two.sided       less               greater
+n_1 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_2 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_3 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_4 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_5 [0, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
+
+, , s., d.rank=10
+
+    two.sided          less               greater
+n_1 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_2 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_3 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_4 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_5 [-Inf, Inf] (100%) [-Inf, 4] (97%)    [1e-09, Inf] (97%)
+
+, , s0, d.rank=7
+
+    two.sided       less               greater
+n_1 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_2 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_3 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_4 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_5 [0, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
+
+, , s., d.rank=7
+
+    two.sided           less               greater
+n_1 [-Inf, Inf] (100%)  [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_2 [1e-09, Inf] (100%) [-Inf, Inf] (100%) [1e-09, Inf] (100%)
+n_3 [1e-09, Inf] (100%) [-Inf, Inf] (100%) [1e-09, Inf] (100%)
+n_4 [1e-09, Inf] (100%) [-Inf, Inf] (100%) [1e-09, Inf] (100%)
+n_5 [1e-09, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
+
+, , s0, d.rank=5
+
+    two.sided       less               greater
+n_1 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_2 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_3 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_4 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
+n_5 [0, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
+
+, , s., d.rank=5
+
+    two.sided           less               greater
+n_1 [-Inf, Inf] (100%)  [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_2 [1e-09, Inf] (100%) [-Inf, Inf] (100%) [1e-09, Inf] (100%)
+n_3 [1e-09, Inf] (100%) [-Inf, Inf] (100%) [1e-09, Inf] (100%)
+n_4 [1e-09, Inf] (100%) [-Inf, Inf] (100%) [1e-09, Inf] (100%)
+n_5 [1e-09, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
+
+>
+>
 > ##-------- 2-sample tests (working unchanged) ------------------
-> 
+>
 > R2 <- lapply(alts, ## for all three alternatives
 +              function(alt)
 +                  lapply(seq_along(x0), function(k)
 +                          wilcox.test(x = x.set$s0[[k]], y = x.set$s.[[k]],
 +                                      exact=TRUE, conf.int=TRUE, alternative = alt)))
-> length(w2 <- warnings()) # 27
+> length(w2 <- warnings()) # 1  (was '27')
 [1] 1
-> unique(w2) # 3 different ones
-Warning message:
-In ks.test.default(round(ds2, 1), "pnorm", exact = TRUE) :
-  ties should not be present for the one-sample Kolmogorov-Smirnov test
-> 
+> if(!identical(w2, w1)) # typically they *are* identical ==> no new warnings
++     summary(w2)
+>
+>
 > table(uc2 <- unlist(c2 <- lapply(R2, function(A) lapply(A, class))))
 
-htest 
-   15 
+htest
+   15
 > stopifnot(uc2 == "htest")
-> 
+>
 > stR2 <- lapply(stats,
 +                function(COMP)
-+                    lapply(R2, function(A) lapply(A, getC, C=COMP)))
-> 
++                    lapply(R2, function(A) lapply(A, `[[`, COMP)))
+>
 > lapply(stats[-3], ## -3: "conf.int" separately
 +        function(ST) sapply(stR2[[ST]], unlist))
 $statistic
@@ -340,16 +781,16 @@ difference in location     0e+00  0e+00   0e+00
 difference in location     0e+00  0e+00   0e+00
 difference in location     0e+00  0e+00   0e+00
 
-> 
+>
 > noquote(sapply(stR2[["conf.int"]], function(.) vapply(., formatCI, "")))
-     two.sided          less               greater           
+     two.sided          less               greater
 [1,] [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
 [2,] [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
-[3,] [-Inf, Inf] (100%) [-Inf, 2] (100%)   [-2, Inf] (100%)  
-[4,] [-3, 3] (100%)     [-Inf, 2] (97%)    [-2, Inf] (97%)   
-[5,] [-3, 3] (96%)      [-Inf, 2] (95%)    [-2, Inf] (97%)   
-> 
-> 
+[3,] [-Inf, Inf] (100%) [-Inf, 2] (100%)   [-2, Inf] (100%)
+[4,] [-3, 3] (100%)     [-Inf, 2] (97%)    [-2, Inf] (97%)
+[5,] [-3, 3] (96%)      [-Inf, 2] (95%)    [-2, Inf] (97%)
+>
+>
 > proc.time()
    user  system elapsed 
-  0.237   0.012   0.240 
+  0.544   0.273   0.981 

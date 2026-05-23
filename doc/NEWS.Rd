@@ -102,6 +102,12 @@
       \PR{19038}.  Currently, this does not apply when the
       \code{"internal"} code for date-time conversion and printing is in
       use, as e.g., on Windows and macOS.
+
+      \item \code{wilcox.test()} gains new optional argument
+      \code{digits.zap}, \emph{and} the default for argument
+      \code{digits.rank} is changed from \code{Inf} to \code{7},
+      addressing bugs \PR{18035} and \PR{19071}, in order to deal with
+      both ties of almost equal numbers and almost zeros of differences.
     }
   }
 }

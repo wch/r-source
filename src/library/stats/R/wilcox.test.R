@@ -22,7 +22,7 @@ wilcox.test.default <-
 function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
          mu = 0, paired = FALSE, exact = NULL, correct = TRUE,
          conf.int = FALSE, conf.level = 0.95, tol.root = 1e-4,
-         digits.rank = Inf, ...)
+         digits.rank = 7L, digits.zap = digits.rank, ...)
 {
     alternative <- match.arg(alternative)
     if(!missing(mu) && ((length(mu) > 1L) || !is.finite(mu)))
@@ -64,7 +64,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
         if(!(correct %in% (0 : 3)))
             stop("'correct' must be an integer between 0 and 3")
     } else {
-        correct <- (isTRUE(correct) - 1)
+        correct <- (isTRUE(correct) - 1) # TRUE means 0 extra terms
     }
 
     CINT <- NULL
@@ -76,17 +76,17 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
             exact <- (n < 50)
         if(exact) {
             METHOD <- sub("test", "exact test", METHOD, fixed = TRUE)
-            STAT <- .wilcox_test_one_stat_exact(x, mu, n, digits.rank)
+            STAT <- .wilcox_test_one_stat_exact(x, mu, n, digits.rank, digits.zap)
             PVAL <- .wilcox_test_one_pval_exact(STAT, n, alternative)
             if(conf.int)
                 CINT <- .wilcox_test_one_cint_exact(x, n,
                                                     STAT$z,
                                                     alternative,
-                                                    conf.level)
+                                                    conf.level, digits.rank, digits.zap)
         } else { ## not exact
             if(correct >= 0)
                 METHOD <- paste(METHOD, "with continuity correction")
-            STAT <- .wilcox_test_one_stat_asymp(x, mu, n, digits.rank)
+            STAT <- .wilcox_test_one_stat_asymp(x, mu, n, digits.rank, digits.zap)
             PVAL <- .wilcox_test_one_pval_asymp(STAT, n, alternative,
                                                 correct)
             if(conf.int)
@@ -164,32 +164,41 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 ## For the internal dpq functions we thus use z = rank(abs(x))[x != 0]
 ## in case of ties or zeroes.
 
+.zapsmall.r <- function(x, digits)
+    zapsmall(x, digits, function(x, ina) { x <- abs(x[is.finite(x)])
+        if(length(x <- x[x > 0])) quantile(x, .75, names=FALSE) else 0 },
+        min.d = -324)
+
+
 .wilcox_test_one_stat_exact <-
-function(x, mu, n = length(x), digits.rank)
+function(x, mu, n = length(x), digits.rank, digits.zap)
 {
     x <- x - mu
     if(is.finite(digits.rank))
         x <- signif(x, digits.rank)
-    i <- (x == 0)
+    if(is.finite(digits.zap))
+        x <- .zapsmall.r(x, digits.zap)
     r <- rank(abs(x))
     TIES <- length(r) != length(unique(r))
-    ZERO <- any(i)
+    ZERO <- any(i0 <- x == 0)
     STATISTIC <- c("V" = sum(r[x > 0]))
-    list(statistic = STATISTIC, z =  if(TIES || ZERO) r[!i] else NULL)
+    list(statistic = STATISTIC, z = if(TIES || ZERO) r[!i0])# else NULL
 }
 
 .wilcox_test_one_stat_asymp <-
-function(x, mu, n = length(x), digits.rank)
+function(x, mu, n = length(x), digits.rank, digits.zap)
 {
     x <- x - mu
     if(is.finite(digits.rank))
         x <- signif(x, digits.rank)
-    ZERO <- any(x == 0)
+    if(is.finite(digits.zap))
+        x <- .zapsmall.r(x, digits.zap)
+    r <- rank(abs(x))
+    ZERO <- any(i0 <- x == 0)
     if(ZERO) {
-        x <- x[x != 0]
+        x <- x[!i0]
         n <- length(x)
     }
-    r <- rank(abs(x))
     TIES <- length(r) != length(unique(r))
     STATISTIC <- c("V" = sum(r[x > 0]))
     MEAN <-  n * (n + 1) / 4
@@ -222,14 +231,14 @@ function(STAT, n, alternative)
 }
 
 .wilcox_test_one_cint_exact <-
-function(x, n, z, alternative, conf.level)
+function(x, n, z, alternative, conf.level, digits.rank, digits.zap)
 {
     ## Exact confidence interval for the median in the
     ## one-sample case.  When used with paired values this
     ## gives a confidence interval for mean(x) - mean(y).
     alpha <- 1 - conf.level
     diffs <- outer(x, x, `+`)
-    diffs <- sort(diffs[!lower.tri(diffs)]) / 2
+    diffs <- sort(diffs[upper.tri(diffs, diag=TRUE)]) / 2
     ## Of course the 'diffs' are really the Walsh averages.
     toler <- 10 * .Machine$double.eps
     CONF.INT <- if(is.null(z)) {
@@ -279,6 +288,10 @@ function(x, n, z, alternative, conf.level)
         n.d <- length(diffs)
         ptail <- function(mu, lower = TRUE) {
             x <- x - mu
+            if(is.finite(digits.rank))
+                x <- signif(x, digits.rank)
+            if(is.finite(digits.zap))
+                x <- .zapsmall.r(x, digits.zap)
             z <- rank(abs(x))
             v <- sum(z[x > 0])
             if(lower)
@@ -309,7 +322,7 @@ function(x, n, z, alternative, conf.level)
             c(mu, pi)
         }
         upper <- function(alpha) {
-            alpha <- alpha + toler            
+            alpha <- alpha + toler
             pi <- 0
             mu <- Inf
             if(ptail(diffs[n.d] + 1) > alpha)
@@ -325,7 +338,7 @@ function(x, n, z, alternative, conf.level)
             if(!is.finite(mu))
                 mu <- diffs[1L]
             c(mu, pi)
-        }            
+        }
         switch(alternative,
                "two.sided" = {
                    l <- lower(alpha / 2)
@@ -344,7 +357,7 @@ function(x, n, z, alternative, conf.level)
                    c(-Inf, u[1L])
                })
     }
-    conf.level <- 1 - achieved.alpha    
+    conf.level <- 1 - achieved.alpha
     attr(CONF.INT, "conf.level") <- conf.level
     ESTIMATE <- c("(pseudo)median" = median(diffs))
     ## NOTE: This is the Hodges-Lehmann estimate and not what is
@@ -465,7 +478,7 @@ function(x, n, alternative, conf.level, correct,
                     f.lower = Wmumin - zq, f.upper = Wmumax - zq,
                     tol = tol.root, zq = zq)$root
         }
-        
+
         CONF.INT <-
             switch(alternative,
                    "two.sided" = {
@@ -536,7 +549,7 @@ function(x, y, mu, n.x = length(x), n.y = length(y), digits.rank)
     STATISTIC <- c("W" = sum(r[seq_along(x)]) - n.x * (n.x + 1) / 2)
     list(statistic = STATISTIC, z = if(TIES) r else NULL)
 }
-    
+
 .wilcox_test_two_stat_asymp <-
 function(x, y, mu, n.x = length(x), n.y = length(y), digits.rank)
 {
@@ -656,7 +669,7 @@ function(x, y, n.x, n.y, z, alternative, conf.level)
             c(mu, pi)
         }
         upper <- function(alpha) {
-            alpha <- alpha + toler            
+            alpha <- alpha + toler
             pi <- 0
             mu <- Inf
             if(ptail(diffs[n.d] + 1) > alpha)
@@ -672,7 +685,7 @@ function(x, y, n.x, n.y, z, alternative, conf.level)
             if(!is.finite(mu))
                 mu <- diffs[1L]
             c(mu, pi)
-        }            
+        }
         switch(alternative,
                "two.sided" = {
                    l <- lower(alpha / 2)
@@ -751,7 +764,7 @@ function(STAT, n.x, n.y, alternative, correct)
            "greater" = F(z, lower.tail = FALSE),
            "two.sided" = 2 * min(p <- F(z), 1 - p))
 }
-    
+
 .wilcox_test_two_cint_asymp <-
 function(x, y, n.x, n.y, alternative, conf.level, correct,
          tol.root, digits.rank)
@@ -831,7 +844,7 @@ function(formula, data, subset, na.action = na.pass, ...)
     if(missing(formula) || (length(formula) != 3L))
         stop("'formula' missing or incorrect")
     if ("paired" %in% ...names())
-        stop("cannot use 'paired' in formula method")    
+        stop("cannot use 'paired' in formula method")
     oneSampleOrPaired <- FALSE
     if (length(attr(terms(formula[-2L]), "term.labels")) != 1L)
         if (formula[[3L]] == 1L)
@@ -928,7 +941,7 @@ function(q, m, n, z = NULL, lower.tail = TRUE)
 }
 
 .qwilcox <-
-function(p, m, n, z = NULL, lower.tail = TRUE)    
+function(p, m, n, z = NULL, lower.tail = TRUE)
 {
     if(is.null(z))
         return(qwilcox(p, m, n, lower.tail = lower.tail))
@@ -965,9 +978,8 @@ function(x, n, z = NULL)
     i <- which(!is.na(x))
     if (!any(i)) 
         return(y)
-    f <- 2 - all(z == floor(z))
-    d <- .Call(C_dpermdist1,
-               sort(as.integer(f * z)))
+    f <- 2L - all(z == (iz <- as.integer(z)))
+    d <- .Call(C_dpermdist1, sort(f * iz))
     w <- seq.int(0, length(d) - 1L)
     x <- f * x[i]
     w <- w[match(x, w)] + 1L
@@ -1025,4 +1037,4 @@ function(p, n, z = NULL, lower.tail = TRUE)
     p <- p - 10 * .Machine$double.eps
     y[i] <- vapply(p[i], function(e) s[v >= e][1L], 0)
     y
-}   
+}

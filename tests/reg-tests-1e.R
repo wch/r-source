@@ -3355,6 +3355,28 @@ stopifnot(exprs = {
 ## The 'correct = 1 | 2 | 3' did *not* improve the p values in R 4.6.0
 
 
+## wilcox.test(*, digits.rank) -- changed default *AND* new digits.zap = digits.rank
+x3 <- c(1.1, 2, 1.15)
+wtL <- list({}
+, wt.00      = wilcox.test(c(x3, 0))
+, wt.e100dII = wilcox.test(c(x3,  1e-100), digits.rank=Inf)
+, wte_100dII = wilcox.test(c(x3, -1e-100), digits.rank=Inf)
+, wt.e100dI  = wilcox.test(c(x3,  1e-100), digits.rank=Inf, digits.zap = 12)
+, wte_100dI  = wilcox.test(c(x3, -1e-100), digits.rank=Inf, digits.zap = 12)
+, wt.e100d7  = wilcox.test(c(x3,  1e-100), digits.rank= 7L)
+, wte_100d7  = wilcox.test(c(x3, -1e-100), digits.rank= 7L)
+)
+P <- if(interactive()) print else identity
+(pval <- vapply(P(wtL[!sapply(wtL, is.null)]), \(wt) wt$p.value, numeric(1)))
+noData <- \(x) x[names(x) != "data.name"]
+stopifnot(exprs = {
+    all.equal(unname(pval), c(.25, 0.125, rep(.25, 5)))
+    with(wtL, all.equal(noData(wt.00),
+                        noData(wt.e100dI)))
+})
+## the p-values were  rep((1:2)/8, 3)  in previous R, the first two indeed back compatible.
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
