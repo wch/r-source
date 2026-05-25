@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2025  The R Core Team
+ *  Copyright (C) 1997--2026  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -899,14 +899,14 @@ static SEXP wstripchars(const wchar_t * const inchar, int minlen, int usecl)
 	}
 
 	for (i = WUP; i > 0; i--) {
-	    if (islower((int)wc[i]) && LASTCHARW(i))
+	    if (iswlower((wint_t)wc[i]) && LASTCHARW(i))
 		mywcscpy(wc + i, wc + i + 1);
 	    if (wcslen(wc) - nspace <= minlen)
 		goto donewsc;
 	}
 
 	for (i = WUP; i > 0; i--) {
-	    if (islower((int)wc[i]) && !FIRSTCHARW(i))
+	    if (iswlower((wint_t)wc[i]) && !FIRSTCHARW(i))
 		mywcscpy(wc + i, wc + i + 1);
 	    if (wcslen(wc) - nspace <= minlen)
 		goto donewsc;
