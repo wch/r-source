@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-05-25 12:47-0700\n"
 "PO-Revision-Date: 2011-12-01 20:24+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -158,15 +158,15 @@ msgstr "ugyldig værdi for lag.max"
 msgid "invalid tag"
 msgstr "ugyldig argumenttype"
 
-#: distance.c:152
+#: distance.c:153
 msgid "treating non-finite values as NA"
 msgstr "behandler ikkebegrænsende værdier som NA"
 
-#: distance.c:225
+#: distance.c:226
 msgid "distance(): invalid p"
 msgstr "distance(): ugyldig p"
 
-#: distance.c:229
+#: distance.c:230
 msgid "distance(): invalid distance"
 msgstr "distance(): ugyldig afstand"
 

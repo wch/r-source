@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 2.4.2\n"
 
 msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
-msgstr "OOPS : il y a un problème avec '.OldClassesPrototypes[[‘%d]]'"
+msgstr "OOPS : il y a un problème avec '.OldClassesPrototypes[[‘%d]]'"
 
 msgid "unnamed argument to initialize() for S3 class must have a class definition; %s does not"
 msgstr "un argument non nommé de initialize() pour une classe S3 doit avoir une définition de classe ; %s n'en a pas"
@@ -120,9 +120,8 @@ msgstr ""
 "pas de version du générique de %s permise dans le package %s ;\n"
 "    un nouveau générique sera attribué pour %s"
 
-#, fuzzy
 msgid "fdef appears to be a generic function, but with generic name %s instead of %s"
-msgstr "la fonction %s semble être une fonction générique, mais avec le nom générique %s"
+msgstr "'fdef' semble être une fonction générique, mais avec le nom générique %s au lieu de %s"
 
 msgid "generic function %s not found for removal"
 msgstr "la fonction générique %s est introuvable pour son élimination"
@@ -485,9 +484,8 @@ msgstr "une classe ne peut avoir simultanément un type 'data' ordinaire et cach
 msgid "a validity method must be a function of one argument, got an object of class %s"
 msgstr "une méthode de validation doit être une fonction a un seul argument, un objet de classe %s est trouvé"
 
-#, fuzzy
 msgid "unable to load required package %s"
-msgstr "impossible de trouver le package %s nécessaire"
+msgstr "impossible de charger le package nécessaire %s"
 
 msgid "unable to find an environment containing class %s"
 msgstr "impossible de trouver un environnement contenant la classe %s"
@@ -511,10 +509,10 @@ msgid "no definition of inheritance from %s to %s, though the relation was impli
 msgstr "pas de définition d'héritage de %s à %s, bien qu'une telle relation était supposée par setIs() de %s"
 
 msgid "Debugging .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, force=TRUE);"
-msgstr "Débogage .checkSubclasses() : assignClassDef(what=“%s”, *, where=%s, force=TRUE);"
+msgstr "Débogage .checkSubclasses() : assignClassDef(what=“%s”, *, where=%s, force=TRUE) ;"
 
 msgid "E := environment(): %s; parent.env(E): %s"
-msgstr "E := environment(): %s; parent.env(E): %s"
+msgstr "E := environment() : %s ; parent.env(E) : %s"
 
 msgid "argument 'includeSubclasses' must be a logical, either one value or a vector of the same length as argument 'classes'"
 msgstr "l'argument 'includeSubclasses' doit être un booléen (logical), soit une valeur unique, ou un vecteur de même longueur que l'argument 'classes'"
@@ -767,9 +765,8 @@ msgstr ""
 msgid "argument %s must be a list or a character vector; got an object of class %s"
 msgstr "l'argument %s doit être une liste ou un vecteur de chaîne de caractères ; un objet de classe %s est obtenu"
 
-#, fuzzy
 msgid "expected a non-empty character string for argument 'name'"
-msgstr "une chaîne de caractères non vide est attendue pour l'argument name"
+msgstr "une chaîne de caractères non vide est attendue pour l'argument 'name'"
 
 msgid "no function %s found"
 msgstr "fonction %s introuvable"
@@ -992,8 +989,11 @@ msgstr "%s n'est pas une classe de référence"
 msgid "%s is not a field in class %s"
 msgstr "%s n'est pas un champ de la classe %s"
 
+
 msgid "unnamed arguments to $new() must be objects from a reference class; got an object of class %s"
-msgstr "les arguments non nommés de $new() doivent être des objets d'une classe de référence ;  Un objet de classe %s est trouvé"
+msgstr ""
+"les arguments non nommés de $new() doivent être des objets d'une classe de référence ; Un objet de classe %s est "
+"trouvé"
 
 msgid "%s is not a valid field or method name for this class"
 msgstr "%s n'est pas un champ correct ou le nom d'une méthode pour cette classe"

@@ -19,17 +19,15 @@ msgstr ""
 
 #: base.c:43
 msgid "no base graphics system is registered"
-msgstr ""
+msgstr "nenhum há sistema gráfico base registrado"
 
 #: base.c:310
-#, fuzzy
 msgid "Incompatible graphics state"
 msgstr "estado gráfico inválido"
 
 #: base.c:385 base.c:392 base.c:400
-#, fuzzy
 msgid "the base graphics system is not registered"
-msgstr "muitos sistemas gráficos registrados"
+msgstr "O sistema gráfico básico não está registrado"
 
 #: graphics.c:297
 #, c-format
@@ -41,9 +39,9 @@ msgid "attempt to plot on null device"
 msgstr "tentativa de gerar gráfico em um dispositivo nulo"
 
 #: graphics.c:1872
-#, fuzzy
 msgid "outer margins too large (figure region too small)"
-msgstr "margens externas muito grandes (região para figura muito pequena)"
+msgstr ""
+"margens externas estão muito grandes (região para figura muito pequena)"
 
 #: graphics.c:1874
 msgid "figure region too large"
@@ -68,7 +66,6 @@ msgid "axis style \"%c\" unimplemented"
 msgstr "estilo de eixo \"%c\" não implementado"
 
 #: graphics.c:2267
-#, fuzzy
 msgid "no graphics device is active"
 msgstr "Nenhum dispositivo gráfico está ativo"
 
@@ -83,6 +80,8 @@ msgstr "estado gráfico inválido"
 #: graphics.c:2618
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
+"dispositivo gráfico fechado durante a chamada para o localizador ou "
+"identificação"
 
 #: graphics.c:2668
 msgid "No graphics device is active"
@@ -102,7 +101,6 @@ msgid "invalid argument to GBox"
 msgstr "argumento inválido para GBox"
 
 #: graphics.c:3431
-#, fuzzy
 msgid "metric information not available for this device"
 msgstr "informação métrica não disponível para este dispositivo"
 
@@ -129,23 +127,22 @@ msgstr "parâmetro gráfico \"%s\" não pode ser especificado"
 msgid "parameter \"mfg\" has the wrong length"
 msgstr "parâmetro \"mfg\" tem o comprimento errado"
 
+
 #: par.c:438
 msgid "parameter \"i\" in \"mfg\" is out of range"
-msgstr "parâmetro  \"i\" em \"mfg\" fora dos limites"
+msgstr "parâmetro \"i\" em \"mfg\" fora dos limites"
 
 #: par.c:440
 msgid "parameter \"j\" in \"mfg\" is out of range"
-msgstr "parâmetro  \"j\" em \"mfg\" fora dos limites"
+msgstr "parâmetro \"j\" em \"mfg\" fora dos limites"
 
 #: par.c:445
-#, fuzzy
 msgid "value of 'nr' in \"mfg\" is wrong and will be ignored"
-msgstr "valor de nr em \"mfg\" está errado e vai ser ignorado"
+msgstr "valor de 'nr' em \"mfg\" está errado e será ignorado"
 
 #: par.c:447
-#, fuzzy
 msgid "value of 'nc' in \"mfg\" is wrong and will be ignored"
-msgstr "valor de nc em \"mfg\" está errado e vai ser ignorado"
+msgstr "o valor de 'nc' em \"mfg\" está errado e será ignorado"
 
 #: par.c:474
 msgid "calling par(new=TRUE) with no plot"
@@ -162,9 +159,9 @@ msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\" não é um parâmetro gráfico"
 
 #: par.c:1109
-#, fuzzy, c-format
+#, c-format
 msgid "argument %d does not name a graphical parameter"
-msgstr "\"%s\" não é um parâmetro gráfico"
+msgstr "o argumento %d não nomeia um parâmetro gráfico"
 
 #: par.c:1117
 msgid "invalid argument passed to par()"
@@ -210,9 +207,9 @@ msgid "invalid '%s' value"
 msgstr "valor '%s' inválido"
 
 #: plot.c:293
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'vfont' value [typeface %d]"
-msgstr "valor de 'vfont' inválido [typeface]"
+msgstr "valor de 'vfont' inválido [typeface %d]"
 
 #: plot.c:317
 #, c-format
@@ -283,13 +280,12 @@ msgid "zero-length '%s' specified"
 msgstr "'side' de comprimento zero foi especificado"
 
 #: plot.c:889
-#, fuzzy
 msgid "'gap.axis' must be of length one"
-msgstr "'hadj' deve ter comprimento 1"
+msgstr "'gap.axis' deve ter comprimento 1"
 
 #: plot.c:919
 msgid "'gap.axis' must be NA or a finite number"
-msgstr ""
+msgstr "'gap.axis' deve ser NA ou um número finito"
 
 #: plot.c:977
 msgid "'labels' is supplied and not 'at'"
@@ -338,9 +334,10 @@ msgstr "quarto argumento inválido"
 msgid "cannot mix zero-length and non-zero-length coordinates"
 msgstr "não é possível misturar coordenadas de comprimento zero com de não-zero"
 
+
 #: plot.c:1915
 msgid "Empty raster"
-msgstr ""
+msgstr "Raster vazio"
 
 #: plot.c:1997
 msgid "invalid arrow head length"
@@ -375,9 +372,9 @@ msgid "invalid '%s' argument"
 msgstr "argumento '%s' inválido"
 
 #: plot.c:3081 plot.c:3221
-#, fuzzy, c-format
+#, c-format
 msgid "invalid number of points in %s"
-msgstr "número de pontos inválidos em locator()"
+msgstr "número de pontos inválidos em %s"
 
 #: plot.c:3086
 msgid "invalid plot type"

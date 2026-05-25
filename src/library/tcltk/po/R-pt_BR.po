@@ -72,7 +72,7 @@ msgid "Load"
 msgstr "Carregar"
 
 msgid "Go get them!"
-msgstr "Vá pegá-los"
+msgstr "Vá pegá-los!"
 
 msgid "Load packages"
 msgstr "Carregar pacotes"
@@ -99,7 +99,7 @@ msgid "'filters' must be a 2-column character matrix"
 msgstr "'filters' deve ser uma matriz caractere com 2 colunas"
 
 msgid "tcltk DLL is linked to"
-msgstr ""
+msgstr "tcltk DLL está vinculada a"
 
 msgid "Tcl/Tk support is not available on this system"
 msgstr "Suporte a Tcl/Tk não está disponível neste sistema"

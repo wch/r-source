@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -1799,6 +1799,13 @@ msgstr "引數 'na.action' 忽略不用"
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "除非 algorithm = \"port\"，否則上限或下限將忽略不用"
+
+#, fuzzy
+msgid "'%s' is not implemented yet"
+msgstr "還沒有實作 '%s' 種類"
+
+msgid "hatvalues() for nls(*, algorithm='plinear')"
+msgstr ""
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
 msgstr "無法為\"nls\"物件計算 REML log-likelihood"

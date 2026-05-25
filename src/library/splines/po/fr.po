@@ -20,12 +20,14 @@ msgstr ""
 
 #: splines.c:154
 msgid "'ord' must be a positive integer"
-msgstr "'ord' doit �tre un entier positif"
+msgstr "'ord' doit ï¿½tre un entier positif"
 
 #: splines.c:222
 #, c-format
 msgid "derivs = %d >= ord = %d, but should be in {0,..,ord-1}"
-msgstr "derivs = %d >= ord = %d, mais devraient �tre dans {0,..,ord-1}"
+msgstr ""
+"derivs = %d >= ord = %d, mais devraient ï¿½tre dans "
+"{0,..,ord-1}"
 
 #: splines.c:225
 #, c-format

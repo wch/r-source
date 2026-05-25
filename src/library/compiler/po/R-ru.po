@@ -72,7 +72,7 @@ msgid "no visible binding for global variable '%s'"
 msgstr "нет видимого связывания для глобальной переменной '%s'"
 
 msgid "no visible binding for '<<-' assignment to '%s'"
-msgstr "нет глобального связывания для назначения '<<-'  объекту '%s'"
+msgstr "нет глобального связывания для назначения '<<-' объекту '%s'"
 
 msgid "wrong number of arguments to '%s'"
 msgstr "неправильное число аргументов для '%s'"

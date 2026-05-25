@@ -30,17 +30,14 @@ msgstr "'labels' et 'at' doivent être de même longueur"
 msgid "logical 'label' supplied of length 0"
 msgstr "la valeur logique 'label' est de longueur nulle"
 
-#, fuzzy
 msgid "Invalid coordinates"
-msgstr "'order' incorrect"
+msgstr "Coordonnées incorrectes"
 
-#, fuzzy
 msgid "Invalid grob coordinates"
-msgstr "nom de 'grob' incorrect"
+msgstr "Coordonnées de 'grob' incorrectes"
 
-#, fuzzy
 msgid "Invalid gTree coordinates"
-msgstr "classe \"gTree\" incorrecte"
+msgstr "Coordonnées 'gTree' incorrectes"
 
 msgid "Closed must be length 1 and must not be a missing value"
 msgstr ""
@@ -114,8 +111,11 @@ msgstr "mélange de valeurs et de valeurs manquantes pour %s"
 msgid "'gamma' 'gpar' element is defunct"
 msgstr "'gamma' 'gpar' n'existe plus"
 
+
 msgid "'fill' gpar list components must all be patterns"
 msgstr ""
+"les composants 'fill'de la liste gpar doivent tous être "
+"des modèles"
 
 msgid "invalid 'linemitre' value"
 msgstr "valeur 'linemitre' incorrecte"
@@ -168,9 +168,8 @@ msgstr "il faut naviguer dans au moins une vue"
 msgid "Invalid number of generations"
 msgstr "Nombre de générations incorrect"
 
-#, fuzzy
 msgid "Invalid 'clearGroups' argument"
-msgstr "argument 'arrow' incorrect"
+msgstr "argument 'clearGroups' incorrect"
 
 msgid "invalid object inserted on the display list"
 msgstr "objet incorrect inséré dans la liste d'affichage"
@@ -349,9 +348,8 @@ msgstr "listing incorrect"
 msgid "invalid 'listing'"
 msgstr "'listing' incorrect"
 
-#, fuzzy
 msgid "Only a grob can be converted to a mask"
-msgstr "Seul un grob peut être converti en chemin"
+msgstr "Seul un grob peut être converti en masque"
 
 msgid "invalid 'origin'"
 msgstr "'origin' incorrecte"
@@ -359,21 +357,23 @@ msgstr "'origin' incorrecte"
 msgid "Only a grob can be converted to a path"
 msgstr "Seul un grob peut être converti en chemin"
 
-#, fuzzy
 msgid "colours and stops must be at least length 1"
-msgstr "'x' et 'y' doivent être de même longueur"
+msgstr ""
+"'colours' et 'stops' doivent être au moins de longueur 1"
 
-#, fuzzy
 msgid "x1, y1, x2, and y2 must all be length 1"
-msgstr "'x1', 'y1', 'x2' et 'y2' doivent être des unités ('units')"
+msgstr ""
+"'x1', 'y1', 'x2' et 'y2' doivent tous être de longueur 1"
 
-#, fuzzy
 msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
-msgstr "'x1', 'y1', 'x2' et 'y2' doivent être des unités ('units')"
+msgstr ""
+"'cx1', 'cy1', 'cx2', 'cy2', 'r1' et 'r2' doivent tous être "
+"de longueur 1"
 
-#, fuzzy
 msgid "x, y, width, and height must all be length 1"
-msgstr "'x', 'y', 'width' et 'height' doivent tous de longueur 1"
+msgstr ""
+"'x', 'y', 'width' et 'height' doivent tous être de "
+"longueur 1"
 
 msgid "Pattern must be based on grob"
 msgstr "Le modèle doit être basé sur le grob"
@@ -386,9 +386,9 @@ msgid ""
 "(recycling coords)"
 msgstr ""
 
-#, fuzzy
 msgid "Pattern fill applied to object with no inside"
-msgstr "Remplissage en gradient appliqué à un objet qui n’a pas de contenu"
+msgstr ""
+"Remplissage du modèle appliqué à un objet sans contenu"
 
 msgid "'length' must be a 'unit' object"
 msgstr "'length' doit être un objet 'unit'"
@@ -468,33 +468,34 @@ msgstr "'r' doit être un objet 'unit'"
 msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr "'x', 'y', 'width' et 'height' doivent tous de longueur 1"
 
-#, fuzzy
 msgid "Invalid glyph info"
-msgstr "Transformation invalide"
+msgstr "Informations sur les glyphes non valides"
 
-#, fuzzy
 msgid "'x' and 'y' must have length > 0"
-msgstr "'x' et 'y' doivent être de longueur unitaire"
+msgstr "'x' et 'y' doivent avoir une longueur > 0"
 
 msgid "'hjust' and 'vjust' must be glyphJust() values"
 msgstr ""
+"'hjust' et 'vjust' doivent être des valeurs glyphJust()"
 
-#, fuzzy
 msgid "'hjust' and 'vjust' must have length 1"
-msgstr "'x' et 'y' doivent être de longueur unitaire"
+msgstr "'hjust' et 'vjust' doivent être de longueur 1"
 
 msgid "Unknown width; using first width"
 msgstr ""
+"Largeur inconnue ; utilisation de la première largeur"
 
-#, fuzzy
 msgid "Unknown anchor; using left justification"
-msgstr "justification horizontale incorrecte"
+msgstr "Ancre non définie ; justification à gauche utilisée"
 
 msgid "Unknown height; using first height"
 msgstr ""
+"Hauteur inconnue ; utilisation de la première hauteur"
 
 msgid "Unknown anchor; using bottom justification"
 msgstr ""
+"Ancrage inconnu ; utilisation de la justification par le "
+"bas"
 
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x' et 'units' doivent avoir une longueur positive"
@@ -591,13 +592,11 @@ msgstr "'parent' doit être une vue et 'children' doit être une 'vpList' dans '
 msgid "a viewport path must contain at least one viewport name"
 msgstr "un chemin de vue doit contenir au moins un nom de vue"
 
-#, fuzzy
 msgid "must specify at least one of 'xData' or 'xscale'"
-msgstr "il faut spécifier au moins 'x' ou 'xscale'"
+msgstr "il faut spécifier au moins 'xData' ou 'xscale'"
 
-#, fuzzy
 msgid "must specify at least one of 'yData' or 'yscale'"
-msgstr "il faut spécifier au moins 'y' ou 'yscale'"
+msgstr "il faut spécifier au moins 'yData' ou 'yscale'"
 
 msgid "shutting down all devices when unloading 'grid' namespace"
 msgstr "tous les périphériques graphiques sont fermés lorsque l'espace de noms de 'grid' est déchargé"

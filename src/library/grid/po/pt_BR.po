@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-04-25 10:48-0700\n"
 "PO-Revision-Date: 2011-03-26 08:54-0300\n"
 "Last-Translator: Fernando Henrique <pessoal@fernandohrosa.com.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -19,29 +19,28 @@ msgstr ""
 
 #: gpar.c:632
 msgid "updateGContext must only be called after initGContext"
-msgstr ""
+msgstr "updateGContext só deve ser chamado após initGContext"
 
 #: grid.c:199
 msgid "Turning clipping on or off within a (clipping) path is no honoured"
-msgstr ""
+msgstr "Ativar ou desativar o recorte em um caminho (recorte) não está sendo respeitado"
 
 #: grid.c:241
-#, fuzzy
 msgid "cannot clip to rotated viewport"
 msgstr "Não é possível cortar sobre uma viewport rotacionada"
 
 #: grid.c:456
 msgid "Clipping paths within a (clipping) path are not honoured"
-msgstr ""
+msgstr "O recorte dos caminhos dentro de um caminho (de recorte) não está sendo respeitado"
 
 #: grid.c:475
 msgid "Masks within a (clipping) path are not honoured"
-msgstr ""
+msgstr "Máscaras dentro de um caminho (recorte) não estão sendo respeitadas"
 
 #: grid.c:699 grid.c:877
 #, c-format
 msgid "Viewport '%s' was not found"
-msgstr ""
+msgstr "A janela de visualização gráfica '%s' não foi encontrada"
 
 #: grid.c:909 grid.c:914 grid.c:1035 grid.c:1040
 #, fuzzy
@@ -53,27 +52,22 @@ msgid "attempt to plot on null device"
 msgstr "tentativa de fazer um gráfico no dispositivo nulo"
 
 #: grid.c:1710
-#, fuzzy
 msgid "there is no layout defined"
 msgstr "Não há layout definido"
 
 #: grid.c:1932
-#, fuzzy
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "Limite do polígono não encontrado (largura ou altura zero?)"
 
 #: grid.c:1941
-#, fuzzy
 msgid "polygon edge not found"
 msgstr "Limite do polígono não encontrado"
 
 #: grid.c:2095
-#, fuzzy
 msgid "require at least two points to draw arrow"
 msgstr "Pelo menos dois pontos são necessários para desenhar uma seta"
 
 #: grid.c:2466
-#, fuzzy
 msgid "non-finite control point in Xspline"
 msgstr "Ponto de controle não-finito em Xspline"
 
@@ -83,80 +77,73 @@ msgstr "valores não-finitos de x ou y no caminho do gráfico"
 
 #: grid.c:3487
 msgid "Empty raster"
-msgstr ""
+msgstr "Raster vazio"
 
 #: grid.c:4038 grid.c:4094
 msgid "Coordinates for text pch not yet supported"
-msgstr ""
+msgstr "Coordenadas para 'pch' de texto ainda não suportadas"
 
 #: grid.c:4099
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
-msgstr ""
+msgstr "O valor pch '%d' é inválido nesta configuração de localidade"
 
 #: grid.c:4920
 #, c-format
 msgid "unimplemented pch value '%d'"
-msgstr ""
+msgstr "O valor '%d' de pch não está implementado"
 
 #: grid.c:5079
 msgid "invalid plotting symbol"
 msgstr "simbolo para gráfico inválido"
 
 #: grid.c:5198
-#, fuzzy
 msgid "unable to clip to rotated rectangle"
 msgstr "Não é possível cortar sobre um retângulo rotacionado"
 
 #: layout.c:600
-#, fuzzy
 msgid "invalid 'layout.pos.row'"
-msgstr "layout.pos.row inválido"
+msgstr "'layout.pos.row' inválido"
 
 #: layout.c:604
-#, fuzzy
 msgid "invalid 'layout.pos.col'"
-msgstr "layout.pos.col inválido"
+msgstr "'layout.pos.col' inválido"
 
 #: matrix.c:50
 msgid "singular transformation matrix"
 msgstr "matriz de transformação singular"
 
 #: state.c:191
-#, fuzzy
 msgid "unable to store 'grid' state.  Too many devices open?"
-msgstr "Não foi possível guardar o estado do grid. Muitos dispositivos abertos?"
+msgstr "Não foi possível guardar o estado do 'grid'. Muitos dispositivos abertos?"
 
 #: unit.c:65
 msgid "Cannot create unit scalar from 0-length unit vector"
-msgstr ""
+msgstr "Não é possível criar escalares de unidades a partir do vetor de unidades de comprimento 0"
 
 #: unit.c:799 unit.c:1308
-#, fuzzy
 msgid "invalid unit or unit not yet implemented"
 msgstr "Unidade inválida ou unidade ainda não implementada"
 
 #: unit.c:1261 unit.c:1365 unit.c:1396
 msgid "Viewport has zero dimension(s)"
-msgstr ""
+msgstr "A janela de visualização gráfica tem dimensão zero"
 
 #: unit.c:1428 unit.c:1443 unit.c:1458 unit.c:1473
 msgid "Unsupported unit conversion"
-msgstr ""
+msgstr "Conversão de unidade não suportada"
 
 #: unit.c:1565
 msgid "Invalid unit"
 msgstr "Unidade inválida"
 
 #: unit.c:1580
-#, fuzzy
 msgid "'units' must be character"
-msgstr "Unidades devem ser do tipo caractere"
+msgstr "'units' deve ser do tipo caractere"
 
 #: unit.c:1583
-#, fuzzy
 msgid "'units' must be of length > 0"
-msgstr "Unidades devem ter comprimento > 0"
+msgstr "'units' devem ter comprimento > 0"
 
 #: unit.c:1594
 msgid "data must be either NULL, have length 1, or match the length of the final unit vector"
@@ -164,46 +151,45 @@ msgstr ""
 
 #: unit.c:1606
 msgid "no string supplied for 'strwidth/height' unit"
-msgstr ""
+msgstr "Nenhuma string de caracteres fornecida para a unidade 'strwidth/height'"
 
 #: unit.c:1610
 msgid "no 'grob' supplied for 'grobwidth/height' unit"
-msgstr ""
+msgstr "Nenhum 'grob' fornecido para a unidade 'grobwidth/height'"
 
 #: unit.c:1637
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
-msgstr ""
+msgstr "'gPath' deve ter profundidade 1 em unidades 'grobwidth/height'"
 
 #: unit.c:1642
 msgid "non-NULL value supplied for plain unit"
-msgstr ""
+msgstr "valor não NULL fornecido para unidade simples"
 
 #: unit.c:1695 unit.c:1729 unit.c:1778
 msgid "old version of unit class is no longer allowed"
-msgstr ""
+msgstr "A versão antiga da classe unit não é mais permitida"
 
 #: unit.c:1701
 msgid "object is not coercible to a unit"
-msgstr ""
+msgstr "objeto não é coercível a uma unidade"
 
 #: unit.c:1727
 msgid "object is not a unit"
-msgstr ""
+msgstr "objeto não é uma unidade"
 
 #: unit.c:1859
 msgid "units can only be multiplied with numerics and integers"
-msgstr ""
+msgstr "as unidades só podem ser multiplicadas por números numéricos ou inteiros"
 
 #: util.c:216
 msgid "Unable to calculate text width/height (using zero)"
-msgstr ""
+msgstr "Não foi possível calcular a largura/altura do texto (usando zero)"
 
 #: viewport.c:57
 msgid "Mask is not logical value ('none' or 'inherit')"
-msgstr ""
+msgstr "Mask não é um valor lógico ('none' ou 'inherit')"
 
 #: viewport.c:331
-#, fuzzy
 msgid "non-finite location and/or size for viewport"
 msgstr "Localização e/ou tamanhos não finitos para viewport"
 

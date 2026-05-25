@@ -322,7 +322,7 @@ msgid "'ncol' must be >= 1"
 msgstr "'ncol' は1以上でなければなりません"
 
 msgid "nrow * ncol < #{legend labels}"
-msgstr "nrow * ncol < #{legend labels}"
+msgstr "nrow * ncol < #{凡例ラベル}"
 
 msgid "invalid justification"
 msgstr "不正な位置決め指定 (justification) です"
@@ -466,9 +466,8 @@ msgstr "'r' は 'units' オブジェクトでなければなりません"
 msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr "'x', 'y', 'width', 'height' は全て長さ 1 でなければなりません"
 
-#, fuzzy
 msgid "Invalid glyph info"
-msgstr "不正な 'order' です"
+msgstr "無効なグリフ情報"
 
 #, fuzzy
 msgid "'x' and 'y' must have length > 0"

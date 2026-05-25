@@ -40,9 +40,8 @@ msgstr "não é um cluster válido"
 msgid "replacing registration for cluster type '%s'"
 msgstr ""
 
-#, fuzzy
 msgid "unknown cluster type: '%s'"
-msgstr "tipo de cluster desconhecido"
+msgstr "tipo de cluster desconhecido: '%s'"
 
 msgid "numeric 'names' must be >= 1"
 msgstr "'names' numéricos devem ser >= 1"
@@ -52,6 +51,8 @@ msgstr ""
 
 msgid "Connection setup failed or timed out."
 msgstr ""
+"A configuração da conexão falhou ou demorou "
+"muito."
 
 msgid "PORT must be specified"
 msgstr "PORT deve ser especificado"
@@ -72,20 +73,23 @@ msgid "'process' must be of class %s"
 msgstr "'process' deve ser de classe %s"
 
 msgid "'child' must be a valid child process"
-msgstr ""
+msgstr "'filho' deve ser um processo filho válido"
 
 msgid "'what' must be a character or raw vector"
 msgstr ""
+"'what' deve ser um caractere ou vetor bruto "
+"(raw vector)"
 
-#, fuzzy
 msgid "'mc.cores' must be >= 1"
 msgstr "'mc.cores' deve ser >= 1"
 
 msgid "affinity.list and X must have the same length"
 msgstr "affinity.list e X devem ter o mesmo comprimento"
 
+
 msgid "%d function calls resulted in an error"
 msgstr ""
+"chamadas da função %d resultaram em um erro"
 
 #, fuzzy
 msgid "'mc.preschedule' must be false if 'affinity.list' is used"
@@ -108,8 +112,9 @@ msgstr ""
 
 msgid "fork clusters are not supported on Windows"
 msgstr ""
+"clusters de bifurcação não são suportados no "
+"Windows"
 
-#, fuzzy
 msgid "'mc.cores' > 1 is not supported on Windows"
 msgstr "'mc.cores' > 1 não é suportado no Windows"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-05-25 12:47-0700\n"
 "PO-Revision-Date: 2024-03-20 03:05+0000\n"
 "Last-Translator: Lluís <lluis.revilla+weblate@gmail.com>\n"
 "Language-Team: none\n"
@@ -182,25 +182,24 @@ msgstr "noms de variables no vàlids"
 msgid "invalid tag"
 msgstr "etiqueta no vàlida"
 
-#: distance.c:152
+#: distance.c:153
 #, fuzzy
 msgid "treating non-finite values as NA"
 msgstr "tractant els valors no-finits com a NA"
 
-#: distance.c:225
+#: distance.c:226
 #, fuzzy
 msgid "distance(): invalid p"
 msgstr "distance(): p no vàlida"
 
-#: distance.c:229
+#: distance.c:230
 #, fuzzy
 msgid "distance(): invalid distance"
 msgstr "distance(): la distància no és vàlida"
 
 #: distn.c:36
-#, fuzzy
 msgid "NaNs produced"
-msgstr "NaN produït"
+msgstr "s'han produït NaNs"
 
 #: distn.c:37
 #, fuzzy

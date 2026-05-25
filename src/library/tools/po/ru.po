@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-04-25 10:48-0700\n"
 "PO-Revision-Date: 2024-03-25 14:56+0300\n"
 "Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
@@ -28,22 +28,22 @@ msgstr "аргумент 'files' должен быть символьным"
 #: Rmd5.c:73
 #, c-format
 msgid "md5 failed on file '%ls'"
-msgstr "md5 на файле '%ls' не удался"
+msgstr "не удалось посчитать md5 для файла '%ls'"
 
 #: Rmd5.c:75
 #, c-format
 msgid "md5 failed on file '%s'"
-msgstr "md5 на файле '%s' не удался"
+msgstr "не удалось посчитать md5 для файла '%s'"
 
 #: Rsha256.c:86
-#, fuzzy, c-format
+#, c-format
 msgid "sha256 failed on file '%ls'"
-msgstr "md5 на файле '%ls' не удался"
+msgstr "не удалось посчитать sha256 для файла '%ls'"
 
 #: Rsha256.c:88
-#, fuzzy, c-format
+#, c-format
 msgid "sha256 failed on file '%s'"
-msgstr "md5 на файле '%s' не удался"
+msgstr "не удалось посчитать sha256 для файла '%s'"
 
 #: getfmts.c:60
 #, c-format
@@ -66,7 +66,7 @@ msgstr "длина 'fmt' превышает максимальную длину формата %d"
 #: getfmts.c:95
 #, c-format
 msgid "unrecognised format specification '%s'"
-msgstr "нераспознанное описание формата '%s'"
+msgstr "не понимаю указание формата '%s'"
 
 #: getfmts.c:135
 msgid "at most one asterisk '*' is supported in each conversion specification"
@@ -196,7 +196,7 @@ msgstr "pskill() на этой платформе не поддерживается"
 
 #: signals.c:140
 msgid "psnice() is not supported on this platform"
-msgstr "psnice()  на этой платформе не поддерживается"
+msgstr "psnice() на этой платформе не поддерживается"
 
 #: text.c:69
 msgid "invalid argument type"

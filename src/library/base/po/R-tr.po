@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -21,34 +21,37 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "'%s' is defunct."
-msgstr ""
+msgstr "'%s' geçersiz."
 
+#, fuzzy
 msgid "Use '%s' instead."
-msgstr ""
+msgstr "Bunun yerine '%s' kullanın."
 
 msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
-msgstr ""
+msgstr "Bkz. help(\"Defunct\") ve help(\"%s-defunct\")."
 
 msgid "See help(\"Defunct\")"
-msgstr ""
+msgstr "Bkz. help(\"Defunct\")"
 
+#, fuzzy
 msgid "'%s' is deprecated."
-msgstr ""
+msgstr "'%s' artık kullanılmamaktadır."
 
 msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
-msgstr ""
+msgstr "Bkz. help(\"Deprecated\") ve help(\"%s-deprecated\")."
 
 msgid "See help(\"Deprecated\")"
-msgstr ""
+msgstr "Bkz. help(\"Deprecated\")"
 
 msgid "argument to 'La.svd' must be numeric or complex"
-msgstr ""
+msgstr "'La.svd' argümanı nümerik ya da kompleks olmalı"
 
 msgid "infinite or missing values in 'x'"
-msgstr ""
+msgstr "'x' içinde sonsuz veya kayıp değerler"
 
+#, fuzzy
 msgid "a dimension is zero"
-msgstr ""
+msgstr "bir boyut sıfırdır"
 
 msgid "\"all\" and \"exact\" are mutually exclusive"
 msgstr ""
@@ -57,22 +60,24 @@ msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
 msgstr ""
 
 msgid "second argument must be a list"
-msgstr ""
+msgstr "ikinci argüman bir liste olmalı"
 
 msgid "'iconvlist' is not available on this system"
-msgstr ""
+msgstr "'iconvlist' bu sistemde mevcut değil"
 
+#, fuzzy
 msgid "'kind' must be a character string (RNG to be used)."
-msgstr ""
+msgstr "'kind' 1 uzunluğunda bir karakter dizisi olmalıdır (RNG kullanılacak)."
 
 msgid "'%s' is not a valid abbreviation of an RNG"
-msgstr ""
+msgstr "'%s' bir RNG'nin geçerli kısaltması değildir"
 
+#, fuzzy
 msgid "'%s' must be a character string"
-msgstr ""
+msgstr "%s karakter dizesine dönüştürüldü"
 
 msgid "'%s' is not a valid choice"
-msgstr ""
+msgstr "'%s' geçerli bir opsiyon değil"
 
 msgid "malformed version string"
 msgstr ""
@@ -81,16 +86,16 @@ msgid "target is %s, current is %s"
 msgstr ""
 
 msgid "'tolerance' should be numeric"
-msgstr ""
+msgstr "'tolerance' nümerik olmalı"
 
 msgid "'scale' should be numeric or NULL"
-msgstr ""
+msgstr "'scale' nümerik veya NULL olmalı"
 
 msgid "'%s' must be logical"
-msgstr ""
+msgstr "'%s' mantıksal olmalı"
 
 msgid "dim(X) must have a positive length"
-msgstr ""
+msgstr "dim(X) pozitif bir uzunluğa sahip olmalı"
 
 msgid "'X' must have named dimnames"
 msgstr ""
@@ -99,10 +104,10 @@ msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr ""
 
 msgid "'MARGIN' does not match dim(X)"
-msgstr ""
+msgstr "'MARGIN' dim(X) ile eşleşmiyor"
 
 msgid "'dim' cannot be of length 0"
-msgstr ""
+msgstr "'dim' 0 uzunluğunda olamaz"
 
 msgid "'dim' specifies too large an array"
 msgstr ""
@@ -114,22 +119,23 @@ msgid "incorrect value for 'MARGIN'"
 msgstr "'MARGIN' için geçersiz değer"
 
 msgid "dim(x) must have a positive length"
-msgstr ""
+msgstr "dim(x) pozitif bir uzunluğa sahip olmalı"
 
 msgid "'pos=1' is not possible and has been warned about for years"
 msgstr ""
 
 msgid "file '%s' not found"
-msgstr ""
+msgstr "'%s' dosyası bulunamadı"
 
 msgid "invalid 'name' argument"
-msgstr ""
+msgstr "geçersiz 'name' argümanı"
 
 msgid "package %s is required by %s, which may no longer work correctly"
 msgstr ""
 
+#, fuzzy
 msgid "package %s is required by %s so will not be detached"
-msgstr ""
+msgstr "%s paketi %s için gereklidir, bu nedenle ayrılamaz"
 
 msgid ""
 "%s failed in %s() for '%s', details:\n"
@@ -141,7 +147,7 @@ msgid "%s namespace cannot be unloaded:"
 msgstr ""
 
 msgid "%s converted to character string"
-msgstr ""
+msgstr "%s karakter dizesine dönüştürüldü"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
 msgstr ""
@@ -150,10 +156,11 @@ msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
 msgstr ""
 
 msgid "'value' must be a list"
-msgstr ""
+msgstr "'değer' bir liste olmalı"
 
+#, fuzzy
 msgid "an object with that name already exists"
-msgstr ""
+msgstr "Bu ada sahip bir nesne zaten var"
 
 msgid "autoloader did not find '%s' in '%s'"
 msgstr ""
@@ -162,10 +169,10 @@ msgid "can only splice inside a call"
 msgstr ""
 
 msgid "can only splice vectors"
-msgstr ""
+msgstr "sadece vektörleri birleştirebilir"
 
 msgid "the LINPACK argument has been defunct since R 3.1.0"
-msgstr ""
+msgstr "LINPACK argümanı R 3.1.0'dan beri geçersiz"
 
 msgid "complex matrices not permitted at present"
 msgstr ""
@@ -174,7 +181,7 @@ msgid "'x' must be an array of at least two dimensions"
 msgstr ""
 
 msgid "invalid 'dims'"
-msgstr ""
+msgstr "Geçersiz 'dims'"
 
 msgid "condition handlers must be specified with a condition class"
 msgstr ""
@@ -201,29 +208,28 @@ msgid "can only write character objects"
 msgstr ""
 
 msgid "'headers' must have names and must not be NA"
-msgstr ""
+msgstr "'headers' ada sahip olmalı ve NA olmamalı"
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
-msgstr ""
+msgstr "'origin'; 'start', 'current' veya 'end' seçeneklerinden biri olmalı"
 
 msgid "can only truncate an open connection"
 msgstr ""
 
-#, fuzzy
 msgid "invalid 'endian' argument"
-msgstr "geçersiz paket ismi"
+msgstr "geçersiz 'endian' argümanı"
 
 msgid "can only write vector objects"
 msgstr ""
 
 msgid "'timeout' must be NULL or a non-negative number"
-msgstr ""
+msgstr "'timeout' NULL veya negatif olmayan bir sayı olmalı"
 
 msgid "'from' must be raw or character"
 msgstr ""
 
 msgid "'x' must be numeric"
-msgstr ""
+msgstr "'x' nümerik olmalı"
 
 msgid "invalid number of intervals"
 msgstr ""
@@ -235,11 +241,10 @@ msgid "number of intervals and length of 'labels' differ"
 msgstr ""
 
 msgid "invalid 'row.names' length"
-msgstr ""
+msgstr "Geçersiz 'row.names' uzunluğu"
 
-#, fuzzy
 msgid "invalid 'make.names'"
-msgstr "geçersiz paket ismi"
+msgstr "geçersiz 'make.names'"
 
 msgid "duplicate 'row.names' are not allowed"
 msgstr ""
@@ -253,16 +258,16 @@ msgstr ""
 msgid "cannot coerce class %s to a data.frame"
 msgstr ""
 
+msgid "row names contain missing values"
+msgstr "Satır adları eksik değerler içeriyor"
+
 msgid "'row.names' is not a character or integer vector of length %d"
-msgstr ""
+msgstr "'row.names' bir karakter veya %d uzunluğunda bir tam sayı vektörü değildir"
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr ""
 
 msgid "some row.names duplicated: %s --> row.names NOT used"
-msgstr ""
-
-msgid "row names contain missing values"
 msgstr ""
 
 msgid "duplicate row.names: %s"
@@ -272,34 +277,34 @@ msgid "arguments imply differing number of rows: %s"
 msgstr ""
 
 msgid "'row.names' should specify one of the variables"
-msgstr ""
+msgstr "'row.names' değişkenlerden birini belirtmeli"
 
 msgid "row names supplied are of the wrong length"
-msgstr ""
+msgstr "Sağlanan satır adları yanlış uzunlukta"
 
 msgid "row names were found from a short variable and have been discarded"
 msgstr ""
 
 msgid "named arguments other than 'drop' are discouraged"
-msgstr ""
+msgstr "'drop' dışında adlandırılmış argümanlar önerilmez"
 
 msgid "'drop' argument will be ignored"
-msgstr ""
+msgstr "'drop' argümanı yok sayılır"
 
 msgid "undefined columns selected"
-msgstr ""
+msgstr "Tanımsız sütunlar seçildi"
 
 msgid "named arguments other than 'exact' are discouraged"
-msgstr ""
+msgstr "'exact' dışında adlandırılmış argümanlar önerilmez"
 
 msgid "named arguments are discouraged"
-msgstr ""
+msgstr "Adlandırılmış argümanlar önerilmez"
 
 msgid "number of items to replace is not a multiple of replacement length"
 msgstr ""
 
 msgid "'value' is the wrong length"
-msgstr ""
+msgstr "'value' yanlış uzunlukta"
 
 msgid "unsupported matrix index in replacement"
 msgstr ""
@@ -311,10 +316,10 @@ msgid "missing values are not allowed in subscripted assignments of data frames"
 msgstr ""
 
 msgid "non-existent rows not allowed"
-msgstr ""
+msgstr "Var olmayan satırlara izin verilmez"
 
 msgid "column name \"\" cannot match any column"
-msgstr ""
+msgstr "Sütun adı \"\" herhangi bir sütunla eşleşemez"
 
 msgid "new columns would leave holes after existing columns"
 msgstr ""
@@ -326,7 +331,7 @@ msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
 msgstr ""
 
 msgid "replacing element in non-existent column: %s"
-msgstr ""
+msgstr "Var olmayan sütundaki öğeyi değiştirme: %s"
 
 msgid "only a single element should be replaced"
 msgstr ""
@@ -1175,14 +1180,15 @@ msgstr ""
 msgid "-- done processing S4 stuff for"
 msgstr ""
 
+#, fuzzy
 msgid "--- processing exports for"
-msgstr ""
+msgstr "--- dışa aktarmalar işleniyor"
 
 msgid "--- sealing exports for"
 msgstr ""
 
 msgid "- done loading"
-msgstr ""
+msgstr "- yükleme bitti"
 
 #, fuzzy
 msgid "Loading required namespace: %s"
@@ -1196,31 +1202,34 @@ msgstr ""
 
 #, fuzzy
 msgid "not a namespace"
-msgstr "isim alanı"
+msgstr "isim alanı değil"
 
 msgid "operation not allowed on base namespace"
-msgstr ""
+msgstr "Temel ad alanında işleme izin verilmiyor"
 
 msgid "duplicate import names %s"
-msgstr ""
+msgstr "Yinelenen içe aktarma adları %s"
 
+#, fuzzy
 msgid "replacing local value with import %s when loading %s"
-msgstr ""
+msgstr "%s yüklenirken lokal değeri içe aktarılan %s ile değiştiriliyor"
 
 msgid "cannot import into a sealed namespace"
 msgstr ""
 
+#, fuzzy
 msgid "replacing previous import by %s when loading %s"
-msgstr ""
+msgstr "%s yüklenirken önceki içe aktarmayı %s ile değiştirme"
 
 msgid "invalid import target"
-msgstr ""
+msgstr "geçersiz içe aktarma hedefi"
 
 msgid "found methods to import for function %s but not the generic itself"
 msgstr ""
 
+#, fuzzy
 msgid "replacing previous import %s by %s when loading %s"
-msgstr ""
+msgstr "%s yüklenirken önceki içe aktarma %s'yi %s ile değiştirme"
 
 msgid "No generic function %s found corresponding to requested imported methods from package %s when loading %s (malformed exports?)"
 msgstr ""
@@ -1229,31 +1238,31 @@ msgid "cannot add to exports of a sealed namespace"
 msgstr ""
 
 msgid "undefined exports: %s"
-msgstr ""
+msgstr "Tanımsız dışa aktarmalar: %s"
 
 msgid "unable to re-encode some lines in NAMESPACE file"
 msgstr ""
 
 msgid "package %s has no 'NAMESPACE' file"
-msgstr ""
+msgstr "package %s'de 'NAMESPACE' dosyası yok"
 
 msgid "empty name in directive '%s' in 'NAMESPACE' file"
-msgstr ""
+msgstr "'NAMESPACE' dosyasındaki '%s' yönergesinde boş ad"
 
 msgid "duplicate symbol names %s in useDynLib(\"%s\")"
-msgstr ""
+msgstr "useDynLib(\"%s\") içinde yinelenen sembol adları %s"
 
 msgid "bad 'S3method' directive: %s"
-msgstr ""
+msgstr "kötü 'S3method' yönergesi: %s"
 
 msgid "unknown namespace directive: %s"
 msgstr ""
 
 msgid "S3 method %s was declared but not found"
-msgstr ""
+msgstr "S3 yöntemi %s tanımlandı ancak bulunamadı"
 
 msgid "bad method"
-msgstr ""
+msgstr "kötü metot"
 
 msgid "object '%s' not found whilst loading namespace '%s'"
 msgstr ""
@@ -1262,16 +1271,16 @@ msgid "While loading namespace \"%s\": \"%s\" differ in ncol(.), env=%d, newNS=%
 msgstr ""
 
 msgid "Maybe package installed with version of R newer than %s ?"
-msgstr ""
+msgstr "Belki paket %s'den daha yeni bir R sürümüyle yüklenmiştir?"
 
 msgid "'%s' is not implemented yet"
-msgstr ""
+msgstr "'%s' henüz uygulanmadı"
 
 msgid "argument '%s' is not used (yet)"
-msgstr ""
+msgstr "'%s' argümanı kullanılmıyor (henüz)"
 
 msgid "'x' cannot be coerced to class \"octmode\""
-msgstr ""
+msgstr "'x' \"octmode\" sınıfına zorlanamaz"
 
 msgid "'x' cannot be coerced to class \"hexmode\""
 msgstr ""
@@ -1280,34 +1289,34 @@ msgid "using ... with FUN = \"*\" is an error"
 msgstr ""
 
 msgid "no arguments"
-msgstr ""
+msgstr "argüman yok"
 
 msgid "an argument will be fractionally recycled"
-msgstr ""
+msgstr "bir argüman kısmi geri dönüştürülecek"
 
 msgid "invalid ncol(x)"
-msgstr ""
+msgstr "geçersiz ncol(x)"
 
 msgid "too large a matrix for LINPACK"
-msgstr ""
+msgstr "LINPACK için çok büyük bir matris"
 
 msgid "first argument must be a QR decomposition"
 msgstr ""
 
 msgid "invalid nrow(qr$qr)"
-msgstr ""
+msgstr "geçersiz nrow(qr$qr)"
 
 msgid "invalid ncol(qr$qr)"
-msgstr ""
+msgstr "geçersiz ncol(qr$qr)"
 
 msgid "invalid ncol(qr$rank)"
-msgstr ""
+msgstr "geçersiz ncol(qr$rank)"
 
 msgid "invalid ncol(y)"
-msgstr ""
+msgstr "geçersiz ncol(y)"
 
 msgid "'qr' and 'y' must have the same number of rows"
-msgstr ""
+msgstr "'qr' ve 'y' aynı sayıda satıra sahip olmalı"
 
 msgid "exact singularity in 'qr.coef'"
 msgstr ""
@@ -1316,108 +1325,106 @@ msgid "argument is not a QR decomposition"
 msgstr ""
 
 msgid "invalid NCOL(y)"
-msgstr ""
+msgstr "geçersiz NCOL(y)"
 
 msgid "not implemented for complex 'qr'"
 msgstr ""
 
 msgid "not supported for LAPACK QR"
-msgstr ""
+msgstr "LAPACK QR için desteklenmez"
 
 msgid "'k' is too large"
-msgstr ""
+msgstr "'k' çok büyük"
 
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr ""
 
 msgid "invalid NCOL(R)"
-msgstr ""
+msgstr "geçersiz NCOL(R)"
 
 msgid "'x' must be a vector of an atomic type"
 msgstr ""
 
 msgid "invalid 'rle' structure"
-msgstr ""
+msgstr "geçersiz 'RLE' yapısı"
 
 msgid "... must contain names or character strings"
 msgstr ""
 
-#, fuzzy
 msgid "invalid 'x'"
-msgstr "geçersiz paket ismi"
+msgstr "geçersiz 'x'"
 
 msgid "incorrect length for 'group'"
-msgstr ""
+msgstr "'group' için yanlış uzunluk"
 
 msgid "missing values for 'group'"
-msgstr ""
+msgstr "'group' için eksik değerler"
 
 msgid "not a data frame"
-msgstr ""
+msgstr "bir data frame değil"
 
 msgid "length of 'center' must equal the number of columns of 'x'"
-msgstr ""
+msgstr "'center' uzunluğu, 'x'in sütun sayısına eşit olmalı"
 
 msgid "length of 'scale' must equal the number of columns of 'x'"
-msgstr ""
+msgstr "'scale' uzunluğu, 'x'in sütun sayısına eşit olmalı"
 
 msgid "either specify 'nmax' or 'n', but not both."
-msgstr ""
+msgstr "yalnızca 'nmax' veya 'n' belirtin, ikisini birden belirtmeyin."
 
 msgid "'from' must be a finite number"
-msgstr ""
+msgstr "'from' sonlu bir sayı olmalı"
 
 msgid "first element used of 'length.out' argument"
-msgstr ""
+msgstr "'length.out' argümanının ilk kullanılan elementi"
 
 msgid "'to' must be a finite number"
-msgstr ""
+msgstr "'to' sonlu bir sayı olmalı"
 
 msgid "invalid '(to - from)/by'"
-msgstr ""
+msgstr "geçersiz '(to - from)/by'"
 
 msgid "wrong sign in 'by' argument"
-msgstr ""
+msgstr "'by' argümanında yanlış girdi"
 
 msgid "'by' argument is much too small"
-msgstr ""
+msgstr "'by' argümanı çok küçük"
 
 msgid "'length.out' must be a non-negative number"
-msgstr ""
+msgstr "'length.out' negatif olmayan bir sayı olmalı"
 
 msgid "too many arguments"
-msgstr ""
+msgstr "çok fazla argüman"
 
-#, fuzzy
 msgid "invalid 'compress' argument:"
-msgstr "geçersiz paket ismi"
+msgstr "geçersiz 'compress' argümanı:"
 
 msgid "'compress' is ignored unless 'file' is a file name"
-msgstr ""
+msgstr "'file' bir dosya adı olmadığı sürece 'compress' yok sayılır"
 
 msgid "'connection' must be a connection"
-msgstr ""
+msgstr "'connection' bir bağlantı olmalı"
 
 msgid "'file' must be NULL or an already open connection"
-msgstr ""
+msgstr "'file' NULL veya zaten açık bir bağlantı olmalı"
 
 msgid "cannot split the message connection"
-msgstr ""
+msgstr "Mesaj bağlantısı bölünemez"
 
 msgid "'file' must be NULL, a connection or a character string"
-msgstr ""
+msgstr "'file' NULL, bir bağlantı veya bir karakter dizisi olmalı"
 
 msgid "this is the \"qr\" method for the generic function solve()"
 msgstr ""
 
 msgid "singular matrix 'a' in 'solve'"
-msgstr ""
+msgstr "'solve' içinde tekil matris 'a'"
 
 msgid "only square matrices can be inverted"
-msgstr ""
+msgstr "sadece kare matrisler ters çevrilebilir"
 
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
-msgstr ""
+msgstr "solve.default bir \"qr\" nesnesiyle çağrılır: 'qr.solve' kullanın"
 
 msgid "singular matrix 'a' in solve"
 msgstr ""
@@ -1430,29 +1437,30 @@ msgstr ""
 msgid "'partial' sorting not supported by radix method"
 msgstr ""
 
+#, fuzzy
 msgid "'index.return' only for non-factors"
-msgstr ""
+msgstr "'index.return' yalnızca faktör olmayanlar için"
 
 msgid "'x' must be atomic"
 msgstr ""
 
 msgid "'index.return' only for 'na.last = NA'"
-msgstr ""
+msgstr "'index.return' yalnızca 'na.last = NA' için"
 
 msgid "unsupported options for partial sorting"
-msgstr ""
+msgstr "Kısmi sıralama için desteklenmeyen seçenekler"
 
 msgid "non-finite 'partial'"
-msgstr ""
+msgstr "sonsuz 'partial'"
 
 msgid "'decreasing' of length > 1 is only for method = \"radix\""
 msgstr ""
 
 msgid "argument lengths differ"
-msgstr ""
+msgstr "argüman uzunlukları farklı"
 
 msgid "method = \"quick\" is only for numeric 'x'"
-msgstr ""
+msgstr "method = \"quick\" yalnızca nümerik 'x' içindir"
 
 msgid ""
 "'x' must be atomic for 'sort.list', method \"shell\" and \"quick\"\n"
@@ -1460,69 +1468,72 @@ msgid ""
 msgstr ""
 
 msgid "cannot xtfrm 'x'"
-msgstr ""
+msgstr "'x' xtfrm olamaz"
 
 msgid "'local' must be TRUE, FALSE or an environment"
-msgstr ""
+msgstr "'local' TRUE, FALSE veya bir ortam olmalı"
 
 msgid "'echo' must be logical"
-msgstr ""
+msgstr "'echo' mantıksal olmalı"
 
 msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
 msgstr ""
 
 msgid "empty file/url name"
-msgstr ""
+msgstr "Boş dosya/URL adı"
 
 msgid "unable to find a plausible encoding"
-msgstr ""
+msgstr "Makul bir şifreleme bulunamıyor"
 
 msgid "encoding = \"%s\" chosen"
-msgstr ""
+msgstr "encoding = \"%s\" seçildi"
 
 msgid "'chdir = TRUE' makes no sense for a URL"
-msgstr ""
+msgstr "'chdir = TRUE' bir URL için hiçbir anlam ifade etmiyor"
 
 msgid "cannot 'chdir' as current directory is unknown"
-msgstr ""
+msgstr "Geçerli dizin bilinmediği için 'chdir' kullanılamıyor"
 
 msgid "'chdir = TRUE' makes no sense for a connection"
 msgstr ""
 
 msgid "specify either 'file' or 'exprs' but not both"
-msgstr ""
+msgstr "'exprs' veya 'exprObject' ifadelerinden yalnızca birini belirtin, ikisini birden değil"
 
 msgid "'%s' is not an existing file"
 msgstr ""
 
 msgid "'formula' must be a formula"
-msgstr ""
+msgstr "'formula' bir formül olmalı"
 
 msgid "Unexpected LHS in 'formula' has been ignored."
-msgstr ""
+msgstr "'formula'daki beklenmeyen LHS yok sayıldı."
 
 msgid "Unexpected LHS in 'formula' has been combined with RHS."
-msgstr ""
+msgstr "'formula'daki beklenmeyen LHS, RHS ile birleştirildi."
 
 msgid "Timestamp of %s has changed"
-msgstr ""
+msgstr "%s'in zaman damgası değişti"
 
 msgid "'x' and 'to' must refer to same file"
-msgstr ""
+msgstr "'x' ve 'to' aynı dosyaya işaret etmeli"
 
 msgid "additional arguments ignored in stop()"
-msgstr ""
+msgstr "stop() içindeki ek argümanlar yok sayıldı"
 
+#, fuzzy
 msgid "Only one of 'exprs', 'exprObject' or expressions, not more"
-msgstr ""
+msgstr "'exprs', 'exprObject' veya ifadelerden yalnızca biri, daha fazlası değil"
 
 msgid ""
 "%s and %s are not equal:\n"
 "  %s"
 msgstr ""
+"%s ve %s eşit değildir:\n"
+"  %s"
 
 msgid "additional arguments ignored in warning()"
-msgstr ""
+msgstr "warning() içindeki ek argümanlar yok sayıldı"
 
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr ""
@@ -1749,7 +1760,6 @@ msgstr ""
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
 msgstr[0] ""
-msgstr[1] ""
 
 msgid "The following object is masked _by_ %s:"
 msgid_plural "The following objects are masked _by_ %s:"
@@ -1806,22 +1816,18 @@ msgstr[0] ""
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
 msgstr[0] ""
-msgstr[1] ""
 
 msgid "package %s is not loaded"
 msgid_plural "packages %s are not loaded"
 msgstr[0] ""
-msgstr[1] ""
 
 msgid "there is no package called"
 msgid_plural "there are no packages called"
 msgstr[0] ""
-msgstr[1] ""
 
 msgid "object %s not found"
 msgid_plural "objects %s not found"
 msgstr[0] ""
-msgstr[1] ""
 
 msgid "'arg' should be %s"
 msgid_plural "'arg' should be one of %s"
@@ -1846,22 +1852,18 @@ msgstr[0] ""
 msgid "class %s is not exported by 'namespace:%s'"
 msgid_plural "classes %s are not exported by 'namespace:%s'"
 msgstr[0] ""
-msgstr[1] ""
 
 msgid "object %s is not exported by 'namespace:%s'"
 msgid_plural "objects %s are not exported by 'namespace:%s'"
 msgstr[0] ""
-msgstr[1] ""
 
 msgid "previous export '%s' is being replaced"
 msgid_plural "previous exports '%s' are being replaced"
 msgstr[0] ""
-msgstr[1] ""
 
 msgid "S3 method %s was declared in NAMESPACE but not found"
 msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
 msgstr[0] ""
-msgstr[1] ""
 
 msgid "%s is not TRUE"
 msgid_plural "%s are not all TRUE"
@@ -1870,7 +1872,6 @@ msgstr[0] ""
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] ""
-msgstr[1] ""
 
 msgid ""
 "In %s :\n"

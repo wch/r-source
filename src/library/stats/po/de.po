@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-05-25 12:47-0700\n"
 "PO-Revision-Date: 2025-03-11 12:09+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -23,9 +23,10 @@ msgstr "Bandbreite/Spannweite der gleitenden Mediane größer als n"
 #: Srunmed.c:263
 #, c-format
 msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%lld]"
-msgstr "runmed(x, .., na.action=\"na.fail\"): es gibt NAs beginnend bei x[%lld]"
+msgstr "runmed(x, .., na.action=\"na.fail\"): haben NAs, die bei x[%lld beginnen]"
 
 #: Srunmed.c:266
+#, fuzzy
 msgid "runmed(): invalid 'na.action'"
 msgstr "runmed(): unzulässige 'na.action'"
 
@@ -156,15 +157,15 @@ msgstr "ungültige Variablennamen"
 msgid "invalid tag"
 msgstr "ungültiger tag"
 
-#: distance.c:152
+#: distance.c:153
 msgid "treating non-finite values as NA"
 msgstr "behandle nicht-endliche Werte als NA"
 
-#: distance.c:225
+#: distance.c:226
 msgid "distance(): invalid p"
 msgstr "distance(): unzulässiges p"
 
-#: distance.c:229
+#: distance.c:230
 msgid "distance(): invalid distance"
 msgstr "distance(): unzulässige distance"
 
@@ -309,7 +310,7 @@ msgstr "'%s' muss Länge 1 haben"
 #: isoreg.c:55
 #, c-format
 msgid "non-finite sum(y) == %g is not allowed"
-msgstr "nicht-endliche sum(y) == %g ist nicht erlaubt"
+msgstr "unendliche Summe(y) == %g ist nicht erlaubt"
 
 #: ksmooth.c:63
 msgid "only 2500 rows are allowed for sm.method=\"spline\""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:17\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2021-11-06 22:40+0100\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -798,6 +798,27 @@ msgstr ""
 msgid "'objdump' is not on the path"
 msgstr ""
 
+msgid "non-API functions declared in installed headers: %s"
+msgstr ""
+
+msgid "non-API variables declared in installed headers: %s"
+msgstr ""
+
+msgid "API funcitons not declared in installed headers: %s"
+msgstr ""
+
+msgid "API variables not in declared in installed headers: %s"
+msgstr ""
+
+msgid "in API but marked for warnings: %s"
+msgstr ""
+
+msgid "API functions listed in nonAPI: %s"
+msgstr ""
+
+msgid "API variables listed in nonAPI: %s"
+msgstr ""
+
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "求值 %2$s 時取得 %1$s；原本是要 %3$s"
 
@@ -1000,6 +1021,16 @@ msgstr "讀取檔案 '%s' 時發生錯誤"
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "這看起來好像是梱綁軟體 -- 已經不存在了"
 
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "成功將 %s 程式套件解開並 MD5 和檢查"
+
+msgid "package %s signature verified (%s %s)"
+msgstr ""
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
 msgid "'cleanup' exists but is not executable -- see the 'R Installation and Administration Manual'"
 msgstr "有 'cleanup' 但它不是可執行檔 -- 請參考 'R 安裝和管理手冊 '"
 
@@ -1023,9 +1054,6 @@ msgstr ""
 
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr ""
-
-msgid "package %s successfully unpacked and MD5 sums checked"
-msgstr "成功將 %s 程式套件解開並 MD5 和檢查"
 
 msgid "not using staged install with --libs-only"
 msgstr ""
@@ -1274,6 +1302,30 @@ msgstr "'x' 必須是單字串"
 msgid "invalid hex string"
 msgstr ""
 
+#, fuzzy
+msgid "'gpg' is not available for signing"
+msgstr "不存在 '%s' 這個測試"
+
+msgid "Target file for the signature already exists"
+msgstr ""
+
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'x' 必須是單字串"
+
+msgid "'keyring' must be specified if 'use.default.keyring=FALSE'"
+msgstr ""
+
+msgid "Failed to invoke 'gpg' for signing"
+msgstr ""
+
+msgid "Cannot sign due to failed pin entry for key %s"
+msgstr ""
+
+#, fuzzy
+msgid "Signing failed:"
+msgstr "載入失敗"
+
 msgid "this requires 'objdump.exe' to be on the PATH"
 msgstr "這需要 'objdump.exe' 位於 PATH 中"
 
@@ -1417,10 +1469,6 @@ msgstr ""
 
 msgid "update_PACKAGES complete."
 msgstr ""
-
-#, fuzzy
-msgid "'%s' must be a character string"
-msgstr "'x' 必須是單字串"
 
 msgid "test '%s' is not available"
 msgstr "不存在 '%s' 這個測試"

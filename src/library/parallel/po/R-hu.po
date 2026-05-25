@@ -14,10 +14,10 @@ msgstr ""
 "X-Generator: Weblate 4.16.4\n"
 
 msgid "invalid value of %s"
-msgstr ""
+msgstr "A %s érvénytelen értéke"
 
 msgid "need at least one argument"
-msgstr ""
+msgstr "Legalább egy argumentumra van szükség"
 
 msgid "zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
@@ -33,82 +33,94 @@ msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "a 'MARGIN' nem minden eleme dimenziónév"
 
 msgid "no cluster 'cl' supplied and none is registered"
-msgstr ""
+msgstr "Nincs megadva \"CL\" fürt, és nincs regisztrálva"
 
 msgid "not a valid cluster"
-msgstr ""
+msgstr "nem érvényes fürt"
 
 msgid "replacing registration for cluster type '%s'"
 msgstr ""
 
+#, fuzzy
 msgid "unknown cluster type: '%s'"
-msgstr ""
+msgstr "ismeretlen fürttípus"
 
 msgid "numeric 'names' must be >= 1"
-msgstr ""
+msgstr "A numerikus \"neveknek\" >= 1-nek kell lenniük"
 
 msgid "node of a socket cluster on host %s with pid %d"
-msgstr ""
+msgstr "Szoftvercsatornafürt csomópontja a %s gazdagépen PID %d"
 
 msgid "Connection setup failed or timed out."
 msgstr ""
+"A kapcsolat beállítása sikertelen vagy időtúllépést okozott."
 
+#, fuzzy
 msgid "PORT must be specified"
-msgstr ""
+msgstr "A PORT-ot meg kell adni"
 
 msgid "'nnodes' must be >= 1"
-msgstr ""
+msgstr "Az \"nnodes\" értékének >= 1-nek kell lennie"
 
 msgid "Cluster setup failed."
-msgstr ""
+msgstr "A fürt beállítása nem sikerült."
 
 msgid "invalid 'child' argument"
-msgstr ""
+msgstr "Érvénytelen \"gyermek\" argumentum"
 
 msgid "'children' must be a list of processes or a single process"
 msgstr ""
+"A \"gyermekek\" a folyamatok listájának vagy egyetlen "
+"folyamatnak kell lenniük"
 
+#, fuzzy
 msgid "'process' must be of class %s"
-msgstr ""
+msgstr "A \"folyamatnak\" %s osztályba kell tartoznia"
 
 msgid "'child' must be a valid child process"
 msgstr ""
+"A \"gyermek\" kifejezésnek érvényes gyermekfolyamatnak kell "
+"lennie"
 
 msgid "'what' must be a character or raw vector"
-msgstr ""
+msgstr "A \"mit\" karakternek vagy nyers vektornak kell lennie"
 
 msgid "'mc.cores' must be >= 1"
-msgstr ""
+msgstr "Az \"mc.cores\" értékének >= 1-nek kell lennie"
 
 msgid "affinity.list and X must have the same length"
-msgstr ""
+msgstr "affinity.list és X azonos hosszúságúnak kell lennie"
 
 msgid "%d function calls resulted in an error"
-msgstr ""
+msgstr "A(z) %d függvényhívások hibát eredményeztek"
 
 msgid "'mc.preschedule' must be false if 'affinity.list' is used"
 msgstr ""
+"Az \"mc.preschedule\" paraméternek hamisnak kell lennie, ha az "
+"\"affinity.list\" függvényt használja"
 
 msgid "all scheduled cores encountered errors in user code"
-msgstr ""
+msgstr "Minden ütemezett mag hibát észlelt a felhasználói kódban"
 
 msgid "Zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
 
 msgid "invalid 'jobs' argument"
-msgstr ""
+msgstr "Érvénytelen \"állások\" argumentum"
 
 msgid "'v' must be a vector"
-msgstr ""
+msgstr "\"v\"-nek vektornak kell lennie"
 
 msgid "some results may be missing, folded or caused an error"
 msgstr ""
+"Előfordulhat, hogy egyes eredmények hiányoznak, összecsukódnak "
+"vagy hibát okoznak"
 
 msgid "fork clusters are not supported on Windows"
-msgstr ""
+msgstr "Az elágazási fürtöket a Windows nem támogatja"
 
 msgid "'mc.cores' > 1 is not supported on Windows"
-msgstr ""
+msgstr "Az \"mc.cores\" > 1 nem támogatott Windows rendszeren"
 
 msgid "Cluster setup failed. %d worker of %d failed to connect."
 msgid_plural "Cluster setup failed. %d of %d workers failed to connect."
@@ -119,11 +131,12 @@ msgid "socket cluster with %d nodes on host %s"
 msgid_plural "socket cluster with %d nodes on hosts %s"
 msgstr[0] ""
 msgstr[1] ""
+"Szoftvercsatorna-fürt %d csomópontokkal a %s gazdagépeken"
 
 msgid "%d parallel function call did not deliver a result"
 msgid_plural "%d parallel function calls did not deliver results"
 msgstr[0] ""
-msgstr[1] ""
+msgstr[1] "%d A párhuzamos függvényhívások nem hoztak eredményt"
 
 msgid "scheduled core %s did not deliver a result, all values of the job will be affected"
 msgid_plural "scheduled cores %s did not deliver results, all values of the jobs will be affected"

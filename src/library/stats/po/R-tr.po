@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -936,7 +936,7 @@ msgid "'x' has been rounded to integer: %s"
 msgstr "'x' tamsayıya yuvarlandı:"
 
 msgid "if 'x' is not a matrix, 'y' must be given"
-msgstr "eğer 'x'  bir matris değilse, 'y' verilmeli"
+msgstr "eğer 'x' bir matris değilse, 'y' verilmeli"
 
 msgid "'mult' must be integer >= 2, typically = 30"
 msgstr "'mult' >= 2 bir tamsayı olmalı, genellikle = 30"
@@ -1836,6 +1836,13 @@ msgid "argument 'na.action' will be ignored"
 msgstr "'na.action' argümanı görmezden gelinecek"
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
+msgstr ""
+
+#, fuzzy
+msgid "'%s' is not implemented yet"
+msgstr "tip '%s' henüz tanımlanmadı"
+
+msgid "hatvalues() for nls(*, algorithm='plinear')"
 msgstr ""
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"

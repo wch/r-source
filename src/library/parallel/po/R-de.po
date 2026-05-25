@@ -72,7 +72,7 @@ msgid "'children' must be a list of processes or a single process"
 msgstr "'children' muss eine Liste von Prozessen oder ein einzelner Prozess sein"
 
 msgid "'process' must be of class %s"
-msgstr "'process' muss aus der  Klasse %s sein"
+msgstr "'process' muss aus der Klasse %s sein"
 
 msgid "'child' must be a valid child process"
 msgstr "'child' muss ein gültiger Kindprozess sein"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2024-03-19 03:05+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -216,7 +216,7 @@ msgid "cannot compute exact confidence interval with ties"
 msgstr "タイがあるので、正確な信頼区間を計算することができません"
 
 msgid "'formula' missing or incorrect"
-msgstr "モデル式 ('formula') が無いか、不正確です"
+msgstr "'formula' が無いか不正確です"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "グループ化因子は丁度 2 つの水準を持たなければなりません"
@@ -552,9 +552,8 @@ msgstr "1 つ以上のベクトルを与えなければなりません"
 msgid "arguments must have the same length"
 msgstr "引数は同じ長さでなければなりません"
 
-#, fuzzy
 msgid "wrong number of columns in new data:"
-msgstr "'x' の列数が間違っています"
+msgstr "新しいデータの列数が間違っています:"
 
 msgid "contrasts apply only to factors"
 msgstr "対比は因子にしか適用できません"
@@ -1745,7 +1744,7 @@ msgid "f() values at end points not of opposite sign"
 msgstr "f() の端点での値が異なった符号を持ちません"
 
 msgid "convergence problem in zero finding:"
-msgstr "0点の探索中に収束の問題が発生しました"
+msgstr "0点の探索中に収束の問題が発生しました:"
 
 msgid "'control' argument must be a named list"
 msgstr "引数 'control' は名前付きリストでなければなりません"
@@ -1772,7 +1771,7 @@ msgid "cannot recognize parameter name"
 msgstr "パラメータの名前を確認できません"
 
 msgid "levels truncated to positive values only"
-msgstr "水準は正の値だけに縮小されました"
+msgstr "水準 (levels) は正の値のみに切りつめられました"
 
 msgid "invalid  'attr(rhs, \"gradient\")'"
 msgstr ""
@@ -1804,6 +1803,13 @@ msgstr "引数 'na.action' は無視されます"
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "algorithm = \"port\" でない限り upper および lower の制約は無視されます"
 
+#, fuzzy
+msgid "'%s' is not implemented yet"
+msgstr "型 '%s' はまだ実装されていません"
+
+msgid "hatvalues() for nls(*, algorithm='plinear')"
+msgstr ""
+
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
 msgstr "\"nls\" オブジェクトのための REML 対数尤度を計算することができません"
 
@@ -1829,7 +1835,7 @@ msgid "bounds can only be used with method L-BFGS-B (or Brent)"
 msgstr "bounds は L-BFGS-B 法 (または Brent 法) でしか使用することができません"
 
 msgid "unknown names in control:"
-msgstr "control の中に未知の名前"
+msgstr "control の中に未知の名前:"
 
 msgid "read the documentation for 'trace' more carefully"
 msgstr "'trace' に対する解説をより注意深く読んでください"
@@ -2196,7 +2202,7 @@ msgid "NA lev[]; probably smoothing parameter 'spar' way too large!"
 msgstr "NA lev[ ]; おそらく平滑化パラメ‐タ 'spar' が大きすぎました！"
 
 msgid "setting df = 1  __use with care!__"
-msgstr "df = 1 と設定しました。注意して使ってください！"
+msgstr "df = 1 と設定しました。  注意して使ってください！"
 
 msgid "need result of smooth.spline(keep.data = TRUE)"
 msgstr "smooth.spline(keep.data = TRUE) の結果が必要です"

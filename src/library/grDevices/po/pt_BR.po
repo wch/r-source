@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-04-25 10:47-0700\n"
 "PO-Revision-Date: 2023-10-19 19:25+0000\n"
 "Last-Translator: Renata Hirota <re.hirota@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -20,79 +20,79 @@ msgstr ""
 #: axis_scales.c:37 axis_scales.c:38 axis_scales.c:50
 #, c-format
 msgid "'%s' must be numeric of length %d"
-msgstr ""
+msgstr "'%s' deve ser um número de comprimento %d"
 
 #: clippath.c:36
 msgid "Clipping path ignored (device is appending path)"
-msgstr ""
+msgstr "Caminho de recorte ignorado (o dispositivo está anexando o caminho)"
 
 #: colors.c:69
 #, c-format
 msgid "color intensity %s, not in [0,1]"
-msgstr ""
+msgstr "intensidade de cor %s, não em [0,1]"
 
 #: colors.c:71
 #, c-format
 msgid "color intensity %g, not in [0,1]"
-msgstr ""
+msgstr "intensidade de cor %g não está no intervalo [0,1]"
 
 #: colors.c:78
 #, c-format
 msgid "color intensity %s, not in 0:255"
-msgstr ""
+msgstr "intensidade de cor %s, não no intervalo 0:255"
 
 #: colors.c:80
 #, c-format
 msgid "color intensity %d, not in 0:255"
-msgstr ""
+msgstr "intensidade de cor %d, não no intervalo 0:255"
 
 #: colors.c:87
 #, c-format
 msgid "alpha level %s, not in [0,1]"
-msgstr ""
+msgstr "nível alfa %s não está no intervalo [0,1]"
 
 #: colors.c:89
 #, c-format
 msgid "alpha level %g, not in [0,1]"
-msgstr ""
+msgstr "nível alpha %g não está no intervalo [0,1]"
 
 #: colors.c:96
 #, c-format
 msgid "alpha level %s, not in 0:255"
-msgstr ""
+msgstr "nível alfa %s não está no intervalo 0:255"
 
 #: colors.c:98
 #, c-format
 msgid "alpha level %d, not in 0:255"
-msgstr ""
+msgstr "nível alfa %d não está no intervalo 0:255"
 
 #: colors.c:113
 msgid "inputs must be finite"
-msgstr ""
+msgstr "entradas devem ser finitas"
 
 #: colors.c:128
 msgid "bad hsv to rgb color conversion"
-msgstr ""
+msgstr "conversão de cores HSV para RGB ruim"
 
 #: colors.c:220 colors.c:234
 msgid "invalid hsv color"
-msgstr ""
+msgstr "Cor HSV inválida"
 
 #: colors.c:346 colors.c:366
 msgid "invalid hcl color"
-msgstr ""
+msgstr "cor HCL inválida"
 
 #: colors.c:398
 msgid "invalid value of 'maxColorValue'"
-msgstr ""
+msgstr "valor de 'maxColorValue' inválido"
 
 #: colors.c:426
 msgid "invalid 'names' vector"
-msgstr ""
+msgstr "vetor 'names' inválido"
 
 #: colors.c:491 colors.c:500
 msgid "invalid gray level, must be in [0,1]."
-msgstr ""
+msgstr "nível de cinza inválido, deve estar no intervalo [0,1]."
 
 #: colors.c:556 cairo/cairoBM.c:625
 #, c-format
@@ -101,44 +101,43 @@ msgstr "valor '%s' inválido"
 
 #: colors.c:1343
 msgid "invalid hex digit in 'color' or 'lty'"
-msgstr ""
+msgstr "hex inválido em 'color' ou 'lty'"
 
 #: colors.c:1353 colors.c:1371
 msgid "invalid RGB specification"
-msgstr ""
+msgstr "especificação RGB inválida"
 
 #: colors.c:1408
-#, fuzzy, c-format
+#, c-format
 msgid "invalid color name '%s'"
-msgstr "cadeia de caracteres inválida em '%s'"
+msgstr "nome de cor inválido em '%s'"
 
 #: colors.c:1458 colors.c:1467
 #, c-format
 msgid "invalid color specification \"%s\""
-msgstr ""
+msgstr "especificação de cor inválida \"%s\""
 
 #: colors.c:1495
 msgid "supplied color is neither numeric nor character"
-msgstr ""
+msgstr "A cor fornecida não é numeric nem character"
 
 #: colors.c:1499
 #, c-format
 msgid "numerical color values must be >= 0, found %d"
-msgstr ""
+msgstr "os valores numéricos de cor devem ser >= 0, encontrado %d"
 
 #: colors.c:1510
-#, fuzzy
 msgid "invalid argument type"
-msgstr "cadeia de caracteres inválida em '%s'"
+msgstr "tipo de argumento inválido"
 
 #: colors.c:1521
 msgid "unknown palette (need >= 2 colors)"
-msgstr ""
+msgstr "paleta desconhecida (precisa > = 2 cores)"
 
 #: colors.c:1525 colors.c:1547
 #, c-format
 msgid "maximum number of colors is %d"
-msgstr ""
+msgstr "o número máximo de cores é %d"
 
 #: devPS.c:591
 #, c-format
@@ -156,14 +155,14 @@ msgid "invalid string in '%s'"
 msgstr "cadeia de caracteres inválida em '%s'"
 
 #: devPS.c:811
-#, fuzzy, c-format
+#, c-format
 msgid "font width unknown for character 0x%02x in encoding %s"
-msgstr "fonte com largura desconhecida para caractere 0x%x"
+msgstr "largura da fonte desconhecida para o caractere 0x%02x na codificação %s"
 
 #: devPS.c:871
-#, fuzzy, c-format
+#, c-format
 msgid "font metrics unknown for Unicode character U+%04X"
-msgstr "métrica de fonte desconhecida para caractere Unicode U+%04x"
+msgstr "métrica de fonte desconhecida para caractere Unicode U+%04X"
 
 #: devPS.c:882
 #, c-format
@@ -173,12 +172,12 @@ msgstr "codificação desconhecida'%s' em 'PostScriptMetricInfo'"
 #: devPS.c:899
 #, c-format
 msgid "Unicode character %lc (U+%04X) cannot be converted"
-msgstr ""
+msgstr "O caractere Unicode %lc (U+%04X) não pode ser convertido"
 
 #: devPS.c:918 devPS.c:972
-#, fuzzy, c-format
+#, c-format
 msgid "font metrics unknown for character 0x%02x in encoding %s"
-msgstr "métrica da fonte desconhecida para caractere 0x%x"
+msgstr "métrica da fonte desconhecida para caractere 0x%02x na codificação %s"
 
 #: devPS.c:987
 #, fuzzy, c-format
@@ -220,7 +219,7 @@ msgstr "falha ao alocar lista de codificação"
 #: devPS.c:1424
 #, fuzzy
 msgid "truncated string which was too long for copy"
-msgstr "string truncada que era muito longa para cópia"
+msgstr "string truncada que era muito longa para copiar"
 
 #: devPS.c:1464
 #, c-format
@@ -228,53 +227,49 @@ msgid "failed to load encoding file '%s'"
 msgstr "falha ao carregar arquivo de codificação '%s'"
 
 #: devPS.c:1563 devPS.c:1597
-#, fuzzy
 msgid "invalid font name or more than one font name"
 msgstr "nome de fonte inválido ou mais de um nome de fonte"
 
 #: devPS.c:1722 devPS.c:1757
 #, c-format
 msgid "font family '%s' not found in PostScript font database"
-msgstr ""
+msgstr "família de fontes '%s' não encontrada no banco de fontes PostScript"
 
 #: devPS.c:1841 devPS.c:1923 devPS.c:1950
 #, c-format
 msgid "font encoding for family '%s' not found in font database"
-msgstr ""
+msgstr "codificação de fonte para a família '%s' não foi encontrada no banco de fontes"
 
 #: devPS.c:1868 devPS.c:1895
 #, c-format
 msgid "font CMap for family '%s' not found in font database"
-msgstr ""
+msgstr "fonte CMap para a família '%s' não encontrada no banco de fontes"
 
 #: devPS.c:2089 devPS.c:2169 devPS.c:2237
 #, c-format
 msgid "cannot load afm file '%s'"
-msgstr ""
+msgstr "não é possível carregar o arquivo afm '%s'"
 
 #: devPS.c:2525
 #, fuzzy
 msgid "corrupt loaded encodings;  encoding not recorded"
-msgstr "falha ao alocar informação de codificação"
+msgstr "codificações carregadas estão corrompidas;  codificação não registrada"
 
 #: devPS.c:2536
-#, fuzzy
 msgid "failed to record device encoding"
-msgstr "falha ao alocar informação de codificação"
+msgstr "falha em registrar a codificação do dispositivo"
 
 #: devPS.c:2711
 msgid "object '.ps.prolog' is not a character vector"
-msgstr ""
+msgstr "o objeto '.ps.prolog' não é um vetor de caracteres"
 
 #: devPS.c:2790 devPS.c:7483 devWindows.c:810
-#, fuzzy
 msgid "invalid line end"
-msgstr "cadeia de caracteres inválida em '%s'"
+msgstr "fim de linha inválido"
 
 #: devPS.c:2809 devPS.c:7503 devWindows.c:823
-#, fuzzy
 msgid "invalid line join"
-msgstr "cadeia de caracteres inválida em '%s'"
+msgstr "junção de linha inválida"
 
 #: devPS.c:2817
 #, fuzzy
@@ -283,58 +278,59 @@ msgstr "cadeia de caracteres inválida em '%s'"
 
 #: devPS.c:3022 devPS.c:3959 devPS.c:4408 devPS.c:4435 devPS.c:9166
 #: devPS.c:9237
-#, c-format
+#, fuzzy, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
-msgstr ""
+msgstr "tentativa de usar fonte inválida %d substituída por fonte 1"
 
 #: devPS.c:3260 devPS.c:6887
 #, c-format
 msgid "filename too long in %s()"
-msgstr ""
+msgstr "nome de arquivo muito longo em %s()"
 
 #: devPS.c:3266 devPS.c:6893
 #, c-format
 msgid "memory allocation problem in %s()"
-msgstr ""
+msgstr "problema de alocação de memória em %s()"
 
 #: devPS.c:3284 devPS.c:6960
 #, c-format
 msgid "encoding path is too long in %s()"
-msgstr ""
+msgstr "o caminho de codificação é longa demais em %s()"
 
 #: devPS.c:3298
-#, fuzzy, c-format
+#, c-format
 msgid "failed to load encoding file in %s()"
-msgstr "falha ao carregar arquivo de codificação '%s'"
+msgstr "falha em carregar o arquivo de codificação '%s'"
 
 #: devPS.c:3343 devPS.c:3406 devPS.c:7019 devPS.c:7075 devPS.c:8965
 msgid "invalid font type"
-msgstr ""
+msgstr "tipo de fonte inválido"
 
 #: devPS.c:3367
 msgid "failed to initialise default PostScript font"
-msgstr ""
+msgstr "falha em inicializar a fonte PostScript padrão"
 
 #: devPS.c:3433
 msgid "failed to initialise additional PostScript fonts"
-msgstr ""
+msgstr "falha em inicializar fontes PostScript adicionais"
 
 #: devPS.c:3449
+#, fuzzy
 msgid "invalid foreground/background color (postscript)"
-msgstr ""
+msgstr "cor de primeiro plano/plano de fundo inválida (PostScript)"
 
 #: devPS.c:3454
 msgid "'command' is too long"
-msgstr ""
+msgstr "'command' é muito longo"
 
 #: devPS.c:3459
 msgid "'postscript(print.it=TRUE)' used with an empty 'print' command"
-msgstr ""
+msgstr "'postscript(print.it=TRUE)' usado com um comando 'print' vazio"
 
 #: devPS.c:3510
-#, c-format
+#, fuzzy, c-format
 msgid "invalid page type '%s' (postscript)"
-msgstr ""
+msgstr "tipo de página '%s' inválido (postscript)"
 
 #: devPS.c:3639 devWindows.c:2363
 msgid "semi-transparency is not supported on this device: reported only once per page"
@@ -343,12 +339,12 @@ msgstr ""
 #: devPS.c:3750 devPS.c:3761
 #, c-format
 msgid "cannot open 'postscript' pipe to '%s'"
-msgstr ""
+msgstr "não é possível abrir o pipe 'postscript' para '%s'"
 
 #: devPS.c:3772 devPS.c:8226 qdPDF.c:102
 #, c-format
 msgid "cannot open file '%s'"
-msgstr ""
+msgstr "não foi possível abrir o arquivo '%s'"
 
 #: devPS.c:3900 devPS.c:3915
 #, c-format
@@ -819,12 +815,13 @@ msgid "R Graphics"
 msgstr ""
 
 #: devWindows.c:3220
+#, fuzzy
 msgid "attempt to use the locator after dev.hold()"
-msgstr ""
+msgstr "Tentativa de uso do localizador após dev.hold()"
 
 #: devWindows.c:3251
 msgid "graphics device closed during call to locator or identify"
-msgstr ""
+msgstr "dispositivo gráfico fechado durante a chamada para o localizador ou identificação"
 
 #: devWindows.c:3523
 msgid "option 'windowsTimeouts' should be integer"

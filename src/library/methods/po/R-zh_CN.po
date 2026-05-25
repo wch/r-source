@@ -118,9 +118,8 @@ msgstr ""
 "程序包%2$s不允许泛型版本的%1$s；\n"
 "一个新的泛型函数将会同程序包%3$s一起被分配"
 
-#, fuzzy
 msgid "fdef appears to be a generic function, but with generic name %s instead of %s"
-msgstr "函数%s好象是泛型函数，却有%s的泛型名称"
+msgstr "fdef 似乎是一个通用泛化函数，但通用名称为 %s 而不是 %s"
 
 msgid "generic function %s not found for removal"
 msgstr "没有%s这样的泛型函数，因此不能将之删除"
@@ -1219,7 +1218,7 @@ msgid "no definition for object %s found in tracing environment"
 msgstr "在追溯环境里找不到%s对象的定义"
 
 msgid "multiple generics match pattern, using table %s"
-msgstr "有多个泛型同模式相匹配，用表%s"
+msgstr "多个泛型匹配正则，使用表 %s"
 
 msgid "does not seem to be a method table for generic %s in tracing environment"
 msgstr "在追溯环境里找不到%s泛型函数的方法表"

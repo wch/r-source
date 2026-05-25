@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:17\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2025-07-10 15:25+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -774,6 +774,27 @@ msgstr "'cc' ist kein Pfad"
 msgid "'objdump' is not on the path"
 msgstr "'objdump' ist kein Pfad"
 
+msgid "non-API functions declared in installed headers: %s"
+msgstr ""
+
+msgid "non-API variables declared in installed headers: %s"
+msgstr ""
+
+msgid "API funcitons not declared in installed headers: %s"
+msgstr ""
+
+msgid "API variables not in declared in installed headers: %s"
+msgstr ""
+
+msgid "in API but marked for warnings: %s"
+msgstr ""
+
+msgid "API functions listed in nonAPI: %s"
+msgstr ""
+
+msgid "API variables listed in nonAPI: %s"
+msgstr ""
+
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "Erhielt %s bei der Auswertung von %s: wollte %s"
 
@@ -974,6 +995,16 @@ msgstr "Fehler beim Lesen der Datei '%s'"
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "sieht aus wie ein Bundle -- und diese funktionieren nicht mehr"
 
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "Paket %s erfolgreich entpackt und MD5 Summen überprüft"
+
+msgid "package %s signature verified (%s %s)"
+msgstr ""
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
 msgid "'cleanup' exists but is not executable -- see the 'R Installation and Administration Manual'"
 msgstr "'cleanup' existiert, ist aber nicht ausführbar -- bitte im 'R Installation and Administration Manual' nachlesen"
 
@@ -997,9 +1028,6 @@ msgstr "Bemerkung: gefixter rpath"
 
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr "Warnung: geteilte Objekte/dynamische Bibliotheken mit fest-kodierten temporären Installationspfaden"
-
-msgid "package %s successfully unpacked and MD5 sums checked"
-msgstr "Paket %s erfolgreich entpackt und MD5 Summen überprüft"
 
 msgid "not using staged install with --libs-only"
 msgstr "staged install wird nicht genutzt mit --libs-only"
@@ -1242,6 +1270,29 @@ msgstr "x muss eine einzelne Zeichenkette sein"
 msgid "invalid hex string"
 msgstr "ungültige hex Zeichenkette"
 
+#, fuzzy
+msgid "'gpg' is not available for signing"
+msgstr "Test '%s' nicht verfügbar"
+
+msgid "Target file for the signature already exists"
+msgstr ""
+
+msgid "'%s' must be a character string"
+msgstr "'%s' muss eine Zeichenkette sein"
+
+msgid "'keyring' must be specified if 'use.default.keyring=FALSE'"
+msgstr ""
+
+msgid "Failed to invoke 'gpg' for signing"
+msgstr ""
+
+msgid "Cannot sign due to failed pin entry for key %s"
+msgstr ""
+
+#, fuzzy
+msgid "Signing failed:"
+msgstr "Laden fehlgeschlagen"
+
 msgid "this requires 'objdump.exe' to be on the PATH"
 msgstr "hierfür muss 'objdump.exe' im PATH sein"
 
@@ -1383,9 +1434,6 @@ msgstr "Schreibe finale, aktualisierte PACKAGES Dateien."
 
 msgid "update_PACKAGES complete."
 msgstr "update_PACKAGES abgeschlossen."
-
-msgid "'%s' must be a character string"
-msgstr "'%s' muss eine Zeichenkette sein"
 
 msgid "test '%s' is not available"
 msgstr "Test '%s' nicht verfügbar"

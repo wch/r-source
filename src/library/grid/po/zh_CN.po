@@ -86,7 +86,7 @@ msgstr ""
 #: grid.c:4099
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
-msgstr ""
+msgstr "绘图字符'%d'在当前地区语言无效"
 
 #: grid.c:4920
 #, c-format

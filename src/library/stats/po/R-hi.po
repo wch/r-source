@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2023-08-30 15:43+0000\n"
 "Last-Translator: Ayush Bipin Patel <ayush.ap58@gmail.com>\n"
 "Language-Team: none\n"
@@ -14,109 +14,139 @@ msgstr ""
 "X-Generator: Weblate 4.16.4\n"
 
 msgid "models are not all fitted to the same number of observations"
-msgstr ""
+msgstr "सभी मॉडलों को एक ही संख्या के अवलोकनों के लिए फिट नहीं किया गया है"
 
 msgid "empty model supplied"
-msgstr ""
+msgstr "खाली मॉडल प्रदान किया गया"
 
 msgid "'acf' must be of length two or more"
-msgstr ""
+msgstr "'acf' की लंबाई दो या उससे अधिक होनी चाहिए"
 
+#, fuzzy
 msgid "object not interpretable as a factor"
-msgstr ""
+msgstr "ऑब्जेक्ट को फैक्टर के रूप में व्याख्यायित नहीं किया जा सकता"
 
+#, fuzzy
 msgid "cannot fit models without level ('alpha' must not be 0 or FALSE)"
-msgstr ""
+msgstr "लेवल के बिना मॉडल फिट नहीं किया जा सकता ('अल्फा' 0 या FALSE नहीं होना चाहिए)"
 
+#, fuzzy
 msgid "'alpha', 'beta' and 'gamma' must be within the unit interval"
-msgstr ""
+msgstr "'अल्फा', ' बेटा', और 'गामा' यूनिट अंतराल के भीतर होना चाहिए"
 
+#, fuzzy
 msgid "data must be non-zero for multiplicative Holt-Winters"
-msgstr ""
+msgstr "गुणात्मक हॉल्ट-विंटर्स के लिए डेटा शून्य नहीं होना चाहिए"
 
+#, fuzzy
 msgid "need at least 2 periods to compute seasonal start values"
-msgstr ""
+msgstr "मौसमी प्रारंभ मान निकालने के लिए कम से कम 2 आवधिक समय की आवश्यकता होती है"
 
 msgid "invalid length(x)"
 msgstr "length(x) अमान्य है"
 
+#, fuzzy
 msgid "optimization difficulties: %s"
-msgstr ""
+msgstr "अभिव्यंदन की कठिनाइयाँ: %s"
 
+#, fuzzy
 msgid "optimization failure"
-msgstr ""
+msgstr "अनुकूलन विफलता"
 
+#, fuzzy
 msgid "time series has no or less than 2 periods"
-msgstr ""
+msgstr "टाइम सीरीज में कोई अवधि नहीं है या 2 अवधि से कम हैं"
 
+#, fuzzy
 msgid "the series is entirely NA"
-msgstr ""
+msgstr "यह श्रृंखला पूरी तरह से NA है"
 
+#, fuzzy
 msgid "frequency must be a positive integer >= 2 for BSM"
-msgstr ""
+msgstr "BSM के लिए आवृत्ति एक सकारात्मक पूर्णांक ≥ 2 होना चाहिए"
 
+#, fuzzy
 msgid "only implemented for univariate time series"
-msgstr ""
+msgstr "केवल एकल चर समय श्रृंखला के लिए लागू किया गया"
 
+#, fuzzy
 msgid "'x' must be numeric"
-msgstr ""
+msgstr "'x' संख्यात्मक होना चाहिए"
 
+#, fuzzy
 msgid "the first value of the time series must not be missing"
-msgstr ""
+msgstr "समय श्रृंखला का पहला मान गायब नहीं होना चाहिए"
 
+#, fuzzy
 msgid "all parameters were fixed"
-msgstr ""
+msgstr "सभी पैरामीटर तय कर दिए गए थे"
 
+#, fuzzy
 msgid "possible convergence problem: 'optim' gave code = %d and message %s"
-msgstr ""
+msgstr "संभावित संगम समस्या: 'optim' ने कोड = %d और संदेश = %s दिया"
 
+#, fuzzy
 msgid "no factors in the fitted model"
-msgstr ""
+msgstr "फिट किए गए मॉडल में कोई कारक नहीं"
 
+#, fuzzy
 msgid "'which' specified no factors"
-msgstr ""
+msgstr "'जिसने' कोई कारक निर्दिष्ट नहीं किया"
 
+#, fuzzy
 msgid "'which' specified some non-factors which will be dropped"
-msgstr ""
+msgstr "'which' ने कुछ गैर-घटक निर्दिष्ट किए जिन्हें हटा दिया जाएगा"
 
+#, fuzzy
 msgid "'sampleT' and 'nser' must be integer"
-msgstr ""
+msgstr "'sampleT' और 'nser' पूर्णांक होना चाहिए"
 
+#, fuzzy
 msgid "'lag.max' must be at least 0"
-msgstr ""
+msgstr "'lag.max' कम से कम 0 होना चाहिए"
 
+#, fuzzy
 msgid "'lag.max' must be at least 1"
-msgstr ""
+msgstr "'lag.max' कम से कम 1 होना चाहिए"
 
+#, fuzzy
 msgid "NAs in 'x'"
-msgstr ""
+msgstr "'x' में NAs"
 
+#, fuzzy
 msgid "x$lag must have at least 1 column"
-msgstr ""
+msgstr "x$lag में कम से कम 1 कॉलम होना चाहिए"
 
+#, fuzzy
 msgid "can use ci.type=\"ma\" only if first lag is 0"
-msgstr ""
+msgstr "ci.type=\"ma\" केवल तभी उपयोग किया जा सकता है जब पहला लैग 0 हो"
 
 msgid "Page [%d,%d]: i =%s; j =%s"
-msgstr ""
+msgstr "पृष्ठ [%d,%d]: i =%s; j =%s"
 
+#, fuzzy
 msgid "univariate time series only"
-msgstr ""
+msgstr "केवल एकचर समय श्रृंखला"
 
+#, fuzzy
 msgid "no terms in scope"
-msgstr ""
+msgstr "कोई नियम लागू नहीं"
 
+#, fuzzy
 msgid "no terms in scope for adding to object"
-msgstr ""
+msgstr "ऑब्जेक्ट में जोड़ने के लिए कोई शर्तें नहीं हैं"
 
+#, fuzzy
 msgid "number of rows in use has changed: remove missing values?"
-msgstr ""
+msgstr "इस्तेमाल में पंक्तियों की संख्या बदल गई है: क्या गायब मान हटाएं?"
 
+#, fuzzy
 msgid "attempting model selection on an essentially perfect fit is nonsense"
-msgstr ""
+msgstr "मूल रूप से पूरी तरह फिट पर मॉडल चयन करने का प्रयास बेकार है"
 
+#, fuzzy
 msgid "F test assumes quasi%s family"
-msgstr ""
+msgstr "F परीक्षण क्वासी%s परिवार मानता है"
 
 msgid "no 'add1' method implemented for \"mlm\" models"
 msgstr ""
@@ -211,7 +241,7 @@ msgid "cannot compute exact confidence interval with ties"
 msgstr ""
 
 msgid "'formula' missing or incorrect"
-msgstr ""
+msgstr "'सूत्र' गायब है या गलत है"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr ""
@@ -451,10 +481,10 @@ msgid "'x' and 'y' must have at least 2 levels"
 msgstr ""
 
 msgid "all entries of 'x' must be nonnegative and finite"
-msgstr ""
+msgstr "'x' के सभी प्रविष्टियाँ गैर-ऋणात्मक और सीमित होनी चाहिए"
 
 msgid "at least one entry of 'x' must be positive"
-msgstr ""
+msgstr "'x' का कम से कम एक मान धनात्मक होना चाहिए"
 
 msgid "cannot compute simulated p-value with zero marginals"
 msgstr ""
@@ -1744,6 +1774,12 @@ msgid "argument 'na.action' will be ignored"
 msgstr ""
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
+msgstr ""
+
+msgid "'%s' is not implemented yet"
+msgstr ""
+
+msgid "hatvalues() for nls(*, algorithm='plinear')"
 msgstr ""
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"

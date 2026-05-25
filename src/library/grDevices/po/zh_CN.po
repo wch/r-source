@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-04-25 10:47-0700\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -156,14 +156,14 @@ msgid "invalid string in '%s'"
 msgstr "'%s'里的字符串无效"
 
 #: devPS.c:811
-#, fuzzy, c-format
+#, c-format
 msgid "font width unknown for character 0x%02x in encoding %s"
-msgstr "字符0x%x不带字体宽度这样的设置"
+msgstr "编码 %2$s 中字符 0x%1$02x 的字体宽度未知"
 
 #: devPS.c:871
-#, fuzzy, c-format
+#, c-format
 msgid "font metrics unknown for Unicode character U+%04X"
-msgstr "Unicode字符U+%04x不带字体度量"
+msgstr "Unicode 字符 U+%04X 的字体规格未知"
 
 #: devPS.c:882
 #, c-format

@@ -14,18 +14,16 @@ msgstr ""
 "X-Generator: Weblate 4.16.4\n"
 
 msgid "namespace found within local environments"
-msgstr ""
+msgstr "namespace encontrado dentro de ambientes locais"
 
 msgid "not a proper evaluation environment"
 msgstr "não é um ambiente apropriado para avaliação"
 
-#, fuzzy
 msgid "non-namespace found within namespace environments"
-msgstr ""
-"'ns' deve ser um espaço de nomes ou um ambiente importado de espaço de nomes"
+msgstr "não-namespace encontrado em ambientes de namespace"
 
 msgid "namespace found within global environments"
-msgstr ""
+msgstr "namespace encontrado dentro de ambientes globais"
 
 msgid "bad assignment: %s"
 msgstr "atribuição não apropriada: %s"
@@ -78,15 +76,14 @@ msgstr "nenhuma associação para atribuição '<<-' para '%s'"
 msgid "wrong number of arguments to '%s'"
 msgstr "número de argumentos inválidos para '%s'"
 
-#, fuzzy
 msgid "more than one default provided in switch() call"
-msgstr "mais de um valor default fornecido na chamada de switch"
+msgstr "mais de um valor default fornecido na chamada de switch()"
 
 msgid "'switch' with no alternatives"
 msgstr "'switch' sem alternativas"
 
 msgid "Error: compilation failed -"
-msgstr ""
+msgstr "Erro: falha de compilação -"
 
 msgid "cannot compile a non-function"
 msgstr "não é possível compilar algo que não seja uma função"
@@ -116,17 +113,16 @@ msgid "'%s' is not a valid compiler option"
 msgstr "'%s' não é uma opção válida de compilação"
 
 msgid "invalid environment variable value: %s==%s"
-msgstr ""
+msgstr "valor de variável de ambiente inválido: %s==%s"
 
 msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
-msgstr ""
+msgstr "opções de compilador inválidas: optimize(==%d)<2 e jitEnabled(==%d)>2"
 
 msgid "function is not compiled"
 msgstr "função não está compilada"
 
-#, fuzzy
 msgid "cannot compile this expression"
-msgstr "não é possível compilar promessas literais em código"
+msgstr "não é possível compilar esta expressão"
 
 msgid "local assignment to syntactic function: "
 msgid_plural "local assignments to syntactic functions: "

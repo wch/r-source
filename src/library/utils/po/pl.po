@@ -26,9 +26,10 @@ msgstr ""
 msgid "invalid '%s' argument"
 msgstr "niepoprawny argument '%s'"
 
+
 #: io.c:350 io.c:841
 msgid "invalid quote symbol set"
-msgstr "niepoprawne ustawiony symbol cudzysłowiu"
+msgstr "niepoprawnie ustawiony symbol cudzysłowu"
 
 #: io.c:362 io.c:864 io.c:1084
 msgid "cannot open the connection"
@@ -41,7 +42,7 @@ msgstr "nie można czytać z tego połączenia"
 #: io.c:416 io.c:434
 #, c-format
 msgid "quoted string on line %d terminated by EOF"
-msgstr "cytowany łańcuch tekstowy w linii %d przerwany przez znak końca pliku (EOF)"
+msgstr "cytowany ciąg znaków w linii %d przerwany przez znak końca pliku (EOF)"
 
 #: io.c:569
 msgid "the first argument must be of mode character"
@@ -50,7 +51,7 @@ msgstr "pierwszy argument musi być trybu tekstowego"
 #: io.c:599
 #, c-format
 msgid "invalid 'numerals' string: \"%s\""
-msgstr "niepoprawny łańcuch tekstowy 'numerals': \"%s\""
+msgstr "niepoprawny ciąg znaków 'numerals': \"%s\""
 
 #: io.c:779
 #, c-format
@@ -61,9 +62,10 @@ msgstr "Wybór: "
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr "nie można przydzielić bufora w 'readTableHead'"
 
+
 #: io.c:902
 msgid "\\ followed by EOF"
-msgstr "\\ a następnie EOF"
+msgstr "\\ po którym następuje EOF"
 
 #: io.c:954 io.c:958
 #, c-format
@@ -87,26 +89,26 @@ msgstr "Problem podczas zamykania połączenia"
 msgid "'file' is not a connection"
 msgstr "argument 'file' nie jest połączeniem"
 
+
 #: io.c:1080
 msgid "cannot write to this connection"
-msgstr "nie można zapisać w tym połączeniu"
+msgstr "nie można zapisać do tego połączenia"
 
 #: io.c:1111
 msgid "'dec' must be a single character"
 msgstr "argument 'dec' musi być pojedynczym znakiem"
 
 #: io.c:1138
-#, fuzzy, c-format
+#, c-format
 msgid "corrupt data frame -- length of column %d does not match nrows"
 msgstr "uszkodzona ramka danych -- długość kolumny %d nie zgadza się z liczbą wierszy"
 
 #: io.c:1172
-#, fuzzy, c-format
+#, c-format
 msgid "column %d claims to be a factor but does not have numeric codes"
 msgstr "kolumna %d twierdzi, że jest czynnikiem, ale nie posiada kodów liczbowych"
 
 #: io.c:1190
-#, fuzzy
 msgid "corrupt matrix -- dims do not match length"
 msgstr "macierz jest uszkodzona -- wymiary nie zgadzają się z długością"
 
@@ -138,21 +140,19 @@ msgstr "niepoprawne określenie '%s'"
 #: stubs.c:254
 #, c-format
 msgid "'%s' contains missing values"
-msgstr ""
+msgstr "'%s' zawiera brakujące wartości"
 
 #: utils.c:68
-#, fuzzy
 msgid "argument 'class' must be a character string"
-msgstr "argument 'text' musi być łańcuchem tekstowym"
+msgstr "argument 'class' musi być ciągiem znaków"
 
 #: utils.c:78
-#, fuzzy
 msgid "argument 'x' must be a length-1 character vector"
-msgstr "argument 'text' musi być wektorem tekstowym lub pustym wektorem"
+msgstr "argument 'x' musi być wektorem tekstowym o długości 1"
 
 #: utils.c:81
 msgid "argument 'x' must be UTF-8 encoded (including ASCII)"
-msgstr ""
+msgstr "argument 'x' musi być w kodowaniu UTF-8 (wliczając ASCII)"
 
 #: utils.c:147
 msgid "'hostname' must be a character vector of length 1"
@@ -231,13 +231,14 @@ msgstr "nie można otworzyć schowka"
 msgid "unable to write to the clipboard"
 msgstr "nie można zapisać do schowka"
 
+
 #: windows/util.c:416
 msgid "'title' must be a character string"
-msgstr "argument 'title' musi być łańcuchem tekstowym"
+msgstr "argument 'title' musi być ciągiem znaków"
 
 #: windows/util.c:425
 msgid "'text' must be a character string"
-msgstr "argument 'text' musi być łańcuchem tekstowym"
+msgstr "argument 'text' musi być ciągiem znaków"
 
 #: windows/util.c:464
 #, c-format
@@ -262,17 +263,19 @@ msgstr "Wybierz jeden lub więcej"
 msgid "Select one"
 msgstr "Wybierz jeden"
 
+
 #: windows/widgets.c:196 windows/widgets.c:266
 msgid "'default' must be a character string"
-msgstr "argument 'default' musi być łańcuchem tekstowym"
+msgstr "argument 'default' musi być ciągiem znaków"
 
 #: windows/widgets.c:198
 msgid "'default' is overlong"
 msgstr "argument 'default' jest zbyt długi"
 
+
 #: windows/widgets.c:202 windows/widgets.c:272
 msgid "'caption' must be a character string"
-msgstr "argument 'caption' musi być łańcuchem tekstowym"
+msgstr "argument 'caption' musi być ciągiem znaków"
 
 #: windows/widgets.c:204
 msgid "'multi' must be a logical value"

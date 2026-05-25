@@ -55,9 +55,10 @@ msgstr "tylko potomne procesy mogą przesłać dane do procesu głównego"
 msgid "there is no pipe to the master process"
 msgstr "nie ma potoku do procesu głównego"
 
+
 #: fork.c:765
 msgid "content to send must be RAW, use serialize() if needed"
-msgstr "zawartość do wysłania musi być PUSTA, użyj 'serialize()' jeśli konieczne"
+msgstr "zawartość do wysłania musi być typu RAW, użyj 'serialize()' jeśli konieczne"
 
 #: fork.c:774 fork.c:785 fork.c:1204
 msgid "write error, closing pipe to the master"

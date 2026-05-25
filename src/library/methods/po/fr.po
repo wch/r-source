@@ -33,7 +33,8 @@ msgstr "type inattendu '%s' pour le message de condition"
 
 #: methods_list_dispatch.c:132
 msgid "condition message must be length 1"
-msgstr "le message de condition doit �tre de longueur unitaire"
+msgstr ""
+"le message de condition doit ï¿½tre de longueur unitaire"
 
 #: methods_list_dispatch.c:213
 msgid "could not find the skeleton calls for 'methods' (package detached?): expect very bad things to happen"
@@ -51,12 +52,16 @@ msgstr "La m�thode de s�lection du langage S a g�n�r� une erreur lors 
 
 #: methods_list_dispatch.c:409
 msgid "Function name for method selection called internally"
-msgstr "Nom de fonction pour la s�lection de m�thode appel� en interne"
+msgstr ""
+"Nom de fonction pour la sï¿½lection de mï¿½thode appelï¿½ en "
+"interne"
 
 #: methods_list_dispatch.c:505
 #, c-format
 msgid "no generic function definition found for '%s'"
-msgstr "pas de d�finition de fonction g�n�rique trouv�e pour '%s'"
+msgstr ""
+"pas de dï¿½finition de fonction gï¿½nï¿½rique trouvï¿½e pour "
+"'%s'"
 
 #: methods_list_dispatch.c:506
 #, c-format
@@ -75,7 +80,9 @@ msgstr "pas de m�thode directe ou h�rit�e pour la fonction '%s' dans cet a
 
 #: methods_list_dispatch.c:586 methods_list_dispatch.c:1166
 msgid "invalid object (non-function) used as method"
-msgstr "objet incorrect (autre chose qu'une fonction) utilis� dans cette m�thode"
+msgstr ""
+"objet incorrect (autre chose qu'une fonction) utilisï¿½ dans "
+"cette mï¿½thode"
 
 #: methods_list_dispatch.c:607
 #, c-format
@@ -89,7 +96,8 @@ msgstr "symbole incorrect dans la v�rification des arguments manquants dans le
 
 #: methods_list_dispatch.c:618
 msgid "use of NULL environment is defunct"
-msgstr "l'utilisation de l'environnement NULL n'est plus autoris�e"
+msgstr ""
+"l'utilisation de l'environnement NULL n'est plus autorisï¿½e"
 
 #: methods_list_dispatch.c:622
 #, c-format
@@ -129,7 +137,9 @@ msgstr "utilisation r�cursive de la fonction '%s' dans la s�lection de m�t
 #: methods_list_dispatch.c:740
 #, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
-msgstr "erreur lors de l'�valuation d'une 'primitive' comme m�thode suivante : %s"
+msgstr ""
+"erreur lors de l'ï¿½valuation d'une 'primitive' comme "
+"mï¿½thode suivante : %s"
 
 #: methods_list_dispatch.c:896
 #, c-format
@@ -139,7 +149,9 @@ msgstr "'%s' doit �tre une cha�ne de caract�res unique (un vecteur de cara
 #: methods_list_dispatch.c:900
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
-msgstr "'%s' doit �tre une cha�ne de caract�res non vide ; Une cha�ne de caract�res vide est renvoy�e"
+msgstr ""
+"'%s' doit ï¿½tre une chaï¿½ne de caractï¿½res non vide ; Une "
+"chaï¿½ne de caractï¿½res vide est renvoyï¿½e"
 
 #: methods_list_dispatch.c:904
 #, c-format
@@ -153,7 +165,9 @@ msgstr "class doit �tre soit un nom sous forme de cha�ne de caract�res, so
 #: methods_list_dispatch.c:1075
 #, c-format
 msgid "failed to get the generic for the primitive \"%s\""
-msgstr "impossible de trouver la fonction g�n�rique pour la primitive \"%s\""
+msgstr ""
+"impossible de trouver la fonction gï¿½nï¿½rique pour la "
+"primitive \"%s\""
 
 #: methods_list_dispatch.c:1082
 #, c-format

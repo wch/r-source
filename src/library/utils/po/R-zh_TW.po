@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-08 11:37\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -33,7 +33,7 @@ msgstr "找不到這個說明書"
 msgid "some options in argument 'restrict' were not recognized and hence ignored"
 msgstr ""
 
-msgid "argument 'format' is deprecated and has no affect on search results"
+msgid "argument 'format' is deprecated and has no effect on search results"
 msgstr ""
 
 msgid "A search query has been submitted to %s"
@@ -97,6 +97,17 @@ msgstr "'results' 這個選項的值必須小寫"
 msgid "value of 'strip.white' option should be lowercase"
 msgstr "'strip.white' 這個選項的值必須小寫"
 
+msgid "using default value %s"
+msgstr ""
+
+#, fuzzy
+msgid "this function cannot be used from an interactive session"
+msgstr "winDialog() 不能在非交互形式下使用"
+
+#, fuzzy
+msgid "unrecognized Sweave call"
+msgstr "不明的數值指示器"
+
 msgid "elements of 'what' after the first will be ignored"
 msgstr "只用 'what' 值裡的第一個元素"
 
@@ -143,6 +154,10 @@ msgstr "沒有可用的拼寫查對器"
 
 msgid "Performing query %s"
 msgstr ""
+
+#, fuzzy
+msgid "Unsupported object"
+msgstr "不支援此一項目種類"
 
 msgid ""
 "Use <code> %s </code> \n"
@@ -755,8 +770,8 @@ msgstr "從 'pkgs' 推斷 'repos = NULL'"
 msgid "unable to create temporary directory %s"
 msgstr "無法建立臨時目錄 %s"
 
-msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
-msgstr "type == \"both\" 只適用在 Windows 上或在為 Mac OS X 的 CRAN 組建上"
+msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
+msgstr ""
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
 msgstr "設定了 'repos = NULL' 後就不能再設定 type == \"both\""
@@ -1229,8 +1244,16 @@ msgstr "檔案 %s 不是 MacOS X 的二進位套件"
 msgid "binary package %s is not compatible with this build of R"
 msgstr ""
 
-msgid "package %s successfully unpacked and MD5 sums checked"
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
 msgstr "程式套件 %s 開啟成功，MD5 和檢查也透過"
+
+#, fuzzy
+msgid "package %s signature verified (%s %s)"
+msgstr "沒有 %s 這個程式套件 (給 %s 用)"
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
 
 msgid ""
 "ERROR: failed to lock directory %s for modifying\n"
@@ -1436,6 +1459,9 @@ msgstr[0] "最後一個記錄不完全，%d 列忽略不用"
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "羅馬數字不對：%s"
+
+#~ msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
+#~ msgstr "type == \"both\" 只適用在 Windows 上或在為 Mac OS X 的 CRAN 組建上"
 
 #~ msgid "no R objects specified or available"
 #~ msgstr "沒有指點定的 R 物件"

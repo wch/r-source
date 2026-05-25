@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-04-25 10:48-0700\n"
 "PO-Revision-Date: 2022-08-31 15:04+0000\n"
 "Last-Translator: Marcel Ramos <marcel.ramos@sph.cuny.edu>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -33,14 +33,14 @@ msgid "md5 failed on file '%s'"
 msgstr "md5 a échoué sur le fichier '%s'"
 
 #: Rsha256.c:86
-#, fuzzy, c-format
+#, c-format
 msgid "sha256 failed on file '%ls'"
-msgstr "md5 a échoué sur le fichier ‘%ls'"
+msgstr "erreur de sha256 sur le fichier ‘%ls'"
 
 #: Rsha256.c:88
-#, fuzzy, c-format
+#, c-format
 msgid "sha256 failed on file '%s'"
-msgstr "md5 a échoué sur le fichier '%s'"
+msgstr "erreur de sha256 sur le fichier '%s'"
 
 #: getfmts.c:60
 #, c-format
@@ -58,7 +58,7 @@ msgstr "'fmt' doit avoir une longueur 1"
 #: getfmts.c:74
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
-msgstr "la longueur de 'fmt' dépasse le format maximal de longueur %d"
+msgstr "la longueur de 'fmt' dépasse la longueur du format maximal %d"
 
 #: getfmts.c:95
 #, c-format
@@ -87,7 +87,7 @@ msgstr "marque erronée (espace additionel ?) à %s:%d:%d"
 #: gramRd.c:3112
 #, c-format
 msgid "Macro '%s' previously defined."
-msgstr "La macro '%s' est déjà précédemment définie."
+msgstr "La macro '%s' est déjà définie précédemment."
 
 #: gramRd.c:3122
 #, c-format
@@ -112,7 +112,7 @@ msgstr "retour de ligne à l'intérieur d'une chaîne de caractères entre guill
 #: gramRd.c:3390
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
-msgstr "impossible d'allouer de la mémoire tampon pour une longue macro à la lign %d"
+msgstr "impossible d'allouer de la mémoire tampon pour une longue macro à la ligne %d"
 
 #: gramRd.c:3420
 msgid "macros nested too deeply: infinite recursion?"

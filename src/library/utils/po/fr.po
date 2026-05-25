@@ -33,13 +33,14 @@ msgstr "argument '%s' incorrect"
 msgid "invalid quote symbol set"
 msgstr "set de symboles pour mettre du texte entre guillemets incorrect"
 
+
 #: io.c:362 io.c:864 io.c:1084
 msgid "cannot open the connection"
-msgstr "impossible d’ouvrir la connection"
+msgstr "impossible d'ouvrir la connexion"
 
 #: io.c:365 io.c:369
 msgid "cannot read from this connection"
-msgstr "impossible de lire depuis la connection"
+msgstr "impossible de lire depuis cette connexion"
 
 #: io.c:416 io.c:434
 #, c-format
@@ -143,14 +144,15 @@ msgid "'%s' contains missing values"
 msgstr "'%s' contient des valeurs manquantes"
 
 #: utils.c:68
-#, fuzzy
 msgid "argument 'class' must be a character string"
-msgstr "'text' doit être une chaîne de caractères"
+msgstr ""
+"l'argument 'class' doit être une chaîne de caractères"
 
 #: utils.c:78
-#, fuzzy
 msgid "argument 'x' must be a length-1 character vector"
-msgstr "l’argument doit être une chaîne de caractères ou un vecteur raw"
+msgstr ""
+"l’argument 'x' doit être un vecteur de caractères de "
+"longueur 1"
 
 #: utils.c:81
 msgid "argument 'x' must be UTF-8 encoded (including ASCII)"

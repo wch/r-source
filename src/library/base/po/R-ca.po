@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2023-11-20 03:05+0000\n"
 "Last-Translator: Robert Castelo <robert.castelo@upf.edu>\n"
 "Language-Team: none\n"
@@ -55,16 +55,14 @@ msgstr "el segon argument ha de ser una llista"
 msgid "'iconvlist' is not available on this system"
 msgstr "«iconvlist» no està disponible en aquest sistema"
 
-#, fuzzy
 msgid "'kind' must be a character string (RNG to be used)."
-msgstr "«kind» ha de ser una cadena de caràcters de longitud 1 (RNG a usar)."
+msgstr "«kind» ha de ser una cadena de caràcters (RNG a utilitzar)."
 
 msgid "'%s' is not a valid abbreviation of an RNG"
 msgstr "«%s» no és una abreviatura vàlida d'un RNG"
 
-#, fuzzy
 msgid "'%s' must be a character string"
-msgstr "«name» ha de ser una única cadena de caràcters"
+msgstr "«%s» ha de ser una cadena de caràcters"
 
 msgid "'%s' is not a valid choice"
 msgstr "«%s» no és una elecció vàlida"
@@ -249,6 +247,9 @@ msgstr "s'han proporcionat «dimnames» no vàlids per al «data frame»"
 msgid "cannot coerce class %s to a data.frame"
 msgstr "no es pot forçar la classe %s a «data.frame»"
 
+msgid "row names contain missing values"
+msgstr "els noms de les files contenen valors no disponibles"
+
 msgid "'row.names' is not a character or integer vector of length %d"
 msgstr "«row.names» no és un vector de caràcters o enters de longitud %d"
 
@@ -257,9 +258,6 @@ msgstr "els noms de les files als arguments de «data.frame» no coincideixen, e
 
 msgid "some row.names duplicated: %s --> row.names NOT used"
 msgstr "alguns «row.names» duplicats: %s --> «row.names» NO utilitzats"
-
-msgid "row names contain missing values"
-msgstr "els noms de les files contenen valors no disponibles"
 
 msgid "duplicate row.names: %s"
 msgstr "«row.names» duplicats: %s"
@@ -743,24 +741,22 @@ msgid "No factors specified"
 msgstr "No s'ha especificat cap factor"
 
 msgid "invalid '%s': type \"%s\""
-msgstr ""
+msgstr "«%s» no vàlid: tipus \"%s\""
 
-#, fuzzy
 msgid "'uplo' must be \"U\" or \"L\""
-msgstr "«wait» ha de ser TRUE o FALSE"
+msgstr "«uplo» ha de ser \"U\" o \"L\""
 
-#, fuzzy
 msgid "invalid nrow(z)"
-msgstr "nrow(x) no vàlid"
+msgstr "nrow(z) no vàlid"
 
 msgid "triangular matrix should be square"
 msgstr "la matriu triangular ha de ser quadrada"
 
 msgid "using 1-norm approximation for approximate 2-norm"
-msgstr ""
+msgstr "s'està usant l'aproximació 1-norm per aproximar 2-norm"
 
 msgid "norm=\"%s\" not available here; using norm=\"1\""
-msgstr ""
+msgstr "norm=\"%s\" no disponible aquí; s'usarà norm=\"1\""
 
 msgid "unknown conflict policy: %s"
 msgstr "política de conflictes desconeguda: %s"
@@ -931,9 +927,8 @@ msgstr "s'ha d'especificar «file»"
 msgid "nothing specified to be save()d"
 msgstr "no s'ha especificat res per a desar"
 
-#, fuzzy
 msgid "'%s' must be a non-empty character string"
-msgstr "«%s» ha de ser una cadena no buida"
+msgstr "«%s» ha de ser una cadena de caràcters no buida"
 
 msgid "'compress' must be logical or character"
 msgstr "«compress» ha de ser «logical» o «character»"
@@ -1357,9 +1352,8 @@ msgstr "estructura 'rle' no vàlida"
 msgid "... must contain names or character strings"
 msgstr "... ha de contenir noms o cadenes de caràcters"
 
-#, fuzzy
 msgid "invalid 'x'"
-msgstr "«dims» no vàlid"
+msgstr "«x» no vàlid"
 
 msgid "incorrect length for 'group'"
 msgstr "longitud incorrecta per «group»"
@@ -1741,7 +1735,7 @@ msgid "'invisible' must be TRUE or FALSE"
 msgstr "«invisible» ha de ser TRUE o FALSE"
 
 msgid "running command '%s' had status %d"
-msgstr "l'ordre en execució «%s» té l'estat %d"
+msgstr "l'ordre en execució «%s» tenia l'estat %d"
 
 msgid "'%s' could not be run"
 msgstr "no s'ha pogut executar «%s»"
@@ -1846,8 +1840,8 @@ msgstr[1] "els paquets %s no s'han carregat"
 
 msgid "there is no package called"
 msgid_plural "there are no packages called"
-msgstr[0] "no s'ha cridat cap paquet"
-msgstr[1] "no s'ha cridat cap paquet"
+msgstr[0] "no hi ha cap paquet anomenat"
+msgstr[1] "no hi han paquets anomenats"
 
 msgid "object %s not found"
 msgid_plural "objects %s not found"

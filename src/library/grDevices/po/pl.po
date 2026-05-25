@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-04-25 10:47-0700\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -22,7 +22,7 @@ msgstr "'%s' musi być liczbą o długości %d"
 
 #: clippath.c:36
 msgid "Clipping path ignored (device is appending path)"
-msgstr ""
+msgstr "Ścieżka przycinająca zignorowana (urządzenie dołącza ścieżkę)"
 
 #: colors.c:69
 #, c-format
@@ -126,7 +126,7 @@ msgstr "liczbowe wartości koloru muszą być >=0, znaleziono %d"
 
 #: colors.c:1510
 msgid "invalid argument type"
-msgstr "niepoprawny argument 'type'"
+msgstr "niepoprawny typ argumentu"
 
 #: colors.c:1521
 msgid "unknown palette (need >= 2 colors)"
@@ -150,17 +150,17 @@ msgstr "napotkano nieznany obiekt AFM"
 #: devPicTeX.c:479
 #, c-format
 msgid "invalid string in '%s'"
-msgstr "niepoprawny łańcuch w '%s'"
+msgstr "niepoprawny tekst w '%s'"
 
 #: devPS.c:811
-#, fuzzy, c-format
+#, c-format
 msgid "font width unknown for character 0x%02x in encoding %s"
-msgstr "nieznana szerokość czcionki dla znaku '0x%x'"
+msgstr "nieznana szerokość czcionki dla znaku '0x%02x' w kodowaniu %s"
 
 #: devPS.c:871
-#, fuzzy, c-format
+#, c-format
 msgid "font metrics unknown for Unicode character U+%04X"
-msgstr "nieznane metryki czcionki dla znaku Unicode 'U+%04x'"
+msgstr "nieznane metryki czcionki dla znaku Unicode 'U+%04X'"
 
 #: devPS.c:882
 #, c-format
@@ -170,17 +170,17 @@ msgstr "nieznane kodowanie '%s' w 'PostScriptMetricInfo'"
 #: devPS.c:899
 #, c-format
 msgid "Unicode character %lc (U+%04X) cannot be converted"
-msgstr ""
+msgstr "Znak Unicode %lc (U+%04X) nie może być przekształcony"
 
 #: devPS.c:918 devPS.c:972
-#, fuzzy, c-format
+#, c-format
 msgid "font metrics unknown for character 0x%02x in encoding %s"
-msgstr "nieznane metryki czcionki dla znaku '0x%x'"
+msgstr "nieznane metryki czcionki dla znaku '0x%02x' w kodowaniu %s"
 
 #: devPS.c:987
-#, fuzzy, c-format
+#, c-format
 msgid "invalid character (%04X) sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
-msgstr "niepoprawny znak (%04x) wysłany do 'PostScriptCIDMetricInfo' w jednobajtowej lokalizacji"
+msgstr "niepoprawny znak (%04X) wysłany do 'PostScriptCIDMetricInfo' w jednobajtowej lokalizacji"
 
 #: devPS.c:995
 msgid "invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
@@ -192,7 +192,7 @@ msgstr "nie udało się przydzielić informacji o czcionce CID"
 
 #: devPS.c:1123
 msgid "failed to allocate Type 1 font info"
-msgstr "nie udało się przydzielić informacji o czcionce  Type 1"
+msgstr "nie udało się przydzielić informacji o czcionce Type 1"
 
 #: devPS.c:1143
 msgid "failed to allocate encoding info"
@@ -216,7 +216,7 @@ msgstr "nie udało się przydzielić listy kodowań"
 
 #: devPS.c:1424
 msgid "truncated string which was too long for copy"
-msgstr "przycięty łańcuch, który był zbyt długi do skopiowania"
+msgstr "przycięto tekst, który był zbyt długi do skopiowania"
 
 #: devPS.c:1464
 #, c-format
@@ -365,14 +365,14 @@ msgid "unknown encoding '%s' in 'mbcsToSbcs'"
 msgstr "nieznana strona kodowa '%s' w 'mbcsToSbcs'"
 
 #: devPS.c:4647 devPS.c:4654
-#, fuzzy, c-format
+#, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': for <%02x>"
-msgstr "niepowodzenie konwersji '%s' w 'mbcsToSbcs': kropka zastąpiona <%02x>"
+msgstr "błąd konwersji na '%s'; w 'mbcsToSbcs': dla <%02x>"
 
 #: devPS.c:4649 devPS.c:4656
 #, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"
-msgstr "niepowodzenie konwersji '%s' w 'mbcsToSbcs': kropka zastąpiona <%02x>"
+msgstr "niepowodzenie konwersji na '%s' w 'mbcsToSbcs': kropka zastąpiona <%02x>"
 
 #: devPS.c:4738
 #, c-format
@@ -382,49 +382,47 @@ msgstr "nie udało się otworzyć konwertera dla kodowania '%s'"
 #: devPS.c:4756 devPS.c:9337
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
-msgstr "konwersja tesktu dla kodowania '%s' nie powiodła się"
+msgstr "konwersja tekstu dla kodowania '%s' nie powiodła się"
 
 #: devPS.c:5142
-#, fuzzy
 msgid "Failed to allocate PDF definition string"
-msgstr "nie udało się przydzielić listy czcionek"
+msgstr "Nie udało się przydzielić ciągu definicji PDF"
 
 #: devPS.c:5164
 msgid "failed to increase definition string (shut down PDF device)"
-msgstr ""
+msgstr "nie udało się zwiększyć ciągu definicji (zamknij urządzenie PDF)"
 
 #: devPS.c:5214
-#, fuzzy
 msgid "failed to increase 'maxDefns'"
-msgstr "nie udało się zwiększyć 'maxRaster'"
+msgstr "nie udało się zwiększyć 'maxDefns'"
 
 #: devPS.c:5846
 msgid "Drawing not appended to path (contains text)"
-msgstr ""
+msgstr "Rysunek nie jest dołączony do ścieżki (zawiera tekst)"
 
 #: devPS.c:6075
 msgid "Compositing operator has no corresponding blend mode; defaulting to Normal"
-msgstr ""
+msgstr "Operator tworzenia kompozycji nie ma odpowiadającego mu trybu mieszania; ustawianie domyślnego trybu 'Normal'"
 
 #: devPS.c:6348
 msgid "Failed to write PDF clipping path"
-msgstr ""
+msgstr "Nie udało się zapisać ścieżki przycinającej PDF"
 
 #: devPS.c:6373
 msgid "Failed to write PDF stroke"
-msgstr ""
+msgstr "Nie udało się zapisać obrysu PDF"
 
 #: devPS.c:6394
 msgid "Failed to write PDF fill"
-msgstr ""
+msgstr "Nie udało się zapisać wypełnienia PDF"
 
 #: devPS.c:6415
 msgid "Failed to write PDF fillStroke"
-msgstr ""
+msgstr "Nie udało się zapisać pliku PDF fillStroke"
 
 #: devPS.c:6461
 msgid "Glyph ID larger than 0xFFFF; output will be incorrect"
-msgstr ""
+msgstr "Identyfikator glifu większy niż 0xFFFF; dane wyjściowe będą nieprawidłowe"
 
 #: devPS.c:6484
 msgid "invalid 'alpha' value in PDF"
@@ -460,11 +458,11 @@ msgstr "nie udało się załadować domyślnej strony kodowej"
 
 #: devPS.c:7043
 msgid "failed to initialise default PDF font"
-msgstr "nie udało się zainicjalizować domyślnej czcionki PDF"
+msgstr "nie udało się zainicjować domyślnej czcionki PDF"
 
 #: devPS.c:7098
 msgid "failed to initialise additional PDF fonts"
-msgstr "nie udało się zainicjalizować dodatkowych czcionek PDF"
+msgstr "nie udało się zainicjować dodatkowych czcionek PDF"
 
 #: devPS.c:7111
 msgid "failed to allocate rasters"
@@ -475,9 +473,8 @@ msgid "failed to allocate masks"
 msgstr "nie udało się przydzielić masek"
 
 #: devPS.c:7128
-#, fuzzy
 msgid "failed to allocate definitions"
-msgstr "nie udało się przydzielić listy czcionek"
+msgstr "nie udało się przydzielić definicji"
 
 #: devPS.c:7201
 #, c-format
@@ -537,16 +534,16 @@ msgstr "nie udało się znaleźć lub załadować czcionkę PDF"
 
 #: devPS.c:9173 devPS.c:9232
 msgid "Text not added to path containing other drawing"
-msgstr ""
+msgstr "Tekst nie został dodany do ścieżki zawierającej inny rysunek"
 
 #: devPS.c:9282 devPS.c:9449
 msgid "failed to find or load PDF CID font"
 msgstr "nie udało się znaleźć lub załadować czcionkę CID PDF"
 
 #: devPS.c:9948 devPicTeX.c:763
-#, fuzzy, c-format
+#, c-format
 msgid "invalid 'file' parameter in %s"
-msgstr "niepoprawny parametr 'family' w %s"
+msgstr "nieprawidłowy parametr 'file' w %s"
 
 #: devPS.c:9957 devPS.c:9961 devPS.c:10059 devPS.c:10063
 #, c-format
@@ -572,84 +569,80 @@ msgstr "nie można uruchomić urządzenia '%s()'"
 
 #: devQuartz.c:477
 msgid "Quartz gradients exhausted (failed to increase maxPatterns)"
-msgstr ""
+msgstr "Gradienty Quartz zostały wyczerpane (nie udało się zwiększyć maxPatterns)"
 
 #: devQuartz.c:483
 msgid "Quartz patterns exhausted (failed to increase maxPatterns)"
-msgstr ""
+msgstr "Wzory Quartz zostały wyczerpane (nie udało się zwiększyć maxPatterns)"
 
 #: devQuartz.c:524 cairo/cairoFns.c:350
 msgid "Attempt to release non-existent pattern"
-msgstr ""
+msgstr "Próba zwolnienia nieistniejącego wzorca"
 
 #: devQuartz.c:561
 msgid "Quartz patterns exhausted"
-msgstr ""
+msgstr "Wzorce Quartz zostały wyczerpane"
 
 #: devQuartz.c:627 devQuartz.c:642 devQuartz.c:644 devQuartz.c:675
 #: devQuartz.c:677
-#, fuzzy
 msgid "Failed to create gradient"
-msgstr "nie udało się zwiększyć 'maxRaster'"
+msgstr "Nie udało się utworzyć gradientu"
 
 #: devQuartz.c:659 devQuartz.c:692
 msgid "Unsupported gradient fill extend type; using 'pad'"
-msgstr ""
+msgstr "Nieobsługiwany typ wydłużenia wypełnienia gradientowego; używanie 'pad'"
 
 #: devQuartz.c:735 devQuartz.c:768
-#, fuzzy
 msgid "Failed to create pattern"
-msgstr "nie udało się przydzielić rastrów"
+msgstr "Nie udało się utworzyć wzorca"
 
 #: devQuartz.c:758
 msgid "Unsupported pattern extend mode;  using \"repeat\""
-msgstr ""
+msgstr "Nieobsługiwany tryb rozszerzania wzorca;  używanie \"repeat\""
 
 #: devQuartz.c:822
 msgid "Quartz clipping paths exhausted (failed to increase maxClipPaths)"
-msgstr ""
+msgstr "Wyczerpano ścieżki przycinania Quartz (nie udało się zwiększyć maxClipPaths)"
 
 #: devQuartz.c:871
 msgid "Quartz clipping paths exhausted"
-msgstr ""
+msgstr "Wyczerpano ścieżki przycinania Quartz"
 
 #: devQuartz.c:879
-#, fuzzy
 msgid "Failed to create clipping path"
-msgstr "nie udało się przydzielić listy kodowań"
+msgstr "Nie udało się utworzyć ścieżki przycinającej"
 
 #: devQuartz.c:974
 msgid "Quartz masks exhausted (failed to increase maxMasks)"
-msgstr ""
+msgstr "Wyczerpano maski Quartz (nie udało się zwiększyć maxMasks)"
 
 #: devQuartz.c:1025
 msgid "Quartz masks exhausted"
-msgstr ""
+msgstr "Wyczerpano maski Quartz"
 
 #: devQuartz.c:1041
-#, fuzzy
 msgid "Failed to create Quartz mask"
-msgstr "nie udało się przydzielić masek"
+msgstr "Nie udało się utworzyć maski Quartz"
 
 #: devQuartz.c:1143
 msgid "Quartz groups exhausted (failed to increase maxGroups)"
-msgstr ""
+msgstr "Wyczerpano grupy Quartz (nie udało się zwiększyć maxGroups)"
 
 #: devQuartz.c:1171 cairo/cairoFns.c:920
 msgid "Attempt to release non-existent group"
-msgstr ""
+msgstr "Próba zwolnienia nieistniejącej grupy"
 
 #: devQuartz.c:1200
 msgid "Quartz groups exhausted"
-msgstr ""
+msgstr "Wyczerpano grupy Quartz"
 
 #: devQuartz.c:1220
 msgid "Add compositing operator not supported; falling back to over"
-msgstr ""
+msgstr "Operator dodawania kompozycji nie jest obsługiwany; ustawianie trybu 'nad'"
 
 #: devQuartz.c:1308 cairo/cairoFns.c:877
 msgid "Groups exhausted"
-msgstr ""
+msgstr "Grupy wyczerpane"
 
 #: devQuartz.c:1703
 #, c-format
@@ -667,25 +660,24 @@ msgstr "nie można było znaleźć żadnej czcionki dla rodziny '%s'"
 
 #: devQuartz.c:2742 cairo/cairoFns.c:528
 msgid "Attempt to reuse non-existent clipping path"
-msgstr ""
+msgstr "Próba ponownego użycia nieistniejącej ścieżki przycinającej"
 
 #: devQuartz.c:2763 cairo/cairoFns.c:541
 msgid "Attempt to release non-existent clipping path"
-msgstr ""
+msgstr "Próba zwolnienia nieistniejącej ścieżki przycinającej"
 
 #: devQuartz.c:2814 cairo/cairoFns.c:688
 msgid "Attempt to release non-existent mask"
-msgstr ""
+msgstr "Próba zwolnienia nieistniejącej maski"
 
 #: devQuartz.c:3172
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid font path: \"%s\""
-msgstr "niepoprawny parametr 'fonts' w %s"
+msgstr "Nieprawidłowa ścieżka czcionki: \"%s\""
 
 #: devQuartz.c:3216
-#, fuzzy
 msgid "Failed to load font"
-msgstr "nie udało się przydzielić listy czcionek"
+msgstr "nie udało się załadować czcionki"
 
 #: devQuartz.c:3309 devQuartz.c:3314
 msgid "invalid 'file' argument"
@@ -697,7 +689,7 @@ msgstr "niepoprawny rozmiar urządzenia 'quartz()'"
 
 #: devQuartz.c:3369
 msgid "unable to create device description"
-msgstr "nie można utworzyć opisu urządzenia."
+msgstr "nie można utworzyć opisu urządzenia"
 
 #: devQuartz.c:3419
 msgid "unable to create quartz() device target, given type may not be supported"
@@ -861,15 +853,15 @@ msgstr ""
 
 #: group.c:38
 msgid "Group definition ignored (device is appending path)"
-msgstr ""
+msgstr "Definicja grupy została zignorowana (urządzenie dołącza ścieżkę)"
 
 #: group.c:57
 msgid "Group use ignored (device is appending path)"
-msgstr ""
+msgstr "Grupowe użycie zostało zignorowane (urządzenie dołącza ścieżkę)"
 
 #: mask.c:37
 msgid "Mask ignored (device is appending path)"
-msgstr ""
+msgstr "Maska została zignorowana (urządzenie dołącza ścieżkę)"
 
 #: qdBitmap.c:75
 #, fuzzy
@@ -895,49 +887,49 @@ msgstr "niepoprawny argument '%s'"
 
 #: cairo/cairoBM.c:196 cairo/cairoBM.c:368
 msgid "unimplemented cairo-based device"
-msgstr ""
+msgstr "niezaimplementowane urządzenie oparte o Cairo"
 
 #: cairo/cairoBM.c:268
-#, fuzzy, c-format
+#, c-format
 msgid "could not open file '%s'"
-msgstr "nie można otworzyć pliku '%s'"
+msgstr "nie udało się otworzyć pliku '%s'"
 
 #: cairo/cairoBM.c:668
-#, fuzzy, c-format
+#, c-format
 msgid "unable to start device '%s'"
-msgstr "nie można uruchomić urządzenia '%s()'"
+msgstr "nie można uruchomić urządzenia '%s'"
 
 #: cairo/cairoFns.c:148
 msgid "Cairo patterns exhausted (failed to increase maxPatterns)"
-msgstr ""
+msgstr "Wyczerpano wzorce Cairo (nie udało się zwiększyć maxPatterns)"
 
 #: cairo/cairoFns.c:195
 msgid "Cairo patterns exhausted"
-msgstr ""
+msgstr "Wyczerpano wzorce Cairo"
 
 #: cairo/cairoFns.c:392
 msgid "Cairo clipping paths exhausted (failed to increase maxClipPaths)"
-msgstr ""
+msgstr "Wyczerpano ścieżki przycinania Cairo (nie udało się zwiększyć maxClipPaths)"
 
 #: cairo/cairoFns.c:439
 msgid "Cairo clipping paths exhausted"
-msgstr ""
+msgstr "Wyczerpano ścieżki przycinania Cairo"
 
 #: cairo/cairoFns.c:571
 msgid "Cairo masks exhausted (failed to increase maxMasks)"
-msgstr ""
+msgstr "Wyczerpano maski Cairo (nie udało się zwiększyć maxMasks)"
 
 #: cairo/cairoFns.c:619
 msgid "Cairo masks exhausted"
-msgstr ""
+msgstr "Wyczerpano maski Cairo"
 
 #: cairo/cairoFns.c:649
 msgid "Ignored luminance mask (not supported on this device)"
-msgstr ""
+msgstr "maska luminancji została zignorowana (nieobsługiwana na tym urządzeniu)"
 
 #: cairo/cairoFns.c:719
 msgid "Cairo groups exhausted (failed to increase maxGroups)"
-msgstr ""
+msgstr "Wyczerpano grupy Cairo (nie udało się zwiększyć maxGroups)"
 
 #: cairo/cairoFns.c:773
 msgid "Cairo groups exhausted"
@@ -958,9 +950,8 @@ msgid "Variable fonts not supported (requires Cairo >= 1.16.0)"
 msgstr ""
 
 #: cairo/cairoFns.c:2536
-#, fuzzy
 msgid "Font file not found; matching font family and face"
-msgstr "rodzina czcionek nie została znaleziona w bazie czcionek systemu Windows"
+msgstr "Nie znaleziono pliku czcionki; Dopasowywanie rodziny czcionek oraz kroju"
 
 #~ msgid "ran out of colors in xfig()"
 #~ msgstr "zabrakło kolorów w 'xfig()'"

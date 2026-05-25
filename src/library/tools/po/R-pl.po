@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:17\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -58,17 +58,14 @@ msgstr "katalog '%s' nie zawiera kodu R"
 msgid "directory '%s' does not contain Rd objects"
 msgstr "katalog '%s' nie zawiera obiektów Rd"
 
-#, fuzzy
 msgid "Functions or methods with usage in Rd file '%s' but not in code:"
-msgstr "Funkcje lub metody z użyciem w obiekcie dokumentacji '%s' ale nie w kodzie:"
+msgstr "Funkcje lub metody z użyciem w pliku Rd '%s' ale nie w kodzie:"
 
-#, fuzzy
 msgid "Data with usage in Rd file '%s' but not in code:"
-msgstr "Dane z użyciem w obiekcie dokumentacji '%s', ale nie w kodzie:"
+msgstr "Dane z użyciem w pliku Rd '%s', ale nie w kodzie:"
 
-#, fuzzy
 msgid "Variables with usage in Rd file '%s' but not in code:"
-msgstr "Dane z użyciem w obiekcie dokumentacji '%s', ale nie w kodzie:"
+msgstr "Zmienne z użyciem w pliku Rd '%s', ale nie w kodzie:"
 
 msgid "Argument names in code not in docs:"
 msgstr "Nazwy argumentów w kodzie, ale nie w dokumentacji:"
@@ -83,14 +80,13 @@ msgid "Mismatches in argument names:"
 msgstr "Niezgodność w nazwach argumentów:"
 
 msgid "Mismatches in argument default values (first 3):"
-msgstr "Niezgodność w domyslnych wartościach argumentów (pierwsze 3):"
+msgstr "Niezgodność w domyślnych wartościach argumentów (pierwsze 3):"
 
 msgid "Mismatches in argument default values:"
 msgstr "Niezgodność w domyślnych wartościach argumentów:"
 
-#, fuzzy
 msgid "Codoc mismatches from Rd file '%s':"
-msgstr "Niezgodność struktury w obiekcie dokumentacji '%s':"
+msgstr "Niezgodność kodu z dokumentacją na podstawie pliku Rd '%s':"
 
 msgid "Code: %s"
 msgstr "Kod: %s"
@@ -98,47 +94,38 @@ msgstr "Kod: %s"
 msgid "Docs: %s"
 msgstr "Dokumenty: %s"
 
-#, fuzzy
 msgid "S4 class codoc mismatches from Rd file '%s':"
-msgstr "Niezgodność struktury klasy S4 w obiekcie dokumentacji '%s':"
+msgstr "Niezgodność kodu z dokumentacją klasy S4 na podstawie pliku Rd '%s':"
 
 msgid "Slots for class '%s'"
 msgstr "Gniazda dla klasy \"%s\""
 
-#, fuzzy
 msgid "Data codoc mismatches from Rd file '%s':"
-msgstr "Niezgodność struktury danych w obiekcie dokumentacji '%s':"
+msgstr "Niezgodność danych z dokumentacją na podstawie pliku Rd '%s':"
 
 msgid "Variables in data frame '%s'"
 msgstr "Zmienne w ramce danych '%s'"
 
-#, fuzzy
 msgid "Undocumented arguments in Rd file '%s'"
-msgstr "Nieudokumentowane argumenty w obiekcie dokumentacji '%s'"
+msgstr "Nieudokumentowane argumenty w pliku Rd '%s'"
 
-#, fuzzy
 msgid "Duplicated \\argument entries in Rd file '%s':"
-msgstr "Powtórzone wpisy '\\argument' w obiekcie dokumentacji '%s':"
+msgstr "Powtórzone wpisy '\\argument' w pliku Rd '%s':"
 
-#, fuzzy
 msgid "Documented arguments not in \\usage in Rd file '%s':"
-msgstr "Udokumentowane argumenty nie są w '\\usage' w obiekcie dokumentacji '%s':"
+msgstr "Udokumentowane argumenty nie są w sekcji '\\usage' w pliku Rd '%s':"
 
-#, fuzzy
 msgid "Objects in \\usage without \\alias in Rd file '%s':"
-msgstr "Obiekty w '\\usage' bez '\\alias' w obiekcie dokumentacji '%s':"
+msgstr "Obiekty w sekcji '\\usage' bez sekcji '\\alias' w pliku Rd '%s':"
 
-#, fuzzy
 msgid "Assignments in \\usage in Rd file '%s':"
-msgstr "Przypisania w '\\usage' w obiekcie dokumentacji '%s':"
+msgstr "Przypisania w sekcji '\\usage' w pliku Rd '%s':"
 
-#, fuzzy
 msgid "Bad \\usage lines found in Rd file '%s':"
-msgstr "Znaleziono niepoprawne linie '\\usage' w obiekcie dokumentacji '%s':"
+msgstr "Znaleziono niepoprawne linie w sekcji '\\usage' w pliku Rd '%s':"
 
-#, fuzzy
 msgid "S3 methods shown with full name in Rd file '%s':"
-msgstr "Metody S3 pokazane z pełną nazwą w obiekcie dokumentacji '%s':"
+msgstr "Metody S3 pokazane z pełną nazwą w pliku Rd '%s':"
 
 msgid "you must specify 'package', 'dir' or 'file'"
 msgstr "musisz określić 'package', 'dir' lub 'file'"
@@ -156,11 +143,12 @@ msgstr ""
 msgid "cannot check R code installed as image"
 msgstr "nie można sprawdzić kodu R zainstalowanego jako obraz"
 
-#, fuzzy
 msgid ""
 "parse error in examples from file '%s':\n"
 "%s"
-msgstr "błąd przetwarzania w przykładach z pliku '%s':"
+msgstr ""
+"błąd przetwarzania w przykładach z pliku '%s':\n"
+"%s"
 
 msgid "File '%s':"
 msgstr "Plik '%s':"
@@ -169,7 +157,7 @@ msgid "found T/F in %s"
 msgstr "znaleziono wartości T/F w %s"
 
 msgid "The package 'dir' argument must be of length 1"
-msgstr "argument 'dir' pakiety musi być długości 1"
+msgstr "argument 'dir' pakietu musi być długości 1"
 
 msgid "package name '%s' seems invalid; using directory name '%s' instead"
 msgstr "nazwa pakietu '%s' wygląda na niepoprawną; zamiast niej używanie nazwy katalogu '%s'"
@@ -235,7 +223,7 @@ msgid "Packages with priorities 'base' or 'recommended' or 'defunct-base' must a
 msgstr "Pakiety z priorytetami 'base' lub 'recommended' lub 'defunct-base' muszą być już być znane R."
 
 msgid "Malformed Title field: should not end in a period."
-msgstr "Niepoprawnie wypełnione pole 'Title': nie powinno kończyć się kropką"
+msgstr "Niepoprawnie wypełnione pole 'Title': nie powinno kończyć się kropką."
 
 msgid "Malformed Description field: should contain one or more complete sentences."
 msgstr "Niepoprawnie wypełnione pole 'Description': powinno zawierać jedno lub więcej kompletnych zdań."
@@ -259,7 +247,7 @@ msgid "Authors@R field gives persons with no role:"
 msgstr "Pole 'Authors@R' wskazuje na osoby bez żadnej roli:"
 
 msgid "Authors@R field gives no person with name and author role"
-msgstr "Pole 'Authors@R' nie zawiera danych osoby z imieniem oraz rolą autora."
+msgstr "Pole 'Authors@R' nie zawiera danych osoby z imieniem oraz rolą autora"
 
 msgid "Cannot extract Maintainer field from Authors@R field:"
 msgstr "Nie można wyodrębnić pola 'Maintainer' z pola 'Authors@R':"
@@ -270,21 +258,17 @@ msgstr "Pole 'Authors@R' zawiera więcej niż jedną osobę z rolą opiekuna:"
 msgid "Authors@R field gives no person with maintainer role, valid email address and non-empty name."
 msgstr "Pole 'Authors@R' nie zawiera danych osoby z rolą opiekuna, poprawnym adresem e-mail oraz niepustą nazwą."
 
-#, fuzzy
 msgid "Authors@R field gives persons with invalid ORCID identifiers:"
-msgstr "Pole 'Authors@R' wskazuje na osoby beż żadnych imion:"
+msgstr "Pole 'Authors@R' wskazuje na osoby z nieprawidłowymi identyfikatorami ORCID:"
 
-#, fuzzy
 msgid "Authors@R field gives persons with duplicated ORCID identifiers:"
-msgstr "Pole 'Authors@R' wskazuje na osoby beż żadnych imion:"
+msgstr "Pole 'Authors@R' wskazuje na osoby ze zdublowanymi identyfikatorami ORCID:"
 
-#, fuzzy
 msgid "Authors@R field gives persons with invalid ROR identifiers:"
-msgstr "Pole 'Authors@R' wskazuje na osoby beż żadnych imion:"
+msgstr "Pole 'Authors@R' wskazuje na osoby z nieprawidłowymi identyfikatorami ROR:"
 
-#, fuzzy
 msgid "Authors@R field gives persons with duplicated ROR identifiers:"
-msgstr "Pole 'Authors@R' wskazuje na osoby beż żadnych imion:"
+msgstr "Pole 'Authors@R' wskazuje na osoby ze zdublowanymi identyfikatorami ROR:"
 
 msgid "Encoding '%s' is not portable"
 msgstr "Strona kodowa '%s' nie jest przenośna"
@@ -293,7 +277,7 @@ msgid "Unknown encoding with non-ASCII data"
 msgstr "Nieznane kodowanie z danymi nie-ASCII"
 
 msgid "Record: %d Field(s): %s"
-msgstr ""
+msgstr "Wpis: %d Pole(a): %s"
 
 msgid "Non-standard license specification:"
 msgstr "Niestandardowa specyfikacja licencji:"
@@ -317,32 +301,28 @@ msgid "License components which are templates and need '+ file LICENSE':"
 msgstr "Komponenty licencji, które są szablonami oraz potrzebują dodatkowo pliku 'LICENSE':"
 
 msgid "License stub is invalid DCF."
-msgstr ""
+msgstr "Fragment licencji jest niepoprawny w pliku DCF."
 
-#, fuzzy
 msgid "License stub records with missing/empty fields:"
-msgstr "nie można poradzić sobie z obiektami Rd z brakującymi/pustymi nazwami"
+msgstr "Wpisy o licencjach z brakującymi/pustymi nazwami:"
 
 msgid "Non-portable flags in variable '%s':"
 msgstr "Nieprzenośne flagi w zmiennej '%s':"
 
-#, fuzzy
 msgid "Non-portable flags in file '%s':"
-msgstr "Nieprzenośne flagi w zmiennej '%s':"
+msgstr "Nieprzenośne flagi w pliku '%s':"
 
 msgid "Variables overriding user/site settings:"
 msgstr "Zmienne omijające ustawienia użytkownika/strony:"
 
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
-msgstr ""
+msgstr "niepoprawny 'OS.type' \"%s\". Nie powinno się wydarzyć"
 
-#, fuzzy
 msgid "Missing link(s) in Rd file '%s':"
-msgstr "Brakujący link lub linki w obiekcie dokumentacji '%s':"
+msgstr "Brakujące linki w pliku Rd '%s':"
 
-#, fuzzy
 msgid "Non-topic package-anchored link(s) in Rd file '%s':"
-msgstr "Brakujący link lub linki w obiekcie dokumentacji '%s':"
+msgstr "Linki zakotwiczone w pakiecie nie będące tematami w pliku Rd '%s':"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
 msgstr "Zobacz informację w sekcji 'Cross-references' podręcznika 'Writing R Extensions'."
@@ -351,13 +331,13 @@ msgid "Call sequence:"
 msgstr "Sekwencja wywołania:"
 
 msgid "..."
-msgstr ""
+msgstr "..."
 
 msgid "No dataset created in 'envir'"
-msgstr ""
+msgstr "Brak zbioru danych utworzonego w 'envir'"
 
 msgid "Search path was changed"
-msgstr ""
+msgstr "Ścieżka wyszukiwania została zmieniona"
 
 msgid "File %s:"
 msgstr "Plik %s:"
@@ -426,7 +406,7 @@ msgid "'library' or 'require' calls in package code:"
 msgstr "wywołania 'library' lub 'require' w kodzie pakietu:"
 
 msgid "'library' or 'require' call to %s in package code."
-msgstr "wywołania 'library' lub 'require' do %s w kodzie pakietu"
+msgstr "wywołania 'library' lub 'require' do %s w kodzie pakietu."
 
 msgid "Namespaces in Imports field not imported from:"
 msgstr "Przestrzenie nazw w polu 'Imports' nie zostały zaimportowane z pakietu:"
@@ -488,17 +468,14 @@ msgstr "Pliki Rd z powtórzoną nazwą '%s':"
 msgid "Rd files with duplicated alias '%s':"
 msgstr "Pliki Rd z powtórzonym aliasem '%s':"
 
-#, fuzzy
 msgid "Rd files without \\alias:"
-msgstr "Pliki Rd z powtórzonym aliasem '%s':"
+msgstr "Pliki Rd bez pola \\alias:"
 
-#, fuzzy
 msgid "Invalid package aliases in Rd file '%s':"
-msgstr "Nieprzenośne flagi w zmiennej '%s':"
+msgstr "Nieprawidłowe aliasy pakietu w pliku Rd '%s':"
 
-#, fuzzy
 msgid "Argument items with no description in Rd file '%s':"
-msgstr "Pozycje argumentu bez opisu w obiekcie Rd '%s':"
+msgstr "Pozycje argumentów bez opisu w pliku Rd '%s':"
 
 #, fuzzy
 msgid "Auto-generated content requiring editing in Rd file '%s':"
@@ -525,7 +502,7 @@ msgstr ""
 "w pliku 'NAMESPACE'."
 
 msgid "concordance is not valid"
-msgstr ""
+msgstr "skorowidz nie jest poprawny"
 
 msgid "Rd object required"
 msgstr "Wymagany jest obiekt Rd"
@@ -534,7 +511,7 @@ msgid "missing/empty %s field in '%s'"
 msgstr "brakujące/puste pole %s w '%s'"
 
 msgid "Rd files must have a non-empty %s."
-msgstr "Pliki Rd muszą mieć niepustą %s."
+msgstr "Pliki Rd muszą mieć niepustą sekcję %s."
 
 msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
 msgstr "Zobacz rozdział 'Writing R documentation' w podręczniku 'Writing R Extensions'."
@@ -546,7 +523,7 @@ msgid "Rd files must have a non-empty \\title."
 msgstr "Pliki Rd muszą mieć niepustą sekcję '\\title'."
 
 msgid "argument 'outFile' must be a character string or connection"
-msgstr "argument 'outfile' musi być łańcuchem tekstowym lub połączeniem"
+msgstr "argument 'outFile' musi być ciągiem znaków lub połączeniem"
 
 msgid "you must specify 'dir' or 'files'"
 msgstr "musisz określić argument 'dir' lub 'files'"
@@ -570,16 +547,16 @@ msgid "No Rd macros in package '%s'."
 msgstr "Nie znaleziono makr Rd w pakiecie '%s'."
 
 msgid "links not supported for 'standalone = FALSE' when _R_HELP_LINKS_TO_TOPICS_=false"
-msgstr ""
+msgstr "linki nie są obsługiwane dla 'standalone = FALSE', gdy _R_HELP_LINKS_TO_TOPICS_=false"
 
 msgid "more than one \\examples section, using the first"
 msgstr "więcej niż jedna sekcja \\examples, używanie pierwszej"
 
 msgid "alias:"
-msgstr ""
+msgstr "alias:"
 
 msgid "is not one line"
-msgstr ""
+msgstr "nie jest w jednej linii"
 
 msgid "Converting Rd files to LaTeX ..."
 msgstr "Konwertowanie plików Rd do LaTeX'a ..."
@@ -650,38 +627,34 @@ msgstr "Ilustracja %s nadpisuje następujące wyjścia %s przez ilustrację %s: 
 msgid "Detected vignette source files (%s) with shared names (%s) and therefore risking overwriting each other's output files"
 msgstr "Wykryto pliki źródłowe ilustracji (%s) ze współdzielonymi nazwami (%s) w efekcie czego istnieje ryzyko nadpisania każdego z ich plików wyjściowych"
 
-#, fuzzy
 msgid "Note: skipping %s"
-msgstr "przetwarzanie %s"
+msgstr "Uwaga: pomijanie %s"
 
-#, fuzzy
 msgid "Error: Vignette '%s' is non-ASCII but has no declared encoding"
-msgstr "Ilustracja '%s' nie jest ASCII, ale nie zawiera deklaracji kodowania"
+msgstr "Błąd: Ilustracja '%s' nie jest w formacie ASCII, ale nie ma zadeklarowanego kodowania"
 
 msgid "--- re-building %s using %s"
-msgstr ""
+msgstr "--- przebudowa %s przy użyciu %s"
 
-#, fuzzy
 msgid ""
 "Error: processing vignette '%s' failed with diagnostics:\n"
 "%s"
 msgstr ""
-"przetwarzanie ilustracji '%s' nie powiodło dając komunikat:\n"
+"Błąd: przetwarzanie ilustracji '%s' nie powiodło się z diagnostyką:\n"
 "%s"
 
-#, fuzzy
 msgid ""
 "Error: tangling vignette '%s' failed with diagnostics:\n"
 "%s"
 msgstr ""
-"wiązanie ilustracji '%s' nie powiodło dając komunikat:\n"
+"Błąd: splątana ilustracja '%s' nie powiodła się z diagnostyką:\n"
 "%s"
 
 msgid "--- finished re-building %s"
-msgstr ""
+msgstr "--- zakończono odbudowę %s"
 
 msgid "--- failed re-building %s"
-msgstr ""
+msgstr "--- nieudane odbudowanie %s"
 
 msgid "running 'make' failed"
 msgstr "uruchomienie 'make' nie powiodło się"
@@ -693,7 +666,7 @@ msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr "nazwa pliku ilustracji '%s' nie zgadza się z żadną ze ścieżek nazwy pliku '%s'"
 
 msgid "+-+"
-msgstr ""
+msgstr "+-+"
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "W ilustracjach '%s', '%s' oraz '%s' mają te same nazwy ilustracji"
@@ -708,7 +681,7 @@ msgid "Vignette engine %s is not registered"
 msgstr "Silnik ilustracji %s nie jest zarejestrowany"
 
 msgid "Vignette engine %s is not registered by any of the packages %s"
-msgstr "Silnik ilustracji %s nie jest zarejestrowany przez jakekolwiek pakiety %s"
+msgstr "Silnik ilustracji %s nie jest zarejestrowany przez żaden z pakietów %s"
 
 msgid "Engine name %s and package %s do not match"
 msgstr "Nazwa silnika ilustracji %s oraz pakietu %s nie zgadzają się"
@@ -717,7 +690,7 @@ msgid "Argument %s must be a function and not %s"
 msgstr "Argument %s musi być funkcją a nie %s"
 
 msgid "Argument %s must be a character vector or NULL and not %s"
-msgstr "Argument %s musi być łańcuchem tekstowym lub wartością NULL, a nie %s"
+msgstr "Argument %s musi być ciągiem znaków lub wartością NULL, a nie %s"
 
 msgid "Cannot change the %s engine or use an engine of that name"
 msgstr "Nie można zmienić silnika %s lub użyć silnika o tej nazwie"
@@ -791,9 +764,30 @@ msgid "loading failed"
 msgstr "ładowanie nie powiodło się"
 
 msgid "'cc' is not on the path"
-msgstr ""
+msgstr "'cc' nie znajduje się na ścieżce"
 
 msgid "'objdump' is not on the path"
+msgstr "'objdump' nie znajduje się na ścieżce"
+
+msgid "non-API functions declared in installed headers: %s"
+msgstr ""
+
+msgid "non-API variables declared in installed headers: %s"
+msgstr ""
+
+msgid "API funcitons not declared in installed headers: %s"
+msgstr ""
+
+msgid "API variables not in declared in installed headers: %s"
+msgstr ""
+
+msgid "in API but marked for warnings: %s"
+msgstr ""
+
+msgid "API functions listed in nonAPI: %s"
+msgstr ""
+
+msgid "API variables listed in nonAPI: %s"
 msgstr ""
 
 msgid "Got %s in evaluating %s; wanted %s"
@@ -833,7 +827,7 @@ msgid "Error: cannot rename directory to %s"
 msgstr "Błąd: nie można zmienić katalogu na %s"
 
 msgid "elapsed-time limit of %g %s reached for sub-process"
-msgstr "granica upływu czasu o wartości %g %s został osiągnięta dla podprocesu"
+msgstr "osiągnięto limit czasu upłyniętego %g %s dla podprocesu"
 
 msgid "cannot link from %s"
 msgstr "nie można połączyć z %s"
@@ -863,7 +857,7 @@ msgid "no packages to check"
 msgstr "brak pakietów do sprawdzenia"
 
 msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
-msgstr ""
+msgstr "'reverse$repos' powinien być podzbiorem getOption(\"repos\")"
 
 #, fuzzy
 msgid "downloading reverse dependencies %s"
@@ -889,7 +883,7 @@ msgid "non-ASCII input in a CITATION file without a declared encoding"
 msgstr "wejście nie-ASCII w pliku 'CITATION' bez zadeklarowanego kodowania"
 
 msgid "<p><code class='language-R'>%s</code> was run in the console.</p>"
-msgstr ""
+msgstr "<p><code class='language-R'>%s</code> zostało uruchomione w konsoli.</p>"
 
 msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed.</p>"
 msgstr ""
@@ -898,10 +892,10 @@ msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org
 msgstr ""
 
 msgid "HTTPD-REQUEST %s%s"
-msgstr ""
+msgstr "HTTPD-REQUEST %s%s"
 
 msgid "="
-msgstr ""
+msgstr "="
 
 msgid "No files in this directory"
 msgstr "Brak plików w tym katalogu"
@@ -919,7 +913,7 @@ msgid "Help pages:"
 msgstr "Strony pomocy:"
 
 msgid "HTTPD-ERROR %s %s"
-msgstr ""
+msgstr "HTTPD-ERROR %s %s"
 
 msgid "No package named %s could be found"
 msgstr "Nie znaleziono pakietu o nazwie '%s'"
@@ -943,17 +937,16 @@ msgid "URL %s was not found"
 msgstr "adres URL %s nie został znaleziony"
 
 msgid "HTTPD-DEMO %s::%s"
-msgstr ""
+msgstr "HTTPD-DEMO %s::%s"
 
 msgid "HTTPD-EXAMPLE %s::%s"
-msgstr ""
+msgstr "HTTPD-EXAMPLE %s::%s"
 
-#, fuzzy
 msgid "No NEWS found for package %s"
-msgstr "Nie znaleziono pomocy na temat pakietu '%s'"
+msgstr "Nie znaleziono pliku 'NEWS' w pakiecie %s"
 
 msgid "Only help files, %s, %s and files under %s and %s in a package can be viewed"
-msgstr "Tylko pliki pomocy, %s, %s oraz pliki w %s oraz %s w pakiecie mogą być przegladane"
+msgstr "Tylko pliki pomocy, %s, %s oraz pliki w %s oraz %s w pakiecie mogą być przeglądane"
 
 msgid "unsupported URL %s"
 msgstr "niewspierany adres URL %s"
@@ -980,7 +973,7 @@ msgid "failed to start the httpd server"
 msgstr "nie udało się uruchomić serwera httpd"
 
 msgid "* Package: %s"
-msgstr ""
+msgstr "* Pakiet: %s"
 
 msgid "cannot read index information in file '%s'"
 msgstr "nie można odczytać indeksu informacji w pliku '%s'"
@@ -988,15 +981,24 @@ msgstr "nie można odczytać indeksu informacji w pliku '%s'"
 msgid ".install_packages() exit status"
 msgstr "Status wyjścia dla funkcji '.install_packages()'"
 
-#, fuzzy
 msgid "restoration failed"
-msgstr "ładowanie nie powiodło się"
+msgstr "przywrócenie nie powiodło się"
 
 msgid "error reading file '%s'"
 msgstr "błąd podczas czytania pliku '%s'"
 
 msgid "this seems to be a bundle -- and they are defunct"
-msgstr "plik 'DESCRIPTION' wygląda to na paczkę -- a one zostały zlikwidowane"
+msgstr "wygląda to na paczkę -- a one zostały zlikwidowane"
+
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "pakiet %s został pomyślnie rozpakowany oraz sumy MD5 zostały sprawdzone"
+
+msgid "package %s signature verified (%s %s)"
+msgstr ""
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
 
 msgid "'cleanup' exists but is not executable -- see the 'R Installation and Administration Manual'"
 msgstr "plik 'cleanup' istnieje, ale nie jest wykonywalny -- zobacz 'R Installation and Adminstration Manual'"
@@ -1008,54 +1010,49 @@ msgid "no DLL was created"
 msgstr "nie utworzono pliku DLL"
 
 msgid "NOTE: fixed path"
-msgstr ""
+msgstr "UWAGA: poprawiona ścieżka"
 
 msgid "NOTE: fixed library identification name"
-msgstr ""
+msgstr "UWAGA: poprawiona nazwa identyfikacyjna biblioteki"
 
 msgid "NOTE: fixed library path"
-msgstr ""
+msgstr "UWAGA: poprawiona ścieżka do biblioteki"
 
 msgid "NOTE: fixed rpath"
-msgstr ""
+msgstr "UWAGA: poprawione rpath"
 
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
-msgstr ""
-
-msgid "package %s successfully unpacked and MD5 sums checked"
-msgstr "pakiet %s został pomyślnie rozpakowany oraz sumy MD5 zostały sprawdzone"
+msgstr "OSTRZEŻENIE: współdzielone obiekty/biblioteki dynamiczne z zakodowanymi na stałe tymczasowymi ścieżkami instalacji"
 
 msgid "not using staged install with --libs-only"
-msgstr ""
+msgstr "nieużywanie instalacji etapowej z opcją --libs-only"
 
 msgid "staged installation is only possible with locking"
-msgstr ""
+msgstr "instalacja etapowa jest możliwa tylko z blokadą"
 
 msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
-msgstr ""
+msgstr "OSTRZEŻENIE: poprawki instalacyjne nie zostaną zastosowane, nie można uzyskać indeksu poprawek"
 
 msgid "patch utility is needed for installation-time patching"
-msgstr ""
+msgstr "narzędzie do poprawek jest potrzebne do instalowania poprawek w czasie instalacji"
 
 msgid "NOTE: Skipping installation-time patch"
-msgstr ""
+msgstr "UWAGA: Pomijanie łatki instalacyjnej"
 
-#, fuzzy
 msgid "which seems to be already applied."
-msgstr "plik 'DESCRIPTION' wygląda to na paczkę -- a one zostały zlikwidowane"
+msgstr "które wygląda na już zastosowane."
 
 msgid "WARNING: failed to apply patch"
-msgstr ""
+msgstr "OSTRZEŻENIE: nie udało się zastosować łatki"
 
 msgid "Applied installation-time patch"
-msgstr ""
+msgstr "Zastosowano łatkę podczas instalacji"
 
 msgid "and saved it as"
-msgstr ""
+msgstr "oraz zapisano ją jako"
 
-#, fuzzy
 msgid "in package installation"
-msgstr "niepoprawna struktura pakietu"
+msgstr "w instalacji pakietu"
 
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr "Katalog 'include' w R jest pusty -- być może trzeba zainstalować R-devel.rpm lub coś podobnego"
@@ -1070,7 +1067,7 @@ msgid "empty 'data' directory"
 msgstr "pusty katalog 'data'"
 
 msgid "WARNING: moving package to final location failed, copying instead"
-msgstr ""
+msgstr "OSTRZEŻENIE: przeniesienie pakietu do docelowej lokalizacji nie powiodło się, zamiast tego kopiowanie"
 
 msgid "cannot create unique directory for build"
 msgstr "nie można utworzyć unikalnego katalogu dla kompilacji"
@@ -1094,31 +1091,31 @@ msgid "ERROR: no permission to install to directory"
 msgstr "BŁĄD: brak uprawnień aby zainstalować w katalogu"
 
 msgid "building a fake installation is disallowed"
-msgstr "budowałe fałszywej instalacji jest zabronione"
+msgstr "budowanie fałszywej instalacji jest zabronione"
 
 msgid "specified C++"
 msgstr ""
 
 msgid "using C compiler:"
-msgstr ""
+msgstr "używanie kompilatora C:"
 
 msgid "using Fortran compiler:"
-msgstr ""
+msgstr "używanie kompilatora Fortran:"
 
 msgid "using C++ compiler:"
-msgstr ""
+msgstr "używanie kompilatora C++:"
 
 msgid "using C++"
-msgstr ""
+msgstr "używanie C++"
 
 msgid "using SDK:"
-msgstr ""
+msgstr "używanie SDK:"
 
 msgid "WARNING: failed to revert patch"
-msgstr ""
+msgstr "OSTRZEŻENIE: nie udało się wycofać łatki"
 
 msgid "Reverted installation-time patch"
-msgstr ""
+msgstr "Wycofano łatkę"
 
 #, fuzzy
 msgid "Input must be character"
@@ -1158,11 +1155,10 @@ msgid "package seems to be using lazy loading already"
 msgstr "wygląda na to, że pakiet już wykorzystuje leniwe ładowanie"
 
 msgid "'files' and 'bytes' are mutually exclusive"
-msgstr ""
+msgstr "argumenty 'files' i 'bytes' wzajemnie się wykluczają"
 
-#, fuzzy
 msgid "'bytes' must be a raw vector"
-msgstr "argument 'text' musi być wektorem tekstowym"
+msgstr "'bytes' musi być nieprzetworzonym wektorem"
 
 msgid ""
 "Cannot process chunk/lines:\n"
@@ -1190,11 +1186,12 @@ msgstr ""
 "Fragment %s:\n"
 "%s"
 
-#, fuzzy
 msgid ""
 "Cannot extract version info from the following section titles:\n"
 "%s"
-msgstr "Nie można wyodrębnić informacji o wersji z następujących tytułów sekcji:"
+msgstr ""
+"Nie można wyodrębnić informacji o wersji z następujących tytułów sekcji:\n"
+"%s"
 
 msgid ""
 "Malformed NEWS.Rd file:\n"
@@ -1242,9 +1239,8 @@ msgstr "niepoprawny pakiet"
 msgid "Processing packages:"
 msgstr "Przetwarzanie pakietów:"
 
-#, fuzzy
 msgid "Invalid DESCRIPTION file for package %s"
-msgstr "niepoprawny plik 'DESCRIPTION'"
+msgstr "niepoprawny plik 'DESCRIPTION' w pakiecie %s"
 
 msgid ""
 "reading DESCRIPTION for package %s failed with message:\n"
@@ -1253,43 +1249,64 @@ msgstr ""
 "Odczytywanie pliku 'DESCRIPTION' dla pakietu %s nie powiodło się zwracając komunikat:\n"
 "  %s"
 
-#, fuzzy
 msgid "unable to create temporary directory %s"
 msgstr "nie można utworzyć katalogu tymczasowego %s"
 
 msgid "expected one package directory, found %d."
-msgstr ""
+msgstr "oczekiwano jednego katalogu pakietu, znaleziono %d."
 
 msgid "argument '%s' must be a character string or connection"
-msgstr "argument '%s' musi być łańcuchem tekstowym lub połączeniem"
+msgstr "argument '%s' musi być ciągiem znaków lub połączeniem"
 
 msgid "unimplemented encoding"
 msgstr "niezaimplementowana strona kodowa"
 
-#, fuzzy
 msgid "x must be a single string"
-msgstr "argument 'x' musi być pojedynczym łańcuchem tekstowym"
+msgstr "argument 'x' musi być pojedynczym tekstem"
 
 msgid "invalid hex string"
+msgstr "nieprawidłowy tekst szesnastkowy"
+
+#, fuzzy
+msgid "'gpg' is not available for signing"
+msgstr "test '%s' nie jest dostępny"
+
+msgid "Target file for the signature already exists"
 msgstr ""
 
+msgid "'%s' must be a character string"
+msgstr "argument '%s' musi być ciągiem znaków"
+
+msgid "'keyring' must be specified if 'use.default.keyring=FALSE'"
+msgstr ""
+
+msgid "Failed to invoke 'gpg' for signing"
+msgstr ""
+
+msgid "Cannot sign due to failed pin entry for key %s"
+msgstr ""
+
+#, fuzzy
+msgid "Signing failed:"
+msgstr "ładowanie nie powiodło się"
+
 msgid "this requires 'objdump.exe' to be on the PATH"
-msgstr "'objdump.exe' musi być określowe w ścieżce środowiskowej PATH"
+msgstr "'objdump.exe' musi być określone w ścieżce środowiskowej PATH"
 
 msgid "this requires 'nm' to be on the PATH"
-msgstr "'nm' musi być określowe w ścieżce środowiskowej PATH"
+msgstr "'nm' musi być określone w ścieżce środowiskowej PATH"
 
 msgid "Found %s, possibly from %s"
 msgstr "Znaleziono %s, prawdopodobnie z %s"
 
 msgid "no native symbols were extracted"
-msgstr "żadne natywne symbole nie zostały wydobyte"
+msgstr "nie wyodrębniono żadnych symboli natywnych"
 
 msgid "not a PDF file"
-msgstr ""
+msgstr "to nie jest plik PDF"
 
 msgid "'diff' is not available so useDiff = FALSE will be used"
-msgstr ""
+msgstr "opcja 'diff' nie jest dostępna, więc zostanie użyte useDiff = FALSE"
 
 msgid "testing '%s' failed"
 msgstr "testowanie '%s' nie powiodło się"
@@ -1297,9 +1314,8 @@ msgstr "testowanie '%s' nie powiodło się"
 msgid "Testing examples for package %s"
 msgstr "Testowanie przykładów dla pakietu %s"
 
-#, fuzzy
 msgid "Error: running examples in %s failed"
-msgstr "działanie 'texi2dvi' na pliku '%s' nie powiodło się"
+msgstr "Błąd: uruchomienie przykładów w %s nie powiodło się"
 
 msgid "comparing %s to %s ..."
 msgstr "porównywanie %s z %s ..."
@@ -1325,9 +1341,8 @@ msgstr "Uruchamianie specyficznych testów dla pakietu %s"
 msgid "Running %s"
 msgstr "Uruchamianie %s"
 
-#, fuzzy
 msgid "Error: running the tests in %s failed"
-msgstr "działanie 'texi2dvi' na pliku '%s' nie powiodło się"
+msgstr "Błąd: uruchomienie testów w %s nie powiodło się"
 
 msgid "Running vignettes for package %s"
 msgstr "Uruchamianie ilustracji dla pakietu %s"
@@ -1338,16 +1353,14 @@ msgstr "nie znaleziono plików przeanalizowanych składniowo"
 msgid "FAILED"
 msgstr "NIE POWIODŁO SIĘ"
 
-#, fuzzy
 msgid "directory %s is not writeable"
-msgstr "katalog '%s' nie istnieje"
+msgstr "katalog %s nie jest zapisywalny"
 
 msgid "DIFFERED"
 msgstr "RÓŻNICE"
 
-#, fuzzy
 msgid "running tests of random deviate generation (should no longer ever fail)"
-msgstr "wykonywanie testów generowania losowych odchyleń -- okazjonalnie zawodzi"
+msgstr "uruchamianie testów generowania losowych odchyleń (już nigdy nie powinno zakończyć się niepowodzeniem)"
 
 msgid "unknown header specification"
 msgstr "nieznana specyfikacja nagłówka"
@@ -1356,70 +1369,68 @@ msgid "R CMD build failed"
 msgstr "'R CMD build' nie powiodło się"
 
 msgid "PACKAGES files do not include MD5 sums in the win.binary case"
-msgstr ""
+msgstr "Pliki PACKAGES nie zawierają sum MD5 w przypadku win.binary"
 
 msgid ", so strict checking is impossible. Calling down to write_PACKAGES"
-msgstr ""
+msgstr ", więc dokładne sprawdzenie jest niemożliwe. Wywoływanie write_PACKAGES"
 
 msgid "directly."
-msgstr ""
+msgstr "bezpośrednio."
 
 msgid "No existing PACKAGES file found at"
-msgstr ""
+msgstr "Nie znaleziono istniejącego pliku PACKAGES w"
 
 msgid "Existing PACKAGES file contained no rows and/or no columns"
-msgstr ""
+msgstr "Istniejący plik PACKAGES nie zawierał żadnych wierszy i/lub kolumn"
 
 msgid "Specified fields no present in existing PACKAGES file:"
-msgstr ""
+msgstr "Określone pola nie występują w istniejącym pliku PACKAGES:"
 
 msgid "Unable to update existing PACKAGES file. Calling write_PACKAGES directly."
-msgstr ""
+msgstr "Nie można zaktualizować istniejącego pliku PACKAGES. Bezpośrednie wywoływanie write_PACKAGES."
 
 msgid "Updating existing repository [strict mode:"
-msgstr ""
+msgstr "Aktualizacja istniejącego repozytorium [tryb ścisły:"
 
 msgid "ON"
-msgstr ""
+msgstr "WŁ"
 
 msgid "OFF"
-msgstr ""
+msgstr "WYŁ"
 
 msgid ""
 "]\n"
 "Detected PACKAGES file with"
 msgstr ""
+"]\n"
+"Wykryto plik PACKAGES z"
 
 msgid "entries at"
-msgstr ""
+msgstr "wpisem/wpisami w"
 
 msgid "unable to find any package tarballs in"
-msgstr ""
+msgstr "nie można znaleźć żadnych plików tarball w katalogu"
 
 msgid "All existing entry MD5sums match tarballs."
-msgstr ""
+msgstr "Wszystkie istniejące sumy MD5 wpisów odpowiadają plikom tarball."
 
 msgid "Found"
-msgstr ""
+msgstr "Znaleziono"
 
 msgid "package versions to process."
-msgstr ""
+msgstr "wersję pakietu do przetworzenia."
 
 msgid "No new packages or updated package versions detected"
-msgstr ""
+msgstr "Nie wykryto żadnych nowych pakietów ani zaktualizowanych wersji pakietów"
 
 msgid "[dryrun mode] Dryrun complete."
-msgstr ""
+msgstr "[Tryb pracy na sucho] Przebieg próbny zakończony."
 
 msgid "Writing final updated PACKAGES files."
-msgstr ""
+msgstr "Zapisywanie ostatecznych zaktualizowanych plików PACKAGES."
 
 msgid "update_PACKAGES complete."
-msgstr ""
-
-#, fuzzy
-msgid "'%s' must be a character string"
-msgstr "argument 'x' musi być pojedynczym łańcuchem tekstowym"
+msgstr "'update_PACKAGES' zakończyło się."
 
 msgid "test '%s' is not available"
 msgstr "test '%s' nie jest dostępny"
@@ -1434,7 +1445,7 @@ msgid "only Rd syntax is currently supported"
 msgstr "aktualnie tylko składnia Rd jest wspierana"
 
 msgid "texi2dvi script/program not available, using emulation"
-msgstr ""
+msgstr "Skrypt/program texi2dvi jest niedostępny, używanie emulacji"
 
 msgid "Running 'texi2dvi' on '%s' failed."
 msgstr "Uruchomienie 'texi2dvi' na pliku '%s' nie powiodło się."
@@ -1458,7 +1469,7 @@ msgid "invalid package layout"
 msgstr "niepoprawna struktura pakietu"
 
 msgid "*not* using 'C' for LC_COLLATE locale"
-msgstr ""
+msgstr "*nie* używanie 'C' dla ustawień regionalnych LC_COLLATE"
 
 msgid "file '%s' is not in valid DCF format"
 msgstr "plik '%s' nie jest poprawnym formatem DCF"
@@ -1478,10 +1489,10 @@ msgid ""
 msgstr ""
 
 msgid "inferiorCallError"
-msgstr ""
+msgstr "inferiorCallError"
 
 msgid "inferior call failed"
-msgstr ""
+msgstr "gorsze połączenie nie powiodło się"
 
 msgid "'text' must be a character vector"
 msgstr "argument 'text' musi być wektorem tekstowym"
@@ -1489,12 +1500,11 @@ msgstr "argument 'text' musi być wektorem tekstowym"
 msgid "parsing '%s'"
 msgstr "przetwarzanie pliku %s"
 
-#, fuzzy
 msgid "Undeclared package %s in Rd xrefs"
 msgid_plural "Undeclared packages %s in Rd xrefs"
-msgstr[0] "Nieznany pakiet %s w krzyżowych referencjach Rd"
-msgstr[1] "Nieznane pakiety %s w krzyżowych referencjach Rd"
-msgstr[2] "Nieznane pakiety %s w krzyżowych referencjach Rd"
+msgstr[0] "Niezadeklarowany pakiet %s w odnośnikach Rd"
+msgstr[1] "Niezadeklarowane pakiety %s w odnośnikach Rd"
+msgstr[2] "Niezadeklarowane pakiety %s w odnośnikach Rd"
 
 msgid "Package unavailable to check Rd xrefs: %s"
 msgid_plural "Packages unavailable to check Rd xrefs: %s"
@@ -1544,12 +1554,11 @@ msgstr[0] "Znaleziono prawdopodobnie globalną wartość 'T' lub 'F' w przykład
 msgstr[1] "Znaleziono prawdopodobnie globalną wartość 'T' lub 'F' w przykładach następujących plików Rd:"
 msgstr[2] "Znaleziono prawdopodobnie globalną wartość 'T' lub 'F' w przykładach następujących plików Rd:"
 
-#, fuzzy
 msgid "Possibly missing '()' after 'return' in the following function:"
 msgid_plural "Possibly missing '()' after 'return' in the following functions:"
-msgstr[0] "Znaleziono prawdopodobnie globalną wartość 'T' lub 'F' w następującej funkcji:"
-msgstr[1] "Znaleziono prawdopodobnie globalną wartość 'T' lub 'F' w następujących funkcjach:"
-msgstr[2] "Znaleziono prawdopodobnie globalną wartość 'T' lub 'F' w następujących funkcjach:"
+msgstr[0] "Prawdopodobnie brakuje '()' po 'return' w następującej funkcji:"
+msgstr[1] "Prawdopodobnie brakuje '()' po 'return' w następujących funkcjach:"
+msgstr[2] "Prawdopodobnie brakuje '()' po 'return' w następujących funkcjach:"
 
 msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
@@ -1557,7 +1566,6 @@ msgstr[0] "Znaleziono wywołanie '.Internal' w następującej funkcji:"
 msgstr[1] "Znaleziono wywołania '.Internal' w następujących funkcjach:"
 msgstr[2] "Znaleziono wywołania '.Internal' w następujących funkcjach:"
 
-#, fuzzy
 msgid "Found a .Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
 msgstr[0] "Znaleziono wywołanie '.Internal' w metodach w następującej funkcji ogólnej S4:"
@@ -1596,7 +1604,7 @@ msgstr[2] "Znaleziono przestarzałe funkcje:"
 
 msgid "Found the defunct/removed function:"
 msgid_plural "Found the defunct/removed functions:"
-msgstr[0] "Znaleziono zlikwidowaną/usunietą funkcję:"
+msgstr[0] "Znaleziono zlikwidowaną/usuniętą funkcję:"
 msgstr[1] "Znaleziono zlikwidowane/usuniete funkcje:"
 msgstr[2] "Znaleziono zlikwidowane/usuniete funkcje:"
 
@@ -1630,14 +1638,13 @@ msgstr[2] ""
 
 msgid "SUMMARY: processing the following file failed:"
 msgid_plural "SUMMARY: processing the following files failed:"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "PODSUMOWANIE: przetwarzanie następującego pliku nie powiodło się:"
+msgstr[1] "PODSUMOWANIE: przetwarzanie następujących plików nie powiodło się:"
+msgstr[2] "PODSUMOWANIE: przetwarzanie następujących plików nie powiodło się:"
 
-#, fuzzy
 msgid "Package %s does not have a registered vignette engine"
 msgid_plural "None of packages %s have registered vignette engines"
-msgstr[0] "Żadne z pakietów %s nie mają zarejestrowanych silników ilustracji"
+msgstr[0] "Pakiet %s nie ma zarejestrowanego silnika ilustracji"
 msgstr[1] "Żadne z pakietów %s nie mają zarejestrowanych silników ilustracji"
 msgstr[2] "Żadne z pakietów %s nie mają zarejestrowanych silników ilustracji"
 
@@ -1647,12 +1654,11 @@ msgstr[0] "nie można przekodować %s linia %s"
 msgstr[1] "nie można przekodować %s linie %s"
 msgstr[2] "nie można przekodować %s linie %s"
 
-#, fuzzy
 msgid "%s file\n"
 msgid_plural "%s files\n"
-msgstr[0] ": poniższy plik\n"
-msgstr[1] ": poniższe pliki\n"
-msgstr[2] ": poniższe pliki\n"
+msgstr[0] "%s plik\n"
+msgstr[1] "%s pliki\n"
+msgstr[2] "%s pliki\n"
 
 msgid "Required field missing or empty:"
 msgid_plural "Required fields missing or empty:"
@@ -1674,9 +1680,9 @@ msgstr[2] "obiekty %s są utworzone przez więcej niż jedno wywołanie danych"
 
 msgid "%d of the package tests failed"
 msgid_plural "%d of the package tests failed"
-msgstr[0] "%d z testów pakietu nie powiodło się"
-msgstr[1] "%d z testów pakietu nie powiodło się"
-msgstr[2] "%d z testów pakietu nie powiodło się"
+msgstr[0] "%d test pakietu nie powiódł się"
+msgstr[1] "%d testy pakietu nie powiodły się"
+msgstr[2] "%d testów pakietu nie powiodło się"
 
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"

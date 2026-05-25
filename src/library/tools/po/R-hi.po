@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:17\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2023-08-31 20:16+0000\n"
 "Last-Translator: Ayush Bipin Patel <ayush.ap58@gmail.com>\n"
 "Language-Team: none\n"
@@ -744,6 +744,27 @@ msgstr ""
 msgid "'objdump' is not on the path"
 msgstr ""
 
+msgid "non-API functions declared in installed headers: %s"
+msgstr ""
+
+msgid "non-API variables declared in installed headers: %s"
+msgstr ""
+
+msgid "API funcitons not declared in installed headers: %s"
+msgstr ""
+
+msgid "API variables not in declared in installed headers: %s"
+msgstr ""
+
+msgid "in API but marked for warnings: %s"
+msgstr ""
+
+msgid "API functions listed in nonAPI: %s"
+msgstr ""
+
+msgid "API variables listed in nonAPI: %s"
+msgstr ""
+
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr ""
 
@@ -941,6 +962,15 @@ msgstr ""
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr ""
 
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr ""
+
+msgid "package %s signature verified (%s %s)"
+msgstr ""
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
 msgid "'cleanup' exists but is not executable -- see the 'R Installation and Administration Manual'"
 msgstr ""
 
@@ -963,9 +993,6 @@ msgid "NOTE: fixed rpath"
 msgstr ""
 
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
-msgstr ""
-
-msgid "package %s successfully unpacked and MD5 sums checked"
 msgstr ""
 
 msgid "not using staged install with --libs-only"
@@ -1185,6 +1212,27 @@ msgstr ""
 msgid "invalid hex string"
 msgstr ""
 
+msgid "'gpg' is not available for signing"
+msgstr ""
+
+msgid "Target file for the signature already exists"
+msgstr ""
+
+msgid "'%s' must be a character string"
+msgstr ""
+
+msgid "'keyring' must be specified if 'use.default.keyring=FALSE'"
+msgstr ""
+
+msgid "Failed to invoke 'gpg' for signing"
+msgstr ""
+
+msgid "Cannot sign due to failed pin entry for key %s"
+msgstr ""
+
+msgid "Signing failed:"
+msgstr ""
+
 msgid "this requires 'objdump.exe' to be on the PATH"
 msgstr ""
 
@@ -1323,9 +1371,6 @@ msgid "Writing final updated PACKAGES files."
 msgstr ""
 
 msgid "update_PACKAGES complete."
-msgstr ""
-
-msgid "'%s' must be a character string"
 msgstr ""
 
 msgid "test '%s' is not available"

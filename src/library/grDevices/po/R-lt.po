@@ -242,7 +242,7 @@ msgid "Invalid glyph info"
 msgstr ""
 
 msgid "'%s' was removed in R 4.5.0."
-msgstr ""
+msgstr "„%s“ pašalintas R 4.5.0 versijoje."
 
 #, fuzzy
 msgid "Invalid compositing operator"

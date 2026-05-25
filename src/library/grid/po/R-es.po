@@ -20,13 +20,13 @@ msgid "invalid to specify axis labels when 'at' is NULL"
 msgstr "invalido especificar etiquetas de ejes cuando 'at' es NULL"
 
 msgid "'labels' and 'at' locations must have same length"
-msgstr ""
+msgstr "posiciones 'labels' y 'at'deberían tener la misma longitud"
 
 msgid "logical 'label' supplied of length 0"
-msgstr ""
+msgstr "'label' de tipo lógico suministrado tiene longitud 0"
 
 msgid "Invalid coordinates"
-msgstr ""
+msgstr "coordenadas no válidas"
 
 msgid "Invalid grob coordinates"
 msgstr "coordenadas grob invalidas"
@@ -34,9 +34,8 @@ msgstr "coordenadas grob invalidas"
 msgid "Invalid gTree coordinates"
 msgstr "coordenadas gTree invalidas"
 
-#, fuzzy
 msgid "Closed must be length 1 and must not be a missing value"
-msgstr "Closed no debería tener un valor no informado"
+msgstr "Closed debe tener un largo de 1 y no debe ser un valor perdido"
 
 msgid "end points must not be identical"
 msgstr "los puntos finales no deben ser iguales"
@@ -146,8 +145,10 @@ msgstr "válido solamente para impulsar ventanas"
 msgid "must specify at least one viewport"
 msgstr "se debe especificar al menos una ventana"
 
+
 msgid "Down viewport failed to record on display list"
 msgstr ""
+"downViewport() falló al registrar viewport en la lista de visualización"
 
 msgid "Down viewport incorrectly recorded on display list"
 msgstr "La ventana inferior grabada incorrectamente en la lista de visualizaciones"
@@ -171,7 +172,7 @@ msgid "invalid modification of the display list"
 msgstr "modificación no válida de la lista de visualizaciones"
 
 msgid "'expr' must return a grob or gList"
-msgstr ""
+msgstr "'expr' debe devolver un objeto 'grob' o 'gList'"
 
 msgid "invalid 'grob' argument"
 msgstr "argumento 'grob' no válido"
@@ -314,7 +315,6 @@ msgstr "'nrow' debe ser >= 1"
 msgid "'ncol' must be >= 1"
 msgstr "'ncol' debe ser >= 1"
 
-#, fuzzy
 msgid "nrow * ncol < #{legend labels}"
 msgstr "nrow * ncol < #{legend labels}"
 
@@ -367,228 +367,234 @@ msgid "Pattern must be based on grob"
 msgstr "El patrón debe estar basados en grob"
 
 msgid "Missing pattern fill has been set to transparent"
-msgstr ""
+msgstr "patrón de relleno faltante, se establece como transparente"
 
 msgid ""
 "grob drawing produces more shapes than grob coords\n"
 "(recycling coords)"
 msgstr ""
+"al graficar grob se producen más formas que coordenadas en grob\n"
+"(reciclando coordenadas...)"
 
 msgid "Pattern fill applied to object with no inside"
-msgstr ""
+msgstr "Se aplicó un patrón de relleno a un objeto sin interior"
 
 msgid "'length' must be a 'unit' object"
-msgstr ""
+msgstr "'length' debe ser un objeto de tipo 'unit'"
 
 msgid "invalid 'ends' or 'type' argument"
-msgstr ""
+msgstr "argumentos 'typo' o 'ends' no válidos"
 
 msgid "'x' and 'y' must be units"
-msgstr ""
+msgstr "'x' e 'y' deben ser unidades"
 
 msgid "'x' and 'y' must have length 1"
-msgstr ""
+msgstr "'x' e 'y' deben tener longitud 1"
 
 msgid "invalid 'arrow' argument"
-msgstr ""
+msgstr "argumento 'arrow' no válido"
 
 msgid "it is invalid to specify both 'id' and 'id.lengths'"
-msgstr ""
+msgstr "no es válido especificar tanto 'id' como 'id.lengths'"
 
 msgid "'x' and 'y' must be same length"
-msgstr ""
+msgstr "'x' e 'y' deben tener la misma longitud"
 
 msgid "'x' and 'y' and 'id' must all be same length"
-msgstr ""
+msgstr "'x' e 'y' e 'id' deben tener la misma longitud"
 
 msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
-msgstr ""
+msgstr "'x', 'y' e 'id.lengths' deben especificar la misma longitud total"
 
 msgid "'x0', 'y0', 'x1', and 'y1' must be units"
-msgstr ""
+msgstr "'x0', 'y0', 'x1' e 'y1' deben ser unidades"
 
 msgid "'x' and 'y' must be units or NULL"
-msgstr ""
+msgstr "'x' e 'y' deben ser unidades o NULL"
 
 msgid "corrupt 'arrows' object"
-msgstr ""
+msgstr "Objeto 'arrows' no válido (corrupto)"
 
 msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
-msgstr ""
+msgstr "'x' e 'y' y 'pathId.lengths' deben especificar la misma longitud total"
 
 msgid "x and y must be units"
-msgstr ""
+msgstr "x e y deben ser unidades"
 
 msgid "must have exactly 4 control points"
-msgstr ""
+msgstr "debe tener exactamente 4 puntos de control"
 
 msgid "must have exactly 4 control points per Bezier curve"
-msgstr ""
+msgstr "debe tener exactamente 4 puntos de control por curva de Bézier"
 
 msgid "'x', 'y', and 'r' must be units"
-msgstr ""
+msgstr "'x', 'y' y 'r' deben ser unidades"
 
 msgid "'x', 'y', 'width', and 'height' must be units"
-msgstr ""
+msgstr "'x', 'y', 'ancho' y 'alto' deben ser unidades"
 
 msgid "invalid 'rot' value"
-msgstr ""
+msgstr "valor de 'rot' no válido"
 
 msgid "zero-length 'pch'"
-msgstr ""
+msgstr "'pch' de longitud cero"
 
 msgid "'x', 'y' and 'size' must be units"
-msgstr ""
+msgstr "'x', 'y' y 'size' deben ser unidades"
 
 msgid "'x' and 'y' must be 'unit' objects and have the same length"
-msgstr ""
+msgstr "'x' e 'y' deben ser objetos 'unit' y tener la misma longitud"
 
 msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
-msgstr ""
+msgstr "'x', 'y', 'ancho' y 'alto' deben ser unidades de longitud 1"
 
 msgid "'x' and 'y' must all be units of length 1"
-msgstr ""
+msgstr "'x' e 'y' deben ser unidades de longitud 1"
 
 msgid "'r' must be a 'unit' object"
-msgstr ""
+msgstr "'r' debe ser un objeto 'unit'"
 
 msgid "'x', 'y', 'width', and 'height' must have length 1"
-msgstr ""
+msgstr "'x', 'y', 'ancho' y 'alto' deben tener una longitud de 1"
 
 msgid "Invalid glyph info"
-msgstr ""
+msgstr "Información de glifo no válida"
 
 msgid "'x' and 'y' must have length > 0"
-msgstr ""
+msgstr "'x' e 'y' deben tener longitud >0"
 
 msgid "'hjust' and 'vjust' must be glyphJust() values"
-msgstr ""
+msgstr "'hjust' y 'vjust' deben ser valores de glyphJust()"
 
 msgid "'hjust' and 'vjust' must have length 1"
-msgstr ""
+msgstr "'hjust' y 'vjust' deben tener una longitud de 1"
 
 msgid "Unknown width; using first width"
-msgstr ""
+msgstr "Ancho desconocido; se utiliza el primer ancho"
 
 msgid "Unknown anchor; using left justification"
-msgstr ""
+msgstr "Ancla desconocida; se utiliza justificación a la izquierda"
 
 msgid "Unknown height; using first height"
-msgstr ""
+msgstr "Alto desconocida; se utiliza el primer alto"
 
 msgid "Unknown anchor; using bottom justification"
-msgstr ""
+msgstr "Ancla desconocida; se utiliza justificación inferior"
 
 msgid "'x' and 'units' must have length > 0"
-msgstr ""
+msgstr "'x' y 'units' deben tener una longitud > 0"
 
 msgid "invalid 'axis' or 'type'"
-msgstr ""
+msgstr "'axis' o 'type' no válidos"
 
 msgid "'x' and 'y' must be units and 'device' must be logical"
-msgstr ""
+msgstr "'x' e 'y' deben ser unidades y 'device' debe ser lógico"
 
 msgid "'w' and 'h' must be units and 'device' must be logical"
-msgstr ""
+msgstr "'w' y 'h' deben ser unidades y 'device' debe ser lógico"
 
 msgid "Not a unit object"
-msgstr ""
+msgstr "no es un objeto unidad"
 
 msgid "'Summary' function '%s' not meaningful for units"
-msgstr ""
+msgstr "Función de resumen '%s' no tiene sentido para las unidades"
 
 msgid "operator '%s' not meaningful for units"
-msgstr ""
+msgstr "el operador '%s' no tiene sentido para las unidades"
 
 msgid "'*' or '/' cannot be used as a unary operator"
-msgstr ""
+msgstr "'*' o '/' no se pueden usar como un operador unario"
 
 msgid "only one operand may be a unit"
-msgstr ""
+msgstr "solo un operando puede ser de tipo unidad"
 
 msgid "non-unit operand must be numeric"
-msgstr ""
+msgstr "el operando que no es de tipo unidad debe ser numérico"
 
 msgid "can't divide with a unit"
-msgstr ""
+msgstr "no se puede dividir con un objeto unidad"
 
 msgid "both operands must be units"
-msgstr ""
+msgstr "ambos operandos deben ser de tipo unidad"
 
 msgid "index out of bounds (\"unit\" subsetting)"
-msgstr ""
+msgstr "Índice fuera de límites (al extraer un subconjunto de \"unit\")"
 
 msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
 msgstr ""
+"No se puede crear un vector de longitud cero (al extraer un subconjunto de "
+"\"unit\")"
 
 msgid "index must be of length 1"
-msgstr ""
+msgstr "el índice debe tener una longitud de 1"
 
 msgid "replacement must be of length 1"
-msgstr ""
+msgstr "el reemplazo debe ser de longitud 1"
 
 msgid "invalid 'theta'"
-msgstr ""
+msgstr "'theta' no válido"
 
 msgid "'range' must be numeric"
-msgstr ""
+msgstr "'range' debe ser numérico"
 
 msgid "invalid 'gp' value"
-msgstr ""
+msgstr "Valor 'gp' no válido"
 
 msgid "invalid 'clip' value"
-msgstr ""
+msgstr "valor 'clip' no válido"
 
 msgid "invalid 'mask' value"
-msgstr ""
+msgstr "valor de 'mask' no válido"
 
 msgid "invalid 'xscale' in viewport"
-msgstr ""
+msgstr "valor de 'xscale' no válido en esta ventana gráfica"
 
 msgid "invalid 'yscale' in viewport"
-msgstr ""
+msgstr "valor de 'yscale' no válido en esta ventana gráfica"
 
 msgid "invalid 'angle' in viewport"
-msgstr ""
+msgstr "valor de 'angle' no válido en esta ventana gráfica"
 
 msgid "invalid 'layout' in viewport"
-msgstr ""
+msgstr "'layout' no válido en esta ventana gráfica"
 
 msgid "invalid 'layout.pos.row' in viewport"
-msgstr ""
+msgstr "'layout.pos.row' no válido en esta ventana gráfica"
 
 msgid "invalid 'layout.pos.col' in viewport"
-msgstr ""
+msgstr "'layout.pos.col' no válido en esta ventana gráfica"
 
 msgid "only viewports allowed in 'vpList'"
-msgstr ""
+msgstr "sólo se admiten ventanas gráficas en 'vpList'"
 
 msgid "only viewports allowed in 'vpStack'"
-msgstr ""
+msgstr "solo se admiten ventanas gráficas en 'vpStack'"
 
 msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
 msgstr ""
 
 msgid "a viewport path must contain at least one viewport name"
 msgstr ""
+"una ruta de ventana gráfica debe contener al menos un nombre de ventana "
+"gráfica"
 
-#, fuzzy
 msgid "must specify at least one of 'xData' or 'xscale'"
-msgstr "se debe especificar al menos una ventana"
+msgstr "se debe especificar al menos 'xData' o 'xscale'"
 
-#, fuzzy
 msgid "must specify at least one of 'yData' or 'yscale'"
-msgstr "se debe especificar al menos una ventana"
+msgstr "se debe especificar al menos 'yData' o 'yscale'"
 
 msgid "shutting down all devices when unloading 'grid' namespace"
 msgstr ""
+"cerrando todos los dispositivos gráficos al descargar el espacio de nombres "
+"'grid'"
 
 msgid "invalid grob name"
 msgid_plural "invalid grob names"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "nombre de grob no válido"
+msgstr[1] "nombres de grob no válidos"
 
 msgid "invalid viewport name"
 msgid_plural "invalid viewport names"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "nombre de ventana gráfica no válido"
+msgstr[1] "nombres de ventanas gráficas no válidos"

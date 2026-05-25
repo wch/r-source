@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-08 11:37\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -34,7 +34,8 @@ msgstr "documento non trovato"
 msgid "some options in argument 'restrict' were not recognized and hence ignored"
 msgstr "alcune opzioni nell'argomento 'restrict' non sono riconosciute e vengono ignorate"
 
-msgid "argument 'format' is deprecated and has no affect on search results"
+#, fuzzy
+msgid "argument 'format' is deprecated and has no effect on search results"
 msgstr "l'argomento 'format' è deprecato e non altera i risultati della ricerca"
 
 msgid "A search query has been submitted to %s"
@@ -98,6 +99,17 @@ msgstr "il valore dell'opzione 'results' dev'essere in minuscolo"
 msgid "value of 'strip.white' option should be lowercase"
 msgstr "il valore dell'opzione 'strip.white' dev'essere in minuscolo"
 
+msgid "using default value %s"
+msgstr ""
+
+#, fuzzy
+msgid "this function cannot be used from an interactive session"
+msgstr "winDialog() non può essere utilizzato in maniera non-interattiva"
+
+#, fuzzy
+msgid "unrecognized Sweave call"
+msgstr "Indicatore valore non riconosciuto"
+
 msgid "elements of 'what' after the first will be ignored"
 msgstr "gli elementi di 'what' oltre al primo saranno ignorati"
 
@@ -144,6 +156,10 @@ msgstr "Non è stato trovato alcun programma per il controllo ortografico."
 
 msgid "Performing query %s"
 msgstr ""
+
+#, fuzzy
+msgid "Unsupported object"
+msgstr "tipo di voce non supportata"
 
 msgid ""
 "Use <code> %s </code> \n"
@@ -756,8 +772,8 @@ msgstr "dedurre 'repos = NULL' da 'pkgs'"
 msgid "unable to create temporary directory %s"
 msgstr "non è possibile creare una directory temporanea %s"
 
-msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
-msgstr "type ==\"both\" può essere usato su Windows o un CRAN per macOS"
+msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
+msgstr ""
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
 msgstr "type==\"both\" può essere usato con 'repos=NULL'"
@@ -1220,8 +1236,16 @@ msgstr "il file %s non è un pacchetto binario macOS"
 msgid "binary package %s is not compatible with this build of R"
 msgstr ""
 
-msgid "package %s successfully unpacked and MD5 sums checked"
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
 msgstr "pacchetto %s aperto con successo con controllo somme MD5"
+
+#, fuzzy
+msgid "package %s signature verified (%s %s)"
+msgstr "il pacchetto %s non è disponibile %s"
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
 
 msgid ""
 "ERROR: failed to lock directory %s for modifying\n"
@@ -1459,6 +1483,9 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "numero romano non valido: %s"
 msgstr[1] "numeri romani non validi: %s"
+
+#~ msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
+#~ msgstr "type ==\"both\" può essere usato su Windows o un CRAN per macOS"
 
 #~ msgid "no R objects specified or available"
 #~ msgstr "nessun oggetto R specificato o disponibile"

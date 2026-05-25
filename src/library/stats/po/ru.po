@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-05-25 12:47-0700\n"
 "PO-Revision-Date: 2024-03-25 14:52+0300\n"
 "Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
@@ -161,15 +161,15 @@ msgstr "неправильные имена переменных"
 msgid "invalid tag"
 msgstr "неправильный тег"
 
-#: distance.c:152
+#: distance.c:153
 msgid "treating non-finite values as NA"
 msgstr "обрабатываю не-конечные значения как NA"
 
-#: distance.c:225
+#: distance.c:226
 msgid "distance(): invalid p"
 msgstr "distance(): неправильный p"
 
-#: distance.c:229
+#: distance.c:230
 msgid "distance(): invalid distance"
 msgstr "distance(): неправильное расстояние"
 
@@ -199,7 +199,7 @@ msgstr "аргумент %s должен быть числовым вектором длины 1 или %d"
 #: fexact.c:276
 #, c-format
 msgid "integer overflow would happen in 'mult * ldkey' = %g"
-msgstr "может произойти  целочисленное переполнение в 'mult * ldkey' = %g"
+msgstr "может произойти целочисленное переполнение в 'mult * ldkey' = %g"
 
 #: fexact.c:656
 #, c-format
@@ -914,7 +914,7 @@ msgstr "%s$%s() не найден"
 #: port.c:500
 #, c-format
 msgid "'gradient' must be a numeric matrix of dimension (%d,%d)"
-msgstr "'gradient' должен быть числовой матрицей матрицей с измерениями (%d,%d)"
+msgstr "'gradient' должен быть числовой матрицей с измерениями (%d,%d)"
 
 #: port.c:521
 #, c-format
@@ -935,7 +935,7 @@ msgstr "'lowerb' и 'upperb' должны быть числовыми векторами"
 
 #: prho.c:159
 msgid "invalid sample size 'n' in C routine prho(n,s,*)"
-msgstr ""
+msgstr "неправильный размер выборки 'n' в C-функции prho(n,s,*)"
 
 #: rWishart.c:53
 msgid "inconsistent degrees of freedom and dimension"

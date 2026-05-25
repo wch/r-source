@@ -34,17 +34,16 @@ msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "nie wszystkie elementy 'MARGIN' są nazwami wymiarów"
 
 msgid "no cluster 'cl' supplied and none is registered"
-msgstr "nie dostarczono argumentu klastr 'cl' oraz żaden nie jest zarejestrowany"
+msgstr "nie dostarczono argumentu klastra 'cl' oraz żaden nie jest zarejestrowany"
 
 msgid "not a valid cluster"
-msgstr "to nie jest poprawny klaster"
+msgstr "nie jest to poprawny klaster"
 
 msgid "replacing registration for cluster type '%s'"
-msgstr ""
+msgstr "zastępowanie rejestracji dla klastra typu '%s'"
 
-#, fuzzy
 msgid "unknown cluster type: '%s'"
-msgstr "nieznany typ klastra"
+msgstr "nieznany typ klastra: '%s'"
 
 msgid "numeric 'names' must be >= 1"
 msgstr "argument 'names' musi być >= 1"
@@ -53,7 +52,7 @@ msgid "node of a socket cluster on host %s with pid %d"
 msgstr "węzeł gniazda klastra na hoście %s z pid %d"
 
 msgid "Connection setup failed or timed out."
-msgstr ""
+msgstr "Ustawienie połączenia nie powiodło się lub przekroczono czas oczekiwania."
 
 msgid "PORT must be specified"
 msgstr "argument 'port' musi być określony"
@@ -62,7 +61,7 @@ msgid "'nnodes' must be >= 1"
 msgstr "argument 'nnodes' musi być >= 1"
 
 msgid "Cluster setup failed."
-msgstr ""
+msgstr "Ustawienie klastra nie powiodło się."
 
 msgid "invalid 'child' argument"
 msgstr "niepoprawny argument 'child'"
@@ -86,7 +85,7 @@ msgid "affinity.list and X must have the same length"
 msgstr "'affinity.list' oraz 'X' muszą mieć tę samą długość"
 
 msgid "%d function calls resulted in an error"
-msgstr "wywołania funkcji %d spowodowało błąd"
+msgstr "%d wywołania funkcji spowodowały błąd"
 
 msgid "'mc.preschedule' must be false if 'affinity.list' is used"
 msgstr "'mc.preschedule' musi mieć wartość FALSE jeśli argument 'affinity.list' jest użyty"
@@ -112,11 +111,12 @@ msgstr "rozgałęzione klastry nie są obsługiwane w systemie Windows"
 msgid "'mc.cores' > 1 is not supported on Windows"
 msgstr "argument 'mc.cores' > 1 nie jest wspierany w systemach Windows"
 
+
 msgid "Cluster setup failed. %d worker of %d failed to connect."
 msgid_plural "Cluster setup failed. %d of %d workers failed to connect."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Ustawienie klastra nie powiodło się. %d pracownik z %d nie mógł się połączyć."
+msgstr[1] "Ustawienie klastra nie powiodło się. %d pracowników z %d nie mogło się połączyć."
+msgstr[2] "Ustawienie klastra nie powiodło się. %d pracowników z %d nie mogło się połączyć."
 
 msgid "socket cluster with %d nodes on host %s"
 msgid_plural "socket cluster with %d nodes on hosts %s"
@@ -124,18 +124,18 @@ msgstr[0] "gniazdo klastra z %d węzłem na hoście %s"
 msgstr[1] "gniazdo klastra z %d węzłami na hoście %s"
 msgstr[2] "gniazdo klastra z %d węzłami na hoście %s"
 
+
 msgid "%d parallel function call did not deliver a result"
 msgid_plural "%d parallel function calls did not deliver results"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d równoległe wywołanie funkcji nie dostarczyło wyniku"
+msgstr[1] "%d równoległe wywołania funkcji nie dostarczyło wyników"
+msgstr[2] "%d równoległych wywołań funkcji nie dostarczyło wyników"
 
-#, fuzzy
 msgid "scheduled core %s did not deliver a result, all values of the job will be affected"
 msgid_plural "scheduled cores %s did not deliver results, all values of the jobs will be affected"
-msgstr[0] "zaplanowane jądro '%s' napotkało błąd w kodzie użytkownika, wpłynie to na wszystkie wartości zadania"
-msgstr[1] "zaplanowane jądra '%s' napotkały błędy w kodzie użytkownika, wpłynie to na wszystkie wartości zadań"
-msgstr[2] "zaplanowane jądra '%s' napotkały błędy w kodzie użytkownika, wpłynie to na wszystkie wartości zadań"
+msgstr[0] "zaplanowane jądro '%s' nie dostarczyło wyniku, wpłynie to na wszystkie wartości zadania"
+msgstr[1] "zaplanowane jądra '%s' nie dostarczyły wyniku, wpłynie to na wszystkie wartości zadań"
+msgstr[2] "zaplanowane jądra '%s' nie dostarczyły wyniku, wpłynie to na wszystkie wartości zadań"
 
 msgid "scheduled core %s encountered error in user code, all values of the job will be affected"
 msgid_plural "scheduled cores %s encountered errors in user code, all values of the jobs will be affected"
@@ -143,8 +143,9 @@ msgstr[0] "zaplanowane jądro '%s' napotkało błąd w kodzie użytkownika, wpł
 msgstr[1] "zaplanowane jądra '%s' napotkały błędy w kodzie użytkownika, wpłynie to na wszystkie wartości zadań"
 msgstr[2] "zaplanowane jądra '%s' napotkały błędy w kodzie użytkownika, wpłynie to na wszystkie wartości zadań"
 
+
 msgid "%d parallel job did not deliver a result"
 msgid_plural "%d parallel jobs did not deliver results"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d równoległe zadanie nie dostarczyło wyniku"
+msgstr[1] "%d równoległe zadania nie dostarczyły wyników"
+msgstr[2] "%d równoległych zadań nie dostarczyło wyników"

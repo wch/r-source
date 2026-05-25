@@ -42,12 +42,14 @@ msgstr "pas de grappe 'cl' fournie et aucune n'est enregistrée"
 msgid "not a valid cluster"
 msgstr "groupe de processus invalide"
 
+
 msgid "replacing registration for cluster type '%s'"
 msgstr ""
+"remplacement de l'enregistrement pour le type de cluster "
+"'%s'"
 
-#, fuzzy
 msgid "unknown cluster type: '%s'"
-msgstr "groupe de processus de type inconnu"
+msgstr "type de cluster inconnu : '%s'"
 
 msgid "numeric 'names' must be >= 1"
 msgstr "'names' numérique doit être >= 1"

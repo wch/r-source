@@ -28,7 +28,9 @@ msgid "one of 'x1' and 'y1' must be given"
 msgstr "jeden z 'x1' oraz 'y1' musi być podany"
 
 msgid "'length', 'angle', or 'code' greater than length 1; values after the first are ignored"
-msgstr "argument 'length', 'angle', lub 'code' mają długość większą niż 1; wszystkie wartości oprócz pierwszych zostaną zignorowane"
+msgstr ""
+"argument 'length', 'angle', lub 'code' mają długość większą niż 1; wszystkie wartości oprócz "
+"pierwszego zostaną zignorowane"
 
 msgid "'x' must be a 2-d contingency table"
 msgstr "'x' musi być 2-wymiarową tabelą kontyngencji"
@@ -67,7 +69,7 @@ msgid "Cannot use shading lines in bars when log scale is used"
 msgstr "Nie można użyć linii cieniujących w słupkach kiedy używana jest skala logarytmiczna"
 
 msgid "log scale error: at least one 'height + offset' value <= 0"
-msgstr "błąd skali logarytmicznej: przynajmniej jedna wartość 'height + offset'  musi być <= 0"
+msgstr "błąd skali logarytmicznej: przynajmniej jedna wartość 'height + offset' musi być <= 0"
 
 msgid "log scale error: 'xlim' <= 0"
 msgstr "błąd skali logarytmicznej: 'xlim' <= 0"
@@ -79,18 +81,16 @@ msgid "incorrect number of names"
 msgstr "nieprawidłowa liczba nazw"
 
 msgid "'formula' missing or incorrect"
-msgstr "brakująca lub niepoprawna 'formula'"
+msgstr "brakuje argumentu 'formula' lub jest on niepoprawny"
 
-#, fuzzy
 msgid "formula must specify 1 or 2 categorical variables"
-msgstr "'formula' powinna określać dokładnie dwie zmienne"
+msgstr "formuła musi określać 1 lub 2 zmienne kategoryczne"
 
 msgid "duplicated categorical values - try another formula or subset"
-msgstr ""
+msgstr "powtórzone wartości kategoryczne - spróbuj innej formuły lub podzbioru"
 
-#, fuzzy
 msgid "formula with cbind() must specify 1 categorical variable"
-msgstr "'formula' powinna określać dokładnie dwie zmienne"
+msgstr "formuła z 'cbind()' musi określać 1 zmienną kategoryczną"
 
 msgid "invalid first argument"
 msgstr "niepoprawny pierwszy argument"
@@ -121,10 +121,10 @@ msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
 msgstr "oś y jest w skali skumulowanego prawdopodobieństwa, 'ylim' musi być w przedziale [0,1]"
 
 msgid "no 'z' matrix specified"
-msgstr "nie określono macierzy 'z'"
+msgstr "brak określonej macierzy 'z'"
 
 msgid "increasing 'x' and 'y' values expected"
-msgstr "oczekiwano zwiększających się wartości 'x' oraz 'y'"
+msgstr "oczekiwano rosnących wartości 'x' oraz 'y'"
 
 msgid "no proper 'z' matrix specified"
 msgstr "nie określono odpowiedniej macierzy 'z'"
@@ -235,7 +235,7 @@ msgid "'breaks' are not strictly increasing"
 msgstr "'breaks' nie są ściśle rosnące"
 
 msgid "'probability' is an alias for '!freq', however they differ."
-msgstr "'probability' jest aliasem dla '!freq', jednakże różnią się"
+msgstr "'probability' jest aliasem dla '!freq', jednakże różnią się."
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr "niektóre wartości zmiennej 'x' nie zostały zliczone; być może wartości argumentu 'breaks' nie rozciągają się na cały zakres zmiennej 'x'"
@@ -301,9 +301,8 @@ msgstr "niepoprawne długości współrzędnych"
 msgid "horizontal specification overrides: Number of columns := %d"
 msgstr "obejścia określenia poziomu: Liczba kolumn := %d"
 
-#, fuzzy
 msgid "'text.width' must be numeric, >= 0, or a scalar NA"
-msgstr "argument 'text.width' musi być liczbą >= 0"
+msgstr "argument 'text.width' musi być liczbą >= 0, lub wartością NA"
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
 msgstr "'merge = TRUE' nie ma efektu gdy nie są rysowane żadne linie segmentów"
@@ -333,7 +332,7 @@ msgid "invalid 'shade' specification"
 msgstr "niepoprawne określenie 'shade'"
 
 msgid "length of 'sort' does not conform to 'dim(x)'"
-msgstr "długość  'sort' nie jest zgodna z 'dim(x)'"
+msgstr "długość 'sort' nie jest zgodna z 'dim(x)'"
 
 msgid "non-numeric argument to 'pairs'"
 msgstr "argument nieliczbowy przekazywany do 'pairs'"
@@ -354,7 +353,7 @@ msgid "surface extends beyond the box"
 msgstr "powierzchnia rozciąga się poza pudełko"
 
 msgid "'x' values must be positive."
-msgstr "wartości 'x' muszą być dodatnie"
+msgstr "wartości 'x' muszą być dodatnie."
 
 msgid "invalid table 'x'"
 msgstr "niepoprawna tabela 'x'"
@@ -368,22 +367,20 @@ msgstr "nie można obsłużyć więcej niż jedną współrzędną 'x'"
 msgid "must have a response variable"
 msgstr "wymagana jest zmienna zależna"
 
-#, fuzzy
 msgid "invalid plot type"
-msgstr "niepoprawne szerokości wykresu pudełkowego"
+msgstr "niepoprawny typ wykresu"
 
 msgid "plot type '%s' will be truncated to first character"
-msgstr ""
+msgstr "typ '%s' wykresu zostanie przycięty do pierwszego znaku"
 
-#, fuzzy
 msgid "invalid plot type '%s'"
-msgstr "niepoprawne szerokości wykresu pudełkowego"
+msgstr "niepoprawny typ '%s' wykresu"
 
 msgid "'plot.data.frame' applied to non data frame"
 msgstr "'plot.data.frame' zastosowano do danych niebędących ramką danych"
 
 msgid "'y' must be a numeric vector"
-msgstr "'y' musi być wektorem liczbowym"
+msgstr "argument 'y' musi być wektorem liczbowym"
 
 msgid "'x' must be a data frame"
 msgstr "'x' musi być ramką danych"
@@ -425,13 +422,13 @@ msgid "'figs' must specify at least one screen"
 msgstr "'figs' musi określać przynajmniej jeden ekran"
 
 msgid "'nrpoints' should be numeric scalar with value >= 0."
-msgstr "'nrpoints' powinien być liczbą o wartości >= 0"
+msgstr "'nrpoints' powinien być liczbą o wartości >= 0."
 
 msgid "a 2-way table has to be specified"
 msgstr "2-kierunkowa tabela musi zostać określona"
 
 msgid "weights are not supported for 2-way table specification"
-msgstr ""
+msgstr "wagi nie są wspierane dla 2-kierunkowej tablicy specyfikacji"
 
 msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
 msgstr "oś x jest w skali skumulowanego prawdopodobieństwa, 'xlim' musi być pomiędzy [0,1]"
@@ -449,10 +446,10 @@ msgid "labels do not make sense for a single location"
 msgstr "etykiety nie mają sensu dla pojedynczego położenia"
 
 msgid "'locations' must be a 2-column matrix."
-msgstr "'locations' musi być 2-kolumnową macierzą"
+msgstr "'locations' musi być 2-kolumnową macierzą."
 
 msgid "number of rows of 'locations' and 'x' must be equal."
-msgstr "liczba wierszy dla 'locations' oraz 'x' muszą być równe"
+msgstr "liczba wierszy dla 'locations' oraz 'x' muszą być równe."
 
 msgid "length of 'angles' must equal 'ncol(x)'"
 msgstr "długość 'angles' musi równać się 'ncol(x)'"
@@ -487,12 +484,11 @@ msgstr "skala logarytmiczna y:  'yinch()' nie ma sensu"
 msgid "log scale:  xyinch() is nonsense"
 msgstr "skala logarytmiczna:  'xyinch()' nie ma sensu"
 
-#, fuzzy
 msgid "Duplicated argument %s is disregarded"
 msgid_plural "Duplicated arguments %s are disregarded"
-msgstr[0] "dodatkowy argument %s zostanie odrzucony"
-msgstr[1] "dodatkowe argumenty %s zostaną odrzucone"
-msgstr[2] "dodatkowe argumenty %s zostaną odrzucone"
+msgstr[0] "Powtórzony argument %s został odrzucony"
+msgstr[1] "Powtórzone argumenty %s zostały odrzucone"
+msgstr[2] "Powtórzone argumenty %s zostały odrzucone"
 
 msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"

@@ -20,7 +20,7 @@ msgstr ""
 
 #: class_support.c:29
 msgid "calling the C routine used as an initializer for 'externalptr' objects"
-msgstr ""
+msgstr "استدعاء روتين C المستخدم كمهيئ لكائنات \"externalptr\""
 
 #: do_substitute_direct.c:41
 msgid "invalid list for substitution"
@@ -29,39 +29,40 @@ msgstr "القائمة غير صالحة للاستبدال"
 #: methods_list_dispatch.c:129
 #, c-format
 msgid "unexpected type '%s' for condition message"
-msgstr ""
+msgstr "اكتب غير متوقع '%s' لرسالة الشرط"
 
 #: methods_list_dispatch.c:132
 msgid "condition message must be length 1"
 msgstr "يجب أن تكون رسالة الشرط بطول 1"
 
+
 #: methods_list_dispatch.c:213
 msgid "could not find the skeleton calls for 'methods' (package detached?): expect very bad things to happen"
-msgstr ""
+msgstr "تعذر العثور على الهيكل العظمي يدعو إلى \"طرق\" (حزمة منفصلة؟): توقع حدوث أشياء سيئة للغاية"
 
 #: methods_list_dispatch.c:279
 #, c-format
 msgid "no \"allMethods\" slot found in object of class \"%s\" used as methods list for function '%s'"
-msgstr ""
+msgstr "لا توجد فتحة \"allMethods\" في كائن الفئة \"%s\" المستخدمة كقائمة طرق للوظيفة \"%s\""
 
 #: methods_list_dispatch.c:407
 #, c-format
 msgid "S language method selection did not return normally when called from internal dispatch for function '%s'"
-msgstr ""
+msgstr "لم يعد تحديد طريقة لغة S بشكل طبيعي عند استدعاؤه من الإرسال الداخلي للوظيفة \"%s\""
 
 #: methods_list_dispatch.c:409
 msgid "Function name for method selection called internally"
-msgstr ""
+msgstr "اسم الوظيفة لاختيار الطريقة يسمى داخليا"
 
 #: methods_list_dispatch.c:505
 #, c-format
 msgid "no generic function definition found for '%s'"
-msgstr ""
+msgstr "لم يتم العثور على تعريف دالة عامة ل \"%s\""
 
 #: methods_list_dispatch.c:506
 #, c-format
 msgid "no generic function definition found for '%s' in the supplied environment"
-msgstr ""
+msgstr "لم يتم العثور على تعريف دالة عامة ل \"%s\" في البيئة المتوفرة"
 
 #: methods_list_dispatch.c:541
 #, c-format
@@ -71,16 +72,16 @@ msgstr ""
 #: methods_list_dispatch.c:556
 #, c-format
 msgid "no direct or inherited method for function '%s' for this call"
-msgstr ""
+msgstr "لا توجد طريقة مباشرة أو موروثة للدالة \"%s\" لهذه المكالمة"
 
 #: methods_list_dispatch.c:586 methods_list_dispatch.c:1166
 msgid "invalid object (non-function) used as method"
-msgstr ""
+msgstr "كائن غير صالح (غير دالة) يستخدم كأسلوب"
 
 #: methods_list_dispatch.c:607
 #, c-format
 msgid "could not find symbol '%s' in frame of call"
-msgstr ""
+msgstr "تعذر العثور على الرمز \"%s\" في إطار المكالمة"
 
 #: methods_list_dispatch.c:615
 #, c-format
@@ -89,7 +90,7 @@ msgstr ""
 
 #: methods_list_dispatch.c:618
 msgid "use of NULL environment is defunct"
-msgstr ""
+msgstr "استخدام بيئة NULL غير موجودة"
 
 #: methods_list_dispatch.c:622
 #, c-format
@@ -99,17 +100,17 @@ msgstr ""
 #: methods_list_dispatch.c:645
 #, c-format
 msgid "error in evaluating the argument '%s' in selecting a method for function '%s': %s"
-msgstr ""
+msgstr "خطأ في تقييم الوسيطة \"%s\" في تحديد طريقة للدالة \"%s\": %s"
 
 #: methods_list_dispatch.c:663
 #, c-format
 msgid "object of class \"%s\" used as methods list for function '%s' ( no 'argument' slot)"
-msgstr ""
+msgstr "كائن من الفئة \"%s\" يستخدم كقائمة طرق للوظيفة \"%s\" (لا توجد فتحة \"وسيطة\")"
 
 #: methods_list_dispatch.c:674
 #, c-format
 msgid "(in selecting a method for function '%s') '...' and related variables cannot be used for methods dispatch"
-msgstr ""
+msgstr "(عند تحديد طريقة للوظيفة \"%s\") '...' ولا يمكن استخدام المتغيرات ذات الصلة لإرسال الطرق"
 
 #: methods_list_dispatch.c:677
 #, c-format
@@ -119,43 +120,43 @@ msgstr ""
 #: methods_list_dispatch.c:708
 #, c-format
 msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
-msgstr ""
+msgstr "لا توجد طريقة مطابقة للدالة '%s' (الوسيطة '%s'، مع الفئة \"%s\")"
 
 #: methods_list_dispatch.c:715
 #, c-format
 msgid "recursive use of function '%s' in method selection, with no default method"
-msgstr ""
+msgstr "الاستخدام المتكرر للدالة \"%s\" في اختيار الأسلوب ، بدون طريقة افتراضية"
 
 #: methods_list_dispatch.c:740
 #, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
-msgstr ""
+msgstr "خطأ في تقييم الطريقة التالية \"البدائية\": %s"
 
 #: methods_list_dispatch.c:896
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
-msgstr ""
+msgstr "يجب أن يكون \"%s\" سلسلة واحدة (حصلت على متجه حرف بطول %d)"
 
 #: methods_list_dispatch.c:900
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
-msgstr ""
+msgstr "يجب أن تكون \"%s\" سلسلة غير فارغة. حصلت على سلسلة فارغة"
 
 #: methods_list_dispatch.c:904
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
-msgstr ""
+msgstr "يجب أن يكون \"%s\" سلسلة واحدة (حصلت على كائن من الفئة \"%s\")"
 
 #: methods_list_dispatch.c:989
 msgid "class should be either a character-string name or a class definition"
-msgstr ""
+msgstr "يجب أن تكون الفئة إما اسم سلسلة حرف أو تعريف فئة"
 
 #: methods_list_dispatch.c:1075
 #, c-format
 msgid "failed to get the generic for the primitive \"%s\""
-msgstr ""
+msgstr "فشل في الحصول على الاسم العام للبدائية \"%s\""
 
 #: methods_list_dispatch.c:1082
 #, c-format
 msgid "expected a generic function or a primitive for dispatch, got an object of class \"%s\""
-msgstr ""
+msgstr "توقع وظيفة عامة أو بدائية للإرسال ، حصلت على كائن من الفئة \"%s\""

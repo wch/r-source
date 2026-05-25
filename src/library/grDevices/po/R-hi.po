@@ -257,7 +257,7 @@ msgid "Invalid 'extend' value"
 msgstr ""
 
 msgid "'%s' is deprecated."
-msgstr ""
+msgstr "'%s ' अब अमान्य है।"
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr ""

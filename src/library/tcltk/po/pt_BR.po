@@ -30,9 +30,10 @@ msgstr "erro tcl.\n"
 msgid "invalid argument"
 msgstr "argumento inválido"
 
+
 #: tcltk.c:295
 msgid "no such variable"
-msgstr ""
+msgstr "variável não existente"
 
 #: tcltk.c:327 tcltk.c:347 tcltk.c:424 tcltk.c:491 tcltk.c:547
 msgid "invalid tclObj -- perhaps saved from another session?"

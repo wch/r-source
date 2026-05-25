@@ -13,43 +13,35 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 4.16.4\n"
 
-#, fuzzy
 msgid "invalid 'at' location in 'axis'"
 msgstr "Localização 'at' inválida em 'axis'"
 
-#, fuzzy
 msgid "invalid to specify axis labels when 'at' is NULL"
 msgstr "Inválido especificar rótulos de eixos quanto 'at' é NULL"
 
 msgid "'labels' and 'at' locations must have same length"
 msgstr "localizações de 'labels' e 'at' devem ter o mesmo comprimento"
 
-#, fuzzy
 msgid "logical 'label' supplied of length 0"
 msgstr "'label' lógica fornecida com comprimento 0"
 
-#, fuzzy
 msgid "Invalid coordinates"
-msgstr "'frame' inválido"
+msgstr "coordenadas inválidas"
 
-#, fuzzy
 msgid "Invalid grob coordinates"
-msgstr "Nome(s) de 'grob' inválido(s)"
+msgstr "Coordenadas grob inválidas"
 
-#, fuzzy
 msgid "Invalid gTree coordinates"
-msgstr "Classe 'gTree' inválida"
+msgstr "coordenadas gTree inválidas"
 
 msgid "Closed must be length 1 and must not be a missing value"
-msgstr ""
+msgstr "Closed deve ter comprimento 1 e não pode estar vazio"
 
-#, fuzzy
 msgid "end points must not be identical"
-msgstr "Pontos finais não devem ser identicos"
+msgstr "pontos finais não devem ser idênticos"
 
-#, fuzzy
 msgid "'x1', 'y1', 'x2', and 'y2' must be units"
-msgstr "'x1', 'y1' ,'x2', e 'y2' devem ser unidade"
+msgstr "'x1', 'y1' ,'x2', e 'y2' devem ser unidades"
 
 msgid "'shape' must be between -1 and 1"
 msgstr "'shape' deve ser entre -1 e 1"
@@ -60,46 +52,38 @@ msgstr "'squareShape' deve ser entre -1 e 1"
 msgid "'arrow' must be an arrow object or NULL"
 msgstr "'arrow' deve ser um objeto 'arrow' ou NULL"
 
-#, fuzzy
 msgid "how did we get here?"
-msgstr "Como é que chegamos aqui?"
+msgstr "Como chegamos aqui?"
 
-#, fuzzy
 msgid "must start new page if showing leaves separately"
-msgstr "Deve iniciar nova página se folhas estão exibidas separadamente"
+msgstr "deve iniciar nova página se folhas estão exibidas separadamente"
 
-#, fuzzy
 msgid "invalid 'edit' information"
 msgstr "informação 'edit' inválida"
 
 msgid "'gEditList' can only contain 'gEdit' objects"
 msgstr "'gEditList' pode conter apenas objetos 'gEdit'"
 
-#, fuzzy
 msgid "invalid 'frame'"
 msgstr "'frame' inválido"
 
-#, fuzzy
 msgid "invalid 'grob'"
 msgstr "'grob' inválido"
 
-#, fuzzy
 msgid "invalid 'row' and/or 'col' (no such cell in frame layout)"
-msgstr "'row' e/ou 'col' (nenhuma célula na estrutura de dados)"
+msgstr "'row' e/ou 'col' inválidos (nenhum célula no layout do quadro)"
 
 msgid "'col' can only be a range of existing columns"
 msgstr "'col' só pode ser um intervalo de colunas existentes"
 
-#, fuzzy
 msgid "invalid 'col' specification"
-msgstr "Especificação inválida para 'col'"
+msgstr "especificação de 'col' inválida"
 
 msgid "'row' can only be a range of existing rows"
 msgstr "'row' só pode ser um intervalo de linhas existentes"
 
-#, fuzzy
 msgid "invalid 'row' specification"
-msgstr "Especificação inválida para 'row'"
+msgstr "especificação inválida para 'row'"
 
 #, fuzzy
 msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
@@ -109,55 +93,44 @@ msgstr "Não pode ser especificado mais de um 'side=[\"left\", \"right\"]', 'col
 msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
 msgstr "Deve especificar exatamente um de 'side=[\"top\", \"bottom\"]', 'row', 'row.before', ou 'row.after'"
 
-#, fuzzy
 msgid "invalid 'n'"
 msgstr "'n' inválido"
 
-#, fuzzy
 msgid "invalid 'f'"
 msgstr "'f' inválido"
 
-#, fuzzy
 msgid "'gpar' element '%s' must not be length 0"
-msgstr "elemento gpar '%s' não deve ser de comprimento 0"
+msgstr "o elemento 'gpar ''%s' não pode ter comprimento 0"
 
 msgid "mixture of missing and non-missing values for %s"
-msgstr ""
+msgstr "Mistura de valores faltantes e não-faltantes para %s"
 
-#, fuzzy
 msgid "'gamma' 'gpar' element is defunct"
-msgstr "'gamma' gpar é extinto"
+msgstr "o elemento 'gamma' de 'gpar' foi extinto"
 
 msgid "'fill' gpar list components must all be patterns"
-msgstr ""
+msgstr "os componentes da lista gpar 'fill' devem ser todos padrões"
 
-#, fuzzy
 msgid "invalid 'linemitre' value"
 msgstr "Valor 'linemitre' inválido"
 
-#, fuzzy
 msgid "invalid 'alpha' value"
-msgstr "Valor 'alpha' inválido"
+msgstr "valor 'alpha' inválido"
 
-#, fuzzy
 msgid "must specify only one of 'font' and 'fontface'"
-msgstr "Deve especificar somente um de 'font' e 'fontface'"
+msgstr "deve especificar somente um de 'font' e 'fontface'"
 
-#, fuzzy
 msgid "invalid fontface"
-msgstr "Superfície da fonte inválida"
+msgstr "tipo de fonte inválido"
 
-#, fuzzy
 msgid "argument must be a 'gpar' object"
-msgstr "Argumento deve ser um objeto 'gpar'"
+msgstr "argumento deve ser um objeto 'gpar'"
 
-#, fuzzy
 msgid "must specify only valid 'gpar' names"
-msgstr "Deve especificar apenas nomes 'gpar' válidos"
+msgstr "É necessário especificar apenas nomes 'gpar' válidos"
 
-#, fuzzy
 msgid "invalid display list element"
-msgstr "elemento da lista de exibição inválido"
+msgstr "Elemento da lista de exibição inválido"
 
 #, fuzzy
 msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
@@ -173,9 +146,8 @@ msgstr "grob modificou a ordem e a mesma não foi restaurada (captura PODE não 
 msgid "only valid to push viewports"
 msgstr "Somente válido para empurrar vistas"
 
-#, fuzzy
 msgid "must specify at least one viewport"
-msgstr "Deve especificar ao menos uma vista"
+msgstr "Deve-se especificar ao menos uma vista"
 
 #, fuzzy
 msgid "Down viewport failed to record on display list"
@@ -185,127 +157,102 @@ msgstr "Objeto inválido inserido na lista de exibição"
 msgid "Down viewport incorrectly recorded on display list"
 msgstr "Objeto inválido inserido na lista de exibição"
 
-#, fuzzy
 msgid "must pop at least one viewport"
-msgstr "Deve restaurar ao menos uma vista"
+msgstr "deve aparecer pelo menos uma viewport"
 
-#, fuzzy
 msgid "must navigate up at least one viewport"
-msgstr "Deve ao menos navegar até uma vista"
+msgstr "Deve ao menos navegar até uma viewport"
 
 msgid "Invalid number of generations"
-msgstr ""
+msgstr "Número inválido de gerações"
 
-#, fuzzy
 msgid "Invalid 'clearGroups' argument"
-msgstr "argumento 'arrow' inválido"
+msgstr "Argumento 'clearGroups' inválido"
 
-#, fuzzy
 msgid "invalid object inserted on the display list"
 msgstr "Objeto inválido inserido na lista de exibição"
 
-#, fuzzy
 msgid "invalid modification of the display list"
-msgstr "Elemento Inválido na lista de exibição"
+msgstr "modificação inválida da lista de exibição"
 
 msgid "'expr' must return a grob or gList"
-msgstr ""
+msgstr "'expr' deve retornar um grob ou gList"
 
-#, fuzzy
 msgid "invalid 'grob' argument"
-msgstr "Argumento 'grob' inválido"
+msgstr "argumento 'grob' inválido"
 
-#, fuzzy
 msgid "invalid 'vp' slot"
-msgstr "Slot 'vp' Inválido"
+msgstr "slot 'vp' inválido"
 
-#, fuzzy
 msgid "invalid 'gp' slot"
-msgstr "Slot 'gp' inválido"
+msgstr "slot 'gp' inválido"
 
-#, fuzzy
 msgid "invalid 'grob' class"
-msgstr "Classe 'grob' inválida"
+msgstr "classe 'grob' inválida"
 
-#, fuzzy
 msgid "a 'grob' path must contain at least one 'grob' name"
 msgstr "Um caminho 'grob' deve conter ao menos um nome 'grob'"
 
-#, fuzzy
 msgid "unable to coerce to \"gList\""
-msgstr "Impossível converter automaticamente em uma gList"
+msgstr "incapaz de fazer coerção em uma \"gList\""
 
-#, fuzzy
 msgid "only 'grobs' allowed in \"gList\""
-msgstr "Somente 'grobs' permitidos em 'gList'"
+msgstr "apenas 'grobs' permitidos em \"gList\""
 
-#, fuzzy
 msgid "invalid element to add to \"gList\""
 msgstr "elemento inválido para adicionar à 'gList'"
 
-#, fuzzy
 msgid "can only set 'children' for a \"gTree\""
-msgstr "Só é permitido definir 'children' para uma 'gTree'"
+msgstr "só é permitido definir 'children' para uma 'gTree'"
 
-#, fuzzy
 msgid "'children' must be a \"gList\""
 msgstr "'children' deve ser uma 'gList'"
 
-#, fuzzy
 msgid "it is only valid to get 'children' from a \"gTree\""
-msgstr "Só é válido obter 'children' de uma 'gTree'"
+msgstr "só é válido obter 'children' de uma 'gTree'"
 
-#, fuzzy
 msgid "invalid \"gTree\" class"
-msgstr "Classe 'gTree' inválida"
+msgstr "classe \"gTree\" inválida"
 
 msgid "'allDevices' not yet implemented"
 msgstr "'allDevices' não foram implementados ainda"
 
-#, fuzzy
 msgid "invalid 'gPath'"
 msgstr "'gPath' inválido"
 
-#, fuzzy
 msgid "invalid 'grep' value"
-msgstr "Valor 'grep' inválido"
+msgstr "valor 'grep' inválido"
 
-#, fuzzy
 msgid "it is only valid to get a child from a \"gTree\""
 msgstr "Só é válido obter um 'child' de uma 'gTree'"
 
 msgid "'gPath' does not specify a valid child"
 msgstr "'gPath' não especifica uma criança válida"
 
-#, fuzzy
 msgid "it is only valid to set a child of a \"gTree\""
-msgstr "Somente é válido definir uma criança de uma 'gTree'"
+msgstr "Só é válido definir uma 'child' de uma 'gTree'"
 
-#, fuzzy
 msgid "it is only valid to set a 'grob' as child of a \"gTree\""
-msgstr "Somente é válido definir um 'grob' como criança de um 'gTree'"
+msgstr ""
+"Só é válido definir um 'grob' como um elemento filho de uma \"gTree\""
 
 msgid "New 'grob' name (%s) does not match 'gPath' (%s)"
 msgstr "Novo nome de 'grob' (%s) não corresponde a 'gPath' (%s)"
 
-#, fuzzy
 msgid "it is only valid to add a 'grob' to a \"gTree\""
-msgstr "Somente é válido adicionar um 'grob' a um 'gTree'"
+msgstr "Só é válido adicionar um 'grob' a uma 'gTree'"
 
-#, fuzzy
 msgid "it is only valid to add a child to a \"gTree\""
-msgstr "Somente é válido adicionar um filho a um 'gTree'"
+msgstr "Só é válido adicionar um elemento filho a uma \"gTree\""
 
 msgid "'gPath' (%s) not found"
 msgstr "'gPath' (%s) não encontrado"
 
-#, fuzzy
 msgid "it is only valid to remove a child from a \"gTree\""
-msgstr "Somente é válido remover um filho de um  'gTree'"
+msgstr "Somente é válido remover um filho de um 'gTree'"
 
-#, fuzzy
 msgid "it is only valid to edit a child of a \"gTree\""
-msgstr "Somente é válido editar um filho de um  'gTree'"
+msgstr "Somente é válido editar um filho de um 'gTree'"
 
 #, fuzzy
 msgid "it is invalid to directly edit the 'children' or 'childrenOrder' slot"
@@ -315,18 +262,15 @@ msgstr "É inválido editar diretamente os slots 'children' ou 'childrenOrder'"
 msgid "invalid 'result'"
 msgstr "'result' inválido"
 
-#, fuzzy
 msgid "the new 'grob' must have the same name as the old 'grob'"
-msgstr "O novo 'grob' deve ter o mesmo nome do 'grob' antigo"
+msgstr "O novo 'grob' deve ter o mesmo nome que o 'grob' antigo"
 
-#, fuzzy
 msgid "slot '%s' not found"
 msgstr "Slot '%s' não encontrado"
 
 msgid "gPath (%s) not found"
 msgstr "gPath (%s) não encontrado"
 
-#, fuzzy
 msgid "grob '%s' not found"
 msgstr "Grob '%s' não encontrado"
 
@@ -338,34 +282,31 @@ msgstr "'frame' inválido"
 msgid "Invalid revert target"
 msgstr "argumento 'print' inválido"
 
-#, fuzzy
 msgid "can only reorder 'children' for a \"gTree\""
-msgstr "Só é permitido definir 'children' para uma 'gTree'"
+msgstr "Só é permitido rearranjar 'children' para uma \"gTree'"
 
-#, fuzzy
 msgid "Invalid 'order'"
-msgstr "'frame' inválido"
+msgstr "'order' inválido"
 
 msgid "Group definition failed"
-msgstr ""
+msgstr "A definição de grupo falhou"
 
 #, fuzzy
 msgid "Invalid source"
-msgstr "'frame' inválido"
+msgstr "Fonte inválida"
 
-#, fuzzy
 msgid "Invalid destination"
-msgstr "Justificação inválida"
+msgstr "Destino inválido"
 
 msgid "Unknown group:"
-msgstr ""
+msgstr "Grupo desconhecido:"
 
 msgid "Invalid transform (nothing drawn)"
-msgstr ""
+msgstr "Transformação inválida (nada foi desenhado)"
 
 #, fuzzy
 msgid "Invalid transform"
-msgstr "'frame' inválido"
+msgstr "Transformação inválida"
 
 msgid "'l' must be a layout"
 msgstr "'l' deve ser um layout"
@@ -379,95 +320,92 @@ msgstr "'hgap' deve ser uma única unidade"
 msgid "'vgap' must be single unit"
 msgstr "'vgap' deve ser uma única unidade"
 
-#, fuzzy
 msgid "'nrow' must be >= 1"
-msgstr "'l' deve ser um layout"
+msgstr "'nrow' deve ser >= 1"
 
-#, fuzzy
 msgid "'ncol' must be >= 1"
-msgstr "'l' deve ser um layout"
+msgstr "'ncol' deve ser >= 1"
 
+#, fuzzy
 msgid "nrow * ncol < #{legend labels}"
-msgstr ""
+msgstr "nrow * ncol < #{legend labels}"
 
-#, fuzzy
 msgid "invalid justification"
-msgstr "Justificação inválida"
+msgstr "Justificativa/alinhamento do texto inválido"
 
-#, fuzzy
 msgid "invalid horizontal justification"
-msgstr "Justificação horizontal inválida"
+msgstr "Justificativa/alinhamento do texto horizontal inválido"
 
 #, fuzzy
 msgid "invalid vertical justification"
-msgstr "Justificação vertical inválida"
+msgstr "Justificativa/alinhamento do texto vertical inválido"
 
 msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
 msgstr "'respect' deve ser lógico ou um 'nrow' por uma matriz 'ncol'"
 
-#, fuzzy
 msgid "invalid 'print' argument"
-msgstr "argumento 'print' inválido"
+msgstr "Argumento 'print' inválido"
 
-#, fuzzy
 msgid "invalid object in 'listing'"
-msgstr "Objeto inválido em listing"
+msgstr "Objeto inválido em 'listing'"
 
 #, fuzzy
 msgid "invalid listing"
-msgstr "listing inválido"
+msgstr "listagem inválida"
 
 #, fuzzy
 msgid "invalid 'listing'"
-msgstr "listing inválido"
+msgstr "'listing' inválido"
 
+#, fuzzy
 msgid "Only a grob can be converted to a mask"
-msgstr ""
+msgstr "Apenas um grob pode ser convertido em uma máscara"
 
 #, fuzzy
 msgid "invalid 'origin'"
 msgstr "'origin' inválido"
 
+#, fuzzy
 msgid "Only a grob can be converted to a path"
-msgstr ""
+msgstr "Apenas um grob pode ser convertido em um caminho"
 
 #, fuzzy
 msgid "colours and stops must be at least length 1"
-msgstr "'x' e 'y' devem ter o mesmo comprimento"
+msgstr "'colours' e os 'stops' devem ter comprimento igual ou maior que 1"
 
-#, fuzzy
 msgid "x1, y1, x2, and y2 must all be length 1"
-msgstr "'x1', 'y1' ,'x2', e 'y2' devem ser unidade"
+msgstr "'x1', 'y1' ,'x2', e 'y2' devem ter comprimento 1"
 
-#, fuzzy
 msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
-msgstr "'x1', 'y1' ,'x2', e 'y2' devem ser unidade"
+msgstr "cx1, cy1, cx2, cy2, r1, e r2 devem ter comprimento 1"
 
-#, fuzzy
 msgid "x, y, width, and height must all be length 1"
 msgstr "'x', 'y', 'width', e 'height' devem ter comprimento 1"
 
+#, fuzzy
 msgid "Pattern must be based on grob"
-msgstr ""
+msgstr "O padrão deve ser baseado no grob"
 
 msgid "Missing pattern fill has been set to transparent"
-msgstr ""
+msgstr "O padrão de preenchimento ausente foi definido como transparente."
 
+#, fuzzy
 msgid ""
 "grob drawing produces more shapes than grob coords\n"
 "(recycling coords)"
 msgstr ""
+"O desenho do Grob produz mais formas do que as coordenadas do Grob\n"
+"(coordenadas foram reutilizadas)"
 
+#, fuzzy
 msgid "Pattern fill applied to object with no inside"
-msgstr ""
+msgstr "Padrão de preenchimento aplicado a uma objeto sem interior"
 
-#, fuzzy
 msgid "'length' must be a 'unit' object"
-msgstr "'length' deve ser um objeto unitário"
+msgstr "'length' deve ser um objeto do tipo unidade (unit())"
 
-#, fuzzy
 msgid "invalid 'ends' or 'type' argument"
-msgstr "argumento 'ends' ou 'type' inválido"
+msgstr "Argumento 'ends' ou 'type' inválido"
 
 msgid "'x' and 'y' must be units"
 msgstr "'x' e 'y' devem ser unidades"
@@ -478,7 +416,6 @@ msgstr "'x' e 'y' devem ter comprimento 1"
 msgid "invalid 'arrow' argument"
 msgstr "argumento 'arrow' inválido"
 
-#, fuzzy
 msgid "it is invalid to specify both 'id' and 'id.lengths'"
 msgstr "É inválido especificar 'id' e 'id.lengths' juntos"
 
@@ -497,9 +434,8 @@ msgstr "'x0', 'y0' ,'x1', e 'y1' devem ser unidades"
 msgid "'x' and 'y' must be units or NULL"
 msgstr "'x' e 'y' devem ser unidades ou NULL"
 
-#, fuzzy
 msgid "corrupt 'arrows' object"
-msgstr "Objeto 'arrows' corrupto"
+msgstr "Objeto 'arrows' corrompido"
 
 #, fuzzy
 msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
@@ -509,10 +445,10 @@ msgid "x and y must be units"
 msgstr "x e y devem ser unidades"
 
 msgid "must have exactly 4 control points"
-msgstr ""
+msgstr "Deve ter exatamente 4 pontos de controle"
 
 msgid "must have exactly 4 control points per Bezier curve"
-msgstr ""
+msgstr "deve ter exatamente 4 pontos de controle por curva de Bézier"
 
 msgid "'x', 'y', and 'r' must be units"
 msgstr "'x', 'y', e 'r' devem ser unidades"
@@ -547,33 +483,33 @@ msgstr "'r' deve ser um objeto unitário"
 msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr "'x', 'y', 'width', e 'height' devem ter comprimento 1"
 
-#, fuzzy
 msgid "Invalid glyph info"
-msgstr "'frame' inválido"
+msgstr "Informações de glyph/glifo inválidas"
 
 #, fuzzy
 msgid "'x' and 'y' must have length > 0"
 msgstr "'x' e 'y' devem ter comprimento 1"
 
 msgid "'hjust' and 'vjust' must be glyphJust() values"
-msgstr ""
+msgstr "'hjust' e 'vjust' devem ser valores glyphJust()"
 
 #, fuzzy
 msgid "'hjust' and 'vjust' must have length 1"
 msgstr "'x' e 'y' devem ter comprimento 1"
 
 msgid "Unknown width; using first width"
-msgstr ""
+msgstr "Largura desconhecida; Usando a primeira largura"
 
 #, fuzzy
 msgid "Unknown anchor; using left justification"
 msgstr "Justificação horizontal inválida"
 
 msgid "Unknown height; using first height"
-msgstr ""
+msgstr "Altura desconhecida; Usando a primeira altura"
 
+#, fuzzy
 msgid "Unknown anchor; using bottom justification"
-msgstr ""
+msgstr "Âncora desconhecida; Usando a justificação 'bottom'"
 
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x' e 'units' devem ter comprimentos > 0"
@@ -602,7 +538,7 @@ msgid "operator '%s' not meaningful for units"
 msgstr "Operador '%s' não faz sentido para unidades"
 
 msgid "'*' or '/' cannot be used as a unary operator"
-msgstr ""
+msgstr "'*' ou '/' não podem ser usados como um operador unário"
 
 #, fuzzy
 msgid "only one operand may be a unit"
@@ -612,8 +548,9 @@ msgstr "Somente um operando pode ser uma unidade"
 msgid "non-unit operand must be numeric"
 msgstr "Operando não-unitário deve ser numérico"
 
+#, fuzzy
 msgid "can't divide with a unit"
-msgstr ""
+msgstr "não é possível dividir com uma unidade"
 
 #, fuzzy
 msgid "both operands must be units"
@@ -623,8 +560,11 @@ msgstr "Ambos os operandos devem ser unidades"
 msgid "index out of bounds (\"unit\" subsetting)"
 msgstr "Índice fora dos limites (subsetting unitário)"
 
+#, fuzzy
 msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
 msgstr ""
+"Não é possível criar vetor unitário de comprimento zero (subconjunto de "
+"\"unidade\")"
 
 #, fuzzy
 msgid "index must be of length 1"
@@ -673,36 +613,30 @@ msgstr "'layout' inválido em vista"
 msgid "invalid 'layout.pos.row' in viewport"
 msgstr "'layout.pos.row' inválido em vista"
 
-#, fuzzy
 msgid "invalid 'layout.pos.col' in viewport"
-msgstr "'layout.pos.col' inválido em vista"
+msgstr "'layout.pos.col' inválido para viewport"
 
-#, fuzzy
 msgid "only viewports allowed in 'vpList'"
-msgstr "Somente vistas permitidas em 'vpList'"
+msgstr "Somente viewport permitidas em 'vpList'"
 
-#, fuzzy
 msgid "only viewports allowed in 'vpStack'"
-msgstr "Somente vistas permitidas em 'vpStack'"
+msgstr "Somente viewports permitidas em 'vpStack'"
 
 msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
 msgstr "'parent' deve ser uma vista e 'children' deve ser uma 'vpList' em 'vpTree'"
 
-#, fuzzy
 msgid "a viewport path must contain at least one viewport name"
-msgstr "Um caminho vista deve conter pelo menos um nome de vista"
+msgstr "Um caminho de viewport deve conter pelo menos um nome de viewport"
 
-#, fuzzy
 msgid "must specify at least one of 'xData' or 'xscale'"
-msgstr "Deve especificar pelo menos um de 'x' ou 'xscale'"
+msgstr "Deve especificar pelo menos um entre 'xData' ou 'xscale'"
 
-#, fuzzy
 msgid "must specify at least one of 'yData' or 'yscale'"
-msgstr "Deve especificar pelo menos um de 'y' ou 'yscale'"
+msgstr "Deve especificar pelo menos um entre 'yData' ou 'yscale'"
 
-#, fuzzy
 msgid "shutting down all devices when unloading 'grid' namespace"
-msgstr "desligando todos os dispositivos quando descarregando name space 'grid'"
+msgstr ""
+"Desligando todos os dispositivos enquanto descarrega o namespace do 'grid'"
 
 msgid "invalid grob name"
 msgid_plural "invalid grob names"

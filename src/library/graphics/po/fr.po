@@ -156,9 +156,9 @@ msgid "\"%s\" is not a graphical parameter"
 msgstr "\"%s\" n'est pas un paramètre graphique"
 
 #: par.c:1109
-#, fuzzy, c-format
+#, c-format
 msgid "argument %d does not name a graphical parameter"
-msgstr "\"%s\" n'est pas un paramètre graphique"
+msgstr "l'argument %d n'est pas un paramètre graphique"
 
 #: par.c:1117
 msgid "invalid argument passed to par()"

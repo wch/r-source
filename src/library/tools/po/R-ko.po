@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:17\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -158,11 +158,12 @@ msgstr ""
 msgid "cannot check R code installed as image"
 msgstr "이미지로서 설치된 R 코드는 확인할 수 없습니다"
 
-#, fuzzy
 msgid ""
 "parse error in examples from file '%s':\n"
 "%s"
-msgstr "파일 '%s'에 포함된 예제부분에서  파싱에러가 발생했습니다:"
+msgstr ""
+"파일 '%s'의 예제에서 구문 분석 오류가 발생했습니다:\n"
+"%s 님"
 
 msgid "File '%s':"
 msgstr "파일 '%s':"
@@ -793,6 +794,27 @@ msgstr ""
 msgid "'objdump' is not on the path"
 msgstr ""
 
+msgid "non-API functions declared in installed headers: %s"
+msgstr ""
+
+msgid "non-API variables declared in installed headers: %s"
+msgstr ""
+
+msgid "API funcitons not declared in installed headers: %s"
+msgstr ""
+
+msgid "API variables not in declared in installed headers: %s"
+msgstr ""
+
+msgid "in API but marked for warnings: %s"
+msgstr ""
+
+msgid "API functions listed in nonAPI: %s"
+msgstr ""
+
+msgid "API variables listed in nonAPI: %s"
+msgstr ""
+
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "%2$s를 평가시 %3$s을 기대했으나 %1$s를 얻었습니다"
 
@@ -919,7 +941,7 @@ msgid "No package named %s could be found"
 msgstr "%s이라는 이름의 패키지를 찾을 수없습니다"
 
 msgid "No help found for topic %s in any package."
-msgstr "%s이라는 주제에 대한 도움말을 어떠한 패키지에서도  찾을 수 없습니다."
+msgstr "%s이라는 주제에 대한 도움말을 어떠한 패키지에서도 찾을 수 없습니다."
 
 msgid "No package index found for package %s"
 msgstr "패키지 %s에 대한 패키지 인덱스를 찾을 수 없습니다"
@@ -992,6 +1014,16 @@ msgstr "파일 '%s'를 읽는데 에러가 발생했습니다"
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr ""
 
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "패키지 %s는 성공적으로 압축해제되었고, MD5 sums 이 확인되었습니다"
+
+msgid "package %s signature verified (%s %s)"
+msgstr ""
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
 msgid "'cleanup' exists but is not executable -- see the 'R Installation and Administration Manual'"
 msgstr "'cleanup'이 있지만 실행가능하지 않습니다 -- 'R Installation and Administration Manual'을 살펴보세요"
 
@@ -1015,9 +1047,6 @@ msgstr ""
 
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr ""
-
-msgid "package %s successfully unpacked and MD5 sums checked"
-msgstr "패키지 %s는 성공적으로 압축해제되었고, MD5 sums 이 확인되었습니다"
 
 msgid "not using staged install with --libs-only"
 msgstr ""
@@ -1244,6 +1273,30 @@ msgstr "'x'는 반드시 한개의 문자열이어야 합니다"
 msgid "invalid hex string"
 msgstr ""
 
+#, fuzzy
+msgid "'gpg' is not available for signing"
+msgstr "테스트 '%s'는 사용가능하지 않습니다"
+
+msgid "Target file for the signature already exists"
+msgstr ""
+
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'x'는 반드시 한개의 문자열이어야 합니다"
+
+msgid "'keyring' must be specified if 'use.default.keyring=FALSE'"
+msgstr ""
+
+msgid "Failed to invoke 'gpg' for signing"
+msgstr ""
+
+msgid "Cannot sign due to failed pin entry for key %s"
+msgstr ""
+
+#, fuzzy
+msgid "Signing failed:"
+msgstr "로딩에 실패했습니다"
+
 msgid "this requires 'objdump.exe' to be on the PATH"
 msgstr ""
 
@@ -1386,10 +1439,6 @@ msgstr ""
 
 msgid "update_PACKAGES complete."
 msgstr ""
-
-#, fuzzy
-msgid "'%s' must be a character string"
-msgstr "'x'는 반드시 한개의 문자열이어야 합니다"
 
 msgid "test '%s' is not available"
 msgstr "테스트 '%s'는 사용가능하지 않습니다"

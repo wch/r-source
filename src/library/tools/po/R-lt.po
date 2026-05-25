@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tools 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:17\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2021-11-08 10:33+0100\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -785,6 +785,27 @@ msgstr ""
 msgid "'objdump' is not on the path"
 msgstr ""
 
+msgid "non-API functions declared in installed headers: %s"
+msgstr ""
+
+msgid "non-API variables declared in installed headers: %s"
+msgstr ""
+
+msgid "API funcitons not declared in installed headers: %s"
+msgstr ""
+
+msgid "API variables not in declared in installed headers: %s"
+msgstr ""
+
+msgid "in API but marked for warnings: %s"
+msgstr ""
+
+msgid "API functions listed in nonAPI: %s"
+msgstr ""
+
+msgid "API variables listed in nonAPI: %s"
+msgstr ""
+
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "Gavo %s vertinant %s; reikėjo %s\\"
 
@@ -986,6 +1007,16 @@ msgstr "klaida nuskaitant failą '%s'"
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "tai atrodo kaip paketas -- ir yra nepilnas"
 
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "paketas %s sėkmingai išpakuotas ir MD5 sumos patikrintos"
+
+msgid "package %s signature verified (%s %s)"
+msgstr ""
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
 msgid "'cleanup' exists but is not executable -- see the 'R Installation and Administration Manual'"
 msgstr "'cleanup' egzistuoja, bet nėra vykdoma -- peržiūrėti 'R diegimo ir administravimo žinyną'"
 
@@ -1009,9 +1040,6 @@ msgstr "PASTABA: fiksuotas rpath"
 
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr "ĮSPĖJIMAS: bendrinami objektai/dinaminės bibliotekos su įkoduotais laikinais diegimo keliais"
-
-msgid "package %s successfully unpacked and MD5 sums checked"
-msgstr "paketas %s sėkmingai išpakuotas ir MD5 sumos patikrintos"
 
 msgid "not using staged install with --libs-only"
 msgstr "nenaudoja etapinio diegimo su --libs-only"
@@ -1259,6 +1287,30 @@ msgstr "'x' turi būti vieno simbolio eilutė"
 msgid "invalid hex string"
 msgstr ""
 
+#, fuzzy
+msgid "'gpg' is not available for signing"
+msgstr "testas '%s' neprieinamas"
+
+msgid "Target file for the signature already exists"
+msgstr ""
+
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'x' turi būti vieno simbolio eilutė"
+
+msgid "'keyring' must be specified if 'use.default.keyring=FALSE'"
+msgstr ""
+
+msgid "Failed to invoke 'gpg' for signing"
+msgstr ""
+
+msgid "Cannot sign due to failed pin entry for key %s"
+msgstr ""
+
+#, fuzzy
+msgid "Signing failed:"
+msgstr "įkėlimas nepavyko"
+
 msgid "this requires 'objdump.exe' to be on the PATH"
 msgstr "tam reikia, kad 'objdump.exe' būtų PATH"
 
@@ -1404,10 +1456,6 @@ msgstr "Galutinių atnaujintų PACKAGES failų rašymas."
 
 msgid "update_PACKAGES complete."
 msgstr "update_PACKAGES baigtas."
-
-#, fuzzy
-msgid "'%s' must be a character string"
-msgstr "'x' turi būti vieno simbolio eilutė"
 
 msgid "test '%s' is not available"
 msgstr "testas '%s' neprieinamas"

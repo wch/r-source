@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2021-01-27 10:34+0100\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -263,6 +263,9 @@ msgstr "資料框的 'dimnames' 給得無效"
 msgid "cannot coerce class %s to a data.frame"
 msgstr "不能把 \"%s\" 類別強迫變成 data.frame"
 
+msgid "row names contain missing values"
+msgstr "列名稱裡有缺值"
+
 #, fuzzy
 msgid "'row.names' is not a character or integer vector of length %d"
 msgstr "'row.names' 不是長度為 %d 的字元向量 -- 省略它。將會産生錯誤！"
@@ -272,9 +275,6 @@ msgstr "'data.frame' 引數裡 %d 單元中列名稱不匹配"
 
 msgid "some row.names duplicated: %s --> row.names NOT used"
 msgstr "某些 row.names 有重複：%s --> row.names 不用了"
-
-msgid "row names contain missing values"
-msgstr "列名稱裡有缺值"
 
 msgid "duplicate row.names: %s"
 msgstr "row.names 有重複: %s"
@@ -1772,7 +1772,7 @@ msgid "'invisible' must be TRUE or FALSE"
 msgstr "'invisible' 的值必須是 'TRUE' 或 'FALSE' 值"
 
 msgid "running command '%s' had status %d"
-msgstr ""
+msgstr "執行中命令 '%s' 已有狀態 %d"
 
 msgid "'%s' could not be run"
 msgstr "無法運行 '%s'"

@@ -20,23 +20,22 @@ msgstr ""
 msgid "must have at least 'ord' knots"
 msgstr "pelo menos os nós 'ord' devem estar presentes"
 
-#, fuzzy
 msgid "length of 'derivs' is larger than length of 'x'"
 msgstr "comprimento de 'derivs' deve ser igual ao comprimento de 'x'"
 
 msgid "empty 'derivs'"
-msgstr ""
+msgstr "'derivs' vazio"
 
 msgid "'ord' must be positive integer, at most the number of knots"
 msgstr "'ord' deve ser um inteiro positivo, sendo no máximo igual ao número de nós"
 
-#, fuzzy
 msgid "need at least %s (=%d) knots"
-msgstr "são necessários pelo menos 2*ord -1 (=%d) nós"
+msgstr "necessita pelo menos %s (=%d) nós"
 
-#, fuzzy
 msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
-msgstr "os dados 'x' devem estar na faixa de %g a %g, a não ser que você especifique 'outer.ok = TRUE'"
+msgstr ""
+"os dados 'x' devem estar na faixa de %g a %g, a não ser que você "
+"especifique '%s'"
 
 msgid "%s needs package 'Matrix' correctly installed"
 msgstr "%s precisa do pacote 'Matrix' instalado corretamente"
@@ -44,9 +43,8 @@ msgstr "%s precisa do pacote 'Matrix' instalado corretamente"
 msgid "values of 'x' must be distinct"
 msgstr "valores de 'x' devem ser distintos"
 
-#, fuzzy
 msgid "must have at least 'ord'=%d points"
-msgstr "pelo menos os nós 'ord' devem estar presentes"
+msgstr "deve ter pelo menos 'ord'=%d pontos"
 
 msgid "'formula' must be of the form \"y ~ x\""
 msgstr "'formula' deve ser da forma \"y ~ x\""
@@ -76,7 +74,7 @@ msgid "knot positions must be strictly increasing"
 msgstr "posições dos nós devem ser estritamente crescentes"
 
 msgid "currently implemented only for cubic splines"
-msgstr ""
+msgstr "atualmente implementado apenas para splines cúbicas"
 
 msgid "spline must be monotone"
 msgstr "spline deve ser monótono"
@@ -84,21 +82,20 @@ msgstr "spline deve ser monótono"
 msgid "'degree' must be integer >= 1"
 msgstr "'degree' deve ser inteiro >= 1"
 
-#, fuzzy
 msgid "'df' was too small; have used %d"
-msgstr "'df' muito pequeno; foi usado"
+msgstr "'df' muito pequeno; foi usado %d"
 
 msgid "non-finite knots"
-msgstr ""
+msgstr "nós não finitos"
 
 msgid "all interior knots match left boundary knot"
-msgstr ""
+msgstr "todos os nós internos correspondem ao nó de limite esquerdo"
 
 msgid "all interior knots match right boundary knot"
-msgstr ""
+msgstr "todos os nós internos correspondem ao nó de limite direito"
 
 msgid "shoving 'interior' knots matching boundary knots to inside"
-msgstr ""
+msgstr "empurrando nós 'interiores' combinando nós de limite para dentro"
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
 msgstr "alguns valores de 'x' depois dos nós de fronteira podem causar bases má condicionadas"

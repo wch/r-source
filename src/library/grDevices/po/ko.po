@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-04-25 10:47-0700\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: \n"
@@ -36,7 +36,7 @@ msgstr "색의 강도는 [0,1] 내에 있어야 하는데 %s를 가집니다."
 #: colors.c:71
 #, c-format
 msgid "color intensity %g, not in [0,1]"
-msgstr "색의 강도는 [0,1] 내에 있어야 하는데  %g를 가집니다."
+msgstr "색의 강도는 [0,1] 내에 있어야 하는데 %g를 가집니다."
 
 #: colors.c:78
 #, c-format

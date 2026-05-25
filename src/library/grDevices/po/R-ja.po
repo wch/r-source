@@ -241,7 +241,7 @@ msgid "There must be anchors named \"left\" and \"bottom\""
 msgstr ""
 
 msgid "Invalid glyph info"
-msgstr ""
+msgstr "無効なグリフ情報"
 
 msgid "'%s' was removed in R 4.5.0."
 msgstr ""
@@ -344,9 +344,8 @@ msgstr "未知のフォントです"
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr "フォントエンコーディングがミスマッチです '%s'/'%s'"
 
-#, fuzzy
 msgid "'%s' must be a non-empty character string"
-msgstr "'file' は空でない文字列でなければなりません"
+msgstr "'%s' は空でない文字列でなければなりません"
 
 msgid "GhostScript was not found"
 msgstr "GhostScript が見つかりません"
@@ -515,7 +514,7 @@ msgid "unknown family for X11(type = \"XLib\")"
 msgstr "X11(type = \"XLib\") に対して、未知のファミリーです"
 
 msgid "invalid X11 font specification:"
-msgstr "不正な X11 フォントの指定方法です"
+msgstr "不正な X11 フォントの指定方法:"
 
 msgid "invalid arguments in 'X11Fonts' (must be font names)"
 msgstr "'X11Fonts' 中の不正な引数です (フォント名が必要です)"

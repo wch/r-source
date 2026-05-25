@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-08 11:37\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2024-03-20 03:05+0000\n"
 "Last-Translator: Joan Maspons <joanmaspons@gmail.com>\n"
 "Language-Team: none\n"
@@ -31,7 +31,7 @@ msgid "some options in argument 'restrict' were not recognized and hence ignored
 msgstr "algunes opcions de l'argument «restrict» no s'han reconegut i per tant s'han ignorat"
 
 #, fuzzy
-msgid "argument 'format' is deprecated and has no affect on search results"
+msgid "argument 'format' is deprecated and has no effect on search results"
 msgstr "l'argument «format» és obsolet i no afecta els resultats de la cerca"
 
 #, fuzzy
@@ -114,6 +114,17 @@ msgstr "el valor de l'opció «resultats» hauria de ser minúscules"
 msgid "value of 'strip.white' option should be lowercase"
 msgstr "el valor de l'opció «strip.white» hauria de ser en minúscules"
 
+msgid "using default value %s"
+msgstr ""
+
+#, fuzzy
+msgid "this function cannot be used from an interactive session"
+msgstr "winDialog() no es pot utilitzar de forma no interactiva"
+
+#, fuzzy
+msgid "unrecognized Sweave call"
+msgstr "Indicador de valor no reconegut"
+
 #, fuzzy
 msgid "elements of 'what' after the first will be ignored"
 msgstr "s'ignoraran els elements de «què» després del primer"
@@ -171,6 +182,10 @@ msgstr "No s'ha trobat cap programa de verificació ortogràfica adequat."
 
 msgid "Performing query %s"
 msgstr ""
+
+#, fuzzy
+msgid "Unsupported object"
+msgstr "tipus d'entrada no compatible"
 
 #, fuzzy
 msgid ""
@@ -373,7 +388,6 @@ msgstr "recupera cridats no interactivament; fotogrames bolcats, usa debugger() 
 msgid "Enter a frame number, or 0 to exit"
 msgstr "Introduïu un número d'entorn, o 0 per a sortir"
 
-#, fuzzy
 msgid "No suitable frames for recover()"
 msgstr "No hi ha fotogrames adequats per a «recuper()»"
 
@@ -592,7 +606,6 @@ msgstr "Cancel·lat per l'usuari"
 msgid "Unable to connect to CRAN to check R version."
 msgstr "No s'ha pogut connectar al CRAN per a comprovar la versió de l'R."
 
-#, fuzzy
 msgid "'%s' must be a character string"
 msgstr "«%s» ha de ser una cadena de caràcters"
 
@@ -652,7 +665,6 @@ msgstr "Si el navegador llançat per «%s» ja s'està executant, *no* es reinic
 msgid "Otherwise, be patient ..."
 msgstr "En cas contrari, sigues pacient..."
 
-#, fuzzy
 msgid "'%s' must be a non-empty character string"
 msgstr "«%s» ha de ser una cadena de caràcters no buida"
 
@@ -798,7 +810,6 @@ msgstr "les funcions genèriques i altres objectes S4 (p. ex., «%s») no es pod
 msgid "'download.file()' error code '%d'"
 msgstr "Codi d'error «%d» de «download.file()»"
 
-#, fuzzy
 msgid "unable to access index for repository %s"
 msgstr "no s'ha pogut accedir a l'índex per al repositori %s"
 
@@ -963,9 +974,8 @@ msgstr "s'està inferint «repos = NULL» des de «pkgs»"
 msgid "unable to create temporary directory %s"
 msgstr "no s'ha pogut crear el directori temporal %s"
 
-#, fuzzy
-msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
-msgstr "type == \"tots dos\" només es pot utilitzar en Windows o en una construcció CRAN per a macOS"
+msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
+msgstr ""
 
 #, fuzzy
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
@@ -1366,7 +1376,6 @@ msgstr "dígit octal no vàlid"
 msgid "removing leading '/' from '%s'"
 msgstr "s'està eliminant el «/» inicial"
 
-#, fuzzy
 msgid "removing drive '%s'"
 msgstr "s'està eliminant la unitat «%s»"
 
@@ -1561,8 +1570,15 @@ msgid "binary package %s is not compatible with this build of R"
 msgstr ""
 
 #, fuzzy
-msgid "package %s successfully unpacked and MD5 sums checked"
+msgid "package %s successfully unpacked and %s sums checked"
 msgstr "el paquet %s s'ha desempaquetat correctament i s'han marcat les sumes MD5"
+
+#, fuzzy
+msgid "package %s signature verified (%s %s)"
+msgstr "el paquet %s no està disponible %s"
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -1655,7 +1671,6 @@ msgid_plural "Output files:  "
 msgstr[0] "Fitxer de sortida:"
 msgstr[1] "Fitxer de sortida:"
 
-#, fuzzy
 msgid "Output/used file:  "
 msgid_plural "Output/used files:  "
 msgstr[0] "Fitxer de sortida/utilitzat:  "
@@ -1707,7 +1722,6 @@ msgid_plural "%d times caught the same error in %s: %s"
 msgstr[0] "%d error detectat a %s: %s"
 msgstr[1] "%d vegades s'ha detectat el mateix error a %s: %s"
 
-#, fuzzy
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
 msgstr[0] "no s'ha trobat l'objecte «%s»"
@@ -1844,6 +1858,10 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "el nombre roman no és vàlid: %s"
 msgstr[1] "nombres romans no vàlids: %s"
+
+#, fuzzy
+#~ msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
+#~ msgstr "type == \"tots dos\" només es pot utilitzar en Windows o en una construcció CRAN per a macOS"
 
 #, fuzzy
 #~ msgid "no R objects specified or available"

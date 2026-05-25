@@ -13,9 +13,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.1.6\n"
 
-#, fuzzy
 msgid "invalid value of %s"
-msgstr "ugyldig værdi for »seed«"
+msgstr "ugyldig værdi for %s"
 
 msgid "need at least one argument"
 msgstr "kræver mindst et argument"
@@ -46,24 +45,26 @@ msgstr ""
 msgid "unknown cluster type: '%s'"
 msgstr "ukendt klyngetype"
 
-#, fuzzy
 msgid "numeric 'names' must be >= 1"
-msgstr "»nnodes« skal være >= 1"
+msgstr "nnodes skal være >= 1"
 
 msgid "node of a socket cluster on host %s with pid %d"
 msgstr "knude for en sokkelklynge på vært %s med pid %d"
 
+
 msgid "Connection setup failed or timed out."
 msgstr ""
+"Opsætningen af forbindelsen mislykkedes "
+"eller fik timeout."
 
 msgid "PORT must be specified"
-msgstr ""
+msgstr "PORT skal angives"
 
 msgid "'nnodes' must be >= 1"
-msgstr "»nnodes« skal være >= 1"
+msgstr "'nnodes' skal være >= 1"
 
 msgid "Cluster setup failed."
-msgstr ""
+msgstr "Klyngekonfigurationen mislykkedes."
 
 msgid "invalid 'child' argument"
 msgstr "ugyldig »child«-argument"

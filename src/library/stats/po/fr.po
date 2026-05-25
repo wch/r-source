@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-05-25 12:47-0700\n"
 "PO-Revision-Date: 2021-02-10 18:07+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -23,18 +23,18 @@ msgid "bandwidth/span of running medians is larger than n"
 msgstr "largeur de fenêtre de médiane mobile supérieure à n"
 
 #: Srunmed.c:263
-#, fuzzy, c-format
+#, c-format
 msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%lld]"
-msgstr "runmed(x, .., na.action=\"na.fail\"): des valeurs manquantes se trouvent à x[%lld]"
+msgstr "runmed(x, .., na.action=\"na.fail\") : des valeurs manquantes se trouvent à x[%lld]"
 
 #: Srunmed.c:266
 msgid "runmed(): invalid 'na.action'"
-msgstr "runmed(): 'na.action' incorrecte"
+msgstr "runmed() : 'na.action' incorrecte"
 
 #: Srunmed.c:316
 #, c-format
 msgid "na_action logic error (%d), please report!"
-msgstr "na_action erreur logique (%d), veuillez reporter l’erreur, s’il-vous-plait !"
+msgstr "na_action erreur logique (%d), veuillez rapporter l’erreur, s’il-vous-plait !"
 
 #: ansari.c:121
 msgid "probabilities outside [0,1] in qansari()"
@@ -74,9 +74,8 @@ msgid "non-finite x[%d] in bandwidth calculation"
 msgstr "valeurs infinies x[%d] dans le calcul de largeur de bande"
 
 #: bandwidths.c:125
-#, fuzzy
 msgid "data are constant in bandwidth calculation"
-msgstr "valeurs infinies x[%d] dans le calcul de largeur de bande"
+msgstr "données constantes dans le calcul de la largeur de bande"
 
 #: complete_cases.c:29
 #, c-format
@@ -147,9 +146,8 @@ msgid "invalid expression in '%s'"
 msgstr "expression incorrecte dans '%s'"
 
 #: deriv.c:865
-#, fuzzy
 msgid "too many variables"
-msgstr "trop de facteurs"
+msgstr "trop de variables"
 
 #: deriv.c:1080 model.c:94
 msgid "invalid variable names"
@@ -159,15 +157,15 @@ msgstr "noms des variables incorrects"
 msgid "invalid tag"
 msgstr "marque (tag) incorrecte"
 
-#: distance.c:152
+#: distance.c:153
 msgid "treating non-finite values as NA"
 msgstr "valeurs infinies traitées comme NA"
 
-#: distance.c:225
+#: distance.c:226
 msgid "distance(): invalid p"
 msgstr "distance() : p incorrect"
 
-#: distance.c:229
+#: distance.c:230
 msgid "distance(): invalid distance"
 msgstr "distance() : distance incorrecte"
 
@@ -277,7 +275,7 @@ msgid "nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ 
 msgstr "nextn() n’a pas trouvé de solution < %d = INT_MAX (le plus grand entier) ; passer '0 + n' à la place de 'n'"
 
 #: fourier.c:218
-#, fuzzy, c-format
+#, c-format
 msgid "nextn<64>() found no solution < %llu = UINT64_MAX (the maximal integer)"
 msgstr "nextn<64>() n’a pas trouvé de solution < %llu = UINT64_MAX (le plus grand entier)"
 
@@ -310,7 +308,7 @@ msgstr "'%s' doit être de longueur unitaire"
 #: isoreg.c:55
 #, c-format
 msgid "non-finite sum(y) == %g is not allowed"
-msgstr ""
+msgstr "sum(y) == %g n'est pas limité et donc non autorisé"
 
 #: ksmooth.c:63
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
@@ -321,7 +319,7 @@ msgid "'x' is not a matrix"
 msgstr "'x' n'est pas une matrice"
 
 #: lm.c:56
-#, fuzzy, c-format
+#, c-format
 msgid "dimensions of 'x' (%d,%d) and 'y' (%lld) do not match"
 msgstr "les dimensions de 'x' (%d,%d) et de 'y' (%lld) ne correspondent pas"
 
@@ -669,9 +667,9 @@ msgid "-Inf replaced by maximally negative value"
 msgstr "-Inf remplacé par la valeur négative la plus large possible"
 
 #: optimize.c:226 optimize.c:316 optimize.c:538
-#, fuzzy, c-format
+#, c-format
 msgid "%s replaced by maximum positive value"
-msgstr "NA remplacé par la valeur maximale positive"
+msgstr "%s remplacé par la valeur maximale positive"
 
 #: optimize.c:236
 msgid "invalid function value in 'optimize'"
@@ -880,23 +878,21 @@ msgid "'rho' must be an environment"
 msgstr "'rho' doit être un environnement"
 
 #: port.c:388 port.c:554
-#, fuzzy
 msgid "'d' must be a nonempty numeric (double) vector"
-msgstr "'d' doit être un vecteur numérique non vide"
+msgstr "'d' doit être un vecteur numérique de doubles non vide"
 
 #: port.c:390
 msgid "When Hessian defined must also have gradient defined"
 msgstr "Quand Hessian est défini, un gradient doit l'être aussi"
 
 #: port.c:393
-#, fuzzy, c-format
+#, c-format
 msgid "environment 'rho' must contain a numeric (double) vector '.par' of length %d"
-msgstr "l'environnement 'rho' doit contenir un vecteur numérique '.par' de longueur %d"
+msgstr "l'environnement 'rho' doit contenir un vecteur numérique (double) '.par' de longueur %d"
 
 #: port.c:407
-#, fuzzy
 msgid "'lower' and 'upper' must be numeric (double) vectors"
-msgstr "'lower' et 'upper' doivent tous deux être des vecteurs numériques"
+msgstr "'lower' et 'upper' doivent tous deux être des vecteurs numériques (doubles)"
 
 #: port.c:466
 msgid "'getElement' applies only to named lists"
@@ -931,7 +927,7 @@ msgstr "'lowerb' et 'upperb' doivent tous deux être des vecteurs numériques"
 
 #: prho.c:159
 msgid "invalid sample size 'n' in C routine prho(n,s,*)"
-msgstr ""
+msgstr "taille 'n' non autorisée pour l'échantillon dans la fonction C prho(n,s,*)"
 
 #: rWishart.c:53
 msgid "inconsistent degrees of freedom and dimension"
@@ -977,7 +973,7 @@ msgstr "second argument 'size' incorrect"
 #: rcont.c:79
 #, c-format
 msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
-msgstr "rcont2 [%d,%d]: exp provoque un dépassement mémoire vers le bas à 0; l'algorithme a échoué"
+msgstr "rcont2 [%d,%d] : exp provoque un dépassement mémoire vers le bas à 0 ; l'algorithme a échoué"
 
 #: smooth.c:101
 #, c-format

@@ -16,7 +16,7 @@ msgstr ""
 "X-Generator: Poedit 2.0.4\n"
 
 msgid "must have at least 'ord' knots"
-msgstr "potrzeba mieć przynajmniej węzły 'ord'"
+msgstr "wymagane są co najmniej węzły 'ord'"
 
 msgid "length of 'derivs' is larger than length of 'x'"
 msgstr "długość 'derivs' jest większa niż długość 'x'"
@@ -28,13 +28,13 @@ msgid "'ord' must be positive integer, at most the number of knots"
 msgstr "'ord' musi być dodatnią liczbą całkowitą, równą co najwyżej liczbie węzłów"
 
 msgid "need at least %s (=%d) knots"
-msgstr "potrzeba przynamniej %s (=%d) wezłów"
+msgstr "potrzeba przynamniej %s (=%d) węzłów"
 
 msgid "the 'x' data must be in the range %g to %g unless you set '%s'"
-msgstr "dane 'x' muszą być w przedziale od %g do %g chyba, że ustawiono '%s'"
+msgstr "dane 'x' muszą być w przedziale od %g do %g, chyba że ustawiono '%s'"
 
 msgid "%s needs package 'Matrix' correctly installed"
-msgstr "'%s' potrzebuje poprawnie zainstalowanego pakietu 'Matrix'"
+msgstr "'%s' wymaga poprawnie zainstalowanego pakietu 'Matrix'"
 
 msgid "values of 'x' must be distinct"
 msgstr "wartości 'x' muszą być różne"
@@ -70,7 +70,7 @@ msgid "knot positions must be strictly increasing"
 msgstr "pozycje węzłów muszą być ściśle rosnące"
 
 msgid "currently implemented only for cubic splines"
-msgstr "aktualnie zaimplementowane tylko dla szcześciennych splajnów"
+msgstr "aktualnie zaimplementowane tylko dla sześciennych splajnów"
 
 msgid "spline must be monotone"
 msgstr "funkcja sklejana musi być funkcją monotoniczną"
@@ -82,16 +82,16 @@ msgid "'df' was too small; have used %d"
 msgstr "'df' było zbyt małe; użyto %d"
 
 msgid "non-finite knots"
-msgstr ""
+msgstr "nieskończone węzły"
 
 msgid "all interior knots match left boundary knot"
-msgstr ""
+msgstr "wszystkie węzły wewnętrzne odpowiadają lewemu węzłowi granicznemu"
 
 msgid "all interior knots match right boundary knot"
-msgstr ""
+msgstr "wszystkie węzły wewnętrzne odpowiadają prawemu węzłowi granicznemu"
 
 msgid "shoving 'interior' knots matching boundary knots to inside"
-msgstr ""
+msgstr "wpychanie węzłów 'interior' pasujących do węzłów granicznych do wnętrza"
 
 msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
 msgstr "niektóre wartości 'x' poza zakresem węzłów mogą powodować źle uwarunkowane bazy"

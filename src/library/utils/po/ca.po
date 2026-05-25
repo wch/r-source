@@ -35,7 +35,6 @@ msgid "invalid quote symbol set"
 msgstr "joc de símbols de cita no vàlid"
 
 #: io.c:362 io.c:864 io.c:1084
-#, fuzzy
 msgid "cannot open the connection"
 msgstr "no s'ha pogut obrir la connexió"
 
@@ -254,7 +253,7 @@ msgid "'%s' must be length 1"
 msgstr "«%s» ha de ser de longitud 1"
 
 #: windows/util.c:577
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be a list"
 msgstr "«%s» ha de ser una llista"
 

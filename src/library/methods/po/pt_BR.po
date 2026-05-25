@@ -28,11 +28,11 @@ msgstr "lista para substituição inválida"
 #: methods_list_dispatch.c:129
 #, c-format
 msgid "unexpected type '%s' for condition message"
-msgstr ""
+msgstr "tipo inesperado '%s' para mensagem de condição"
 
 #: methods_list_dispatch.c:132
 msgid "condition message must be length 1"
-msgstr ""
+msgstr "mensagem de condição deve ser de comprimento 1"
 
 #: methods_list_dispatch.c:213
 msgid "could not find the skeleton calls for 'methods' (package detached?): expect very bad things to happen"
@@ -50,7 +50,7 @@ msgstr "Seleção de método na linguagem S retornou um erro quando chamada a pa
 
 #: methods_list_dispatch.c:409
 msgid "Function name for method selection called internally"
-msgstr ""
+msgstr "Nome da função para seleção de método chamada internamente"
 
 #: methods_list_dispatch.c:505
 #, c-format
@@ -146,14 +146,13 @@ msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr "'%s' deve ser uma string única (foi obtido um objeto da classe \"%s\")"
 
 #: methods_list_dispatch.c:989
-#, fuzzy
 msgid "class should be either a character-string name or a class definition"
-msgstr "Class deve ser ou um nome cadeia de caracteres ou uma definição de classe"
+msgstr "class deve ser uma string de caracteres ou definição de classe"
 
 #: methods_list_dispatch.c:1075
-#, fuzzy, c-format
+#, c-format
 msgid "failed to get the generic for the primitive \"%s\""
-msgstr "Falha ao obter a genérica primitiva '%s"
+msgstr "falha em obter o genérico para o primitivo \"%s\""
 
 #: methods_list_dispatch.c:1082
 #, fuzzy, c-format

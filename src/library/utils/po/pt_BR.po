@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51+0200\n"
+"POT-Creation-Date: 2026-04-25 10:48-0700\n"
 "PO-Revision-Date: 2023-01-20 19:04+0000\n"
 "Last-Translator: Caio Lente <lente@ime.usp.br>\n"
 "Language-Team: none\n"
@@ -31,7 +31,7 @@ msgstr "argumento '%s' inválido"
 
 #: io.c:350 io.c:841
 msgid "invalid quote symbol set"
-msgstr ""
+msgstr "símbolo de citação inválido"
 
 #: io.c:362 io.c:864 io.c:1084
 msgid "cannot open the connection"
@@ -44,7 +44,7 @@ msgstr "não é possível ler a partir desta conexão"
 #: io.c:416 io.c:434
 #, c-format
 msgid "quoted string on line %d terminated by EOF"
-msgstr ""
+msgstr "sequência de caracteres entre aspas na linha %d terminada por EOF"
 
 #: io.c:569
 msgid "the first argument must be of mode character"
@@ -161,7 +161,7 @@ msgstr "'hostname' deve ser um vetor de caracteres de comprimento 1"
 #: utils.c:153
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
-msgstr ""
+msgstr "nsl() não conseguiu resolver o host '%s'"
 
 #: utils.c:160
 msgid "unknown format returned by 'gethostbyname'"
@@ -252,7 +252,7 @@ msgstr "'%s' deve ser uma lista"
 #: windows/util.c:581
 #, c-format
 msgid "'%s' element %d is not a window handle"
-msgstr ""
+msgstr "Em '%s' o elemento %d não é um identificador de janela"
 
 #: windows/widgets.c:110
 msgid "Select one or more"

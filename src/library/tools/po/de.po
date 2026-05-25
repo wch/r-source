@@ -176,7 +176,7 @@ msgstr "Pfad zu lang"
 #: install.c:120 install.c:139 install.c:141
 #, c-format
 msgid "invalid '%s' argument"
-msgstr "unzulässiges '%s' Argument"
+msgstr "ungültiges '%s' Argument"
 
 #: install.c:170
 msgid "write error during file append"

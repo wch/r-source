@@ -19,13 +19,13 @@ msgid "invalid 'filename'"
 msgstr "niepoprawny argument 'filename'"
 
 msgid "svg: Cairo-based devices are not available for this platform"
-msgstr ""
+msgstr "svg: urządzenia oparte o Cairo nie są dostępne na tej platformie"
 
 msgid "cairo_pdf: Cairo-based devices are not available for this platform"
-msgstr ""
+msgstr "cairo_pdf: urządzenia oparte o Cairo nie są dostępne na tej platformie"
 
 msgid "cairo_ps: Cairo-based devices are not available for this platform"
-msgstr ""
+msgstr "cairo_ps: urządzenia oparte o Cairo nie są dostępne na tej platformie"
 
 msgid "'coef' must not be negative"
 msgstr "wartość 'coef' musi być nieujemna"
@@ -67,13 +67,13 @@ msgid "'start' and 'end' must be distinct and in [0, 1]."
 msgstr "wartości 'start' oraz 'end' muszą być różne oraz zawierać się w przedziale [0, 1]."
 
 msgid "'palette' does not match any given palette"
-msgstr ""
+msgstr "argument 'palette' nie pasuje do żadnej podanej palety"
 
 msgid "'palette' is ambiguous"
-msgstr ""
+msgstr "argument 'palette' jest niejednoznaczny"
 
 msgid "'n' set to %s, the maximum available for %s palette"
-msgstr ""
+msgstr "'n' ustawione na %s, maksymalna możliwa wartość dla palety %s"
 
 msgid "'gamma' must be a scalar or 'sRGB'"
 msgstr "argument 'gamma' musi być liczbą lub wartością 'sRGB'"
@@ -88,10 +88,10 @@ msgid "display gamma = %s"
 msgstr "wyświetl gamma = %s"
 
 msgid "'from' must be a \"colorConverter\" object or a string"
-msgstr "argument 'from' musi być obiektem klasy \"colorConverter\" lub łańcuchem tekstowym"
+msgstr "argument 'from' musi być obiektem klasy \"colorConverter\" lub tekstem"
 
 msgid "'to' must be a \"colorConverter\" object or a string"
-msgstr "'to' musi być obiektem klasy \"colorConverter\" lub łańcuchem"
+msgstr "'to' musi być obiektem klasy \"colorConverter\" lub tekstem"
 
 msgid "'from.ref.white' disagrees with definition of %s"
 msgstr "'from.ref.white' nie zgadza się z definicją %s"
@@ -130,7 +130,7 @@ msgid "can only print from a screen device"
 msgstr "można drukować jedynie z ekranu urządzenia"
 
 msgid "need to specify one of 'width' and 'height'"
-msgstr "potrzeba określić jeden z 'width' oraz 'height'"
+msgstr "konieczne jest określenie jednego z 'width' oraz 'height'"
 
 msgid "dev.control() called without an open graphics device"
 msgstr "funkcja 'dev.control()' wywołana bez otwartego urządzenia graficznego"
@@ -160,35 +160,34 @@ msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new(): używanie 'postscript(file=\"%s\")'"
 
 msgid "Invalid capabilities - alert the device maintainer"
-msgstr ""
+msgstr "Niepoprawne możliwości - powiadom opiekuna urządzenia"
 
-#, fuzzy
 msgid "Invalid span weight"
-msgstr "Niepoprawny typ czcionki"
+msgstr "Nieprawidłowa waga zakresu"
 
 msgid "length of arguments must match (and be greater than 0)"
-msgstr ""
+msgstr "długość argumentów musi być taka sama (i większa niż 0)"
 
 msgid "Invalid glyph width(s)"
-msgstr ""
+msgstr "niepoprawne szerokości glifu"
 
 msgid "Invalid glyph width"
-msgstr ""
+msgstr "niepoprawna szerokość glifu"
 
 msgid "Unknown width; using left anchor"
-msgstr ""
+msgstr "Nieznana szerokość; używanie lewego zakotwiczenia"
 
 msgid "Invalid glyph height(s)"
-msgstr ""
+msgstr "niepoprawne wysokości glifu"
 
 msgid "Invalid glyph height"
-msgstr ""
+msgstr "niepoprawna wysokość glifu"
 
 msgid "Unknown height; using bottom anchor"
-msgstr ""
+msgstr "Nieznana wysokość; używanie dolnego zakotwiczenia"
 
 msgid "Invalid glyph anchor"
-msgstr ""
+msgstr "niepoprawne zakotwiczenie glifu"
 
 msgid "Registered axis names must be lower case"
 msgstr ""
@@ -212,66 +211,58 @@ msgid "Axis values must be numeric"
 msgstr "macierz RGB musi być liczbowa"
 
 msgid "Font file longer than 500 will be truncated"
-msgstr ""
+msgstr "Plik czcionek dłuższy niż 500 zostanie przycięty"
 
 msgid "Font family longer than 200 will be truncated"
-msgstr ""
+msgstr "Rodzina czcionek dłuższa niż 200 zostanie przycięta"
 
 msgid "PostScript font name longer than 200 will be truncated"
-msgstr ""
+msgstr "Nazwa czcionki PostScript dłuższa niż 200 zostanie przycięta"
 
 msgid "Font information is inconsistent"
-msgstr ""
+msgstr "Informacje o czcionce są niespójne"
 
 msgid "List must include at least one font"
-msgstr ""
+msgstr "Lista musi zawierać co najmniej jedną czcionkę"
 
-#, fuzzy
 msgid "Invalid glyph font"
-msgstr "Niepoprawny typ czcionki"
+msgstr "Niepoprawna czcionka glifu"
 
-#, fuzzy
 msgid "Invalid font list"
-msgstr "Niepoprawny typ czcionki"
+msgstr "niepoprawna lista czcionek"
 
-#, fuzzy
 msgid "Unknown font"
-msgstr "nieznana czcionka"
+msgstr "Nieznana czcionka"
 
 msgid "There must be anchors named \"left\" and \"bottom\""
-msgstr ""
+msgstr "Muszą istnieć kotwice o nazwach \"left\" oraz \"bottom\""
 
 msgid "Invalid glyph info"
-msgstr ""
+msgstr "niepoprawna informacja o glifie"
 
 msgid "'%s' was removed in R 4.5.0."
-msgstr ""
+msgstr "'%s' zostało usunięte w R 4.5.0."
 
-#, fuzzy
 msgid "Invalid compositing operator"
-msgstr "niepoprawny format wyjściowy"
+msgstr "Niepoprawny operator tworzenia kompozycji"
 
 msgid "wrong 'type'; should never happen, please report!"
-msgstr ""
+msgstr "niepoprawny 'type'; nigdy nie powinno się pojawić. Proszę zgłosić!"
 
-#, fuzzy
 msgid "Invalid mask type"
-msgstr "Niepoprawny typ czcionki"
+msgstr "niepoprawny typ maski"
 
-#, fuzzy
 msgid "Invalid fill rule"
-msgstr "niepoprawny argument 'file'"
+msgstr "Niepoprawna reguła wypełnienia"
 
-#, fuzzy
 msgid "Invalid pattern type"
-msgstr "Niepoprawny typ czcionki"
+msgstr "niepoprawny typ wzorca"
 
-#, fuzzy
 msgid "Invalid 'extend' value"
-msgstr "niepoprawny argument 'filename'"
+msgstr "niepoprawny argument 'extend'"
 
 msgid "'%s' is deprecated."
-msgstr ""
+msgstr "Funkcja '%s' jest przestarzała."
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "niepoprawne argumenty w '%s' (potrzebne są nazwane argumenty)"
@@ -298,7 +289,7 @@ msgid "invalid 'family' argument"
 msgstr "niepoprawny argument 'family'"
 
 msgid "'title' argument \"%s\" contains invalid characters"
-msgstr ""
+msgstr "argument 'title' \"%s\" zawiera niepoprawne znaki"
 
 msgid "invalid 'file' argument '%s'"
 msgstr "niepoprawny argument 'file' '%s'"
@@ -345,9 +336,8 @@ msgstr "nieznana czcionka"
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr "niezgodność strony kodowej czcionki '%s'/'%s'"
 
-#, fuzzy
 msgid "'%s' must be a non-empty character string"
-msgstr "argument 'file' musi być niepustym łańcuchem tekstowym"
+msgstr "argument '%s' musi być niepustym tekstem"
 
 msgid "GhostScript was not found"
 msgstr "program 'GhostScript' nie został znaleziony"
@@ -358,9 +348,8 @@ msgstr "niepoprawny format wyjściowy"
 msgid "status %d in running command '%s'"
 msgstr "status '%d' w działającym poleceniu '%s'"
 
-#, fuzzy
 msgid "Invalid 'glyphInfo'"
-msgstr "niepoprawny argument 'file'"
+msgstr "niepoprawny argument 'glyphInfo'"
 
 msgid "failed to add more ticks; 'min.n' too large?"
 msgstr "nie udało się dodać więcej znaczników na osi; 'min.n' jest zbyt duże?"
@@ -396,7 +385,7 @@ msgid "argument is not of class %s"
 msgstr "argument nie jest obiektem klasy %s"
 
 msgid "invalid \"recordedplot\":"
-msgstr ""
+msgstr "niepoprawne \"recordedplot\":"
 
 msgid "snapshot recorded in different R version (pre 3.3.0)"
 msgstr "zrzut zapisany w innej wersji R (przed 3.3.0)"
@@ -417,13 +406,13 @@ msgid "'bandwidth' must be positive"
 msgstr "argument 'bandwidth' musi być dodatni"
 
 msgid "Must have the ('Recommended') package \"KernSmooth\" installed"
-msgstr ""
+msgstr "Konieczny jest zainstalowany pakiet \"KernSmooth\" ('Recommended')"
 
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' musi być wynikiem funkcji 'range()', a więc o długości 2"
 
 msgid "points cut off after point[%d]"
-msgstr ""
+msgstr "punkty odcięte po punkcie[%d]"
 
 msgid "invalid first argument"
 msgstr "niepoprawny pierwszy argument"
@@ -450,7 +439,7 @@ msgid "'file' is missing with no default"
 msgstr "brakuje argumentu 'file', a brak zdefiniowanej wartości domyślnej"
 
 msgid "'file' must be a non-empty character string"
-msgstr "argument 'file' musi być niepustym łańcuchem tekstowym"
+msgstr "argument 'file' musi być niepustym ciągiem znaków"
 
 msgid "unrecognized format of gs -help"
 msgstr "nierozpoznany format 'gs -help'"
@@ -465,32 +454,29 @@ msgstr ""
 "Dostępne urządzenia to:\n"
 "%s"
 
-#, fuzzy
 msgid "invalid width"
-msgstr "niepoprawny argument 'title'"
+msgstr "niepoprawna szerokość"
 
-#, fuzzy
 msgid "invalid height"
-msgstr "niepoprawny argument 'title'"
+msgstr "niepoprawna wysokość"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "wartość 'res' musi być określona chyba, że 'units = \"px\"'"
 
-#, fuzzy
 msgid "'filename' must be a non-empty character string"
-msgstr "argument 'file' musi być niepustym łańcuchem tekstowym"
+msgstr "argument 'file' musi być niepustym ciągiem znaków"
 
 msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
-msgstr ""
+msgstr "typ = \"quartz\" jest niedostępny. próbowanie \"Xlib\""
 
 msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
-msgstr ""
+msgstr "typ = \"cairo\" jest niedostępny. próbowanie \"Xlib\""
 
 msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
-msgstr ""
+msgstr "typ = \"cairo-png\" jest niedostępny. próbowanie \"Xlib\""
 
 msgid "compression is not supported for type = \"quartz\""
-msgstr ""
+msgstr "kompresja nie jest obsługiwana dla typu = \"quartz\""
 
 msgid "invalid 'title'"
 msgstr "niepoprawny argument 'title'"
@@ -499,7 +485,7 @@ msgid "invalid 'file'"
 msgstr "niepoprawny argument 'file'"
 
 msgid "invalid Quartz font:  must be 4 strings"
-msgstr "niepoprawna czcionka 'Quartz': muszą być 4 łańcuchy"
+msgstr "niepoprawna czcionka 'Quartz': muszą być 4 teksty"
 
 msgid "invalid arguments in 'quartzFonts' (must be font names)"
 msgstr "niepoprawne argumenty w 'quatzFonts' (muszą być nazwy czcionek)"
@@ -511,7 +497,7 @@ msgid "cairo-based types are not supported on this build - using \"Xlib\""
 msgstr "czcionki oparte o cairo nie są wspierane w tej kompilacji - używanie \"Xlib\""
 
 msgid "unknown family for X11(type = \"XLib\")"
-msgstr "nieznana rodzina dla  'X11(type = \"XLib\")'"
+msgstr "nieznana rodzina dla 'X11(type = \"XLib\")'"
 
 msgid "invalid X11 font specification:"
 msgstr "niepoprawne określenie czcionki X11:"
@@ -532,7 +518,7 @@ msgid "invalid value for 'rescale'"
 msgstr "niepoprawna wartość dla 'rescale'"
 
 msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
-msgstr ""
+msgstr "Wywołania takie jak '%s' nie są bezpieczne i powinny być zastąpione przez '%s'"
 
 msgid "can only bring windows devices to the front"
 msgstr "można jedynie przywołać urządzenia okien na wierzch"
@@ -570,12 +556,11 @@ msgstr[0] "różni się pomiędzy nowym a poprzednim"
 msgstr[1] "różnią się pomiędzy nowym a poprzednim"
 msgstr[2] "różnią się pomiędzy nowym a poprzednim"
 
-#, fuzzy
 msgid "%d %s value <= 0 omitted from logarithmic plot"
 msgid_plural "%d %s values <= 0 omitted from logarithmic plot"
-msgstr[0] "%d wartość x <= 0 pominięto na wykresie logarytmicznym"
-msgstr[1] "%d wartości x <= 0 pominięto na wykresie logarytmicznym"
-msgstr[2] "%d wartości x <= 0 pominięto na wykresie logarytmicznym"
+msgstr[0] "%d wartość %s <= 0 pominięto na wykresie logarytmicznym"
+msgstr[1] "%d wartości %s <= 0 pominięto na wykresie logarytmicznym"
+msgstr[2] "%d wartości %s <= 0 pominięto na wykresie logarytmicznym"
 
 #~ msgid "%d y value <= 0 omitted from logarithmic plot"
 #~ msgid_plural "%d y values <= 0 omitted from logarithmic plot"

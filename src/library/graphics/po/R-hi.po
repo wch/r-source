@@ -14,13 +14,13 @@ msgstr ""
 "X-Generator: Weblate 4.16.4\n"
 
 msgid "'a' is overridden by 'reg'"
-msgstr ""
+msgstr "'a' को 'reg' द्वारा अधिलेखित किया गया है"
 
 msgid "only using the first two of %d regression coefficients"
 msgstr ""
 
 msgid "'a' and 'b' are overridden by 'coef'"
-msgstr ""
+msgstr "'a' और 'b' को 'coef' द्वारा अधिलेखित किया गया है"
 
 msgid "one of 'x1' and 'y1' must be given"
 msgstr "'x1' और 'y1' में से कोई एक उपलब्ध करवाया जाना चाहिए"
@@ -29,37 +29,37 @@ msgid "'length', 'angle', or 'code' greater than length 1; values after the firs
 msgstr "'length', 'angle', या 'code' की लंबायी 1 से अधिक है; पेहली संख्याके बाद की सभी संख्ये अनदेखी की जाती है"
 
 msgid "'x' must be a 2-d contingency table"
-msgstr ""
+msgstr "'x' एक 2-डी आकस्मिक तालिका होनी चाहिए"
 
 msgid "all entries of 'x' must be nonnegative and finite"
-msgstr ""
+msgstr "'x' के सभी प्रविष्टियाँ गैर-ऋणात्मक और सीमित होनी चाहिए"
 
 msgid "at least one entry of 'x' must be positive"
-msgstr ""
+msgstr "'x' का कम से कम एक मान धनात्मक होना चाहिए"
 
 msgid "incorrect 'col': must be length 2"
 msgstr "गलत 'col': लंबाई 2 होनी चाहिए"
 
 msgid "only for 1-D table"
-msgstr ""
+msgstr "केवल 1-डी टेबल के लिए"
 
 msgid "'side' must be in {1:4}"
-msgstr ""
+msgstr "'side' {1:4} में होना चाहिए"
 
 msgid "invalid 'axp'"
-msgstr ""
+msgstr "अमान्य 'axp'"
 
 msgid "invalid 'log'"
-msgstr ""
+msgstr "अमान्य 'लॉग'"
 
 msgid "invalid positive 'axp[3]'"
-msgstr ""
+msgstr "अमान्य पॉजिटिव 'axp[3]'"
 
 msgid "invalid 'usr'"
-msgstr ""
+msgstr "अमान्य 'usr'"
 
 msgid "'height' must be a vector or a matrix"
-msgstr ""
+msgstr "'ऊँचाई' एक वेक्टर या मैट्रिक्स होना चाहिए"
 
 msgid "Cannot use shading lines in bars when log scale is used"
 msgstr ""
@@ -68,16 +68,16 @@ msgid "log scale error: at least one 'height + offset' value <= 0"
 msgstr ""
 
 msgid "log scale error: 'xlim' <= 0"
-msgstr ""
+msgstr "लॉग स्केल त्रुटि: 'xlim' <= 0"
 
 msgid "log scale error: 'ylim' <= 0"
-msgstr ""
+msgstr "लॉग स्केल त्रुटि: 'ylim' <= 0"
 
 msgid "incorrect number of names"
-msgstr ""
+msgstr "गलत नामों की संख्या"
 
 msgid "'formula' missing or incorrect"
-msgstr ""
+msgstr "'सूत्र' गायब है या गलत है"
 
 msgid "formula must specify 1 or 2 categorical variables"
 msgstr ""
@@ -196,8 +196,9 @@ msgstr ""
 msgid "incorrect geometry specification"
 msgstr ""
 
+#, fuzzy
 msgid "'x' must be numeric"
-msgstr ""
+msgstr "'x' संख्यात्मक होना चाहिए"
 
 msgid "invalid length(x)"
 msgstr "length(x) अमान्य है"

@@ -1,0 +1,116 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The R Core Team
+# This file is distributed under the same license as the R package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.5.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2025-03-31 11:51+0200\n"
+"PO-Revision-Date: 2026-04-14 15:44+0000\n"
+"Last-Translator: Tulio Baars <tuliobaars@gmail.com>\n"
+"Language-Team: none\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.11.4\n"
+
+#: fork.c:223
+#, c-format
+msgid "unable to terminate child process: %s"
+msgstr "não foi possível encerrar o processo filho: %s"
+
+#: fork.c:250
+#, c-format
+msgid "unable to terminate child: %s"
+msgstr "incapaz de encerrar o filho: %s"
+
+#: fork.c:329 fork.c:620 ncpus.c:87 ncpus.c:123 ncpus.c:178
+msgid "memory allocation error"
+msgstr "Erro de alocação de memória"
+
+#: fork.c:385 fork.c:389 fork.c:393
+#, c-format
+msgid "invalid '%s' argument"
+msgstr "argumento '%s' inválido"
+
+#: fork.c:451
+msgid "Error while shutting down parallel: unable to terminate some child processes\n"
+msgstr ""
+"Erro ao desligar o paralelo: não foi possível encerrar algum(s) processo(s) "
+"filho(s)\n"
+
+#: fork.c:544 fork.c:547
+msgid "unable to create a pipe"
+msgstr "Não foi possível criar um pipe"
+
+#: fork.c:569
+#, c-format
+msgid "unable to fork, possible reason: %s"
+msgstr "incapaz de bifurcar, possível motivo: %s"
+
+#: fork.c:761
+msgid "only children can send data to the master process"
+msgstr "Somente filhos podem enviar dados para o processo mestre"
+
+#: fork.c:763
+msgid "there is no pipe to the master process"
+msgstr "não há pipe para o processo mestre"
+
+#: fork.c:765
+msgid "content to send must be RAW, use serialize() if needed"
+msgstr "o conteúdo a ser enviado deve ser RAW, use serialize() se necessário"
+
+#: fork.c:774 fork.c:785 fork.c:1204
+msgid "write error, closing pipe to the master"
+msgstr "erro de escrita, fechando o pipe para o master"
+
+#: fork.c:795
+msgid "only the master process can send data to a child process"
+msgstr "Somente o processo mestre pode enviar dados para um processo filho"
+
+#: fork.c:803
+#, c-format
+msgid "child %d does not exist"
+msgstr "filho %d não existe"
+
+#: fork.c:809
+msgid "write error"
+msgstr "erro de escrita"
+
+#: fork.c:897
+#, c-format
+msgid "cannot wait for child %d as it does not exist"
+msgstr "não pode esperar pelo filho %d, pois ele não existe"
+
+#: fork.c:956 fork.c:1083
+#, c-format
+msgid "error '%s' in select"
+msgstr "erro '%s' em select"
+
+#: fork.c:1173
+msgid "'mckill' failed"
+msgstr "'mckill' falhou"
+
+#: fork.c:1186
+msgid "'mcexit' can only be used in a child process"
+msgstr "'mcexit' só pode ser usado em um processo filho"
+
+#: fork.c:1218
+msgid "'mcexit' failed"
+msgstr "'mcexit' falhou"
+
+#: fork.c:1248 fork.c:1257
+msgid "invalid CPU affinity specification"
+msgstr "Especificação de afinidade de CPU inválida"
+
+#: fork.c:1268
+msgid "requested CPU set is too large for this system"
+msgstr "O conjunto de CPU solicitado é muito grande para este sistema"
+
+#: fork.c:1291
+msgid "retrieving CPU affinity set failed"
+msgstr "Falha na recuperação do conjunto de afinidades de CPU"

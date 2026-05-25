@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-08 11:37\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -29,7 +29,8 @@ msgstr "documento não encontrado"
 msgid "some options in argument 'restrict' were not recognized and hence ignored"
 msgstr "algumas opções do argumento 'restrict' não foram reconhecidas e portanto ignoradas"
 
-msgid "argument 'format' is deprecated and has no affect on search results"
+#, fuzzy
+msgid "argument 'format' is deprecated and has no effect on search results"
 msgstr "o argumento 'format' está obsoleto e não tem efeito nos resultados da busca"
 
 msgid "A search query has been submitted to %s"
@@ -93,6 +94,17 @@ msgstr "valor da opção 'results' deveria ser em letras minúsculas"
 msgid "value of 'strip.white' option should be lowercase"
 msgstr "valor da opção 'strip.white' deveria ser em letras minúsculas"
 
+msgid "using default value %s"
+msgstr ""
+
+#, fuzzy
+msgid "this function cannot be used from an interactive session"
+msgstr "winDialog() não pode ser usada de forma não interativa"
+
+#, fuzzy
+msgid "unrecognized Sweave call"
+msgstr "Indicador de valor desconhecido"
+
 msgid "elements of 'what' after the first will be ignored"
 msgstr "elementos de 'what' além o primeiro vão ser ignorados"
 
@@ -138,7 +150,11 @@ msgid "No suitable spell check program found."
 msgstr "Nenhum programa de correção ortográfica apropriado foi encontrado."
 
 msgid "Performing query %s"
-msgstr ""
+msgstr "Realizando consulta %s"
+
+#, fuzzy
+msgid "Unsupported object"
+msgstr "tipo de campo não suportado"
 
 msgid ""
 "Use <code> %s </code> \n"
@@ -174,15 +190,14 @@ msgstr "É recomendado usar %s ao invés de %s."
 msgid "Use either %s or %s but not both."
 msgstr "Use %s ou %s, mas não ambos."
 
-#, fuzzy
 msgid "Arguments of person() should be character or NULL"
-msgstr "'priority' deve ser um caractere ou NULL"
+msgstr "Os argumentos de person() devem ser character ou NULL"
 
 msgid "subscript out of bounds"
 msgstr "índice fora dos limites"
 
 msgid "must have some non-empty fields"
-msgstr ""
+msgstr "deve ter alguns campos não-vazios"
 
 msgid "method is only applicable to %s objects"
 msgstr "método só é aplicável a objetos %s"
@@ -213,7 +228,7 @@ msgstr ""
 "%s"
 
 msgid "package %s has no %s file: only auto-generation is possible"
-msgstr ""
+msgstr "o pacote %s não possui o arquivo %s: apenas a geração automática é possível"
 
 msgid "could not determine year for %s from package DESCRIPTION file"
 msgstr "não foi possível determinar o ano para %s do arquivo DESCRIPTION do pacote"
@@ -538,9 +553,8 @@ msgstr "não é possível atualizar índice HTML do pacote"
 msgid "done"
 msgstr "concluído"
 
-#, fuzzy
 msgid "Source must be a seekable connection"
-msgstr "'file' deve ser uma string de caracteres ou conexão"
+msgstr "A fonte deve ser uma conexão buscável"
 
 msgid "menu() cannot be used non-interactively"
 msgstr "menu() não deve ser usada de forma não interativa"
@@ -564,7 +578,7 @@ msgid "'%s' is a formal generic function; S3 methods will not likely be found"
 msgstr "'%s' é uma função genérica formal; métodos S3 provavelmente não serão encontrados"
 
 msgid "some methods may be unavailable outside of their namespace"
-msgstr ""
+msgstr "Alguns métodos podem não estar disponíveis fora de seus namespaces"
 
 msgid "no function '%s' is visible"
 msgstr "nenhuma função '%s' está visível"
@@ -750,8 +764,8 @@ msgstr "inferindo 'repos = NULL' de 'pkgs'"
 msgid "unable to create temporary directory %s"
 msgstr "não é possível criar diretório temporário %s"
 
-msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
-msgstr "type == \"both\" só pode ser usado no Windows ou em um build do CRAN para macOS"
+msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
+msgstr ""
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
 msgstr "type == \"both\" não pode ser usado com 'repos = NULL'"
@@ -950,7 +964,7 @@ msgid "The 'flesh' argument does not contain a skeleton attribute."
 msgstr "O argumento 'flesh' não contém um atributo skeleton."
 
 msgid "Either ensure you unlist a relistable object, or specify the skeleton separately."
-msgstr ""
+msgstr "Certifique-se de não listas um objeto relistável ou especifique o esqueleto separadamente."
 
 msgid "cannot coerce 'x' to roman"
 msgstr "não é possível fazer coerção de 'x' para romano"
@@ -1012,9 +1026,8 @@ msgstr "O número de tokens != 'length(proto)'"
 msgid "The number of tokens is not consistent across 'x'"
 msgstr "O número de tokens não é consistente ao longo de 'x'"
 
-#, fuzzy
 msgid "cannot coerce %s to TRUE or FALSE"
-msgstr "não é possível fazer a coerção de %s para lógico"
+msgstr "não é possível fazer a coerção de %s para TRUE ou FALSE"
 
 msgid "no lines found in %s"
 msgstr "nenhuma linha encontrada em %s"
@@ -1081,7 +1094,7 @@ msgid "incomplete block on file"
 msgstr "bloco inválido no arquivo"
 
 msgid "incomplete block: rather use gzfile(.) created connection?"
-msgstr ""
+msgstr "bloco incompleto: prefere usar conexão criada com gzfile(.)?"
 
 msgid "invalid name field in tarball"
 msgstr "campo name inválido no tarball"
@@ -1096,7 +1109,7 @@ msgid "cannot restore symbolic link from %s to %s as a file copy, because the so
 msgstr ""
 
 msgid "unsupported entry type"
-msgstr ""
+msgstr "tipo de campo não suportado"
 
 msgid "file '%s' not found"
 msgstr "arquivo '%s' não encontrado"
@@ -1214,8 +1227,16 @@ msgstr "arquivo %s não é um pacote binário de macOS"
 msgid "binary package %s is not compatible with this build of R"
 msgstr ""
 
-msgid "package %s successfully unpacked and MD5 sums checked"
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
 msgstr "pacote %s desempacotado com sucesso e somas MD5 verificadas"
+
+#, fuzzy
+msgid "package %s signature verified (%s %s)"
+msgstr "pacote %s não está disponível %s"
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
 
 msgid ""
 "ERROR: failed to lock directory %s for modifying\n"
@@ -1307,13 +1328,13 @@ msgstr[1] "Especificações inválidas de papéis: %s."
 
 msgid "Invalid ORCID iD: %s."
 msgid_plural "Invalid ORCID iDs: %s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "iD ORCID inválido: %s."
+msgstr[1] "iDs ORCID inválidos: %s."
 
 msgid "Invalid ROR ID: %s."
 msgid_plural "Invalid ROR IDs: %s."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ID ROR inválido: %s."
+msgstr[1] "IDs ROR inválidos: %s."
 
 msgid "A bibentry of bibtype %s has to specify the field: %s"
 msgid_plural "A bibentry of bibtype %s has to specify the fields: %s"
@@ -1453,6 +1474,9 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "algarismo romano inválido: %s"
 msgstr[1] "algarismos romanos inválidos: %s"
+
+#~ msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
+#~ msgstr "type == \"both\" só pode ser usado no Windows ou em um build do CRAN para macOS"
 
 #~ msgid "no R objects specified or available"
 #~ msgstr "nenhum objeto R especificado ou disponível"

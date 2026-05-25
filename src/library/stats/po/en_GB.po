@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-05-25 12:47-0700\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: none\n"
@@ -158,15 +158,15 @@ msgstr "invalid variable names"
 msgid "invalid tag"
 msgstr "invalid tag"
 
-#: distance.c:152
+#: distance.c:153
 msgid "treating non-finite values as NA"
 msgstr "treating non-finite values as NA"
 
-#: distance.c:225
+#: distance.c:226
 msgid "distance(): invalid p"
 msgstr "distance(): invalid p"
 
-#: distance.c:229
+#: distance.c:230
 msgid "distance(): invalid distance"
 msgstr "distance(): invalid distance"
 
@@ -670,9 +670,9 @@ msgid "-Inf replaced by maximally negative value"
 msgstr "-Inf replaced by maximally negative value"
 
 #: optimize.c:226 optimize.c:316 optimize.c:538
-#, fuzzy, c-format
+#, c-format
 msgid "%s replaced by maximum positive value"
-msgstr "NA replaced by maximum positive value"
+msgstr "%s replaced by maximum positive value"
 
 #: optimize.c:236
 msgid "invalid function value in 'optimize'"

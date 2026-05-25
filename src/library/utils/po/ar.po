@@ -29,255 +29,254 @@ msgstr ""
 msgid "invalid '%s' argument"
 msgstr "الوسيطة '%s' غير صالحة"
 
+
 #: io.c:350 io.c:841
 msgid "invalid quote symbol set"
-msgstr ""
+msgstr "مجموعة رموز اقتباس غير صالحة"
 
 #: io.c:362 io.c:864 io.c:1084
 msgid "cannot open the connection"
-msgstr ""
+msgstr "لا يمكن فتح الاتصال"
 
 #: io.c:365 io.c:369
 msgid "cannot read from this connection"
-msgstr ""
+msgstr "لا يمكن القراءة من هذا الاتصال"
 
 #: io.c:416 io.c:434
 #, c-format
 msgid "quoted string on line %d terminated by EOF"
-msgstr ""
+msgstr "سلسلة مقتبسة على السطر %d تم إنهاؤها بواسطة EOF"
 
 #: io.c:569
 msgid "the first argument must be of mode character"
-msgstr ""
+msgstr "يجب أن تكون الوسيطة الأولى ذات طابع الوضع"
 
 #: io.c:599
 #, c-format
 msgid "invalid 'numerals' string: \"%s\""
-msgstr ""
+msgstr "سلسلة \"أرقام\" غير صالحة: \"%s\""
 
 #: io.c:779
 #, c-format
 msgid "Selection: "
-msgstr ""
+msgstr "إنتخاب: "
 
 #: io.c:874 io.c:889
 msgid "cannot allocate buffer in 'readTableHead'"
-msgstr ""
+msgstr "لا يمكن تخصيص المخزن المؤقت في \"readTableHead\""
 
 #: io.c:902
 msgid "\\ followed by EOF"
-msgstr ""
+msgstr "\\ يليه EOF"
 
 #: io.c:954 io.c:958
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
-msgstr ""
+msgstr "تم العثور على السطر النهائي غير المكتمل بواسطة readTableHeader على \"%s\""
 
 #: io.c:1015
 msgid "index out of range"
-msgstr ""
+msgstr "مؤشر خارج النطاق"
 
 #: io.c:1052
 #, c-format
 msgid "Problem closing connection:  %s"
-msgstr ""
+msgstr "مشكلة إغلاق الاتصال:%s"
 
 #: io.c:1054
 msgid "Problem closing connection"
-msgstr ""
+msgstr "مشكلة إغلاق الاتصال"
 
 #: io.c:1077
 msgid "'file' is not a connection"
-msgstr ""
+msgstr "\"الملف\" ليس اتصالا"
 
 #: io.c:1080
 msgid "cannot write to this connection"
-msgstr ""
+msgstr "لا يمكن الكتابة إلى هذا الاتصال"
 
 #: io.c:1111
 msgid "'dec' must be a single character"
-msgstr ""
+msgstr "يجب أن يكون \"dec\" حرفا واحدا"
 
 #: io.c:1138
 #, c-format
 msgid "corrupt data frame -- length of column %d does not match nrows"
-msgstr ""
+msgstr "إطار البيانات التالف - طول العمود %d لا يتطابق مع الصفوف"
 
 #: io.c:1172
 #, c-format
 msgid "column %d claims to be a factor but does not have numeric codes"
-msgstr ""
+msgstr "يدعي العمود %d أنه عامل ولكن لا يحتوي على رموز رقمية"
 
 #: io.c:1190
 msgid "corrupt matrix -- dims do not match length"
-msgstr ""
+msgstr "مصفوفة تالفة - لا تتطابق الطول مع DIMS"
 
 #: stubs.c:56
 msgid "'savehistory' can only be used in Rgui and Rterm"
-msgstr ""
+msgstr "لا يمكن استخدام \"حفظ التاريخ\" إلا في Rgui و Rterm"
 
 #: stubs.c:73
 msgid "'loadhistory' can only be used in Rgui and Rterm"
-msgstr ""
+msgstr "لا يمكن استخدام \"حفظ التاريخ\" إلا في Rgui و Rterm"
 
 #: stubs.c:85
 msgid "invalid timestamp"
-msgstr ""
+msgstr "طابع زمني غير صالح"
 
 #: stubs.c:151 stubs.c:159
 msgid "X11 dataentry cannot be loaded"
-msgstr ""
+msgstr "لا يمكن تحميل إدخال بيانات X11"
 
 #: stubs.c:155 stubs.c:184 stubs.c:190
 msgid "X11 is not available"
-msgstr ""
+msgstr "X11 غير متوفر"
 
 #: stubs.c:248 stubs.c:251
 #, c-format
 msgid "invalid '%s' specification"
-msgstr ""
+msgstr "مواصفات \"%s\" غير صالحة"
 
 #: stubs.c:254
 #, c-format
 msgid "'%s' contains missing values"
-msgstr ""
+msgstr "يحتوي \"%s\" على قيم مفقودة"
 
 #: utils.c:68
 msgid "argument 'class' must be a character string"
-msgstr ""
+msgstr "يجب أن تكون الوسيطة \"class\" سلسلة أحرف"
 
 #: utils.c:78
 msgid "argument 'x' must be a length-1 character vector"
-msgstr ""
+msgstr "يجب أن تكون الوسيطة \"X\" متجه بطول 1 حرف"
 
 #: utils.c:81
 msgid "argument 'x' must be UTF-8 encoded (including ASCII)"
-msgstr ""
+msgstr "يجب أن تكون الوسيطة \"x\" مشفرة ب UTF-8 (بما في ذلك ASCII)"
 
 #: utils.c:147
 msgid "'hostname' must be a character vector of length 1"
-msgstr ""
+msgstr "يجب أن يكون \"اسم المضيف\" متجه حرف بطول 1"
 
 #: utils.c:153
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
-msgstr ""
+msgstr "تعذر على nsl() حل المضيف \"%s\""
 
 #: utils.c:160
 msgid "unknown format returned by 'gethostbyname'"
-msgstr ""
+msgstr "تنسيق غير معروف تم إرجاعه بواسطة \"gethostbyname\""
 
 #: utils.c:169
 msgid "nsl() is not supported on this platform"
-msgstr ""
+msgstr "NSL() غير مدعوم على هذه المنصة"
 
 #: windows/dialogs.c:181
 msgid "unknown type"
-msgstr ""
+msgstr "نوع غير معروف"
 
-#: windows/dialogs.c:213 windows/dialogs.c:237 windows/dialogs.c:275
-#: windows/dialogs.c:310
+#: windows/dialogs.c:213 windows/dialogs.c:237 windows/dialogs.c:275 windows/dialogs.c:310
 msgid "menu functions can only be used in the GUI"
-msgstr ""
+msgstr "لا يمكن استخدام وظائف القائمة إلا في واجهة المستخدم الرسومية (GUI)"
 
 #: windows/dialogs.c:245
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
-msgstr ""
+msgstr "يتعذر استرداد العناصر ل %s (%s)"
 
 #: windows/dialogs.c:283
 #, c-format
 msgid "unable to add menu (%s)"
-msgstr ""
+msgstr "تعذر إضافة القائمة (%s)"
 
 #: windows/dialogs.c:295
 #, c-format
 msgid "unable to add menu item (%s)"
-msgstr ""
+msgstr "تعذر إضافة القائمة (%s)"
 
 #: windows/dialogs.c:318
 msgid "menu does not exist"
-msgstr ""
+msgstr "القائمة غير موجودة"
 
 #: windows/dialogs.c:325
 #, c-format
 msgid "unable to delete menu item (%s)"
-msgstr ""
+msgstr "تعذر إضافة القائمة (%s)"
 
-#: windows/registry.c:67 windows/registry.c:242 windows/registry.c:245
-#: windows/registry.c:248
+#: windows/registry.c:67 windows/registry.c:242 windows/registry.c:245 windows/registry.c:248
 #, c-format
 msgid "invalid '%s' value"
-msgstr ""
+msgstr "قيمة \"%s\" غير صالحة"
 
 #: windows/registry.c:260
 #, c-format
 msgid "Registry key '%ls' not found"
-msgstr ""
+msgstr "لم يتم العثور على مفتاح التسجيل \"%ls\""
 
 #: windows/util.c:46
 msgid "unsupported version of Windows"
-msgstr ""
+msgstr "إصدار غير مدعوم من Windows"
 
 #: windows/util.c:291
 msgid "argument must be a character vector or a raw vector"
-msgstr ""
+msgstr "يجب أن تكون الوسيطة متجه حرف أو متجه أولي"
 
 #: windows/util.c:332
 msgid "unable to open the clipboard"
-msgstr ""
+msgstr "تعذر فتح الحافظة"
 
 #: windows/util.c:337
 msgid "unable to write to the clipboard"
-msgstr ""
+msgstr "تعذر فتح الحافظة"
 
 #: windows/util.c:416
 msgid "'title' must be a character string"
-msgstr ""
+msgstr "يجب أن يكون \"العنوان\" سلسلة أحرف"
 
 #: windows/util.c:425
 msgid "'text' must be a character string"
-msgstr ""
+msgstr "يجب أن يكون \"النص\" عبارة عن سلسلة أحرف"
 
 #: windows/util.c:464
 #, c-format
 msgid "'%s' must be length 1"
-msgstr ""
+msgstr "يجب أن يكون طول \"%s\" 1"
 
 #: windows/util.c:577
 #, c-format
 msgid "'%s' must be a list"
-msgstr ""
+msgstr "يجب أن تكون \"%s\" قائمة"
 
 #: windows/util.c:581
 #, c-format
 msgid "'%s' element %d is not a window handle"
-msgstr ""
+msgstr "عنصر \"%s\" %d ليس مقبض نافذة"
 
 #: windows/widgets.c:110
 msgid "Select one or more"
-msgstr ""
+msgstr "حدد واحدا أو أكثر"
 
 #: windows/widgets.c:110
 msgid "Select one"
-msgstr ""
+msgstr "حدد واحدا"
 
 #: windows/widgets.c:196 windows/widgets.c:266
 msgid "'default' must be a character string"
-msgstr ""
+msgstr "يجب أن تكون كلمة \"default\" عبارة عن سلسلة أحرف"
 
 #: windows/widgets.c:198
 msgid "'default' is overlong"
-msgstr ""
+msgstr "\"الافتراضي\" طويل الأمد"
 
 #: windows/widgets.c:202 windows/widgets.c:272
 msgid "'caption' must be a character string"
-msgstr ""
+msgstr "يجب أن يكون \"النص\" عبارة عن سلسلة أحرف"
 
 #: windows/widgets.c:204
 msgid "'multi' must be a logical value"
-msgstr ""
+msgstr "يجب أن تكون كلمة \"متعددة\" قيمة منطقية"
 
 #: windows/widgets.c:206
 msgid "'filterindex' must be an integer value"
-msgstr ""
+msgstr "يجب أن يكون \"filterindex\" قيمة صحيحة"

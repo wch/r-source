@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2024-03-22 18:10+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -31,7 +31,6 @@ msgstr "não é possível ajustar modelos sem nível especificado ('alpha' não 
 msgid "'alpha', 'beta' and 'gamma' must be within the unit interval"
 msgstr "'alpha', 'beta' e 'gamma' devem estar dentro do intervalo unitário"
 
-#, fuzzy
 msgid "data must be non-zero for multiplicative Holt-Winters"
 msgstr "os dados devem ser não-zero para Holt-Winters multiplicativo"
 
@@ -120,13 +119,13 @@ msgid "F test assumes quasi%s family"
 msgstr "O teste F assume a família quasi%s"
 
 msgid "no 'add1' method implemented for \"mlm\" models"
-msgstr "Nenhum método  'add1' implementado para modelos  \"mlm\""
+msgstr "Nenhum método 'add1' implementado para modelos \"mlm\""
 
 msgid "scope is not a subset of term labels"
 msgstr "A fórmula de destino não é um subconjunto dos termos rotulados"
 
 msgid "no 'drop1' method for \"mlm\" models"
-msgstr "nenhum método  'drop1' para modelos \"mlm\""
+msgstr "nenhum método 'drop1' para modelos \"mlm\""
 
 msgid "F test assumes 'quasi%s' family"
 msgstr "O teste F assume a família quasi%s"
@@ -214,7 +213,7 @@ msgid "cannot compute exact confidence interval with ties"
 msgstr "impossível computar os intervalos de confiança exatos com empate"
 
 msgid "'formula' missing or incorrect"
-msgstr "'formula' com termos faltando ou incorreta"
+msgstr "'formula' faltando ou incorreto"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "fator de agrupamento deve ter exatamente 2 níveis"
@@ -226,10 +225,10 @@ msgid "Error() model is singular"
 msgstr "modelo Error() é singular"
 
 msgid "the 'split' argument must be a list"
-msgstr "o argumento  'split' deve ser uma lista"
+msgstr "o argumento 'split' deve ser uma lista"
 
 msgid "'coef' must define a contrast, i.e., sum to 0"
-msgstr "'coef' deve definir um contraste, i.e., somatório deve ser  0"
+msgstr "'coef' deve definir um contraste, i.e., somatório deve ser 0"
 
 msgid "'coef' must have same length as 'contrast.obj'"
 msgstr "'coef' deve ter o mesmo comprimento de 'contrast.obj'"
@@ -298,7 +297,7 @@ msgid "MLE only implemented for univariate series"
 msgstr "MLE implementado somente para séries univariadas"
 
 msgid "'order.max' must be >= 0"
-msgstr "'order.max' deve ser  >= 0"
+msgstr "'order.max' deve ser >= 0"
 
 msgid "'order.max' must be < 'n.used'"
 msgstr "'order.max' deve ser < 'n.used'"
@@ -501,13 +500,13 @@ msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "somente %d do primeiro %d autovalor são > 0"
 
 msgid "Waiting for profiling to be done..."
-msgstr ""
+msgstr "Aguardando a análise de rendimento (profiling) ser feita..."
 
 msgid "Reprofiling for"
-msgstr ""
+msgstr "Reprocessamento da análise para"
 
 msgid "statistic. Waiting..."
-msgstr ""
+msgstr "estatística. Espere..."
 
 msgid "initial value is not in the interior of the feasible region"
 msgstr "valor inicial não está na região viável"
@@ -596,9 +595,8 @@ msgstr "impossível gerenciar 'pairwise.complete.obs'"
 msgid "'V' is not a square numeric matrix"
 msgstr "'V' não é uma matriz quadrada numérica"
 
-#, fuzzy
 msgid "diag(V) had non-positive or NA entries; the non-finite result may be dubious"
-msgstr "diag(.) tem entradas 0 ou NA; resultados não-finitos são duvidosos"
+msgstr "diag(V) tem entradas 0 ou NA; os resultados não-finitos podem ser duvidosos"
 
 msgid "'x' must be a numeric vector"
 msgstr "'X' deve ser um vetor numérico"
@@ -627,9 +625,8 @@ msgstr "pesos devem ser não-negativos e nem todos zero"
 msgid "length of 'center' must equal the number of columns in 'x'"
 msgstr "comprimento do 'center' deve ser igual ao número de colunas em 'x'"
 
-#, fuzzy
 msgid "invalid 'tree' ('merge' component)"
-msgstr "'tree' inválido (mesclar componente)"
+msgstr "'tree' inválido ('merge' componente)"
 
 msgid "either 'k' or 'h' must be specified"
 msgstr "ou 'k' ou 'h' deve ser especificado"
@@ -677,7 +674,7 @@ msgid "'x' must have at least 2 rows and 2 columns"
 msgstr "'x' deve ter ao menos 2 linhas e 2 colunas"
 
 msgid "'margins' must be a numeric vector of length 2"
-msgstr "'margins'  deve ser um vetor numérico de comprimento 2"
+msgstr "'margins' deve ser um vetor numérico de comprimento 2"
 
 msgid "row dendrogram ordering gave index of wrong length"
 msgstr "linha de ordenação do dendrograma forneceu índice de comprimento erradolinha de ordenação do dendrograma forneceu índice de comprimento errado"
@@ -689,16 +686,16 @@ msgid "column dendrogram ordering gave index of wrong length"
 msgstr "coluna de ordenação do dendrograma forneceu índice de comprimento errado"
 
 msgid "'ColSideColors' must be a character vector of length ncol(x)"
-msgstr "'ColSideColors'  deve ser um vector de caracteres de comprimento ncol(x)"
+msgstr "'ColSideColors' deve ser um vector de caracteres de comprimento ncol(x)"
 
 msgid "'RowSideColors' must be a character vector of length nrow(x)"
-msgstr "'RowSideColors'  deve ser um vetor de caracteres de comprimento nrow(x)'RowSideColors'  deve ser um vetor de caracteres de comprimento nrow(x)"
+msgstr "'RowSideColors' deve ser um vetor de caracteres de comprimento nrow(x)'RowSideColors' deve ser um vetor de caracteres de comprimento nrow(x)"
 
 msgid "argument 'x' must be numeric"
 msgstr "argumento 'x ' deve ser numérico"
 
 msgid "'x' and 'weights' have unequal length"
-msgstr "'x' e 'weights'  têm comprimento desigual"
+msgstr "'x' e 'weights' têm comprimento desigual"
 
 msgid "'x' contains missing values"
 msgstr "'x' contém valores ausentes"
@@ -716,7 +713,7 @@ msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "são precisos ao menos 2 pontos para selecionar uma largura de banda automaticamente"
 
 msgid "Selecting bandwidth *not* using 'weights'"
-msgstr ""
+msgstr "Selecionando largura de banda *sem* usar 'weights'"
 
 msgid "unknown bandwidth rule"
 msgstr "norma de largura de banda desconhecida"
@@ -740,7 +737,7 @@ msgid "'x' is not a vector"
 msgstr "'x' não é um vetor"
 
 msgid "bad value for 'lag' or 'differences'"
-msgstr "valor ruim para o 'lag'  ou 'differences'"
+msgstr "valor ruim para o 'lag' ou 'differences'"
 
 msgid "'xi' does not have the right length"
 msgstr "'xi' não tem o comprimento certo"
@@ -788,7 +785,7 @@ msgid "multivariate case with missing coefficients is not yet implemented"
 msgstr "caso multivariado com coeficientes ausentes ainda não foi implementado"
 
 msgid "'x' must have 1 or more non-missing values"
-msgstr "'x' deve ter um ou mais valores  ausentes"
+msgstr "'x' deve ter um ou mais valores ausentes"
 
 msgid "wrong embedding dimension"
 msgstr "dimensão de incorporação errada"
@@ -843,9 +840,8 @@ msgstr "não é possível encontrar valores iniciais válidos: especifique algun
 msgid "y values must be 0 <= y <= 1"
 msgstr "valores y devem ser 0 <= y <= 1"
 
-#, fuzzy
 msgid "non-integer #successes in a %s glm!"
-msgstr "#sucessos não-inteiro em um glm binomial!"
+msgstr "#sucessos não-inteiro em um glm %s!"
 
 msgid "non-integer counts in a %s glm!"
 msgstr "contagens não-inteiras em um glm %s!"
@@ -1057,13 +1053,13 @@ msgid "Parameter:"
 msgstr "Parâmetro:"
 
 msgid "down"
-msgstr ""
+msgstr "abaixo"
 
 msgid "up"
-msgstr ""
+msgstr "em cima"
 
 msgid "profiling has found a better solution, so original fit had not converged"
-msgstr ""
+msgstr "análise do perfil encontrou uma solução melhor, então ajuste inicial não convergiu"
 
 msgid "'family' not recognized"
 msgstr "'family' não reconhecida"
@@ -1081,7 +1077,7 @@ msgid "number of offsets is %d should equal %d (number of observations)"
 msgstr "número de offsets é %d e deve igualar %d (número de observações)"
 
 msgid "fitting to calculate the null deviance did not converge -- increase 'maxit'?"
-msgstr ""
+msgstr "O ajuste para calcular o desvio nulo não convergiu - aumentar 'maxit'?"
 
 msgid "value of 'epsilon' must be > 0"
 msgstr "valor de 'epsilon' deve ser > 0"
@@ -1264,7 +1260,7 @@ msgid "number of cluster centres must lie between 1 and nrow(x)"
 msgstr "número de centros de agrupamento deve estar entre 1 e nrow(x)"
 
 msgid "Quick-TRANSfer stage steps exceeded maximum (= %d)"
-msgstr ""
+msgstr "As etapas do estágio Quick-TRANSfer excederam o máximo (= %d)"
 
 msgid "invalid nrow(x)"
 msgstr "nrow(x) inválido"
@@ -1394,15 +1390,14 @@ msgstr "testes-F ANOVA sobre um ajuste essencialmente perfeito, são incertos"
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr "chamando predict.lm(<fake-lm-object>) ..."
 
-#, fuzzy
 msgid "prediction from rank-deficient fit"
-msgstr "uma predição a partir de um ajuste rank-deficient pode ser enganoso"
+msgstr "predição a partir de um ajuste com rank/ordenação deficiente"
 
 msgid "%s; consider predict(., rankdeficient=\"NA\")"
 msgstr "%s; considerar predict(., rankdeficient=\"NA\")"
 
 msgid "lower-rank qr: determining non-estimable cases"
-msgstr ""
+msgstr "qr de classificação inferior (lower-rank qr): determinando casos não estimáveis"
 
 msgid "%s; attr(*, \"non-estim\") has doubtful cases"
 msgstr "%s; attr(*, \"non-estim\") tem casos duvidosos"
@@ -1636,7 +1631,7 @@ msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' deve ser um objeto da classe %s"
 
 msgid "setting '%s' in terms.formula() is deprecated"
-msgstr ""
+msgstr "A configuração de '%s' em terms.formula() está obsoleta"
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr "variável '%s' foi ajustada com tipo \"%s\" mas tipo \"%s\" foi fornecido"
@@ -1751,7 +1746,7 @@ msgid "invalid  'attr(rhs, \"gradient\")'"
 msgstr "'attr(rhs, \"gradient\")' inválido"
 
 msgid "setVarying : 'vary' length must match length of parameters"
-msgstr "setVarying : comprimento de 'vary'  deve corresponder ao comprimento de parâmetros"
+msgstr "setVarying : comprimento de 'vary' deve corresponder ao comprimento de parâmetros"
 
 msgid "singular gradient matrix at initial parameter estimates"
 msgstr "matriz gradiente singular com estimativas de parâmetros iniciais"
@@ -1776,6 +1771,13 @@ msgstr "argumento 'na.action' será ignorado"
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "limites superior e inferior ignorados, a menos que algoritmo = \"port\""
+
+#, fuzzy
+msgid "'%s' is not implemented yet"
+msgstr "tipo '%s' ainda não é implementado"
+
+msgid "hatvalues() for nls(*, algorithm='plinear')"
+msgstr ""
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
 msgstr "não é possível calcular REML log-verossimilhança para objetos \"nls\""
@@ -1802,7 +1804,7 @@ msgid "bounds can only be used with method L-BFGS-B (or Brent)"
 msgstr "limites só podem ser usados com o método L-BFGS-B (ou Brent)"
 
 msgid "unknown names in control:"
-msgstr ""
+msgstr "Nomes desconhecidos no controle:"
 
 msgid "read the documentation for 'trace' more carefully"
 msgstr "leia a documentação de 'trace' com mais atenção"
@@ -1827,7 +1829,7 @@ msgid "'lower' and 'upper' must be finite values"
 msgstr "'lower' e 'upper' devem ser valores finitos"
 
 msgid "pooling of SD is incompatible with paired tests"
-msgstr ""
+msgstr "agrupamento/pooling de SD é incompatível com testes pareados"
 
 msgid "'x' must have 2 columns"
 msgstr "'x' deve ter 2 colunas"
@@ -1924,7 +1926,7 @@ msgid "wrong number of columns in 'x'"
 msgstr "número errado de colunas em 'x'"
 
 msgid "cannot rescale a constant/zero column to unit variance"
-msgstr ""
+msgstr "não é possível redimensionar uma coluna constante/zero para variância unitária"
 
 msgid "PCA applies only to numerical variables"
 msgstr "PCA aplica-se apenas a variáveis numéricas"
@@ -2051,13 +2053,13 @@ msgid "'k' must be positive"
 msgstr "'k' deve ser positivo"
 
 msgid "'k' must be odd!  Changing 'k' to %d"
-msgstr ""
+msgstr "'k' deve ser ímpar!  Alterando 'k' para %d"
 
 msgid "'k' is bigger than 'n'!  Changing 'k' to %d"
 msgstr "'k' é maior que 'n'!  Alterando 'k' para %d"
 
 msgid "bandwidth 'k' must be >= 1 and odd!"
-msgstr ""
+msgstr "largura de banda 'k' deve ser > = 1 e ímpar!"
 
 msgid "argument 'object' has an impossible length"
 msgstr "argumento 'object' tem um comprimento impossível"
@@ -2135,7 +2137,7 @@ msgid "'nknots' must be at least 1"
 msgstr "'nknots' deve ser pelo menos 1"
 
 msgid "cannot use more inner knots than unique 'x' values"
-msgstr ""
+msgstr "não é possível usar mais nós internos do que valores únicos de 'x'"
 
 msgid "must not specify both 'spar' and 'lambda'"
 msgstr "não se deve especificar ambos 'spar' e 'lambda'"
@@ -2170,7 +2172,7 @@ msgid "not a valid \"smooth.spline\" object"
 msgstr "objeto \"smooth.spline\" inválido"
 
 msgid "'span' must be between 0 and 1."
-msgstr "'span' deve estar entre 0  e 1"
+msgstr "'span' deve estar entre 0 e 1"
 
 msgid "'y' must be numeric vector"
 msgstr "'y' deve ser um vetor numérico"
@@ -2182,7 +2184,7 @@ msgid "number of weights must match number of observations."
 msgstr "o número de pesos deve corresponder ao número de observações."
 
 msgid "'x' must be between 0 and 1 for periodic smooth"
-msgstr ""
+msgstr "'x' deve estar entre 0 e 1 para suavização periódica"
 
 msgid "no finite observations"
 msgstr "sem observações finitas"
@@ -2227,7 +2229,7 @@ msgid "'x' must have length >= 1"
 msgstr "'x' deve ter comprimento >= 1"
 
 msgid "'y' must be one longer than 'x'"
-msgstr ""
+msgstr "'y' deve ser um maior que 'x'"
 
 msgid "no 'as.stepfun' method available for 'x'"
 msgstr "nenhum método 'as.stepfun' disponível para 'x'"
@@ -2283,9 +2285,8 @@ msgstr "'y' é faltante para o teste pareado"
 msgid "data are essentially constant"
 msgstr "os dados são essencialmente constantes"
 
-#, fuzzy
 msgid "cannot use 'paired' in formula method"
-msgstr "não é possível usar pontos em fórmula com os dados fornecidos"
+msgstr "não é possível usar 'paired' quando 'fomula' é utilizado ao invés de 'x' e 'y'"
 
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
 msgstr "'main' deve ser TRUE, FALSE, NULL ou character (vetor)."
@@ -2496,15 +2497,14 @@ msgstr[1] "A fórmula superior tem termos %s não incluídos no modelo"
 
 msgid "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "existem %d Termos de erro: apenas 1 é permitido"
+msgstr[1] "existem %d Termos de erro: apenas 1 é permitido"
 
 msgid "unknown name %s in the 'split' list"
 msgid_plural "unknown names %s in the 'split' list"
 msgstr[0] "nome %s desconhecido na lista 'split'"
 msgstr[1] "nomes %s desconhecidos na lista 'split'"
 
-#, fuzzy
 msgid "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\""
 msgstr[0] "argumento extra %s não é da classe \"%s\""
@@ -2552,8 +2552,8 @@ msgstr[1] "matriz 'X' tem %d casos (linhas)"
 
 msgid "'Y' has %d case (row)"
 msgid_plural "'Y' has %d cases (rows)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "'Y' tem %d caso (linha)"
+msgstr[1] "'Y' tem %d casos (linhas)"
 
 msgid "only %d case"
 msgid_plural "only %d cases"
@@ -2587,8 +2587,8 @@ msgstr[1] "fator '%s' tem novos níveis %s"
 
 msgid "%d observation deleted due to missingness"
 msgid_plural "%d observations deleted due to missingness"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d observação suprimida por falta de dados"
+msgstr[1] "%d observações suprimidas por falta de dados"
 
 msgid "_NOT_ converged in %d iteration"
 msgid_plural "_NOT_ converged in %d iterations"
@@ -2607,18 +2607,18 @@ msgstr[1] "Ajuste de parâmetros %s sem variáveis"
 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "O parâmetro %s não ocorre na fórmula do modelo"
+msgstr[1] "Os parâmetros %s não ocorrem na fórmula do modelo"
 
 msgid "%d observation with NA, NaN or Inf deleted"
 msgid_plural "%d observations with NAs, NaNs and/or Infs deleted"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d observação com NAs, NaNs e/ou Infs suprimida"
+msgstr[1] "%d observações com NAs, NaNs e/ou Infs suprimidas"
 
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "'start.innov' é muito curto: precisa de %d ponto"
+msgstr[1] "'start.innov' é muito curto: precisa de %d pontos"
 
 #~ msgid "cannot compute exact confidence intervals with ties"
 #~ msgstr "impossível computar os intervalos de confiança exatos com empate"

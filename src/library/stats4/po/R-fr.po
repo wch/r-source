@@ -19,28 +19,30 @@ msgstr ""
 "X-Generator: Poedit 2.4.2\n"
 
 msgid "named list expected"
-msgstr "liste nomm�e attendue"
+msgstr "liste nommée attendue"
 
 msgid "some named values are not arguments to the supplied log-likelihood"
 msgstr "quelques valeurs nomm�es ne sont pas des arguments correspondant au maximum de vraissemblance fourni"
 
 msgid "Mismatch in length of start values"
-msgstr "Incoh�rence dans la longueur des valeurs de d�part"
+msgstr "Incohérence dans la longueur des valeurs de départ"
 
 msgid "fixed values violate constraints"
-msgstr "des valeurs fix�es sont incompatibles avec les contraintes"
+msgstr ""
+"des valeurs fixées sont incompatibles avec les contraintes"
 
 msgid "start values do not satisfy constraints"
-msgstr "les valeurs de d�part ne sont pas coh�rentes par rapport aux contraintes"
+msgstr "les valeurs de départ ne vérifient pas les contraintes"
 
 msgid "profiling has found a better solution, so original fit had not converged"
 msgstr "le profilage a trouv� une meilleure solution, l'ajustement original n'a donc pas converg�"
 
 msgid "levels truncated to positive values only"
-msgstr "les seuils sont nivel�s � des valeurs positives uniquement"
+msgstr ""
+"les niveaux ont été tronqués aux valeurs positives uniquement"
 
 msgid "extra arguments discarded"
-msgstr "arguments suppl�mentaires �limin�s"
+msgstr "arguments supplémentaires supprimés"
 
 #~ msgid "'start' must be a named list"
 #~ msgstr "'start' doit �tre une liste nomm�e"

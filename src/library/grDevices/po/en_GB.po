@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-04-25 10:47-0700\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: English\n"
@@ -674,9 +674,9 @@ msgid "Attempt to release non-existent mask"
 msgstr "Attempt to release non-existent mask"
 
 #: devQuartz.c:3172
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid font path: \"%s\""
-msgstr "invalid 'fonts' parameter in %s"
+msgstr "Invalid font path: \"%s\""
 
 #: devQuartz.c:3216
 msgid "Failed to load font"

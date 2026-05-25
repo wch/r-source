@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-04-25 10:48-0700\n"
 "PO-Revision-Date: 2023-10-19 19:25+0000\n"
 "Last-Translator: Renata Hirota <re.hirota@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -22,9 +22,9 @@ msgid "argument 'files' must be character"
 msgstr "argumento 'files' deve ser do tipo caractere"
 
 #: Rmd5.c:73
-#, fuzzy, c-format
+#, c-format
 msgid "md5 failed on file '%ls'"
-msgstr "md5 falhou no arquivo '%s'"
+msgstr "md5 falhou no arquivo '%ls'"
 
 #: Rmd5.c:75
 #, c-format
@@ -32,37 +32,37 @@ msgid "md5 failed on file '%s'"
 msgstr "md5 falhou no arquivo '%s'"
 
 #: Rsha256.c:86
-#, fuzzy, c-format
+#, c-format
 msgid "sha256 failed on file '%ls'"
-msgstr "md5 falhou no arquivo '%s'"
+msgstr "sha256 falhou no arquivo '%ls'"
 
 #: Rsha256.c:88
-#, fuzzy, c-format
+#, c-format
 msgid "sha256 failed on file '%s'"
-msgstr "md5 falhou no arquivo '%s'"
+msgstr "sha256 falhou no arquivo '%s'"
 
 #: getfmts.c:60
 #, c-format
 msgid "only %d arguments are allowed"
-msgstr ""
+msgstr "apenas %d argumentos são permitidos"
 
 #: getfmts.c:65
 msgid "'fmt' is not a character vector"
-msgstr ""
+msgstr "'fmt' não é um vetor de caracteres"
 
 #: getfmts.c:68
 msgid "'fmt' must be length 1"
-msgstr ""
+msgstr "comprimento de 'fmt' deve ser 1"
 
 #: getfmts.c:74
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
-msgstr ""
+msgstr "o comprimento de 'fmt' excede o comprimento máximo %d"
 
 #: getfmts.c:95
 #, c-format
 msgid "unrecognised format specification '%s'"
-msgstr ""
+msgstr "especificação de formato não reconhecida '%s'"
 
 #: getfmts.c:135
 msgid "at most one asterisk '*' is supported in each conversion specification"
@@ -71,7 +71,7 @@ msgstr ""
 #: gramLatex.c:2856 gramRd.c:3967
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
-msgstr ""
+msgstr "não é possível alocar buffer para cadeia de caracteres longa na linha %d"
 
 #: gramLatex.c:3167 gramRd.c:4521 gramRd.c:4527
 #, c-format
@@ -81,51 +81,51 @@ msgstr "valor '%s' inválido"
 #: gramRd.c:2576 gramRd.c:2579
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
-msgstr ""
+msgstr "marcação ruim (espaço extra?) em %s:%d:%d"
 
 #: gramRd.c:3112
 #, c-format
 msgid "Macro '%s' previously defined."
-msgstr ""
+msgstr "Macro '%s' definida previamente."
 
 #: gramRd.c:3122
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
-msgstr ""
+msgstr "Máximo de 4 argumentos permitidos para macros definidas por usuário."
 
 #: gramRd.c:3164
 #, c-format
 msgid "No macro definition for '%s'."
-msgstr ""
+msgstr "Não existe macro definida para '%s'."
 
 #: gramRd.c:3227
 #, c-format
 msgid "Not enough arguments passed to user macro '%s'"
-msgstr ""
+msgstr "Não for passados argumentos suficientes para a macro de usuário '%s'"
 
 #: gramRd.c:3367 gramRd.c:3371
 #, c-format
 msgid "newline within quoted string at %s:%d"
-msgstr ""
+msgstr "nova linha dentro da string entre aspas em %s:%d"
 
 #: gramRd.c:3390
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
-msgstr ""
+msgstr "não foi possível alocar buffer para macro longa na linha %d"
 
 #: gramRd.c:3420
 msgid "macros nested too deeply: infinite recursion?"
-msgstr ""
+msgstr "macros aninhadas muito profundamente: recursão infinita?"
 
 #: gramRd.c:3829
 #, c-format
 msgid "Unable to find macro %s"
-msgstr ""
+msgstr "Não é possível encontrar a macro %s"
 
 #: gramRd.c:4028
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
-msgstr ""
+msgstr "Fim inesperado de input (em %c string entre aspas aberta em %s:%d:%d)"
 
 #: gramRd.c:4534
 msgid "cannot open the connection"
@@ -137,29 +137,29 @@ msgstr "não é possível ler a partir desta conexão"
 
 #: gramRd.c:4549
 msgid "invalid Rd file"
-msgstr ""
+msgstr "arquivo Rd inválido"
 
 #: gramRd.c:4569
 msgid "'deparseRd' only supports deparsing character elements"
-msgstr ""
+msgstr "'deparseRd' suporta apenas a análise sintática de elementos de caracteres"
 
 #: gramRd.c:4572
 msgid "bad state"
-msgstr ""
+msgstr "mau estado"
 
 #: gramRd.c:4585
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
-msgstr ""
+msgstr "modo de texto incorreto %d em 'deparseRd'"
 
 #: http.c:31
 msgid "invalid bind address specification"
-msgstr ""
+msgstr "especificação de endereço de vínculo inválida"
 
 #: http.c:36
 #, c-format
 msgid "Invalid port number %d: should be in 0:65535, typically above 1024"
-msgstr ""
+msgstr "o número da porta %d é inválido: deve estar em 0:65535, normalmente acima de 1024"
 
 #: http.c:60
 msgid "allocation error in remove_dot_segments"
@@ -171,7 +171,7 @@ msgstr ""
 
 #: install.c:95
 msgid "path too long"
-msgstr ""
+msgstr "caminho muito longo"
 
 #: install.c:120 install.c:139 install.c:141
 #, c-format
@@ -184,11 +184,11 @@ msgstr ""
 
 #: pdscan.c:74
 msgid "too many items"
-msgstr ""
+msgstr "itens em excesso"
 
 #: signals.c:42
 msgid "pskill() is not supported on this platform"
-msgstr ""
+msgstr "pskill() não é suportado nesta plataforam"
 
 #: signals.c:140
 msgid "psnice() is not supported on this platform"
@@ -200,4 +200,4 @@ msgstr "tipo de argumento inválido"
 
 #: text.c:227 text.c:249
 msgid "out of memory"
-msgstr "falta de memória"
+msgstr "sem memória"

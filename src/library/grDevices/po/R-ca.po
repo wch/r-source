@@ -262,8 +262,7 @@ msgstr "la matriu rgb ha de ser numèrica"
 
 #, fuzzy
 msgid "Font file longer than 500 will be truncated"
-msgstr "El fitxer de tipus de lletra més llarg de 500 serà truncat"
-
+msgstr ""
 #, fuzzy
 msgid "Font family longer than 200 will be truncated"
 msgstr "Es truncarà la família del tipus de lletra més llarga de 200"
@@ -426,7 +425,6 @@ msgstr "tipus de lletra desconegut"
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr "la codificació del tipus de lletra no coincideix amb «%s»/«%s»"
 
-#, fuzzy
 msgid "'%s' must be a non-empty character string"
 msgstr "«%s» ha de ser una cadena de caràcters no buida"
 

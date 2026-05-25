@@ -23,13 +23,13 @@ msgid "zero-length inputs cannot be mixed with those of non-zero length"
 msgstr "शून्य-लंबाई वाले इनपुट को गैर-शून्य लंबाई के इनपुट के साथ मिश्रित नहीं किया जा सकता है"
 
 msgid "dim(X) must have a positive length"
-msgstr "dim(X) की लंबाई की संख्या धनात्मक होनी चाहिए"
+msgstr "dim(X) की लंबाई की संख्या घनात्मक होनी चाहिए"
 
 msgid "'X' must have named dimnames"
 msgstr "'X' के dimnames का नाम दिया होना चाहिये"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
-msgstr ""
+msgstr "'MARGIN' के सभी तत्व आयामों के नाम नहीं हैं"
 
 msgid "no cluster 'cl' supplied and none is registered"
 msgstr "नाही कोई समूह 'cl' उपलब्ध करवया गाय है नाही कोई दर्ज किया गाय है"

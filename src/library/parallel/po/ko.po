@@ -64,7 +64,8 @@ msgstr "보내야할 컨텐츠는 반드시 RAW이어야 하며, 필요하다면
 
 #: fork.c:774 fork.c:785 fork.c:1204
 msgid "write error, closing pipe to the master"
-msgstr "쓰기 에러입니다.  마스터에 연결된 파이프를 닫습니다"
+msgstr ""
+"쓰기 에러입니다. 마스터에 연결된 파이프를 닫습니다"
 
 #: fork.c:795
 msgid "only the master process can send data to a child process"

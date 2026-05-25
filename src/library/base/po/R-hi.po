@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2023-09-01 10:22+0000\n"
 "Last-Translator: Ayush Bipin Patel <ayush.ap58@gmail.com>\n"
 "Language-Team: none\n"
@@ -17,91 +17,95 @@ msgid "'%s' is defunct."
 msgstr "'%s' निष्क्रिय है|"
 
 msgid "Use '%s' instead."
-msgstr ""
+msgstr "इसके बजाय '%s' का उपयोग करें |"
 
 msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
-msgstr ""
+msgstr "help(\"Defunct\") और help(\"%s-defunct\") देखें।"
 
 msgid "See help(\"Defunct\")"
-msgstr ""
+msgstr "help(\"Defunct\") देखें"
 
 msgid "'%s' is deprecated."
-msgstr ""
+msgstr "'%s ' अब अमान्य है।"
 
 msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
-msgstr ""
+msgstr "help(\"Deprecated\") और help(\"%s-deprecated\") देखें।"
 
 msgid "See help(\"Deprecated\")"
-msgstr ""
+msgstr "help(\"Deprecated\") देखें"
 
 msgid "argument to 'La.svd' must be numeric or complex"
-msgstr ""
+msgstr "'La.svd' का तर्क संख्यात्मक या सम्मिश्र संख्यात्मक होना चाहिए"
 
 msgid "infinite or missing values in 'x'"
-msgstr ""
+msgstr "'x' में अनंत या अनुपलब्ध मूल्य"
 
 msgid "a dimension is zero"
-msgstr ""
+msgstr "एक आयाम शून्य है"
 
 msgid "\"all\" and \"exact\" are mutually exclusive"
-msgstr ""
+msgstr "\"all\" और \"exact\" परस्पर अनन्य हैं"
 
 msgid "\"hexNumeric\" and \"digits17\" are mutually exclusive"
-msgstr ""
+msgstr "\"hexNumeric\" और \"digits17\" परस्पर अनन्य हैं"
 
 msgid "second argument must be a list"
-msgstr ""
+msgstr "दूसरा तर्क एक list होना चाहिए"
 
 msgid "'iconvlist' is not available on this system"
-msgstr ""
+msgstr "इस तंत्र पर 'iconvlist' उपलब्ध नहीं है"
 
+#, fuzzy
 msgid "'kind' must be a character string (RNG to be used)."
-msgstr ""
+msgstr "'kind' लंबाई 1 का कैरेक्टर स्ट्रिंग होना चाहिए (RNG का उपयोग करें)।"
 
 msgid "'%s' is not a valid abbreviation of an RNG"
-msgstr ""
+msgstr "'%s' RNG का एक वैध संक्षिप्त नाम नहीं है"
 
+#, fuzzy
 msgid "'%s' must be a character string"
-msgstr ""
+msgstr "'sample.kind' लंबाई 1 का कैरेक्टर स्ट्रिंग होना चाहिए"
 
 msgid "'%s' is not a valid choice"
-msgstr ""
+msgstr "'%s' एक वैध विकल्प नहीं है"
 
 msgid "malformed version string"
-msgstr ""
+msgstr "विकृत संस्करण स्ट्रिंग"
 
+#, fuzzy
 msgid "target is %s, current is %s"
-msgstr ""
+msgstr "लक्ष्य %s है, वर्तमान %s है"
 
+#, fuzzy
 msgid "'tolerance' should be numeric"
-msgstr ""
+msgstr "'tolerance' संख्यात्मक होना चाहिए"
 
 msgid "'scale' should be numeric or NULL"
-msgstr ""
+msgstr "'scale' संख्यात्मक या NULL होना चाहिए"
 
 msgid "'%s' must be logical"
-msgstr ""
+msgstr "'%s' तार्किक होना चाहिए"
 
 msgid "dim(X) must have a positive length"
-msgstr "dim(X) की लंबाई की संख्या धनात्मक होनी चाहिए"
+msgstr "dim(X) की लंबाई की संख्या घनात्मक होनी चाहिए"
 
 msgid "'X' must have named dimnames"
 msgstr "'X' के dimnames का नाम दिया होना चाहिये"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
-msgstr ""
+msgstr "'MARGIN' के सभी तत्व आयामों के नाम नहीं हैं"
 
 msgid "'MARGIN' does not match dim(X)"
 msgstr "'MARGIN' dim(X) से मेल नहीं खाता"
 
 msgid "'dim' cannot be of length 0"
-msgstr ""
+msgstr "'dims' की लंबाई 0 नहीं हो सकती"
 
 msgid "'dim' specifies too large an array"
-msgstr ""
+msgstr "'dim' बहुत बड़ा सरणी निर्दिष्ट करता है"
 
 msgid "'x' must have named dimnames"
-msgstr ""
+msgstr "'x' के dimnames का नाम अनिवार्य है"
 
 msgid "incorrect value for 'MARGIN'"
 msgstr ""
@@ -214,8 +218,9 @@ msgstr ""
 msgid "'from' must be raw or character"
 msgstr ""
 
+#, fuzzy
 msgid "'x' must be numeric"
-msgstr ""
+msgstr "'x' संख्यात्मक होना चाहिए"
 
 msgid "invalid number of intervals"
 msgstr ""
@@ -244,6 +249,9 @@ msgstr ""
 msgid "cannot coerce class %s to a data.frame"
 msgstr ""
 
+msgid "row names contain missing values"
+msgstr ""
+
 msgid "'row.names' is not a character or integer vector of length %d"
 msgstr ""
 
@@ -251,9 +259,6 @@ msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr ""
 
 msgid "some row.names duplicated: %s --> row.names NOT used"
-msgstr ""
-
-msgid "row names contain missing values"
 msgstr ""
 
 msgid "duplicate row.names: %s"

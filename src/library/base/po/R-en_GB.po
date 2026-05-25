@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2024-01-30 03:05+0000\n"
 "Last-Translator: Heather Turner <ht@heatherturner.net>\n"
 "Language-Team: none\n"
@@ -249,6 +249,9 @@ msgstr "invalid 'dimnames' given for data frame"
 msgid "cannot coerce class %s to a data.frame"
 msgstr "cannot coerce class %s to a data.frame"
 
+msgid "row names contain missing values"
+msgstr "row names contain missing values"
+
 msgid "'row.names' is not a character or integer vector of length %d"
 msgstr "'row.names' is not a character or integer vector of length %d"
 
@@ -257,9 +260,6 @@ msgstr "mismatch of row names in arguments of 'data.frame', item %d"
 
 msgid "some row.names duplicated: %s --> row.names NOT used"
 msgstr "some row.names duplicated: %s --> row.names NOT used"
-
-msgid "row names contain missing values"
-msgstr "row names contain missing values"
 
 msgid "duplicate row.names: %s"
 msgstr "duplicate row.names: %s"
@@ -929,9 +929,8 @@ msgstr "'file' must be specified"
 msgid "nothing specified to be save()d"
 msgstr "nothing specified to be save()d"
 
-#, fuzzy
 msgid "'%s' must be a non-empty character string"
-msgstr "'%s' must be a non-empty string"
+msgstr "'%s' must be a non-empty character string"
 
 msgid "'compress' must be logical or character"
 msgstr "'compress' must be logical or character"
@@ -1545,7 +1544,7 @@ msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 
 msgid "attempt to set an attribute on NULL"
-msgstr ""
+msgstr "attempt to set an attribute on NULL"
 
 msgid "incorrect value for 'x'"
 msgstr "incorrect value for 'x'"

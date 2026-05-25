@@ -19,17 +19,16 @@ msgstr ""
 "X-Generator: Weblate 4.16.4\n"
 
 msgid "namespace found within local environments"
-msgstr ""
+msgstr "命名空间被发现在本地环境中"
 
 msgid "not a proper evaluation environment"
 msgstr "不是一个正确的评估环境"
 
-#, fuzzy
 msgid "non-namespace found within namespace environments"
-msgstr "'ns'必须是一个命名空间或命名空间的进口环境"
+msgstr "非命名空间被发现在命名空间环境中"
 
 msgid "namespace found within global environments"
-msgstr ""
+msgstr "命名空间被发现在全局环境中"
 
 msgid "bad assignment: %s"
 msgstr "坏的赋值：%s"
@@ -86,7 +85,7 @@ msgid "more than one default provided in switch() call"
 msgstr "调用switch()时只能有一个默认值"
 
 msgid "'switch' with no alternatives"
-msgstr ""
+msgstr "'switch' 没有选择项"
 
 msgid "Error: compilation failed -"
 msgstr ""
@@ -101,7 +100,7 @@ msgid "saving to file \"%s\" ..."
 msgstr "保存到文件\"%s\" ..."
 
 msgid "done"
-msgstr "做完了"
+msgstr "完成"
 
 msgid "'env' must be a top level environment"
 msgstr "'env'必需是顶层环境"

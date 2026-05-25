@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-04-25 10:48-0700\n"
 "PO-Revision-Date: 2024-03-18 06:08+0000\n"
 "Last-Translator: Robert Castelo <robert.castelo@upf.edu>\n"
 "Language-Team: none\n"
@@ -131,7 +131,6 @@ msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "Final d'entrada inesperat (a la cadena entre cometes %c oberta a %s:%d:%d)"
 
 #: gramRd.c:4534
-#, fuzzy
 msgid "cannot open the connection"
 msgstr "no s'ha pogut obrir la connexió"
 
@@ -176,7 +175,6 @@ msgid "non-character argument"
 msgstr "argument de no caràcter"
 
 #: install.c:95
-#, fuzzy
 msgid "path too long"
 msgstr "camí massa llarg"
 

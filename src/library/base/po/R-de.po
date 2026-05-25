@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2026-05-01 14:17+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -80,7 +80,7 @@ msgid "target is %s, current is %s"
 msgstr "Ziel ist %s, aktuell ist %s"
 
 msgid "'tolerance' should be numeric"
-msgstr "'tolerance' sollte  numerisch sein"
+msgstr "'tolerance' sollte numerisch sein"
 
 msgid "'scale' should be numeric or NULL"
 msgstr "'scale' sollte numerisch oder NULL sein"
@@ -253,6 +253,9 @@ msgstr "ungültige 'dimnames' für data frame gegeben"
 msgid "cannot coerce class %s to a data.frame"
 msgstr "kann Klasse %s nicht in data.frame umwandeln"
 
+msgid "row names contain missing values"
+msgstr "Zeilennamen enthalten fehlende Werte"
+
 msgid "'row.names' is not a character or integer vector of length %d"
 msgstr "'row.names' ist kein Zeichenketten- oder Ganzahlvektor der Länge %d"
 
@@ -261,9 +264,6 @@ msgstr "Zeilennamen passen nicht zu den Argumenten für 'data.frame', Element %d
 
 msgid "some row.names duplicated: %s --> row.names NOT used"
 msgstr "einige row.names doppelt: %s -> row.names NICHT benutzt"
-
-msgid "row names contain missing values"
-msgstr "Zeilennamen enthalten fehlende Werte"
 
 msgid "duplicate row.names: %s"
 msgstr "doppelte row.names: %s"
@@ -1708,7 +1708,7 @@ msgid "'receive.console.signals' must be TRUE or FALSE"
 msgstr "'receive.console.signals' muss TRUE oder FALSE sein"
 
 msgid "'input' must be a character vector or 'NULL'"
-msgstr "'input'  muss ein Zeichenkettenvektor oder 'NULL' sein"
+msgstr "'input' muss ein Zeichenkettenvektor oder 'NULL' sein"
 
 msgid "arguments 'minimized' and 'invisible' are for Windows only"
 msgstr "Argumente 'minimized' und 'invisible' sind nur für Windows"
@@ -1744,7 +1744,7 @@ msgid "'invisible' must be TRUE or FALSE"
 msgstr "'invisible' muss TRUE oder FALSE sein"
 
 msgid "running command '%s' had status %d"
-msgstr "Auführung von Kommando '%s' hatte Status %d"
+msgstr "Ausführung von Kommando '%s' ergab Status %d"
 
 msgid "'%s' could not be run"
 msgstr "'%s' konnte nicht ausgeführt werden"

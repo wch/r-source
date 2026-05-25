@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-05-25 12:47-0700\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -22,16 +22,16 @@ msgstr "pasmo/rozpiętość ruchomych median jest większe niż 'n'"
 #: Srunmed.c:263
 #, c-format
 msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%lld]"
-msgstr ""
+msgstr "runmed(x, .., na.action=\"na.fail\"): ma wartości NA zaczynając od x[%lld]"
 
 #: Srunmed.c:266
 msgid "runmed(): invalid 'na.action'"
-msgstr ""
+msgstr "runmed(): niepoprawna wartość 'na.action'"
 
 #: Srunmed.c:316
 #, c-format
 msgid "na_action logic error (%d), please report!"
-msgstr ""
+msgstr "błąd logiczny na_action (%d), prosimy o zgłoszenie!"
 
 #: ansari.c:121
 msgid "probabilities outside [0,1] in qansari()"
@@ -47,11 +47,11 @@ msgstr "approx(): niepoprawna metoda interpolacji"
 
 #: approx.c:117
 msgid "approx(): attempted to interpolate NA values"
-msgstr "approx(): próbowano interpolować wartości NA"
+msgstr "approx(): próba interpolacji wartości NA"
 
 #: approx.c:121
 msgid "approx(x,y, .., na.rm=FALSE): NA values in x are not allowed"
-msgstr ""
+msgstr "approx(x,y, .., na.rm=FALSE): wartości NA w x nie są dozwolone"
 
 #: arima.c:81 arima.c:192 arima.c:377 arima.c:608 optim.c:33
 msgid "invalid argument type"
@@ -71,9 +71,8 @@ msgid "non-finite x[%d] in bandwidth calculation"
 msgstr "nieskończone x[%d] w obliczeniach pasma"
 
 #: bandwidths.c:125
-#, fuzzy
 msgid "data are constant in bandwidth calculation"
-msgstr "nieskończone x[%d] w obliczeniach pasma"
+msgstr "dane są stałe w obliczeniach przepustowości"
 
 #: complete_cases.c:29
 #, c-format
@@ -118,7 +117,7 @@ msgstr "odchylenie standardowe wynosi zero"
 
 #: deriv.c:152
 msgid "invalid form in unary minus check"
-msgstr "niepoprawna forma sprawdzania jednoargumentowej operacji minus"
+msgstr "niepoprawna forma podczas sprawdzania jednoargumentowej operacji minus"
 
 #: deriv.c:675
 #, c-format
@@ -132,7 +131,7 @@ msgstr "wyrażenie nie może być typu '%s'"
 
 #: deriv.c:785
 msgid "variable must be a character string"
-msgstr "zmienna musi być łańcuchem tekstowym"
+msgstr "zmienna musi być ciągiem znaków"
 
 #: deriv.c:787
 msgid "only the first element is used as variable name"
@@ -144,9 +143,8 @@ msgid "invalid expression in '%s'"
 msgstr "niepoprawne wyrażenie w '%s'"
 
 #: deriv.c:865
-#, fuzzy
 msgid "too many variables"
-msgstr "brak czynników"
+msgstr "zbyt wiele zmiennych"
 
 #: deriv.c:1080 model.c:94
 msgid "invalid variable names"
@@ -156,15 +154,15 @@ msgstr "niepoprawne nazwy zmiennych"
 msgid "invalid tag"
 msgstr "niepoprawny znacznik"
 
-#: distance.c:152
+#: distance.c:153
 msgid "treating non-finite values as NA"
 msgstr "traktowanie nieskończonych wartości jako NA"
 
-#: distance.c:225
+#: distance.c:226
 msgid "distance(): invalid p"
 msgstr "distance(): niepoprawne 'p'"
 
-#: distance.c:229
+#: distance.c:230
 msgid "distance(): invalid distance"
 msgstr "distance(): niepoprawna odległość"
 
@@ -271,21 +269,20 @@ msgstr "wymagany jest (wielowymiarowy) szereg o wartościach będących wektoram
 #: fourier.c:206
 #, c-format
 msgid "nextn() found no solution < %d = INT_MAX (the maximal integer); pass '0+ n' instead of 'n'"
-msgstr ""
+msgstr "nextn() nie znalazł rozwiązania < %d = INT_MAX (maksymalna liczba całkowita); przekaż '0+ n' zamiast 'n'"
 
 #: fourier.c:218
 #, c-format
 msgid "nextn<64>() found no solution < %llu = UINT64_MAX (the maximal integer)"
-msgstr ""
+msgstr "nextn<64>() nie znalazł rozwiązania < %llu = UINT64_MAX (maksymalna liczba całkowita)"
 
 #: fourier.c:234
 msgid "no factors"
 msgstr "brak czynników"
 
 #: fourier.c:235
-#, fuzzy
 msgid "too many factors"
-msgstr "brak czynników"
+msgstr "zbyt wiele czynników"
 
 #: fourier.c:238
 msgid "invalid factors"
@@ -293,12 +290,12 @@ msgstr "niepoprawne czynniki"
 
 #: fourier.c:242
 msgid "'n' must have typeof(.) \"integer\" or \"double\""
-msgstr ""
+msgstr "'n' musi mieć typeof(.) równy \"integer\" lub \"double\""
 
 #: fourier.c:283
 #, c-format
 msgid "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"double\")"
-msgstr ""
+msgstr "nextn() = %<PRIu64> > 2^53 może nie być dokładnie reprezentowalne w R (jako \"double\")"
 
 #: integrate.c:79 integrate.c:81 integrate.c:123
 #, c-format
@@ -308,7 +305,7 @@ msgstr "argument '%s' musi mieć długość 1"
 #: isoreg.c:55
 #, c-format
 msgid "non-finite sum(y) == %g is not allowed"
-msgstr ""
+msgstr "nieskończona wartość sum(y) == %g nie jest dozwolona"
 
 #: ksmooth.c:63
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
@@ -319,7 +316,7 @@ msgid "'x' is not a matrix"
 msgstr "argument 'x' nie jest macierzą"
 
 #: lm.c:56
-#, fuzzy, c-format
+#, c-format
 msgid "dimensions of 'x' (%d,%d) and 'y' (%lld) do not match"
 msgstr "wymiary 'x' (%d,%d) oraz 'y' (%lld) nie zgadzają się"
 
@@ -335,11 +332,11 @@ msgstr "argument 'span' jest zbyt mały"
 #: loessc.c:257
 #, c-format
 msgid "workspace required (%.0f) is too large%s."
-msgstr ""
+msgstr "wymagany obszar roboczy (%.0f) jest za duży%s."
 
 #: loessc.c:258
 msgid " probably because of setting 'se = TRUE'"
-msgstr ""
+msgstr " prawdopodobnie z powodu ustawienia 'se = TRUE'"
 
 #: loglin.c:370
 msgid "this should not happen"
@@ -367,7 +364,7 @@ msgstr "argument 'delta' musi być skończony oraz > 0"
 
 #: mAR.c:83
 msgid "assert failed in src/library/ts/src/carray.c"
-msgstr ""
+msgstr "założenie nie powiodło się w src/library/ts/src/carray.c"
 
 #: mAR.c:470
 msgid "Singular matrix in qr_solve"
@@ -375,7 +372,7 @@ msgstr "Osobliwa macierz w 'qr_solve'"
 
 #: mAR.c:513
 msgid "Singular matrix in ldet"
-msgstr "Osobliwa macierz w 'qr_solve'"
+msgstr "Osobliwa macierz w 'ldet'"
 
 #: mAR.c:700
 msgid "Invalid vmethod"
@@ -523,7 +520,7 @@ msgstr "argument 'data' posiada niepoprawny typ"
 #: model.c:1873
 #, c-format
 msgid "'varlist' has changed (from nvar=%d) to new %d after EncodeVars() -- should no longer happen!"
-msgstr ""
+msgstr "'varlist' został zmieniony (z nvar=%d) na nowy %d po EncodeVars() -- nie powinno się już zdarzyć!"
 
 #: model.c:2159
 msgid "'.' in formula and no 'data' argument"
@@ -543,7 +540,7 @@ msgstr "'length(m)' musi wynosić co najmniej dwa"
 
 #: monoSpl.c:74
 msgid "Argument Sx must be numeric vector one shorter than m[]"
-msgstr "Argument 'Sx' musi być wektorem liczbowym o jeden którszym niż 'm[]'"
+msgstr "Argument 'Sx' musi być wektorem liczbowym o jeden krótszym niż 'm[]'"
 
 #: nls.c:96
 msgid "'control' must be a list"
@@ -566,7 +563,7 @@ msgstr "osobliwy gradient"
 #: nls.c:256
 #, c-format
 msgid "step factor %g reduced below 'minFactor' of %g"
-msgstr "czynnik kroku %g zmiejszony poniżej  'minFactor' %g"
+msgstr "czynnik kroku %g zmniejszony poniżej 'minFactor' %g"
 
 #: nls.c:264
 #, c-format
@@ -583,7 +580,7 @@ msgstr "argument 'theta' powinien być typu tekstowego"
 
 #: nls.c:287 port.c:383
 msgid "use of NULL environment is defunct"
-msgstr "użycie wartości NULL dla środowiska zostało zlikwidowane"
+msgstr "użycie środowiska NULL jest przestarzałe"
 
 #: nls.c:291
 msgid "'rho' should be an environment"
@@ -595,7 +592,7 @@ msgstr "'dir' nie jest wektorem liczbowym o poprawnej długości"
 
 #: nls.c:300
 msgid "'central' is NA, but must be TRUE or FALSE"
-msgstr ""
+msgstr "argument 'central' ma wartość NA, a musi mieć wartość TRUE lub FALSE"
 
 #: nls.c:316
 msgid "Missing value or an infinity produced when evaluating the model"
@@ -628,7 +625,7 @@ msgstr "gradient w 'optim' obliczony do długości %d a nie %d"
 #: optim.c:146 optim.c:185
 #, c-format
 msgid "non-finite finite-difference value [%d]"
-msgstr ""
+msgstr "nieskończona wartość skończonej różnicy [%d]"
 
 #: optim.c:217 optim.c:423
 msgid "'fn' is not a function"
@@ -667,9 +664,9 @@ msgid "-Inf replaced by maximally negative value"
 msgstr "-Inf zastąpiona maksymalną ujemną wartością"
 
 #: optimize.c:226 optimize.c:316 optimize.c:538
-#, fuzzy, c-format
+#, c-format
 msgid "%s replaced by maximum positive value"
-msgstr "wartość NA zastąpiona przez maksymalną dodatnią wartość"
+msgstr "%s zastąpiono maksymalną wartością dodatnią"
 
 #: optimize.c:236
 msgid "invalid function value in 'optimize'"
@@ -712,7 +709,7 @@ msgstr "niepoprawna wartość funkcji w optymalizatorze 'nlm'"
 
 #: optimize.c:570 optimize.c:585
 msgid "function value caching for optimization is seriously confused"
-msgstr "buforowanie wartości funkcji na potrzeby optymalizacji poważnie pomylone"
+msgstr "buforowanie wartości funkcji w celu optymalizacji jest poważnie mylące"
 
 #: optimize.c:600
 msgid "numeric parameter expected"
@@ -752,7 +749,7 @@ msgstr "niepoprawna granica iteracji w 'nlm'"
 
 #: optimize.c:649
 msgid "minimization function has no good digits in nlm"
-msgstr "funkcja minimalizacyjna nie ma dobrych cyfr w 'nlm'"
+msgstr "funkcja minimalizacji nie ma dobrych cyfr w 'nlm'"
 
 #: optimize.c:651
 msgid "no analytic gradient to check in nlm!"
@@ -789,7 +786,7 @@ msgstr "Bieżąca iteracja prawdopodobnie jest rozwiązaniem.\n"
 
 #: optimize.c:674
 msgid "Successive iterates within tolerance.\n"
-msgstr "Kolejna iteracja w granicach tolerancji.\n"
+msgstr "Kolejne iteracje są w granicach tolerancji.\n"
 
 #: optimize.c:678
 msgid "Last global step failed to locate a point lower than x.\n"
@@ -871,30 +868,28 @@ msgstr "funkcja gradientu musi zwrócić wektor liczbowy o długości %d"
 #: port.c:330
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
-msgstr "Funkcja hesjana musi zwrócić kwadratową macierz liczbową rzędu %d"
+msgstr "Funkcja hesjanu musi zwrócić kwadratową macierz liczbową rzędu %d"
 
 #: port.c:386
 msgid "'rho' must be an environment"
 msgstr "'rho' musi być środowiskiem"
 
 #: port.c:388 port.c:554
-#, fuzzy
 msgid "'d' must be a nonempty numeric (double) vector"
-msgstr "'d' musi być niepustym wektorem liczbowym"
+msgstr "'d' musi być niepustym wektorem liczbowym (rzeczywistym)"
 
 #: port.c:390
 msgid "When Hessian defined must also have gradient defined"
-msgstr "Kiedy jest zdefiniowany Hesjan musi być również zdefiniowany gradient"
+msgstr "Kiedy Hesjan jest zdefiniowany gradient musi również być zdefiniowany"
 
 #: port.c:393
-#, fuzzy, c-format
+#, c-format
 msgid "environment 'rho' must contain a numeric (double) vector '.par' of length %d"
-msgstr "środowisko 'rho' musi zawierać wektor liczbowy '.par' o długości %d"
+msgstr "środowisko 'rho' musi zawierać (rzeczywisty) wektor liczbowy '.par' o długości %d"
 
 #: port.c:407
-#, fuzzy
 msgid "'lower' and 'upper' must be numeric (double) vectors"
-msgstr "'lower' oraz 'upper' muszą być wektorami liczbowymi"
+msgstr "'lower' oraz 'upper' muszą być (rzeczywistymi) wektorami liczbowymi"
 
 #: port.c:466
 msgid "'getElement' applies only to named lists"
@@ -929,11 +924,11 @@ msgstr "'lowerb' oraz 'upperb' muszą być wektorami liczbowymi"
 
 #: prho.c:159
 msgid "invalid sample size 'n' in C routine prho(n,s,*)"
-msgstr ""
+msgstr "nieprawidłowy rozmiar 'n' próby w procedurze C 'prho(n,s,*)'"
 
 #: rWishart.c:53
 msgid "inconsistent degrees of freedom and dimension"
-msgstr "niespójna liczba stopni swodoby oraz wymiaru"
+msgstr "niespójna liczba stopni swobody oraz wymiaru"
 
 #: rWishart.c:86
 msgid "'scal' must be a square, real matrix"
@@ -980,7 +975,7 @@ msgstr "rcont2 [%d,%d]: wyrażenie spadło do 0; niepowodzenie algorytmu"
 #: smooth.c:101
 #, c-format
 msgid "invalid end-rule for running median of 3: %d"
-msgstr "niepoprawna końcowa reguła dla ruchomiej mediany 3: %d"
+msgstr "niepoprawna końcowa reguła dla ruchomej mediany 3: %d"
 
 #: starma.c:364
 #, c-format

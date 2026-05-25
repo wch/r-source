@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-05-25 12:47-0700\n"
 "PO-Revision-Date: 2023-10-19 19:25+0000\n"
 "Last-Translator: Renata Hirota <re.hirota@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -27,16 +27,16 @@ msgstr "largura de banda/vão das medianas móveis é maior que n"
 #: Srunmed.c:263
 #, c-format
 msgid "runmed(x, .., na.action=\"na.fail\"): have NAs starting at x[%lld]"
-msgstr ""
+msgstr "runmed(x, .., na.action=\"na.fail\"): tem NAs começando em x[%lld]"
 
 #: Srunmed.c:266
 msgid "runmed(): invalid 'na.action'"
-msgstr ""
+msgstr "runmed(): 'na.action' inválido"
 
 #: Srunmed.c:316
 #, c-format
 msgid "na_action logic error (%d), please report!"
-msgstr ""
+msgstr "na_action erro de lógica (%d), favor reportar!"
 
 #: ansari.c:121
 msgid "probabilities outside [0,1] in qansari()"
@@ -56,7 +56,7 @@ msgstr "approx(): tentativa de interpolar valores NA"
 
 #: approx.c:121
 msgid "approx(x,y, .., na.rm=FALSE): NA values in x are not allowed"
-msgstr ""
+msgstr "approx(x,y, .., na.rm=FALSE): valores NA em x não são permitidos"
 
 #: arima.c:81 arima.c:192 arima.c:377 arima.c:608 optim.c:33
 msgid "invalid argument type"
@@ -73,11 +73,11 @@ msgstr "intervalo máximo suportado é 350"
 #: bandwidths.c:119
 #, c-format
 msgid "non-finite x[%d] in bandwidth calculation"
-msgstr ""
+msgstr "x[%d] não finito no cálculo da largura de banda"
 
 #: bandwidths.c:125
 msgid "data are constant in bandwidth calculation"
-msgstr ""
+msgstr "dados  são constantes no cálculo da largura de banda"
 
 #: complete_cases.c:29
 #, c-format
@@ -132,7 +132,7 @@ msgstr "Função '%s' não está na tabela de derivadas"
 #: deriv.c:782
 #, c-format
 msgid "expression must not be type '%s'"
-msgstr ""
+msgstr "a expressão não deve ser do tipo '%s'"
 
 #: deriv.c:785
 msgid "variable must be a character string"
@@ -148,9 +148,8 @@ msgid "invalid expression in '%s'"
 msgstr "expressão inválida em '%s'"
 
 #: deriv.c:865
-#, fuzzy
 msgid "too many variables"
-msgstr "não há fatores"
+msgstr "variáveis em excesso"
 
 #: deriv.c:1080 model.c:94
 msgid "invalid variable names"
@@ -160,15 +159,15 @@ msgstr "nomes inválidos de variável"
 msgid "invalid tag"
 msgstr "etiqueta inválida"
 
-#: distance.c:152
+#: distance.c:153
 msgid "treating non-finite values as NA"
 msgstr "considerando valores não-finitos como NA"
 
-#: distance.c:225
+#: distance.c:226
 msgid "distance(): invalid p"
 msgstr "distance(): p inválido"
 
-#: distance.c:229
+#: distance.c:230
 msgid "distance(): invalid distance"
 msgstr "distance(): distância inválida"
 
@@ -266,16 +265,15 @@ msgstr ""
 #: fourier.c:218
 #, c-format
 msgid "nextn<64>() found no solution < %llu = UINT64_MAX (the maximal integer)"
-msgstr ""
+msgstr "nextn<64>() não encontrou solução < %llu = UINT64_MAX (o INT máximo)"
 
 #: fourier.c:234
 msgid "no factors"
 msgstr "não há fatores"
 
 #: fourier.c:235
-#, fuzzy
 msgid "too many factors"
-msgstr "não há fatores"
+msgstr "excesso de fatores"
 
 #: fourier.c:238
 msgid "invalid factors"
@@ -283,7 +281,7 @@ msgstr "fatores inválidos"
 
 #: fourier.c:242
 msgid "'n' must have typeof(.) \"integer\" or \"double\""
-msgstr ""
+msgstr "'n' deve ter typeof(.) \"integer\" ou \"double\""
 
 #: fourier.c:283
 #, c-format
@@ -291,33 +289,32 @@ msgid "nextn() = %<PRIu64> > 2^53 may not be exactly representable in R (as \"do
 msgstr ""
 
 #: integrate.c:79 integrate.c:81 integrate.c:123
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be of length one"
-msgstr "'m' deve ser uma lista"
+msgstr "'%s' deve ter comprimento um"
 
 #: isoreg.c:55
-#, c-format
+#, fuzzy, c-format
 msgid "non-finite sum(y) == %g is not allowed"
-msgstr ""
+msgstr "valor não finito de sum(y) == %g não é permitido"
 
 #: ksmooth.c:63
 msgid "only 2500 rows are allowed for sm.method=\"spline\""
 msgstr "são permitidas apenas 2500 linhas para sm.method=\"spline\""
 
 #: lm.c:51
-#, fuzzy
 msgid "'x' is not a matrix"
-msgstr "'tmax' não é um inteiro"
+msgstr "'x' não é uma matriz"
 
 #: lm.c:56
 #, c-format
 msgid "dimensions of 'x' (%d,%d) and 'y' (%lld) do not match"
-msgstr ""
+msgstr "as dimensões de 'x' (%d,%d) e 'y' (%lld) não correspondem"
 
 #: lm.c:71 lm.c:75
 #, c-format
 msgid "NA/NaN/Inf in '%s'"
-msgstr ""
+msgstr "NA/NaN/Inf em '%s'"
 
 #: loessc.c:242
 msgid "span is too small"
@@ -326,36 +323,35 @@ msgstr "vão é muito pequeno"
 #: loessc.c:257
 #, c-format
 msgid "workspace required (%.0f) is too large%s."
-msgstr ""
+msgstr "ambiente de trabalho necessário (%.0f) é muito grande%s."
 
 #: loessc.c:258
 msgid " probably because of setting 'se = TRUE'"
-msgstr ""
+msgstr " provavelmente por causa da configuração 'se = TRUE'"
 
 #: loglin.c:370
 msgid "this should not happen"
-msgstr ""
+msgstr "isso não deveria acontecer"
 
 #: loglin.c:372
 msgid "algorithm did not converge"
-msgstr ""
+msgstr "o algoritmo não convergiu"
 
 #: loglin.c:374
 msgid "incorrect specification of 'table' or 'start'"
-msgstr ""
+msgstr "especificação incorreta de 'table' ou 'start'"
 
 #: lowess.c:287
 msgid "'f' must be finite and > 0"
-msgstr ""
+msgstr "'f' deve ser finito e > 0"
 
 #: lowess.c:290
-#, fuzzy
 msgid "'iter' must be finite and >= 0"
-msgstr "'maxiter' deve ser positivo"
+msgstr "'iter' deve ser finito e >= 0"
 
 #: lowess.c:293
 msgid "'delta' must be finite and > 0"
-msgstr ""
+msgstr "'delta' deve ser finito e > 0"
 
 #: mAR.c:83
 msgid "assert failed in src/library/ts/src/carray.c"

@@ -1,0 +1,204 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The R Core Team
+# This file is distributed under the same license as the R package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.4.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2026-04-25 10:48-0700\n"
+"PO-Revision-Date: 2026-04-14 15:42+0000\n"
+"Last-Translator: Kylie Ainslie <ainslie.kylie@gmail.com>\n"
+"Language-Team: none\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.11.4\n"
+
+#: Rmd5.c:57 Rsha256.c:70
+msgid "argument 'files' must be character"
+msgstr ""
+
+#: Rmd5.c:73
+#, c-format
+msgid "md5 failed on file '%ls'"
+msgstr ""
+
+#: Rmd5.c:75
+#, c-format
+msgid "md5 failed on file '%s'"
+msgstr ""
+
+#: Rsha256.c:86
+#, c-format
+msgid "sha256 failed on file '%ls'"
+msgstr ""
+
+#: Rsha256.c:88
+#, c-format
+msgid "sha256 failed on file '%s'"
+msgstr ""
+
+#: getfmts.c:60
+#, c-format
+msgid "only %d arguments are allowed"
+msgstr ""
+
+#: getfmts.c:65
+msgid "'fmt' is not a character vector"
+msgstr ""
+
+#: getfmts.c:68
+msgid "'fmt' must be length 1"
+msgstr ""
+
+#: getfmts.c:74
+#, c-format
+msgid "'fmt' length exceeds maximal format length %d"
+msgstr ""
+
+#: getfmts.c:95
+#, c-format
+msgid "unrecognised format specification '%s'"
+msgstr ""
+
+#: getfmts.c:135
+msgid "at most one asterisk '*' is supported in each conversion specification"
+msgstr ""
+
+#: gramLatex.c:2856 gramRd.c:3967
+#, c-format
+msgid "unable to allocate buffer for long string at line %d"
+msgstr ""
+
+#: gramLatex.c:3167 gramRd.c:4521 gramRd.c:4527
+#, c-format
+msgid "invalid '%s' value"
+msgstr ""
+
+#: gramRd.c:2576 gramRd.c:2579
+#, c-format
+msgid "bad markup (extra space?) at %s:%d:%d"
+msgstr ""
+
+#: gramRd.c:3112
+#, c-format
+msgid "Macro '%s' previously defined."
+msgstr ""
+
+#: gramRd.c:3122
+#, c-format
+msgid "At most 4 arguments are allowed for user defined macros."
+msgstr ""
+
+#: gramRd.c:3164
+#, c-format
+msgid "No macro definition for '%s'."
+msgstr ""
+
+#: gramRd.c:3227
+#, c-format
+msgid "Not enough arguments passed to user macro '%s'"
+msgstr ""
+
+#: gramRd.c:3367 gramRd.c:3371
+#, c-format
+msgid "newline within quoted string at %s:%d"
+msgstr ""
+
+#: gramRd.c:3390
+#, c-format
+msgid "unable to allocate buffer for long macro at line %d"
+msgstr ""
+
+#: gramRd.c:3420
+msgid "macros nested too deeply: infinite recursion?"
+msgstr ""
+
+#: gramRd.c:3829
+#, c-format
+msgid "Unable to find macro %s"
+msgstr ""
+
+#: gramRd.c:4028
+#, c-format
+msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
+msgstr ""
+
+#: gramRd.c:4534
+msgid "cannot open the connection"
+msgstr ""
+
+#: gramRd.c:4541
+msgid "cannot read from this connection"
+msgstr ""
+
+#: gramRd.c:4549
+msgid "invalid Rd file"
+msgstr ""
+
+#: gramRd.c:4569
+msgid "'deparseRd' only supports deparsing character elements"
+msgstr ""
+
+#: gramRd.c:4572
+msgid "bad state"
+msgstr ""
+
+#: gramRd.c:4585
+#, c-format
+msgid "bad text mode %d in 'deparseRd'"
+msgstr ""
+
+#: http.c:31
+msgid "invalid bind address specification"
+msgstr ""
+
+#: http.c:36
+#, c-format
+msgid "Invalid port number %d: should be in 0:65535, typically above 1024"
+msgstr ""
+
+#: http.c:60
+msgid "allocation error in remove_dot_segments"
+msgstr ""
+
+#: http.c:150 pdscan.c:121
+msgid "non-character argument"
+msgstr ""
+
+#: install.c:95
+msgid "path too long"
+msgstr ""
+
+#: install.c:120 install.c:139 install.c:141
+#, c-format
+msgid "invalid '%s' argument"
+msgstr "ongeldig '%s'-argument"
+
+#: install.c:170
+msgid "write error during file append"
+msgstr ""
+
+#: pdscan.c:74
+msgid "too many items"
+msgstr ""
+
+#: signals.c:42
+msgid "pskill() is not supported on this platform"
+msgstr ""
+
+#: signals.c:140
+msgid "psnice() is not supported on this platform"
+msgstr ""
+
+#: text.c:69
+msgid "invalid argument type"
+msgstr ""
+
+#: text.c:227 text.c:249
+msgid "out of memory"
+msgstr ""

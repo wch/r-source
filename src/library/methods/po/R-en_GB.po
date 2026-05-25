@@ -479,9 +479,8 @@ msgstr "class cannot have both an ordinary and hidden data type"
 msgid "a validity method must be a function of one argument, got an object of class %s"
 msgstr "a validity method must be a function of one argument, got an object of class %s"
 
-#, fuzzy
 msgid "unable to load required package %s"
-msgstr "unable to find required package %s"
+msgstr "unable to load required package %s"
 
 msgid "unable to find an environment containing class %s"
 msgstr "unable to find an environment containing class %s"

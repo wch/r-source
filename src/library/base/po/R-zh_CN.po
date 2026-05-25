@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2023-12-20 13:03+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -19,28 +19,28 @@ msgstr ""
 "X-Generator: Weblate 4.16.4\n"
 
 msgid "'%s' is defunct."
-msgstr "'%s'不再有用。"
+msgstr "'%s' 已弃用."
 
 msgid "Use '%s' instead."
-msgstr "请用'%s'。"
+msgstr "请改用'%s'."
 
 msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
-msgstr "见help(\"Defunct\"))和help(\"%s-defunct\")。"
+msgstr "参见 help（“Defunct”） 和 help（“%s-defunct”）。"
 
 msgid "See help(\"Defunct\")"
-msgstr "见help(\"Defunct\"))"
+msgstr "参阅 help(\"Defunct\")"
 
 msgid "'%s' is deprecated."
-msgstr "%s不再有用。"
+msgstr "'%s' 已弃用."
 
 msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
 msgstr "见help(\"Deprecated\")和help(\"%s-deprecated\")。"
 
 msgid "See help(\"Deprecated\")"
-msgstr "见help(\"Deprecated\")"
+msgstr "参见 help(\"Deprecated\")"
 
 msgid "argument to 'La.svd' must be numeric or complex"
-msgstr "'La.svd'的参数必需是数值或复数值"
+msgstr "'La.svd' 的参数必须是数值或复数值"
 
 msgid "infinite or missing values in 'x'"
 msgstr "'x'里有无穷值或缺失值"
@@ -60,22 +60,20 @@ msgstr "第二个参数必需为列表"
 msgid "'iconvlist' is not available on this system"
 msgstr "本系统不支持'iconvlist'"
 
-#, fuzzy
 msgid "'kind' must be a character string (RNG to be used)."
-msgstr "'kind' 必需是字符串，而且其长度只能为一(用RNG) 。"
+msgstr "'kind' 必需是字符串，而且其长度只能为一(使用RNG) 。"
 
 msgid "'%s' is not a valid abbreviation of an RNG"
 msgstr "'%s'不是有效的RNG缩写"
 
-#, fuzzy
 msgid "'%s' must be a character string"
-msgstr "“name”必须是单个字符串"
+msgstr "'%s' 必需是字符串"
 
 msgid "'%s' is not a valid choice"
-msgstr "%s'不是有效的选择"
+msgstr "'%s'不是有效的选择"
 
 msgid "malformed version string"
-msgstr "版本字串格式有错误"
+msgstr "版本字串格式错误"
 
 msgid "target is %s, current is %s"
 msgstr "目标应该是%s ，现在却是%s"
@@ -87,13 +85,13 @@ msgid "'scale' should be numeric or NULL"
 msgstr "'scale' 应当是数值或 NULL"
 
 msgid "'%s' must be logical"
-msgstr "'%s' 必需是逻辑值"
+msgstr "'%s' 必须是逻辑值"
 
 msgid "dim(X) must have a positive length"
-msgstr "dim(X)的值必需是正数"
+msgstr "dim(X)的长度必须是正数"
 
 msgid "'X' must have named dimnames"
-msgstr "'X'必需有带名称的维名"
+msgstr "'X' 必须具有维度名"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "所有'MARGIN'的元素都必需是维的名称不是'MARGIN'的所有元素都是尺寸名称"
@@ -120,7 +118,7 @@ msgid "'pos=1' is not possible and has been warned about for years"
 msgstr "“pos=1”是不可能的，并且一直被警告"
 
 msgid "file '%s' not found"
-msgstr "没有'%s'文件"
+msgstr "找不到'%s'文件"
 
 msgid "invalid 'name' argument"
 msgstr "'name'参数无效"
@@ -147,10 +145,10 @@ msgid "%s converted to character string"
 msgstr "%s被转换成字符串"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
-msgstr "正规表现'['被换成'\\\\['"
+msgstr "正则表达式'['被换成'\\\\['"
 
 msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
-msgstr "正规表现'[<-'被换成'\\\\[<-'"
+msgstr "正则表达式'[<-'被换成'\\\\[<-'"
 
 msgid "'value' must be a list"
 msgstr "'value'必需是列表"
@@ -254,6 +252,9 @@ msgstr "数据框的'dimnames'给得无效"
 msgid "cannot coerce class %s to a data.frame"
 msgstr "无法将类 %s 强制转换为 data.frame"
 
+msgid "row names contain missing values"
+msgstr "行名里有缺失值"
+
 msgid "'row.names' is not a character or integer vector of length %d"
 msgstr "“row.names”不是长度为 %d 的字符或整数向量"
 
@@ -262,9 +263,6 @@ msgstr "'data.frame'参数里%d单元中行名不匹配"
 
 msgid "some row.names duplicated: %s --> row.names NOT used"
 msgstr "某些row.names有重复：%s --> row.names不用了"
-
-msgid "row names contain missing values"
-msgstr "行名里有缺失值"
 
 msgid "duplicate row.names: %s"
 msgstr "row.names有重复: %s"
@@ -395,9 +393,8 @@ msgstr "一进列%s对\"Date\"对象不适用"
 msgid "%s not defined for \"Date\" objects"
 msgstr "%s对\"Date\"没有定义"
 
-#, fuzzy
 msgid "'%s' must be of length 1"
-msgstr "'to'的长度必需为一"
+msgstr "'%s'的长度必需为一"
 
 msgid "without 'by', at least one of 'to' and 'from' must be specified"
 msgstr ""
@@ -837,7 +834,7 @@ msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
 msgstr "'DESCRIPTION'内有'Encoding'这个域，但重新編碼是不可能的"
 
 msgid "%sPackages in library %s:"
-msgstr "图书馆%2$s里有%1$s个程序包："
+msgstr "程序包库%2$s里有%1$s个程序包："
 
 msgid "no packages found"
 msgstr "找不到程序包"
@@ -1782,7 +1779,7 @@ msgid "ERROR: no packages specified"
 msgstr "错误：没有设定程序包"
 
 msgid "Removing from library"
-msgstr "从图书馆里删除"
+msgstr "从程序包库里删除"
 
 msgid "ERROR: cannot cd to directory"
 msgstr "错误：无法更换到目录"
@@ -1851,7 +1848,7 @@ msgstr[0] "数据框没有列但有%d行"
 
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
-msgstr[0] "图书馆%s里没有程序包"
+msgstr[0] "程序包库%s里没有程序包"
 
 msgid "package %s is not loaded"
 msgid_plural "packages %s are not loaded"

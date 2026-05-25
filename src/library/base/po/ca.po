@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-05-25 12:47-0700\n"
 "PO-Revision-Date: 2024-03-20 03:05+0000\n"
 "Last-Translator: Lluís <lluis.revilla+weblate@gmail.com>\n"
 "Language-Team: none\n"
@@ -126,7 +126,7 @@ msgstr "problema en mostrar «%ls»"
 #: src/main/apply.c:348 src/main/apply.c:351 src/main/array.c:98
 #: src/main/array.c:1756 src/main/array.c:1902 src/main/array.c:1904
 #: src/main/array.c:1905 src/main/array.c:2371 src/main/array.c:2373
-#: src/main/array.c:2375 src/main/attrib.c:213 src/main/builtin.c:88
+#: src/main/array.c:2375 src/main/attrib.c:225 src/main/builtin.c:88
 #: src/main/builtin.c:97 src/main/builtin.c:116 src/main/builtin.c:118
 #: src/main/builtin.c:154 src/main/builtin.c:160 src/main/builtin.c:588
 #: src/main/builtin.c:606 src/main/builtin.c:792 src/main/builtin.c:794
@@ -169,18 +169,18 @@ msgstr "problema en mostrar «%ls»"
 #: src/main/connections.c:5949 src/main/connections.c:5973
 #: src/main/connections.c:6860 src/main/connections.c:6887
 #: src/main/connections.c:6894 src/main/context.c:673 src/main/context.c:682
-#: src/main/context.c:686 src/main/datetime.c:1292 src/main/datetime.c:1296
-#: src/main/datetime.c:1510 src/main/datetime.c:1512 src/main/datetime.c:2023
-#: src/main/datetime.c:2026 src/main/debug.c:248 src/main/deparse.c:453
+#: src/main/context.c:686 src/main/datetime.c:1285 src/main/datetime.c:1289
+#: src/main/datetime.c:1503 src/main/datetime.c:1505 src/main/datetime.c:1994
+#: src/main/datetime.c:1997 src/main/debug.c:248 src/main/deparse.c:453
 #: src/main/dotcode.c:496 src/main/dotcode.c:500 src/main/dotcode.c:505
 #: src/main/dounzip.c:378 src/main/dounzip.c:385 src/main/dounzip.c:395
 #: src/main/dounzip.c:400 src/main/dounzip.c:404 src/main/dounzip.c:408
-#: src/main/envir.c:1891 src/main/envir.c:1894 src/main/envir.c:2006
-#: src/main/envir.c:2011 src/main/envir.c:2118 src/main/envir.c:2133
-#: src/main/envir.c:2139 src/main/envir.c:2252 src/main/envir.c:2260
-#: src/main/envir.c:2267 src/main/envir.c:2550 src/main/envir.c:2671
-#: src/main/envir.c:2969 src/main/envir.c:3234 src/main/envir.c:3248
-#: src/main/envir.c:3255 src/main/envir.c:3271 src/main/envir.c:4044
+#: src/main/envir.c:2215 src/main/envir.c:2218 src/main/envir.c:2330
+#: src/main/envir.c:2335 src/main/envir.c:2442 src/main/envir.c:2457
+#: src/main/envir.c:2463 src/main/envir.c:2575 src/main/envir.c:2583
+#: src/main/envir.c:2590 src/main/envir.c:2873 src/main/envir.c:2994
+#: src/main/envir.c:3292 src/main/envir.c:3570 src/main/envir.c:3584
+#: src/main/envir.c:3591 src/main/envir.c:3607 src/main/envir.c:4488
 #: src/main/errors.c:1283 src/main/eval.c:863 src/main/eval.c:873
 #: src/main/eval.c:876 src/main/eval.c:879 src/main/eval.c:887
 #: src/main/eval.c:894 src/main/grep.c:1293 src/main/grep.c:1298
@@ -226,14 +226,14 @@ msgstr "problema en mostrar «%ls»"
 #: src/main/sysutils.c:642 src/main/sysutils.c:646 src/main/sysutils.c:2966
 #: src/main/sysutils.c:2970 src/main/unique.c:1571 src/main/unique.c:1882
 #: src/main/unique.c:1886 src/main/unique.c:1896 src/main/unique.c:2288
-#: src/main/unique.c:2293 src/main/util.c:718 src/main/util.c:721
-#: src/main/util.c:1709 src/main/util.c:1723 src/main/util.c:2527
-#: src/main/util.c:2785 src/main/util.c:2786 src/main/util.c:2787
-#: src/main/util.c:2803 src/main/util.c:2846 src/main/util.c:2888
-#: src/main/util.c:2890 src/main/util.c:2892 src/main/util.c:2895
-#: src/main/util.c:2898 src/main/util.c:2902 src/main/util.c:2904
-#: src/main/util.c:2906 src/main/util.c:3207 src/main/util.c:3209
-#: src/main/util.c:3249 src/main/util.c:3251 src/modules/X11/devX11.c:3363
+#: src/main/unique.c:2293 src/main/util.c:716 src/main/util.c:719
+#: src/main/util.c:1707 src/main/util.c:1721 src/main/util.c:2525
+#: src/main/util.c:2783 src/main/util.c:2784 src/main/util.c:2785
+#: src/main/util.c:2801 src/main/util.c:2844 src/main/util.c:2886
+#: src/main/util.c:2888 src/main/util.c:2890 src/main/util.c:2893
+#: src/main/util.c:2896 src/main/util.c:2900 src/main/util.c:2902
+#: src/main/util.c:2904 src/main/util.c:3205 src/main/util.c:3207
+#: src/main/util.c:3247 src/main/util.c:3249 src/modules/X11/devX11.c:3363
 #: src/modules/X11/devX11.c:3366 src/modules/X11/devX11.c:3369
 #: src/modules/X11/devX11.c:3393 src/modules/internet/internet.c:324
 #: src/modules/internet/internet.c:330 src/modules/internet/internet.c:336
@@ -245,7 +245,7 @@ msgstr "problema en mostrar «%ls»"
 #: src/modules/lapack/Lapack.c:183 src/modules/lapack/Lapack.c:288
 #: src/modules/lapack/Lapack.c:863 src/modules/lapack/Lapack.c:971
 #: src/modules/lapack/Lapack.c:1033 src/modules/lapack/Lapack.c:1382
-#: src/unix/sys-std.c:1414 src/unix/sys-std.c:1437 src/unix/sys-unix.c:909
+#: src/unix/sys-std.c:1415 src/unix/sys-std.c:1438 src/unix/sys-unix.c:909
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argument «%s» no vàlid"
@@ -255,11 +255,11 @@ msgid "unsupported version of Windows"
 msgstr "versió de Windows no admesa"
 
 #: src/gnuwin32/extra.c:334
-#, fuzzy, c-format
+#, c-format
 msgid "cannot resolve current user or domain: '%s'"
-msgstr "no es pot suprimir el fitxer «%s», raó «%s»"
+msgstr "no es pot resoldre l'usuari o el domini: «%s»"
 
-#: src/gnuwin32/extra.c:757 src/gnuwin32/extra.c:874 src/main/util.c:1078
+#: src/gnuwin32/extra.c:757 src/gnuwin32/extra.c:874 src/main/util.c:1076
 msgid "'path' must be a character vector"
 msgstr "«path» ha de ser un vector de caràcters"
 
@@ -322,9 +322,8 @@ msgstr "la impressió d'una sortida extremadament llarga està truncada"
 #: src/gnuwin32/run.c:1114 src/main/connections.c:1709
 #: src/main/connections.c:1713 src/main/connections.c:1720
 #: src/main/connections.c:1735
-#, fuzzy
 msgid "allocation of pipe connection failed"
-msgstr "ha fallat l'assignació de la connexió de canonada"
+msgstr "ha fallat l'assignació de la connexió del conducte"
 
 #: src/gnuwin32/run.c:1130
 msgid "'names' is not a character vector"
@@ -362,9 +361,9 @@ msgid "command '%s' timed out after %ds"
 msgstr "l'ordre «%s» ha excedit el temps després de %ds"
 
 #: src/gnuwin32/sys-win32.c:364 src/unix/sys-unix.c:868
-#, fuzzy, c-format
+#, c-format
 msgid "running command '%s' had status %d"
-msgstr "l'ordre en execució «%s» tenia l'estat %d i el missatge d'error «%s»"
+msgstr "l'ordre en execució «%s» tenia l'estat %d"
 
 #: src/gnuwin32/system.c:138 src/main/sysutils.c:2924
 msgid "reached session elapsed time limit"
@@ -400,8 +399,8 @@ msgstr "<ERROR: ha fallat la recodificació des de la codificació «%s»>\n"
 #: src/gnuwin32/system.c:721 src/gnuwin32/system.c:1277
 #: src/gnuwin32/system.c:1289 src/main/connections.c:887
 #: src/main/connections.c:892 src/main/dounzip.c:222 src/main/saveload.c:2065
-#: src/main/serialize.c:3040 src/main/serialize.c:3045
-#: src/main/serialize.c:3144 src/main/serialize.c:3198 src/unix/system.c:427
+#: src/main/serialize.c:3057 src/main/serialize.c:3062
+#: src/main/serialize.c:3161 src/main/serialize.c:3215 src/unix/system.c:427
 #, c-format
 msgid "cannot open file '%s': %s"
 msgstr "no es pot obrir el fitxer «%s»: %s"
@@ -462,7 +461,7 @@ msgid "subscript out of bounds"
 msgstr "subíndex fora dels límits"
 
 #: src/include/Errormsg.h:28
-#, fuzzy, c-format
+#, c-format
 msgid "object of type '%s' is not subsettable"
 msgstr "l'objecte del tipus «%s» no és subconjuntable"
 
@@ -553,61 +552,61 @@ msgstr "la longitud de la llavor ha de ser entre 0...625; s'ignorarà"
 msgid "RNG_Init: unimplemented RNG kind %d"
 msgstr "RNG_Init: tipus RNG %d no implementat"
 
-#: src/main/RNG.c:356
+#: src/main/RNG.c:357
 #, c-format
 msgid "'.Random.seed' is not an integer vector but of type '%s', so ignored"
 msgstr "«.Random.seed» no és un vector enter, sinó del tipus «%s», per tant, s'ignora"
 
-#: src/main/RNG.c:364
+#: src/main/RNG.c:365
 msgid "'.Random.seed[1]' is not a valid integer, so ignored"
 msgstr "«.Random.seed[1]» no és un enter vàlid, per tant, s'ignora"
 
-#: src/main/RNG.c:371
+#: src/main/RNG.c:372
 msgid "'.Random.seed[1]' is not a valid Normal type, so ignored"
 msgstr "«.Random.seed[1]» no és un tipus Normal vàlid, per tant, s'ignora"
 
-#: src/main/RNG.c:385
+#: src/main/RNG.c:386
 msgid "'.Random.seed[1] = 5' but no user-supplied generator, so ignored"
 msgstr "«.Random.seed[1] = 5» però no hi ha cap generador subministrat per l'usuari, per tant, s'ignora"
 
-#: src/main/RNG.c:390
+#: src/main/RNG.c:391
 msgid "'.Random.seed[1]' is not a valid RNG kind so ignored"
 msgstr "«.Random.seed[1]» no és un tipus de RNG vàlid i s'ignora"
 
-#: src/main/RNG.c:424
+#: src/main/RNG.c:425
 msgid "'.Random.seed' has wrong length"
 msgstr "«.Random.seed» té una longitud incorrecta"
 
-#: src/main/RNG.c:480
+#: src/main/RNG.c:481
 msgid "RNGkind: Marsaglia-Multicarry has poor statistical properties"
 msgstr "RNGkind: Marsaglia-Multicarry té propietats estadístiques pobres"
 
-#: src/main/RNG.c:490
+#: src/main/RNG.c:491
 #, c-format
 msgid "RNGkind: unimplemented RNG kind %d"
 msgstr "RNGkind: tipus de RNG %d no implementat"
 
-#: src/main/RNG.c:509
+#: src/main/RNG.c:510
 msgid "RNGkind: severe deviations from normality for Kinderman-Ramage + Marsaglia-Multicarry"
 msgstr "RNGkind: desviacions severes de la normalitat per Kinderman-Ramage + Marsaglia-Multicarry"
 
-#: src/main/RNG.c:512
+#: src/main/RNG.c:513
 msgid "RNGkind: deviations from normality for Ahrens-Dieter + Marsaglia-Multicarry"
 msgstr "RNGkind: desviacions de la normalitat per Ahrens-Dieter + Marsaglia-Multicarry"
 
-#: src/main/RNG.c:516
+#: src/main/RNG.c:517
 msgid "invalid Normal type in 'RNGkind'"
 msgstr "tipus Normal no vàlid a «RNGkind»"
 
-#: src/main/RNG.c:519
+#: src/main/RNG.c:520
 msgid "'user_norm_rand' not in load table"
 msgstr "«user_norm_rand» no és a la taula de càrrega"
 
-#: src/main/RNG.c:534
+#: src/main/RNG.c:535
 msgid "invalid sample type in 'RNGkind'"
 msgstr "tipus de mostra no vàlid a «RNGkind»"
 
-#: src/main/RNG.c:580
+#: src/main/RNG.c:581
 msgid "supplied seed is not a valid integer"
 msgstr "la llavor subministrada no és un enter vàlid"
 
@@ -648,52 +647,50 @@ msgid "Invalid object."
 msgstr "L'objecte no és vàlid."
 
 #: src/main/Rdynload.c:446
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid entry '%s' in native symbol object."
-msgstr "L'entrada «%s» no és vàlida a l'objecte de símbol natiu."
+msgstr "L'entrada «%s» no és vàlida en un objecte símbol natiu."
 
 #: src/main/Rdynload.c:452
-#, fuzzy, c-format
+#, c-format
 msgid "Component '%s' missing in symbol object."
-msgstr "Falta el component «%s» a l'objecte de símbol."
+msgstr "Falta el component «%s» en un objecte símbol."
 
 #: src/main/Rdynload.c:464
-#, fuzzy
 msgid "Invalid symbol list."
 msgstr "Llista de símbols no vàlida."
 
 #: src/main/Rdynload.c:478
-#, fuzzy, c-format
+#, c-format
 msgid "Symbol at %d does not have registration information."
 msgstr "El símbol a %d no té informació de registre."
 
 #: src/main/Rdynload.c:514
-#, fuzzy
 msgid "Invalid symbol name."
 msgstr "El nom del símbol no és vàlid."
 
 #: src/main/Rdynload.c:517
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot register already registered native symbol '%s'."
-msgstr "No es pot registrar el símbol natiu registrat «%s»."
+msgstr "No es pot registrar el símbol natiu ja registrat «%s»."
 
 #: src/main/Rdynload.c:519
-#, fuzzy, c-format
+#, c-format
 msgid "Symbol '%s' does not have a valid native address."
 msgstr "El símbol «%s» no té una adreça nativa vàlida."
 
 #: src/main/Rdynload.c:521
-#, fuzzy, c-format
+#, c-format
 msgid "Symbol '%s' does not have a valid DllInfo reference."
 msgstr "El símbol «%s» no té una referència DllInfo vàlida."
 
 #: src/main/Rdynload.c:526
-#, fuzzy, c-format
+#, c-format
 msgid "Symbol '%s' comes from a different shared object."
 msgstr "El símbol «%s» prové d'un objecte compartit diferent."
 
 #: src/main/Rdynload.c:529
-#, fuzzy, c-format
+#, c-format
 msgid "Symbol '%s' is missing parameter specification."
 msgstr "Falta l'especificació del paràmetre al símbol «%s»."
 
@@ -702,35 +699,30 @@ msgid "`maximal number of DLLs reached..."
 msgstr "`s'ha arribat al número màxim de DLL..."
 
 #: src/main/Rdynload.c:920
-#, fuzzy
 msgid "could not allocate space for 'path'"
-msgstr "no s'ha pogut assignar espai per al «camí»"
+msgstr "no s'ha pogut assignar espai per a «path»"
 
 #: src/main/Rdynload.c:932
-#, fuzzy, c-format
+#, c-format
 msgid "DLLname '%s' is too long"
-msgstr "El DLLname «%s» és massa llarg"
+msgstr "El nom de la DLL «%s» és massa llarg"
 
 #: src/main/Rdynload.c:961
-#, fuzzy
 msgid "could not allocate space for 'name'"
 msgstr "no s'ha pogut assignar espai per a «name»"
 
 #: src/main/Rdynload.c:971
-#, fuzzy
 msgid "could not allocate space for 'DllInfo'"
 msgstr "no s'ha pogut assignar espai per a «DllInfo»"
 
-#: src/main/Rdynload.c:1216 src/main/platform.c:2019 src/main/util.c:924
-#: src/main/util.c:1032
-#, fuzzy
+#: src/main/Rdynload.c:1216 src/main/platform.c:2019 src/main/util.c:922
+#: src/main/util.c:1030
 msgid "path too long"
 msgstr "camí massa llarg"
 
-#: src/main/Rdynload.c:1244 src/main/Rdynload.c:1261 src/main/util.c:850
-#, fuzzy
+#: src/main/Rdynload.c:1244 src/main/Rdynload.c:1261 src/main/util.c:848
 msgid "character argument expected"
-msgstr "s'esperava un argument de caràcter"
+msgstr "s'esperava un argument de tipus caràcter"
 
 #: src/main/Rdynload.c:1251 src/main/Rdynload.c:1284 src/main/Rdynload.c:1304
 #, fuzzy, c-format
@@ -742,84 +734,76 @@ msgstr ""
 "  %s"
 
 #: src/main/Rdynload.c:1265
-#, fuzzy, c-format
+#, c-format
 msgid "shared object '%s' was not loaded"
 msgstr "no s'ha carregat l'objecte compartit «%s»"
 
 #: src/main/Rdynload.c:1344
-#, fuzzy, c-format
+#, c-format
 msgid "cannot allocate memory for registered native symbol (%d byte)"
 msgid_plural "cannot allocate memory for registered native symbol (%d bytes)"
 msgstr[0] "no s'ha pogut assignar memòria per al símbol natiu registrat (%d byte)"
 msgstr[1] "no s'ha pogut assignar memòria per al símbol natiu registrat (%d bytes)"
 
 #: src/main/Rdynload.c:1480 src/main/Rdynload.c:1679
-#, fuzzy
 msgid "NULL value passed for DllInfo"
-msgstr "Valor nul passat per DllInfo"
+msgstr "valor NULL passat per DllInfo"
 
 #: src/main/Rdynload.c:1484
-#, fuzzy
 msgid "must pass package name or DllInfo reference"
-msgstr "ha de passar el nom del paquet o la referència de DllInfo"
+msgstr "cal passar el nom del paquet o la referència de DllInfo"
 
 #: src/main/Rdynload.c:1594
-#, fuzzy, c-format
+#, c-format
 msgid "unimplemented type %d in 'createRSymbolObject'"
 msgstr "tipus no implementat %d a «createRSymbolObject»"
 
 #: src/main/Rdynload.c:1676
-#, fuzzy
 msgid "R_getRegisteredRoutines() expects a DllInfo reference"
 msgstr "R_getRegisteredRoutines() espera una referència de DllInfo"
 
 #: src/main/Rdynload.c:1765
-#, fuzzy, c-format
+#, c-format
 msgid "function '%s' not provided by package '%s'"
-msgstr "la funció «%s» no està proporcionada pel paquet «%s»"
+msgstr "la funció «%s» no és proporcionada pel paquet «%s»"
 
 #: src/main/Rdynload.c:1767
-#, fuzzy
 msgid "table entry must be an external pointer"
 msgstr "l'entrada de la taula ha de ser un punter extern"
 
 #: src/main/Renviron.c:258
-#, fuzzy, c-format
+#, c-format
 msgid "problem in setting variable '%s' in Renviron"
-msgstr "problema en establir la variable «%s» al Renviron"
+msgstr "problema en establir la variable «%s» a Renviron"
 
 #: src/main/Renviron.c:515 src/main/objects.c:1370 src/main/raw.c:203
-#, fuzzy, c-format
+#, c-format
 msgid "argument '%s' must be a character string"
 msgstr "l'argument «%s» ha de ser una cadena de caràcters"
 
 #: src/main/Renviron.c:519
-#, fuzzy, c-format
+#, c-format
 msgid "file '%s' cannot be opened for reading"
 msgstr "no es pot obrir el fitxer «%s» per a lectura"
 
 #: src/main/Rstrptime.h:529 src/main/Rstrptime.h:1014
-#, fuzzy, c-format
+#, c-format
 msgid "use of %s for input is not supported"
-msgstr "no s'admet l'ús de %s per a l'entrada"
+msgstr "no s'admet l'ús de %s com a entrada"
 
 #: src/main/Rstrptime.h:1302
-#, fuzzy
 msgid "input string is too long"
 msgstr "la cadena d'entrada és massa llarga"
 
 #: src/main/Rstrptime.h:1304
-#, fuzzy
 msgid "invalid multibyte input string"
 msgstr "cadena d'entrada multibyte no vàlida"
 
 #: src/main/Rstrptime.h:1307
-#, fuzzy
 msgid "format string is too long"
 msgstr "la cadena de format és massa llarga"
 
 #: src/main/Rstrptime.h:1309
-#, fuzzy
 msgid "invalid multibyte format string"
 msgstr "cadena de format multibyte no vàlida"
 
@@ -831,27 +815,25 @@ msgid "argument '%s' has length > 1 and only the first element will be used"
 msgstr "l'argument «%s» té longitud > 1 i només s'utilitzarà el primer element"
 
 #: src/main/agrep.c:191 src/main/agrep.c:822
-#, fuzzy
 msgid "'pattern' must be a non-empty character string"
-msgstr "«patró» ha de ser una cadena de caràcters no buida"
+msgstr "«pattern» ha de ser una cadena de caràcters no buida"
 
 #: src/main/agrep.c:202 src/main/agrep.c:831 src/main/grep.c:1347
 #: src/main/grep.c:3033 src/main/grep.c:3373
-#, fuzzy
 msgid "regular expression is invalid in this locale"
 msgstr "l'expressió regular no és vàlida en aquesta configuració regional"
 
 #: src/main/agrep.c:208 src/main/agrep.c:626
-#, fuzzy, c-format
+#, c-format
 msgid "regcomp error:  '%s'"
-msgstr "error de regcomp: «%s»"
+msgstr "error de regcomp:  «%s»"
 
 #: src/main/agrep.c:240 src/main/agrep.c:877 src/main/grep.c:633
 #: src/main/grep.c:735 src/main/grep.c:851 src/main/grep.c:1059
 #: src/main/grep.c:1400 src/main/grep.c:2257 src/main/grep.c:2547
 #: src/main/grep.c:3153 src/main/grep.c:3242 src/main/grep.c:3405
 #: src/main/grep.c:3412
-#, fuzzy, c-format
+#, c-format
 msgid "input string %lld is invalid in this locale"
 msgstr "la cadena d'entrada %lld no és vàlida en aquesta configuració regional"
 
@@ -860,76 +842,72 @@ msgstr "la cadena d'entrada %lld no és vàlida en aquesta configuració regiona
 #: src/main/grep.c:1582 src/main/grep.c:1590 src/main/grep.c:2132
 #: src/main/grep.c:2134 src/main/grep.c:2985 src/main/grep.c:2987
 #: src/main/grep.c:3329
-#, fuzzy, c-format
+#, c-format
 msgid "argument '%s' will be ignored"
-msgstr "s'ignorarà l'argument «%s = \"%s\"»"
+msgstr "s'ignorarà l'argument «%s»"
 
 #: src/main/agrep.c:617
-#, fuzzy, c-format
+#, c-format
 msgid "input string x[%d] is invalid in this locale"
 msgstr "la cadena d'entrada x[%d] no és vàlida en aquesta configuració regional"
 
 #: src/main/agrep.c:664
-#, fuzzy, c-format
+#, c-format
 msgid "input string y[%d] is invalid in this locale"
 msgstr "la cadena d'entrada y[%d] no és vàlida en aquesta configuració regional"
 
 #: src/main/agrep.c:837 src/main/grep.c:3379
-#, fuzzy, c-format
+#, c-format
 msgid "regcomp error: '%s'"
 msgstr "error de regcomp: «%s»"
 
 #: src/main/apply.c:111
-#, fuzzy
 msgid "'FUN.VALUE' must be a vector"
 msgstr "«FUN.VALUE» ha de ser un vector"
 
 #: src/main/apply.c:115 src/main/array.c:544 src/main/character.c:1009
 #: src/main/character.c:1864 src/main/connections.c:4427 src/main/context.c:724
-#: src/main/context.c:738 src/main/datetime.c:1099 src/main/datetime.c:1194
-#: src/main/datetime.c:1514 src/main/datetime.c:1664 src/main/dotcode.c:222
-#: src/main/errors.c:1177 src/main/errors.c:1199 src/main/errors.c:1317
-#: src/main/errors.c:1324 src/main/errors.c:1588 src/main/identical.c:45
-#: src/main/platform.c:3931 src/main/seq.c:249 src/main/seq.c:256
-#: src/main/seq.c:260 src/main/seq.c:366 src/main/seq.c:373 src/main/seq.c:376
-#: src/main/seq.c:378 src/main/seq.c:435 src/main/seq.c:439 src/main/seq.c:443
-#: src/main/sort.c:1431 src/main/sort.c:1517 src/main/sort.c:1521
-#: src/main/sort.c:1528 src/main/source.c:222 src/main/summary.c:1204
-#: src/main/sysutils.c:269 src/main/util.c:1207 src/main/util.c:1211
-#: src/main/util.c:1218 src/main/util.c:1221 src/main/util.c:2596
-#: src/modules/X11/devX11.c:3256 src/modules/X11/devX11.c:3283
-#: src/modules/X11/devX11.c:3288 src/modules/X11/devX11.c:3293
-#: src/modules/X11/devX11.c:3303 src/modules/X11/devX11.c:3308
-#: src/modules/X11/devX11.c:3312 src/modules/X11/devX11.c:3316
-#: src/modules/X11/devX11.c:3321
+#: src/main/context.c:738 src/main/datetime.c:986 src/main/datetime.c:1635
+#: src/main/dotcode.c:222 src/main/errors.c:1177 src/main/errors.c:1199
+#: src/main/errors.c:1317 src/main/errors.c:1324 src/main/errors.c:1588
+#: src/main/identical.c:45 src/main/platform.c:3931 src/main/seq.c:249
+#: src/main/seq.c:256 src/main/seq.c:260 src/main/seq.c:366 src/main/seq.c:373
+#: src/main/seq.c:376 src/main/seq.c:378 src/main/seq.c:435 src/main/seq.c:439
+#: src/main/seq.c:443 src/main/sort.c:1431 src/main/sort.c:1517
+#: src/main/sort.c:1521 src/main/sort.c:1528 src/main/source.c:222
+#: src/main/summary.c:1204 src/main/sysutils.c:269 src/main/util.c:1205
+#: src/main/util.c:1209 src/main/util.c:1216 src/main/util.c:1219
+#: src/main/util.c:2594 src/modules/X11/devX11.c:3256
+#: src/modules/X11/devX11.c:3283 src/modules/X11/devX11.c:3288
+#: src/modules/X11/devX11.c:3293 src/modules/X11/devX11.c:3303
+#: src/modules/X11/devX11.c:3308 src/modules/X11/devX11.c:3312
+#: src/modules/X11/devX11.c:3316 src/modules/X11/devX11.c:3321
 #, c-format
 msgid "invalid '%s' value"
 msgstr "el valor «%s» no és vàlid"
 
-#: src/main/apply.c:118 src/main/complex.c:766 src/main/serialize.c:1989
-#: src/main/serialize.c:2006
-#, fuzzy
+#: src/main/apply.c:118 src/main/complex.c:766 src/main/serialize.c:2006
+#: src/main/serialize.c:2023
 msgid "invalid length"
 msgstr "longitud no vàlida"
 
 #: src/main/apply.c:123
-#, fuzzy
 msgid "long vectors are not supported for matrix/array results"
-msgstr "no s'admeten vectors llargs per als resultats de matrius/arrays"
+msgstr "no s'admeten vectors llargs per als resultats de matrius"
 
 #: src/main/apply.c:130
-#, fuzzy, c-format
+#, c-format
 msgid "type '%s' is not supported"
 msgstr "el tipus «%s» no és compatible"
 
 #: src/main/apply.c:178
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "values must be length %d,\n"
 " but FUN(X[[%lld]]) result is length %d"
 msgstr ""
 "els valors han de ser de longitud %d,\n"
-" però el resultat de FUN(X[[%lld]]) és longitud %d"
+" però el resultat de FUN(X[[%lld]]) és de longitud %d"
 
 #: src/main/apply.c:190
 #, fuzzy, c-format
@@ -941,230 +919,199 @@ msgstr ""
 " però el resultat de FUN(X[[%lld]]) és el tipus «%s»"
 
 #: src/main/apply.c:267
-#, fuzzy, c-format
+#, c-format
 msgid "dimnames(<value>) is neither NULL nor list of length %d"
-msgstr "dimnames(<value>) no és NULL ni llista de longitud %d"
+msgstr "dimnames(<value>) no és ni NULL ni una llista de longitud %d"
 
-#: src/main/apply.c:344 src/main/coerce.c:2755
-#, fuzzy, c-format
+#: src/main/apply.c:344 src/main/coerce.c:2754
+#, c-format
 msgid "'%s' must be a list or expression"
-msgstr "«%s» ha de ser una llista o expressió"
+msgstr "«%s» ha de ser una llista o una expressió"
 
-#: src/main/arithmetic.c:50 src/main/eval.c:5095
-#, fuzzy
+#: src/main/arithmetic.c:50 src/main/eval.c:5115
 msgid "NaNs produced"
-msgstr "NaN produït"
+msgstr "s'han produït NaNs"
 
 #: src/main/arithmetic.c:51
-#, fuzzy
 msgid "non-numeric argument to mathematical function"
-msgstr "argument no numèric per a la funció matemàtica"
+msgstr "argument no numèric per a una funció matemàtica"
 
 #: src/main/arithmetic.c:185
-#, fuzzy
 msgid "probable complete loss of accuracy in modulus"
 msgstr "probable pèrdua completa de precisió en el mòdul"
 
 #: src/main/arithmetic.c:309
-#, fuzzy
 msgid "NAs produced by integer overflow"
-msgstr "NA produïts per desbordament enter"
+msgstr "NAs produïts per desbordament d'enters"
 
 #: src/main/arithmetic.c:507
-#, fuzzy
 msgid "operator needs one or two arguments"
 msgstr "l'operador necessita un o dos arguments"
 
 #: src/main/arithmetic.c:523
-#, fuzzy
 msgid "non-numeric argument to binary operator"
-msgstr "argument no numèric a l'operador binari"
+msgstr "argument no numèric per a l'operador binari"
 
 #: src/main/arithmetic.c:578
-#, fuzzy
 msgid ""
 "Recycling array of length 1 in array-vector arithmetic is deprecated.\n"
 "  Use c() or as.vector() instead."
 msgstr ""
-"La matriu de reciclatge de longitud 1 en aritmètica de vector de matriu està obsoleta.\n"
+"El reciclatge de matrius de longitud 1 en aritmètica de matriu-vector està obsolet.\n"
 "  Utilitzeu c() o as.vector() en el seu lloc."
 
 #: src/main/arithmetic.c:586
-#, fuzzy
 msgid ""
 "Recycling array of length 1 in vector-array arithmetic is deprecated.\n"
 "  Use c() or as.vector() instead."
 msgstr ""
-"La matriu de reciclatge de longitud 1 en l'aritmètica de matriu vectorial està obsoleta.\n"
+"El reciclatge de matrius de longitud 1 en l'aritmètica de vector-matriu està obsolet.\n"
 "  Utilitzeu c() o as.vector() en el seu lloc."
 
 #: src/main/arithmetic.c:600 src/main/logic.c:94 src/main/relop.c:317
-#, fuzzy
 msgid "non-conformable arrays"
 msgstr "matrius no conformes"
 
 #: src/main/arithmetic.c:660 src/main/logic.c:137 src/main/relop.c:361
-#, fuzzy
 msgid "longer object length is not a multiple of shorter object length"
-msgstr "La longitud d'objecte més llarga no és múltiple la longitud d'objecte més curta"
+msgstr "la longitud d'objecte més llarg no és múltiple de la longitud de l'objecte més curt"
 
 #: src/main/arithmetic.c:730
-#, fuzzy
 msgid "invalid argument to unary operator"
 msgstr "argument no vàlid per a un operador unari"
 
 #: src/main/arithmetic.c:762 src/main/arithmetic.c:788
 #: src/main/arithmetic.c:809
-#, fuzzy
 msgid "invalid unary operator"
-msgstr "operador unari invàlid"
+msgstr "operador unari no vàlid"
 
 #: src/main/arithmetic.c:1443
-#, fuzzy
 msgid "unimplemented real function of 1 argument"
-msgstr "funció real no implementada d'1 argument"
+msgstr "funció real d'1 argument no implementada"
 
 #: src/main/arithmetic.c:1457 src/main/complex.c:650 src/main/complex.c:715
-#, fuzzy
 msgid "unimplemented complex function"
 msgstr "funció complexa no implementada"
 
 #: src/main/arithmetic.c:1714 src/main/arithmetic.c:2167
 #: src/main/arithmetic.c:2338 src/main/arithmetic.c:2443
-#, fuzzy, c-format
+#, c-format
 msgid "unimplemented real function of %d numeric arguments"
-msgstr "funció real no implementada de %d arguments numèrics"
+msgstr "funció real de %d arguments numèrics no implementada"
 
 #: src/main/arithmetic.c:1821
-#, fuzzy
 msgid "invalid second argument of length 0"
 msgstr "el segon argument de longitud 0 no és vàlid"
 
 #: src/main/arithmetic.c:1941
-#, fuzzy
 msgid "invalid argument 'base' of length 0"
-msgstr "argument «base» de longitud 0 no vàlid"
+msgstr "l'argument «base» de longitud 0 no és vàlid"
 
 #: src/main/array.c:91 src/main/array.c:2161
-#, fuzzy, c-format
+#, c-format
 msgid "'data' must be of a vector type, was '%s'"
-msgstr "«data» ha de ser d'un tipus de vector, era «%s»"
+msgstr "«data» ha de ser de tipus vector, però era «%s»"
 
 #: src/main/array.c:111 src/main/array.c:119
-#, fuzzy
 msgid "non-numeric matrix extent"
 msgstr "extensió de la matriu no numèrica"
 
 #: src/main/array.c:114 src/main/array.c:2270
-#, fuzzy
 msgid "invalid 'nrow' value (too large or NA)"
-msgstr "valor «nrow» no vàlid (massa gran o NA)"
+msgstr "el valor «nrow» no és vàlid (massa gran o NA)"
 
 #: src/main/array.c:116 src/main/array.c:2272
-#, fuzzy
 msgid "invalid 'nrow' value (< 0)"
-msgstr "valor «nrow» no vàlid ( 0 0)"
+msgstr "valor «nrow» no vàlid (< 0)"
 
 #: src/main/array.c:122 src/main/array.c:2275
-#, fuzzy
 msgid "invalid 'ncol' value (too large or NA)"
-msgstr "valor «ncol» no vàlid (massa gran o NA)"
+msgstr "el valor «ncol» no és vàlid (massa gran o NA)"
 
 #: src/main/array.c:124 src/main/array.c:2277
-#, fuzzy
 msgid "invalid 'ncol' value (< 0)"
-msgstr "valor «ncol» no vàlid ( 0 0)"
+msgstr "valor «ncol» no vàlid (< 0)"
 
 #: src/main/array.c:148
-#, fuzzy, c-format
+#, c-format
 msgid "data length [%lld] is not a sub-multiple or multiple of the number of rows [%d]"
 msgstr "la longitud de les dades [%lld] no és un submúltiple o múltiple del nombre de files [%d]"
 
 #: src/main/array.c:152
-#, fuzzy, c-format
+#, c-format
 msgid "data length [%lld] is not a sub-multiple or multiple of the number of columns [%d]"
 msgstr "la longitud de les dades [%lld] no és un submúltiple o múltiple del nombre de columnes [%d]"
 
 #: src/main/array.c:156 src/main/array.c:159
-#, fuzzy, c-format
+#, c-format
 msgid "data length differs from size of matrix: [%lld != %d x %d]"
-msgstr "la longitud de les dades difereix de la mida de la matriu: [%lld !] %d x %d]"
+msgstr "la longitud de les dades difereix de la mida de la matriu: [%lld != %d x %d]"
 
 #: src/main/array.c:164
-#, fuzzy
 msgid "non-empty data for zero-extent matrix"
-msgstr "dades no buides per a la matriu d'extensió zero"
+msgstr "dades no buides per a una matriu d'extensió zero"
 
 #: src/main/array.c:169 src/main/array.c:172 src/main/array.c:2173
 #: src/main/array.c:2175 src/main/array.c:2284 src/main/array.c:2287
-#, fuzzy
 msgid "too many elements specified"
 msgstr "s'han especificat massa elements"
 
 #: src/main/array.c:227
-#, fuzzy
 msgid "negative extents to matrix"
-msgstr "extensió negativa a la matriu"
+msgstr "extensió negativa de la matriu"
 
 #: src/main/array.c:230 src/main/array.c:233
-#, fuzzy
 msgid "allocMatrix: too many elements specified"
 msgstr "allocMatrix: s'han especificat massa elements"
 
 #: src/main/array.c:261
-#, fuzzy
 msgid "negative extents to 3D array"
-msgstr "extensió negativa a la matriu 3D"
+msgstr "extensió negativa de la matriu 3D"
 
 #: src/main/array.c:264 src/main/array.c:267
-#, fuzzy
 msgid "'alloc3DArray': too many elements specified"
 msgstr "'alloc3DArray': s'han especificat massa elements"
 
 #: src/main/array.c:292 src/main/array.c:295
-#, fuzzy
 msgid "'allocArray': too many elements specified by 'dims'"
 msgstr "«allocArray»: massa elements especificats per «dims»"
 
 #: src/main/array.c:562
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be a list or atomic vector"
 msgstr "«%s» ha de ser una llista o un vector atòmic"
 
 #: src/main/array.c:606
-#, fuzzy, c-format
+#, c-format
 msgid "a matrix-like object is required as argument to '%s'"
 msgstr "es requereix un objecte semblant a una matriu com a argument per a «%s»"
 
 #: src/main/array.c:1266
-#, fuzzy, c-format
+#, c-format
 msgid "%d argument passed to '%s' which requires at least %d"
 msgid_plural "%d arguments passed to '%s' which requires at least %d"
-msgstr[0] "S'ha passat %d argument a «%s» que requereix com a mínim %d"
-msgstr[1] "S'han passat %d arguments a «%s» que requereix com a mínim %d"
+msgstr[0] "S'ha passat l'argument %d a «%s» que requereix com a mínim %d"
+msgstr[1] "S'han passat els arguments %d a «%s» que requereix com a mínim %d"
 
 #: src/main/array.c:1282
-#, fuzzy, c-format
+#, c-format
 msgid "more than 2 arguments passed to default method of '%s'"
 msgstr "s'han passat més de 2 arguments al mètode per defecte de «%s»"
 
 #: src/main/array.c:1287
-#, fuzzy
 msgid "requires numeric/complex matrix/vector arguments"
-msgstr "requereix arguments numèrics/complexos de matriu/vector"
+msgstr "requereix arguments matriu/vector de tipus numèric/complex"
 
 #: src/main/array.c:1397 src/main/array.c:1401 src/main/array.c:1405
-#, fuzzy
 msgid "non-conformable arguments"
 msgstr "arguments no conformes"
 
 #: src/main/array.c:1690
-#, fuzzy
 msgid "argument is not a matrix"
 msgstr "l'argument no és una matriu"
 
-#: src/main/array.c:1710 src/main/attrib.c:1237
-#, fuzzy, c-format
+#: src/main/array.c:1710 src/main/attrib.c:1249
+#, c-format
 msgid "invalid first argument, must be %s"
 msgstr "el primer argument no és vàlid, ha de ser %s"
 
@@ -1174,24 +1121,21 @@ msgid "'perm' is of wrong length %d (!= %d)"
 msgstr "«perm» té una longitud incorrecta %d (!= %d)"
 
 #: src/main/array.c:1730 src/main/array.c:1733
-#, fuzzy
 msgid "'a' does not have named dimnames"
-msgstr "«a» no té noms difuminats"
+msgstr "«a» no té dimnames amb noms"
 
 #: src/main/array.c:1741
-#, fuzzy, c-format
+#, c-format
 msgid "'perm[%d]' does not match a dimension name"
-msgstr "'perm[%d]' no coincideix amb un nom de dimensió"
+msgstr "«perm[%d]» no coincideix amb un nom de dimensió"
 
 #: src/main/array.c:1754
-#, fuzzy
 msgid "value out of range in 'perm'"
 msgstr "valor fora de l'interval a «perm»"
 
 #: src/main/array.c:1847
-#, fuzzy
 msgid "'resize' must be TRUE or FALSE"
-msgstr "«resize» ha de ser CERT o FALS"
+msgstr "«resize» ha de ser TRUE o FALSE"
 
 #: src/main/array.c:1915
 #, fuzzy
@@ -1199,7 +1143,6 @@ msgid "'x' must be numeric or complex"
 msgstr "«%s» ha de ser una matriu numèrica"
 
 #: src/main/array.c:1918
-#, fuzzy
 msgid "'x' is too short"
 msgstr "«x» és massa curt"
 
@@ -1209,238 +1152,220 @@ msgid "'dim' cannot be of length 0"
 msgstr "«dims» no pot ser de longitud 0"
 
 #: src/main/array.c:2280
-#, fuzzy
 msgid "'x' must have positive length"
 msgstr "«x» ha de tenir una longitud positiva"
 
 #: src/main/array.c:2384
-#, fuzzy, c-format
+#, c-format
 msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr "matriu singular a «backsolve». Primer zero en diagonal [%d]"
 
-#: src/main/attrib.c:44 src/main/attrib.c:262 src/main/attrib.c:294
-#: src/main/attrib.c:318 src/main/attrib.c:448 src/main/attrib.c:495
-#: src/main/attrib.c:549
-#, fuzzy
+#: src/main/attrib.c:44 src/main/attrib.c:274 src/main/attrib.c:306
+#: src/main/attrib.c:330 src/main/attrib.c:460 src/main/attrib.c:507
+#: src/main/attrib.c:561
 msgid "attempt to set an attribute on NULL"
 msgstr "s'ha intentat establir un atribut a NULL"
 
-#: src/main/attrib.c:86
-#, fuzzy, c-format
+#: src/main/attrib.c:95
+#, c-format
 msgid "row names must be 'character' or 'integer', not '%s'"
-msgstr "els noms de les files han de ser 'caràcter' o 'enter', no '%s'"
+msgstr "els noms de les files han de ser 'character' o 'integer', no '%s'"
 
-#: src/main/attrib.c:146
+#: src/main/attrib.c:155
 #, fuzzy, c-format
 msgid "getAttrib: invalid type (%s) for TAG"
 msgstr "getAttrib: tipus no vàlid (%s) per a l'ETIQUETA"
 
-#: src/main/attrib.c:182 src/main/attrib.c:258 src/main/attrib.c:2083
+#: src/main/attrib.c:191 src/main/attrib.c:270 src/main/attrib.c:2095
 #, fuzzy
 msgid "'name' is not a symbol or a scalar string"
 msgstr "«names» no és un vector de caràcters"
 
-#: src/main/attrib.c:372
-#, fuzzy, c-format
+#: src/main/attrib.c:384
+#, c-format
 msgid "cannot set an attribute on a '%s'"
-msgstr "no s'ha pogut establir l'atribut en un símbol"
+msgstr "no es pot assignar un atribut a «%s»"
 
-#: src/main/attrib.c:424
-#, fuzzy, c-format
+#: src/main/attrib.c:436
+#, c-format
 msgid "invalid type (%s) for 'names': must be vector or NULL"
-msgstr "tipus no vàlid (%s) per a 'noms': ha de ser vector o NULL"
+msgstr "tipus no vàlid (%s) per a 'names': ha de ser un vector o NULL"
 
-#: src/main/attrib.c:427
-#, fuzzy, c-format
+#: src/main/attrib.c:439
+#, c-format
 msgid "'names' attribute [%lld] must be the same length as the vector [%lld]"
 msgstr "l'atribut «names» [%lld] ha de tenir la mateixa longitud que el vector [%lld]"
 
-#: src/main/attrib.c:433
-#, fuzzy
+#: src/main/attrib.c:445
 msgid "names() applied to a non-vector"
 msgstr "names() aplicat a un no vector"
 
-#: src/main/attrib.c:441
+#: src/main/attrib.c:453
 #, fuzzy, c-format
 msgid "invalid time series parameters specified (%d)"
 msgstr "s'han especificat paràmetres de sèries de temps no vàlids"
 
-#: src/main/attrib.c:452
-#, fuzzy
+#: src/main/attrib.c:464
 msgid "'tsp' attribute must be numeric"
 msgstr "l'atribut «tsp» ha de ser numèric"
 
-#: src/main/attrib.c:458
-#, fuzzy
+#: src/main/attrib.c:470
 msgid "'tsp' attribute must be numeric of length three"
 msgstr "l'atribut «tsp» ha de ser numèric de longitud tres"
 
-#: src/main/attrib.c:476
-#, fuzzy
+#: src/main/attrib.c:488
 msgid "cannot assign 'tsp' to zero-length vector"
 msgstr "no es pot assignar «tsp» a un vector de longitud zero"
 
-#: src/main/attrib.c:506
-#, fuzzy
+#: src/main/attrib.c:518
 msgid "attempt to set invalid 'comment' attribute"
-msgstr "s'ha intentat establir l'atribut «comment» no vàlid"
+msgstr "s'ha intentat establir un atribut «comment» no vàlid"
 
-#: src/main/attrib.c:558
-#, fuzzy
+#: src/main/attrib.c:570
 msgid "adding class \"factor\" to an invalid object"
 msgstr "s'està afegint la classe «factor» a un objecte no vàlid"
 
-#: src/main/attrib.c:589
-#, fuzzy
+#: src/main/attrib.c:601
 msgid "attempt to set invalid 'class' attribute"
-msgstr "s'ha intentat establir l'atribut «class» no vàlid"
+msgstr "s'ha intentat establir un atribut «class» no vàlid"
 
-#: src/main/attrib.c:943
-#, fuzzy, c-format
+#: src/main/attrib.c:955
+#, c-format
 msgid "invalid to use names()<- on an S4 object of class '%s'"
-msgstr "no és vàlid usar names() on- en un objecte S4 de la classe «%s»"
+msgstr "no és vàlid usar names()<- en un objecte S4 de la classe «%s»"
 
-#: src/main/attrib.c:985
-#, fuzzy
+#: src/main/attrib.c:997
 msgid "incompatible 'names' argument"
 msgstr "argument «names» incompatible"
 
-#: src/main/attrib.c:1035
-#, fuzzy, c-format
+#: src/main/attrib.c:1047
+#, c-format
 msgid "invalid type (%s) to set 'names' attribute"
 msgstr "tipus no vàlid (%s) per a definir l'atribut «names»"
 
-#: src/main/attrib.c:1108
-#, fuzzy
+#: src/main/attrib.c:1120
 msgid "'dimnames' applied to non-array"
-msgstr "'dimnames' aplicat a no-array"
+msgstr "«dimnames» aplicat a una no-matriu"
 
-#: src/main/attrib.c:1113 src/main/coerce.c:2758
-#, fuzzy, c-format
+#: src/main/attrib.c:1125 src/main/coerce.c:2757
+#, c-format
 msgid "'%s' must be a list"
 msgstr "«%s» ha de ser una llista"
 
-#: src/main/attrib.c:1117 src/main/attrib.c:1146
-#, fuzzy, c-format
+#: src/main/attrib.c:1129 src/main/attrib.c:1158
+#, c-format
 msgid "length of 'dimnames' [%d] must match that of 'dims' [%d]"
 msgstr "la longitud de «dimnames» [%d] ha de coincidir amb la de «dims» [%d]"
 
-#: src/main/attrib.c:1152
-#, fuzzy, c-format
+#: src/main/attrib.c:1164
+#, c-format
 msgid "invalid type (%s) for 'dimnames' (must be a vector)"
 msgstr "tipus no vàlid (%s) per a «dimnames» (ha de ser un vector)"
 
-#: src/main/attrib.c:1155
-#, fuzzy, c-format
+#: src/main/attrib.c:1167
+#, c-format
 msgid "length of 'dimnames' [%d] not equal to array extent"
 msgstr "la longitud de «dimnames» [%d] no és igual a l'extensió de la matriu"
 
-#: src/main/attrib.c:1239
-#, fuzzy, c-format
+#: src/main/attrib.c:1251
+#, c-format
 msgid "invalid second argument, must be %s"
 msgstr "el segon argument no és vàlid, ha de ser %s"
 
-#: src/main/attrib.c:1246
-#, fuzzy
+#: src/main/attrib.c:1258
 msgid "length-0 dimension vector is invalid"
-msgstr "el vector longitud-0 dimensió no és vàlid"
+msgstr "el vector de dimensió de longitud 0 no és vàlid"
 
-#: src/main/attrib.c:1251
-#, fuzzy
+#: src/main/attrib.c:1263
 msgid "the dims contain missing values"
-msgstr "els valors perduts contenen ATENUAcions"
+msgstr "el «dims» conté valors no disponibles"
 
-#: src/main/attrib.c:1253
-#, fuzzy
+#: src/main/attrib.c:1265
 msgid "the dims contain negative values"
-msgstr "els valors d'enfosquiment contenen valors negatius"
+msgstr "les dimensions contenen valors negatius"
 
-#: src/main/attrib.c:1257
-#, fuzzy, c-format
+#: src/main/attrib.c:1269
+#, c-format
 msgid "dims [product %lld] do not match the length of object [%lld]"
-msgstr "dims [producte %lld] no coincideix amb la longitud de l'objecte [%lld]"
+msgstr "les dimensions [producte de %lld] no coincideixen amb la longitud de l'objecte [%lld]"
 
-#: src/main/attrib.c:1343
-#, fuzzy, c-format
+#: src/main/attrib.c:1355
+#, c-format
 msgid "factor level [%lld] is duplicated"
 msgstr "el nivell del factor [%lld] està duplicat"
 
-#: src/main/attrib.c:1371
-#, fuzzy
+#: src/main/attrib.c:1383
 msgid "attributes must be a list or NULL"
 msgstr "els atributs han de ser una llista o NULL"
 
-#: src/main/attrib.c:1376
-#, fuzzy
+#: src/main/attrib.c:1388
 msgid "attributes must be named"
-msgstr "els atributs han de ser anomenats"
+msgstr "els atributs han de tenir noms"
 
-#: src/main/attrib.c:1380
-#, fuzzy, c-format
+#: src/main/attrib.c:1392
+#, c-format
 msgid "all attributes must have names [%d does not]"
-msgstr "tots els atributs han de tenir noms [%d no]"
+msgstr "tots els atributs han de tenir noms [%d no en té]"
 
-#: src/main/attrib.c:1485
-#, fuzzy
+#: src/main/attrib.c:1497
 msgid "'which' must be of mode character"
-msgstr "«quin» ha de ser de caràcter de mode"
+msgstr "«which» ha de ser de mode caràcter"
 
-#: src/main/attrib.c:1487
-#, fuzzy
+#: src/main/attrib.c:1499
 msgid "exactly one attribute 'which' must be given"
-msgstr "s'ha de donar exactament un atribut «quin»"
+msgstr "s'ha de donar exactament un atribut «which»"
 
-#: src/main/attrib.c:1624
+#: src/main/attrib.c:1636
 #, fuzzy
 msgid "invalid slot name length"
 msgstr "la longitud del nom de l'espai buit no és vàlida"
 
-#: src/main/attrib.c:1628
+#: src/main/attrib.c:1640
 #, fuzzy, c-format
 msgid "invalid type '%s' for slot name"
 msgstr "tipus «%s» no vàlid per al nom de la ranura"
 
-#: src/main/attrib.c:1672
+#: src/main/attrib.c:1684
 #, fuzzy
 msgid "'name' must be non-null character string"
 msgstr "«name» ha de ser una cadena de caràcters no nul·la"
 
-#: src/main/attrib.c:1674
+#: src/main/attrib.c:1686
 #, fuzzy
 msgid "'name' must be a scalar string"
 msgstr "«%s» ha de ser una cadena de caràcters"
 
-#: src/main/attrib.c:1801 src/main/attrib.c:1872 src/main/attrib.c:1924
+#: src/main/attrib.c:1813 src/main/attrib.c:1884 src/main/attrib.c:1936
 #, fuzzy
 msgid "invalid type or length for slot name"
 msgstr "tipus o longitud no vàlides per al nom del lloc"
 
-#: src/main/attrib.c:1835
+#: src/main/attrib.c:1847
 #, fuzzy, c-format
 msgid "cannot get a slot (\"%s\") from an object of type \"%s\""
 msgstr "no es pot obtenir un espai («%s») d'un objecte de tipus «%s»"
 
-#: src/main/attrib.c:1846
+#: src/main/attrib.c:1858
 #, fuzzy, c-format
 msgid "no slot of name \"%s\" for this object of class \"%s\""
 msgstr "no hi ha cap espai del nom «%s» per a aquest objecte de la classe «%s»"
 
-#: src/main/attrib.c:1863
+#: src/main/attrib.c:1875
 #, fuzzy
 msgid "attempt to set slot on NULL object"
 msgstr "s'ha intentat establir la ranura a l'objecte NULL"
 
-#: src/main/attrib.c:1919
+#: src/main/attrib.c:1931
 #, fuzzy
 msgid "formal classes cannot be used without the 'methods' package"
 msgstr "les classes formals no es poden utilitzar sense el paquet «mètodes»"
 
-#: src/main/attrib.c:1929
+#: src/main/attrib.c:1941
 #, fuzzy, c-format
 msgid "no applicable method for `@` applied to an object of class \"%s\""
 msgstr "no hi ha cap mètode aplicable per a \" aplicat a un objecte de la classe «%s»"
 
-#: src/main/attrib.c:2069
+#: src/main/attrib.c:2081
 #, fuzzy
 msgid "bad attribute tag"
 msgstr "atribut de noms dolents"
@@ -1467,12 +1392,11 @@ msgid "repeated formal argument 'use.names'"
 msgstr "argument formal repetit 'use.names'"
 
 #: src/main/bind.c:952
-#, fuzzy
 msgid "argument not a list"
-msgstr "argument no és una llista"
+msgstr "l'argument no és una llista"
 
-#: src/main/bind.c:1102 src/main/names.c:1334 src/main/names.c:1339
-#: src/main/names.c:1344 src/main/names.c:1349
+#: src/main/bind.c:1102 src/main/names.c:1347 src/main/names.c:1352
+#: src/main/names.c:1357 src/main/names.c:1362
 #, fuzzy, c-format
 msgid "class name too long in '%s'"
 msgstr "el nom de la classe és massa llarg a «%s»"
@@ -1518,8 +1442,8 @@ msgstr "la mida del vector no pot ser infinita"
 msgid "vector size specified is too large"
 msgstr "la mida del vector especificada és massa gran"
 
-#: src/main/builtin.c:75 src/main/builtin.c:112 src/main/envir.c:1879
-#: src/main/envir.c:1998 src/main/envir.c:2103 src/main/envir.c:2238
+#: src/main/builtin.c:75 src/main/builtin.c:112 src/main/envir.c:2203
+#: src/main/envir.c:2322 src/main/envir.c:2427 src/main/envir.c:2561
 #: src/main/paste.c:103 src/main/paste.c:345 src/main/random.c:482
 #: src/main/random.c:511 src/main/unique.c:2292
 msgid "invalid first argument"
@@ -1527,16 +1451,16 @@ msgstr "el primer argument no és vàlid"
 
 #: src/main/builtin.c:84 src/main/builtin.c:93 src/main/builtin.c:317
 #: src/main/builtin.c:356 src/main/builtin.c:409 src/main/builtin.c:423
-#: src/main/coerce.c:1617 src/main/connections.c:3874 src/main/engine.c:3244
-#: src/main/envir.c:1003 src/main/envir.c:1057 src/main/envir.c:1227
-#: src/main/envir.c:1265 src/main/envir.c:1888 src/main/envir.c:2003
-#: src/main/envir.c:2038 src/main/envir.c:2114 src/main/envir.c:2245
-#: src/main/envir.c:3006 src/main/envir.c:3093 src/main/envir.c:3396
-#: src/main/envir.c:3425 src/main/envir.c:3446 src/main/envir.c:3469
-#: src/main/envir.c:3504 src/main/envir.c:3525 src/main/envir.c:3572
-#: src/main/envir.c:4034 src/main/envir.c:4039 src/main/eval.c:9058
+#: src/main/coerce.c:1616 src/main/connections.c:3874 src/main/engine.c:3244
+#: src/main/envir.c:1153 src/main/envir.c:1207 src/main/envir.c:1377
+#: src/main/envir.c:1415 src/main/envir.c:2212 src/main/envir.c:2327
+#: src/main/envir.c:2362 src/main/envir.c:2438 src/main/envir.c:2568
+#: src/main/envir.c:3342 src/main/envir.c:3429 src/main/envir.c:3732
+#: src/main/envir.c:3761 src/main/envir.c:3782 src/main/envir.c:3831
+#: src/main/envir.c:3866 src/main/envir.c:3887 src/main/envir.c:4006
+#: src/main/envir.c:4478 src/main/envir.c:4483 src/main/eval.c:9076
 #: src/main/objects.c:242 src/main/objects.c:250 src/main/saveload.c:2174
-#: src/main/saveload.c:2471 src/main/serialize.c:3221
+#: src/main/saveload.c:2471 src/main/serialize.c:3238
 msgid "use of NULL environment is defunct"
 msgstr "l'ús de l'entorn NULL és obsolet"
 
@@ -1594,7 +1518,7 @@ msgstr "'parent' no és un entorn"
 #: src/main/connections.c:5373 src/main/connections.c:5443
 #: src/main/connections.c:5664 src/main/connections.c:5668
 #: src/main/connections.c:6140 src/main/deparse.c:418 src/main/deparse.c:504
-#: src/main/serialize.c:2466
+#: src/main/serialize.c:2483
 #, fuzzy
 msgid "cannot write to this connection"
 msgstr "no s'ha pogut escriure a aquesta connexió"
@@ -1624,7 +1548,7 @@ msgstr "vector: no es pot crear un vector de mode '%s'."
 msgid "cannot set length of non-(vector or list)"
 msgstr "no s'ha pogut establir la longitud del no-(vector o llista)"
 
-#: src/main/builtin.c:843 src/main/character.c:682 src/main/coerce.c:3124
+#: src/main/builtin.c:843 src/main/character.c:682 src/main/coerce.c:3123
 #, fuzzy
 msgid "invalid value"
 msgstr "valor no vàlid"
@@ -1634,15 +1558,15 @@ msgstr "valor no vàlid"
 msgid "length of NULL cannot be changed"
 msgstr "no es pot canviar la longitud de NULL"
 
-#: src/main/builtin.c:955 src/main/envir.c:2255 src/main/envir.c:2263
+#: src/main/builtin.c:955 src/main/envir.c:2578 src/main/envir.c:2586
 #, fuzzy, c-format
 msgid "wrong length for '%s' argument"
 msgstr "longitud incorrecta per a l'argument «%s»"
 
-#: src/main/builtin.c:985 src/main/coerce.c:2827 src/main/coerce.c:2870
-#: src/main/eval.c:1171 src/main/eval.c:1288 src/main/eval.c:3656
-#: src/main/eval.c:3745 src/main/eval.c:3816 src/main/eval.c:4148
-#: src/main/eval.c:8037 src/main/eval.c:8206
+#: src/main/builtin.c:985 src/main/coerce.c:2826 src/main/coerce.c:2869
+#: src/main/eval.c:1171 src/main/eval.c:1286 src/main/eval.c:3660
+#: src/main/eval.c:3749 src/main/eval.c:3820 src/main/eval.c:4168
+#: src/main/eval.c:8055 src/main/eval.c:8224 src/main/eval.c:9503
 #, fuzzy
 msgid "'...' used in an incorrect context"
 msgstr "'...' utilitzat en un context incorrecte"
@@ -1657,12 +1581,12 @@ msgstr "els valors per defecte de «commutar» són duplicats: «%s» i «%s»"
 msgid "'EXPR' is missing"
 msgstr "Falta «EXPR»"
 
-#: src/main/builtin.c:1044 src/main/eval.c:8616
+#: src/main/builtin.c:1044 src/main/eval.c:8634
 #, fuzzy
 msgid "EXPR must be a length 1 vector"
 msgstr "EXPR ha de ser un vector de longitud 1"
 
-#: src/main/builtin.c:1047 src/main/eval.c:8619
+#: src/main/builtin.c:1047 src/main/eval.c:8637
 #, fuzzy, c-format
 msgid ""
 "EXPR is a \"factor\", treated as integer.\n"
@@ -1671,7 +1595,7 @@ msgstr ""
 "EXPR és un \"factor\", tractat com a enter.\n"
 " Considereu utilitzar «%s»."
 
-#: src/main/builtin.c:1104 src/main/eval.c:8629 src/main/eval.c:8658
+#: src/main/builtin.c:1104 src/main/eval.c:8647 src/main/eval.c:8676
 msgid "'switch' with no alternatives"
 msgstr "«switch» sense cap alternativa"
 
@@ -1850,7 +1774,7 @@ msgstr "dades no vàlides del mode «%s» (massa curt)"
 msgid "'%s' object cannot be coerced to type '%s'"
 msgstr "l'objecte «%s» no es pot coaccionar al tipus «%s»"
 
-#: src/main/coerce.c:1198 src/main/coerce.c:1568
+#: src/main/coerce.c:1198 src/main/coerce.c:1567
 #, fuzzy
 msgid "no method for coercing this S4 class to a vector"
 msgstr "no hi ha cap mètode per a forçar aquesta classe S4 a un vector"
@@ -1870,152 +1794,152 @@ msgstr "s'està intentant coaccionar el no-factor"
 msgid "malformed factor"
 msgstr "factor mal format"
 
-#: src/main/coerce.c:1613
+#: src/main/coerce.c:1612
 #, fuzzy
 msgid "list argument expected"
 msgstr "s'esperava un argument de llista"
 
-#: src/main/coerce.c:1620 src/main/dstruct.c:120 src/main/eval.c:9062
+#: src/main/coerce.c:1619 src/main/dstruct.c:120 src/main/eval.c:9080
 #, fuzzy
 msgid "invalid environment"
 msgstr "entorn no vàlid"
 
-#: src/main/coerce.c:1624
+#: src/main/coerce.c:1623
 #, fuzzy
 msgid "argument must have length at least 1"
 msgstr "l'argument ha de tenir una longitud com a mínim 1"
 
-#: src/main/coerce.c:1647
+#: src/main/coerce.c:1646
 #, fuzzy
 msgid "invalid body for function"
 msgstr "cos no vàlid per a la funció"
 
-#: src/main/coerce.c:1673
+#: src/main/coerce.c:1672
 #, fuzzy
 msgid "argument must be character"
 msgstr "l'argument ha de ser caràcter"
 
-#: src/main/coerce.c:1678
+#: src/main/coerce.c:1677
 #, fuzzy
 msgid "argument must be a character string"
 msgstr "l'argument ha de ser una cadena de caràcters"
 
-#: src/main/coerce.c:1719
+#: src/main/coerce.c:1718
 #, fuzzy, c-format
 msgid "parsing result not of length one, but %d"
 msgstr "s'està analitzant el resultat no de la longitud u, sinó %d"
 
-#: src/main/coerce.c:1751
+#: src/main/coerce.c:1750
 #, fuzzy
 msgid "invalid length 0 argument"
 msgstr "argument de longitud 0 no vàlid"
 
-#: src/main/coerce.c:1767
+#: src/main/coerce.c:1766
 #, fuzzy
 msgid "as.call(<character>) not feasible; consider str2lang(<char.>)"
 msgstr "as.call(<character>) no és factible; considereu str2lang(<char.>)"
 
-#: src/main/coerce.c:1770
+#: src/main/coerce.c:1769
 #, fuzzy
 msgid "invalid argument list"
 msgstr "llista d'arguments no vàlida"
 
-#: src/main/coerce.c:1788
+#: src/main/coerce.c:1787
 #, c-format
 msgid "'length = %lld' in coercion to '%s'"
 msgstr "«length = %lld» en coerció a «%s»"
 
-#: src/main/coerce.c:1822 src/main/coerce.c:1830 src/main/coerce.c:1839
-#: src/main/coerce.c:1847
+#: src/main/coerce.c:1821 src/main/coerce.c:1829 src/main/coerce.c:1838
+#: src/main/coerce.c:1846
 #, fuzzy
 msgid "NA in coercion to boolean"
 msgstr "SNA introduïts per coacció a un rang enter"
 
-#: src/main/coerce.c:2167
+#: src/main/coerce.c:2166
 #, fuzzy
 msgid "type \"single\" unimplemented in R"
 msgstr "escriu «single» sense implementar en R"
 
-#: src/main/coerce.c:2169
+#: src/main/coerce.c:2168
 #, fuzzy
 msgid "unimplemented predicate"
 msgstr "predicat no implementat"
 
-#: src/main/coerce.c:2358
+#: src/main/coerce.c:2357
 #, fuzzy, c-format
 msgid "%s() applied to non-(list or vector) of type '%s'"
 msgstr "%s() aplicat a no-(llista o vector) del tipus «%s»"
 
-#: src/main/coerce.c:2555 src/main/coerce.c:2616 src/main/coerce.c:2692
+#: src/main/coerce.c:2554 src/main/coerce.c:2615 src/main/coerce.c:2691
 #, fuzzy, c-format
 msgid "default method not implemented for type '%s'"
 msgstr "no s'ha implementat el mètode per defecte per al tipus «%s»"
 
-#: src/main/coerce.c:2712
+#: src/main/coerce.c:2711
 #, fuzzy
 msgid "'name' is missing"
 msgstr "Falta «name»"
 
-#: src/main/coerce.c:2719
+#: src/main/coerce.c:2718
 #, fuzzy
 msgid "first argument must be a character string"
 msgstr "el primer argument ha de ser una cadena de caràcters"
 
-#: src/main/coerce.c:2751
+#: src/main/coerce.c:2750
 #, fuzzy
 msgid "'what' must be a function or character string"
 msgstr "«what» ha de ser una cadena de funció o caràcter"
 
-#: src/main/coerce.c:2762 src/main/unique.c:1890
+#: src/main/coerce.c:2761 src/main/unique.c:1890
 #, fuzzy
 msgid "'envir' must be an environment"
 msgstr "'envir' ha de ser un entorn"
 
-#: src/main/coerce.c:2921
+#: src/main/coerce.c:2920
 #, fuzzy
 msgid "invalid environment specified"
 msgstr "s'ha especificat un entorn invàlid"
 
-#: src/main/coerce.c:2990
+#: src/main/coerce.c:2989
 #, fuzzy
 msgid "Setting class(x) to NULL;   result will no longer be an S4 object"
 msgstr "S'està establint la classe(x) a NULL; el resultat ja no serà un objecte S4"
 
-#: src/main/coerce.c:2993
+#: src/main/coerce.c:2992
 #, fuzzy, c-format
 msgid "Setting class(x) to multiple strings (\"%s\", \"%s\", ...); result will no longer be an S4 object"
 msgstr "S'està establint la classe(x) a múltiples cadenes (\"%s\", \"%s\", ...); el resultat ja no serà un objecte S4"
 
-#: src/main/coerce.c:2997
+#: src/main/coerce.c:2996
 #, fuzzy, c-format
 msgid "Setting class(x) to \"%s\" sets attribute to NULL; result will no longer be an S4 object"
 msgstr "S'està establint la classe(x) a «%s» estableix l'atribut a NULL; el resultat ja no serà un objecte S4"
 
-#: src/main/coerce.c:3022
+#: src/main/coerce.c:3021
 #, fuzzy
 msgid "invalid replacement object to be a class string"
 msgstr "l'objecte de reemplaçament no és vàlid per a ser una cadena de classe"
 
-#: src/main/coerce.c:3028
+#: src/main/coerce.c:3027
 #, fuzzy, c-format
 msgid "invalid to set the class to matrix unless the dimension attribute is of length 2 (was %d)"
 msgstr "no és vàlida per a establir la classe a matriu a menys que l'atribut de dimensió sigui de longitud 2 (era %d)"
 
-#: src/main/coerce.c:3059
+#: src/main/coerce.c:3058
 #, fuzzy, c-format
 msgid "\"%s\" can only be set as the class if the object has this type; found \"%s\""
 msgstr "«%s» només es pot definir com a classe si l'objecte té aquest tipus; s'ha trobat «%s»"
 
-#: src/main/coerce.c:3077
+#: src/main/coerce.c:3076
 msgid "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr "no es pot establir la classe a «array» a menys que l'atribut de dimensió tingui longitud > 0"
 
-#: src/main/coerce.c:3116
+#: src/main/coerce.c:3115
 #, fuzzy
 msgid "'value' must be non-null character string"
 msgstr "«value» ha de ser una cadena de caràcters no nul·la"
 
-#: src/main/coerce.c:3128
+#: src/main/coerce.c:3127
 msgid "invalid to change the storage mode of a factor"
 msgstr ""
 
@@ -2064,8 +1988,8 @@ msgstr "connexió no vàlida"
 msgid "closing unused connection %d (%s)\n"
 msgstr "s'està tancant la connexió no utilitzada %d (%s)\n"
 
-#: src/main/connections.c:281 src/main/serialize.c:1724
-#: src/main/serialize.c:1745 src/main/sysutils.c:725 src/main/sysutils.c:747
+#: src/main/connections.c:281 src/main/serialize.c:1741
+#: src/main/serialize.c:1762 src/main/sysutils.c:725 src/main/sysutils.c:747
 #: src/main/sysutils.c:768 src/main/sysutils.c:1715 src/main/sysutils.c:1730
 #: src/main/sysutils.c:1944 src/main/sysutils.c:2114 src/main/sysutils.c:2123
 #: src/main/sysutils.c:2135 src/main/sysutils.c:2549
@@ -2104,7 +2028,7 @@ msgstr "no es pot obrir el fitxer «%ls»: és un directori"
 #: src/main/connections.c:899 src/main/connections.c:1850
 #: src/main/connections.c:2002 src/main/connections.c:2207
 #: src/main/connections.c:2449
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open file '%s': it is a directory"
 msgstr "no es pot obrir el fitxer «%s»: és un directori"
 
@@ -2202,9 +2126,8 @@ msgstr "Ha fallat l'assignació de la connexió fifo"
 #: src/main/connections.c:5310 src/main/connections.c:5436
 #: src/main/connections.c:5660 src/main/dcf.c:93 src/main/deparse.c:410
 #: src/main/deparse.c:496 src/main/saveload.c:2371 src/main/saveload.c:2456
-#: src/main/scan.c:969 src/main/serialize.c:2640 src/main/serialize.c:2696
+#: src/main/scan.c:969 src/main/serialize.c:2657 src/main/serialize.c:2713
 #: src/main/source.c:291
-#, fuzzy
 msgid "cannot open the connection"
 msgstr "no s'ha pogut obrir la connexió"
 
@@ -2506,8 +2429,8 @@ msgid "cannot close 'message' sink connection"
 msgstr "no s'ha pogut tancar la connexió «missage» del conducte"
 
 #: src/main/connections.c:4256 src/main/connections.c:6139
-#: src/main/connections.c:6147 src/main/serialize.c:2456
-#: src/main/serialize.c:2464
+#: src/main/connections.c:6147 src/main/serialize.c:2473
+#: src/main/serialize.c:2481
 #, fuzzy
 msgid "connection is not open"
 msgstr "la connexió no està oberta"
@@ -2530,7 +2453,7 @@ msgstr "Error en escriure a la connexió"
 #: src/main/connections.c:4446 src/main/connections.c:4448
 #: src/main/connections.c:4736 src/main/connections.c:5293
 #: src/main/connections.c:5318 src/main/connections.c:6148 src/main/dcf.c:100
-#: src/main/scan.c:972 src/main/scan.c:976 src/main/serialize.c:2458
+#: src/main/scan.c:972 src/main/scan.c:976 src/main/serialize.c:2475
 #: src/main/source.c:294
 #, fuzzy
 msgid "cannot read from this connection"
@@ -2920,23 +2843,28 @@ msgstr "error intern a «dosys»"
 msgid "integer overflow in 'cumsum'; use 'cumsum(as.numeric(.))'"
 msgstr "desbordament enter a «cumsum»; useu «cumsum(as.numeric(.))»"
 
-#: src/main/cum.c:217
+#: src/main/cum.c:233
 #, fuzzy
 msgid "'cummax' not defined for complex numbers"
 msgstr "'cummax' no està definit per als nombres complexos"
 
-#: src/main/cum.c:220
+#: src/main/cum.c:236
 #, fuzzy
 msgid "'cummin' not defined for complex numbers"
 msgstr "'cummin' no està definit per als nombres complexos"
 
-#: src/main/cum.c:247 src/main/cum.c:274
+#: src/main/cum.c:239
+#, fuzzy
+msgid "'cumvar' not defined for complex numbers"
+msgstr "'cummax' no està definit per als nombres complexos"
+
+#: src/main/cum.c:266 src/main/cum.c:296
 #, fuzzy
 msgid "unknown cumxxx function"
 msgstr "funció cumxxxx desconeguda"
 
-#: src/main/datetime.c:550 src/main/datetime.c:561 src/main/datetime.c:605
-#: src/main/datetime.c:617
+#: src/main/datetime.c:551 src/main/datetime.c:562 src/main/datetime.c:606
+#: src/main/datetime.c:618
 #, fuzzy
 msgid "datetimes before 1902 may not be accurate: warns once per session"
 msgstr "és possible que les dates anteriors a 1902 no siguin exactes: avisa una vegada per sessió"
@@ -2958,47 +2886,47 @@ msgstr "problema amb establir la zona horària"
 msgid "cannot set timezones on this system"
 msgstr "no es poden establir zones horàries en aquest sistema"
 
-#: src/main/datetime.c:1026
+#: src/main/datetime.c:1070
 #, fuzzy
 msgid "a valid \"POSIXlt\" object is a list of at least 9 elements"
 msgstr "un objecte «POSIXlt» vàlid és una llista d'almenys 9 elements"
 
-#: src/main/datetime.c:1030
+#: src/main/datetime.c:1074
 #, fuzzy
 msgid "a valid \"POSIXlt\" object has names"
 msgstr "un objecte «POSIXlt» vàlid té noms"
 
-#: src/main/datetime.c:1036
+#: src/main/datetime.c:1080
 #, fuzzy, c-format
 msgid "a valid \"POSIXlt\" object has element %d with name '%s' which should be '%s'"
 msgstr "un objecte \"POSIXlt\" vàlid té l'element %d amb el nom '%s' que hauria de ser '%s'"
 
-#: src/main/datetime.c:1043 src/main/datetime.c:1059
+#: src/main/datetime.c:1087 src/main/datetime.c:1103
 #, fuzzy, c-format
 msgid "a valid \"POSIXlt\" object has a numeric element %s"
 msgstr "un objecte «POSIXlt» vàlid té un element numèric %s"
 
-#: src/main/datetime.c:1054
+#: src/main/datetime.c:1098
 #, fuzzy, c-format
 msgid "a valid \"POSIXlt\" object has a character element %s"
 msgstr "un objecte \"POSIXlt\" vàlid té un element de caràcter %s"
 
-#: src/main/datetime.c:1067 src/main/datetime.c:1300 src/main/datetime.c:1985
+#: src/main/datetime.c:1111 src/main/datetime.c:1293 src/main/datetime.c:1956
 #, fuzzy, c-format
 msgid "invalid '%s'"
 msgstr "«%s» no vàlid"
 
-#: src/main/datetime.c:1070
+#: src/main/datetime.c:1114
 #, fuzzy
 msgid "attr(x, \"tzone\") should have length 1 or 3"
 msgstr "attr(x, \"tzone\") ha de tenir longitud 1 o 3"
 
-#: src/main/datetime.c:1182
+#: src/main/datetime.c:1197
 #, fuzzy, c-format
 msgid "zero-length component [[%d]] in non-empty \"POSIXlt\" structure"
 msgstr "component de longitud zero [[%d]] en l'estructura «POSIXlt» no buida"
 
-#: src/main/datetime.c:1818
+#: src/main/datetime.c:1789
 #, fuzzy, c-format
 msgid "'%s' is not a \"%s\""
 msgstr "«%s» no és un «%s»"
@@ -3092,11 +3020,8 @@ msgstr "argument de longitud zero"
 msgid "'opts' should be small non-negative integer"
 msgstr "«opts» ha de ser un enter petit no negatiu"
 
-#: src/main/deparse.c:467 src/main/envir.c:2028 src/main/envir.c:2156
-#: src/main/envir.c:2312 src/main/envir.c:3888 src/main/eval.c:1178
-#: src/main/eval.c:2595 src/main/eval.c:5784 src/main/saveload.c:2082
-#: src/main/saveload.c:2417 src/main/serialize.c:3239
-#, fuzzy, c-format
+#: src/main/deparse.c:467 src/main/envir.c:2352 src/main/errors.c:2818
+#, c-format
 msgid "object '%s' not found"
 msgstr "no s'ha trobat l'objecte «%s»"
 
@@ -3637,328 +3562,360 @@ msgstr "índex %d fora dels límits"
 msgid "cannot change value of locked binding for '%s'"
 msgstr "no es pot canviar el valor de la vinculació bloquejada per a «%s»"
 
-#: src/main/envir.c:269 src/main/envir.c:1671
+#: src/main/envir.c:269 src/main/envir.c:1995
 #, fuzzy
 msgid "cannot add bindings to a locked environment"
 msgstr "no es poden afegir vinculacions a un entorn bloquejat"
 
-#: src/main/envir.c:834
+#: src/main/envir.c:799
+msgid "cycle detected in promise chain"
+msgstr ""
+
+#: src/main/envir.c:873 src/main/envir.c:2368 src/main/envir.c:3759
+#: src/main/envir.c:3780 src/main/envir.c:3800 src/main/envir.c:3810
+#: src/main/envir.c:3818 src/main/envir.c:3827 src/main/envir.c:3864
+#: src/main/envir.c:3885 src/main/envir.c:4004 src/main/envir.c:4094
+#: src/main/errors.c:2810 src/main/errors.c:2839
+#, fuzzy
+msgid "not a symbol"
+msgstr "no és un símbol"
+
+#: src/main/envir.c:875 src/main/envir.c:3707 src/main/envir.c:3735
+#: src/main/envir.c:3764 src/main/envir.c:3785 src/main/envir.c:3802
+#: src/main/envir.c:3804 src/main/envir.c:3812 src/main/envir.c:3820
+#: src/main/envir.c:3834 src/main/envir.c:3869 src/main/envir.c:3890
+#: src/main/envir.c:4009
+#, fuzzy
+msgid "not an environment"
+msgstr "no és un entorn"
+
+#: src/main/envir.c:984
 #, fuzzy
 msgid "cannot unbind in the base namespace"
 msgstr "no s'ha pogut desvincular a l'espai de noms base"
 
-#: src/main/envir.c:836
+#: src/main/envir.c:986
 #, fuzzy
 msgid "unbind in the base environment is unimplemented"
 msgstr "desvincular a l'entorn base no està implementat"
 
-#: src/main/envir.c:838 src/main/envir.c:1959 src/main/envir.c:3664
+#: src/main/envir.c:988 src/main/envir.c:2283 src/main/envir.c:4098
 #, fuzzy
 msgid "cannot remove bindings from a locked environment"
 msgstr "no s'han pogut eliminar les vinculacions d'un entorn bloquejat"
 
-#: src/main/envir.c:1230 src/main/envir.c:1268 src/main/envir.c:2041
+#: src/main/envir.c:1380 src/main/envir.c:1418 src/main/envir.c:2365
 #, fuzzy, c-format
 msgid "argument to '%s' is not an environment"
 msgstr "l'argument per a «%s» no és un entorn"
 
-#: src/main/envir.c:1433
+#: src/main/envir.c:1616
 #, fuzzy, c-format
 msgid "indexing '...' with non-positive index %d"
 msgstr "s'està indexant «...» amb un índex no positiu %d"
 
-#: src/main/envir.c:1442
+#: src/main/envir.c:1620
+#, fuzzy
+msgid "bad ... value"
+msgstr "valor incorrecte"
+
+#: src/main/envir.c:1626
 #, fuzzy, c-format
 msgid "the ... list contains fewer than %d element"
 msgid_plural "the ... list contains fewer than %d elements"
 msgstr[0] "la llista ... conté menys de %d element"
 msgstr[1] "la llista ... conté menys de %d elements"
 
-#: src/main/envir.c:1446
+#: src/main/envir.c:1630
 #, fuzzy, c-format
 msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d s'utilitza en un context incorrecte, no... per a cercar-hi"
 
-#: src/main/envir.c:1465
+#: src/main/envir.c:1663
 #, fuzzy
 msgid "indexing '...' with an invalid index"
 msgstr "indexant «...» amb un índex no vàlid"
 
-#: src/main/envir.c:1475 src/main/envir.c:1486
+#: src/main/envir.c:1672 src/main/envir.c:1687
 #, fuzzy
 msgid "incorrect context: the current call has no '...' to look in"
 msgstr "context incorrecte: la crida actual no té «...» per a cercar-hi"
 
-#: src/main/envir.c:1603
-#, fuzzy, c-format
-msgid "could not find function \"%s\""
-msgstr "no s'ha pogut trobar la funció «%s»"
+#: src/main/envir.c:1735 src/main/envir.c:1740 src/main/envir.c:1749
+#: src/main/envir.c:1754
+msgid "not a delayed ... element"
+msgstr ""
 
-#: src/main/envir.c:1633
+#: src/main/envir.c:1763 src/main/envir.c:1768
+msgid "not a forced ... element"
+msgstr ""
+
+#: src/main/envir.c:1957
 #, fuzzy
 msgid "cannot assign values in the empty environment"
 msgstr "no es poden assignar valors a l'entorn buit"
 
-#: src/main/envir.c:1639 src/main/envir.c:1769
+#: src/main/envir.c:1963 src/main/envir.c:2093
 #, fuzzy
 msgid "cannot assign variables to this database"
 msgstr "no s'han pogut assignar variables a aquesta base de dades"
 
-#: src/main/envir.c:1853
+#: src/main/envir.c:2177
 #, fuzzy, c-format
 msgid "cannot add binding of '%s' to the base environment"
 msgstr "no es pot afegir la vinculació de «%s» a l'entorn base"
 
-#: src/main/envir.c:1882
+#: src/main/envir.c:2206
 #, fuzzy
 msgid "only the first element is used as variable name"
 msgstr "només s'utilitza el primer element com a nom de variable"
 
-#: src/main/envir.c:1914
+#: src/main/envir.c:2238
 #, fuzzy
 msgid "first argument must be a named list"
 msgstr "el primer argument ha de ser una llista amb nom"
 
-#: src/main/envir.c:1920
+#: src/main/envir.c:2244
 #, fuzzy
 msgid "names(x) must be a character vector of the same length as x"
 msgstr "names(x) ha de ser un vector de caràcters de la mateixa longitud que x"
 
-#: src/main/envir.c:1923
+#: src/main/envir.c:2247
 #, fuzzy
 msgid "'envir' argument must be an environment"
 msgstr "l'argument «envir» ha de ser un entorn"
 
-#: src/main/envir.c:1953
+#: src/main/envir.c:2277
 #, fuzzy
 msgid "cannot remove variables from base namespace"
 msgstr "no s'han pogut eliminar les variables de l'espai de noms base"
 
-#: src/main/envir.c:1955
+#: src/main/envir.c:2279
 #, fuzzy
 msgid "cannot remove variables from the base environment"
 msgstr "no s'han pogut eliminar les variables de l'entorn base"
 
-#: src/main/envir.c:1957
+#: src/main/envir.c:2281
 #, fuzzy
 msgid "cannot remove variables from the empty environment"
 msgstr "no s'han pogut eliminar les variables de l'entorn buit"
 
-#: src/main/envir.c:1965
+#: src/main/envir.c:2289
 #, fuzzy
 msgid "cannot remove variables from this database"
 msgstr "no s'han pogut eliminar les variables d'aquesta base de dades"
 
-#: src/main/envir.c:2044 src/main/envir.c:3423 src/main/envir.c:3444
-#: src/main/envir.c:3465 src/main/envir.c:3502 src/main/envir.c:3523
-#: src/main/envir.c:3570 src/main/envir.c:3660
-#, fuzzy
-msgid "not a symbol"
-msgstr "no és un símbol"
-
-#: src/main/envir.c:2081
+#: src/main/envir.c:2405
 #, fuzzy, c-format
 msgid "invalid '%s' argument '%s'"
 msgstr "argument «%s» no vàlid «%s»"
 
-#: src/main/envir.c:2099
+#: src/main/envir.c:2423
 msgid "first argument has length > 1"
 msgstr "el primer argument té longitud > 1"
 
-#: src/main/envir.c:2158
-#, fuzzy, c-format
-msgid "object '%s' of mode '%s' was not found"
-msgstr "no s'ha trobat l'objecte «%s» del mode «%s»"
-
-#: src/main/envir.c:2241
+#: src/main/envir.c:2564
 #, fuzzy, c-format
 msgid "invalid name in position %d"
 msgstr "nom no vàlid a la posició %d"
 
-#: src/main/envir.c:2247
+#: src/main/envir.c:2570
 #, fuzzy
 msgid "second argument must be an environment"
 msgstr "el segon argument ha de ser un entorn"
 
-#: src/main/envir.c:2290
+#: src/main/envir.c:2613
 #, fuzzy, c-format
 msgid "first argument to '%s' must be a symbol"
 msgstr "el primer argument ha de ser un vector"
 
-#: src/main/envir.c:2292
+#: src/main/envir.c:2615
 #, fuzzy, c-format
 msgid "second argument to '%s' must be an environment"
 msgstr "el segon argument ha de ser un entorn"
 
-#: src/main/envir.c:2440
+#: src/main/envir.c:2763
 #, fuzzy, c-format
 msgid "'missing(%s)' did not find an argument"
 msgstr "«missing(%s)» no ha trobat cap argument"
 
-#: src/main/envir.c:2464
+#: src/main/envir.c:2787
 #, fuzzy
 msgid "invalid use of 'missing'"
 msgstr "ús no vàlid de «missing»"
 
-#: src/main/envir.c:2546
+#: src/main/envir.c:2869
 #, fuzzy
 msgid "'pos' must be an integer"
 msgstr "'pos' ha de ser un enter"
 
-#: src/main/envir.c:2560
+#: src/main/envir.c:2883
 #, fuzzy
 msgid "all elements of a list must be named"
 msgstr "tots els elements d'una llista han de ser anomenats"
 
-#: src/main/envir.c:2583
+#: src/main/envir.c:2906
 #, fuzzy
 msgid "'attach' only works for lists, data frames and environments"
 msgstr "'adjuntar' només funciona per a llistes, marcs de dades i entorns"
 
-#: src/main/envir.c:2666
+#: src/main/envir.c:2989
 #, fuzzy
 msgid "detaching \"package:base\" is not allowed"
 msgstr "no es permet desmarcar «package:base»"
 
-#: src/main/envir.c:3013 src/main/envir.c:3095
+#: src/main/envir.c:3349 src/main/envir.c:3431
 #, fuzzy
 msgid "argument must be an environment"
 msgstr "l'argument ha de ser un entorn"
 
-#: src/main/envir.c:3099
+#: src/main/envir.c:3435
 #, fuzzy
 msgid "arguments must be symbolic"
 msgstr "els arguments han de ser simbòlics"
 
-#: src/main/envir.c:3244
+#: src/main/envir.c:3580
 #, fuzzy
 msgid "no enclosing environment"
 msgstr "sense entorn de tancament"
 
-#: src/main/envir.c:3301
+#: src/main/envir.c:3637
 #, fuzzy, c-format
 msgid "no item called \"%s\" on the search list"
 msgstr "no hi ha cap element anomenat «%s» a la llista de cerca"
 
-#: src/main/envir.c:3327
+#: src/main/envir.c:3663
 #, fuzzy
 msgid "using 'as.environment(NULL)' is defunct"
 msgstr "s'està desactivant l'ús de «as.environment(NULL)»"
 
-#: src/main/envir.c:3333
+#: src/main/envir.c:3669
 #, fuzzy
 msgid "S4 object does not extend class \"environment\""
 msgstr "L'objecte S4 no amplia la classe «entorn»"
 
-#: src/main/envir.c:3348
+#: src/main/envir.c:3684
 #, fuzzy
 msgid "invalid object for 'as.environment'"
 msgstr "objecte no vàlid per a «as.environment»"
 
-#: src/main/envir.c:3371 src/main/envir.c:3399 src/main/envir.c:3428
-#: src/main/envir.c:3449 src/main/envir.c:3472 src/main/envir.c:3507
-#: src/main/envir.c:3528 src/main/envir.c:3575
-#, fuzzy
-msgid "not an environment"
-msgstr "no és un entorn"
-
-#: src/main/envir.c:3436 src/main/envir.c:3457 src/main/envir.c:3515
-#: src/main/envir.c:3536 src/main/envir.c:3579 src/main/envir.c:3588
+#: src/main/envir.c:3772 src/main/envir.c:3793 src/main/envir.c:3877
+#: src/main/envir.c:3898 src/main/envir.c:4013 src/main/envir.c:4022
 #, fuzzy, c-format
 msgid "no binding for \"%s\""
 msgstr "no hi ha cap vinculació per a «%s»"
 
-#: src/main/envir.c:3467
+#: src/main/envir.c:3829
 #, fuzzy
 msgid "not a function"
 msgstr "no és una funció"
 
-#: src/main/envir.c:3475 src/main/envir.c:3491
+#: src/main/envir.c:3837 src/main/envir.c:3853
 #, fuzzy
 msgid "symbol already has a regular binding"
 msgstr "el símbol ja té una vinculació regular"
 
-#: src/main/envir.c:3477 src/main/envir.c:3493
+#: src/main/envir.c:3839 src/main/envir.c:3855
 #, fuzzy
 msgid "cannot change active binding if binding is locked"
 msgstr "no es pot canviar la vinculació activa si la vinculació està bloquejada"
 
-#: src/main/envir.c:3581 src/main/envir.c:3590
+#: src/main/envir.c:3952 src/main/envir.c:3987
+#, fuzzy
+msgid "unbound variable"
+msgstr "nom de variable incorrecte"
+
+#: src/main/envir.c:3956
+#, fuzzy
+msgid "not a delayed or forced binding"
+msgstr "no s'ha pogut desvincular una vinculació bloquejada"
+
+#: src/main/envir.c:3970 src/main/envir.c:3991 src/main/envir.c:3996
+#, fuzzy
+msgid "not a delayed binding"
+msgstr "no s'ha pogut desvincular una vinculació bloquejada"
+
+#: src/main/envir.c:3978
+#, fuzzy
+msgid "not a forced binding"
+msgstr "no s'ha pogut desvincular una vinculació bloquejada"
+
+#: src/main/envir.c:4015 src/main/envir.c:4024
 #, fuzzy, c-format
 msgid "no active binding for \"%s\""
 msgstr "no hi ha cap vinculació activa per a «%s»"
 
-#: src/main/envir.c:3610 src/main/envir.c:3872
+#: src/main/envir.c:4044 src/main/envir.c:4306
 #, fuzzy
 msgid "unknown op"
 msgstr "op desconegut"
 
-#: src/main/envir.c:3666
+#: src/main/envir.c:4100
 #, fuzzy
 msgid "cannot unbind a locked binding"
 msgstr "no s'ha pogut desvincular una vinculació bloquejada"
 
-#: src/main/envir.c:3668
+#: src/main/envir.c:4102
 #, fuzzy
 msgid "cannot unbind an active binding"
 msgstr "no s'ha pogut desvincular una vinculació activa"
 
-#: src/main/envir.c:3818
+#: src/main/envir.c:4252
 #, fuzzy
 msgid "bad namespace name"
 msgstr "nom d'espai de noms incorrecte"
 
-#: src/main/envir.c:3831
+#: src/main/envir.c:4265
 #, fuzzy
 msgid "namespace already registered"
 msgstr "l'espai de noms ja està registrat"
 
-#: src/main/envir.c:3844
+#: src/main/envir.c:4278
 #, fuzzy
 msgid "namespace not registered"
 msgstr "l'espai de noms no està registrat"
 
-#: src/main/envir.c:3908
+#: src/main/envir.c:4352
 #, fuzzy
 msgid "bad variable name"
 msgstr "nom de variable incorrecte"
 
-#: src/main/envir.c:3950
+#: src/main/envir.c:4394
 #, fuzzy
 msgid "bad namespace"
 msgstr "espai de noms incorrecte"
 
-#: src/main/envir.c:3986
+#: src/main/envir.c:4430
 #, fuzzy, c-format
 msgid "'%s' is not an exported object from 'namespace:%s'"
 msgstr "«%s» no és un objecte exportat de «namespace:%s»"
 
-#: src/main/envir.c:4037
+#: src/main/envir.c:4481
 #, fuzzy
 msgid "bad import environment argument"
 msgstr "argument d'entorn d'importació incorrecte"
 
-#: src/main/envir.c:4042
+#: src/main/envir.c:4486
 #, fuzzy
 msgid "bad export environment argument"
 msgstr "argument d'entorn d'exportació incorrecte"
 
-#: src/main/envir.c:4046
+#: src/main/envir.c:4490
 #, fuzzy
 msgid "length of import and export names must match"
 msgstr "la longitud dels noms d'importació i exportació ha de coincidir"
 
-#: src/main/envir.c:4069
+#: src/main/envir.c:4513
 #, fuzzy, c-format
 msgid "exported symbol '%s' has no value"
 msgstr "el símbol exportat «%s» no té valor"
 
-#: src/main/envir.c:4318
+#: src/main/envir.c:4762
 #, fuzzy, c-format
 msgid "unknown encoding: %d"
 msgstr "codificació desconeguda: %d"
 
-#: src/main/envir.c:4338
+#: src/main/envir.c:4782
 #, fuzzy, c-format
 msgid "embedded nul in string: '%s'"
 msgstr "nul incrustat a la cadena: «%s»"
@@ -3999,12 +3956,10 @@ msgid "Calls:"
 msgstr "Trucades:"
 
 #: src/main/errors.c:582 src/main/errors.c:601 src/main/errors.c:772
-#, fuzzy
 msgid "Lost warning messages\n"
 msgstr "Missatges d'avís perduts\n"
 
 #: src/main/errors.c:613
-#, fuzzy
 msgid "Warning message:"
 msgid_plural "Warning messages:"
 msgstr[0] "Missatge d'avís:"
@@ -4058,9 +4013,8 @@ msgid "Error: "
 msgstr "Error: "
 
 #: src/main/errors.c:887 src/main/errors.c:1499
-#, fuzzy
 msgid "In addition: "
-msgstr "A més: "
+msgstr "A més a més: "
 
 #: src/main/errors.c:1013
 #, fuzzy
@@ -4075,7 +4029,7 @@ msgstr "l'opció «error» no és vàlida\n"
 #: src/modules/lapack/Lapack.c:539 src/modules/lapack/Lapack.c:594
 #: src/modules/lapack/Lapack.c:631 src/modules/lapack/Lapack.c:632
 #: src/modules/lapack/Lapack.c:896
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' must be a character string"
 msgstr "«%s» ha de ser una cadena de caràcters"
 
@@ -4184,32 +4138,42 @@ msgstr "l'objecte condició ha de ser un VECSXP de longitud com a mínim un"
 msgid "first element of condition object must be a scalar string"
 msgstr "el primer element de l'objecte de condició ha de ser una cadena escalar"
 
-#: src/main/errors.c:2787
-#, fuzzy, c-format
+#: src/main/errors.c:2788
+#, c-format
 msgid "argument \"%s\" is missing, with no default"
 msgstr "manca l'argument «%s», sense valor per defecte"
 
-#: src/main/errors.c:2790
+#: src/main/errors.c:2791
 #, fuzzy
 msgid "argument is missing, with no default"
 msgstr "manca l'argument, sense valor per defecte"
 
-#: src/main/errors.c:2972
+#: src/main/errors.c:2825
+#, fuzzy, c-format
+msgid "object '%s' of mode '%s' was not found"
+msgstr "no s'ha trobat l'objecte «%s» del mode «%s»"
+
+#: src/main/errors.c:2847
+#, fuzzy, c-format
+msgid "could not find function \"%s\""
+msgstr "no s'ha pogut trobar la funció «%s»"
+
+#: src/main/errors.c:3026
 #, fuzzy, c-format
 msgid "partial argument match of '%s' to '%s'"
 msgstr "coincidència parcial de l'argument de «%s» a «%s»"
 
-#: src/main/errors.c:2984
+#: src/main/errors.c:3038
 #, fuzzy
 msgid "protect(): protection stack overflow"
 msgstr "protect(): desbordament de la pila de protecció"
 
-#: src/main/errors.c:2985
+#: src/main/errors.c:3039
 #, fuzzy
 msgid "evaluation nested too deeply: infinite recursion / options(expressions=)?"
 msgstr "avaluació imbricada massa profundament: recursivitat infinita / opcions(expressions))?"
 
-#: src/main/errors.c:2986
+#: src/main/errors.c:3040
 #, fuzzy
 msgid "node stack overflow"
 msgstr "desbordament de la pila de nodes"
@@ -4254,262 +4218,267 @@ msgstr "promet ja en avaluació: referència recursiva d'argument per defecte o 
 msgid "restarting interrupted promise evaluation"
 msgstr "s'està reiniciant l'avaluació de promeses interrompuda"
 
-#: src/main/eval.c:1284 src/main/eval.c:2461 src/main/eval.c:7976
+#: src/main/eval.c:1282 src/main/eval.c:2470 src/main/eval.c:7994
 #, fuzzy
 msgid "attempt to apply non-function"
 msgstr "s'intenta aplicar la no-funció"
 
-#: src/main/eval.c:1308
+#: src/main/eval.c:1306
 #, c-format
 msgid "%s at %s#%d: "
 msgstr "%s a %s#%d: "
 
-#: src/main/eval.c:2452 src/main/eval.c:3661
+#: src/main/eval.c:2461 src/main/eval.c:3665
 #, fuzzy, c-format
 msgid "argument %d is empty"
 msgstr "l'argument %d és buit"
 
-#: src/main/eval.c:2502
+#: src/main/eval.c:2511
 #, fuzzy, c-format
 msgid "could not find symbol \"%s\" in environment of the generic function"
 msgstr "no s'ha pogut trobar el símbol «%s» a l'entorn de la funció genèrica"
 
-#: src/main/eval.c:2520
+#: src/main/eval.c:2529
 #, fuzzy, c-format
 msgid "symbol \"%s\" not in environment of method"
 msgstr "el símbol «%s» no és a l'entorn del mètode"
 
-#: src/main/eval.c:2654
+#: src/main/eval.c:2663
 msgid "the condition has length > 1"
 msgstr "la condició té longitud > 1"
 
-#: src/main/eval.c:2671
+#: src/main/eval.c:2680
 #, fuzzy
 msgid "missing value where TRUE/FALSE needed"
 msgstr "manca el valor on cal «TRUE»/«FALSE»"
 
-#: src/main/eval.c:2672
+#: src/main/eval.c:2681
 #, fuzzy
 msgid "argument is not interpretable as logical"
 msgstr "l'argument no es pot interpretar com a lògic"
 
-#: src/main/eval.c:2673
+#: src/main/eval.c:2682
 #, fuzzy
 msgid "argument is of length zero"
 msgstr "l'argument és de longitud zero"
 
-#: src/main/eval.c:2771
+#: src/main/eval.c:2780
 #, fuzzy
 msgid "non-symbol loop variable"
 msgstr "variable de bucle no simbòlica"
 
-#: src/main/eval.c:2864 src/main/eval.c:7676
+#: src/main/eval.c:2873 src/main/eval.c:7694
 #, fuzzy
 msgid "invalid for() loop sequence"
 msgstr "la seqüència de bucles for() no és vàlida"
 
-#: src/main/eval.c:3013
+#: src/main/eval.c:3022
 #, fuzzy
 msgid "multi-argument returns are not permitted"
 msgstr "no es permeten retorns multiargument"
 
-#: src/main/eval.c:3065
+#: src/main/eval.c:3072
 #, fuzzy
 msgid "\"expr\" must be a call expression"
 msgstr "«expr» ha de ser una expressió de crida"
 
-#: src/main/eval.c:3174
+#: src/main/eval.c:3178
 #, fuzzy
 msgid "invalid (NULL) left side of assignment"
 msgstr "la part esquerra de l'assignació no és vàlida (NULL)"
 
-#: src/main/eval.c:3215
+#: src/main/eval.c:3219
 #, fuzzy
 msgid "target of assignment expands to non-language object"
 msgstr "l'objectiu de l'assignació s'expandeix a un objecte que no sigui d'idioma"
 
-#: src/main/eval.c:3305
+#: src/main/eval.c:3309
 #, fuzzy, c-format
 msgid "overlong name in '%s'"
 msgstr "nom massa llarg a «%s»"
 
-#: src/main/eval.c:3432
+#: src/main/eval.c:3436
 #, fuzzy
 msgid "cannot do complex assignments in base namespace"
 msgstr "no es poden fer assignacions complexes a l'espai de noms base"
 
-#: src/main/eval.c:3434
+#: src/main/eval.c:3438
 #, fuzzy
 msgid "cannot do complex assignments in base environment"
 msgstr "no es poden fer assignacions complexes a l'entorn base"
 
-#: src/main/eval.c:3447
+#: src/main/eval.c:3451
 msgid "existing `*tmp*` binding is locked"
 msgstr ""
 
-#: src/main/eval.c:3449
+#: src/main/eval.c:3453
 #, fuzzy
 msgid "existing `*tmp*` binding is an active binding"
 msgstr "no s'ha pogut desvincular una vinculació activa"
 
-#: src/main/eval.c:3490 src/main/eval.c:3519
+#: src/main/eval.c:3494 src/main/eval.c:3523
 msgid "invalid function in complex assignment"
 msgstr "funció no vàlida en una assignació complexa"
 
-#: src/main/eval.c:3593
+#: src/main/eval.c:3597
 #, fuzzy
 msgid "invalid (do_set) left-hand side to assignment"
 msgstr "costat esquerre (doset) no vàlid per a l'assignació"
 
-#: src/main/eval.c:3675
+#: src/main/eval.c:3679
 #, fuzzy, c-format
 msgid "'%s' is missing"
 msgstr "falta «%s»"
 
-#: src/main/eval.c:3850
-#, fuzzy, c-format
+#: src/main/eval.c:3870
+#, c-format
 msgid "invalid formal argument list for \"%s\""
-msgstr "la llista d'arguments formals per a «function» no és vàlida"
+msgstr "la llista d'arguments formals per a «%s» no és vàlida"
 
-#: src/main/eval.c:3907 src/main/eval.c:3938 src/main/eval.c:3943
+#: src/main/eval.c:3927 src/main/eval.c:3958 src/main/eval.c:3963
 #, fuzzy, c-format
 msgid "invalid '%s' argument of type '%s'"
 msgstr "argument «%s» no vàlid del tipus «%s»"
 
-#: src/main/eval.c:3935
+#: src/main/eval.c:3955
 #, fuzzy
 msgid "numeric 'envir' arg not of length one"
 msgstr "l'argument numèric «envir» no és de longitud u"
 
-#: src/main/eval.c:4034 src/main/eval.c:4047
+#: src/main/eval.c:4054 src/main/eval.c:4067
 #, fuzzy
 msgid "'Recall' called from outside a closure"
 msgstr "'Recall' cridat des de fora d'un tancament"
 
-#: src/main/eval.c:4141
+#: src/main/eval.c:4161
 #, fuzzy
 msgid "value in '...' is not a promise"
 msgstr "el valor de «...» no és una promesa"
 
-#: src/main/eval.c:4455
+#: src/main/eval.c:4475
 #, fuzzy, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "Mètodes incompatibles («%s», «%s») per a «%s»"
 
-#: src/main/eval.c:4507
+#: src/main/eval.c:4527
 #, fuzzy
 msgid "dispatch error in group dispatch"
 msgstr "error d'enviament al grup d'enviament"
 
-#: src/main/eval.c:4994
+#: src/main/eval.c:5014
 #, fuzzy, c-format
 msgid "\"%s\" is not a %s function"
 msgstr "«%s» no és una funció %s"
 
-#: src/main/eval.c:5638
+#: src/main/eval.c:5658
 #, fuzzy
 msgid "bad opcode"
 msgstr "codi d'operació incorrecte"
 
-#: src/main/eval.c:6785
+#: src/main/eval.c:6803
 #, fuzzy, c-format
 msgid "invalid %s type in 'x %s y'"
 msgstr "tipus %s no vàlid a «x %s y»"
 
-#: src/main/eval.c:7542
+#: src/main/eval.c:7560
 #, fuzzy
 msgid "byte code version mismatch"
 msgstr "la versió del codi de bytes no coincideix"
 
-#: src/main/eval.c:7809
+#: src/main/eval.c:7827
 #, fuzzy
 msgid "invalid sequence argument in for loop"
 msgstr "argument de seqüència no vàlid per al bucle"
 
-#: src/main/eval.c:7965 src/main/names.c:1373
+#: src/main/eval.c:7983 src/main/names.c:1386
 #, fuzzy, c-format
 msgid "there is no .Internal function '%s'"
 msgstr "No hi ha .Funció interna «%s»"
 
-#: src/main/eval.c:8105 src/main/eval.c:8527 src/main/eval.c:8568
+#: src/main/eval.c:8123 src/main/eval.c:8545 src/main/eval.c:8586
 #, fuzzy
 msgid "bad function"
 msgstr "funció incorrecta"
 
-#: src/main/eval.c:8118
+#: src/main/eval.c:8136
 #, fuzzy
 msgid "not a BUILTIN function"
 msgstr "no és una funció BUILTIN"
 
-#: src/main/eval.c:8626
+#: src/main/eval.c:8644
 #, fuzzy
 msgid "bad numeric 'switch' offsets"
 msgstr "desplaçaments numèrics de «canvi» incorrectes"
 
-#: src/main/eval.c:8632
+#: src/main/eval.c:8650
 #, fuzzy
 msgid "numeric EXPR required for 'switch' without named alternatives"
 msgstr "EXPR numèric requerit per a «commutar» sense alternatives amb nom"
 
-#: src/main/eval.c:8636
+#: src/main/eval.c:8654
 #, fuzzy
 msgid "bad character 'switch' offsets"
 msgstr "desplaçaments de «canvi» de caràcter incorrecte"
 
-#: src/main/eval.c:8780
+#: src/main/eval.c:8798
 #, fuzzy
 msgid "cannot find index for threaded code address"
 msgstr "no s'ha pogut trobar l'índex per a l'adreça de codi amb fil"
 
-#: src/main/eval.c:9055
+#: src/main/eval.c:9073
 #, fuzzy
 msgid "invalid body"
 msgstr "cos no vàlid"
 
-#: src/main/eval.c:9075
+#: src/main/eval.c:9093
 #, fuzzy
 msgid "invalid symbol"
 msgstr "símbol no vàlid"
 
-#: src/main/eval.c:9119
+#: src/main/eval.c:9137
 #, fuzzy
 msgid "argument is not a byte code object"
 msgstr "l'argument no és un objecte de codi de bytes"
 
-#: src/main/eval.c:9190 src/main/eval.c:9209 src/main/eval.c:9243
+#: src/main/eval.c:9208 src/main/eval.c:9227 src/main/eval.c:9261
 #, fuzzy
 msgid "constant buffer must be a generic vector"
 msgstr "la memòria intermèdia constant ha de ser un vector genèric"
 
-#: src/main/eval.c:9245
+#: src/main/eval.c:9263
 #, fuzzy
 msgid "bad constant count"
 msgstr "nombre de constants incorrecte"
 
-#: src/main/eval.c:9285
+#: src/main/eval.c:9303
 #, fuzzy
 msgid "profile timer in use"
 msgstr "temporitzador de perfil en ús"
 
-#: src/main/eval.c:9287
+#: src/main/eval.c:9305
 #, fuzzy
 msgid "already byte code profiling"
 msgstr "ja s'està perfilant el codi de bytes"
 
-#: src/main/eval.c:9307
+#: src/main/eval.c:9325
 #, fuzzy
 msgid "setting profile timer failed"
 msgstr "ha fallat l'establiment del temporitzador del perfil"
 
-#: src/main/eval.c:9326
+#: src/main/eval.c:9344
 #, fuzzy
 msgid "not byte code profiling"
 msgstr "no perfil de codi de bytes"
 
-#: src/main/eval.c:9343 src/main/eval.c:9348 src/main/eval.c:9353
+#: src/main/eval.c:9361 src/main/eval.c:9366 src/main/eval.c:9371
 #, fuzzy
 msgid "byte code profiling is not supported in this build"
 msgstr "no s'admet el perfilat del codi de bytes en aquesta construcció"
+
+#: src/main/eval.c:9448
+#, fuzzy, c-format
+msgid "'%s' is not of type %s"
+msgstr "«%s» no és un %s"
 
 #: src/main/gevents.c:45
 #, fuzzy, c-format
@@ -5081,22 +5050,22 @@ msgstr "'estat' no vàlid, s'assumeix 0"
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "«runLast» no vàlid, s'assumeix «FALSE»"
 
-#: src/main/main.c:1659
+#: src/main/main.c:1660
 #, fuzzy
 msgid "cannot allocate space for toplevel callback element"
 msgstr "no s'ha pogut assignar espai per a l'element de crida de retorn de nivell superior"
 
-#: src/main/main.c:1747
+#: src/main/main.c:1750
 #, fuzzy
 msgid "negative index passed to R_removeTaskCallbackByIndex"
-msgstr "Índex negatiu passat a R_removeTaskCallbackByIndex"
+msgstr "Índex negatiu passat a RremoveTaskCallbackByIndex"
 
-#: src/main/main.c:1874
+#: src/main/main.c:1877
 #, fuzzy, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "missatges d'avís de la crida de retorn de tasques de nivell superior «%s»\n"
 
-#: src/main/main.c:1965
+#: src/main/main.c:1968
 #, fuzzy
 msgid "top-level task callback did not return a logical value"
 msgstr "la crida de retorn de la tasca de nivell superior no ha retornat un valor lògic"
@@ -5246,18 +5215,18 @@ msgstr "unprotectptr: no s'ha trobat el punter"
 #, fuzzy, c-format
 msgid "R_Reprotect: only %d protected item, can't reprotect index %d"
 msgid_plural "R_Reprotect: only %d protected items, can't reprotect index %d"
-msgstr[0] "R_Reprotect: només %d element protegit, no es pot reprotegir l'índex %d"
-msgstr[1] "R_Reprotect: només %d elements protegits, no es pot reprotegir l'índex %d"
+msgstr[0] "RReprotect: només %d element protegit, no es pot reprotegir l'índex %d"
+msgstr[1] "RReprotect: només %d elements protegits, no es pot reprotegir l'índex %d"
 
 #: src/main/memory.c:3551
 #, fuzzy, c-format
 msgid "'R_Calloc' could not allocate memory (%llu of %llu bytes)"
-msgstr "'R_Calloc' no ha pogut assignar memòria (%llu de %llu bytes)"
+msgstr "'RCalloc' no ha pogut assignar memòria (%llu de %llu bytes)"
 
 #: src/main/memory.c:3562
 #, fuzzy, c-format
 msgid "'R_Realloc' could not re-allocate memory (%llu bytes)"
-msgstr "'R_Realloc' no ha pogut reassignar la memòria (%llu bytes)"
+msgstr "'RRealloc' no ha pogut reassignar la memòria (%llu bytes)"
 
 #: src/main/memory.c:3578 src/main/memory.c:3585
 #, fuzzy, c-format
@@ -5302,12 +5271,12 @@ msgstr "s'ha intentat establir l'índex %lld/%lld a SET_VECTOR_ELT"
 #: src/main/memory.c:4300
 #, fuzzy, c-format
 msgid "attempt to set index %lld/%lld in SET_STRING_ELT"
-msgstr "s'ha intentat establir l'índex %lld/%lld a SET_STRING_ELT"
+msgstr "s'ha intentat establir l'índex %lld/%lld a SETSTRINGELT"
 
 #: src/main/memory.c:4321
 #, fuzzy, c-format
 msgid "attempt to set index %lld/%lld in SET_VECTOR_ELT"
-msgstr "s'ha intentat establir l'índex %lld/%lld a SET_VECTOR_ELT"
+msgstr "s'ha intentat establir l'índex %lld/%lld a SETVECTORELT"
 
 #: src/main/memory.c:4504 src/main/memory.c:4513 src/main/memory.c:4526
 #: src/main/memory.c:4543 src/main/memory.c:4558 src/main/memory.c:4574
@@ -5379,27 +5348,27 @@ msgstr "no és un vector RAW adequat"
 msgid "'newlen' is too large"
 msgstr "el vector és massa gran"
 
-#: src/main/names.c:1070
+#: src/main/names.c:1083
 #, fuzzy
 msgid "string argument required"
 msgstr "es requereix un argument de cadena"
 
-#: src/main/names.c:1073
+#: src/main/names.c:1086
 #, fuzzy
 msgid "no such primitive function"
 msgstr "no existeix aquesta funció primitiva"
 
-#: src/main/names.c:1269 src/main/names.c:1303
+#: src/main/names.c:1282 src/main/names.c:1316
 #, fuzzy
 msgid "attempt to use zero-length variable name"
 msgstr "s'ha intentat utilitzar el nom de la variable de longitud zero"
 
-#: src/main/names.c:1271 src/main/names.c:1305
+#: src/main/names.c:1284 src/main/names.c:1318
 #, fuzzy, c-format
 msgid "variable names are limited to %d bytes"
 msgstr "els noms de les variables estan limitats a %d bytes"
 
-#: src/main/names.c:1368 src/main/names.c:1371
+#: src/main/names.c:1381 src/main/names.c:1384
 #, fuzzy
 msgid "invalid .Internal() argument"
 msgstr ". no és vàlid.Argument Internal()"
@@ -5607,7 +5576,7 @@ msgstr "El paquet «mètodes» encara no s'ha carregat"
 #: src/main/objects.c:1729
 #, fuzzy
 msgid "R_getClassDef(.) called with NULL string pointer"
-msgstr "R_getClassDef(.) cridat amb un punter de cadena nul"
+msgstr "RgetClassDef(.) cridat amb un punter de cadena nul"
 
 #: src/main/objects.c:1776
 #, fuzzy
@@ -5744,7 +5713,7 @@ msgstr ""
 msgid "invalid argument"
 msgstr "argument no vàlid"
 
-#: src/main/paste.c:88 src/main/util.c:521
+#: src/main/paste.c:88 src/main/util.c:519
 #, fuzzy, c-format
 msgid "%d argument passed to .Internal(%s) which requires %d"
 msgid_plural "%d arguments passed to .Internal(%s) which requires %d"
@@ -5956,7 +5925,7 @@ msgstr "error de lectura a «%s»"
 #: src/main/platform.c:2281
 #, fuzzy
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
-msgstr "establir «LC_NUMERIC» pot fer que l'R funcioni estranyament"
+msgstr "establir «LCNUMERIC» pot fer que l'R funcioni estranyament"
 
 #: src/main/platform.c:2294
 #, fuzzy, c-format
@@ -6334,7 +6303,7 @@ msgstr "l'argument «x» ha de ser un múltiple de %d llarg"
 msgid "argument 'x' must not contain NAs"
 msgstr "l'argument «x» no pot contenir NA"
 
-#: src/main/raw.c:341 src/main/util.c:2016
+#: src/main/raw.c:341 src/main/util.c:2014
 #, fuzzy
 msgid "invalid UTF-8 string"
 msgstr "cadena UTF-8 no vàlida"
@@ -6342,7 +6311,7 @@ msgstr "cadena UTF-8 no vàlida"
 #: src/main/raw.c:388
 #, fuzzy
 msgid "argument 'allow_surrogate_pairs' must be TRUE or FALSE"
-msgstr "l'argument «allow_surrogate_pairs» ha de ser CERT o FALS"
+msgstr "l'argument «allowsurrogatepairs» ha de ser CERT o FALS"
 
 #: src/main/relop.c:140 src/main/relop.c:154 src/main/relop.c:169
 #: src/main/relop.c:185
@@ -6396,8 +6365,8 @@ msgstr "«a» i «b» han de tenir el mateix tipus"
 #: src/main/saveload.c:1399 src/main/saveload.c:1443 src/main/saveload.c:1511
 #: src/main/saveload.c:1520 src/main/serialize.c:385 src/main/serialize.c:392
 #: src/main/serialize.c:405 src/main/serialize.c:409 src/main/serialize.c:436
-#: src/main/serialize.c:452 src/main/serialize.c:2071 src/main/serialize.c:2865
-#: src/main/serialize.c:2873
+#: src/main/serialize.c:452 src/main/serialize.c:2088 src/main/serialize.c:2882
+#: src/main/serialize.c:2890
 #, fuzzy
 msgid "read error"
 msgstr "error de lectura"
@@ -6448,7 +6417,7 @@ msgstr "tipus SEXP incorrecte al fitxer de dades"
 msgid "mismatch on types"
 msgstr "no coincideix en els tipus"
 
-#: src/main/saveload.c:612 src/main/saveload.c:1283 src/main/serialize.c:1996
+#: src/main/saveload.c:612 src/main/saveload.c:1283 src/main/serialize.c:2013
 #, fuzzy, c-format
 msgid "unrecognized internal function name \"%s\""
 msgstr "no s'ha reconegut el nom de la funció interna «%s»"
@@ -6568,7 +6537,7 @@ msgstr "s'ha produït un error d'escriptura de dades complex xdr"
 msgid "an xdr complex data read error occurred"
 msgstr "s'ha produït un error de lectura de dades complexes xdr"
 
-#: src/main/saveload.c:1805 src/main/serialize.c:2418 src/main/serialize.c:3059
+#: src/main/saveload.c:1805 src/main/serialize.c:2435 src/main/serialize.c:3076
 #: src/modules/internet/internet.c:390 src/modules/internet/internet.c:463
 #, fuzzy
 msgid "write failed"
@@ -6634,14 +6603,14 @@ msgstr "les dades carregades no són al formulari de la llista de parelles"
 msgid "first argument must be a file name"
 msgstr "el primer argument ha de ser un nom de fitxer"
 
-#: src/main/saveload.c:2212 src/main/saveload.c:2238 src/main/serialize.c:910
-#: src/main/serialize.c:952 src/main/serialize.c:995
+#: src/main/saveload.c:2212 src/main/saveload.c:2238 src/main/serialize.c:927
+#: src/main/serialize.c:969 src/main/serialize.c:1012
 #, fuzzy
 msgid "XDR write failed"
 msgstr "Ha fallat l'escriptura de l'XDR"
 
-#: src/main/saveload.c:2225 src/main/saveload.c:2250 src/main/serialize.c:1522
-#: src/main/serialize.c:1558 src/main/serialize.c:1596
+#: src/main/saveload.c:2225 src/main/saveload.c:2250 src/main/serialize.c:1539
+#: src/main/serialize.c:1575 src/main/serialize.c:1613
 #, fuzzy
 msgid "XDR read failed"
 msgstr "Ha fallat la lectura de l'XDR"
@@ -6651,12 +6620,12 @@ msgstr "Ha fallat la lectura de l'XDR"
 msgid "cannot save data -- unable to open '%s': %s"
 msgstr "no s'han pogut desar les dades -- no s'ha pogut obrir «%s»: %s"
 
-#: src/main/saveload.c:2358 src/main/serialize.c:2626
+#: src/main/saveload.c:2358 src/main/serialize.c:2643
 #, fuzzy, c-format
 msgid "cannot save to connections in version %d format"
 msgstr "no s'ha pogut desar a les connexions en el format versió %d"
 
-#: src/main/saveload.c:2381 src/main/serialize.c:2651
+#: src/main/saveload.c:2381 src/main/serialize.c:2668
 #, fuzzy
 msgid "connection not open for writing"
 msgstr "la connexió no està oberta per a escriptura"
@@ -6666,13 +6635,13 @@ msgstr "la connexió no està oberta per a escriptura"
 msgid "cannot save XDR format to a text-mode connection"
 msgstr "no s'ha pogut desar el format XDR a una connexió de mode de text"
 
-#: src/main/saveload.c:2403 src/main/serialize.c:2526 src/main/serialize.c:2540
-#: src/main/serialize.c:2737 src/main/serialize.c:2760
+#: src/main/saveload.c:2403 src/main/serialize.c:2543 src/main/serialize.c:2557
+#: src/main/serialize.c:2754 src/main/serialize.c:2777
 #, fuzzy
 msgid "error writing to connection"
 msgstr "error en escriure a la connexió"
 
-#: src/main/saveload.c:2465 src/main/serialize.c:2704
+#: src/main/saveload.c:2465 src/main/serialize.c:2721
 #, fuzzy
 msgid "connection not open for reading"
 msgstr "la connexió no està oberta per a lectura"
@@ -6824,9 +6793,8 @@ msgid "'%s' must be a finite number"
 msgstr "«%s» ha de ser un nombre finit"
 
 #: src/main/seq.c:856
-#, fuzzy
 msgid "'length.out' must be a non-negative number"
-msgstr "'longituds' ha de ser un vector d'enters no negatius"
+msgstr "«length.out» ha de ser un nombre no negatiu"
 
 #: src/main/seq.c:870 src/main/seq.c:877 src/main/seq.c:885
 #, fuzzy, c-format
@@ -6907,7 +6875,7 @@ msgstr "ha d'especificar el format ascii, binari o xdr"
 msgid "unknown output format"
 msgstr "format de sortida desconegut"
 
-#: src/main/serialize.c:607 src/main/serialize.c:2340
+#: src/main/serialize.c:607 src/main/serialize.c:2357
 #, fuzzy
 msgid "unknown input format"
 msgstr "format d'entrada desconegut"
@@ -6917,82 +6885,82 @@ msgstr "format d'entrada desconegut"
 msgid "input format does not match specified format"
 msgstr "el format d'entrada no coincideix amb el format especificat"
 
-#: src/main/serialize.c:825
+#: src/main/serialize.c:842
 #, fuzzy
 msgid "no restore method available"
 msgstr "no hi ha cap mètode de restauració disponible"
 
-#: src/main/serialize.c:873
+#: src/main/serialize.c:890
 #, fuzzy
 msgid "names in persistent strings are currently ignored"
 msgstr "els noms de les cadenes persistents s'ignoren actualment"
 
-#: src/main/serialize.c:1092
+#: src/main/serialize.c:1109
 #, fuzzy, c-format
 msgid "'%s' may not be available when loading"
 msgstr "'%s' no pot estar disponible en carregar"
 
-#: src/main/serialize.c:1100
+#: src/main/serialize.c:1117
 #, fuzzy
 msgid "namespaces may not be available when loading"
 msgstr "És possible que els espais de noms no estiguin disponibles en carregar"
 
-#: src/main/serialize.c:1248
+#: src/main/serialize.c:1265
 #, fuzzy, c-format
 msgid "WriteItem: unknown type %i"
 msgstr "Element d'escriptura: tipus desconegut %i"
 
-#: src/main/serialize.c:1434
+#: src/main/serialize.c:1451
 #, fuzzy, c-format
 msgid "version %d not supported"
 msgstr "versió %d no suportada"
 
-#: src/main/serialize.c:1467
+#: src/main/serialize.c:1484
 #, fuzzy
 msgid "reference index out of range"
 msgstr "l'índex de referència està fora de rang"
 
-#: src/main/serialize.c:1495
+#: src/main/serialize.c:1512
 #, fuzzy
 msgid "names in persistent strings are not supported yet"
 msgstr "els noms de les cadenes persistents encara no són compatibles"
 
-#: src/main/serialize.c:1677
+#: src/main/serialize.c:1694
 #, fuzzy, c-format
 msgid "input string '%s' cannot be translated from '%s' to UTF-8, but is valid UTF-8"
 msgstr "la cadena d'entrada «%s» no es pot traduir de «%s» a UTF-8, però és UTF-8 vàlid"
 
-#: src/main/serialize.c:1681
+#: src/main/serialize.c:1698
 #, fuzzy, c-format
 msgid "input string '%s' cannot be translated to UTF-8, is it valid in '%s'?"
 msgstr "la cadena d'entrada «%s» no es pot traduir a UTF-8, és vàlida a «%s»?"
 
-#: src/main/serialize.c:1717
+#: src/main/serialize.c:1734
 #, fuzzy, c-format
 msgid "deserializing invalid UTF-8 string '%s'"
 msgstr "s'està desserialitzant la cadena UTF-8 no vàlida «%s»"
 
-#: src/main/serialize.c:1747
+#: src/main/serialize.c:1764
 #, fuzzy
 msgid "strings not representable in native encoding will not be translated"
 msgstr "no es traduiran les cadenes no representables en la codificació nativa"
 
-#: src/main/serialize.c:1749
+#: src/main/serialize.c:1766
 #, fuzzy
 msgid "strings not representable in native encoding will be translated to UTF-8"
 msgstr "les cadenes no representables en la codificació nativa es traduiran a UTF-8"
 
-#: src/main/serialize.c:1766
+#: src/main/serialize.c:1783
 #, fuzzy
 msgid "negative serialized length for vector"
 msgstr "longitud serialitzada negativa per a vector"
 
-#: src/main/serialize.c:1774
+#: src/main/serialize.c:1791
 #, fuzzy
 msgid "invalid upper part of serialized vector length"
 msgstr "la part superior de la longitud del vector seriat no és vàlida"
 
-#: src/main/serialize.c:1779
+#: src/main/serialize.c:1796
 #, fuzzy
 msgid ""
 "negative serialized vector length:\n"
@@ -7001,131 +6969,131 @@ msgstr ""
 "longitud de vector serialitzat negativa:\n"
 "Potser un vector llarg de la versió de 64 bits de l'R?"
 
-#: src/main/serialize.c:2059
+#: src/main/serialize.c:2076
 #, fuzzy
 msgid "this version of R cannot read class references"
 msgstr "aquesta versió de l'R no pot llegir les referències de classe"
 
-#: src/main/serialize.c:2061
+#: src/main/serialize.c:2078
 #, fuzzy
 msgid "this version of R cannot read generic function references"
 msgstr "aquesta versió de l'R no pot llegir referències de funcions genèriques"
 
-#: src/main/serialize.c:2090
+#: src/main/serialize.c:2107
 #, fuzzy, c-format
 msgid "ReadItem: unknown type %i, perhaps written by later version of R"
 msgstr "ReadItem: tipus desconegut %i, potser escrit per una versió posterior de R"
 
-#: src/main/serialize.c:2255 src/main/serialize.c:2346
+#: src/main/serialize.c:2272 src/main/serialize.c:2363
 #, fuzzy
 msgid "invalid length of encoding name"
 msgstr "la longitud del nom de codificació no és vàlida"
 
-#: src/main/serialize.c:2265
+#: src/main/serialize.c:2282
 #, fuzzy, c-format
 msgid "cannot read unreleased workspace version %d written by experimental R %d.%d.%d"
 msgstr "no es pot llegir la versió de l'espai de treball no publicat %d escrita per l'R experimental %d.%d.%d"
 
-#: src/main/serialize.c:2269
+#: src/main/serialize.c:2286
 #, fuzzy, c-format
 msgid "cannot read workspace version %d written by R %d.%d.%d; need R %d.%d.%d or newer"
 msgstr "no es pot llegir la versió de l'espai de treball %d escrita per l'R %d.%d.%d; cal l'R %d.%d.%d o més recent"
 
-#: src/main/serialize.c:2425
+#: src/main/serialize.c:2442
 #, fuzzy
 msgid "read failed"
 msgstr "ha fallat la lectura"
 
-#: src/main/serialize.c:2488
+#: src/main/serialize.c:2505
 #, fuzzy
 msgid "error reading from ascii connection"
 msgstr "s'ha produït un error en llegir des de la connexió ascii"
 
-#: src/main/serialize.c:2490
+#: src/main/serialize.c:2507
 #, fuzzy
 msgid "unexpected format in ascii connection"
 msgstr "format inesperat a la connexió ascii"
 
-#: src/main/serialize.c:2495 src/main/serialize.c:2509
+#: src/main/serialize.c:2512 src/main/serialize.c:2526
 #, fuzzy
 msgid "error reading from connection"
 msgstr "s'ha produït un error en llegir de la connexió"
 
-#: src/main/serialize.c:2552
+#: src/main/serialize.c:2569
 #, fuzzy
 msgid "only ascii format can be written to text mode connections"
 msgstr "només es pot escriure el format ascii a les connexions de mode text"
 
-#: src/main/serialize.c:2567
+#: src/main/serialize.c:2584
 #, fuzzy
 msgid "only ascii format can be read from text mode connections"
 msgstr "només es pot llegir el format ascii des de les connexions de mode text"
 
-#: src/main/serialize.c:2624 src/main/serialize.c:2788
-#: src/main/serialize.c:2940
+#: src/main/serialize.c:2641 src/main/serialize.c:2805
+#: src/main/serialize.c:2957
 #, fuzzy
 msgid "bad version value"
 msgstr "valor de versió incorrecte"
 
-#: src/main/serialize.c:2649
+#: src/main/serialize.c:2666
 #, fuzzy
 msgid "binary-mode connection required for ascii=false"
 msgstr "es requereix una connexió en mode binari per a ascii forFALSE"
 
-#: src/main/serialize.c:2663
+#: src/main/serialize.c:2680
 msgid "cannot return a promise (PROMSXP) object"
 msgstr ""
 
-#: src/main/serialize.c:2816 src/main/serialize.c:2853
-#: src/main/serialize.c:2918
+#: src/main/serialize.c:2833 src/main/serialize.c:2870
+#: src/main/serialize.c:2935
 #, fuzzy
 msgid "serialization is too large to store in a raw vector"
 msgstr "la serialització és massa gran per emmagatzemar-la en un vector RAW"
 
-#: src/main/serialize.c:2833
+#: src/main/serialize.c:2850
 #, fuzzy
 msgid "cannot allocate buffer"
 msgstr "no s'ha pogut assignar la memòria intermèdia"
 
-#: src/main/serialize.c:3032 src/main/serialize.c:3114
+#: src/main/serialize.c:3049 src/main/serialize.c:3131
 #, fuzzy
 msgid "not a proper file name"
 msgstr "no és un nom de fitxer adequat"
 
-#: src/main/serialize.c:3036
+#: src/main/serialize.c:3053
 #, fuzzy
 msgid "not a proper raw vector"
 msgstr "no és un vector RAW adequat"
 
-#: src/main/serialize.c:3050 src/main/serialize.c:3147
-#: src/main/serialize.c:3162 src/main/serialize.c:3176
-#: src/main/serialize.c:3187 src/main/serialize.c:3201
+#: src/main/serialize.c:3067 src/main/serialize.c:3164
+#: src/main/serialize.c:3179 src/main/serialize.c:3193
+#: src/main/serialize.c:3204 src/main/serialize.c:3218
 #, fuzzy, c-format
 msgid "seek failed on %s"
 msgstr "ha fallat la cerca a %s"
 
-#: src/main/serialize.c:3060
+#: src/main/serialize.c:3077
 #, fuzzy
 msgid "could not determine file position"
 msgstr "no s'ha pogut determinar la posició del fitxer"
 
-#: src/main/serialize.c:3118
+#: src/main/serialize.c:3135
 #, fuzzy
 msgid "bad offset/length argument"
 msgstr "argument de desplaçament/longitud incorrecte"
 
-#: src/main/serialize.c:3166 src/main/serialize.c:3180
-#: src/main/serialize.c:3191 src/main/serialize.c:3205
+#: src/main/serialize.c:3183 src/main/serialize.c:3197
+#: src/main/serialize.c:3208 src/main/serialize.c:3222
 #, fuzzy, c-format
 msgid "read failed on %s"
 msgstr "ha fallat la lectura a %s"
 
-#: src/main/serialize.c:3225
+#: src/main/serialize.c:3242
 #, fuzzy
 msgid "bad environment"
 msgstr "mal ambient"
 
-#: src/main/serialize.c:3227
+#: src/main/serialize.c:3244
 #, fuzzy
 msgid "bad variable names"
 msgstr "noms de variables incorrectes"
@@ -7351,10 +7319,10 @@ msgstr "un argument no utilitzat pel format"
 msgid "%d arguments not used by format"
 msgstr "%d arguments no utilitzats pel format"
 
-#: src/main/startup.c:78
+#: src/main/startup.c:87
 #, fuzzy
 msgid "R_LibraryFileName: buffer too small"
-msgstr "R_LibraryFileName: la memòria intermèdia és massa petita"
+msgstr "RLibraryFileName: la memòria intermèdia és massa petita"
 
 #: src/main/subassign.c:151
 #, fuzzy
@@ -7502,7 +7470,7 @@ msgstr "subíndex negatiu no vàlid a %s"
 
 #: src/main/subscript.c:298 src/main/subscript.c:302 src/main/subset.c:1331
 #: src/main/subset.c:1389
-#, fuzzy, c-format
+#, c-format
 msgid "partial match of '%s' to '%s'"
 msgstr "coincidència parcial de «%s» a «%s»"
 
@@ -7647,9 +7615,8 @@ msgid "argument to 'which' is not logical"
 msgstr "l'argument per a «quin» no és lògic"
 
 #: src/main/summary.c:1206
-#, fuzzy
 msgid "no arguments"
-msgstr "arguments no vàlids"
+msgstr "sense arguments"
 
 #: src/main/summary.c:1218 src/main/summary.c:1236
 #, fuzzy
@@ -7795,27 +7762,27 @@ msgstr "punt Unicode %u no vàlid"
 #: src/main/sysutils.c:2653
 #, fuzzy
 msgid "'R_USER' not set"
-msgstr "no s'ha definit «R_USER»"
+msgstr "no s'ha definit «RUSER»"
 
 #: src/main/sysutils.c:2674 src/main/sysutils.c:2702
 #, fuzzy
 msgid "cannot allocate 'R_TempDir'"
-msgstr "no es pot assignar «R_TempDir»"
+msgstr "no es pot assignar «RTempDir»"
 
 #: src/main/sysutils.c:2696
 #, fuzzy
 msgid "'R_TempDir' contains space"
-msgstr "'R_TempDir' conté espai"
+msgstr "'RTempDir' conté espai"
 
 #: src/main/sysutils.c:2708
 #, fuzzy
 msgid "cannot create 'R_TempDir'"
-msgstr "no s'ha pogut crear «R_TempDir»"
+msgstr "no s'ha pogut crear «RTempDir»"
 
 #: src/main/sysutils.c:2714 src/main/sysutils.c:2725 src/main/sysutils.c:2730
 #, fuzzy
 msgid "unable to set R_SESSION_TMPDIR"
-msgstr "no s'ha pogut establir R_SESSION_TMPDIR"
+msgstr "no s'ha pogut establir RSESSIONTMPDIR"
 
 #: src/main/sysutils.c:2780
 #, fuzzy
@@ -7825,7 +7792,7 @@ msgstr "nom temporal massa llarg"
 #: src/main/sysutils.c:2784
 #, fuzzy
 msgid "allocation failed in R_tmpnam2"
-msgstr "ha fallat l'assignació a R_tmpnam2"
+msgstr "ha fallat l'assignació a Rtmpnam2"
 
 #: src/main/sysutils.c:2790
 #, fuzzy
@@ -7913,167 +7880,166 @@ msgstr "això no pot passar"
 msgid "'names' must be a character vector"
 msgstr "«names» ha de ser un vector de caràcters"
 
-#: src/main/util.c:89 src/main/util.c:104
+#: src/main/util.c:88 src/main/util.c:102
 #, fuzzy
 msgid "object is not a matrix"
 msgstr "l'objecte no és una matriu"
 
-#: src/main/util.c:316 src/main/util.c:328 src/main/util.c:339
-#: src/main/util.c:368
+#: src/main/util.c:314 src/main/util.c:326 src/main/util.c:337
+#: src/main/util.c:366
 #, fuzzy, c-format
 msgid "type %d is unimplemented in '%s'"
 msgstr "el tipus %d no està implementat a «%s»"
 
-#: src/main/util.c:379
+#: src/main/util.c:377
 #, fuzzy, c-format
 msgid "unimplemented type '%s' in '%s'\n"
 msgstr "tipus no implementat «%s» a «%s»\n"
 
-#: src/main/util.c:381
+#: src/main/util.c:379
 #, fuzzy, c-format
 msgid "unimplemented type (%d) in '%s'\n"
 msgstr "tipus no implementat (%d) a «%s»\n"
 
-#: src/main/util.c:510
+#: src/main/util.c:508
 #, fuzzy
 msgid "invalid tag in name extraction"
 msgstr "etiqueta no vàlida en l'extracció del nom"
 
-#: src/main/util.c:527
+#: src/main/util.c:525
 #, fuzzy, c-format
 msgid "%d argument passed to '%s' which requires %d"
 msgid_plural "%d arguments passed to '%s' which requires %d"
 msgstr[0] "S'ha passat %d argument a «%s» que requereix %d"
 msgstr[1] "S'han passat %d arguments a «%s» que requereix %d"
 
-#: src/main/util.c:541
+#: src/main/util.c:539
 #, fuzzy, c-format
 msgid "supplied argument name '%s' does not match '%s'"
 msgstr "el nom de l'argument proporcionat «%s» no coincideix amb «%s»"
 
-#: src/main/util.c:557
+#: src/main/util.c:555
 #, fuzzy, c-format
 msgid "'nthcdr' list shorter than %d"
 msgstr "la llista «nthcdr» és més curta que %d"
 
-#: src/main/util.c:562
+#: src/main/util.c:560
 #, fuzzy
 msgid "'nthcdr' needs a list to CDR down"
 msgstr "«nthcdr» necessita una llista per baixar el CDR"
 
-#: src/main/util.c:723
+#: src/main/util.c:721
 #, fuzzy
 msgid "'all.x' must be TRUE or FALSE"
 msgstr "«all.x» ha de ser CERT o FALS"
 
-#: src/main/util.c:725
+#: src/main/util.c:723
 #, fuzzy
 msgid "'all.y' must be TRUE or FALSE"
 msgstr "«all.y» ha de ser CERT o FALS"
 
-#: src/main/util.c:754
+#: src/main/util.c:752
 #, fuzzy
 msgid "number of rows in the result exceeds maximum vector length"
 msgstr "El nombre de files en el resultat excedeix la longitud màxima del vector"
 
-#: src/main/util.c:852
+#: src/main/util.c:850
 #, fuzzy
 msgid "missing value is invalid"
 msgstr "el valor que falta no és vàlid"
 
-#: src/main/util.c:861 src/main/util.c:868
+#: src/main/util.c:859 src/main/util.c:866
 #, fuzzy
 msgid "cannot change working directory"
 msgstr "no s'ha pogut canviar el directori de treball"
 
-#: src/main/util.c:886 src/main/util.c:915 src/main/util.c:962
-#: src/main/util.c:1023 src/main/util.c:1202 src/main/util.c:1281
-#: src/main/util.c:1307
+#: src/main/util.c:884 src/main/util.c:913 src/main/util.c:960
+#: src/main/util.c:1021 src/main/util.c:1200 src/main/util.c:1279
+#: src/main/util.c:1305
 #, fuzzy
 msgid "a character vector argument expected"
 msgstr "s'esperava un argument de vector de caràcters"
 
-#: src/main/util.c:1215
+#: src/main/util.c:1213
 #, fuzzy
 msgid "only the first character of 'quote' will be used"
 msgstr "només s'utilitzarà el primer caràcter de «quote»"
 
-#: src/main/util.c:1309
+#: src/main/util.c:1307
 #, fuzzy
 msgid "a character vector 'value' expected"
 msgstr "s'esperava un vector de caràcters «value»"
 
-#: src/main/util.c:1312
+#: src/main/util.c:1310
 #, fuzzy
 msgid "'value' must be of positive length"
 msgstr "«valor» ha de ser de longitud positiva"
 
-#: src/main/util.c:1474 src/main/util.c:1487
+#: src/main/util.c:1472 src/main/util.c:1485
 #, fuzzy, c-format
 msgid "invalid input '%s' in 'utf8towcs'"
 msgstr "l'entrada «%s» a «utf8towcs» no és vàlida"
 
-#: src/main/util.c:1510 src/main/util.c:1520
+#: src/main/util.c:1508 src/main/util.c:1518
 #, fuzzy, c-format
 msgid "invalid input '%s' in 'utf8towcs32'"
 msgstr "l'entrada «%s» a «utf8towcs32» no és vàlida"
 
-#: src/main/util.c:1643
+#: src/main/util.c:1641
 #, fuzzy, c-format
 msgid "invalid multibyte string at '%s'"
 msgstr "cadena multibyte no vàlida a «%s»"
 
-#: src/main/util.c:1838
+#: src/main/util.c:1836
 #, fuzzy
 msgid "error message truncated to 255 chars"
 msgstr "missatge d'error truncat a 255 caràcters"
 
-#: src/main/util.c:1856
-#, fuzzy
+#: src/main/util.c:1854
 msgid "warning message truncated to 255 chars"
 msgstr "missatge d'avís truncat a 255 caràcters"
 
-#: src/main/util.c:2028
+#: src/main/util.c:2026
 #, fuzzy
 msgid "Conversion failed"
 msgstr "Ha fallat la conversió"
 
-#: src/main/util.c:2173
+#: src/main/util.c:2171
 #, fuzzy, c-format
 msgid "accuracy loss in conversion from \"%s\" to numeric"
 msgstr "pèrdua de precisió en la conversió de «%s» a numèrica"
 
-#: src/main/util.c:2521
+#: src/main/util.c:2519
 #, fuzzy
 msgid "all arguments must be named"
 msgstr "els atributs han de ser anomenats"
 
-#: src/main/util.c:2678
+#: src/main/util.c:2676
 #, fuzzy
 msgid "ICU is not supported on this build"
 msgstr "L'UCI no està suportada en aquesta construcció"
 
-#: src/main/util.c:2745
+#: src/main/util.c:2743
 #, fuzzy
 msgid "'breaks' is not sorted"
 msgstr "«breaks» no està ordenat"
 
-#: src/main/util.c:2779 src/main/util.c:2843
+#: src/main/util.c:2777 src/main/util.c:2841
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr "el vector llarg «%s» no està suportat"
 
-#: src/main/util.c:2909
+#: src/main/util.c:2907
 #, fuzzy
 msgid "'eps.correct' must be 0, 1, or 2"
 msgstr "«eps.correct» ha de ser 0, 1 o 2"
 
-#: src/main/util.c:2912
+#: src/main/util.c:2910
 #, fuzzy
 msgid "'bounds' must be TRUE or FALSE"
 msgstr "«bounds» ha de ser CERT o FALS"
 
-#: src/main/util.c:2952
+#: src/main/util.c:2950
 #, fuzzy
 msgid "'x' must be a vector"
 msgstr "«x» ha de ser un vector"
@@ -8365,9 +8331,9 @@ msgid "not an open X11cairo device"
 msgstr "no és un dispositiu X11cairo obert"
 
 #: src/modules/X11/devX11.c:3382
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open file '%s'"
-msgstr "no s'ha pogut obrir el fitxer «%s»"
+msgstr "no es pot obrir el fitxer «%s»"
 
 #: src/modules/X11/devX11.c:3399
 #, fuzzy
@@ -8562,7 +8528,7 @@ msgid "cannot read from connection"
 msgstr "no es pot llegir des de la connexió"
 
 #: src/modules/internet/libcurl.c:1334
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open the connection to '%s'"
 msgstr "no s'ha pogut obrir la connexió a «%s»"
 
@@ -8921,7 +8887,7 @@ msgstr "pnchisq(x=%g, f=%g, theta=%g, ..): no convergeix en %d iter."
 msgid "deriv = %d > %d (= n_max)\n"
 msgstr "deriv ) %d ) %d ( n nmax)\n"
 
-#: src/nmath/rmultinom.c:78
+#: src/nmath/rmultinom.c:83
 #, fuzzy, c-format
 msgid "rbinom: probability sum should be 1, but is %g"
 msgstr "rbinom: la suma de probabilitat hauria de ser 1, però és %g"
@@ -8936,8 +8902,7 @@ msgstr "error d'assignació de la signatura"
 msgid "norm_rand(): invalid N01_kind: %d\n"
 msgstr "normrand(): N01kind no vàlid: %d\n"
 
-#: src/nmath/wilcox.c:85 src/nmath/wilcox.c:95 src/nmath/wilcox.c:153
-#: src/nmath/wilcox.c:311
+#: src/nmath/wilcox.c:121 src/nmath/wilcox.c:332
 #, fuzzy, c-format
 msgid "wilcox allocation error %d"
 msgstr "error d'assignació wilcox %d"
@@ -9001,7 +8966,7 @@ msgstr ""
 msgid "An unusual circumstance has arisen in the nesting of readline input. Please report using bug.report()"
 msgstr "Una circumstància inusual ha sorgit en la nidificació de l'entrada de línia de lectura. Si us plau, informeu-vos usant bug.report()"
 
-#: src/unix/sys-std.c:1276 src/unix/sys-std.c:1446
+#: src/unix/sys-std.c:1276 src/unix/sys-std.c:1447
 #, fuzzy, c-format
 msgid "problem in saving the history file '%s'"
 msgstr "s'ha produït un problema en desar el fitxer d'historial «%s»"
@@ -9021,27 +8986,27 @@ msgstr ""
 msgid "error in running command"
 msgstr "error en executar l'ordre"
 
-#: src/unix/sys-std.c:1417 src/unix/sys-std.c:1440
+#: src/unix/sys-std.c:1418 src/unix/sys-std.c:1441
 #, fuzzy
 msgid "'file' argument is too long"
 msgstr "l'argument «file» és massa llarg"
 
-#: src/unix/sys-std.c:1423 src/unix/sys-std.c:1425
+#: src/unix/sys-std.c:1424 src/unix/sys-std.c:1426
 #, fuzzy
 msgid "no history mechanism available"
 msgstr "no hi ha cap mecanisme d'historial disponible"
 
-#: src/unix/sys-std.c:1452
+#: src/unix/sys-std.c:1453
 #, fuzzy
 msgid "problem in truncating the history file"
 msgstr "problema en truncar el fitxer d'historial"
 
-#: src/unix/sys-std.c:1454 src/unix/sys-std.c:1456
+#: src/unix/sys-std.c:1455 src/unix/sys-std.c:1457
 #, fuzzy
 msgid "no history available to save"
 msgstr "no hi ha cap historial disponible per desar"
 
-#: src/unix/sys-std.c:1468
+#: src/unix/sys-std.c:1469
 #, fuzzy
 msgid "invalid timestamp"
 msgstr "marca horària no vàlida"

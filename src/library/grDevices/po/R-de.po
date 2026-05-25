@@ -239,7 +239,7 @@ msgid "There must be anchors named \"left\" and \"bottom\""
 msgstr "Es muss Anker namens \"left\" und \"right\" geben"
 
 msgid "Invalid glyph info"
-msgstr "Ungültige Glyph-Info"
+msgstr "Ungültige Glypheninformationen"
 
 msgid "'%s' was removed in R 4.5.0."
 msgstr ""
@@ -317,10 +317,10 @@ msgid "invalid CMap name in font specification"
 msgstr "ungültiger CMap Name in der Zeichensatzspezifikation"
 
 msgid "invalid 'cmapEncoding' in font specification"
-msgstr "ungültige 'cmapEncoding'  in der Zeichensatzspezifikation"
+msgstr "ungültige 'cmapEncoding' in der Zeichensatzspezifikation"
 
 msgid "invalid PDF resource in font specification"
-msgstr "ungültige PDF Resource  in der Zeichensatzspezifikation"
+msgstr "ungültige PDF Resource in der Zeichensatzspezifikation"
 
 msgid "Invalid font database name"
 msgstr "Ungültiger Zeichensatzdatenbankname"
@@ -530,7 +530,7 @@ msgid "'type' not applicable to the R console"
 msgstr "'type' für die R-Konsole nicht anwendbar"
 
 msgid "can only manipulate windows devices"
-msgstr "kann nur  Windows-Devices kopieren"
+msgstr "kann nur Windows-Devices kopieren"
 
 msgid "can only copy from 'windows' devices"
 msgstr "kann nur aus 'windows' Devices kopieren"

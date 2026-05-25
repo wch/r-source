@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-04-25 10:47-0700\n"
 "PO-Revision-Date: 2025-03-24 15:12+0100\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-Core <R-core@r-project.org>\n"
@@ -157,7 +157,7 @@ msgstr "ungültige Zeichenkette in '%s'"
 #: devPS.c:811
 #, c-format
 msgid "font width unknown for character 0x%02x in encoding %s"
-msgstr "Zeichenbreite unbekannt für das Zeichen 0x%02x in Kodierung %s"
+msgstr "Zeichenbreite unbekannt für das Zeichen 0x%02x im Encoding %s"
 
 #: devPS.c:871
 #, c-format
@@ -172,12 +172,12 @@ msgstr "unbekannte Kodierung '%s' in 'PostScriptMetricInfo'"
 #: devPS.c:899
 #, c-format
 msgid "Unicode character %lc (U+%04X) cannot be converted"
-msgstr "Unicode Zeichen %lc (U+%04X) kann nicht konvertiert werden"
+msgstr "Der Unicode-Character %lc (U+%04X) kann nicht konvertiert werden"
 
 #: devPS.c:918 devPS.c:972
 #, c-format
 msgid "font metrics unknown for character 0x%02x in encoding %s"
-msgstr "Fontmetrik unbekannt für das Zeichen 0x%02x in Kodierung %s"
+msgstr "Fontmetrik für das Zeichen 0x%02x im Encoding %s ist unbekannt"
 
 #: devPS.c:987
 #, c-format
@@ -888,7 +888,7 @@ msgstr "nicht unterstütztes Schema, keine Abbilddatei geschrieben"
 #: cairo/cairoBM.c:644 cairo/cairoBM.c:649 cairo/cairoBM.c:652
 #, c-format
 msgid "invalid '%s' argument"
-msgstr "unzulässiges '%s' Argument"
+msgstr "ungültiges '%s' Argument"
 
 #: cairo/cairoBM.c:196 cairo/cairoBM.c:368
 msgid "unimplemented cairo-based device"

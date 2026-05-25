@@ -537,7 +537,7 @@ msgid "no suitable arguments to dispatch methods in this function"
 msgstr "nessun argomento adatto per il dispatch di metodi in questa funzione"
 
 msgid "making a generic for special function %s"
-msgstr "creando una generico per una  funzione speciale %s"
+msgstr "creando una generico per una funzione speciale %s"
 
 msgid "in method for %s with signature %s:"
 msgstr "nel metodo per %s con firma %s:"

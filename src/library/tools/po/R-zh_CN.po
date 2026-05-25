@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:17\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -713,7 +713,7 @@ msgid "running 'make' failed"
 msgstr "调用'make'失败"
 
 msgid "file '%s' not found"
-msgstr "找不到'%s'这个文件"
+msgstr "找不到'%s'文件"
 
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
@@ -827,6 +827,27 @@ msgid "'cc' is not on the path"
 msgstr ""
 
 msgid "'objdump' is not on the path"
+msgstr ""
+
+msgid "non-API functions declared in installed headers: %s"
+msgstr ""
+
+msgid "non-API variables declared in installed headers: %s"
+msgstr ""
+
+msgid "API funcitons not declared in installed headers: %s"
+msgstr ""
+
+msgid "API variables not in declared in installed headers: %s"
+msgstr ""
+
+msgid "in API but marked for warnings: %s"
+msgstr ""
+
+msgid "API functions listed in nonAPI: %s"
+msgstr ""
+
+msgid "API variables listed in nonAPI: %s"
 msgstr ""
 
 msgid "Got %s in evaluating %s; wanted %s"
@@ -1007,7 +1028,7 @@ msgid "starting httpd help server ..."
 msgstr "打开httpd帮助服务器…"
 
 msgid "done"
-msgstr "好了"
+msgstr "完成"
 
 msgid "failed to start the httpd server"
 msgstr "打不开httpd服务器"
@@ -1031,6 +1052,16 @@ msgstr "读取文件'%s'时出了错"
 
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "这看起来好象是捆绑软件--已经不存在了"
+
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "%s程序包解压成功且MD5校验通过"
+
+msgid "package %s signature verified (%s %s)"
+msgstr ""
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
 
 msgid "'cleanup' exists but is not executable -- see the 'R Installation and Administration Manual'"
 msgstr "有'cleanup'但它不是执行文件--请参考'R安装和管理文档'"
@@ -1057,9 +1088,6 @@ msgstr ""
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr ""
 
-msgid "package %s successfully unpacked and MD5 sums checked"
-msgstr "成功将%s程序包解包并MD5和检查"
-
 msgid "not using staged install with --libs-only"
 msgstr ""
 
@@ -1084,14 +1112,14 @@ msgstr ""
 
 #, fuzzy
 msgid "Applied installation-time patch"
-msgstr "程辑包安装"
+msgstr "程序包安装"
 
 msgid "and saved it as"
 msgstr ""
 
 #, fuzzy
 msgid "in package installation"
-msgstr "程辑包安装"
+msgstr "程序包安装"
 
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr "R包含目录是空的--也许你需要安装R-devel.rpm或类似的程序包"
@@ -1309,6 +1337,29 @@ msgstr "'x'必需是单字符串"
 msgid "invalid hex string"
 msgstr ""
 
+#, fuzzy
+msgid "'gpg' is not available for signing"
+msgstr "不存在'%s'这个测试"
+
+msgid "Target file for the signature already exists"
+msgstr ""
+
+msgid "'%s' must be a character string"
+msgstr "'%s' 必需是字符串"
+
+msgid "'keyring' must be specified if 'use.default.keyring=FALSE'"
+msgstr ""
+
+msgid "Failed to invoke 'gpg' for signing"
+msgstr ""
+
+msgid "Cannot sign due to failed pin entry for key %s"
+msgstr ""
+
+#, fuzzy
+msgid "Signing failed:"
+msgstr "载入失败"
+
 msgid "this requires 'objdump.exe' to be on the PATH"
 msgstr ""
 
@@ -1455,10 +1506,6 @@ msgstr ""
 
 msgid "update_PACKAGES complete."
 msgstr ""
-
-#, fuzzy
-msgid "'%s' must be a character string"
-msgstr "'x'必需是单字符串"
 
 msgid "test '%s' is not available"
 msgstr "不存在'%s'这个测试"

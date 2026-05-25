@@ -84,7 +84,7 @@ msgid "more than one default provided in switch() call"
 msgstr "switch() 呼び出しの中で、デフォルト選択肢が 2 つ以上あります"
 
 msgid "'switch' with no alternatives"
-msgstr ""
+msgstr "代替がない 'switch'"
 
 msgid "Error: compilation failed -"
 msgstr ""

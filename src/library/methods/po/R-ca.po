@@ -16,43 +16,37 @@ msgstr ""
 msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
 msgstr "Alguna cosa ha anat malament amb '.OldClassesPrototypes[[%d]]'"
 
-#, fuzzy
 msgid "unnamed argument to initialize() for S3 class must have a class definition; %s does not"
-msgstr "l'argument sense nom per a initialize() per a la classe S3 ha de tenir una definició de classe; %s no ho fa"
+msgstr ""
+"l'argument sense nom per a initialize() per a la classe S3 ha de tenir una definició de "
+"classe; %s no ho fa"
 
 #, fuzzy
 msgid "unnamed argument must extend either the S3 class or the class of the data part; not true of class %s"
 msgstr "l'argument sense nom ha d'estendre la classe S3 o la classe de la part de dades; no és cert de la classe %s"
 
-#, fuzzy
 msgid "class %s does not have an S3 data part, and so is of type \"S4\"; no S3 equivalent"
-msgstr "la classe %s no té una part de dades S3, i per tant és de tipus \"S4\"; no té equivalent S3"
+msgstr ""
+"la classe %s no té una part de dades S3, i per tant és de tipus \"S4\"; no té equivalent S3"
 
-#, fuzzy
 msgid "class %s is VIRTUAL; not meaningful to create an S4 object from this class"
 msgstr "la classe %s és VIRTUAL; no té sentit crear un objecte S4 a partir d'aquesta classe"
 
-#, fuzzy
 msgid "object must be a valid data part for class %s; not true of type %s"
 msgstr "l'objecte ha de ser una part de dades vàlida per a la classe %s; no és cert del tipus %s"
 
-#, fuzzy
 msgid "cannot specify matrix() arguments when specifying '.Data'"
-msgstr "no es poden especificar els arguments de la matriu() en especificar «.Data'"
+msgstr "no es poden especificar els arguments de la matrix() en especificar «.Data»"
 
-#, fuzzy
 msgid "cannot specify array() arguments when specifying '.Data'"
-msgstr "no es poden especificar els arguments array() quan s'especifica «.Data'"
+msgstr "no es poden especificar els arguments array() quan s'especifica «.Data»"
 
-#, fuzzy
 msgid "cannot have more than one unnamed argument as environment"
 msgstr "no es pot tenir més d'un argument sense nom com a entorn"
 
-#, fuzzy
 msgid "unnamed argument to new() must be an environment for the new object"
 msgstr "l'argument sense nom a new() ha de ser un entorn per a l'objecte nou"
 
-#, fuzzy
 msgid "methods may not be defined for primitive function %s in this version of R"
 msgstr "no es poden definir mètodes per a la funció primitiva %s en aquesta versió de R"
 
@@ -60,19 +54,15 @@ msgstr "no es poden definir mètodes per a la funció primitiva %s en aquesta ve
 msgid "S3Part() is only defined for classes set up by setOldCLass(), basic classes or subclasses of these:  not true of class %s"
 msgstr "S3Part() només es defineix per a les classes configurades per setOldCLass(), classes bàsiques o subclasses d'aquestes: no és cert de la classe %s"
 
-#, fuzzy
 msgid "the 'S3Class' argument must be a superclass of %s:  not true of class %s"
 msgstr "l'argument «S3Class» ha de ser una superclasse de %s: no és cert de la classe %s"
 
-#, fuzzy
 msgid "replacement value must extend class %s, got %s"
 msgstr "el valor de substitució ha d'estendre la classe %s, s'ha obtingut %s"
 
-#, fuzzy
 msgid "replacement value must be of class %s, got one of class %s"
 msgstr "el valor de substitució ha de ser de la classe %s, s'ha obtingut un de la classe %s"
 
-#, fuzzy
 msgid "no 'replace' method was defined for 'as(x, \"%s\") <- value' for class %s"
 msgstr "no s'ha definit cap mètode «replace» per a «as(x, \"%s\") s- value» per a la classe %s"
 
@@ -1068,7 +1058,6 @@ msgstr "actualment existeixen mètodes per coaccionar de %s a %s; se substituira
 msgid "method is not being debugged"
 msgstr "el mètode no s'està depurant"
 
-#, fuzzy
 msgid "object %s not found"
 msgstr "no s'ha trobat l'objecte %s"
 
@@ -1282,7 +1271,6 @@ msgstr "%s no és un nom de camp o mètode vàlid per a la classe de referència
 msgid "a call to superClass() is in the method %s but there is no superclass definition of this method for class %s"
 msgstr "una crida a superClass() està en el mètode %s però no hi ha cap definició de superclasse d'aquest mètode per a la classe %s"
 
-#, fuzzy
 msgid "methods declared in usingMethods() but not found: %s"
 msgstr "mètodes declarats a usingMethods() però no trobats: %s"
 
@@ -1326,7 +1314,6 @@ msgstr "les trucades directes a callSuper() no són vàlides: només s'ha de cri
 msgid "%s is not a field in this class"
 msgstr "%s no és un camp d'aquesta classe"
 
-#, fuzzy
 msgid "Methods not found: %s"
 msgstr "Mètodes no trobats: %s"
 
@@ -1548,14 +1535,11 @@ msgstr "no s'ha pogut trobar un entorn corresponent al nom del paquet «%s»"
 msgid "supplied package, %s, differs from package inferred from source, %s"
 msgstr "el paquet proporcionat, %s, difereix del paquet inferit des del codi font, %s"
 
-#, fuzzy
 msgid "cannot insert these (not found in source): %s"
-msgstr "no es poden inserir (no s'han trobat a la font): %s"
+msgstr "no es poden inserir (no s'han trobat en el codi font): %s"
 
-#, fuzzy
 msgid "cannot insert methods for these functions (methods table not found in source): %s"
 msgstr "no s'han pogut inserir mètodes per a aquestes funcions (no s'ha trobat la taula de metadades en el codi font): %s"
-
 #, fuzzy
 msgid "Non-function objects are not currently inserted (not traceable): %s"
 msgstr "Actualment no s'insereixen objectes no funcionals (no es pot rastrejar): %s"

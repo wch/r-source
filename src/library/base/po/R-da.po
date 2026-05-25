@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2015-03-25 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -273,6 +273,9 @@ msgstr "ugyldige 'dimnames' angivet for dataramme"
 msgid "cannot coerce class %s to a data.frame"
 msgstr "kan ikke tvinge klasse »%s« ind i en data.frame"
 
+msgid "row names contain missing values"
+msgstr "rækkenavne indeholder manglende værdier"
+
 #, fuzzy
 msgid "'row.names' is not a character or integer vector of length %d"
 msgstr "'normal.kind' skal være en tegnstreng af længde 1"
@@ -282,9 +285,6 @@ msgstr "forskellige rækkenavne i argumenter for 'data.frame', punkt %d"
 
 msgid "some row.names duplicated: %s --> row.names NOT used"
 msgstr "nogle row.names duplikeret: %s --> row.names er IKKE anvendt"
-
-msgid "row names contain missing values"
-msgstr "rækkenavne indeholder manglende værdier"
 
 msgid "duplicate row.names: %s"
 msgstr "duplikate row.names: %s"
@@ -1648,9 +1648,8 @@ msgstr "'x' er ikke en array"
 msgid "'bin' must be numeric or a factor"
 msgstr "'bin' skal være numerisk eller en faktor"
 
-#, fuzzy
 msgid "invalid value of %s"
-msgstr "ugyldig værdi for 'nbins'"
+msgstr "ugyldig værdi for %s"
 
 msgid "'X' must be a data frame when 'INDEX' is a formula"
 msgstr ""

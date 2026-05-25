@@ -36,7 +36,7 @@ msgstr ""
 "había convergido"
 
 msgid "levels truncated to positive values only"
-msgstr "Niveles limitados únicamente a valores positivos"
+msgstr "niveles truncados solo a valores positivos"
 
 msgid "extra arguments discarded"
-msgstr "descartados los argumentos extra"
+msgstr "los argumentos adicionales se descartan"

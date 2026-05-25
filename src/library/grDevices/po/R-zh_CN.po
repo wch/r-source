@@ -273,7 +273,7 @@ msgid "Invalid 'extend' value"
 msgstr "'filename'无效"
 
 msgid "'%s' is deprecated."
-msgstr ""
+msgstr "'%s' 已弃用."
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "'%s'里的参数无效(需要有带名参数)"

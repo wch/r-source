@@ -16,7 +16,7 @@ msgstr ""
 "X-Generator: Poedit 2.0.4\n"
 
 msgid "cannot handle object of mode '%s'"
-msgstr "nie można obsłużyć obiektu o trybie '%s'"
+msgstr "nie można obsłużyć obiektu w trybie '%s'"
 
 msgid "cannot change names on Tcl array"
 msgstr "nie można zmienić nazw w tablicy Tcl"
@@ -94,10 +94,10 @@ msgid "'pb' is not from class %s"
 msgstr "'pb' nie pochodzi z klasy %s"
 
 msgid "'filters' must be a 2-column character matrix"
-msgstr "'filters' muszą być 2-kolumnowymi macierzami znaków"
+msgstr "'filters' musi być 2-kolumnową macierzą znaków"
 
 msgid "tcltk DLL is linked to"
-msgstr ""
+msgstr "biblioteka DLL tcltk jest połączona z"
 
 msgid "Tcl/Tk support is not available on this system"
 msgstr "Obsługa Tcl/Tk nie jest dostępna dla tego systemu"

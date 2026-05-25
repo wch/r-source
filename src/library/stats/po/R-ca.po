@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2024-03-22 18:10+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: none\n"
@@ -1934,7 +1934,6 @@ msgstr "no hi ha cap component ni atribut de termes"
 msgid "'termlabels' must be a character vector"
 msgstr "«termlabels» ha de ser un vector de caràcters de longitud com a mínim un"
 
-#, fuzzy
 msgid "'%s' must be a character string"
 msgstr "«%s» ha de ser una cadena de caràcters"
 
@@ -2130,6 +2129,13 @@ msgstr "s'ignorarà l'argument «na.action»"
 #, fuzzy
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "s'ignoraran els límits superior i inferior a menys que l'algorisme = «port»"
+
+#, fuzzy
+msgid "'%s' is not implemented yet"
+msgstr "el tipus «%s» encara no està implementat"
+
+msgid "hatvalues() for nls(*, algorithm='plinear')"
+msgstr ""
 
 #, fuzzy
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
@@ -2985,7 +2991,6 @@ msgstr "no es pot calcular l'interval de confiança quan totes les observacions 
 msgid "'z' is not a rank vector"
 msgstr "'x' no és un vector"
 
-#, fuzzy
 msgid "must supply 'formula' or 'data'"
 msgstr "s'ha de proporcionar «fórmula» o «dades»"
 

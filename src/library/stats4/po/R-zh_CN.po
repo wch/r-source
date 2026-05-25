@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Weblate 4.13.1\n"
 
 msgid "named list expected"
-msgstr ""
+msgstr "预期是命名列表"
 
 #, fuzzy
 msgid "some named values are not arguments to the supplied log-likelihood"

@@ -573,13 +573,11 @@ msgstr "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree
 msgid "a viewport path must contain at least one viewport name"
 msgstr "a viewport path must contain at least one viewport name"
 
-#, fuzzy
 msgid "must specify at least one of 'xData' or 'xscale'"
-msgstr "must specify at least one of 'x' or 'xscale'"
+msgstr "must specify at least one of 'xData' or 'xscale'"
 
-#, fuzzy
 msgid "must specify at least one of 'yData' or 'yscale'"
-msgstr "must specify at least one of 'y' or 'yscale'"
+msgstr "must specify at least one of 'yData' or 'yscale'"
 
 msgid "shutting down all devices when unloading 'grid' namespace"
 msgstr "shutting down all devices when unloading 'grid' namespace"

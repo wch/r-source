@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:17\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2023-01-04 14:29+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -37,7 +37,7 @@ msgid "neither code nor data objects found"
 msgstr "non trovati codice o oggetti di tipo data"
 
 msgid "Undocumented code objects:"
-msgstr "Oggetti  codice  non documentati:"
+msgstr "Oggetti codice non documentati:"
 
 msgid "Undocumented data sets:"
 msgstr "Dataset non documentati:"
@@ -789,6 +789,27 @@ msgstr ""
 msgid "'objdump' is not on the path"
 msgstr ""
 
+msgid "non-API functions declared in installed headers: %s"
+msgstr ""
+
+msgid "non-API variables declared in installed headers: %s"
+msgstr ""
+
+msgid "API funcitons not declared in installed headers: %s"
+msgstr ""
+
+msgid "API variables not in declared in installed headers: %s"
+msgstr ""
+
+msgid "in API but marked for warnings: %s"
+msgstr ""
+
+msgid "API functions listed in nonAPI: %s"
+msgstr ""
+
+msgid "API variables listed in nonAPI: %s"
+msgstr ""
+
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "Rilevato %s nella valutazione di %s; richiesto %s"
 
@@ -989,6 +1010,16 @@ msgstr "errore durante la lettura del file '%s'"
 msgid "this seems to be a bundle -- and they are defunct"
 msgstr "questo sembra un bundle -- e sono rimossi"
 
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "pacchetto %s aperto con successo con controllo somme MD5"
+
+msgid "package %s signature verified (%s %s)"
+msgstr ""
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
 msgid "'cleanup' exists but is not executable -- see the 'R Installation and Administration Manual'"
 msgstr "'cleanup' esistente ma non è eseguibile -- vedi. 'R Installation and Administration Manual'"
 
@@ -1012,9 +1043,6 @@ msgstr "NOTA: rpath fisso"
 
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr "AVVERTIMENTO: oggetti condivisi/librerie dinamiche con percorsi temporanei di installazione presenti nel codice"
-
-msgid "package %s successfully unpacked and MD5 sums checked"
-msgstr "pacchetto %s aperto con successo con controllo somme MD5"
 
 msgid "not using staged install with --libs-only"
 msgstr "non si utilizza l'installazione staged con --libs-only"
@@ -1261,6 +1289,30 @@ msgstr "'x' dev'essere una stringa di caratteri"
 msgid "invalid hex string"
 msgstr ""
 
+#, fuzzy
+msgid "'gpg' is not available for signing"
+msgstr "il test '%s' non è disponibile"
+
+msgid "Target file for the signature already exists"
+msgstr ""
+
+#, fuzzy
+msgid "'%s' must be a character string"
+msgstr "'x' dev'essere una stringa di caratteri"
+
+msgid "'keyring' must be specified if 'use.default.keyring=FALSE'"
+msgstr ""
+
+msgid "Failed to invoke 'gpg' for signing"
+msgstr ""
+
+msgid "Cannot sign due to failed pin entry for key %s"
+msgstr ""
+
+#, fuzzy
+msgid "Signing failed:"
+msgstr "caricamento fallito"
+
 msgid "this requires 'objdump.exe' to be on the PATH"
 msgstr "questo richiede a 'objdump.exe' di essere nel PATH"
 
@@ -1406,10 +1458,6 @@ msgstr "Scrittura in corso dei file finali aggiornati PACKAGES."
 
 msgid "update_PACKAGES complete."
 msgstr "update_PACKAGES completato."
-
-#, fuzzy
-msgid "'%s' must be a character string"
-msgstr "'x' dev'essere una stringa di caratteri"
 
 msgid "test '%s' is not available"
 msgstr "il test '%s' non è disponibile"

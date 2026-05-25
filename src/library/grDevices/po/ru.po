@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-04-25 10:47-0700\n"
 "PO-Revision-Date: 2024-03-25 14:40+0300\n"
 "Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
@@ -676,9 +676,9 @@ msgid "Attempt to release non-existent mask"
 msgstr "Попытка закрыть несуществующую маску"
 
 #: devQuartz.c:3172
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid font path: \"%s\""
-msgstr "неправильный параметр 'fonts' в %s"
+msgstr "неправильный путь к шрифту: \"%s\""
 
 #: devQuartz.c:3216
 msgid "Failed to load font"

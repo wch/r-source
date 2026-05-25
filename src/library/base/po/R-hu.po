@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2023-09-01 11:37+0000\n"
 "Last-Translator: Norbert Solymosi <solymosi.norbert@gmail.com>\n"
 "Language-Team: none\n"
@@ -41,7 +41,7 @@ msgid "infinite or missing values in 'x'"
 msgstr "'x'-ben végtelen vagy hiányzó értékek vannak"
 
 msgid "a dimension is zero"
-msgstr ""
+msgstr "egy dimenzió nulla"
 
 msgid "\"all\" and \"exact\" are mutually exclusive"
 msgstr ""
@@ -248,6 +248,9 @@ msgstr "az adott data frame-hez érvénytelen 'dimnames'"
 msgid "cannot coerce class %s to a data.frame"
 msgstr ""
 
+msgid "row names contain missing values"
+msgstr "a sornevekben hiányzó értékek vannak"
+
 #, fuzzy
 msgid "'row.names' is not a character or integer vector of length %d"
 msgstr "'normal.kind' 1 hosszúságú karakterlánc kell legyen"
@@ -257,9 +260,6 @@ msgstr "az 'data.frame' argumentumában eltérés van a sornevekben, %d. elem"
 
 msgid "some row.names duplicated: %s --> row.names NOT used"
 msgstr ""
-
-msgid "row names contain missing values"
-msgstr "a sornevekben hiányzó értékek vannak"
 
 msgid "duplicate row.names: %s"
 msgstr ""
@@ -1585,7 +1585,7 @@ msgid "'bin' must be numeric or a factor"
 msgstr "'bin' numerikus vagy faktor kell legyen"
 
 msgid "invalid value of %s"
-msgstr ""
+msgstr "A %s érvénytelen értéke"
 
 msgid "'X' must be a data frame when 'INDEX' is a formula"
 msgstr ""

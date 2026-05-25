@@ -14,115 +14,128 @@ msgstr ""
 "X-Generator: Weblate 4.16.4\n"
 
 msgid "invalid value of %s"
-msgstr "valor invalido de %s"
+msgstr "valor no válido de %s"
 
 msgid "need at least one argument"
 msgstr "necesita al menos un argumento"
 
 msgid "zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
+"la entradas de longitud cero no se pueden mezclar con las de longitud "
+"distinta de cero"
 
 msgid "dim(X) must have a positive length"
-msgstr ""
+msgstr "dim(X) debe tener una longitud positiva"
 
 msgid "'X' must have named dimnames"
-msgstr ""
+msgstr "'X' debe tener 'dimnames' con nombre"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
-msgstr ""
+msgstr "no todos los elementos de 'MARGIN' son nombres de dimensiones"
 
 msgid "no cluster 'cl' supplied and none is registered"
-msgstr ""
+msgstr "No se ha proporcionado ningún clúster 'cl' y ninguno está registrado"
 
 msgid "not a valid cluster"
-msgstr ""
+msgstr "no es un clúster válido"
 
 msgid "replacing registration for cluster type '%s'"
-msgstr ""
+msgstr "Reemplazando el registro por el tipo de clúster '%s'"
 
 msgid "unknown cluster type: '%s'"
-msgstr ""
+msgstr "tipo de clúster desconocido: '%s'"
 
 msgid "numeric 'names' must be >= 1"
-msgstr ""
+msgstr "valores numéricos en 'names' deben ser >= 1"
 
 msgid "node of a socket cluster on host %s with pid %d"
-msgstr ""
+msgstr "nodo de un clúster de sockets en el host %s con pid %d"
 
 msgid "Connection setup failed or timed out."
 msgstr ""
+"Error en la configuración de la conexión o se agotó el tiempo de espera."
 
 msgid "PORT must be specified"
-msgstr ""
+msgstr "se debe especificar PORT"
 
 msgid "'nnodes' must be >= 1"
-msgstr ""
+msgstr "'nnodes' debe ser >= 1"
 
 msgid "Cluster setup failed."
-msgstr ""
+msgstr "Error en la configuración del clúster."
 
 msgid "invalid 'child' argument"
-msgstr ""
+msgstr "Argumento 'child' no válido"
 
 msgid "'children' must be a list of processes or a single process"
-msgstr ""
+msgstr "'children' debe ser una lista de procesos o un solo proceso"
 
 msgid "'process' must be of class %s"
-msgstr ""
+msgstr "'process' debe ser de clase %s"
 
 msgid "'child' must be a valid child process"
-msgstr ""
+msgstr "'child' debe ser un proceso secundario válido"
 
 msgid "'what' must be a character or raw vector"
-msgstr ""
+msgstr "'what' debe ser un carácter o un vector de tipo 'raw'"
 
 msgid "'mc.cores' must be >= 1"
-msgstr ""
+msgstr "'mc.cores' debe ser >= 1"
 
 msgid "affinity.list and X must have the same length"
-msgstr ""
+msgstr "affinity.list y X deben tener la misma longitud"
 
 msgid "%d function calls resulted in an error"
-msgstr ""
+msgstr "%d llamados a función han resultado en un error"
 
 msgid "'mc.preschedule' must be false if 'affinity.list' is used"
-msgstr ""
+msgstr "'mc.preschedule' debe ser FALSE si se usa 'affinity.list'"
 
 msgid "all scheduled cores encountered errors in user code"
 msgstr ""
+"todos los núcleos programados encontraron errores en el código de usuario"
 
 msgid "Zero-length inputs cannot be mixed with those of non-zero length"
 msgstr ""
+"Las entradas de longitud cero no se pueden mezclar con las de longitud "
+"distinta de cero"
 
 msgid "invalid 'jobs' argument"
-msgstr ""
+msgstr "Argumento 'jobs' no válido"
 
 msgid "'v' must be a vector"
-msgstr ""
+msgstr "'v' debe ser un vector"
 
 msgid "some results may be missing, folded or caused an error"
 msgstr ""
+"es posible que falten algunos resultados, que estén duplicados, o que se "
+"hayan producido errores"
 
 msgid "fork clusters are not supported on Windows"
-msgstr ""
+msgstr "Los clústeres de bifurcación (fork) no son soportados en Windows"
 
 msgid "'mc.cores' > 1 is not supported on Windows"
-msgstr ""
+msgstr "'mc.cores' > 1 no es soportado en Windows"
 
 msgid "Cluster setup failed. %d worker of %d failed to connect."
 msgid_plural "Cluster setup failed. %d of %d workers failed to connect."
 msgstr[0] ""
+"Error en la configuración del clúster. %d de %d procesos de trabajo no pudo "
+"conectarse."
 msgstr[1] ""
+"Error en la configuración del clúster. %d de %d procesos de trabajo no "
+"pudieron conectarse."
 
 msgid "socket cluster with %d nodes on host %s"
 msgid_plural "socket cluster with %d nodes on hosts %s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Clúster de sockets con %d nodos en el host %s"
+msgstr[1] "Clúster de sockets con %d nodos en hosts %s"
 
 msgid "%d parallel function call did not deliver a result"
 msgid_plural "%d parallel function calls did not deliver results"
-msgstr[0] ""
+msgstr[0] "La llamada en paralelo a la función %d no entregó un resultado"
 msgstr[1] ""
+"La llamada en paralelo a la/s función/es %d no entregaron resultados"
 
 msgid "scheduled core %s did not deliver a result, all values of the job will be affected"
 msgid_plural "scheduled cores %s did not deliver results, all values of the jobs will be affected"
@@ -136,5 +149,5 @@ msgstr[1] ""
 
 msgid "%d parallel job did not deliver a result"
 msgid_plural "%d parallel jobs did not deliver results"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d trabajo en paralelo no entregó resultado"
+msgstr[1] "%d trabajos en paralelo no entregaron resultados"

@@ -31,9 +31,10 @@ msgstr "bazowy system graficzny nie jest zarejestrowany"
 msgid "bad units specified in '%s'"
 msgstr "określono niepoprawne jednostki w '%s'"
 
+
 #: graphics.c:1820 graphics.c:1842
 msgid "attempt to plot on null device"
-msgstr "próba rysowania na urządzeniu 'null'"
+msgstr "próba rysowania na pustym urządzeniu"
 
 #: graphics.c:1872
 msgid "outer margins too large (figure region too small)"
@@ -52,9 +53,9 @@ msgid "plot region too large"
 msgstr "obszar wykresu jest zbyt duży"
 
 #: graphics.c:1946
-#, fuzzy, c-format
+#, c-format
 msgid "nonfinite axis=%d limits [GScale(%g,%g,..); log=%s] -- corrected now"
-msgstr "nieskończone granice osi [GScale(%g,%g,%d, .); log=%d]"
+msgstr "nieskończone granice osi=%d [GScale(%g,%g,...); log=%s] -- poprawiono teraz"
 
 #: graphics.c:2023
 #, c-format
@@ -152,9 +153,9 @@ msgid "\"%s\" is not a graphical parameter"
 msgstr "'%s' nie jest parametrem graficznym"
 
 #: par.c:1109
-#, fuzzy, c-format
+#, c-format
 msgid "argument %d does not name a graphical parameter"
-msgstr "'%s' nie jest parametrem graficznym"
+msgstr "argument '%d' nie określa parametru graficznego"
 
 #: par.c:1117
 msgid "invalid argument passed to par()"
@@ -163,17 +164,17 @@ msgstr "niepoprawny argument przekazany do 'par()'"
 #: par.c:1161
 #, c-format
 msgid "too many rows in layout, limit %d"
-msgstr "zbyt wiele wierszy w layoucie, limit %d"
+msgstr "zbyt wiele wierszy w układzie, limit to %d"
 
 #: par.c:1167
 #, c-format
 msgid "too many columns in layout, limit %d"
-msgstr "zbyt wiele kolumn w layoucie, limit %d"
+msgstr "zbyt wiele kolumn w układzie, limit to %d"
 
 #: par.c:1169
 #, c-format
 msgid "too many cells in layout, limit %d"
-msgstr "zbyt wiele komórek w layoucie, limit %d"
+msgstr "zbyt wiele komórek w układzie, limit to %d"
 
 #: plot.c:60
 msgid "invalid color specification"
@@ -183,13 +184,14 @@ msgstr "niepoprawne określenie koloru"
 msgid "only NA allowed in logical plotting symbol"
 msgstr "tylko wartość NA jest dozwolona w logicznym rysowanym symbolu"
 
+
 #: plot.c:128
 msgid "invalid plotting symbol"
-msgstr "niepoprawny symbol wykresu"
+msgstr "nieprawidłowy symbol kreślenia"
 
 #: plot.c:217
 msgid "invalid font specification"
-msgstr "niepoprawne określenie koloru"
+msgstr "niepoprawne określenie czcionki"
 
 #: plot.c:276 plot.c:290 plot.c:474 plot.c:479 plot.c:2195 plot.c:2202
 #: plot.c:3225 plot.c:3227 plot.c:3229 plot.c:3388 plot3d.c:1163 plot3d.c:1167
@@ -201,16 +203,17 @@ msgstr "niepoprawna wartość '%s'"
 #: plot.c:293
 #, c-format
 msgid "invalid 'vfont' value [typeface %d]"
-msgstr "niepoprawna wartość 'vfont'  [krój %d]"
+msgstr "niepoprawna wartość 'vfont' [krój %d]"
 
 #: plot.c:317
 #, c-format
 msgid "invalid 'vfont' value [typeface = %d, fontindex = %d]"
 msgstr "niepoprawna wartość 'vfont' [krój = %d, indeks czcionki = %d]"
 
+
 #: plot.c:391
 msgid "invalid graphics parameter"
-msgstr "niepoprawne parametry grafiki"
+msgstr "niepoprawny parametr grafiki"
 
 #: plot.c:470
 msgid "at least 3 arguments required"
@@ -272,13 +275,12 @@ msgid "zero-length '%s' specified"
 msgstr "określono '%s' o zerowej długości"
 
 #: plot.c:889
-#, fuzzy
 msgid "'gap.axis' must be of length one"
-msgstr "argument 'hadj' musi mieć długość 1"
+msgstr "argument 'gap.axis' musi mieć długość 1"
 
 #: plot.c:919
 msgid "'gap.axis' must be NA or a finite number"
-msgstr ""
+msgstr "argument 'gap.axis' musi mieć wartość NA lub być skończoną liczbą"
 
 #: plot.c:977
 msgid "'labels' is supplied and not 'at'"
@@ -380,9 +382,10 @@ msgstr "niepoprawny typ argumentu"
 msgid "different argument lengths"
 msgstr "długości argumentów różnią się"
 
+
 #: plot.c:3237
 msgid "more 'labels' than points"
-msgstr "wiecej etykiet niż punktów"
+msgstr "więcej etykiet niż punktów"
 
 #: plot.c:3289
 #, c-format
@@ -409,9 +412,10 @@ msgstr "niepoprawny wektor parametrów symboli"
 msgid "invalid symbol coordinates"
 msgstr "niepoprawne współrzędne symbolu"
 
+
 #: plot.c:3760
 msgid "x/y/parameter length mismatch"
-msgstr "niezgodność długości x/y/parametru"
+msgstr "niezgodność długości parametru x/y"
 
 #: plot.c:3779
 msgid "invalid circles data"
@@ -538,9 +542,10 @@ msgstr "niepoprawne określenie '%s'"
 msgid "contour(): circular/long seglist -- set %s > %d?"
 msgstr "'contour()': kołowa/długa lista segmentów -- ustawić %s > %d?"
 
+
 #: plot3d.c:1938
 msgid "no 'levels'"
-msgstr ""
+msgstr "brak 'levels'"
 
 #: plot3d.c:1942
 msgid "missing 'x' values"
@@ -561,7 +566,7 @@ msgstr "oczekiwano rosnących wartości 'y'"
 #: plot3d.c:1956
 #, c-format
 msgid "non-finite level values: levels[%d] = %g"
-msgstr ""
+msgstr "nieskończone wartości poziomów: poziomy[%d] = %g"
 
 #: plot3d.c:1969
 msgid "all z values are equal"

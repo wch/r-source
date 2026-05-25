@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-04-25 10:47-0700\n"
 "PO-Revision-Date: 2024-03-19 03:05+0000\n"
 "Last-Translator: Robert Castelo <robert.castelo@upf.edu>\n"
 "Language-Team: none\n"
@@ -376,9 +376,9 @@ msgid "cannot open 'postscript' pipe to '%s'"
 msgstr "no es pot obrir la canonada «postscript» a «%s»"
 
 #: devPS.c:3772 devPS.c:8226 qdPDF.c:102
-#, fuzzy, c-format
+#, c-format
 msgid "cannot open file '%s'"
-msgstr "no s'ha pogut obrir el fitxer «%s»"
+msgstr "no es pot obrir el fitxer «%s»"
 
 #: devPS.c:3900 devPS.c:3915
 #, fuzzy, c-format
@@ -907,9 +907,8 @@ msgid "R Graphics"
 msgstr "Gràfics R"
 
 #: devWindows.c:3220
-#, fuzzy
 msgid "attempt to use the locator after dev.hold()"
-msgstr "s'ha intentat utilitzar el localitzador després de dev.hold()"
+msgstr ""
 
 #: devWindows.c:3251
 msgid "graphics device closed during call to locator or identify"
@@ -1092,9 +1091,8 @@ msgid "Variable fonts not supported (requires Cairo >= 1.16.0)"
 msgstr ""
 
 #: cairo/cairoFns.c:2536
-#, fuzzy
 msgid "Font file not found; matching font family and face"
-msgstr "No s'ha trobat el fitxer de tipus de lletra; s'aparellen la família i la cara del tipus de lletra"
+msgstr ""
 
 #, fuzzy
 #~ msgid "ran out of colors in xfig()"

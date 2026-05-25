@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-08 11:37\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -32,7 +32,7 @@ msgstr ""
 msgid "some options in argument 'restrict' were not recognized and hence ignored"
 msgstr ""
 
-msgid "argument 'format' is deprecated and has no affect on search results"
+msgid "argument 'format' is deprecated and has no effect on search results"
 msgstr ""
 
 msgid "A search query has been submitted to %s"
@@ -94,6 +94,15 @@ msgstr ""
 msgid "value of 'strip.white' option should be lowercase"
 msgstr ""
 
+msgid "using default value %s"
+msgstr ""
+
+msgid "this function cannot be used from an interactive session"
+msgstr ""
+
+msgid "unrecognized Sweave call"
+msgstr ""
+
 msgid "elements of 'what' after the first will be ignored"
 msgstr ""
 
@@ -135,6 +144,9 @@ msgid "No suitable spell check program found."
 msgstr ""
 
 msgid "Performing query %s"
+msgstr ""
+
+msgid "Unsupported object"
 msgstr ""
 
 msgid ""
@@ -728,7 +740,7 @@ msgstr ""
 msgid "unable to create temporary directory %s"
 msgstr ""
 
-msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
+msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
 msgstr ""
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
@@ -1180,7 +1192,13 @@ msgstr ""
 msgid "binary package %s is not compatible with this build of R"
 msgstr ""
 
-msgid "package %s successfully unpacked and MD5 sums checked"
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr ""
+
+msgid "package %s signature verified (%s %s)"
+msgstr ""
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
 msgstr ""
 
 msgid ""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stats 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2021-10-15 18:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1781,6 +1781,13 @@ msgstr "argumentas 'na.action' bus ignoruojamas"
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "viršutiniai ir apatiniai rėžiai ignoruojami, nebent algorithm = \"port\""
+
+#, fuzzy
+msgid "'%s' is not implemented yet"
+msgstr "'%s' tipas neįdiegtas"
+
+msgid "hatvalues() for nls(*, algorithm='plinear')"
+msgstr ""
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
 msgstr "negalima apskaičiuoti REML log-likelihood \"nls\" objektams"

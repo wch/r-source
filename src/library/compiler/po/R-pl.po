@@ -62,7 +62,7 @@ msgid "bad assignment 2"
 msgstr "złe przypisanie 2"
 
 msgid "invalid function in complex assignment"
-msgstr "niepoprawna funkcja w zespolonym przypisaniu"
+msgstr "niepoprawna funkcja w złożonym przypisaniu"
 
 msgid "missing arguments are not allowed"
 msgstr "brakujące argumenty nie są dozwolone"
@@ -104,10 +104,10 @@ msgid "done"
 msgstr "wykonano"
 
 msgid "'env' must be a top level environment"
-msgstr "'env' musi być środowiskiem o najwyższym poziomie"
+msgstr "'env' musi być środowiskiem najwyższego poziomu"
 
 msgid "input and output file names are the same"
-msgstr "nazwy plików wejścia i wyjścia są takie same"
+msgstr "nazwy plików wejściowych i wyjściowych są takie same"
 
 msgid "empty input file; no output written"
 msgstr "pusty plik wejściowy; brak zapisanego wyjścia"
@@ -119,7 +119,7 @@ msgid "'%s' is not a valid compiler option"
 msgstr "'%s' nie jest prawidłową opcją kompilatora"
 
 msgid "invalid environment variable value: %s==%s"
-msgstr "niepoprawa wartość zmiennej środowiskowej: %s==%s"
+msgstr "niepoprawna wartość zmiennej środowiskowej: %s==%s"
 
 msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
 msgstr ""

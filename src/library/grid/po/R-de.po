@@ -32,14 +32,14 @@ msgid "Invalid coordinates"
 msgstr "Ungültige Koordinaten"
 
 msgid "Invalid grob coordinates"
-msgstr "ungültige grob Koordinaten"
+msgstr "Ungültige Grobkoordinaten"
 
 msgid "Invalid gTree coordinates"
-msgstr "ungültige gTree Koordinaten"
+msgstr "Ungültige gTree-Koordinaten"
 
 #, fuzzy
 msgid "Closed must be length 1 and must not be a missing value"
-msgstr "Closed darf kein fehlender Wert sein"
+msgstr "Geschlossen darf kein fehlender Wert sein"
 
 msgid "end points must not be identical"
 msgstr "Endpunkte dürfen nicht identisch sein"
@@ -111,7 +111,7 @@ msgid "'gamma' 'gpar' element is defunct"
 msgstr "'gamma' 'gpar' Element ist nicht mehr funktional"
 
 msgid "'fill' gpar list components must all be patterns"
-msgstr "'fill' gpar Listenkomponenten müssen alle Muster sein"
+msgstr "'fill' GPAR-Listenkomponenten müssen alle Muster sein"
 
 msgid "invalid 'linemitre' value"
 msgstr "unzulässiger Wert für 'linemitre'"
@@ -379,7 +379,7 @@ msgstr ""
 "(Koordinaten werden recycelt)"
 
 msgid "Pattern fill applied to object with no inside"
-msgstr "Füllung mit einem Muster auf ein Objekt ohne Inneres angewendet"
+msgstr "Musterfüllung auf Objekt ohne Innenseite angewendet"
 
 msgid "'length' must be a 'unit' object"
 msgstr "'length' muss ein 'unit'-Objekt sein"
@@ -460,28 +460,28 @@ msgid "'x', 'y', 'width', and 'height' must have length 1"
 msgstr "'x', 'y', 'width' und 'height' müssen alle Länge 1 haben"
 
 msgid "Invalid glyph info"
-msgstr "ungültige glyph Information"
+msgstr "Ungültige Glypheninformationen"
 
 msgid "'x' and 'y' must have length > 0"
-msgstr "'x' und 'y' müssen Länge > 0 haben"
+msgstr "'x' und 'y' müssen eine Länge > 0 haben"
 
 msgid "'hjust' and 'vjust' must be glyphJust() values"
-msgstr "'hjust' und 'vjust' müssen glyphJust() Werte sein"
+msgstr "'hjust' und 'vjust' müssen glyphJust()-Werte sein"
 
 msgid "'hjust' and 'vjust' must have length 1"
-msgstr "'hjust' und 'vjust' müssen Länge 1 haben"
+msgstr "'hjust' und 'vjust' müssen die Länge 1 haben"
 
 msgid "Unknown width; using first width"
-msgstr "Unbekannte Breite; nutze erste Breite"
+msgstr "Unbekannte Breite; Verwenden der ersten Breite"
 
 msgid "Unknown anchor; using left justification"
-msgstr "Unbekannter Anker; nutze linksbündige Ausrichtung"
+msgstr "Unbekannter Anker; Linksbsatz verwenden"
 
 msgid "Unknown height; using first height"
-msgstr "Unbekannte Höhe; nutze erste Höhe"
+msgstr "Unbekannte Höhe; Verwenden der ersten Höhe"
 
 msgid "Unknown anchor; using bottom justification"
-msgstr "Unbekannter Anker; nutze Grundlinienausrichtung"
+msgstr "Unbekannter Anker; Verwenden der unteren Ausrichtung"
 
 msgid "'x' and 'units' must have length > 0"
 msgstr "'x' und 'units' müssen Länge > 0 haben"
@@ -489,11 +489,16 @@ msgstr "'x' und 'units' müssen Länge > 0 haben"
 msgid "invalid 'axis' or 'type'"
 msgstr "Ungültige 'axis' oder ungültiger 'type'"
 
+
 msgid "'x' and 'y' must be units and 'device' must be logical"
-msgstr "'x' und 'y' müssen units sein und 'device' ein logischer Wert"
+msgstr ""
+"'x' und 'y' müssen Einheiten sein und 'device' muss logisch "
+"sein"
 
 msgid "'w' and 'h' must be units and 'device' must be logical"
-msgstr "'w' und 'h' müssen units sein und 'device' ein logischer Wert"
+msgstr ""
+"'w' und 'h' müssen Einheiten sein und 'device' muss logisch "
+"sein"
 
 msgid "Not a unit object"
 msgstr "Kein 'unit' Objekt"

@@ -56,7 +56,7 @@ msgid "bad assignment 2"
 msgstr "asignación incorrecta 2"
 
 msgid "invalid function in complex assignment"
-msgstr "función inválida en asignación de complejos"
+msgstr "función no válida en asignación de complejos"
 
 msgid "missing arguments are not allowed"
 msgstr "no se permiten argumentos omitidos"

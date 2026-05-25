@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -30,7 +30,7 @@ msgid "See help(\"Defunct\")"
 msgstr "Veja help(\"Defunct\")"
 
 msgid "'%s' is deprecated."
-msgstr "'%s' é obsoleto."
+msgstr "'%s' está obsoleto."
 
 msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
 msgstr "Veja help(\"Deprecated\") e help(\"%s-deprecated\")."
@@ -59,16 +59,14 @@ msgstr "segundo argumento deve ser uma lista"
 msgid "'iconvlist' is not available on this system"
 msgstr "'iconvlist' não está disponível neste sistema"
 
-#, fuzzy
 msgid "'kind' must be a character string (RNG to be used)."
-msgstr "'kind' deve ser uma string de caracteres de comprimento 1 (RNG a ser usado)."
+msgstr "'kind' deve ser uma string de caracteres (RNG a ser usado)."
 
 msgid "'%s' is not a valid abbreviation of an RNG"
 msgstr "'%s' não é uma abreviação válida de uma RNG"
 
-#, fuzzy
 msgid "'%s' must be a character string"
-msgstr "'name' deve ser uma única string de caracteres"
+msgstr "'%s' deve ser uma string"
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s' não é uma escolha válida"
@@ -253,6 +251,9 @@ msgstr "'dimnames' inválidos para um data frame"
 msgid "cannot coerce class %s to a data.frame"
 msgstr "não é possível fazer coerção de classe %s para um data.frame"
 
+msgid "row names contain missing values"
+msgstr "nomes de linhas contém valores faltantes"
+
 msgid "'row.names' is not a character or integer vector of length %d"
 msgstr "'row.names' não é um vetor de caracteres ou inteiros de comprimento %d"
 
@@ -261,9 +262,6 @@ msgstr "pareamento errado de nomes de linhas nos argumentos de 'data.frame', ite
 
 msgid "some row.names duplicated: %s --> row.names NOT used"
 msgstr "alguns row.names duplicados: %s --> row.names NÃO usados"
-
-msgid "row names contain missing values"
-msgstr "nomes de linhas contém valores faltantes"
 
 msgid "duplicate row.names: %s"
 msgstr "row.names duplicados: %s"
@@ -395,12 +393,11 @@ msgstr "%s unário não está definido para objetos \"Date\""
 msgid "%s not defined for \"Date\" objects"
 msgstr "%s não definido para objetos \"Date\""
 
-#, fuzzy
 msgid "'%s' must be of length 1"
-msgstr "'to' deve ter comprimento 1"
+msgstr "'%s' deve ter comprimento 1"
 
 msgid "without 'by', at least one of 'to' and 'from' must be specified"
-msgstr ""
+msgstr "sem 'by', pelo menos um de 'to' e 'from' deve ser especificado"
 
 #, fuzzy
 msgid "without 'by', when one of 'to', 'from' is missing, 'length.out' / 'along.with' must be specified"
@@ -461,9 +458,8 @@ msgstr "atributos 'tzone' inconsistentes"
 msgid "as.character(td, ..) no longer obeys a 'format' argument; use format(td, ..) ?"
 msgstr ""
 
-#, fuzzy
 msgid "'digits' must be numeric, integer valued"
-msgstr "'trim' deve ser numérico de comprimento 1"
+msgstr "'digits' deve ser numérico com valor inteiro"
 
 msgid "'tim' is not character or numeric"
 msgstr "'tim' não é caractere ou numérico"
@@ -490,9 +486,8 @@ msgstr "segundo argumento de / não pode ser um objeto \"difftime\""
 msgid "exactly three of 'to', 'from', 'by' and 'length.out' / 'along.with' must be specified"
 msgstr "exatamente dois de 'to', 'by' e 'length.out' / 'along.width' devem ser especificados"
 
-#, fuzzy
 msgid "'%s' must be a \"%s\" object"
-msgstr "'to' deve ser um objeto \"Date\""
+msgstr "'%s' deve ser um objeto \"%s\""
 
 msgid "component subscript must be a character string"
 msgstr "componente subscrito deve ser uma string de caracteres"
@@ -629,7 +624,7 @@ msgid "cannot overwrite a non-directory with a directory"
 msgstr "impossível sobrescrever um não diretório com um diretório"
 
 msgid "directories are omitted unless 'recursive = TRUE'"
-msgstr ""
+msgstr "diretórios são omitidos, a menos que 'recursive = TRUE'"
 
 msgid "file can not be copied both 'from' and 'to'"
 msgstr "arquivo não pode ser copiado ao mesmo tempo em 'from' e 'to'"
@@ -748,26 +743,24 @@ msgstr "devem haver substitutos para as correspondências"
 msgid "No factors specified"
 msgstr "Nenhum fator especificado"
 
-#, fuzzy
 msgid "invalid '%s': type \"%s\""
-msgstr "valor de 'n' inválido"
+msgstr "'%s' inválido: type \"%s\""
 
-#, fuzzy
 msgid "'uplo' must be \"U\" or \"L\""
-msgstr "'wait' deve ser TRUE ou FALSE"
+msgstr "'uplo' deve ser \"U\" ou \"L\""
 
-#, fuzzy
 msgid "invalid nrow(z)"
-msgstr "nrow(x) inválido"
+msgstr "nrow(z) inválido"
 
 msgid "triangular matrix should be square"
 msgstr "matriz triangular deve ser quadrada"
 
+#, fuzzy
 msgid "using 1-norm approximation for approximate 2-norm"
-msgstr ""
+msgstr "usando aproximação de 1 norma para aproximadamente 2 normas"
 
 msgid "norm=\"%s\" not available here; using norm=\"1\""
-msgstr ""
+msgstr "norm=\"%s\" não disponível aqui; usando norm=\"1\""
 
 msgid "unknown conflict policy: %s"
 msgstr "política de conflito desconhecida: %s"
@@ -938,9 +931,8 @@ msgstr "'file' deve ser especificado"
 msgid "nothing specified to be save()d"
 msgstr "nada especificado para ser salvo"
 
-#, fuzzy
 msgid "'%s' must be a non-empty character string"
-msgstr "'file' deve ser uma string não vazia"
+msgstr "'%s' deve ser uma string não vazia"
 
 msgid "'compress' must be logical or character"
 msgstr "'compress' deve ser lógico ou caractere"
@@ -1131,7 +1123,7 @@ msgid "-- processing imports for"
 msgstr "-- processando importações para"
 
 msgid "-- done processing imports for"
-msgstr "-- processamento de importações conluído para"
+msgstr "-- processamento de importações concluído para"
 
 msgid "-- loading code for"
 msgstr "-- carregando código para"
@@ -1364,9 +1356,8 @@ msgstr "estrutura 'rle' inválida"
 msgid "... must contain names or character strings"
 msgstr "... deve conter nomes ou cadeia de caracteres"
 
-#, fuzzy
 msgid "invalid 'x'"
-msgstr "'dims' inválido"
+msgstr "'x' inválido"
 
 msgid "incorrect length for 'group'"
 msgstr "comprimento incorreto para 'group'"
@@ -1469,7 +1460,7 @@ msgid "non-finite 'partial'"
 msgstr "'partial' não finito"
 
 msgid "'decreasing' of length > 1 is only for method = \"radix\""
-msgstr ""
+msgstr "'decreasing' do comprimento > 1 é apenas para o método = \"radix\""
 
 msgid "argument lengths differ"
 msgstr "comprimentos dos argumentos diferem"
@@ -1497,7 +1488,7 @@ msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
 msgstr "'verbose' é TRUE, 'echo' não; ... fazendo 'echo <- TRUE'"
 
 msgid "empty file/url name"
-msgstr ""
+msgstr "nome do arquivo/URL vazio"
 
 msgid "unable to find a plausible encoding"
 msgstr "não foi possível achar uma codificação plausível"
@@ -1520,15 +1511,14 @@ msgstr "especifique 'file' ou 'exprs', mas não ambos"
 msgid "'%s' is not an existing file"
 msgstr "'%s' não é um arquivo existente"
 
-#, fuzzy
 msgid "'formula' must be a formula"
-msgstr "'from' deve ser de tipo raw ou caractere"
+msgstr "'formula' deve ser uma fórmula"
 
 msgid "Unexpected LHS in 'formula' has been ignored."
-msgstr ""
+msgstr "Lado esquerdo inesperado em 'formula' foi ignorado."
 
 msgid "Unexpected LHS in 'formula' has been combined with RHS."
-msgstr ""
+msgstr "Lado esquerdo inesperado em 'formula' foi combinado com o lado direito."
 
 msgid "Timestamp of %s has changed"
 msgstr "Timestamp de %s mudou"
@@ -1606,8 +1596,9 @@ msgstr "'bin' deve ser numérico ou um fator"
 msgid "invalid value of %s"
 msgstr "valor inválido de %s"
 
+#, fuzzy
 msgid "'X' must be a data frame when 'INDEX' is a formula"
-msgstr ""
+msgstr "'X' deve ser um quadro de dados quando 'INDEX' é uma fórmula"
 
 msgid "'INDEX' is of length zero"
 msgstr "'INDEX' tem comprimento zero"
@@ -1692,8 +1683,9 @@ msgstr "Resumo das mensagens de alerta (de um total de %d):"
 msgid "invalid 'digits'"
 msgstr "'digits' inválido"
 
+#, fuzzy
 msgid "Direct call of '%s()' is deprecated.  Use '%s()' or '%s()' instead"
-msgstr ""
+msgstr "A chamada direta de '%s()' foi preterida.  Use '%s()' ou '%s()' em vez disso"
 
 msgid "arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only"
 msgstr "argumentos 'show.output.on.console', 'minimized' e 'invisible' são válidos somente para Windows"
@@ -1715,7 +1707,7 @@ msgid "'receive.console.signals' must be TRUE or FALSE"
 msgstr "'intern' deve ser TRUE ou FALSE"
 
 msgid "'input' must be a character vector or 'NULL'"
-msgstr "'input'  deve ser um vetor de caracter ou 'NULL'"
+msgstr "'input' deve ser um vetor de caracter ou 'NULL'"
 
 msgid "arguments 'minimized' and 'invisible' are for Windows only"
 msgstr "argumentos 'minimized' e 'invisible' são válidos somente para Windows"

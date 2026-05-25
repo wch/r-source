@@ -37,7 +37,7 @@ msgid "File"
 msgstr "Fichier"
 
 msgid "Demos"
-msgstr "D�mos"
+msgstr "Dï¿½mos"
 
 msgid "Packages"
 msgstr "Paquets"
@@ -61,10 +61,10 @@ msgid "t test"
 msgstr "test t"
 
 msgid "Density"
-msgstr "Densit�"
+msgstr "Densitï¿½"
 
 msgid "Interactive linear fitting"
-msgstr "Ajustement lin�aire interactif"
+msgstr "Ajustement linï¿½aire interactif"
 
 msgid "R FAQ"
 msgstr "FAQ R"
@@ -73,7 +73,7 @@ msgid "Load"
 msgstr "Charger"
 
 msgid "Go get them!"
-msgstr "Les r�cup�rer !"
+msgstr "Les rï¿½cupï¿½rer !"
 
 msgid "Load packages"
 msgstr "Charger des packages"
@@ -96,17 +96,22 @@ msgstr "Annuler"
 msgid "'pb' is not from class %s"
 msgstr "'pb' n'est pas un objet de classe %s"
 
+
 msgid "'filters' must be a 2-column character matrix"
-msgstr "'filters' doit �tre une matrice de cha�nes de caract�res � 2 colonnes"
+msgstr ""
+"'filters' doit ï¿½tre une matrice de chaï¿½nes de "
+"caractï¿½res ï¿½ 2 colonnes"
 
 msgid "tcltk DLL is linked to"
-msgstr "tcltk DLL est li� �"
+msgstr "tcltk DLL est lié à"
 
 msgid "Tcl/Tk support is not available on this system"
-msgstr "Tcl/Tk n'est pas support� sur ce syst�me"
+msgstr "Tcl/Tk n'est pas supportï¿½ sur ce systï¿½me"
 
 msgid "Tcl/Tk support files were not installed"
-msgstr "Les fichiers Tcl/Tk n�cessaires n'ont pas �t� install�s"
+msgstr ""
+"Les fichiers Tcl/Tk nï¿½cessaires n'ont pas ï¿½tï¿½ "
+"installï¿½s"
 
 #~ msgid "Loading Tcl/Tk interface ..."
 #~ msgstr "Chargement de Tcl/Tk..."

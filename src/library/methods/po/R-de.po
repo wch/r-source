@@ -412,7 +412,7 @@ msgid "class %s extends an undefined class, %s"
 msgstr "Klasse %s erweitert eine nicht definierte Klasse %s"
 
 msgid "'Class' must be a valid class definition or class"
-msgstr "'Class' muss  eine gültige Klassendefinition oder eine Klasse sein"
+msgstr "'Class' muss eine gültige Klassendefinition oder eine Klasse sein"
 
 msgid "trying to assign an object of class %s as the definition of class %s: must supply a \"classRepresentation\" object"
 msgstr "Versuch ein Objekt der Klasse %s als Definition der Klasse %s zuzuweisen: es muss ein \"classRepresentation\"-Objekt angegeben werden"
@@ -625,7 +625,7 @@ msgid "argument f must be a generic function with signature \"...\""
 msgstr "Argument f muss eine generische Funktion mit Signatur \"...\" sein"
 
 msgid "no method or default matching the \"...\" arguments in %s"
-msgstr "keine Methode und kein Standard passen auf  \"...\" in %s"
+msgstr "keine Methode und kein Standard passen auf \"...\" in %s"
 
 msgid "multiple direct matches: %s; using the first of these"
 msgstr "mehrfache direkte Übereinstimmungen: %s; nutze die erste von diesen"
@@ -739,7 +739,7 @@ msgid "class definition cannot extend more than one of these data types: %s"
 msgstr "Klassendefinitionen können nicht mehr als einen dieser Datentypen erweitern: %s"
 
 msgid "abnormal type %s is not supported as a superclass of a class definition"
-msgstr "Sorry, der unnormaler Typ %s wird als  Superklasse der Klassendefinition nicht unterstützt"
+msgstr "Sorry, der unnormaler Typ %s wird als Superklasse der Klassendefinition nicht unterstützt"
 
 msgid "multiple class definitions for %s from packages: %s; picking the first"
 msgstr "mehrere Klassendefinitionen für %s aus den Paketen: %s; nehme die erste"

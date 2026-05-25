@@ -122,10 +122,10 @@ msgid "y axis is on a cumulative probability scale, 'ylim' must be in [0,1]"
 msgstr "l'axe y a une échelle de probabilités cumulées, 'ylim' doit être dans l'intervalle [0,1]"
 
 msgid "no 'z' matrix specified"
-msgstr "aucune matrice 'z' spécifiée"
+msgstr "aucune matrice 'z' n'est spécifiée"
 
 msgid "increasing 'x' and 'y' values expected"
-msgstr "les valeurs de 'x' et de 'y' doivent être croissantes"
+msgstr "valeurs attendues croissantes de 'x' et de 'y'"
 
 msgid "no proper 'z' matrix specified"
 msgstr "aucune matrice 'z' correcte spécifiée"
@@ -206,7 +206,7 @@ msgid "'x' must be numeric"
 msgstr "'x' doit être numérique"
 
 msgid "invalid length(x)"
-msgstr "'length(x)' incorrect"
+msgstr "length(x) incorrecte"
 
 msgid "'nclass' not used when 'breaks' is specified"
 msgstr "'nclass' non utilisé quand 'breaks' est fourni"
@@ -226,8 +226,11 @@ msgstr "'breaks = %g' est trop large et est mis à 1e6"
 msgid "hist.default: pretty() error, breaks=%s"
 msgstr "hist.default : erreur pour pretty(), breaks=%s"
 
+
 msgid "Invalid breakpoints produced by 'breaks(x)': %s"
-msgstr "Coupures de classes incorrectes produites à l'aide de 'breaks(x)': %s"
+msgstr ""
+"Coupures incorrectes des intervalles produits par 'breaks(x)' : "
+"%s"
 
 msgid "invalid length(breaks)"
 msgstr "length(breaks) incorrects"
@@ -302,9 +305,8 @@ msgstr "longueurs de coordonnées incorrectes"
 msgid "horizontal specification overrides: Number of columns := %d"
 msgstr "argument horizontal supplanté : nombre de colonnes := %d"
 
-#, fuzzy
 msgid "'text.width' must be numeric, >= 0, or a scalar NA"
-msgstr "'text.width' doit être numérique et >= 0"
+msgstr "'text.width' doit être numérique, >= 0, ou un scalaire NA"
 
 msgid "'merge = TRUE' has no effect when no line segments are drawn"
 msgstr "'merge = TRUE' n'a pas d'effet lorsque aucun segment de droite n'est tracé"
@@ -429,8 +431,10 @@ msgstr "'nrpoints' doit être un scalaire numérique >= 0."
 msgid "a 2-way table has to be specified"
 msgstr "une table à double entrée doit être spécifiée"
 
+
 msgid "weights are not supported for 2-way table specification"
 msgstr ""
+"les poids ne sont pas pris en charge pour les tables à 2entrées"
 
 msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
 msgstr "l'axe x a une échelle de probabilités cumulées, 'xlim' doit être dans l'intervalle [0,1]"

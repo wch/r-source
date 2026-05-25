@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-05-25 12:47-0700\n"
 "PO-Revision-Date: 2024-03-23 12:08+0000\n"
 "Last-Translator: Worood Alswaji <woroodalswaji@gmail.com>\n"
 "Language-Team: none\n"
@@ -58,7 +58,7 @@ msgstr ""
 
 #: arima.c:81 arima.c:192 arima.c:377 arima.c:608 optim.c:33
 msgid "invalid argument type"
-msgstr ""
+msgstr "نوع الوسيطة غير صالح"
 
 #: arima.c:444 arima.c:530 pacf.c:324 pacf.c:363
 msgid "can only transform 100 pars in arima0"
@@ -157,15 +157,15 @@ msgstr ""
 msgid "invalid tag"
 msgstr ""
 
-#: distance.c:152
+#: distance.c:153
 msgid "treating non-finite values as NA"
 msgstr ""
 
-#: distance.c:225
+#: distance.c:226
 msgid "distance(): invalid p"
 msgstr ""
 
-#: distance.c:229
+#: distance.c:230
 msgid "distance(): invalid distance"
 msgstr ""
 
@@ -569,7 +569,7 @@ msgstr ""
 
 #: nls.c:287 port.c:383
 msgid "use of NULL environment is defunct"
-msgstr ""
+msgstr "استخدام بيئة NULL غير موجودة"
 
 #: nls.c:291
 msgid "'rho' should be an environment"
@@ -669,7 +669,7 @@ msgstr ""
 #: optimize.c:371
 #, c-format
 msgid "invalid '%s' value"
-msgstr ""
+msgstr "قيمة \"%s\" غير صالحة"
 
 #: optimize.c:268 optimize.c:356
 msgid "'xmin' not less than 'xmax'"

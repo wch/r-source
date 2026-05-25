@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -268,6 +268,9 @@ msgstr "ugyldig «dimnames» oppgjeve for dataramme"
 msgid "cannot coerce class %s to a data.frame"
 msgstr "kan ikkje gjera klassen «%s» om til ei dataramme"
 
+msgid "row names contain missing values"
+msgstr "radnamn inneheld manglande verdiar"
+
 #, fuzzy
 msgid "'row.names' is not a character or integer vector of length %d"
 msgstr "«normal.kind» må vera ein teiknstreng av lengd 1"
@@ -278,9 +281,6 @@ msgstr "ikkje samsvar i radnamn i argument til «data.frame», element %d"
 #, fuzzy
 msgid "some row.names duplicated: %s --> row.names NOT used"
 msgstr "nokre «row.names» er duplikatar:"
-
-msgid "row names contain missing values"
-msgstr "radnamn inneheld manglande verdiar"
 
 #, fuzzy
 msgid "duplicate row.names: %s"

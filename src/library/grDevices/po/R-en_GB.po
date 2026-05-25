@@ -239,7 +239,7 @@ msgid "Invalid glyph info"
 msgstr "Invalid glyph info"
 
 msgid "'%s' was removed in R 4.5.0."
-msgstr ""
+msgstr "'%s' was removed in R 4.5.0."
 
 msgid "Invalid compositing operator"
 msgstr "Invalid compositing operator"

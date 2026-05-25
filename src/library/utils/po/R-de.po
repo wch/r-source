@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-08 11:37\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2025-03-18 11:57+0100\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -33,7 +33,8 @@ msgstr "Dokument nicht gefunden"
 msgid "some options in argument 'restrict' were not recognized and hence ignored"
 msgstr "einige Optionen im Argument 'restrict' wurden nicht erkannt und deshalb ignoriert"
 
-msgid "argument 'format' is deprecated and has no affect on search results"
+#, fuzzy
+msgid "argument 'format' is deprecated and has no effect on search results"
 msgstr "Argument 'format' ist veraltet und hat keinen Einfluss auf Suchergebnisse"
 
 msgid "A search query has been submitted to %s"
@@ -97,6 +98,17 @@ msgstr "Wert der 'results' Option sollte in Kleinbuchstaben sein"
 msgid "value of 'strip.white' option should be lowercase"
 msgstr "Wert der 'strip.white' Option sollte in Kleinbuchstaben sein"
 
+msgid "using default value %s"
+msgstr ""
+
+#, fuzzy
+msgid "this function cannot be used from an interactive session"
+msgstr "winDialog() kann nicht nicht-interaktiv genutzt werden"
+
+#, fuzzy
+msgid "unrecognized Sweave call"
+msgstr "Unbekannter Wertindikator"
+
 msgid "elements of 'what' after the first will be ignored"
 msgstr "Elemente von 'what' nach dem ersten werden ignoriert"
 
@@ -143,6 +155,10 @@ msgstr "Keine passende Rechtschreibprüfung gefunden."
 
 msgid "Performing query %s"
 msgstr "Ausführen von Anfrage %s"
+
+#, fuzzy
+msgid "Unsupported object"
+msgstr "nicht unterstützter Eintragstyp"
 
 msgid ""
 "Use <code> %s </code> \n"
@@ -455,7 +471,7 @@ msgid "R Help on %s"
 msgstr "R Hilfe zu %s"
 
 msgid "invalid %s argument"
-msgstr "unzulässiges %s Argument"
+msgstr "ungültiges %s argument"
 
 msgid "package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed"
 msgstr "Paket %s existiert, wurde aber nicht unter R >= 2.10.0 installiert, weshalb die Hilfe nicht genutzt werden kann"
@@ -756,8 +772,8 @@ msgstr "leite 'repos = NULL' aus 'pkgs' ab"
 msgid "unable to create temporary directory %s"
 msgstr "kann temporäres Verzeichnis %s nicht erzeugen"
 
-msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
-msgstr "type == \"both\" kann nur unter Windows oder einem CRAN-build für macOS benutzt werden"
+msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
+msgstr ""
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
 msgstr "type == \"both\" kann nicht mit 'repos = NULL' benutzt werden"
@@ -1221,8 +1237,16 @@ msgstr "Datei %s ist kein macOS Binärpaket"
 msgid "binary package %s is not compatible with this build of R"
 msgstr ""
 
-msgid "package %s successfully unpacked and MD5 sums checked"
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
 msgstr "Paket %s erfolgreich ausgepackt und MD5 Summen abgeglichen"
+
+#, fuzzy
+msgid "package %s signature verified (%s %s)"
+msgstr "Paket %s ist nicht verfügbar %s"
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
 
 msgid ""
 "ERROR: failed to lock directory %s for modifying\n"
@@ -1461,6 +1485,9 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "ungültige römische Zahl: %s"
 msgstr[1] "ungültige römische Zahlen: %s"
+
+#~ msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
+#~ msgstr "type == \"both\" kann nur unter Windows oder einem CRAN-build für macOS benutzt werden"
 
 #~ msgid "no R objects specified or available"
 #~ msgstr "keine R-Objekte spezifiziert oder verfügbar"

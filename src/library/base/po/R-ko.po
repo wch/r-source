@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2018-04-09 12:05-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -263,18 +263,17 @@ msgstr "데이터프레임에 잘못된 'dimnames'이 주어졌습니다"
 msgid "cannot coerce class %s to a data.frame"
 msgstr "클래스 %s를 데이터프레임으로 강제형변환 할 수 없습니다."
 
-#, fuzzy
+msgid "row names contain missing values"
+msgstr "행 이름들이 결측값들을 가지고 있습니다"
+
 msgid "'row.names' is not a character or integer vector of length %d"
-msgstr "'row.names'은 길이가 %d인 문자형 벡터가 아니므로 삭제합니다.   따라서, 에러가 발생될 것입니다!"
+msgstr "'row.names'은 길이가 %d인 문자형 벡터가 아니므로 삭제합니다. 따라서, 에러가 발생될 것입니다!"
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
 msgstr "데이터 프레임 인자의 행이름과 일치하지 않습니다. item %d"
 
 msgid "some row.names duplicated: %s --> row.names NOT used"
 msgstr "일부 row.names가 중복됩니다: %s --> row.names 는 사용되지 않았습니다"
-
-msgid "row names contain missing values"
-msgstr "행 이름들이 결측값들을 가지고 있습니다"
 
 msgid "duplicate row.names: %s"
 msgstr "중복되는 row.names의 값들은 다음과 같습니다: %s"
@@ -381,9 +380,8 @@ msgstr "모든 변수가 숫자형인 데이터 프레임에 대해서만 정의
 msgid "cannot xtfrm data frames"
 msgstr "데이터 프레임이 아닙니다"
 
-#, fuzzy
 msgid "all variables should have the same length"
-msgstr "유효하지 않은 리스트 인자입니다:  모든 변수들이 같은 길이를 가지고 있습니다"
+msgstr "유효하지 않은 리스트 인자입니다: 모든 변수들이 같은 길이를 가지고 있습니다"
 
 msgid "character string is not in a standard unambiguous format"
 msgstr "문자열이 표준서식을 따르지 않습니다"
@@ -492,7 +490,7 @@ msgid "unary '%s' not defined for \"difftime\" objects"
 msgstr "단항연산자 '%s'는 \"difftime\" 객체에 사용할 수 없습니다."
 
 msgid "'%s' not defined for \"difftime\" objects"
-msgstr "'%s'는  \"difftime\" 객체에 사용할 수 없습니다."
+msgstr "'%s'는 \"difftime\" 객체에 사용할 수 없습니다."
 
 msgid "both arguments of * cannot be \"difftime\" objects"
 msgstr "두개의 인자 모두가 \"difftime\" 객체 일 수는 없습니다."
@@ -1443,7 +1441,7 @@ msgid "only square matrices can be inverted"
 msgstr "오로지 정방행렬들만이 가역할 수 있습니다"
 
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
-msgstr "\"qr\"로 불려지는 solve.default입니다:  'qr.solve'를 사용하세요"
+msgstr "\"qr\"로 불려지는 solve.default입니다: 'qr.solve'를 사용하세요"
 
 msgid "singular matrix 'a' in solve"
 msgstr "solve에 특이행렬 'a'입니다"
@@ -1675,7 +1673,7 @@ msgid "invalid 'value'"
 msgstr "유효하지 않은 'value'입니다"
 
 msgid "unary '%s' not defined for \"numeric_version\" objects"
-msgstr "\"numeric_version\" 객체들에 정의되지 않은 단일연산자  '%s'입니다"
+msgstr "\"numeric_version\" 객체들에 정의되지 않은 단일연산자 '%s'입니다"
 
 msgid "'%s' not defined for \"numeric_version\" objects"
 msgstr "\"numeric_version\" 객체에 정의되지 않은 '%s'입니다"
@@ -1772,7 +1770,7 @@ msgid "Removing from library"
 msgstr "라이브러리로부터 제거됩니다"
 
 msgid "ERROR: cannot cd to directory"
-msgstr "에러:  디렉토리에 들어갈 수 없습니다"
+msgstr "에러: 디렉토리에 들어갈 수 없습니다"
 
 msgid "ERROR: no permission to remove from directory"
 msgstr "에러: 디렉토리부터 지울 수 있는 권한이 없습니다"

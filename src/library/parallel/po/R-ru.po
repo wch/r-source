@@ -35,7 +35,7 @@ msgid "'X' must have named dimnames"
 msgstr "'X' должен иметь именованные dimnames"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
-msgstr "не все элементы 'MARGIN' -- имена измерений"
+msgstr "не все элементы 'MARGIN' являются именами измерений"
 
 msgid "no cluster 'cl' supplied and none is registered"
 msgstr "кластера 'cl' нет и ничего не зарегистрировано"
@@ -44,11 +44,10 @@ msgid "not a valid cluster"
 msgstr "неправильный кластер"
 
 msgid "replacing registration for cluster type '%s'"
-msgstr ""
+msgstr "заменяю уже зарегистрированный тип кластера '%s'"
 
-#, fuzzy
 msgid "unknown cluster type: '%s'"
-msgstr "неизвестный тип кластера"
+msgstr "неизвестный тип кластера: '%s'"
 
 msgid "numeric 'names' must be >= 1"
 msgstr "числовые 'names' должны быть >= 1"
@@ -134,11 +133,12 @@ msgstr[0] "%d вызов параллельной функции не выдали результат"
 msgstr[1] "%d вызова параллельной функции не выдали результат"
 msgstr[2] "%d вызовов параллельной функции не выдали результат"
 
+
 msgid "scheduled core %s did not deliver a result, all values of the job will be affected"
 msgid_plural "scheduled cores %s did not deliver results, all values of the jobs will be affected"
-msgstr[0] "%s запланированное ядро столкнулось с ошибкой в пользовательском коде, будут затронуты все значения задач"
-msgstr[1] " %s запланированных ядра столкнулись с ошибкой в пользовательском коде, будут затронуты все значения задач"
-msgstr[2] " %s запланированных ядер столкнулись с ошибкой в пользовательском коде, будут затронуты все значения задач"
+msgstr[0] "процесс(ы) %s столкнулись с ошибкой в пользовательском коде; будут затронуты все значения задач"
+msgstr[1] "процессы %s столкнулись с ошибкой в пользовательском коде; будут затронуты все значения задач"
+msgstr[2] "процессы %s столкнулись с ошибкой в пользовательском коде; будут затронуты все значения задач"
 
 msgid "scheduled core %s encountered error in user code, all values of the job will be affected"
 msgid_plural "scheduled cores %s encountered errors in user code, all values of the jobs will be affected"

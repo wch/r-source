@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2018-04-09 12:10-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -235,7 +235,7 @@ msgid "the 'split' argument must be a list"
 msgstr "'split' 인자는 반드시 리스트이어야 합니다"
 
 msgid "'coef' must define a contrast, i.e., sum to 0"
-msgstr "'coef'는 반드시 contrast를 정의해야 합니다.  예를들면, 총계는 0입니다"
+msgstr "'coef'는 반드시 contrast를 정의해야 합니다. 예를들면, 총계는 0입니다"
 
 msgid "'coef' must have same length as 'contrast.obj'"
 msgstr "'coef'는 반드시 'contrast.obj'와 같은 길이를 가져야 합니다"
@@ -375,7 +375,7 @@ msgid "converting non-invertible initial MA values"
 msgstr ""
 
 msgid "some ARMA parameters were fixed: setting transform.pars = FALSE"
-msgstr "일부 ARMA 파라미터들은 고정되어 있습니다:  transform.pars = FALSE로 설정합니다"
+msgstr "일부 ARMA 파라미터들은 고정되어 있습니다: transform.pars = FALSE로 설정합니다"
 
 msgid "'xreg' is collinear"
 msgstr "'xreg'는 공선형입니다"
@@ -829,9 +829,8 @@ msgstr "유효하지 않은 인자 'n'입니다"
 msgid "%s link not recognised"
 msgstr "인식되지 않는 %s 링크입니다"
 
-#, fuzzy
 msgid "link \"%s\" not available for %s family; available links are %s"
-msgstr "링크 \"%s\"는 포아송 페밀리에서 사용할 수 없습니다.  사용가능한 링크들은 %s입니다"
+msgstr "링크 \"%s\"은(는) %s 패밀리에 사용할 수 없습니다. 사용 가능한 링크는 %s입니다"
 
 msgid "negative values not allowed for the 'Poisson' family"
 msgstr "'Poisson' 페밀리에 음의 값들은 허용되지 않습니다"
@@ -843,7 +842,7 @@ msgid "negative values not allowed for the 'quasiPoisson' family"
 msgstr "'quasiPoisson' 페밀리에서 음의 값들은 허용되지 않습니다"
 
 msgid "cannot find valid starting values: please specify some"
-msgstr "유효한 시작값들을 찾을 수 없습니다.  일부를 정해주시길 바랍니다"
+msgstr "유효한 시작값들을 찾을 수 없습니다. 일부를 정해주시길 바랍니다"
 
 msgid "y values must be 0 <= y <= 1"
 msgstr "y 값들은 반드시 0 이상 1 이하이어야 합니다"
@@ -1166,7 +1165,7 @@ msgid "using F test with a fixed dispersion is inappropriate"
 msgstr "고정된 dispersion을 이용해서 F 테스트를 사용하는 것은 부적절합니다"
 
 msgid "models with response %s removed because response differs from model 1"
-msgstr "응답 %s를 가지는 모델들은 제거되었습니다.  그 이유는 응답이 모델 1과 다르기 때문입니다"
+msgstr "응답 %s를 가지는 모델들은 제거되었습니다. 그 이유는 응답이 모델 1과 다르기 때문입니다"
 
 msgid "models were not all fitted to the same size of dataset"
 msgstr ""
@@ -1196,7 +1195,7 @@ msgid "invalid length of members"
 msgstr ""
 
 msgid "argument 'x' cannot be coerced to class %s"
-msgstr "인수 'x'를 클래스  %s로 강제형변환을 할 수 없습니다"
+msgstr "인수 'x'를 클래스 %s로 강제형변환을 할 수 없습니다"
 
 msgid "Consider providing an as.hclust.%s() method"
 msgstr "as.hclust.%s() 메소드를 사용하는 것을 고려해주세요"
@@ -1358,7 +1357,7 @@ msgid "method = '%s' is not supported. Using 'qr'"
 msgstr "method = '%s'는 지원되지 않으므로 'qr'을 이용해보세요"
 
 msgid "number of offsets is %d, should equal %d (number of observations)"
-msgstr "offset의 개수  %1$d는 관측치의 개수 %2$d와 같아야 합니다"
+msgstr "offset의 개수 %1$d는 관측치의 개수 %2$d와 같아야 합니다"
 
 msgid "'x' must be a matrix"
 msgstr "'x'는 반드시 행렬이어야 합니다"
@@ -1573,7 +1572,7 @@ msgid "X does not define a subspace of M"
 msgstr ""
 
 msgid "residuals have rank %s < %s"
-msgstr "잔차는  %2$s보다 작은 수의 rank %1$s를 가집니다"
+msgstr "잔차는 %2$s보다 작은 수의 rank %1$s를 가집니다"
 
 msgid "'model.tables' is not implemented for multiple responses"
 msgstr ""
@@ -1796,6 +1795,13 @@ msgstr "인자 'na.action'은 사용되지 않을 것입니다"
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "만약 algorithm에 \"port\"가 주어지지 않는다면 상한과 하한이 무시됩니다"
+
+#, fuzzy
+msgid "'%s' is not implemented yet"
+msgstr "타입 '%s'는 아직 구현되지 않았습니다"
+
+msgid "hatvalues() for nls(*, algorithm='plinear')"
+msgstr ""
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
 msgstr "\"nls\" 객체에 대해서 REML log-likelihood를 계산할 수 없습니다"
@@ -2223,7 +2229,7 @@ msgid "coverage probability out of range [0,1)"
 msgstr "coverage probability가 [0,1) 범위외에 있습니다"
 
 msgid "spline: first and last y values differ - using y[1] for both"
-msgstr "spline:  처음과 마지막 y 값들이 다릅니다 - 양쪽에 모두 y[1]을 사용합니다"
+msgstr "spline: 처음과 마지막 y 값들이 다릅니다 - 양쪽에 모두 y[1]을 사용합니다"
 
 msgid "'y' must be increasing or decreasing"
 msgstr "'y'는 반드시 증가 또는 감소 해야합니다"
@@ -2271,7 +2277,7 @@ msgid "unknown string value for s.window"
 msgstr "s.window에 알수없는 문자열 값입니다"
 
 msgid "'cutpoints' must be unique in 0 < cuts < 1, but are ="
-msgstr "'cutpoints'는 반드시 0과 1사이에 고유한 값이어야 하는데 다음과 같습니다  ="
+msgstr "'cutpoints'는 반드시 0과 1사이에 고유한 값이어야 하는데 다음과 같습니다 ="
 
 msgid "'cutpoints' must be unique, but are ="
 msgstr "'cutpoints'는 반드시 고유해야 하는데 다음과 같습니다 ="
@@ -2280,7 +2286,7 @@ msgid "'x' must be between -1 and 1"
 msgstr "'x'는 반드시 -1과 1 사이에 있어야 합니다"
 
 msgid "'x' must be between %s and %s"
-msgstr "'x'는 반드시  %s와 %s사이에 있어야 합니다"
+msgstr "'x'는 반드시 %s와 %s사이에 있어야 합니다"
 
 msgid "number of 'cutpoints' must be one less than number of symbols"
 msgstr "'cutpoints'의 개수는 반드시 심볼의 개수보다 하나 적어야 합니다"
@@ -2534,7 +2540,7 @@ msgstr[0] ""
 
 msgid "'start' must have %d row"
 msgid_plural "'start' must have %d rows"
-msgstr[0] "'start'은 반드시  %d 개의 행을 가지고 있어야 합니다."
+msgstr[0] "'start'은 반드시 %d 개의 행을 가지고 있어야 합니다."
 
 msgid "unable to optimize from this starting value"
 msgid_plural "unable to optimize from these starting values"
@@ -2546,7 +2552,7 @@ msgstr[0] "'init'는 반드시 %d개의 열을 가지고 있어야 합니다."
 
 msgid "X matrix has rank %d, but only %d observation"
 msgid_plural "X matrix has rank %d, but only %d observations"
-msgstr[0] "X 행렬은 rank %1$d를 가지고 있으나  %2$d개의 관측치 만을 가지고 있습니다."
+msgstr[0] "X 행렬은 rank %1$d를 가지고 있으나 %2$d개의 관측치 만을 가지고 있습니다."
 
 msgid "did not converge in %d iteration"
 msgid_plural "did not converge in %d iterations"

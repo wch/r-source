@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 2.4.2\n"
 
 msgid "invalid 'filename'"
-msgstr "argument 'filename' incorrect"
+msgstr "'filename' incorrect"
 
 msgid "svg: Cairo-based devices are not available for this platform"
 msgstr "svg : les périphériques basés sur Cairo ne sont pas disponibles pour cette plateforme"
@@ -31,13 +31,13 @@ msgid "cairo_ps: Cairo-based devices are not available for this platform"
 msgstr "cairo_ps : les périphériques basés sur Cairo ne sont pas disponibles pour cette plateforme"
 
 msgid "'coef' must not be negative"
-msgstr "'coef' ne peut pas être négatif"
+msgstr "'coef' ne doit pas être négatif"
 
 msgid "no 'z' matrix specified"
 msgstr "aucune matrice 'z' n'est spécifiée"
 
 msgid "increasing 'x' and 'y' values expected"
-msgstr "valeurs croissantes de 'x' et 'y' attendues"
+msgstr "valeurs attendues croissantes de 'x' et de 'y'"
 
 msgid "no proper 'z' matrix specified"
 msgstr "la matrice 'z' spécifiée est incorrecte"
@@ -162,36 +162,39 @@ msgstr "pas de nom de fichier utilisable disponible pour postscript()"
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new() : utilisation de postscript(file=\"%s\")"
 
+
 msgid "Invalid capabilities - alert the device maintainer"
 msgstr ""
+"Capacités non valides - alerter le responsable de l’appareil"
 
-#, fuzzy
 msgid "Invalid span weight"
-msgstr "Type de pattern incorrect"
+msgstr "Poids de travée non valide"
 
 msgid "length of arguments must match (and be greater than 0)"
 msgstr ""
+"la longueur des arguments doit correspondre (et être "
+"supérieure à 0)"
 
 msgid "Invalid glyph width(s)"
-msgstr ""
+msgstr "Largeur(s) de glyphe(s) invalide(s)"
 
 msgid "Invalid glyph width"
-msgstr ""
+msgstr "Largeur de glyphe non valide"
 
 msgid "Unknown width; using left anchor"
-msgstr ""
+msgstr "Largeur inconnue ; Utilisation de l’ancre gauche"
 
 msgid "Invalid glyph height(s)"
-msgstr ""
+msgstr "Hauteur(s) de glyphe(s) invalide(s)"
 
 msgid "Invalid glyph height"
-msgstr ""
+msgstr "Hauteur de glyphe invalide"
 
 msgid "Unknown height; using bottom anchor"
-msgstr ""
+msgstr "Hauteur inconnue ; Utilisation de l’ancrage inférieur"
 
 msgid "Invalid glyph anchor"
-msgstr ""
+msgstr "Ancre de glyphe invalide"
 
 msgid "Registered axis names must be lower case"
 msgstr ""
@@ -215,55 +218,51 @@ msgid "Axis values must be numeric"
 msgstr "la matrice 'rgb' doit être numérique"
 
 msgid "Font file longer than 500 will be truncated"
-msgstr ""
+msgstr "Les fichiers de polices de plus de 500 seront tronqués"
 
 msgid "Font family longer than 200 will be truncated"
-msgstr ""
+msgstr "Les familles de polices de plus de 200 seront tronquées"
 
 msgid "PostScript font name longer than 200 will be truncated"
 msgstr ""
+"Les noms de police PostScript de plus de 200 seront tronqués"
 
 msgid "Font information is inconsistent"
-msgstr ""
+msgstr "Les informations de police sont incohérentes"
 
 msgid "List must include at least one font"
-msgstr ""
+msgstr "La liste doit inclure au moins une police"
 
-#, fuzzy
 msgid "Invalid glyph font"
-msgstr "Type de police incorrect"
+msgstr "Police de glyphe non valide"
 
-#, fuzzy
 msgid "Invalid font list"
-msgstr "Type de police incorrect"
+msgstr "Liste des polices non valide"
 
-#, fuzzy
 msgid "Unknown font"
-msgstr "fonte inconnue"
+msgstr "Police inconnue"
 
 msgid "There must be anchors named \"left\" and \"bottom\""
 msgstr ""
+"Il doit y avoir des ancres nommées  \"gauche\"et \" bas\""
 
 msgid "Invalid glyph info"
-msgstr ""
+msgstr "Informations sur les glyphes non valides"
 
 msgid "'%s' was removed in R 4.5.0."
-msgstr ""
+msgstr "'%s' a été supprimé en R 4.5.0."
 
-#, fuzzy
 msgid "Invalid compositing operator"
-msgstr "format de sortie incorrect"
+msgstr "Opérateur de composition invalide"
 
 msgid "wrong 'type'; should never happen, please report!"
 msgstr "'type' incorrect ; Cela ne devrait pas se produire, veuillez reporter l’erreur, s’il-vous-plait !"
 
-#, fuzzy
 msgid "Invalid mask type"
-msgstr "Type de police incorrect"
+msgstr "Type de masque non valide"
 
-#, fuzzy
 msgid "Invalid fill rule"
-msgstr "argument 'file' incorrect"
+msgstr "Règle de remplissage non valide"
 
 msgid "Invalid pattern type"
 msgstr "Type de pattern incorrect"
@@ -272,7 +271,7 @@ msgid "Invalid 'extend' value"
 msgstr "Valeur de 'extend' incorrecte"
 
 msgid "'%s' is deprecated."
-msgstr ""
+msgstr "'%s' est obsolète."
 
 msgid "invalid arguments in '%s' (need named args)"
 msgstr "arguments incorrects dans '%s' (les arguments doivent être nommés)"
@@ -346,9 +345,8 @@ msgstr "fonte inconnue"
 msgid "font encoding mismatch '%s'/'%s'"
 msgstr "incohérence d'encodage pour la police '%s/%s'"
 
-#, fuzzy
 msgid "'%s' must be a non-empty character string"
-msgstr "'file' doit être une chaîne de caractère non vide"
+msgstr "'%s' doit être une chaîne de caractères non vide"
 
 msgid "GhostScript was not found"
 msgstr "GhostScript est introuvable"
@@ -359,9 +357,8 @@ msgstr "format de sortie incorrect"
 msgid "status %d in running command '%s'"
 msgstr "statut %d dans la commande en cours d'exécution '%s'"
 
-#, fuzzy
 msgid "Invalid 'glyphInfo'"
-msgstr "argument 'file' incorrect"
+msgstr "'glyphInfo' incorrect"
 
 msgid "failed to add more ticks; 'min.n' too large?"
 msgstr "impossible d’ajouter des traits d’axes supplémentaires ; 'min.n' trop large ?"
@@ -424,7 +421,7 @@ msgid "'r' must be a \"range\", hence of length 2"
 msgstr "'r' doit indiquer une étendue des valeurs, donc être de longueur 2"
 
 msgid "points cut off after point[%d]"
-msgstr ""
+msgstr "points coupés après point[%d]"
 
 msgid "invalid first argument"
 msgstr "premier argument incorrect"
@@ -466,20 +463,17 @@ msgstr ""
 "Les périphériques disponibles sont :\n"
 "%s"
 
-#, fuzzy
 msgid "invalid width"
-msgstr "'title' incorrect"
+msgstr "largeur incorrecte"
 
-#, fuzzy
 msgid "invalid height"
-msgstr "'title' incorrect"
+msgstr "hauteur incorrecte"
 
 msgid "'res' must be specified unless 'units = \"px\"'"
 msgstr "'res' doit être spécifié à moins que 'units = \"px\""
 
-#, fuzzy
 msgid "'filename' must be a non-empty character string"
-msgstr "'file' doit être une chaîne de caractère non vide"
+msgstr "'filename' doit être une chaîne de caractères non vide"
 
 msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
 msgstr "type = \"quartz\" n’est pas disponible. Essai de \"Xlib\""
@@ -490,8 +484,11 @@ msgstr "type = \"cairo\" n’est pas disponible. Essai de \"Xlib\""
 msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
 msgstr "type = \"cairo-png\" n’est pas disponible. Essai de \"Xlib\""
 
+
 msgid "compression is not supported for type = \"quartz\""
 msgstr ""
+"La compression n’est pas prise en charge pour Type = "
+"« Quartz »"
 
 msgid "invalid 'title'"
 msgstr "'title' incorrect"
@@ -569,11 +566,12 @@ msgid_plural "differ between new and previous"
 msgstr[0] "diffère entre le nouveau et le précédent"
 msgstr[1] "diffèrent entre le nouveau et le précédent"
 
-#, fuzzy
 msgid "%d %s value <= 0 omitted from logarithmic plot"
 msgid_plural "%d %s values <= 0 omitted from logarithmic plot"
-msgstr[0] "%d valeur x <= 0 est ignorée pour le graphe logarithmique"
-msgstr[1] "%d valeurs x <= 0 sont ignorées pour le graphe logarithmique"
+msgstr[0] ""
+"%d valeur %s <= 0 est ignorée pour le graphe logarithmique"
+msgstr[1] ""
+"%d valeurs %s <= 0 sont ignorées pour le graphe logarithmique"
 
 #~ msgid "%d y value <= 0 omitted from logarithmic plot"
 #~ msgid_plural "%d y values <= 0 omitted from logarithmic plot"

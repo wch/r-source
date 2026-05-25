@@ -1,0 +1,129 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.6.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
+"PO-Revision-Date: 2026-04-14 15:45+0000\n"
+"Last-Translator: Erika Siregar <erika.mukhlisina@gmail.com>\n"
+"Language-Team: none\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.11.4\n"
+
+msgid "namespace found within local environments"
+msgstr "namespace ditemukan di dalam environmen lokal"
+
+msgid "not a proper evaluation environment"
+msgstr "bukan environmen evaluasi yang tepat"
+
+msgid "non-namespace found within namespace environments"
+msgstr "non-namespace ditemukan dalam lingkungan namespace"
+
+msgid "namespace found within global environments"
+msgstr "namespace ditemukan dalam lingkungan global"
+
+msgid "bad assignment: %s"
+msgstr "assignment yang buruk: %s"
+
+msgid "cannot constant fold literal promises"
+msgstr ""
+
+msgid "cannot constant fold literal bytecode objects"
+msgstr ""
+
+msgid "no offset recorded for label \"%s\""
+msgstr "Tidak ada offset yang direkam untuk label \"%s\""
+
+msgid "cannot compile byte code literals in code"
+msgstr "tidak dapat mengkompilasi literal kode byte dalam kode"
+
+msgid "cannot compile promise literals in code"
+msgstr "tidak dapat mengkompilasi literal promise dalam kode"
+
+msgid "possible error in '%s': %s"
+msgstr "kemungkinan kesalahan di &#x27;%s&#x27;: %s"
+
+msgid "bad namespace import frame"
+msgstr ""
+
+msgid "bad assignment 1"
+msgstr ""
+
+msgid "bad assignment 2"
+msgstr ""
+
+msgid "invalid function in complex assignment"
+msgstr ""
+
+msgid "missing arguments are not allowed"
+msgstr "argumen yang hilang tidak diizinkan"
+
+msgid "empty alternative in numeric switch"
+msgstr "Alternatif kosong di switch numerik"
+
+msgid "no visible global function definition for '%s'"
+msgstr "tidak ada definisi fungsi global yang terlihat untuk '%s'"
+
+msgid "no visible binding for global variable '%s'"
+msgstr "tidak ada visible binding untuk variabel global '%s'"
+
+msgid "no visible binding for '<<-' assignment to '%s'"
+msgstr "tidak ada visible binding untuk assignment '<<-' ke '%s'"
+
+msgid "wrong number of arguments to '%s'"
+msgstr "jumlah argumen yang salah untuk '%s'"
+
+msgid "more than one default provided in switch() call"
+msgstr "lebih dari satu default disediakan untuk switch()"
+
+msgid "'switch' with no alternatives"
+msgstr "'switch' tanpa alternatif"
+
+msgid "Error: compilation failed -"
+msgstr "Error: kompilasi gagal -"
+
+msgid "cannot compile a non-function"
+msgstr "tidak dapat mengkompilasi sebuah non fungsi"
+
+msgid "compiling '%s'"
+msgstr "mengkompilasi '%s'"
+
+msgid "saving to file \"%s\" ..."
+msgstr "menyimpan ke file \"%s\" ..."
+
+msgid "done"
+msgstr "selesai"
+
+msgid "'env' must be a top level environment"
+msgstr "'env' harus berupa environmen tingkat atas"
+
+msgid "input and output file names are the same"
+msgstr "nama file input dan output sama"
+
+msgid "empty input file; no output written"
+msgstr "input file kosong; tidak ada output yang ditulis"
+
+msgid "file '%s' does not exist"
+msgstr "file '%s' tidak ada"
+
+msgid "'%s' is not a valid compiler option"
+msgstr "'%s' bukan opsi kompiler yang valid"
+
+msgid "invalid environment variable value: %s==%s"
+msgstr "nilai variable environment tidak valid: %s==%s"
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr "opsi kompiler tidak valid: optimize(==%d)<2 dan jitEnabled(==%d)>2"
+
+msgid "function is not compiled"
+msgstr "fungsi tidak dikompilasi"
+
+msgid "cannot compile this expression"
+msgstr "tidak dapat mengkompilasi ekspresi ini"
+
+msgid "local assignment to syntactic function: "
+msgid_plural "local assignments to syntactic functions: "
+msgstr[0] "Penugasan lokal untuk fungsi sintaksis: "

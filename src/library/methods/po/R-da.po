@@ -27,9 +27,8 @@ msgstr "unavngivet argument skal udvide enten S3-klassen eller klassen for datad
 msgid "class %s does not have an S3 data part, and so is of type \"S4\"; no S3 equivalent"
 msgstr "Klasse %s har ikke en S3-datadel, og er således af type »S4«; ingen tilsvarende S3"
 
-#, fuzzy
 msgid "class %s is VIRTUAL; not meaningful to create an S4 object from this class"
-msgstr "Klasse %s er VIRTUEL;  ikke meningsfuldt at oprette et S4-objekt fra denne klasse"
+msgstr "Klasse %s er VIRTUEL; ikke meningsfuldt at oprette et S4-objekt fra denne klasse"
 
 #, fuzzy
 msgid "object must be a valid data part for class %s; not true of type %s"

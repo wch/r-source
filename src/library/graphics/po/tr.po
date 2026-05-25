@@ -23,6 +23,8 @@ msgstr ""
 #: base.c:43
 msgid "no base graphics system is registered"
 msgstr ""
+"Temel grafik sistemi başlatılmamış veya kayıtlı "
+"değil"
 
 #: base.c:310
 #, fuzzy

@@ -20,7 +20,9 @@ msgstr ""
 
 #: gpar.c:632
 msgid "updateGContext must only be called after initGContext"
-msgstr "updateGContext doit être appelé après initGContext"
+msgstr ""
+"updateGContext doit être appelé uniquement après "
+"initGContext"
 
 #: grid.c:199
 msgid "Turning clipping on or off within a (clipping) path is no honoured"
@@ -41,7 +43,7 @@ msgstr "Les masques dans un chemin (de détourage) ne sont pas respectés"
 #: grid.c:699 grid.c:877
 #, c-format
 msgid "Viewport '%s' was not found"
-msgstr ""
+msgstr "La fenêtre '%s' n'est pas trouvée"
 
 #: grid.c:909 grid.c:914 grid.c:1035 grid.c:1040
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
@@ -82,16 +84,20 @@ msgstr "Graphique raster vide"
 #: grid.c:4038 grid.c:4094
 msgid "Coordinates for text pch not yet supported"
 msgstr ""
+"Les coordonnées du pch de texte ne sont pas encore prises "
+"en charge"
 
 #: grid.c:4099
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr ""
+"la valeur de pch '%d' est incorrecte dans cet "
+"environnement linguistique"
 
 #: grid.c:4920
 #, c-format
 msgid "unimplemented pch value '%d'"
-msgstr ""
+msgstr "valeur '%d' non implémentée pour 'pch'"
 
 #: grid.c:5079
 msgid "invalid plotting symbol"
@@ -184,6 +190,8 @@ msgstr "les unités ne peuvent être multipliées que par des nombres décimaux 
 #: util.c:216
 msgid "Unable to calculate text width/height (using zero)"
 msgstr ""
+"impossible de calculer la largeur ou la hauteur du texte "
+"(zéro est utilisé)"
 
 #: viewport.c:57
 msgid "Mask is not logical value ('none' or 'inherit')"

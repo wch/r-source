@@ -91,7 +91,7 @@ msgstr ""
 #: grid.c:4920
 #, c-format
 msgid "unimplemented pch value '%d'"
-msgstr ""
+msgstr "尚未實作pch '%d' 的值"
 
 #: grid.c:5079
 msgid "invalid plotting symbol"

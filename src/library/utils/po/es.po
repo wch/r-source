@@ -32,41 +32,47 @@ msgstr "argumento '%s' no válido"
 #: io.c:350 io.c:841
 msgid "invalid quote symbol set"
 msgstr ""
+"conjunto no válido de símbolos de entrecomillado "
+"('quote')"
 
 #: io.c:362 io.c:864 io.c:1084
 msgid "cannot open the connection"
-msgstr ""
+msgstr "no se puede abrir la conexión"
 
 #: io.c:365 io.c:369
 msgid "cannot read from this connection"
-msgstr ""
+msgstr "no se puede leer desde esta conexión"
 
 #: io.c:416 io.c:434
 #, c-format
 msgid "quoted string on line %d terminated by EOF"
 msgstr ""
+"cadena entrecomillada en línea %d terminada por "
+"EOF"
 
 #: io.c:569
 msgid "the first argument must be of mode character"
 msgstr ""
+"el primer argumento debe ser de modo carácter"
 
 #: io.c:599
 #, c-format
 msgid "invalid 'numerals' string: \"%s\""
-msgstr ""
+msgstr "cadena 'numerals' no válida: \"%s\""
 
 #: io.c:779
 #, c-format
 msgid "Selection: "
-msgstr ""
+msgstr "Selección: "
 
 #: io.c:874 io.c:889
 msgid "cannot allocate buffer in 'readTableHead'"
 msgstr ""
+"no se puede asignar búfer en 'readTableHead'"
 
 #: io.c:902
 msgid "\\ followed by EOF"
-msgstr ""
+msgstr "\\ seguido de EOF"
 
 #: io.c:954 io.c:958
 #, c-format
@@ -75,28 +81,28 @@ msgstr ""
 
 #: io.c:1015
 msgid "index out of range"
-msgstr ""
+msgstr "Índice fuera de rango"
 
 #: io.c:1052
 #, c-format
 msgid "Problem closing connection:  %s"
-msgstr ""
+msgstr "Problema cerrando la conexión: %s"
 
 #: io.c:1054
 msgid "Problem closing connection"
-msgstr ""
+msgstr "Problema al cerrar la conexión"
 
 #: io.c:1077
 msgid "'file' is not a connection"
-msgstr ""
+msgstr "'file' no es una conexión"
 
 #: io.c:1080
 msgid "cannot write to this connection"
-msgstr ""
+msgstr "no es posible escribir en esa conexión"
 
 #: io.c:1111
 msgid "'dec' must be a single character"
-msgstr ""
+msgstr "'dec' debe ser un solo carácter"
 
 #: io.c:1138
 #, c-format
@@ -111,6 +117,8 @@ msgstr ""
 #: io.c:1190
 msgid "corrupt matrix -- dims do not match length"
 msgstr ""
+"Matriz corrupta -- los dims no coinciden con la "
+"longitud"
 
 #: stubs.c:56
 msgid "'savehistory' can only be used in Rgui and Rterm"
@@ -122,29 +130,31 @@ msgstr ""
 
 #: stubs.c:85
 msgid "invalid timestamp"
-msgstr ""
+msgstr "marca de tiempo no válida"
 
 #: stubs.c:151 stubs.c:159
 msgid "X11 dataentry cannot be loaded"
-msgstr ""
+msgstr "no se puede cargar la entrada de datos X11"
 
 #: stubs.c:155 stubs.c:184 stubs.c:190
 msgid "X11 is not available"
-msgstr ""
+msgstr "X11 no está disponible"
 
 #: stubs.c:248 stubs.c:251
 #, c-format
 msgid "invalid '%s' specification"
-msgstr ""
+msgstr "especificación '%s' no válida"
 
 #: stubs.c:254
 #, c-format
 msgid "'%s' contains missing values"
-msgstr ""
+msgstr "'%s' contiene valores faltantes"
 
 #: utils.c:68
 msgid "argument 'class' must be a character string"
 msgstr ""
+"El argumento 'class' debe ser una cadena de "
+"caracteres"
 
 #: utils.c:78
 msgid "argument 'x' must be a length-1 character vector"
@@ -161,63 +171,69 @@ msgstr ""
 #: utils.c:153
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
-msgstr ""
+msgstr "nsl() no pudo resolver el host '%s'"
 
 #: utils.c:160
 msgid "unknown format returned by 'gethostbyname'"
 msgstr ""
+"formato desconocido devuelto por 'gethostbyname'"
 
 #: utils.c:169
 msgid "nsl() is not supported on this platform"
-msgstr ""
+msgstr "nsl() no es soportado en esta plataforma"
 
 #: windows/dialogs.c:181
 msgid "unknown type"
-msgstr ""
+msgstr "tipo desconocido"
 
-#: windows/dialogs.c:213 windows/dialogs.c:237 windows/dialogs.c:275
-#: windows/dialogs.c:310
+#: windows/dialogs.c:213 windows/dialogs.c:237
+#: windows/dialogs.c:275 windows/dialogs.c:310
 msgid "menu functions can only be used in the GUI"
 msgstr ""
+"las funciones de menú solo se pueden utilizar en "
+"la interfaz gráfica de usuario"
 
 #: windows/dialogs.c:245
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr ""
+"no se pueden recuperar elementos para %s (%s)"
 
 #: windows/dialogs.c:283
 #, c-format
 msgid "unable to add menu (%s)"
-msgstr ""
+msgstr "no se puede agregar el menú (%s)"
 
 #: windows/dialogs.c:295
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr ""
+"no se puede agregar un elemento de menú (%s)"
 
 #: windows/dialogs.c:318
 msgid "menu does not exist"
-msgstr ""
+msgstr "el menú no existe"
 
 #: windows/dialogs.c:325
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr ""
+"no se puede eliminar el elemento de menú (%s)"
 
-#: windows/registry.c:67 windows/registry.c:242 windows/registry.c:245
-#: windows/registry.c:248
+#: windows/registry.c:67 windows/registry.c:242
+#: windows/registry.c:245 windows/registry.c:248
 #, c-format
 msgid "invalid '%s' value"
-msgstr ""
+msgstr "valor '%s' no válido"
 
 #: windows/registry.c:260
 #, c-format
 msgid "Registry key '%ls' not found"
-msgstr ""
+msgstr "no se encontró la clave de registro '%ls'"
 
 #: windows/util.c:46
 msgid "unsupported version of Windows"
-msgstr ""
+msgstr "versión no soportada de Windows"
 
 #: windows/util.c:291
 msgid "argument must be a character vector or a raw vector"
@@ -225,59 +241,61 @@ msgstr ""
 
 #: windows/util.c:332
 msgid "unable to open the clipboard"
-msgstr ""
+msgstr "no se puede abrir el portapapeles"
 
 #: windows/util.c:337
 msgid "unable to write to the clipboard"
-msgstr ""
+msgstr "no se puede escribir en el portapapeles"
 
 #: windows/util.c:416
 msgid "'title' must be a character string"
-msgstr ""
+msgstr "'title' debe ser una cadena de caracteres"
 
 #: windows/util.c:425
 msgid "'text' must be a character string"
-msgstr ""
+msgstr "'text' debe ser una cadena de caracteres"
 
 #: windows/util.c:464
 #, c-format
 msgid "'%s' must be length 1"
-msgstr ""
+msgstr "'%s' debe tener longitud 1"
 
 #: windows/util.c:577
 #, c-format
 msgid "'%s' must be a list"
-msgstr ""
+msgstr "'%s' debe ser una lista"
 
 #: windows/util.c:581
 #, c-format
 msgid "'%s' element %d is not a window handle"
 msgstr ""
+"el elemento '%s' %d no es un identificador de "
+"ventana"
 
 #: windows/widgets.c:110
 msgid "Select one or more"
-msgstr ""
+msgstr "Seleccione uno o varios"
 
 #: windows/widgets.c:110
 msgid "Select one"
-msgstr ""
+msgstr "Seleccione uno"
 
 #: windows/widgets.c:196 windows/widgets.c:266
 msgid "'default' must be a character string"
-msgstr ""
+msgstr "'default' debe ser una cadena de caracteres"
 
 #: windows/widgets.c:198
 msgid "'default' is overlong"
-msgstr ""
+msgstr "'default' es demasiado largo"
 
 #: windows/widgets.c:202 windows/widgets.c:272
 msgid "'caption' must be a character string"
-msgstr ""
+msgstr "'caption' debe ser una cadena de caracteres"
 
 #: windows/widgets.c:204
 msgid "'multi' must be a logical value"
-msgstr ""
+msgstr "'multi' debe ser un valor lógico"
 
 #: windows/widgets.c:206
 msgid "'filterindex' must be an integer value"
-msgstr ""
+msgstr "'filterindex' debe ser un valor entero"

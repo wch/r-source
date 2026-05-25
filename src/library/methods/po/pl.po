@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51+0200\n"
+"POT-Creation-Date: 2026-04-25 10:48-0700\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: class_support.c:29
 msgid "calling the C routine used as an initializer for 'externalptr' objects"
-msgstr "wywołanie procedury C użyte jako inicjalizator dla obiektów 'externalptr'"
+msgstr "wywołanie procedury C użyte jako inicjator dla obiektów 'externalptr'"
 
 #: do_substitute_direct.c:41
 msgid "invalid list for substitution"
@@ -26,11 +26,11 @@ msgstr "niepoprawna lista do podmiany"
 #: methods_list_dispatch.c:129
 #, c-format
 msgid "unexpected type '%s' for condition message"
-msgstr ""
+msgstr "nieoczekiwany typ '%s' w wiadomości warunkowej"
 
 #: methods_list_dispatch.c:132
 msgid "condition message must be length 1"
-msgstr ""
+msgstr "wiadomość warunkowa musi być długości 1"
 
 #: methods_list_dispatch.c:213
 msgid "could not find the skeleton calls for 'methods' (package detached?): expect very bad things to happen"
@@ -39,7 +39,7 @@ msgstr "nie można znaleźć głównych wywołań dla 'methods' (odłączony pak
 #: methods_list_dispatch.c:279
 #, c-format
 msgid "no \"allMethods\" slot found in object of class \"%s\" used as methods list for function '%s'"
-msgstr "nie znaleziono gniazd 'allMethods' w obiekcie klasy \"%s\" użytej jako listy metod dla funkcji '%s'"
+msgstr "nie znaleziono gniazda 'allMethods' w obiekcie klasy \"%s\" użytej jako listy metod dla funkcji '%s'"
 
 #: methods_list_dispatch.c:407
 #, c-format
@@ -48,7 +48,7 @@ msgstr ""
 
 #: methods_list_dispatch.c:409
 msgid "Function name for method selection called internally"
-msgstr ""
+msgstr "Nazwa funkcji dla wyboru metody wywołana wewnętrznie"
 
 #: methods_list_dispatch.c:505
 #, c-format
@@ -131,17 +131,17 @@ msgstr "błąd w trakcie obliczania 'primitive' następnej metody: %s"
 #: methods_list_dispatch.c:896
 #, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
-msgstr "'%s' musi być pojedynczym łańcuchem (otrzymano wektor tekstowy o długości %d)"
+msgstr "%s musi być pojedynczym ciągiem znaków (otrzymano wektor tekstowy o długości %d)"
 
 #: methods_list_dispatch.c:900
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
-msgstr "'%s' musi być niepustym łańcuchem; otrzymano pusty łańcuch"
+msgstr "%s musi być niepustym ciągiem znaków; otrzymano pusty ciąg"
 
 #: methods_list_dispatch.c:904
 #, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
-msgstr "'%s' musi być pojedynczym łańcuchem (otrzymano obiekt klasy '%s')"
+msgstr "%s musi być pojedynczym ciągiem znaków (otrzymano obiekt klasy \"%s\")"
 
 #: methods_list_dispatch.c:989
 msgid "class should be either a character-string name or a class definition"

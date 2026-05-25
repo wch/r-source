@@ -17,22 +17,21 @@ msgstr ""
 "X-Generator: Poedit 2.0.4\n"
 
 msgid "named list expected"
-msgstr ""
+msgstr "oczekiwano nazwanej listy"
 
-#, fuzzy
 msgid "some named values are not arguments to the supplied log-likelihood"
 msgstr ""
 "niektóre nazwane argumenty w funkcji 'fixed' nie są argumentami do "
 "dostarczonej logarytmicznej funkcji wiarygodności"
 
 msgid "Mismatch in length of start values"
-msgstr ""
+msgstr "Niezgodność długości wartości początkowych"
 
 msgid "fixed values violate constraints"
-msgstr ""
+msgstr "ustalone wartości nie zgadzają się z założeniami"
 
 msgid "start values do not satisfy constraints"
-msgstr ""
+msgstr "wartości początkowe nie spełniają warunków początkowych"
 
 msgid ""
 "profiling has found a better solution, so original fit had not converged"
@@ -41,7 +40,7 @@ msgstr ""
 "nie uzbieżniło się"
 
 msgid "levels truncated to positive values only"
-msgstr "poziomy przycięto do wartości dodatnich"
+msgstr "poziomy przycięto tylko do wartości dodatnich"
 
 msgid "extra arguments discarded"
 msgstr "dodatkowe argumenty zostały odrzucone"

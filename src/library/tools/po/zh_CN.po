@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-04-25 10:48-0700\n"
 "PO-Revision-Date: 2023-12-20 13:03+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -25,22 +25,22 @@ msgstr "参数'files'必需是字符"
 #: Rmd5.c:73
 #, c-format
 msgid "md5 failed on file '%ls'"
-msgstr "文件“%ls”的 md5 失败"
+msgstr "文件“%ls”的 md5 校验失败"
 
 #: Rmd5.c:75
 #, c-format
 msgid "md5 failed on file '%s'"
-msgstr "用于'%s'文件的md5运行失败"
+msgstr "用于'%s'文件的md5 校验失败"
 
 #: Rsha256.c:86
-#, fuzzy, c-format
+#, c-format
 msgid "sha256 failed on file '%ls'"
-msgstr "文件“%ls”的 md5 失败"
+msgstr "文件“%ls”的 md5 校验失败"
 
 #: Rsha256.c:88
-#, fuzzy, c-format
+#, c-format
 msgid "sha256 failed on file '%s'"
-msgstr "用于'%s'文件的md5运行失败"
+msgstr "用于'%s'文件的sha256 校验失败"
 
 #: getfmts.c:60
 #, c-format

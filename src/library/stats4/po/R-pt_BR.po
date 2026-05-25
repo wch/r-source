@@ -17,20 +17,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 4.13.1\n"
 
-#, fuzzy
 msgid "named list expected"
 msgstr "lista nomeada esperada"
 
-#, fuzzy
 msgid "some named values are not arguments to the supplied log-likelihood"
 msgstr ""
 "alguns valores nomeados não são argumentos para a log-verossimilhança "
 "fornecida"
 
 msgid "Mismatch in length of start values"
-msgstr ""
+msgstr "Incompatibilidade no comprimento dos valores iniciais"
 
-#, fuzzy
 msgid "fixed values violate constraints"
 msgstr "valores fixos violam restrições"
 
@@ -44,7 +41,7 @@ msgstr ""
 "convergiu"
 
 msgid "levels truncated to positive values only"
-msgstr "níveis truncados para valores positivos"
+msgstr "níveis truncados somente para valores positivos"
 
 msgid "extra arguments discarded"
 msgstr "argumentos extras descartados"

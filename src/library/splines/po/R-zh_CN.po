@@ -25,7 +25,7 @@ msgid "length of 'derivs' is larger than length of 'x'"
 msgstr "'derivs'和'x'的长度必需匹配"
 
 msgid "empty 'derivs'"
-msgstr ""
+msgstr "'derivs' 为空"
 
 msgid "'ord' must be positive integer, at most the number of knots"
 msgstr "'ord'必需为正整数，最多不能超过结的数目"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2023-04-14 03:05+0000\n"
 "Last-Translator: Hugo Gruson <hugo.gruson@normalesup.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -161,15 +161,13 @@ msgid "arguments must have same length"
 msgstr "les arguments doivent avoir la même longueur"
 
 msgid "argument 'x' is  missing -- it has been renamed from 'formula'"
-msgstr ""
+msgstr "argument 'x' absent -- il a été renommé àpartir de 'formula'"
 
-#, fuzzy
 msgid "argument 'x' must be a formula"
-msgstr "l'argument 'x' doit être numérique"
+msgstr "l'argument 'x' doit être une formule"
 
-#, fuzzy
 msgid "formula 'x' must have both left and right hand sides"
-msgstr "'formula' doit avoir un membre de gauche et un membre de droite"
+msgstr "la formule 'x' doit avoir simultanément un membre gauche et un membre droit"
 
 msgid "cannot change frequency from %g to %g"
 msgstr "impossible de changer la fréquence de %g à %g"
@@ -318,13 +316,11 @@ msgstr "'seasonal' doit être une liste possédant une composante 'order'"
 msgid "'seasonal$order' must be a non-negative numeric vector of length 3"
 msgstr "'seasonal$order' doit être un vecteur numérique positif ou nul de longueur 3"
 
-#, fuzzy
 msgid "if not a list, 'seasonal' must be a non-negative numeric vector of length 3"
-msgstr "'seasonal$order' doit être un vecteur numérique positif ou nul de longueur 3"
+msgstr "quand ce n'est pas une liste, 'seasonal' doit être un vecteur numérique positif ou nul de longueur 3"
 
-#, fuzzy
 msgid "'seasonal' is neither a list with component 'order' nor a numeric vector of length 3"
-msgstr "'seasonal' doit être une liste possédant une composante 'order'"
+msgstr "'seasonal' n'est ni une liste avec un composant 'order', ni un vecteur numérique de longueur 3"
 
 msgid "lengths of 'x' and 'xreg' do not match"
 msgstr "les longueurs de 'x' et de 'xreg' ne correspondent pas"
@@ -507,13 +503,13 @@ msgid "only %d of the first %d eigenvalues are > 0"
 msgstr "seulement %d des premières %d valeurs propres sont positives"
 
 msgid "Waiting for profiling to be done..."
-msgstr ""
+msgstr "Attente que le profilage soit terminé..."
 
 msgid "Reprofiling for"
-msgstr ""
+msgstr "Nouveau profilage pour"
 
 msgid "statistic. Waiting..."
-msgstr ""
+msgstr "statistiques. Attendre..."
 
 msgid "initial value is not in the interior of the feasible region"
 msgstr "la valeur initiale ne se trouve pas à l'intérieur de la région admissible"
@@ -573,7 +569,7 @@ msgid "numeric contrasts or contrast name expected"
 msgstr "contrastes numérique ou nom de contraste attendu"
 
 msgid "%s needs package 'Matrix' correctly installed"
-msgstr "%s nécessite le package 'Matrix' correctement installé"
+msgstr "%s a besoin du package 'Matrix' installé correctement"
 
 msgid "not enough degrees of freedom to define contrasts"
 msgstr "nombre de degrés de liberté insuffisant pour définir des contrastes"
@@ -602,9 +598,8 @@ msgstr "impossible de gérer 'pairwise.complete.obs'"
 msgid "'V' is not a square numeric matrix"
 msgstr "'V' n'est pas une matrice carrée numérique"
 
-#, fuzzy
 msgid "diag(V) had non-positive or NA entries; the non-finite result may be dubious"
-msgstr "diag(.) à 0 ou NA entrées ; les résultats non finis sont douteux"
+msgstr "diag(V) a des entrées non positives ou à NA ; les résultats non finis sont douteux"
 
 msgid "'x' must be a numeric vector"
 msgstr "'x' doit être un vecteur numérique"
@@ -721,7 +716,7 @@ msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "il faut au moins 2 points pour choisir automatiquement la largeur de fenêtre"
 
 msgid "Selecting bandwidth *not* using 'weights'"
-msgstr ""
+msgstr "Sélection des largeurs de fenêtre *sans* utiliser les 'pondérations'"
 
 msgid "unknown bandwidth rule"
 msgstr "règle de choix de la largeur de fenêtre inconnue"
@@ -757,7 +752,7 @@ msgid "'x' is not a vector or matrix"
 msgstr "'x' n'est pas un vecteur ou une matrice"
 
 msgid "x[1] != r[1]; using x[1] for diagonal"
-msgstr ""
+msgstr "x[1] != r[1] ; en utilisant x[1] comme diagonale"
 
 msgid "invalid distance method"
 msgstr "méthode de calcul de distance incorrecte"
@@ -1057,16 +1052,16 @@ msgid "'col.vars' missing or incorrect"
 msgstr "'col.vars' manquant ou incorrect"
 
 msgid "Parameter:"
-msgstr ""
+msgstr "Paramètre :"
 
 msgid "down"
-msgstr ""
+msgstr "descendre"
 
 msgid "up"
-msgstr ""
+msgstr "remonter"
 
 msgid "profiling has found a better solution, so original fit had not converged"
-msgstr ""
+msgstr "le profilage a trouvé une meilleure solution, l'ajustement original n'a donc pas convergé"
 
 msgid "'family' not recognized"
 msgstr "'family' non reconnu"
@@ -1144,10 +1139,10 @@ msgid "glm.fit: algorithm stopped at boundary value"
 msgstr "glm.fit : l'algorithme s'est arrêté à la valeur limite"
 
 msgid "glm.fit: fitted probabilities numerically 0 or 1 occurred"
-msgstr "glm.fit: des probabilités ont été ajustées numériquement à 0 ou 1"
+msgstr "glm.fit : des probabilités ont été ajustées numériquement à 0 ou 1"
 
 msgid "glm.fit: fitted rates numerically 0 occurred"
-msgstr "glm.fit: des taux ont été ajustés numériquement à 0"
+msgstr "glm.fit : des taux ont été ajustés numériquement à 0"
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
 msgstr "les arguments de 'anova.glm' suivants sont incorrects et ignorés :"
@@ -1171,7 +1166,7 @@ msgid "observations with zero weight not used for calculating dispersion"
 msgstr "les observations de poids nul n'ont pas été utilisées pour le calcul de la dispersion"
 
 msgid "The \"ward\" method has been renamed to \"ward.D\"; note new \"ward.D2\""
-msgstr "La méthode \"ward\" a été renommée \"ward.D\"; notez la nouvelle méthode \"ward.D2\""
+msgstr "La méthode \"ward\" a été renommée en \"ward.D\" ; notez la nouvelle méthode \"ward.D2\""
 
 msgid "invalid clustering method"
 msgstr "méthode de classification incorrecte"
@@ -1302,13 +1297,11 @@ msgstr "certains éléments de 'x' sont non numériques et seront convertis en n
 msgid "not enough 'x' data"
 msgstr "pas assez de données 'x'"
 
-#, fuzzy
 msgid "Parameter(s)"
-msgstr "paramètres à ajuster"
+msgstr "Paramètre(s)"
 
-#, fuzzy
 msgid "ignored"
-msgstr "' et ignoré(s)"
+msgstr "ignoré"
 
 msgid "not enough 'y' data"
 msgstr "pas assez de données 'y'"
@@ -1319,28 +1312,23 @@ msgstr "les valeurs p seront approximées en présence d'ex-aequos"
 msgid "'y' must be numeric or a function or a string naming a valid function"
 msgstr "'y' doit être numérique ou une fonction ou bien une chaîne de caractères donnant le nom d'une fonction adéquate"
 
-#, fuzzy
 msgid "ties should not be present for the one-sample Kolmogorov-Smirnov test"
-msgstr "aucun ex-aequo ne devrait être présent pour le test de Kolmogorov-Smirnov"
+msgstr "aucun ex-aequo ne doit être présent pour le test de Kolmogorov-Smirnov à un échantillon"
 
-#, fuzzy
 msgid "invalid arguments"
-msgstr "argument 'n' incorrect"
+msgstr "arguments incorrects"
 
-#, fuzzy
 msgid "argument 'sizes' must be a vector of length 2"
-msgstr "'interval' doit être un vecteur de longueur 2"
+msgstr "l'argument 'sizes' doit être un vecteur de longueur 2"
 
-#, fuzzy
 msgid "argument 'q' must be numeric"
-msgstr "l'argument 'x' doit être numérique"
+msgstr "l'argument 'q' doit être numérique"
 
 msgid "computation of exact probability failed, returning Monte Carlo approximation"
-msgstr ""
+msgstr "échec dans le calcul de la probabilité exacte, l'approximation de Monte Carlo est renvoyée"
 
-#, fuzzy
 msgid "argument 'p' must be numeric"
-msgstr "l'argument 'x' doit être numérique"
+msgstr "l'argument 'p' doit être numérique"
 
 msgid ""
 "numeric y must be supplied.\n"
@@ -1404,21 +1392,20 @@ msgstr "Les tests F d'ANOVA sur un ajustement pratiquement parfait ne sont pas f
 msgid "calling predict.lm(<fake-lm-object>) ..."
 msgstr "appel à predict.lm(<faux-objet-lm>) ..."
 
-#, fuzzy
 msgid "prediction from rank-deficient fit"
-msgstr "les prédictions venant d'un modèle de rang faible peuvent être trompeuses"
+msgstr "prédiction à partir d'un ajustement où il manque des rangs"
 
 msgid "%s; consider predict(., rankdeficient=\"NA\")"
-msgstr ""
+msgstr "%s ; considérer predict(., rankdeficient=\"NA\")"
 
 msgid "lower-rank qr: determining non-estimable cases"
-msgstr ""
+msgstr "qr de rang inférieur : détermination de cas non estimables"
 
 msgid "%s; attr(*, \"non-estim\") has doubtful cases"
-msgstr ""
+msgstr "%s ; attr(*, \"non-estim\") contient des cas douteux"
 
 msgid "%s: NAs produced for non-estimable cases"
-msgstr ""
+msgstr "%s : des NA ont été produits pour les cas non estimables"
 
 msgid "predictions on current data refer to _future_ responses"
 msgstr "les prédictions sur les données actuelles se réfèrent à des réponses _futures_"
@@ -1490,7 +1477,7 @@ msgid "no models to compare"
 msgstr "pas de modèle à comparer"
 
 msgid "extra arguments discarded"
-msgstr "arguments supplémentaires ignorés"
+msgstr "arguments supplémentaires supprimés"
 
 msgid "'logLik.lm' does not support multiple responses"
 msgstr "'logLik.lm' n'est pas implémenté pour les réponses multiples"
@@ -1631,13 +1618,11 @@ msgstr "formule %s incorrecte"
 msgid "no terms component nor attribute"
 msgstr "pas de composante 'terms' ni d'attribut"
 
-#, fuzzy
 msgid "'termlabels' must be a character vector"
-msgstr "'termlabels' doit être un vecteur de caractères de longueur >= 1"
+msgstr "'termlabels' doit être un vecteur de caractères"
 
-#, fuzzy
 msgid "'%s' must be a character string"
-msgstr "'sep' doit être une chaîne de caractères"
+msgstr "'%s' doit être une chaîne de caractères"
 
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
 msgstr "Impossible d’analyser le code de la reponse \"%s\" ; cet usage est obsolète. Utilisez as.name(.) ou `..` !"
@@ -1646,7 +1631,7 @@ msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' doit être un objet de classe %s"
 
 msgid "setting '%s' in terms.formula() is deprecated"
-msgstr ""
+msgstr "initialiser '%s' dans terms.formula() est obsolète"
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
 msgstr "la variable '%s' a été ajustée avec le type \"%s\" mais le type \"%s\" a été fourni"
@@ -1663,13 +1648,11 @@ msgstr "'data' doit être un data frame, un environnement ou une liste"
 msgid "variable '%s' is not a factor"
 msgstr "la variable '%s' n'est pas un facteur"
 
-#, fuzzy
 msgid "contrasts dropped from factor %s"
-msgstr "les contrastes s'appliquent uniquement aux facteurs"
+msgstr "contrastes ignorés du facteur %s"
 
-#, fuzzy
 msgid "contrasts dropped from factor %s due to missing levels"
-msgstr "les contrastes ne peuvent être appliqués qu'aux facteurs ayant au moins deux niveaux"
+msgstr "contrastes ignorés du facteur %s dûs aux niveaux absents"
 
 msgid "'offset' must be numeric"
 msgstr "'offset' doit être numérique"
@@ -1717,7 +1700,7 @@ msgid "f.upper = f(upper) is NA"
 msgstr "f.upper = f(upper) est NA"
 
 msgid "invalid 'extendInt'; please report"
-msgstr "argument 'extendInt' incorrect; veuillez envoyer un rapport de bug"
+msgstr "'extendInt' incorrect ; veuillez rapporter le bogue"
 
 msgid "no sign change found in %d iterations"
 msgstr "pas de changement de signe après %d itérations"
@@ -1756,7 +1739,7 @@ msgid "cannot recognize parameter name"
 msgstr "nom de paramètre inconnu"
 
 msgid "levels truncated to positive values only"
-msgstr "les niveaux ont été réduits aux valeurs positives"
+msgstr "les niveaux ont été tronqués aux valeurs positives uniquement"
 
 msgid "invalid  'attr(rhs, \"gradient\")'"
 msgstr "'attr(rhs, \"gradient\")' incorrect"
@@ -1787,6 +1770,13 @@ msgstr "l'argument 'na.action' sera ignoré"
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "limites hautes et basses ignorées, à moins d'utiliser l'algorithme \"port\""
+
+#, fuzzy
+msgid "'%s' is not implemented yet"
+msgstr "le type '%s' n'est pas encore implémenté"
+
+msgid "hatvalues() for nls(*, algorithm='plinear')"
+msgstr ""
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
 msgstr "impossible de calculer la log-vraisemblance REML pour les objets \"nls\""
@@ -1908,9 +1898,8 @@ msgstr "Aucun p2 trouvé dans [p1, 0] pour obtenir la puissance désirée"
 msgid "No significance level [0, 1] can be found to achieve the desired power"
 msgstr "Aucun niveau significatif [0, 1] n’est trouvé pour obtenir la puissance désirée"
 
-#, fuzzy
 msgid "'%s' must be numeric in [0, 1]"
-msgstr "'sig.level' doit être numerique et dans [0, 1]"
+msgstr "'%s' doit être numerique dans [0, 1]"
 
 msgid "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig.level' must be NULL"
 msgstr "un et un seul parmi 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig.level' doit être NULL"
@@ -1930,9 +1919,8 @@ msgstr "'ppr' ne s'applique qu'aux variables numériques"
 msgid "mismatched 'x' and 'y'"
 msgstr "'x' et 'y' ne correspondent pas"
 
-#, fuzzy
 msgid "mismatched 'x' and 'weights'"
-msgstr "'x' et 'y' ne correspondent pas"
+msgstr "'x' et 'weights' ne correspondent pas"
 
 msgid "wrong number of columns in 'x'"
 msgstr "le nombre de colonnes de 'x' est incorrect"
@@ -1995,11 +1983,10 @@ msgid "elements of 'p' must be in (0,1)"
 msgstr "les éléments de 'p' doivent appartenir à (0,1)"
 
 msgid "'conf.level' is not a probability"
-msgstr ""
+msgstr "'conf.level' n'est pas une probabilité"
 
-#, fuzzy
 msgid "'type' must be an integer in 1..9"
-msgstr "'y' doit être plus long que 'x' de un"
+msgstr "'type' doit être un entier dans 1..9"
 
 msgid "'type' must be 1 or 3 for ordered factors"
 msgstr "'type' doit être 1 ou 3 pour les facteurs ordonnés"
@@ -2076,9 +2063,8 @@ msgstr "la largeur de fenêtre 'k' doit être >=1 et impaire !"
 msgid "argument 'object' has an impossible length"
 msgstr "la longueur de l'argument 'object' est incorrecte"
 
-#, fuzzy
 msgid "right-hand side of formula is not a call"
-msgstr "formule %s incorrecte : ce n’est pas un appel"
+msgstr "le membre droit de la formule n’est pas un appel"
 
 msgid "no 'getInitial' method found for \"%s\" objects"
 msgstr "impossible de trouver une méthode 'getInitial' pour les objets \"%s\""
@@ -2158,13 +2144,11 @@ msgstr "il faut spécifier à la fois 'spar' et 'lambda'"
 msgid "'spar' must be of length 1"
 msgstr "'spar' doit être de longueur 1"
 
-#, fuzzy
 msgid "df.offset must be numeric and >= 0"
-msgstr "'offset' doit être numérique"
+msgstr "df.offset doit être numérique et >= 0"
 
-#, fuzzy
 msgid "penalty must be numeric and > 0"
-msgstr "'y' doit être numérique"
+msgstr "'penalty' doit être numérique et > 0"
 
 msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
 msgstr "n’utilise pas un df correct ; il faut fournir 1 < df <= n := #{unique x} ="
@@ -2298,9 +2282,8 @@ msgstr "'y' est manquant pour un test apparié"
 msgid "data are essentially constant"
 msgstr "les données sont pratiquement constantes"
 
-#, fuzzy
 msgid "cannot use 'paired' in formula method"
-msgstr "impossible d'utiliser des points dans la formule avec les données indiquées"
+msgstr "impossible d'utiliser 'paired' dans la méthode de la formule"
 
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
 msgstr "'main' doit être TRUE, FALSE, NULL or caractère (vecteur)."
@@ -2445,7 +2428,6 @@ msgstr "impossible de calculer un intervalle de confiance avec des observations 
 msgid "'z' is not a rank vector"
 msgstr "'x' n'est pas un vecteur"
 
-#, fuzzy
 msgid "must supply 'formula' or 'data'"
 msgstr "il faut fournir soit 'formula', soit 'data'"
 
@@ -2519,11 +2501,10 @@ msgid_plural "unknown names %s in the 'split' list"
 msgstr[0] "nom %s inconnu dans la liste 'split'"
 msgstr[1] "noms %s inconnus dans la liste 'split'"
 
-#, fuzzy
 msgid "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\""
-msgstr[0] "l'argument supplémentaire %s n'est pas un \"%s\""
-msgstr[1] "les arguments supplémentaires %s ne sont pas des \"%s\""
+msgstr[0] "l'argument supplémentaire %s n'est pas de classe \"%s\""
+msgstr[1] "les arguments supplémentaires %s ne sont pas de classe \"%s\""
 
 msgid "%d factor is too many for %d variables"
 msgid_plural "%d factors are too many for %d variables"

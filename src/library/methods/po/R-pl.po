@@ -76,10 +76,10 @@ msgid "the 'replace' argument to setIs() should be a function of 2 or 3 argument
 msgstr "argument 'replace' przekazywany do 'setIs()' powinien być funkcją 2 lub 3 argumentów, otrzymano obiekt klasy %s"
 
 msgid "the member classes must be defined: not true of %s"
-msgstr "klasy członkowe muszą być zdefiniowane: nie jest to prawda dla %s"
+msgstr "klasy członkowskie muszą być zdefiniowane: nie jest to prawda dla %s"
 
 msgid "unable to create union class:  could not set members %s"
-msgstr "nie można utworzyć uni klas:  nie można ustawić członków %s"
+msgstr "nie można utworzyć unii klas:  nie można ustawić członków %s"
 
 msgid ""
 "methods:::bind_activation() is defunct;\n"
@@ -103,7 +103,9 @@ msgstr "potrzeba dostarczyć strukturę funkcji dla %s, jawnie lub poprzez istni
 msgid ""
 "Creating a generic function for %s from %s in %s\n"
 "    (from the saved implicit definition)"
-msgstr "Tworzenie ogólnej funkcji dla %s z pakietu %s w pakiecie %s (z zachowanej niejawnej definicji)"
+msgstr ""
+"Tworzenie ogólnej funkcji dla %s z pakietu %s w pakiecie %s\n"
+"    (z zachowanej niejawnej definicji)"
 
 msgid "Creating a new generic function for %s in %s"
 msgstr "Tworzenie nowej ogólnej funkcji dla %s w pakiecie %s"
@@ -113,9 +115,8 @@ msgid ""
 "   a new generic will be assigned for %s"
 msgstr "żadna ogólna wersja %s w pakiecie %s nie jest dozwolona; nowa ogólna funkcja będzie przypisana dla pakietu %s"
 
-#, fuzzy
 msgid "fdef appears to be a generic function, but with generic name %s instead of %s"
-msgstr "funkcja %s wygląda na ogólną funkcję ale z ogólną nazwą %s"
+msgstr "funkcja fdef wygląda na ogólną funkcję ale z ogólną nazwą %s zamiast %s"
 
 msgid "generic function %s not found for removal"
 msgstr "nie znaleziono ogólnej funkcji %s do usunięcia"
@@ -172,7 +173,7 @@ msgid "no method found for function '%s' and signature %s"
 msgstr "nie znaleziono metody dla funkcji '%s' oraz sygnatury %s"
 
 msgid "'file' must be a character string or a connection"
-msgstr "'file' musi być łańcuchem tekstowym lub połączeniem"
+msgstr "'file' musi być ciągiem znaków lub połączeniem"
 
 msgid ""
 "argument 'signature' is not meaningful with the current implementation and is ignored \n"
@@ -191,7 +192,7 @@ msgid "%s has no methods defined"
 msgstr "%s nie ma zdefiniowanych metod"
 
 msgid "bad class specified for element %d (should be a single character string)"
-msgstr "określono błędną klasę dla elementu %d (powinien być jednym łańcuchem tekstowym)"
+msgstr "określono błędną klasę dla elementu %d (powinien być jednym ciągiem znaków)"
 
 msgid "first argument should be the names of one of more generic functions (got object of class %s)"
 msgstr "pierwszy argument powinien być nazwami jeden lub więcej ogólnych funkcji (otrzymano obiekt klasy %s)"
@@ -221,7 +222,7 @@ msgid "callGeneric() must be called from within a method body"
 msgstr "'callGeneric()' musi być wywołana z wewnątrz ciała ogólnej metody"
 
 msgid "expected a non-empty character string for argument name"
-msgstr "oczekiwano niepustego łańcucha tekstowego dla nazwy argumentu"
+msgstr "oczekiwano niepustego ciągu znaków dla nazwy argumentu"
 
 msgid "generic function supplied was not created for %s"
 msgstr "dostarczona funkcja ogólna nie została utworzona dla %s"
@@ -266,7 +267,7 @@ msgid "generic names differ: %s, %s"
 msgstr "ogólne nazwy różnią się: %s, %s"
 
 msgid "argument %s must be a generic function or a single character string; got an object of class %s"
-msgstr "argument %s musi być funkcją ogólną lub pojedynczym łańcuchem tekstowym; otrzymano obiekt klasy %s"
+msgstr "argument %s musi być funkcją ogólną lub pojedynczym ciągiem znaków; otrzymano obiekt klasy %s"
 
 msgid "non-generic function '%s' given to findMethods()"
 msgstr "nieogólna funkcja '%s' przekazana do 'findMethods()'"
@@ -328,18 +329,15 @@ msgstr "nie znaleziono ogólnej funkcji odpowiadającej %s"
 msgid "%s, along with other use of the \"MethodsList\" metadata objects, is deprecated."
 msgstr "%s, razem z innym użyciem obiektów metadanych 'MethodsList' jest przestarzałe."
 
-#, fuzzy
 msgid "In %s: use of \"MethodsList\" metadata objects is deprecated."
 msgstr "w %s: użycie obiektów metadanych \"MethodsList\" jest przestarzałe."
 
-#, fuzzy
 msgid "Use %s instead."
-msgstr "użyj wzamian %s."
+msgstr "Użyj w zamian %s."
 
 msgid "%s, along with other use of the \"MethodsList\" metadata objects, is defunct."
 msgstr "%s, razem z innym użyciem obiektów metadanych 'MethodsList' zostało zlikwidowane."
 
-#, fuzzy
 msgid "In %s: use of \"MethodsList\" metadata objects is defunct."
 msgstr "w %s: użycie obiektów metadanych \"MethodsList\" zostało zlikwidowane."
 
@@ -419,7 +417,7 @@ msgid "'externalptr' objects cannot be initialized from new()"
 msgstr "obiekty 'externalptr' nie mogą być inicjalizowane z funkcji 'new()'"
 
 msgid "initializing objects from class %s with these arguments is not supported"
-msgstr "inicjalizowanie obiektów z klasy %s z tymi argumentami nie jest wspierane"
+msgstr "inicjowanie obiektów z klasy %s z tymi argumentami nie jest wspierane"
 
 msgid "in defining class %s, the supplied data part class, %s is not valid (must be a basic class or a virtual class combining basic classes)"
 msgstr "podczas definiowania klasy %s, dostarczona część danych klasy, %s nie jest poprawna (musi być podstawową klasą lub klasą wirtualną łączącą podstawowe klasy)"
@@ -443,9 +441,8 @@ msgstr "gniazdo %s w klasie %s aktualnie zdefiniowane (lub odziedziczone) jako %
 msgid "class %s extends an undefined class (%s)"
 msgstr "klasa %s rozszerza niezdefiniowaną klasę (%s)"
 
-#, fuzzy
 msgid "The prototype for class %s has undefined slot(s): %s"
-msgstr "lista '%s' dla klasy %s, zawiera w sobie niezdefiniowaną klasę %s"
+msgstr "Prototyp dla klasy %s, zawiera w sobie niezdefiniowane gniazda: %s"
 
 msgid "%s is not eligible to be the data part of another class (must be a basic class or a virtual class with no slots)"
 msgstr "%s nie kwalifikuje się aby być częścią danych innej klasy (musi być podstawową klasą albo klasą wirtualną bez gniazd)"
@@ -483,7 +480,6 @@ msgstr "klasa nie może mieć jednocześnie zwykłego oraz ukrytego typu danych"
 msgid "a validity method must be a function of one argument, got an object of class %s"
 msgstr "metoda poprawności musi być funkcją jednego argumentu, otrzymano obiekt klasy %s"
 
-#, fuzzy
 msgid "unable to load required package %s"
 msgstr "nie można znaleźć wymaganego pakietu %s"
 
@@ -509,10 +505,10 @@ msgid "no definition of inheritance from %s to %s, though the relation was impli
 msgstr "brak definicji dziedziczenia z %s do %s mimo, że relacja została zasugerowana przez 'setIs()' z %s"
 
 msgid "Debugging .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, force=TRUE);"
-msgstr ""
+msgstr "Debugowanie .checkSubclasses(): assignClassDef(what=\"%s\", *, where=%s, force=TRUE);"
 
 msgid "E := environment(): %s; parent.env(E): %s"
-msgstr ""
+msgstr "E := environment(): %s; parent.env(E): %s"
 
 msgid "argument 'includeSubclasses' must be a logical, either one value or a vector of the same length as argument 'classes'"
 msgstr "argument 'includeSubclasses' musi być argumentem logicznym posiadającym jedną wartość lub wektorem o tej samej długości jak argument 'classes'"
@@ -521,7 +517,7 @@ msgid "argument 'abbreviate' must be 0, 1, 2, or 3"
 msgstr "argument 'abbreviate' musi mieć wartość 0, 1, 2, lub 3"
 
 msgid "needed the supplied labels vector of length %d, got %d"
-msgstr "potrzebowano dostarczyć wektora etykiet o długości %d, otrzymano %d"
+msgstr "potrzebny był dostarczony wektor etykiet o długości %d, otrzymano %d"
 
 msgid "the function being used as %s in making a generic function for %s is currently traced; the function used will have tracing removed"
 msgstr "funkcja użyta jako %s podczas tworzenia ogólnej funkcji dla %s jest aktualnie śledzona; użyta funkcja będzie miała usunięte śledzenie"
@@ -557,7 +553,7 @@ msgid "%s arguments (%s) after %s in the generic must appear in the method, in t
 msgstr "argumenty %s (%s) po %s w ogólnej funkcji muszą pojawić się w metodzie w tym samym miejscu na końcu listy argumentów"
 
 msgid "argument 'f' must be a string, generic function, or primitive: got an ordinary function"
-msgstr "argument 'f' musi być łańcuchem, ogólną funkcją, lub funkcją prymitywną: otrzymano zwykłą funkcję"
+msgstr "argument 'f' musi być tekstem, ogólną funkcją, lub funkcją prymitywną: otrzymano zwykłą funkcję"
 
 msgid "no generic function found for %s"
 msgstr "nie znaleziono ogólnej funkcji dla %s"
@@ -566,19 +562,19 @@ msgid "Empty function name in .getGeneric"
 msgstr "Pusta nazwa funkcji w '.getGeneric'"
 
 msgid "--- caching class"
-msgstr ""
+msgstr "--- zachowywanie klasy"
 
 msgid "--- done caching class"
-msgstr ""
+msgstr "--- zakończono zachowywać klasę"
 
 msgid "--- getting generic"
-msgstr ""
+msgstr "--- pozyskiwanie funkcji ogólnej"
 
 msgid "(and methods)"
-msgstr ""
+msgstr "(oraz metod)"
 
 msgid "--- done getting generic"
-msgstr ""
+msgstr "--- zakończono pozyskiwanie funkcji ogólnej"
 
 msgid "no methods found for %s; cacheGenericsMetaData() will have no effect"
 msgstr "nie znaleziono metod dla %s; 'cacheGenericsMetaData()' nie będzie miał efektu"
@@ -629,7 +625,7 @@ msgid "multiple equivalent inherited matches: %s; using the first of these"
 msgstr "wiele równoważnie dziedziczonych dopasowań: %s; używanie pierwszego z nich"
 
 msgid "single string; got an object of class %s"
-msgstr "pojedynczy łańcuch; otrzymano obiekt klasy %s"
+msgstr "pojedynczy tekst; otrzymano obiekt klasy %s"
 
 msgid "multiple definitions exist for class %s, but the supplied package (%s) is not one of them (%s)"
 msgstr "istnieją wielokrotne definicje dla klasy %s, ale dostarczony pakiet (%s) nie jest jedną z nich (%s)"
@@ -677,7 +673,7 @@ msgid "error in contained classes (%s) for class %s; previous definition restore
 msgstr "błąd w zawartych klasach (%s) dla klasy %s; poprzednia definicja została przywrócona w %s"
 
 msgid "element %d of the representation was not a single character string"
-msgstr "element %d reprezentacji nie był pojedynczym łańcuchem tekstowym"
+msgstr "element %d reprezentacji nie był pojedynczym ciągiem znaków"
 
 msgid "duplicate class names among superclasses: %s"
 msgstr "powtórzone nazwy klasy pośród superklas: %s"
@@ -713,7 +709,7 @@ msgid "class %s not found on %s; 'resetClass' will have no effect"
 msgstr "klasa %s nie została znaleziona w %s; 'resetClass' nie będzie miał efektu"
 
 msgid "argument 'classDef' must be a string or a class representation; got an object of class %s"
-msgstr "argument 'classDef' musi być łańcuchem albo reprezentacją klasy; otrzymano obiekt klasy %s"
+msgstr "argument 'classDef' musi być tekstem albo reprezentacją klasy; otrzymano obiekt klasy %s"
 
 msgid "class %s is sealed; 'resetClass' will have no effect"
 msgstr "klasa %s jest zamknięta; 'resetClass' nie będzie mieć efektu"
@@ -763,11 +759,10 @@ msgstr ""
 "(%s)"
 
 msgid "argument %s must be a list or a character vector; got an object of class %s"
-msgstr "argument %s musi być listą  lub wektorem tekstowym; otrzymano obiekt klasy %s"
+msgstr "argument %s musi być listą lub wektorem tekstowym; otrzymano obiekt klasy %s"
 
-#, fuzzy
 msgid "expected a non-empty character string for argument 'name'"
-msgstr "oczekiwano niepustego łańcucha tekstowego dla nazwy argumentu"
+msgstr "oczekiwano niepustego tekstu dla argumentu 'name'"
 
 msgid "no function %s found"
 msgstr "nie znaleziono funkcji %s"
@@ -791,7 +786,7 @@ msgid "class %s is not defined in this environment"
 msgstr "klasa %s nie jest zdefiniowana w tym środowisku"
 
 msgid "class %s is a class union: 'coerce' relations to a class union are not meaningful"
-msgstr "klasa %s jest unią klas: relacje 'coerce' dla uni klas nie mają sensu"
+msgstr "klasa %s jest unią klas: relacje 'coerce' dla unii klas nie mają sensu"
 
 msgid "'as' method should have one argument, or match the arguments of coerce(): got  (%s)"
 msgstr "metod 'as()' powinna mieć jeden argument lub zgadzać się z argumentami 'coerce()': otrzymano (%s)"
@@ -920,7 +915,7 @@ msgid "trying to check signature length of generic '%s', but it is not a generic
 msgstr "próba sprawdzenia długości sygnatury funkcji ogólnej '%s', ale to nie jest funkcja ogólna: i = %d, funs = %s, gnames = %s"
 
 msgid "no methods table for generic %s from package %s in package %s"
-msgstr "brak tablicy metod dla ogolnej funkcji %s z pakietu %s w pakiecie %s"
+msgstr "brak tablicy metod dla ogólnej funkcji %s z pakietu %s w pakiecie %s"
 
 msgid "undefined classes (%s) will be ignored for argument '%s'"
 msgstr "niezdefiniowane klasy (%s) zostaną zignorowane dla argumentu '%s'"
@@ -929,7 +924,7 @@ msgid "argument 'signatures' must be a character matrix whose rows are method si
 msgstr "argument 'signatures' musi być macierzą tekstową której wiersze są sygnaturami metod"
 
 msgid "not allowed to have test==TRUE and an S4Class definition"
-msgstr "niedozwolone by mieć 'test==TRUE' oraz definicję S4Class"
+msgstr "nie można mieć 'test==TRUE' oraz definicji S4Class"
 
 msgid "argument 'S4Class' must be a class definition: got an object of class %s"
 msgstr "argument 'S4Class' musi być definicją klasy: otrzymano obiekt klasy %s"
@@ -1004,7 +999,7 @@ msgid "%s is not a defined class in this environment"
 msgstr "%s nie jest zdefiniowaną klasą w tym środowisku"
 
 msgid "invalid 'Class' argument:  should be a single string"
-msgstr "niepoprawny argument 'Class': powinien być pojedycznym łańcuchem"
+msgstr "niepoprawny argument 'Class': powinien być pojedynczym tekstem"
 
 msgid "%s is not one of the reference super classes for this object"
 msgstr "Klasa %s nie jest jedną z referencyjnych superklas dla tego obiektu"
@@ -1065,7 +1060,7 @@ msgid "class %s is defined but is not a reference class"
 msgstr "klasa %s jest zdefiniowana, ale nie jest referencyjną klasą"
 
 msgid "class must be a reference class representation or a character string; got an object of class %s"
-msgstr "klasa musi być referencyjną reprezentacją klasy lub łańcuchem tekstowym; otrzymano obiekt klasy %s"
+msgstr "klasa musi być referencyjną reprezentacją klasy lub ciągiem znaków; otrzymano obiekt klasy %s"
 
 msgid "not a reference class: %s"
 msgstr "to nie jest referencja klasy: %s"
@@ -1098,7 +1093,7 @@ msgstr ""
 "(w metodzie %s dla klasy %s)"
 
 msgid "arguments must all be character string names of fields"
-msgstr "wszystkie argumenty muszą być łańcuchami tekstowymi nazw pól"
+msgstr "wszystkie argumenty muszą być ciągiem znaków nazw pól"
 
 msgid "field %s is already locked"
 msgstr "pole %s jest już zablokowane"
@@ -1221,7 +1216,7 @@ msgid "no method in methods table for %s for signature %s"
 msgstr "brak metod w tablicy metod dla %s dla sygnatury %s"
 
 msgid "unloading 'methods' package ..."
-msgstr "zwalnianie pakietu 'methods'..."
+msgstr "zwalnianie pakietu 'methods' ..."
 
 msgid "apparently bad method or class metadata in saved environment;"
 msgstr "najwyraźniej złe metadane metody lub klasy w zapisanym środowisku;"

@@ -1,0 +1,135 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.2.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
+"PO-Revision-Date: 2026-04-14 21:50+0000\n"
+"Last-Translator: Weblate Admin <gergely@rx.studio>\n"
+"Language-Team: none\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 5.11.4\n"
+
+msgid "namespace found within local environments"
+msgstr "مساحة الاسم الموجودة في البيئات المحلية"
+
+msgid "not a proper evaluation environment"
+msgstr "ليست بيئة تقييم مناسبة"
+
+msgid "non-namespace found within namespace environments"
+msgstr "غير مساحة الاسم الموجودة في بيئات مساحة الاسم"
+
+msgid "namespace found within global environments"
+msgstr "مساحة الاسم الموجودة في البيئات المحلية"
+
+msgid "bad assignment: %s"
+msgstr "تعيين سيء: ‪%s"
+
+msgid "cannot constant fold literal promises"
+msgstr "لا يمكن أن تثني الوعود الحرفية الثابتة"
+
+msgid "cannot constant fold literal bytecode objects"
+msgstr "لا يمكن أن تثني كائنات الرمز الثانوي الحرفي"
+
+msgid "no offset recorded for label \"%s\""
+msgstr "لم يتم تسجيل إزاحة للتسمية \"%s\""
+
+msgid "cannot compile byte code literals in code"
+msgstr "لا يمكن تجميع القيم الحرفية لكود البايت في التعليمات البرمجية"
+
+msgid "cannot compile promise literals in code"
+msgstr "لا يمكن تجميع القيم الحرفية لكود البايت في التعليمات البرمجية"
+
+msgid "possible error in '%s': %s"
+msgstr "خطأ محتمل في \"%s\": %s"
+
+msgid "bad namespace import frame"
+msgstr "إطار استيراد مساحة اسم سيئة"
+
+msgid "bad assignment 1"
+msgstr "تعيين سيء 1"
+
+msgid "bad assignment 2"
+msgstr "تعيين سيء 2"
+
+msgid "invalid function in complex assignment"
+msgstr "وظيفة غير صالحة في التعيين المعقد"
+
+msgid "missing arguments are not allowed"
+msgstr "لا يسمح بالوسيطات المفقودة"
+
+msgid "empty alternative in numeric switch"
+msgstr "بديل فارغ في التبديل الرقمي"
+
+msgid "no visible global function definition for '%s'"
+msgstr "لا يوجد تعريف دالة عمومي مرئي ل \"%s\""
+
+msgid "no visible binding for global variable '%s'"
+msgstr "لا يوجد ربط مرئي للمتغير العمومي '%s'"
+
+msgid "no visible binding for '<<-' assignment to '%s'"
+msgstr "لا يوجد ربط مرئي للتعيين \"<<-\" إلى \"%s\""
+
+msgid "wrong number of arguments to '%s'"
+msgstr "عدد خاطئ من الوسيطات إلى '%s'"
+
+msgid "more than one default provided in switch() call"
+msgstr "أكثر من افتراضي واحد متوفر في مكالمة Switch ()"
+
+msgid "'switch' with no alternatives"
+msgstr "\"التبديل\" بدون بدائل"
+
+msgid "Error: compilation failed -"
+msgstr "خطأ: فشل التجميع -"
+
+msgid "cannot compile a non-function"
+msgstr "لا يمكن تجميع وظيفة غير دالة"
+
+msgid "compiling '%s'"
+msgstr "تجميع \"%s\""
+
+msgid "saving to file \"%s\" ..."
+msgstr "الحفظ في الملف \"%s\" ..."
+
+msgid "done"
+msgstr "منجز"
+
+msgid "'env' must be a top level environment"
+msgstr "يجب أن تكون \"env\" بيئة عالية المستوى"
+
+msgid "input and output file names are the same"
+msgstr "أسماء ملفات الإدخال والإخراج هي نفسها"
+
+msgid "empty input file; no output written"
+msgstr "ملف إدخال فارغ لم يتم كتابة أي إخراج"
+
+msgid "file '%s' does not exist"
+msgstr "الملف '%s' غير موجود"
+
+msgid "'%s' is not a valid compiler option"
+msgstr "\"%s\" ليس خيار مترجم صالحا"
+
+msgid "invalid environment variable value: %s==%s"
+msgstr "قيمة متغير البيئة غير الصالحة: %s==%s"
+
+msgid "invalid compiler options: optimize(==%d)<2 and jitEnabled(==%d)>2"
+msgstr "خيارات المترجم غير الصالحة: optimize(==%d)<2 و jitEnabled(==%d)>2"
+
+msgid "function is not compiled"
+msgstr "لم يتم تجميع الوظيفة"
+
+msgid "cannot compile this expression"
+msgstr "لا يمكن تجميع هذا التعبير"
+
+msgid "local assignment to syntactic function: "
+msgid_plural "local assignments to syntactic functions: "
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""

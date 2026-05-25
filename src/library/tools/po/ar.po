@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-04-25 10:48-0700\n"
 "PO-Revision-Date: 2024-03-23 12:08+0000\n"
 "Last-Translator: Worood Alswaji <woroodalswaji@gmail.com>\n"
 "Language-Team: none\n"
@@ -20,142 +20,142 @@ msgstr ""
 
 #: Rmd5.c:57 Rsha256.c:70
 msgid "argument 'files' must be character"
-msgstr ""
+msgstr "يجب أن تكون \"ملفات\" الوسيطة حرفا"
 
 #: Rmd5.c:73
 #, c-format
 msgid "md5 failed on file '%ls'"
-msgstr ""
+msgstr "فشل md5 في الملف \"%ls\""
 
 #: Rmd5.c:75
 #, c-format
 msgid "md5 failed on file '%s'"
-msgstr ""
+msgstr "فشل md5 في الملف \"%s\""
 
 #: Rsha256.c:86
 #, c-format
 msgid "sha256 failed on file '%ls'"
-msgstr ""
+msgstr "فشل sha256 في الملف \"%ls\""
 
 #: Rsha256.c:88
 #, c-format
 msgid "sha256 failed on file '%s'"
-msgstr ""
+msgstr "فشل md5 في الملف \"%s\""
 
 #: getfmts.c:60
 #, c-format
 msgid "only %d arguments are allowed"
-msgstr ""
+msgstr "يسمح فقط بوسيطات %d"
 
 #: getfmts.c:65
 msgid "'fmt' is not a character vector"
-msgstr ""
+msgstr "\"FMT\" ليس متجه أحرف"
 
 #: getfmts.c:68
 msgid "'fmt' must be length 1"
-msgstr ""
+msgstr "يجب أن يكون طول \"FMT\" 1"
 
 #: getfmts.c:74
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
-msgstr ""
+msgstr "يتجاوز طول \"FMT\" الحد الأقصى لطول التنسيق %d"
 
 #: getfmts.c:95
 #, c-format
 msgid "unrecognised format specification '%s'"
-msgstr ""
+msgstr "مواصفات التنسيق غير المعترف بها \"%s\""
 
 #: getfmts.c:135
 msgid "at most one asterisk '*' is supported in each conversion specification"
-msgstr ""
+msgstr "يتم دعم علامة نجمة واحدة \"*\" على الأكثر في كل مواصفات تحويل"
 
 #: gramLatex.c:2856 gramRd.c:3967
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
-msgstr ""
+msgstr "يتعذر تخصيص المخزن المؤقت لسلسلة طويلة في السطر %d"
 
 #: gramLatex.c:3167 gramRd.c:4521 gramRd.c:4527
 #, c-format
 msgid "invalid '%s' value"
-msgstr ""
+msgstr "قيمة \"%s\" غير صالحة"
 
 #: gramRd.c:2576 gramRd.c:2579
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
-msgstr ""
+msgstr "ترميز سيئ (مساحة إضافية؟) عند %s: %d: %d"
 
 #: gramRd.c:3112
 #, c-format
 msgid "Macro '%s' previously defined."
-msgstr ""
+msgstr "الماكرو \"%s\" المحدد مسبقا."
 
 #: gramRd.c:3122
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
-msgstr ""
+msgstr "على الأكثر 4 وسيطات مسموح بها لوحدات الماكرو المعرفة من قبل المستخدم."
 
 #: gramRd.c:3164
 #, c-format
 msgid "No macro definition for '%s'."
-msgstr ""
+msgstr "لا يوجد تعريف ماكرو ل \"%s\"."
 
 #: gramRd.c:3227
 #, c-format
 msgid "Not enough arguments passed to user macro '%s'"
-msgstr ""
+msgstr "لم يتم تمرير وسيطات كافية إلى ماكرو المستخدم \"%s\""
 
 #: gramRd.c:3367 gramRd.c:3371
 #, c-format
 msgid "newline within quoted string at %s:%d"
-msgstr ""
+msgstr "سطر جديد داخل السلسلة المقتبسة في %s:%d"
 
 #: gramRd.c:3390
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
-msgstr ""
+msgstr "يتعذر تخصيص المخزن المؤقت للماكرو الطويل في الخط %d"
 
 #: gramRd.c:3420
 msgid "macros nested too deeply: infinite recursion?"
-msgstr ""
+msgstr "وحدات الماكرو متداخلة بعمق شديد: العودية اللانهائية؟"
 
 #: gramRd.c:3829
 #, c-format
 msgid "Unable to find macro %s"
-msgstr ""
+msgstr "تعذر العثور على الماكرو %s"
 
 #: gramRd.c:4028
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
-msgstr ""
+msgstr "نهاية غير متوقعة للإدخال (في %c السلسلة المقتبسة المفتوحة عند %s:%d:%d)"
 
 #: gramRd.c:4534
 msgid "cannot open the connection"
-msgstr ""
+msgstr "لا يمكن فتح الاتصال"
 
 #: gramRd.c:4541
 msgid "cannot read from this connection"
-msgstr ""
+msgstr "لا يمكن القراءة من هذا الاتصال"
 
 #: gramRd.c:4549
 msgid "invalid Rd file"
-msgstr ""
+msgstr "ملف Rd غير صالح"
 
 #: gramRd.c:4569
 msgid "'deparseRd' only supports deparsing character elements"
-msgstr ""
+msgstr "يدعم \"deparseRd\" فقط تقسيم عناصر الشخصية"
 
 #: gramRd.c:4572
 msgid "bad state"
-msgstr ""
+msgstr "حالة سيئة"
 
 #: gramRd.c:4585
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
-msgstr ""
+msgstr "وضع النص السيئ %d في \"deparseRd\""
 
 #: http.c:31
 msgid "invalid bind address specification"
-msgstr ""
+msgstr "مواصفات عنوان ربط غير صالحة"
 
 #: http.c:36
 #, c-format
@@ -168,11 +168,11 @@ msgstr ""
 
 #: http.c:150 pdscan.c:121
 msgid "non-character argument"
-msgstr ""
+msgstr "حجة غير شخصية"
 
 #: install.c:95
 msgid "path too long"
-msgstr ""
+msgstr "مسار طويل جدا"
 
 #: install.c:120 install.c:139 install.c:141
 #, c-format
@@ -181,24 +181,24 @@ msgstr "الوسيطة '%s' غير صالحة"
 
 #: install.c:170
 msgid "write error during file append"
-msgstr ""
+msgstr "خطأ في الكتابة أثناء إلحاق الملف"
 
 #: pdscan.c:74
 msgid "too many items"
-msgstr ""
+msgstr "الكثير من العناصر"
 
 #: signals.c:42
 msgid "pskill() is not supported on this platform"
-msgstr ""
+msgstr "pskill() غير مدعوم على هذه المنصة"
 
 #: signals.c:140
 msgid "psnice() is not supported on this platform"
-msgstr ""
+msgstr "pskill() غير مدعوم على هذه المنصة"
 
 #: text.c:69
 msgid "invalid argument type"
-msgstr ""
+msgstr "نوع الوسيطة غير صالح"
 
 #: text.c:227 text.c:249
 msgid "out of memory"
-msgstr ""
+msgstr "نفاد الذاكرة"

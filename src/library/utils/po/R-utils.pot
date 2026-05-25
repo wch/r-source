@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 4.6.0\n"
+"Project-Id-Version: R 4.7.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-10 10:06\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -84,6 +84,15 @@ msgstr ""
 msgid "value of 'strip.white' option should be lowercase"
 msgstr ""
 
+msgid "using default value %s"
+msgstr ""
+
+msgid "this function cannot be used from an interactive session"
+msgstr ""
+
+msgid "unrecognized Sweave call"
+msgstr ""
+
 msgid "elements of 'what' after the first will be ignored"
 msgstr ""
 
@@ -121,6 +130,9 @@ msgid "No suitable spell check program found."
 msgstr ""
 
 msgid "Performing query %s"
+msgstr ""
+
+msgid "Unsupported object"
 msgstr ""
 
 msgid "Use <code> %s </code> \n to list the vignettes in all <strong>available</strong> packages."
@@ -696,7 +708,7 @@ msgstr ""
 msgid "unable to create temporary directory %s"
 msgstr ""
 
-msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
+msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
 msgstr ""
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
@@ -1140,7 +1152,13 @@ msgstr ""
 msgid "binary package %s is not compatible with this build of R"
 msgstr ""
 
-msgid "package %s successfully unpacked and MD5 sums checked"
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr ""
+
+msgid "package %s signature verified (%s %s)"
+msgstr ""
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
 msgstr ""
 
 msgid "ERROR: failed to lock directory %s for modifying\nTry removing %s"
