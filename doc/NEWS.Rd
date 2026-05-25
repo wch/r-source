@@ -28,6 +28,11 @@
 
       \item \code{cut(1:11, {})} now signals an error for the invalid
       \code{breaks}, fixing \PR{19057}, thanks to \I{Kevin Ushey}.
+
+      \item \code{all(<symbol>)} signals an error now, as some similar
+      coercions; previously, the coercion of the symbol resulted
+      in \code{NULL} internally, raised a warning, and could access illegal
+      memory; thanks to \I{Kevin Ushey}'s \PR{19054}.
     }
   }
 }
