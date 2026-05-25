@@ -73,10 +73,6 @@
       such as \code{x[i] <- val} have improved, thanks to suggestions by
       \I{Suharto Anggono} in \PR{18989}.
 
-      \item \code{abbreviate(<non-ASCII>)} now works better, using
-      \code{iswlower()} and \code{*upper()} to treat \dQuote{wide}
-      characters, thanks to \I{Kevin}'s \PR{19058}.
-
       \item In an \R installation without \acronym{NLS}, e.g., from
       \command{--disable-nls} configuration, the C \code{ngettext()}
       replacement now also keeps plural for \dQuote{0 things}, thanks to
@@ -87,11 +83,6 @@
       \PR{19059}.  From \I{Suharto Anggono}'s comment #c4, it gives the same
       error also when \code{row.names = RN} explicitly, where \code{RN} has
       \code{NA}s.
-
-      \item \code{all(<symbol>)} signals an error now, as some similar
-      coercions; previously, the coercion of the symbol resulted
-      in \code{NULL} internally, raised a warning, and could access illegal
-      memory; thanks to \I{Kevin Ushey}'s \PR{19054}.
 
       \item \code{.leap.seconds} again has no \code{"tzone"} attribute, as
       in earlier \R versions, fixing \PR{19072} thanks to \I{Suharto Anggono}.
@@ -129,8 +120,17 @@
 
   \subsection{Bug Fixes}{
     \itemize{
+      \item \code{abbreviate(<non-ASCII>)} now works better, using
+      \code{iswlower()} and \code{*upper()} to treat \dQuote{wide}
+      characters, thanks to \I{Kevin}'s \PR{19058}.
+
       \item \code{cut(1:11, {})} now signals an error for the invalid
       \code{breaks}, fixing \PR{19057}, thanks to \I{Kevin Ushey}.
+
+      \item \code{all(<symbol>)} signals an error now, as some similar
+      coercions; previously, the coercion of the symbol resulted
+      in \code{NULL} internally, raised a warning, and could access illegal
+      memory; thanks to \I{Kevin Ushey}'s \PR{19054}.
 
       \item \code{stl()} now checks its 3 x 3 tuning parameters on the R level;
       \code{stl(*, s.window = 0)} now \dQuote{works} instead dumping core,
