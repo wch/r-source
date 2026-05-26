@@ -193,19 +193,21 @@ function(x, mu, n = length(x), digits.rank, digits.zap)
         x <- signif(x, digits.rank)
     if(is.finite(digits.zap))
         x <- .zapsmall.r(x, digits.zap)
-    r <- rank(abs(x))
     ZERO <- any(i0 <- x == 0)
     if(ZERO) {
         x <- x[!i0]
         n <- length(x)
     }
+    r <- rank(abs(x))
     TIES <- length(r) != length(unique(r))
     STATISTIC <- c("V" = sum(r[x > 0]))
     MEAN <-  n * (n + 1) / 4
-    NTIES <- table(r)
-    SIGMA <- sqrt(n * (n + 1) * (2 * n + 1) / 24
-                  - sum(NTIES^3 - NTIES) / 48)
-    list(statistic = STATISTIC, ex = MEAN, sd = SIGMA,
+    V <- MEAN * (2*n + 1) / 6 # = n * (n + 1) * (2 * n + 1) / 24
+    if(TIES) {
+        NTIES <- table(r)
+        V <- V - sum(NTIES^3 - NTIES) / 48
+    }
+    list(statistic = STATISTIC, ex = MEAN, sd = sqrt(V),
          ties = TIES, zero = ZERO)
 }
 
