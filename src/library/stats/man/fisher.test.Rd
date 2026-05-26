@@ -14,7 +14,8 @@
 fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
             hybridPars = c(expect = 5, percent = 80, Emin = 1),
             control = list(), or = 1, alternative = "two.sided",
-            conf.int = TRUE, conf.level = 0.95,
+            pval.only = FALSE,
+            conf.int = !pval.only, conf.level = 0.95,
             simulate.p.value = FALSE, B = 2000)
 }
 \arguments{
@@ -46,6 +47,10 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
     one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.
     You can specify just the initial letter.  Only used in the
     \eqn{2 \times 2}{2 by 2} case.}
+  \item{pval.only}{logical indicating if only the p-value is of interest;
+    notably for the \eqn{2 \times 2}{2 by 2} case with large counts,
+    setting \code{pval.only = TRUE} is typically orders of magnitude
+    faster.}
   \item{conf.int}{logical indicating if a confidence interval for the
     odds ratio in a \eqn{2 \times 2}{2 by 2} table should be
     computed (and returned).}
