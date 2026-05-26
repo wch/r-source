@@ -42,6 +42,10 @@
 
       \item \code{tools::Rd2txt()} now replaces \samp{---} and \samp{--}
       by Unicode dashes when the output encoding is UTF-8.
+
+      \item \code{fisher.test()} gains a new option \code{pval.only = TRUE}
+      for the 2x2 exact case, with substantial speed gains in the case of large
+      counts.
     }
   }
 

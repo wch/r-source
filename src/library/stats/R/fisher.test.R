@@ -1,7 +1,7 @@
 #  File src/library/stats/R/fisher.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2019 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,8 @@ fisher.test <-
 function(x, y = NULL, workspace = 200000, hybrid = FALSE,
          hybridPars = c(expect = 5, percent = 80, Emin = 1),
          control = list(), or = 1, alternative = "two.sided",
-         conf.int = TRUE, conf.level = 0.95,
+         pval.only = FALSE,
+         conf.int = !pval.only, conf.level = 0.95,
          simulate.p.value = FALSE, B = 2000)
 {
     DNAME <- deparse1(substitute(x))
@@ -80,7 +81,6 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
             stop("'or' must be a single number between 0 and Inf")
     }
 
-    PVAL <- NULL
     if(!have.2x2) {
         if(simulate.p.value) {
             ## we drop all-zero rows and columns
@@ -116,11 +116,10 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
             PVAL <- .Call(C_Fexact, x, hypp, workspace, mult)
             METHOD <- paste(METHOD, sprintf("hybrid using asym.chisq. iff (exp=%g, perc=%g, Emin=%g)",
 					    hypp[1], hypp[2], hypp[3]))
-         } else {
+        } else {
             ##  expect < 0 : exact
             PVAL <- .Call(C_Fexact, x, c(-1, 100, 0), workspace, mult)
         }
-
         RVAL <- list(p.value = max(0, min(1, PVAL)))
     } else { ## conf.int and more only in  2 x 2 case
         if(hybrid) warning("'hybrid' is ignored for a 2 x 2 table")
@@ -134,24 +133,25 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
 
         ## Note that in general the conditional distribution of x given
         ## the marginals is a non-central hypergeometric distribution H
-        ## with non-centrality parameter ncp, the odds ratio.
-        support <- lo : hi
-        ## Density of the *central* hypergeometric distribution on its
-        ## support: store for once as this is needed quite a bit.
-        logdc <- dhyper(support, m, n, k, log = TRUE)
+        ## with non-centrality parameter ncp = or, the odds ratio.
+
+        ## Computing logdc is expensive for large hi - lo; do only if needed
+        need.logdc <- TRUE
+        support <- logdc <- NULL # work around FP codetools Note
+        do.logdc <- function() {
+            support <<- lo : hi
+            ## Density of the *central* hypergeometric distribution on its
+            ## support: store for once as this is needed quite a bit.
+            logdc <<- dhyper(support, m, n, k, log = TRUE)
+            need.logdc <<- FALSE
+            invisible()
+        }
         dnhyper <- function(ncp) {
             ## Does not work for boundary values for ncp (0, Inf) but it
             ## does not need to.
             d <- logdc + log(ncp) * support
             d <- exp(d - max(d))        # beware of overflow
             d / sum(d)
-        }
-        mnhyper <- function(ncp) {
-            if(ncp == 0)
-                return(lo)
-            if(ncp == Inf)
-                return(hi)
-            sum(support * dnhyper(ncp))
         }
         pnhyper <- function(q, ncp = 1, upper.tail = FALSE) {
 	    if(ncp == 1) {
@@ -166,32 +166,45 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
 		return(as.numeric(if(upper.tail) q <= hi else q >= hi))
 	    }
 	    ## else
+            if(need.logdc) do.logdc()
 	    sum(dnhyper(ncp)[if(upper.tail) support >= q else support <= q])
         }
 
-        ## Determine the p-value (if still necessary).
-        if(is.null(PVAL)) {
-            PVAL <-
-                switch(alternative,
-                       less = pnhyper(x, or),
-                       greater = pnhyper(x, or, upper.tail = TRUE),
-                       two.sided = {
-                           if(or == 0)
-                               as.numeric(x == lo)
-                           else if(or == Inf)
-                               as.numeric(x == hi)
-                           else {
-                               ## Note that we need a little fuzz.
-                               relErr <- 1 + 10 ^ (-7)
-                               d <- dnhyper(or)
-                               sum(d[d <= d[x - lo + 1] * relErr])
-                           }
-                       })
-            RVAL <- list(p.value = PVAL)
-        }
+        PVAL <-
+            switch(alternative,
+                   less    = pnhyper(x, or),
+                   greater = pnhyper(x, or, upper.tail = TRUE),
+                   two.sided = {
+                       if(or == 0)
+                           as.numeric(x == lo)
+                       else if(or == Inf)
+                           as.numeric(x == hi)
+                       else {
+                           if(need.logdc) do.logdc()
+                           ## Note that we need a little fuzz.
+                           relErr <- 1e-7
+                           d <- dnhyper(or)
+                           sum(d[d <= d[x - lo + 1] * (1 + relErr)])
+                       }
+                   })
 
+        RVAL <- list(p.value = PVAL, null.value = NVAL)
+
+        if(pval.only && conf.int)
+            stop("`pval.only` and `conf.int` may not both be true")
+
+      if(!pval.only) {
         ## Determine the MLE for ncp by solving E(X) = x, where the
         ## expectation is with respect to H.
+        mnhyper <- function(ncp) {
+            if(ncp == 0)
+                return(lo)
+            if(ncp == Inf)
+                return(hi)
+            ## else
+            if(need.logdc) do.logdc()
+            sum(support * dnhyper(ncp))
+        }
         mle <- function(x) {
             if(x == lo)
                 return(0)
@@ -250,8 +263,8 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
         }
         RVAL <- c(RVAL,
                   list(conf.int = if(conf.int) CINT,
-                       estimate = ESTIMATE,
-                       null.value = NVAL))
+                       estimate = ESTIMATE))
+      } # more than just pvalue
     } ## end (2 x 2)
 
     structure(c(RVAL,
