@@ -1,6 +1,6 @@
 % File src/library/stats/man/stlmethods.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{stlmethods}
@@ -12,7 +12,9 @@
   \code{\link{stl}}.  The \code{plot} method does a multiple figure plot
   with some flexibility.
 
-  There are also (non-visible) \code{print} and \code{summary} methods.
+  There are also (non-visible) \code{print} and \code{summary} methods, the
+  latter providing a summary and an \code{\link{IQR}}
+  \dQuote{decomposition} of trend, season and remainder.
 }
 \usage{
 \method{plot}{stl}(x, labels = colnames(X),

@@ -42,8 +42,8 @@ void
 F77_NAME(stl)(double *y, int *n, int *np, int *ns,
 	      int *nt, int *nl, int *isdeg, int *itdeg, int *ildeg,
 	      int *nsjump, int *ntjump, int *nljump, int *ni,
-	      int *no, double *rw, double *season, double *trend,
-	      double *work);
+	      int *no, double *rw, double *season, double *trend);
+// Fortran version also had double *work
 
 typedef struct
 {

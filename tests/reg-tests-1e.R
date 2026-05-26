@@ -3158,10 +3158,50 @@ assertErrV( cut(1:3, {}) )
 
 
 ## <symbol> -> <logical> etc via C level coerceSymbol() -- PR#19054
+## <symbol> -> <logical> etc via C level coerceSymbol() -- PR#19054
 assertErrV( all(quote(symbool)) )
 assertErrV( any(quote(symbool)) )
 ## gave warnings but then TRUE or FALSE in R <= 4.6.0
 
+
+## Platform dependently, stl(.) could severely misbehave when compiled by flang 22, -O2
+sw <- 0:16
+r1 <- lapply(sw, function(sWin) stl(ts(rep(1:3, 3), frequency = 3), s.window = sWin))
+R1 <- lapply(sw, function(sWin) stl(ts(rep(1:3, 3), frequency = 3), s.window = sWin, robust=TRUE))
+chk1 <- function(stl) {
+    cat("<stl>$win: ", substring(deparse(stl$win), 2),
+           "; jump: ", substring(deparse(stl$jump), 2),"\n", sep="")
+    if(any(abs(stl$weights - 1) > 1e-7))
+        cat(" varying weights:  ", sprintf("%.3g", stl$weights), "\n")
+    stopifnot(is.list(stl), inherits(stl, "stl"),
+              identical(stl$deg, c(s=0L, t=1L, l=1L)),
+              is.matrix(mts <- stl$time.series), inherits(mts, "mts"),
+              identical(c(9L, 3L), dim(mts)),
+              identical(c("seasonal", "trend", "remainder"), colnames(mts)))
+}
+(swU <- pmax(3L, ifelse(sw %% 2 == 1, sw, sw+1L))) # effectively used s.window
+invisible(lapply(r1, chk1))
+cat("\n robust=TRUE :\n ===========\n")
+invisible(lapply(R1, chk1))
+Seasr <- vapply(r1, function(stl) stl$time.series[,"seasonal"], numeric(3*3))
+SeasR <- vapply(R1, function(stl) stl$time.series[,"seasonal"], numeric(3*3))
+Trndr <- vapply(r1, function(stl) stl$time.series[,"trend"],    numeric(3*3))
+TrndR <- vapply(R1, function(stl) stl$time.series[,"trend"],    numeric(3*3))
+aremr <- abs(vapply(r1, function(stl) stl$time.series[,"remainder"], numeric(3*3)))
+aremR <- abs(vapply(R1, function(stl) stl$time.series[,"remainder"], numeric(3*3)))
+stopifnot(exprs = {
+    ## s.window = 0 is now *equivalent* to s.window = 1:
+    identical(r1[[1]], r1[[2]])
+    identical(R1[[1]], R1[[2]])
+    ## Seasonal
+    print(max(abs(Seasr - rep(-1:1, 3)))) < 1e-13
+    print(max(abs(SeasR - rep(-1:1, 3)))) < 1e-13
+    print(max(Trndr - 2)) < 1e-13
+    print(max(TrndR - 2)) < 1e-13
+    print(max(aremr)) < 1e-13 # 2.22e-15 was 1.24e-14
+    print(max(aremR)) < 1e-13 # 2.88e-15
+})
+## partly "exploded" (dumped core), partly did not return constant trend =~= 2
 
 
 ## keep at end

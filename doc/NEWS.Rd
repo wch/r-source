@@ -33,6 +33,16 @@
       coercions; previously, the coercion of the symbol resulted
       in \code{NULL} internally, raised a warning, and could access illegal
       memory; thanks to \I{Kevin Ushey}'s \PR{19054}.
+
+      \item \code{stl()} now checks its 3 x 3 tuning parameters on the R level;
+      \code{stl(*, s.window = 0)} now \dQuote{works} instead dumping core,
+      \code{stl(*, s.window = 1)} \dQuote{works} correctly, too.  Also, the
+      \code{summary()} method mentions the robustness \code{weights} only
+      if any robustness iterations happened.
+
+      Further, \code{stl()} is now based on C code, translated from previous
+      Fortran, triggered by a \I{flang 22} compiler optimization bug
+      (\command{-O2}).
     }
   }
 }
