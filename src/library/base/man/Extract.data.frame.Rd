@@ -13,7 +13,7 @@
 \title{Extract or Replace Parts of a Data Frame}
 \description{
   Extract or replace subsets of data frames (to replace subsets is also
-  called \sQuote{to subassign}).
+  called \sQuote{to \I{subassign}}).
 }
 \usage{
 \method{[}{data.frame}(x, i, j, drop = )
@@ -105,9 +105,9 @@
   NA}).  If you want to exact matching on row names use
   \code{\link{match}}, as in the examples.
 
-  When the replacement methods are used to subassign into a column vector,
+  When the replacement methods are used to \I{subassign} into a column vector,
   the vector elements assigned into must correspond to existing rows in the
-  data frame.  If subassignment is used to add a non-existing column, the
+  data frame.  If \I{subassignment} is used to add a non-existing column, the
   column will be added as described above, with unassigned elements set
   to \code{NA}, see \manual{R-lang}{Subset assignment} for a rationale.
 }

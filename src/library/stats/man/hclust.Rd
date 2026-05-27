@@ -127,7 +127,7 @@ hclust(d, method = "complete", members = NULL)
   \bibcitet{R:Ward:1963}, whereas option \code{"ward.D2"} implements
   that criterion \bibcitep{R:Murtagh+Legendre:2014}.  With the latter, the
   dissimilarities are \emph{squared} before cluster updating, and the
-  clustering corresponds to \code{"ward.D"} with squarded distances, see
+  clustering corresponds to \code{"ward.D"} with squared distances, see
   also the example.
   Note that \code{\link[cluster]{agnes}(*, method="ward")} corresponds
   to \code{hclust(*, "ward.D2")}.
