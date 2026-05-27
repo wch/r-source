@@ -37,9 +37,8 @@ stack.loss
   the fourth (dependent) variable, are also provided.
 }
 \source{
-  Brownlee, K. A. (1960, 2nd ed.\sspace{}1965)
-  \emph{Statistical Theory and Methodology in Science and Engineering}.
-  New York: Wiley. pp.\sspace{}491--500.
+  \bibinfo{R:Brownlee:1965}{note}{Pages\sspace{}491--500}
+  \bibshow{R:Brownlee:1965}
 }
 \details{
   \dQuote{Obtained from 21 days of operation of a plant for the

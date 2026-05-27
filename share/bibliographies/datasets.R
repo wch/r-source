@@ -188,6 +188,18 @@ bibentry(bibtype = "Article",
          year = "1985",
          doi = "10.1785/BSSA0750020611")
 
+bibentry(bibtype = "Book",
+         key = "R:Brownlee:1965",
+         author = person(given = c("Kathleen", "A."),
+                         family = "Brownlee"),
+         publisher = "Wiley",
+         address = "New York, NY",
+         series = "Wiley Publication in Applied Statistics",
+         isbn = "0471113557",
+         year = "1965",
+         title = "Statistical Theory and Methodology in Science and Engineering",
+         edition = "Second")
+
 bibentry(bibtype = "Article",
          key = "R:Campbell+Walker:1977",
          title = "A Survey of Statistical Work on the Mackenzie River Series of Annual Canadian Lynx Trappings for the Years 1821-1934 and a New Analysis",

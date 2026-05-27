@@ -77,8 +77,8 @@ constrOptim(theta, f, grad, ui, ci, mu = 1e-04, control = list(),
 }
 
 \references{
-  K. Lange \emph{Numerical Analysis for Statisticians.} Springer
-  2001, p185ff
+  \bibinfo{R:Lange:1999}{note}{Pages 185ff}
+  \bibshow{R:Lange:1999}
 }
 
 \seealso{

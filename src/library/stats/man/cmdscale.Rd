@@ -52,7 +52,7 @@ cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE,
   When \code{add = TRUE}, a minimal additive constant \eqn{c*} is
   computed such that the dissimilarities \eqn{d_{ij} + c*}{d[i,j] +
   c*} are Euclidean and hence can be represented in \code{n - 1}
-  dimensions.  Whereas S (Becker \abbr{et al.}, 1988) computes this
+  dimensions.  Whereas S \bibcitep{R:Becker+Chambers+Wilks:1988} computes this
   constant using an approximation suggested by \I{Torgerson}, \R uses the
   analytical solution of \bibcitet{R:Cailliez:1983}, see also
   \bibcitet{R:Cox+Cox:2001}.

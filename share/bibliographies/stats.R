@@ -3126,3 +3126,13 @@ bibentry(bibtype = "Article",
          number = "1",
          pages = "50--60",
          doi = "10.1214/aoms/1177730491")
+
+bibentry(bibtype = "Book",
+         key = "R:Lange:1999",
+         author = person(given = "Kenneth",
+                         family = "Lange"),
+         title = "Numerical Analysis for Statisticians",
+         publisher = "Springer",
+         year = "1999",
+         series = "Statistics and Computing",
+         address = "New York, NY")

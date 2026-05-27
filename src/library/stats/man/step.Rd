@@ -128,8 +128,8 @@ step(object, scope, scale = 0,
 }
 \author{
   B. D. Ripley: \code{step} is a slightly simplified version of
-  \code{\link[MASS]{stepAIC}} in package \CRANpkg{MASS} (Venables &
-  Ripley, 2002 and earlier editions).
+  \code{\link[MASS]{stepAIC}} in package \CRANpkg{MASS}
+  \bibcitep{|R:Venables+Ripley:2002|and earlier editions}.
 
   The idea of a \code{step} function follows that described in
   \bibcitet{R:Hastie+Pregibon:1992}; but the implementation in \R is

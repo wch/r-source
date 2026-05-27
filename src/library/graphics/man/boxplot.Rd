@@ -72,8 +72,8 @@ boxplot(x, \dots)
   \item{notch}{if \code{notch} is \code{TRUE}, a notch is drawn in
     each side of the boxes.  If the notches of two plots do not
     overlap this is \sQuote{strong evidence} that the two medians differ
-    (Chambers \abbr{et al.}, 1983, p.\sspace{}62).  See \code{\link{boxplot.stats}}
-    for the calculations used.}
+    \bibcitep{|R:Chambers+Cleveland+Kleiner:1983|p.\sspace{}62}.
+    See \code{\link{boxplot.stats}} for the calculations used.}
   \item{warnN}{logical. When \code{notch = TRUE}, indicating if a
     \code{\link{warning}} should be signalled when some notch gets
     outside the hinges, i.e., the box.}

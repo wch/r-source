@@ -60,9 +60,9 @@ polym  (\dots, degree = 1, coefs = NULL, raw = FALSE)
   formulas.
 
   The orthogonal polynomial is summarized by the coefficients, which can
-  be used to evaluate it via the three-term recursion given in Kennedy
-  & Gentle (1980, pp.\sspace{}343--4), and used in the \code{predict} part of
-  the code.
+  be used to evaluate it via the three-term recursion given in
+  \bibcitet{|R:Kennedy+Gentle:1980|pp.\sspace{}343--4},
+  and used in the \code{predict} part of the code.
 
   \code{poly} using \code{\dots} is just a convenience wrapper for
   \code{polym}: \code{coef} is ignored.  Conversely, if \code{polym} is

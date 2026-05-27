@@ -94,7 +94,8 @@ rchisq(n, df, ncp = 0)
   The central cases are computed via the gamma distribution.
 
   The non-central \code{dchisq} and \code{rchisq} are computed as a
-  Poisson mixture of central chi-squares (Johnson \abbr{et al.}, 1995, p.436).
+  Poisson mixture of central chi-squares
+  \bibcitep{|R:Johnson+Kotz+Balakrishnan:1995|page\sspace{}436}.
 
   The non-central \code{pchisq} is for \code{ncp < 80} computed from
   the Poisson mixture of central chi-squares and for larger \code{ncp}
