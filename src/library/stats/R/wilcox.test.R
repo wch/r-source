@@ -985,14 +985,15 @@ function(x, n, z = NULL)
     if(is.null(z))
         return(dsignrank(x, n))
 
-    if (!all(2 * z == floor(2 * z)) || any(z < 1)) 
+    if(!all(2 * z == floor(2 * z)) || any(z < 1)) 
         stop("'z' is not a rank vector")
     y <- rep.int(NA_real_, length(x))
     i <- which(!is.na(x))
-    if (!any(i)) 
+    if(!any(i)) 
         return(y)
-    f <- 2L - all(z == (iz <- as.integer(z)))
-    d <- .Call(C_dpermdist1, sort(f * iz))
+    ## scores can be x.5: in that case need to multiply by f=2.
+    f <- 2 - all(z == floor(z))
+    d <- .Call(C_dpermdist1, sort(as.integer(f * z)))
     w <- seq.int(0, length(d) - 1L)
     x <- f * x[i]
     w <- w[match(x, w)] + 1L
