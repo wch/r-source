@@ -1467,10 +1467,11 @@ stopifnot(
     identical(chkPretty(MTbd +  0:3), seqDp("1960-02-09", "1960-02-14")) )
 ## all pretty() above gave length >= 5 answer (with duplicated values!) in R <= 3.2.3!
 ## and length 1 or 2 instead of about 6 in R 3.2.4
-(p2 <- chkPretty(as.POSIXct("2002-02-02 02:02", tz = "GMT-1"), n = 5, min.n = 5))
+tz. <- "Etc/GMT-1" # had "GMT-1"; then 'tzcode source' "internal" warns 12 x  "unknown timezone 'GMT-1'"
+(p2 <- chkPretty(as.POSIXct("2002-02-02 02:02", tz = tz.), n = 5, min.n = 5))
 stopifnot(length(p2) >= 5+1,
 	  identical(p2, structure(1012611717L + (0:5), class = c("POSIXct", "POSIXt"),
-				  tzone = "GMT-1", labels = time2d(57 + (0:5)), format = "%S"))
+				  tzone = tz., labels = time2d(57 + (0:5)), format = "%S"))
           )
 ## failed in R 3.2.4
 (T3 <- structure(1460019857.25, class = c("POSIXct", "POSIXt")))# typical Sys.date()
