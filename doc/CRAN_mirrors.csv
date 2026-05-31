@@ -62,7 +62,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Japan (Yonezawa) [https]",Japan,Yonezawa,https://ftp.yz.yamagata-u.ac.jp/pub/cran/,"Yamagata University","www-admin # ftp.yz.yamagata-u.ac.jp",1,jp,"secure_mirror_from_master"
 "Korea (Gyeongsan-si) [https]",Korea,Gyeongsan-si,https://cran.yu.ac.kr/,"Yeungnam University","sysop # yu.ac.kr",0,kr,"secure_mirror_from_master"
 "Mexico (Mexico City) [https]",Mexico,"Mexico City",https://cran.itam.mx/,"Instituto Tecnologico Autonomo de Mexico","Ernesto Barrios <ebarrios # Itam.mx>",1,mx,"secure_mirror_from_master"
-"Mexico (Texcoco) [https]",Mexico,Texcoco,https://est.colpos.mx/,"Colegio de Postgraduados, Texcoco","perpdgo # gmail.com",1,mx,"secure_mirror_from_master"
+"Mexico (Texcoco) [https]",Mexico,Texcoco,https://est.colpos.mx/,"Colegio de Postgraduados, Texcoco","perpdgo # gmail.com",0,mx,"secure_mirror_from_master"
 "Morocco [https]",Morocco,Rabat,https://mirror.marwan.ma/cran/,"MARWAN","noc # marwan.ma",1,ma,"secure_mirror_from_master"
 "Netherlands (Amsterdam) [https]","Netherlands",Amsterdam,https://mirrors.evoluso.com/CRAN/,"Evoluso.com","mirrors # evoluso.com",0,nl,
 "Netherlands (Dronten) [https]","Netherlands",Dronten,https://mirror.lyrahosting.com/CRAN/,"Lyra Hosting","admin # lyrahosting.com",1,nl,"secure_mirror_from_master"
