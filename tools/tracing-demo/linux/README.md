@@ -5,6 +5,39 @@ It provisions an `arm64` Ubuntu guest with Lima, validates a recent kernel, inst
 `bpftrace`, builds R with Linux USDT probes, and runs the same demo workload used by
 `tools/tracing-demo/run-demo-trace.sh`.
 
+## How This Relates to macOS DTrace Harness
+
+The Linux harness is the Linux backend of the same tracing model, not a separate
+instrumentation design.
+
+- macOS backend: DTrace collectors read `rtrace` provider events from host-built R.
+- Linux backend: bpftrace collectors read the same `rtrace` USDT events from
+   guest-built R (`--with-ebpf`).
+- Shared reporting: both backends are normalized into the same `summary.csv` and
+   `trace-report-annotated.pdf` outputs.
+
+This gives platform-equivalent report artifacts while preserving backend-specific
+collector implementation.
+
+## Backend Differences at a Glance
+
+| Topic | macOS path | Linux path |
+| --- | --- | --- |
+| Collector | DTrace scripts | bpftrace scripts |
+| Runtime constraints | SIP may limit scheduler/syscall probes | requires guest kernel support and bpftrace |
+| Build/probe integration | host build path in this tree | `./configure --with-ebpf` + `sys/sdt.h` |
+| Execution location | host tracing | Lima Ubuntu guest tracing |
+| Artifact contract | `summary.csv` + annotated PDF | same artifact contract |
+
+## How rtrace Encapsulates Both
+
+`rtrace` is the common probe contract across both backends.
+
+- R emits the same semantic probe events.
+- DTrace and bpftrace capture those events through different collector syntax.
+- The report builder normalizes backend formatting differences before metric
+   computation, so platform reports remain directly comparable.
+
 ## Host Prerequisites
 
 Install host dependencies via Homebrew Bundle fragment:

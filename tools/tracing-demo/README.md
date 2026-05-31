@@ -33,6 +33,47 @@ See Linux-specific docs:
 - `*.err` files for each collector and probe list
 - `run-meta.txt` and `artifacts.txt`
 
+## Cross-Platform Architecture
+
+The harness has one instrumentation contract and two backend collectors.
+
+- Contract layer: `rtrace` USDT probe names and payload shape emitted by R.
+- Backend layer (macOS): DTrace scripts consume `rtrace` provider events.
+- Backend layer (Linux): bpftrace scripts consume the same `rtrace` USDT events.
+- Reporting layer: `tools/tracing-demo/build_trace_report.R` normalizes backend-specific
+   log details and produces one common summary/report format.
+
+In practice, this means the semantic event stream is shared, while probe plumbing and
+privilege/runtime constraints differ by platform.
+
+## DTrace vs bpftrace Differences
+
+| Topic | macOS harness | Linux harness |
+| --- | --- | --- |
+| Collector technology | DTrace (`rtrace_capture.d`, scheduler probes/fallback) | bpftrace (`rtrace_capture.bt`, `sched_capture.bt`) |
+| Probe source | `rtrace` provider probes from R | Linux USDT probes from same `rtrace` points |
+| Build mode | standard macOS flow in this tree | `./configure --with-ebpf` with `sys/sdt.h` |
+| Scheduler view | prefers off-cpu if available; otherwise SIP-safe on-cpu sampling proxy | scheduler events from bpftrace script in guest kernel context |
+| Privilege constraints | SIP can block scheduler/syscall probes; requires `sudo -n` collector attach | relies on guest kernel support (>= 5.15) and bpftrace availability |
+| Run topology | local host process tracing | Lima Ubuntu guest tracing of guest-built R |
+| Output contract | normalized to common `summary.csv` + annotated PDF | normalized to the same `summary.csv` + annotated PDF |
+
+## How rtrace Encapsulates Both Backends
+
+`rtrace` is the stable observability surface. The harness does not depend on backend-
+specific probe names for domain semantics; it depends on `rtrace` events and then
+maps platform capture output into a shared schema.
+
+- Shared semantics: probe names (for example eval/native/gc events), pid/tid/cpu,
+   and wall-clock ordering.
+- Backend-specific capture formats: DTrace and bpftrace emit different raw text
+   layouts and may differ in timestamp column naming.
+- Normalization step: `build_trace_report.R` aligns those differences (for example
+   timestamp column normalization) before computing metrics and rendering charts.
+
+This is why report artifacts are now comparable across macOS and Linux even though
+collection mechanisms differ.
+
 ## Quick Start
 
 1. Build and prepare local runtime (if not already prepared):
