@@ -412,7 +412,8 @@ function(STAT, n, alternative, correct)
     switch(alternative,
            "less" = F(z),
            "greater" = F(z, lower.tail = FALSE),
-           "two.sided" = 2 * min(p <- F(z), if(p < 0.99999) 1 - p else F(z, lower.tail=FALSE)))
+           "two.sided" = 2 * min(p <- F(z),
+                                 if(p < 0.99999) 1 - p else F(z, lower.tail = FALSE)))
 }
 
 .wilcox_test_one_cint_asymp <-
@@ -457,7 +458,7 @@ function(x, n, alternative, conf.level, correct,
         Wmumax <- if(!is.finite(Wmumin)) NA else W(mumax) # if(): warn only once
     }
     if(n == 0 || !is.finite(Wmumax)) { # incl. "all zero / ties" warning above
-        ## FIXME: in the one-side cases this gives (-Inf, NaN) and
+        ## FIXME: in the one-sided cases this gives (-Inf, NaN) and
         ## (NaN, Inf): is this really what we want?
         CONF.INT <-
             structure(c(if(alternative == "less"   ) -Inf else NaN,
@@ -775,7 +776,9 @@ function(STAT, n.x, n.y, alternative, correct)
     switch(alternative,
            "less" = F(z),
            "greater" = F(z, lower.tail = FALSE),
-           "two.sided" = 2 * min(p <- F(z), 1 - p))
+           "two.sided" = 2 * min(p <- F(z),
+                                 if(p < 0.99999) 1 - p
+                                 else F(z, lower.tail = FALSE)))
 }
 
 .wilcox_test_two_cint_asymp <-
