@@ -151,7 +151,8 @@
       Help page improved, also with more non-default examples.
 
       \item \code{wilcox.test(x, exact=FALSE, correct = k)}'s p-value
-      computation got a missing \code{dnorm(z)} factor.
+      computation got a missing \code{dnorm(z)} factor, and so did the
+      2-sample case, in addition to more fixes.
     }
   }
 }

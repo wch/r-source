@@ -3346,11 +3346,39 @@ sapply(Ay1P, roundM)
 (dAy1P <- t(t(A <- simplify2array(Ay1P))[, -6] - A["Xact",]) |> signif(digits=3))
 trd1P <- mkM(c(.00149, .00245, 2.64e-4, 2.04e-5, 3.86e-5),
              c(.00161, .00215, 2.14e-4, 9.52e-5, 3.11e-5), dAy1P)
+##
+##--------------------- 2 samples -------------------------------------
+Axy <- wilcoxAsymp(x20, y20)
+sapply(Axy, roundM)
+(dAxy <- t(t(A <- simplify2array(Axy))[, -6] - A["Xact",]) |> signif(digits=3))
+trd2 <- mkM(c(-0.0132, -0.00357, -2.58e-5, 2.08e-4, 9.28e-6), 
+            c(-0.0123, -0.00330, -2.20e-5, 1.86e-4, 7.79e-6), dAxy)
+Axy40 <- wilcoxAsymp(x20, y20 + 40)
+sapply(Axy40, roundM)
+(dAxy40 <- t(t(A <- simplify2array(Axy40))[, -6] - A["Xact",]) |> signif(digits=3))
+trd2.40 <- mkM(c(-0.00705, -0.00236, -6.97e-5, -4.01e-5, 10.0e-6), 
+               c(-0.00745, -0.00265, -6.86e-5, -1.05e-5, 9.18e-6), dAxy40)
+Axy2c <- wilcoxAsymp(x20, y20 + 200)
+sapply(Axy2c, roundM)
+(dAxy2c <- t(t(A <- simplify2array(Axy2c))[, -6] - A["Xact",]) |> signif(digits=3))
+trd2.2c <- mkM(c(1.36e-5, 1.46e-5, -5.66e-6, -2.47e-6, -1.22e-7), 
+               c(3.83e-5, 4.16e-5, -8.54e-6, -2.70e-6, -6.56e-7), dAxy2c)
+Axy2m <- wilcoxAsymp(x20, y20 + 2000)
+sapply(Axy2m, roundM)
+(dAxy2m <- t(t(A <- simplify2array(Axy2m))[, -6] - A["Xact",]) |> signif(digits=3))
+trd2.2m <- mkM(c(6.3e-8, 6.79e-8, -1.34e-7, -7.06e-8, 7.31e-8), 
+               c(4.46e-7, 4.77e-7, -5.5e-7, -2.97e-7, 1.43e-7), dAxy2m)
+##
 stopifnot(exprs = {
     all.equal(trA1,  mA1, tolerance = 1e-14)
     all.equal(trd1,  dA1, tolerance = 1e-14)
     all.equal(trdy1,dAy1, tolerance = 1e-14)
     all.equal(trd1P,dAy1P,tolerance = 1e-14)
+    ## --- 2 ---
+    all.equal(trd2,    dAxy,   tolerance = 1e-14)
+    all.equal(trd2.40, dAxy40, tolerance = 1e-14)
+    all.equal(trd2.2c, dAxy2c, tolerance = 1e-14)
+    all.equal(trd2.2m, dAxy2m, tolerance = 1e-14)
 })
 ## The 'correct = 1 | 2 | 3' did *not* improve the p values in R 4.6.0
 

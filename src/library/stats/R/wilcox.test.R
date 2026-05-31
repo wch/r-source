@@ -582,7 +582,7 @@ function(STAT, n.x, n.y, alternative)
                ## probabilities, unlike \CRANpkg{coin} which uses
                ## Prob(|T - E(T)| > |t - E(T)|), and unlike binom.test()
                ## which computes the probability of values with density
-               ## not exceeding that of the observed one. 
+               ## not exceeding that of the observed one.
                min(2 * .pwilcox(q, n.x, n.y, z),
                    2 * .pwilcox(q - 1/4, n.x, n.y, z, lower.tail = FALSE),
                    1)
@@ -766,8 +766,8 @@ function(STAT, n.x, n.y, alternative, correct)
             e <- e + c5 * z * (z^4 - 10 * z^2 + 15)
         }
         if(correct > 2) {
-            ## c_7 He_7(z)            
-            e <- 0.5 * c3^2 * z *
+            ## c_7 He_7(z)
+            e <- e + 0.5 * c3^2 * z *
                 (z^6 - 21 * z^4 + 105 * z^2 - 105)
         }
         e <- e * dnorm(z)
@@ -988,11 +988,11 @@ function(x, n, z = NULL)
     if(is.null(z))
         return(dsignrank(x, n))
 
-    if(!all(2 * z == floor(2 * z)) || any(z < 1)) 
+    if(!all(2 * z == floor(2 * z)) || any(z < 1))
         stop("'z' is not a rank vector")
     y <- rep.int(NA_real_, length(x))
     i <- which(!is.na(x))
-    if(!any(i)) 
+    if(!any(i))
         return(y)
     ## scores can be x.5: in that case need to multiply by f=2.
     f <- 2 - all(z == floor(z))
@@ -1012,7 +1012,7 @@ function(q, n, z = NULL, lower.tail = TRUE)
 
     y <- rep.int(NA_real_, length(q))
     i <- which(!is.na(q))
-    if(!any(i)) 
+    if(!any(i))
         return(y)
 
     ## Support of V
@@ -1038,10 +1038,10 @@ function(p, n, z = NULL, lower.tail = TRUE)
         return(qsignrank(p, n, lower.tail = lower.tail))
 
     y <- rep.int(NA_real_, length(p))
-    if (any(i <- (p < 0) | (p > 1))) 
+    if (any(i <- (p < 0) | (p > 1)))
         y[i] <- NaN
     i <- !is.na(p) & !i
-    if (!any(i)) 
+    if (!any(i))
         return(y)
 
     s <- if(all(z == floor(z)))
@@ -1049,7 +1049,7 @@ function(p, n, z = NULL, lower.tail = TRUE)
          else
              seq.int(0, n * (n + 1)) / 2
     v <- .psignrank(s, n, z)
-    if (!lower.tail) 
+    if (!lower.tail)
         p <- 1 - p
     p <- p - 10 * .Machine$double.eps
     y[i] <- vapply(p[i], function(e) s[v >= e][1L], 0)
