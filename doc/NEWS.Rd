@@ -54,6 +54,14 @@
       \item Building R, e.g., on Ubuntu 26.04, using \command{--package-metadata}
         needs to use a different \command{sed} separator than \code{:},
 	fixing \PR{19060}, thanks to \I{Jeroen Ooms} and \I{Dirk Eddelbuettel}.
+
+      \item New optional configure-time tracing support can be enabled via
+      \option{--enable-tracing}.  This wires probes in the evaluator,
+      garbage collector, and native interface dispatch.  On macOS,
+      Solaris and illumos, this uses DTrace provider support (controlled by
+      \option{--with-dtrace}/\option{--without-dtrace}); on Linux this uses
+      USDT notes consumable by eBPF tooling such as \command{bpftrace}
+      (controlled by \option{--with-ebpf}/\option{--without-ebpf}).
     }
   }
 

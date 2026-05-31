@@ -90,6 +90,12 @@ stamp-java : etc/Makeconf etc/javaconf $(srcdir)/src/scripts/javareconf.in
 javaconf: R
 	@$(MAKE) stamp-java
 
+check-tracing-probes: R
+	@cd src/main && $(MAKE) check-tracing-probes
+
+check-tracing-probes-smoke: R
+	@cd src/main && $(MAKE) check-tracing-probes-smoke
+
 
 install install-strip: installdirs svnonly
 	@for d in $(SUBDIRS); do \

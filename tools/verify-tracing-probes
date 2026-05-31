@@ -1,0 +1,117 @@
+#!/bin/sh
+
+# Verify tracing probe artifacts for the current build.
+
+set -eu
+
+SMOKE=0
+if [ "${1:-}" = "--smoke" ]; then
+  SMOKE=1
+  shift
+fi
+
+if [ $# -lt 1 ]; then
+  echo "usage: $0 [--smoke] PATH_TO_R [TOP_BUILD_DIR]" 1>&2
+  exit 2
+fi
+
+R_BIN=$1
+TOP_BUILD_DIR=${2:-}
+if [ -z "${TOP_BUILD_DIR}" ]; then
+  TOP_BUILD_DIR=$(cd "$(dirname "$(dirname "${R_BIN}")")" && pwd)
+fi
+
+case "$(uname -s)" in
+  Linux) PLATFORM=linux ;;
+  Darwin|SunOS) PLATFORM=dtrace ;;
+  *) PLATFORM=other ;;
+esac
+
+find_readelf() {
+  for c in readelf llvm-readelf greadelf; do
+    if command -v "${c}" >/dev/null 2>&1; then
+      echo "${c}"
+      return 0
+    fi
+  done
+  return 1
+}
+
+verify_linux_smoke() {
+  READELF=$(find_readelf || true)
+  if [ -z "${READELF}" ]; then
+    echo "note: readelf not available; skipping Linux USDT note check" 1>&2
+    return 0
+  fi
+
+  if "${READELF}" -n "${R_BIN}" 2>/dev/null | grep -Eq "(stapsdt|NT_STAPSDT|rtrace)"; then
+    echo "ok: found USDT note data in ${R_BIN}" 1>&2
+    return 0
+  fi
+
+  echo "error: no USDT note data found in ${R_BIN}" 1>&2
+  return 1
+}
+
+verify_dtrace_smoke() {
+  HDR="${TOP_BUILD_DIR}/src/main/Rtrace.h"
+  OBJ="${TOP_BUILD_DIR}/src/main/Rtrace.o"
+
+  if [ ! -f "${HDR}" ]; then
+    echo "error: missing generated provider header ${HDR}" 1>&2
+    return 1
+  fi
+  if [ ! -f "${OBJ}" ]; then
+    echo "error: missing generated DOF object ${OBJ}" 1>&2
+    return 1
+  fi
+
+  echo "ok: found ${HDR} and ${OBJ}" 1>&2
+  return 0
+}
+
+verify_full() {
+  if [ "${PLATFORM}" = "linux" ]; then
+    verify_linux_smoke
+    if command -v bpftrace >/dev/null 2>&1; then
+      bpftrace -l "usdt:${R_BIN}:rtrace:*" >/dev/null 2>&1 || {
+        echo "error: bpftrace could not list expected rtrace USDT probes" 1>&2
+        return 1
+      }
+      echo "ok: bpftrace listed rtrace probes" 1>&2
+    else
+      echo "note: bpftrace not available; skipping probe-list check" 1>&2
+    fi
+    return 0
+  fi
+
+  if [ "${PLATFORM}" = "dtrace" ]; then
+    verify_dtrace_smoke
+    if command -v dtrace >/dev/null 2>&1; then
+      dtrace -h -s "${TOP_BUILD_DIR}/src/main/Rtrace.d" -o /dev/null >/dev/null 2>&1 || {
+        echo "error: dtrace failed to parse ${TOP_BUILD_DIR}/src/main/Rtrace.d" 1>&2
+        return 1
+      }
+      echo "ok: dtrace parsed probe provider specification" 1>&2
+    else
+      echo "error: dtrace not found on DTrace platform" 1>&2
+      return 1
+    fi
+    return 0
+  fi
+
+  echo "note: unsupported platform $(uname -s); skipping tracing verification" 1>&2
+  return 0
+}
+
+if [ "${SMOKE}" -eq 1 ]; then
+  if [ "${PLATFORM}" = "linux" ]; then
+    verify_linux_smoke
+  elif [ "${PLATFORM}" = "dtrace" ]; then
+    verify_dtrace_smoke
+  else
+    echo "note: unsupported platform $(uname -s); skipping tracing smoke" 1>&2
+  fi
+else
+  verify_full
+fi

@@ -4244,10 +4244,16 @@ use @I{readline} library (if available) [yes]
 attempt to compile support for @code{Rprof()} [yes]
 @item --enable-memory-profiling
 attempt to compile support for @code{Rprofmem()} and @code{tracemem()} [no]
+@item --enable-tracing
+attempt to compile runtime tracing probes [no]
 @item --enable-R-shlib
 build @R{} as a shared/dynamic library [no]
 @item --enable-BLAS-shlib
 build the @acronym{BLAS} as a shared/dynamic library [yes, except on @abbr{AIX}]
+@item --with-dtrace
+use DTrace probe provider support where available [yes]
+@item --with-ebpf
+use Linux USDT probe notes for eBPF consumers where available [yes]
 @end table
 
 @noindent
@@ -4281,6 +4287,68 @@ is @option{--with-valgrind-instrumentation=@var{level}}, where
 @var{level} is 0, 1 or 2.  (Level 0 is the default and does not add
 anything.)  The system headers for @command{valgrind} are required: on
 Linux they may be in a separate package such as @pkg{valgrind-devel}.
+
+If configured with @option{--enable-tracing}, @R{} builds probe points in
+the evaluator, garbage collector and native interface dispatch.  Back-end
+support is selected by platform and tool availability:
+
+@itemize @bullet
+@item DTrace provider objects are built on macOS, Solaris and illumos when
+@command{dtrace} is found (unless disabled by
+@option{--without-dtrace}).
+@item Linux builds use USDT notes suitable for eBPF tools (for example
+@command{bpftrace}) when @file{sys/sdt.h} is available (unless disabled by
+@option{--without-ebpf}).
+@end itemize
+
+@noindent
+The probe provider name is @samp{rtrace}; probes include
+@samp{eval_entry}, @samp{eval_dispatch}, @samp{gc_start}, @samp{gc_end},
+@samp{native_entry} and @samp{native_exit}.  Typical usage:
+
+@itemize @bullet
+@item On macOS/Solaris/illumos, list probes:
+
+@example
+dtrace -l -P rtrace
+@end example
+
+@item On macOS/Solaris/illumos, trace GC starts in a running @R{} process:
+
+@example
+dtrace -q -n 'rtrace$target:::gc_start { printf("need=%llu count=%u\n", arg0, arg1); }' -p @var{PID}
+@end example
+
+@item On Linux, list USDT probes in the @R{} executable:
+
+@example
+bpftrace -l 'usdt:@var{PATH_TO_R_EXEC}:rtrace:*'
+@end example
+
+@item On Linux, trace native interface entries:
+
+@example
+bpftrace -e 'usdt:@var{PATH_TO_R_EXEC}:rtrace:native_entry { printf("api=%s symbol=%s\n", str(arg0), str(arg1)); }'
+@end example
+@end itemize
+
+@noindent
+After building in the source tree, helper targets are available both from the
+repository root and from @file{src/main}:
+
+@example
+make check-tracing-probes
+make check-tracing-probes-smoke
+make -C src/main check-tracing-probes
+make -C src/main check-tracing-probes-smoke
+@end example
+
+@noindent
+The full check queries probes against the built executable at
+@file{@var{TOP_BUILD_DIR}/bin/exec@var{R_ARCH}/R}.  The smoke target avoids
+privileged tracing attachment: on Linux it verifies the emitted USDT note
+section, and on DTrace platforms it verifies that the generated provider header
+and DOF object are present in @file{src/main}.
 
 If you need to re-configure @R{} with different options you may need to run
 @code{make clean} or even @code{make distclean} before doing so.

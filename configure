@@ -732,6 +732,11 @@ custom_JAVA_HOME
 PAPERCONF
 BUILD_TZONE_FALSE
 BUILD_TZONE_TRUE
+DTRACE
+HAVE_EBPF_USDT_FALSE
+HAVE_EBPF_USDT_TRUE
+HAVE_DTRACE_FALSE
+HAVE_DTRACE_TRUE
 R_PROFILING
 BITMAP_LIBS
 BITMAP_CPPFLAGS
@@ -1084,6 +1089,9 @@ enable_strict_barrier
 enable_prebuilt_html
 enable_lto
 enable_java
+enable_tracing
+with_dtrace
+with_ebpf
 with_blas
 with_lapack
 with_2025blas
@@ -1862,6 +1870,7 @@ Optional Features:
   --enable-prebuilt-html  build static HTML help pages [no]
   --enable-lto            enable link-time optimization [no]
   --enable-java           enable Java [yes]
+  --enable-tracing        enable runtime tracing probes [no]
   --enable-byte-compiled-packages
                           byte-compile base and recommended packages [yes]
   --enable-static[=PKGS]  (libtool) build static libraries [default=no]
@@ -1905,6 +1914,10 @@ Optional Packages:
   --with-jpeglib          use jpeglib library (if available) [yes]
   --with-libtiff          use libtiff library (if available) [yes]
   --with-system-tre       use system tre library (if available) [no]
+  --with-dtrace           use DTrace probes if available
+                          (darwin/solaris/illumos) [yes]
+  --with-ebpf             use Linux USDT probes for eBPF tooling if
+                          available [yes]
   --with-valgrind-instrumentation
                           Level of additional instrumentation for Valgrind
                           (0/1/2) [0]
@@ -51655,6 +51668,95 @@ if test -z "${TK_CONFIG}"; then
 printf %s "checking for tkConfig.sh in library (sub)directories... " >&6; }
 if test ${r_cv_path_TK_CONFIG+y}
 then :
+
+## Tracing probes (DTrace and Linux USDT for eBPF consumers).
+if test ${enable_tracing+y}
+then :
+  want_tracing=$enable_tracing
+else case e in #(
+  e) want_tracing=no ;;
+esac
+fi
+
+if test ${with_dtrace+y}
+then :
+  if test "$with_dtrace" = no; then
+    use_dtrace=no
+  else
+    use_dtrace=yes
+  fi
+else case e in #(
+  e) use_dtrace=yes ;;
+esac
+fi
+
+if test ${with_ebpf+y}
+then :
+  if test "$with_ebpf" = no; then
+    use_ebpf=no
+  else
+    use_ebpf=yes
+  fi
+else case e in #(
+  e) use_ebpf=yes ;;
+esac
+fi
+
+have_dtrace=no
+have_ebpf_usdt=no
+DTRACE=
+
+if test "x${want_tracing}" = xyes; then
+  case "${host_os}" in
+    darwin*|solaris*|illumos*)
+      if test "x${use_dtrace}" = xyes; then
+        DTRACE=`command -v dtrace 2>/dev/null || :`
+        if test -n "${DTRACE}"; then
+          have_dtrace=yes
+
+printf "%s\n" "#define HAVE_DTRACE 1" >>confdefs.h
+
+        else
+          { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: dtrace tool not found, disabling DTrace probes" >&5
+printf "%s\n" "$as_me: WARNING: dtrace tool not found, disabling DTrace probes" >&2;}
+        fi
+      fi
+      ;;
+    linux*)
+      if test "x${use_ebpf}" = xyes; then
+        ac_fn_c_check_header_compile "$LINENO" "sys/sdt.h" "ac_cv_header_sys_sdt_h" "$ac_includes_default"
+if test "x$ac_cv_header_sys_sdt_h" = xyes
+then :
+  have_ebpf_usdt=yes
+
+printf "%s\n" "#define HAVE_EBPF_USDT 1" >>confdefs.h
+
+else case e in #(
+  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: sys/sdt.h not found, disabling Linux USDT probes" >&5
+printf "%s\n" "$as_me: WARNING: sys/sdt.h not found, disabling Linux USDT probes" >&2;} ;;
+esac
+fi
+
+      fi
+      ;;
+  esac
+fi
+
+if test "x${have_dtrace}" = xyes; then
+  HAVE_DTRACE_TRUE=
+  HAVE_DTRACE_FALSE='#'
+else
+  HAVE_DTRACE_TRUE='#'
+  HAVE_DTRACE_FALSE=
+fi
+
+if test "x${have_ebpf_usdt}" = xyes; then
+  HAVE_EBPF_USDT_TRUE=
+  HAVE_EBPF_USDT_FALSE='#'
+else
+  HAVE_EBPF_USDT_TRUE='#'
+  HAVE_EBPF_USDT_FALSE=
+fi
   printf %s "(cached) " >&6
 else case e in #(
   e) for ldir in /usr/local/${LIBnn} /usr/${LIBnn} /${LIBnn} /opt/lib /sw/lib /opt/csw/lib /usr/sfw/lib /opt/freeware/lib; do
@@ -61055,6 +61157,78 @@ fi
 
 if test -z "${BUILD_TZONE_TRUE}" && test -z "${BUILD_TZONE_FALSE}"; then
   as_fn_error $? "conditional \"BUILD_TZONE\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test ${enable_tracing+y}
+then :
+  want_tracing=$enable_tracing
+else case e in #(
+  e) want_tracing=no ;;
+esac
+fi
+if test ${with_dtrace+y}
+then :
+  if test "$with_dtrace" = no; then
+    use_dtrace=no
+  else
+    use_dtrace=yes
+  fi
+else case e in #(
+  e) use_dtrace=yes ;;
+esac
+fi
+if test ${with_ebpf+y}
+then :
+  if test "$with_ebpf" = no; then
+    use_ebpf=no
+  else
+    use_ebpf=yes
+  fi
+else case e in #(
+  e) use_ebpf=yes ;;
+esac
+fi
+have_dtrace=no
+have_ebpf_usdt=no
+if test "x${want_tracing}" = xyes; then
+  case "${host_os}" in
+    darwin*|solaris*|illumos*)
+      if test "x${use_dtrace}" = xyes; then
+        DTRACE=`command -v dtrace 2>/dev/null || :`
+        if test -n "${DTRACE}"; then
+          have_dtrace=yes
+          printf "%s\n" "#define HAVE_DTRACE 1" >>confdefs.h
+        fi
+      fi
+      ;;
+    linux*)
+      if test "x${use_ebpf}" = xyes && test "x${ac_cv_header_sys_sdt_h}" = xyes; then
+        have_ebpf_usdt=yes
+        printf "%s\n" "#define HAVE_EBPF_USDT 1" >>confdefs.h
+      fi
+      ;;
+  esac
+fi
+if test "x${have_dtrace}" = xyes; then
+  HAVE_DTRACE_TRUE=
+  HAVE_DTRACE_FALSE='#'
+else
+  HAVE_DTRACE_TRUE='#'
+  HAVE_DTRACE_FALSE=
+fi
+if test -z "${HAVE_DTRACE_TRUE}" && test -z "${HAVE_DTRACE_FALSE}"; then
+  as_fn_error $? "conditional \"HAVE_DTRACE\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test "x${have_ebpf_usdt}" = xyes; then
+  HAVE_EBPF_USDT_TRUE=
+  HAVE_EBPF_USDT_FALSE='#'
+else
+  HAVE_EBPF_USDT_TRUE='#'
+  HAVE_EBPF_USDT_FALSE=
+fi
+if test -z "${HAVE_EBPF_USDT_TRUE}" && test -z "${HAVE_EBPF_USDT_FALSE}"; then
+  as_fn_error $? "conditional \"HAVE_EBPF_USDT\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${USE_RECOMMENDED_PACKAGES_TRUE}" && test -z "${USE_RECOMMENDED_PACKAGES_FALSE}"; then

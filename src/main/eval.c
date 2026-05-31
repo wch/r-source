@@ -32,6 +32,8 @@
 #include <errno.h>
 #include <math.h>
 
+#include "rtracing.h"
+
 static SEXP bcEval(SEXP, SEXP);
 static void bcEval_init(void);
 
@@ -1084,7 +1086,8 @@ SEXP eval(SEXP e, SEXP rho)
     SEXP op, tmp;
     static int evalcount = 0;
 
-    R_Visible = TRUE;
+	R_Visible = TRUE;
+	R_TRACE_EVAL_ENTRY(R_typeToChar(e), R_EvalDepth);
 
     /* this is needed even for self-evaluating objects or something like
        'while (TRUE) NULL' will not be interruptable */
@@ -1223,6 +1226,7 @@ SEXP eval(SEXP e, SEXP rho)
 	    PrintValue(e);
 	}
 	if (TYPEOF(op) == SPECIALSXP) {
+	    R_TRACE_EVAL_DISPATCH("special", PRIMNAME(op));
 	    int save = R_PPStackTop, flag = PRIMPRINT(op);
 	    const void *vmax = vmaxget();
 	    PROTECT(e);
@@ -1243,6 +1247,7 @@ SEXP eval(SEXP e, SEXP rho)
 	    vmaxset(vmax);
 	}
 	else if (TYPEOF(op) == BUILTINSXP) {
+	    R_TRACE_EVAL_DISPATCH("builtin", PRIMNAME(op));
 	    int save = R_PPStackTop, flag = PRIMPRINT(op);
 	    const void *vmax = vmaxget();
 	    RCNTXT cntxt;
@@ -1273,6 +1278,7 @@ SEXP eval(SEXP e, SEXP rho)
 	    vmaxset(vmax);
 	}
 	else if (TYPEOF(op) == CLOSXP) {
+	    R_TRACE_EVAL_DISPATCH("closure", "");
 	    SEXP pargs = promiseArgs(CDR(e), rho);
 	    PROTECT(pargs);
 	    tmp = applyClosure(e, op, pargs, rho, R_NilValue, TRUE);

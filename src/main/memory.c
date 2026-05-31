@@ -89,6 +89,8 @@
 #include <Rmath.h> // R_pow_di
 #include <Print.h> // R_print
 
+#include "rtracing.h"
+
 /* malloc uses size_t.  We are assuming here that size_t is at least
    as large as unsigned long.  Changed from int at 1.6.0 to (i) allow
    2-4Gb objects on 32-bit system and (ii) objects limited only by
@@ -3227,6 +3229,7 @@ static void R_gc_internal(R_size_t size_needed)
 #endif
 
     gc_count++;
+    R_TRACE_GC_START(size_needed, gc_count);
 
     R_N_maxused = R_MAX(R_N_maxused, R_NodesInUse);
     R_V_maxused = R_MAX(R_V_maxused, R_VSize - VHEAP_FREE());
@@ -3238,6 +3241,8 @@ static void R_gc_internal(R_size_t size_needed)
 	gc_end_timing();
 	R_in_gc = FALSE;
     } END_SUSPEND_INTERRUPTS;
+
+    R_TRACE_GC_END(gens_collected, gc_count);
 
     if (R_check_constants > 2 ||
 	    (R_check_constants > 1 && gens_collected == NUM_OLD_GENERATIONS))

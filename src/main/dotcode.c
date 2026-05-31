@@ -32,6 +32,8 @@
 
 #include <Rmath.h>
 
+#include "rtracing.h"
+
 
 #ifndef max
 #define max(a, b) ((a > b)?(a):(b))
@@ -567,6 +569,7 @@ attribute_hidden SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
     /* args is escaping into user C code and might get captured, so
        make sure it is reference counting. */
     R_args_enable_refcnt(args);
+	 R_TRACE_NATIVE_ENTRY(".External", buf);
 
     if (PRIMVAL(op) == 1) {
 	R_ExternalRoutine2 fun = (R_ExternalRoutine2) ofun;
@@ -575,6 +578,8 @@ attribute_hidden SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 	R_ExternalRoutine fun = (R_ExternalRoutine) ofun;
 	retval = fun(args);
     }
+
+    R_TRACE_NATIVE_EXIT(".External", buf);
 
     R_try_clear_args_refcnt(args);
 
@@ -1433,6 +1438,8 @@ attribute_hidden SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 		      nargs, symbol.symbol.call->numArgs, buf);
     }
 
+    R_TRACE_NATIVE_ENTRY(".Call", buf);
+
     if (R_check_constants < 4)
 	retval = R_doDotCall(ofun, nargs, cargs, call);
     else {
@@ -1475,6 +1482,9 @@ attribute_hidden SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	UNPROTECT(nprotect);
     }
+
+    R_TRACE_NATIVE_EXIT(".Call", buf);
+
     vmaxset(vmax);
     return retval;
 }
@@ -1955,6 +1965,8 @@ attribute_hidden SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* FIXME: Calling a function via an incompatible function pointer is
        undefined behavior. */ 
+	R_TRACE_NATIVE_ENTRY(Fort ? ".Fortran" : ".C", symName);
+
     switch (nargs) {
     case 0:
 	((FUNV0)fun)();
@@ -2547,6 +2559,8 @@ attribute_hidden SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	errorcall(call, _("too many arguments, sorry"));
     }
+
+    R_TRACE_NATIVE_EXIT(Fort ? ".Fortran" : ".C", symName);
 
     for (na = 0, pa = args ; pa != R_NilValue ; pa = CDR(pa), na++) {
 	void *p = cargs[na];

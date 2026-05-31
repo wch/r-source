@@ -418,6 +418,22 @@ AC_ARG_ENABLE([java],
 [want_java=yes])
 AM_CONDITIONAL(WANT_JAVA, [test "x${want_java}" = xyes])
 
+## Optional tracing backends.
+AC_ARG_ENABLE([tracing],
+[AS_HELP_STRING([--enable-tracing],[enable runtime tracing probes @<:@no@:>@])],
+[want_tracing="${enableval}"],
+[want_tracing=no])
+
+AC_ARG_WITH([dtrace],
+[AS_HELP_STRING([--with-dtrace],[use DTrace probes if available (darwin/solaris/illumos) @<:@yes@:>@])],
+[R_ARG_USE(dtrace)],
+[use_dtrace=yes])
+
+AC_ARG_WITH([ebpf],
+[AS_HELP_STRING([--with-ebpf],[use Linux USDT probes for eBPF tooling if available @<:@yes@:>@])],
+[R_ARG_USE(ebpf)],
+[use_ebpf=yes])
+
 ### ** Optional packages.
 
 ## BLAS.
@@ -2685,6 +2701,41 @@ R_SYS_POSIX_LEAPSECONDS
 
 ## stat times
 gl_STAT_TIME
+
+## Tracing probes (DTrace and Linux USDT for eBPF consumers).
+have_dtrace=no
+have_ebpf_usdt=no
+DTRACE=
+
+if test "x${want_tracing}" = xyes; then
+  case "${host_os}" in
+    darwin*|solaris*|illumos*)
+      if test "x${use_dtrace}" = xyes; then
+        AC_PATH_PROG([DTRACE], [dtrace], [])
+        if test -n "${DTRACE}"; then
+          have_dtrace=yes
+          AC_DEFINE(HAVE_DTRACE, 1, [Define to enable DTrace provider probes.])
+        else
+          AC_MSG_WARN([dtrace tool not found, disabling DTrace probes])
+        fi
+      fi
+      ;;
+    linux*)
+      if test "x${use_ebpf}" = xyes; then
+        AC_CHECK_HEADERS([sys/sdt.h], [have_ebpf_usdt=yes])
+        if test "x${have_ebpf_usdt}" = xyes; then
+          AC_DEFINE(HAVE_EBPF_USDT, 1, [Define to enable Linux USDT probes for eBPF tooling.])
+        else
+          AC_MSG_WARN([sys/sdt.h not found, disabling Linux USDT probes])
+        fi
+      fi
+      ;;
+  esac
+fi
+
+AM_CONDITIONAL(HAVE_DTRACE, [test "x${have_dtrace}" = xyes])
+AM_CONDITIONAL(HAVE_EBPF_USDT, [test "x${have_ebpf_usdt}" = xyes])
+AC_SUBST(DTRACE)
  
 ## R profiling.
 if test "${want_R_profiling}" = yes; then

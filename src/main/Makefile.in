@@ -60,6 +60,7 @@ HEADERS = \
 	machar.c \
 	qsort-body.c \
 	rlocale_data.h rlocale_tolower.h rlocale_toupper.h rlocale_widths.h \
+	rtracing.h \
 	split-incl.c \
 	unzip.h \
 	valid_utf8.h \
@@ -69,6 +70,7 @@ HEADERS = \
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win \
+	Rtrace.d \
 	$(HEADERS) \
 	$(SOURCES_C) \
 	$(EXTRA_SOURCES_C) \
@@ -79,9 +81,14 @@ TRE_CPPFLAGS = @BUILD_TRE_TRUE@ -I$(top_srcdir)/src/extra
 XDR_CPPFLAGS = @BUILD_XDR_TRUE@ -I$(top_srcdir)/src/extra/xdr
 @BUILD_XDR_FALSE@XDR_CPPFLAGS = @TIRPC_CPPFLAGS@
 
+@HAVE_DTRACE_TRUE@DTRACE_CPPFLAGS = -DHAVE_DTRACE
+@HAVE_EBPF_USDT_TRUE@EBPF_CPPFLAGS = -DHAVE_EBPF_USDT
+@HAVE_DTRACE_TRUE@DTRACE_DOF_OBJECT = Rtrace.o
+@HAVE_DTRACE_TRUE@DTRACE = @DTRACE@
+
 ## platform.c needs $(CURL_CPPFLAGS).
 ALL_CPPFLAGS = $(TRE_CPPFLAGS) $(XDR_CPPFLAGS) $(R_XTRA_CPPFLAGS) \
-  $(CURL_CPPFLAGS) $(CPPFLAGS) -I$(top_srcdir)/src/nmath $(DEFS)
+	$(CURL_CPPFLAGS) $(DTRACE_CPPFLAGS) $(EBPF_CPPFLAGS) $(CPPFLAGS) -I$(top_srcdir)/src/nmath $(DEFS)
 @WANT_R_SHLIB_TRUE@ALL_CFLAGS = $(ALL_CFLAGS_LO)
 @WANT_R_SHLIB_TRUE@ALL_FFLAGS = $(ALL_FFLAGS_LO)
 @WANT_R_SHLIB_FALSE@ALL_FFLAGS = $(ALL_FFLAGS_PIE)
@@ -101,7 +108,7 @@ STATIC_LIBS = $(MAIN_LIBS) $(EXTRA_STATIC_LIBS)
 EXTRA_LIBS = $(BLAS_LIBS) $(FLIBS) @R_XTRA_LIBS@ @LIBINTL@ $(READLINE_LIBS) $(LIBS) @BUILD_NEW_ACCELERATE_TRUE@ -framework Accelerate
 
 R_binary = R.bin
-R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@$(OBJECTS)
+R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@$(OBJECTS) @WANT_R_SHLIB_FALSE@$(DTRACE_DOF_OBJECT)
 @WANT_R_SHLIB_FALSE@R_bin_LDADD = $(MAIN_OBJS) $(EXTRA_STATIC_LIBS) $(EXTRA_LIBS)
 ## Linked against -lRblas because -lR is and otherwise ld complains.
 @WANT_R_SHLIB_TRUE@R_bin_LDADD = -lR @BLAS_SHLIB_TRUE@-lRblas
@@ -110,7 +117,7 @@ R_bin_OBJECTS = Rmain.o @WANT_R_SHLIB_FALSE@$(OBJECTS)
 @WANT_R_SHLIB_FALSE@R_bin_DEPENDENCIES = $(MAIN_LIBS) $(EXTRA_STATIC_LIBS)@USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 
 libR_la = libR$(R_DYLIB_EXT)
-libR_la_OBJECTS = $(OBJECTS)
+libR_la_OBJECTS = $(OBJECTS) $(DTRACE_DOF_OBJECT)
 libR_la_LIBADD =  $(MAIN_OBJS) $(EXTRA_STATIC_LIBS) $(EXTRA_LIBS) @WANT_R_SHLIB_TRUE@ @USE_EXPORTFILES_TRUE@ -Wl,-bE:$(top_builddir)/etc/R.exp
 libR_la_DEPENDENCIES = $(STATIC_LIBS) $(R_TZONE) @WANT_R_SHLIB_TRUE@ @USE_EXPORTFILES_TRUE@ $(top_builddir)/etc/R.exp
 
@@ -141,10 +148,25 @@ R: Makedeps
 @WANT_R_STATIC_TRUE@	@$(MAKE) install-static-local
 	@$(MAKE) install-bin-local
 
+check-tracing-probes: R
+	@$(SHELL) $(top_srcdir)/tools/verify-tracing-probes "$(top_builddir)/bin/exec$(R_ARCH)/R"
+
+check-tracing-probes-smoke: R
+	@$(SHELL) $(top_srcdir)/tools/verify-tracing-probes --smoke "$(top_builddir)/bin/exec$(R_ARCH)/R" "$(top_builddir)"
+
 
 ## is this portable?  Documented as GNU extension.
 ../include/config.h ../include/Rversion.h:
 	(cd $(@D); $(MAKE) $(@F))
+
+@HAVE_DTRACE_TRUE@Rtrace.h: $(srcdir)/Rtrace.d
+@HAVE_DTRACE_TRUE@	$(DTRACE) -h -s $(srcdir)/Rtrace.d -o $@
+
+@HAVE_DTRACE_TRUE@Rtrace.o: $(OBJECTS) Rtrace.h $(srcdir)/Rtrace.d
+@HAVE_DTRACE_TRUE@	@$(DTRACE) -G -s $(srcdir)/Rtrace.d $(OBJECTS) -o $@ >/dev/null 2>&1 || \
+@HAVE_DTRACE_TRUE@	  $(CC) -c -x c /dev/null -o $@
+
+@HAVE_DTRACE_TRUE@$(OBJECTS): Rtrace.h
 
 $(R_binary): $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
 	$(MAIN_LINK) -o $@ $(R_bin_OBJECTS) $(R_bin_LDADD)
@@ -228,7 +250,7 @@ clean:
 	@-rm -f $(top_builddir)/etc/R.exp
 	@-rm -Rf .libs _libs
 	@-rm -f *core Makedeps *.d *.o *.lo *.la *$(R_DYLIB_EXT) \
-	  $(R_binary) libR.a
+	  $(R_binary) libR.a Rtrace.h
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
