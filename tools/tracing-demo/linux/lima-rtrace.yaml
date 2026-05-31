@@ -1,0 +1,23 @@
+# Lima profile template for Linux eBPF tracing of R on Apple Silicon hosts.
+# Placeholders are replaced by run-linux-vm-trace.sh at launch time.
+images:
+  - location: "https://cloud-images.ubuntu.com/releases/24.04/release/ubuntu-24.04-server-cloudimg-arm64.img"
+    arch: "aarch64"
+cpus: __CPUS__
+memory: "__MEMORY__"
+disk: "__DISK__"
+mountType: "virtiofs"
+mounts:
+  - location: "~"
+    mountPoint: "/mnt/hosthome"
+    writable: true
+containerd:
+  system: false
+  user: false
+provision:
+  - mode: system
+    script: |
+      #!/bin/bash
+      set -euxo pipefail
+      apt-get update
+      apt-get install -y --no-install-recommends ca-certificates curl git sudo

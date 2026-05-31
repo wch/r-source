@@ -12,6 +12,24 @@ For each run, `run-demo-trace.sh` creates a timestamped directory under `tracing
 - `sched.log` (scheduler proxy stream)
 - `summary.csv` (machine-readable metrics)
 - `trace-report-annotated.pdf` (human-readable report)
+
+## Linux VM Harness (Lima + bpftrace)
+
+For a Linux analogue of this workflow on macOS hosts, use:
+
+- `tools/tracing-demo/linux/run-linux-vm-trace.sh`
+
+This path provisions an Ubuntu `arm64` Lima VM with 16GiB memory and host CPU
+count minus two, installs Linux tracing/build dependencies, builds R with Linux
+USDT probes (`--with-ebpf`), and captures `rtrace` probe events via `bpftrace`.
+
+Install host prerequisites with the bundle fragment:
+
+- `brew bundle --file tools/tracing-demo/Brewfile.lima-linux.fragment`
+
+See Linux-specific docs:
+
+- `tools/tracing-demo/linux/README.md`
 - `*.err` files for each collector and probe list
 - `run-meta.txt` and `artifacts.txt`
 
@@ -149,7 +167,7 @@ Before sharing results externally, include:
 Recommended next steps for portability:
 
 - Add a `--mode` flag (`strict-offcpu`, `proxy-only`, `auto`) to `run-demo-trace.sh`
-- Add Linux/eBPF backend for non-macOS hosts
+- Extend Linux/eBPF backend to support x86_64 emulated guests and native Linux hosts
 - Add probe capability detection and explicit mode banner at run start
 - Add a compact JSON report alongside `summary.csv`
 - Add CI smoke check that validates parser/report behavior with fixture logs

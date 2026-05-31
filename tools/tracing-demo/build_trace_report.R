@@ -41,16 +41,45 @@ if (nrow(intervals) > 0) {
   intervals$idx <- seq_len(nrow(intervals))
 }
 
-read_tab <- function(path) {
+read_event_table <- function(path) {
   if (!file.exists(path) || file.info(path)$size == 0) {
     return(data.frame())
   }
-  out <- tryCatch(read.delim(path, sep = "\t", header = TRUE, stringsAsFactors = FALSE), error = function(e) data.frame())
+
+  lines <- readLines(path, warn = FALSE)
+  if (!length(lines)) {
+    return(data.frame())
+  }
+
+  # Linux bpftrace emits a preamble line like "Attaching N probes...".
+  lines <- lines[!grepl("^Attaching [0-9]+ probes\\.\\.\\.$", lines)]
+  if (!length(lines)) {
+    return(data.frame())
+  }
+
+  header <- lines[[1]]
+  sep <- if (grepl("\\|", header, fixed = FALSE)) "|" else "\t"
+
+  out <- tryCatch(
+    read.delim(
+      textConnection(lines),
+      sep = sep,
+      header = TRUE,
+      stringsAsFactors = FALSE,
+      check.names = FALSE
+    ),
+    error = function(e) data.frame()
+  )
+
   out
 }
 
-rtrace <- read_tab(rtrace_log)
-sched <- read_tab(sched_log)
+rtrace <- read_event_table(rtrace_log)
+sched <- read_event_table(sched_log)
+
+if (nrow(sched) > 0 && "nsecs" %in% names(sched) && !"wall_ns" %in% names(sched)) {
+  names(sched)[names(sched) == "nsecs"] <- "wall_ns"
+}
 
 probe_counts <- if (nrow(rtrace) > 0) sort(table(rtrace$probe), decreasing = TRUE) else integer(0)
 offcpu <- if (nrow(sched) > 0) sched[sched$event == "offcpu", , drop = FALSE] else data.frame()

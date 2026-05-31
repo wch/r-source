@@ -1,0 +1,42 @@
+#!/usr/bin/env bpftrace
+
+BEGIN
+{
+  printf("nsecs|probe|pid|tid|cpu\n");
+}
+
+usdt:__R_BIN__:rtrace:eval_entry
+/ pid == __TARGET_PID__ /
+{
+  printf("%llu|%s|%d|%d|%d\n", nsecs, probe, pid, tid, cpu);
+}
+
+usdt:__R_BIN__:rtrace:eval_dispatch
+/ pid == __TARGET_PID__ /
+{
+  printf("%llu|%s|%d|%d|%d\n", nsecs, probe, pid, tid, cpu);
+}
+
+usdt:__R_BIN__:rtrace:native_entry
+/ pid == __TARGET_PID__ /
+{
+  printf("%llu|%s|%d|%d|%d\n", nsecs, probe, pid, tid, cpu);
+}
+
+usdt:__R_BIN__:rtrace:native_exit
+/ pid == __TARGET_PID__ /
+{
+  printf("%llu|%s|%d|%d|%d\n", nsecs, probe, pid, tid, cpu);
+}
+
+usdt:__R_BIN__:rtrace:gc_start
+/ pid == __TARGET_PID__ /
+{
+  printf("%llu|%s|%d|%d|%d\n", nsecs, probe, pid, tid, cpu);
+}
+
+usdt:__R_BIN__:rtrace:gc_end
+/ pid == __TARGET_PID__ /
+{
+  printf("%llu|%s|%d|%d|%d\n", nsecs, probe, pid, tid, cpu);
+}

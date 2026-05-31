@@ -1,0 +1,5 @@
+tap "homebrew/bundle"
+
+brew "lima"
+brew "qemu"
+brew "jq"

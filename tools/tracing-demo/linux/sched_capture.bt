@@ -1,0 +1,12 @@
+#!/usr/bin/env bpftrace
+
+BEGIN
+{
+  printf("nsecs|event|pid|tid|cpu|value_us\n");
+}
+
+profile:hz:199
+/ pid == __TARGET_PID__ /
+{
+  printf("%llu|oncpu-sample|%d|%d|%d|0\n", nsecs, pid, tid, cpu);
+}
