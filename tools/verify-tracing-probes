@@ -18,7 +18,8 @@ fi
 R_BIN=$1
 TOP_BUILD_DIR=${2:-}
 if [ -z "${TOP_BUILD_DIR}" ]; then
-  TOP_BUILD_DIR=$(cd "$(dirname "$(dirname "${R_BIN}")")" && pwd)
+  # R binary is expected at ${TOP_BUILD_DIR}/bin/exec${R_ARCH}/R.
+  TOP_BUILD_DIR=$(cd "$(dirname "$(dirname "$(dirname "${R_BIN}")")")" && pwd)
 fi
 
 case "$(uname -s)" in
