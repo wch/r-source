@@ -19,6 +19,23 @@ instrumentation design.
 This gives platform-equivalent report artifacts while preserving backend-specific
 collector implementation.
 
+## Scale Guidance
+
+Choose storage and visualization strategy by deployment scale while preserving the
+same `rtrace` event contract.
+
+- Small scale: keep local logs and generate `summary.csv`, `trace-heatmap.pdf`, and
+   `trace-report-annotated.pdf` with R for rapid analysis.
+- Larger scale: route probe events to a dedicated telemetry backend (for example
+   OpenTelemetry collector + Jaeger) instead of relying only on per-run files on
+   disk.
+
+Recommended pattern:
+
+- Keep R outputs as reproducible analysis artifacts.
+- Add backend/UI tracing for operational observability across many runs/hosts.
+- Use both lanes together rather than replacing one with the other.
+
 ## Backend Differences at a Glance
 
 | Topic | macOS path | Linux path |

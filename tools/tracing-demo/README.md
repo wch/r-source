@@ -47,6 +47,24 @@ The harness has one instrumentation contract and two backend collectors.
 In practice, this means the semantic event stream is shared, while probe plumbing and
 privilege/runtime constraints differ by platform.
 
+## Scale Guidance: Local Analysis vs Observability Backend
+
+Use the same `rtrace` probe contract for both lanes, but choose the lane based on scale.
+
+- Small scale (developer workstation, targeted experiments): local log files plus
+   R-native reports (`summary.csv`, heatmaps, annotated PDF) are fast to iterate on
+   and excellent for deep analysis.
+- Larger scale (many runs, many hosts, longer retention windows): stream probe
+   events to a dedicated telemetry backend (for example OpenTelemetry collector +
+   Jaeger UI) instead of relying only on local disk logs.
+
+Recommended operating model:
+
+- Keep R report generation as the canonical reproducible analysis artifact.
+- Add OTel export for interactive tracing and fleet-scale observability.
+- Treat Jaeger and R as complementary tools: Jaeger for live trace navigation,
+   R for cross-run statistical analysis and publication-quality visualizations.
+
 ## DTrace vs bpftrace Differences
 
 | Topic | macOS harness | Linux harness |
