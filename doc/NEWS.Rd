@@ -1,4 +1,4 @@
-% -*- coding: utf-8 -*-
+4% -*- coding: utf-8 -*-
 \newcommand{\Rlogo}{\if{html}{\figure{../../html/Rlogo.svg}{options: class="toplogo" alt="[R logo]"}}\if{latex}{\figure{Rlogo.pdf}{options: width=0.5in}}}
 
 \name{NEWS}
@@ -43,6 +43,10 @@
       Further, \code{stl()} is now based on C code, translated from previous
       Fortran, triggered by a \I{flang 22} compiler optimization bug
       (\command{-O2}).
+
+      \item Border case \code{zapsmall(x, digits=Inf)} where \code{x} has an
+      \code{Inf} entry, no longer returns all \code{NaN} but rather \code{x}.
+      Help page improved, also with more non-default examples.
     }
   }
 }
