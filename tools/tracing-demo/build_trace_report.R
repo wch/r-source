@@ -8,6 +8,7 @@ demo_log <- file.path(run_dir, "demo.log")
 rtrace_log <- file.path(run_dir, "rtrace.log")
 sched_log <- file.path(run_dir, "sched.log")
 report_pdf <- file.path(run_dir, "trace-report-annotated.pdf")
+heatmap_pdf <- file.path(run_dir, "trace-heatmap.pdf")
 summary_csv <- file.path(run_dir, "summary.csv")
 
 stopifnot(file.exists(demo_log))
@@ -153,16 +154,176 @@ map_events_to_demo <- function(event_ns, intervals_df) {
   demo_name
 }
 
+normalize_event_ns <- function(event_ns, intervals_df) {
+  if (!length(event_ns) || !nrow(intervals_df)) {
+    return(list(ns = event_ns, mode = "none"))
+  }
+
+  clean <- is.finite(event_ns)
+  if (!any(clean)) {
+    return(list(ns = event_ns, mode = "none"))
+  }
+
+  out <- event_ns
+  run_start_ns <- as.numeric(min(intervals_df$start_ts, na.rm = TRUE)) * 1e9
+  run_end_ns <- as.numeric(max(intervals_df$end_ts, na.rm = TRUE)) * 1e9
+  run_span_ns <- max(1, run_end_ns - run_start_ns)
+
+  direct_hits <- sum(!is.na(map_events_to_demo(event_ns[clean], intervals_df)))
+  if (direct_hits > 0) {
+    return(list(ns = out, mode = "epoch"))
+  }
+
+  min_ns <- min(event_ns[clean], na.rm = TRUE)
+  max_ns <- max(event_ns[clean], na.rm = TRUE)
+  span_ns <- max(1, max_ns - min_ns)
+  scaled <- run_start_ns + ((event_ns - min_ns) / span_ns) * run_span_ns
+
+  scaled_hits <- sum(!is.na(map_events_to_demo(scaled[clean], intervals_df)))
+  if (scaled_hits > direct_hits) {
+    out <- scaled
+    return(list(ns = out, mode = "scaled-monotonic"))
+  }
+
+  list(ns = out, mode = "epoch")
+}
+
+normalized_sched <- normalize_event_ns(if (nrow(sched) > 0) sched$wall_ns else numeric(0), intervals)
+if (nrow(sched) > 0) {
+  sched$wall_ns_demo <- normalized_sched$ns
+}
+
 if (nrow(offcpu) > 0) {
-  offcpu$demo <- map_events_to_demo(offcpu$wall_ns, intervals)
+  offcpu$wall_ns_demo <- sched$wall_ns_demo[sched$event == "offcpu"]
 }
 
 if (nrow(oncpu) > 0) {
-  oncpu$demo <- map_events_to_demo(oncpu$wall_ns, intervals)
+  oncpu$wall_ns_demo <- sched$wall_ns_demo[sched$event == "oncpu-sample"]
 }
 
 if (nrow(syscall_us) > 0) {
-  syscall_us$demo <- map_events_to_demo(syscall_us$wall_ns, intervals)
+  syscall_us$wall_ns_demo <- sched$wall_ns_demo[sched$event == "syscall-us"]
+}
+
+if (nrow(offcpu) > 0) {
+  offcpu$demo <- map_events_to_demo(offcpu$wall_ns_demo, intervals)
+}
+
+if (nrow(oncpu) > 0) {
+  oncpu$demo <- map_events_to_demo(oncpu$wall_ns_demo, intervals)
+}
+
+if (nrow(syscall_us) > 0) {
+  syscall_us$demo <- map_events_to_demo(syscall_us$wall_ns_demo, intervals)
+}
+
+demo_levels <- if (nrow(intervals) > 0) paste(intervals$pkg, intervals$demo, sep = "::") else character(0)
+bin_count <- if (is.na(run_span_sec) || run_span_sec <= 0) 40L else as.integer(max(20L, min(160L, ceiling(run_span_sec * 4))))
+run_start_ns <- if (nrow(intervals) > 0) min(as.numeric(intervals$start_ts) * 1e9, na.rm = TRUE) else NA_real_
+run_end_ns <- if (nrow(intervals) > 0) max(as.numeric(intervals$end_ts) * 1e9, na.rm = TRUE) else NA_real_
+
+make_heatmap_matrix <- function(event_ns, event_weight, event_demo, demo_names, bins, start_ns, end_ns) {
+  if (!length(demo_names) || !is.finite(start_ns) || !is.finite(end_ns)) {
+    return(matrix(numeric(0), nrow = 0, ncol = 0))
+  }
+
+  out <- matrix(0, nrow = length(demo_names), ncol = bins)
+  if (!length(event_ns) || !length(event_demo) || !length(event_weight)) {
+    return(out)
+  }
+
+  span_ns <- max(1, end_ns - start_ns)
+  row_idx <- match(event_demo, demo_names)
+  keep <- !is.na(row_idx) & is.finite(event_ns) & is.finite(event_weight)
+  keep <- keep & event_ns >= start_ns & event_ns <= end_ns
+  if (!any(keep)) {
+    return(out)
+  }
+
+  row_idx <- row_idx[keep]
+  ns <- event_ns[keep]
+  w <- pmax(event_weight[keep], 0)
+  col_idx <- floor((ns - start_ns) / span_ns * bins) + 1L
+  col_idx[col_idx < 1L] <- 1L
+  col_idx[col_idx > bins] <- bins
+
+  accum <- aggregate(w, by = list(row = row_idx, col = col_idx), FUN = sum)
+  out[cbind(accum$row, accum$col)] <- accum$x
+  out
+}
+
+plot_heatmap_panel <- function(mat, title, demo_names, span_seconds, palette) {
+  plot.new()
+  title(main = title)
+
+  if (!nrow(mat) || !ncol(mat) || !any(mat > 0)) {
+    text(0.5, 0.5, "No data available for this heatmap", cex = 1.1)
+    return(invisible(NULL))
+  }
+
+  z <- log10(mat + 1)
+  image(
+    x = seq_len(ncol(z)),
+    y = seq_len(nrow(z)),
+    z = t(z),
+    col = palette,
+    axes = FALSE,
+    xlab = "",
+    ylab = ""
+  )
+  axis(2, at = seq_len(nrow(z)), labels = demo_names, las = 2, cex.axis = 0.65)
+
+  tick_pos <- pretty(seq_len(ncol(z)), n = 7)
+  tick_pos <- tick_pos[tick_pos >= 1 & tick_pos <= ncol(z)]
+  tick_sec <- ((tick_pos - 1) / max(1, ncol(z) - 1)) * span_seconds
+  axis(1, at = tick_pos, labels = sprintf("%.1fs", tick_sec), cex.axis = 0.8)
+  mtext("Run Timeline", side = 1, line = 2.3)
+  box()
+}
+
+offcpu_mat <- make_heatmap_matrix(
+  event_ns = if (nrow(offcpu) > 0) offcpu$wall_ns_demo else numeric(0),
+  event_weight = if (nrow(offcpu) > 0) offcpu$value_us else numeric(0),
+  event_demo = if (nrow(offcpu) > 0) offcpu$demo else character(0),
+  demo_names = demo_levels,
+  bins = bin_count,
+  start_ns = run_start_ns,
+  end_ns = run_end_ns
+)
+
+oncpu_mat <- make_heatmap_matrix(
+  event_ns = if (nrow(oncpu) > 0) oncpu$wall_ns_demo else numeric(0),
+  event_weight = if (nrow(oncpu) > 0) rep(1, nrow(oncpu)) else numeric(0),
+  event_demo = if (nrow(oncpu) > 0) oncpu$demo else character(0),
+  demo_names = demo_levels,
+  bins = bin_count,
+  start_ns = run_start_ns,
+  end_ns = run_end_ns
+)
+
+syscall_mat <- make_heatmap_matrix(
+  event_ns = if (nrow(syscall_us) > 0) syscall_us$wall_ns_demo else numeric(0),
+  event_weight = if (nrow(syscall_us) > 0) syscall_us$value_us else numeric(0),
+  event_demo = if (nrow(syscall_us) > 0) syscall_us$demo else character(0),
+  demo_names = demo_levels,
+  bins = bin_count,
+  start_ns = run_start_ns,
+  end_ns = run_end_ns
+)
+
+combined_mat <- log1p(offcpu_mat) + 0.6 * log1p(oncpu_mat) + 0.8 * log1p(syscall_mat)
+
+if (nrow(combined_mat) > 0) {
+  heat_cols <- colorRampPalette(c("#f7fbff", "#9ecae1", "#3182bd", "#08519c"))(128)
+  pdf(heatmap_pdf, width = 11, height = 8.5, paper = "special")
+  old_par <- par(no.readonly = TRUE)
+  par(mfrow = c(2, 2), mar = c(4.5, 10, 3, 1.5))
+  plot_heatmap_panel(combined_mat, "Combined Activity Heatmap", demo_levels, run_span_sec, heat_cols)
+  plot_heatmap_panel(offcpu_mat, "Off-CPU Duration Heatmap (us)", demo_levels, run_span_sec, heat_cols)
+  plot_heatmap_panel(oncpu_mat, "On-CPU Sample Density Heatmap", demo_levels, run_span_sec, heat_cols)
+  plot_heatmap_panel(syscall_mat, "Syscall Duration Heatmap (us)", demo_levels, run_span_sec, heat_cols)
+  par(old_par)
+  dev.off()
 }
 
 top_contention <- data.frame(demo = character(0), p95_us = numeric(0), count = integer(0))
@@ -325,6 +486,14 @@ if (nrow(top_contention) > 0) {
   } else {
     text(0.5, 0.5, "No mapped contention or proxy windows available", cex = 1.1)
   }
+}
+
+if (nrow(combined_mat) > 0) {
+  old_par <- par(no.readonly = TRUE)
+  par(mar = c(4.5, 10, 3, 1.5))
+  heat_cols <- colorRampPalette(c("#f7fbff", "#9ecae1", "#3182bd", "#08519c"))(128)
+  plot_heatmap_panel(combined_mat, "Combined Activity Heatmap", demo_levels, run_span_sec, heat_cols)
+  par(old_par)
 }
 
 dev.off()

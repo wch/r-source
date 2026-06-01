@@ -122,6 +122,7 @@ limactl shell "$INSTANCE_NAME" -- \
 REQUIRED_ARTIFACTS=(
   "$RUN_DIR/implementation-plan.pdf"
   "$RUN_DIR/trace-report-annotated.pdf"
+  "$RUN_DIR/trace-heatmap.pdf"
 )
 
 for artifact in "${REQUIRED_ARTIFACTS[@]}"; do

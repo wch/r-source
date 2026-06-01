@@ -67,6 +67,7 @@ PROBE_LIST="$RUN_DIR/rtrace-probe-list.txt"
 RUN_META="$RUN_DIR/run-meta.txt"
 SUMMARY_CSV="$RUN_DIR/summary.csv"
 TRACE_REPORT_PDF="$RUN_DIR/trace-report-annotated.pdf"
+HEATMAP_PDF="$RUN_DIR/trace-heatmap.pdf"
 
 cat > "$PLAN_MD" <<'EOF'
 # Implementation Plan: Linux VM eBPF Tracing Session
@@ -259,7 +260,13 @@ if [[ ! -f "$TRACE_REPORT_PDF" ]]; then
   exit 1
 fi
 
+if [[ ! -f "$HEATMAP_PDF" ]]; then
+  echo "ERROR: expected heatmap PDF was not generated: $HEATMAP_PDF" >&2
+  exit 1
+fi
+
 echo "[INFO] Trace report PDF generated: $TRACE_REPORT_PDF"
+echo "[INFO] Heatmap PDF generated: $HEATMAP_PDF"
 
 echo "finished_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$RUN_META"
 echo "demo_exit_code=$R_EXIT" >> "$RUN_META"

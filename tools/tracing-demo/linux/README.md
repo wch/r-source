@@ -13,8 +13,8 @@ instrumentation design.
 - macOS backend: DTrace collectors read `rtrace` provider events from host-built R.
 - Linux backend: bpftrace collectors read the same `rtrace` USDT events from
    guest-built R (`--with-ebpf`).
-- Shared reporting: both backends are normalized into the same `summary.csv` and
-   `trace-report-annotated.pdf` outputs.
+- Shared reporting: both backends are normalized into the same `summary.csv`,
+   `trace-report-annotated.pdf`, and `trace-heatmap.pdf` outputs.
 
 This gives platform-equivalent report artifacts while preserving backend-specific
 collector implementation.
@@ -27,7 +27,7 @@ collector implementation.
 | Runtime constraints | SIP may limit scheduler/syscall probes | requires guest kernel support and bpftrace |
 | Build/probe integration | host build path in this tree | `./configure --with-ebpf` + `sys/sdt.h` |
 | Execution location | host tracing | Lima Ubuntu guest tracing |
-| Artifact contract | `summary.csv` + annotated PDF | same artifact contract |
+| Artifact contract | `summary.csv` + annotated PDF + heatmap PDF | same artifact contract |
 
 ## How rtrace Encapsulates Both
 
@@ -63,6 +63,7 @@ For each run, `run-linux-vm-trace.sh` creates a run directory (default:
 - `rtrace.log`
 - `sched.log`
 - `trace-report-annotated.pdf`
+- `trace-heatmap.pdf`
 - `summary.csv`
 - `rtrace-probe-list.txt`
 - `run-meta.txt`
@@ -70,8 +71,8 @@ For each run, `run-linux-vm-trace.sh` creates a run directory (default:
 - `linux-host-run-meta.txt`
 - collector stderr files (`*.err`)
 
-The host launcher also validates that both PDF artifacts exist at the end of each
-run and exits non-zero if either is missing.
+The host launcher also validates that all expected PDF artifacts exist at the end of each
+run and exits non-zero if any are missing.
 
 ## Quick Start
 

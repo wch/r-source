@@ -12,6 +12,7 @@ For each run, `run-demo-trace.sh` creates a timestamped directory under `tracing
 - `sched.log` (scheduler proxy stream)
 - `summary.csv` (machine-readable metrics)
 - `trace-report-annotated.pdf` (human-readable report)
+- `trace-heatmap.pdf` (time-binned activity heatmaps)
 
 ## Linux VM Harness (Lima + bpftrace)
 
