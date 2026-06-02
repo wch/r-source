@@ -1027,53 +1027,15 @@ inRbuildignore <- function(files, pkgdir) {
 	    errorLog(Log, "invalid 'Package' field"); do_exit(1L)
 	}
         ## make a copy, cd to parent of copy
-        setwd(dirname(pkgdir))
+        setwd(pkgdir)
         filename <- paste0(intname, "_", desc["Version"], ".tar")
         filepath <- file.path(startdir, filename)
         Tdir <- tempfile("Rbuild")
         dir.create(Tdir, mode = "0755")
-        if (WINDOWS) {
-            ## This preserves read-only for files, and dates
-            if (!file.copy(pkgname, Tdir, recursive = TRUE, copy.date = TRUE)) {
-                errorLog(Log, "copying to build directory failed")
-                do_exit(1L)
-            }
-        } else {
-            ## This should preserve dates and permissions (subject to
-            ## umask, if that is consulted which it seems it usually is not).
-            ## Permissions are increased later.
-            ## -L is to follow (de-reference) symlinks
-            ## --preserve is GNU only: at least macOS, FreeBSD and Solaris
-            ##   have non-GNU cp's as it seems do some Linuxen.
-            ver <- suppressWarnings(system2("cp", "--version", stdout = TRUE,
-                                            stderr = FALSE))
-            GNU_cp <- any(grepl("GNU coreutils", ver))
-	    cp_sw <- if(GNU_cp) "-LR --preserve=timestamps" else "-pLR"
-            if (system2("cp", c(cp_sw, shQuote(pkgname), shQuote(Tdir)))) {
-                errorLog(Log, "copying to build directory failed")
-                do_exit(1L)
-            }
-        }
-        setwd(Tdir)
 
-        ## Now correct the package name (PR#9266)
-        if (pkgname != intname) {
-            if (!file.rename(pkgname, intname)) {
-                message(gettextf("Error: cannot rename directory to %s",
-                                 sQuote(intname)), domain = NA)
-                do_exit(1L)
-            }
-            pkgname <- intname
-        }
-
-        ## prepare the copy
-        messageLog(Log, "preparing ", sQuote(pkgname), ":")
-        prepare_pkg(normalizePath(pkgname, "/"), desc, Log);
-        owd <- setwd(pkgname)
-        ## remove exclude files
+        ## exclude ignored files
         allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
-                        full.names = TRUE, include.dirs = TRUE)
-        allfiles <- substring(allfiles, 3L)  # drop './'
+                        include.dirs = TRUE)
         bases <- basename(allfiles)
 
         exclude <- inRbuildignore(allfiles, pkgdir)
@@ -1088,8 +1050,8 @@ inRbuildignore <- function(files, pkgdir) {
         ## Mac resource forks
         exclude <- exclude | startsWith(bases, "._")
         exclude <- exclude | (isdir & grepl("^src.*/[.]deps$", allfiles))
-	## Windows DLL resource file
-        exclude <- exclude | (allfiles == paste0("src/", pkgname, "_res.rc"))
+        ## Windows DLL resource file
+        exclude <- exclude | (allfiles == paste0("src/", intname, "_res.rc"))
         ## inst/doc/.Rinstignore is a mistake
         exclude <- exclude | endsWith(allfiles, "inst/doc/.Rinstignore") |
             endsWith(allfiles, "inst/doc/.build.timestamp") |
@@ -1100,11 +1062,46 @@ inRbuildignore <- function(files, pkgdir) {
         exclude <- exclude | (bases %in% .hidden_file_exclusions)
         ## exclude (old) source tarballs and binary packages (PR#17828)
         exts <- "\\.(tar\\.gz|tar|tar\\.bz2|tar\\.xz|tgz|zip)"
-        exclude <- exclude | grepl(paste0("^", pkgname, "_[0-9.-]+", exts, "$"),
+        exclude <- exclude | grepl(paste0("^", intname, "_[0-9.-]+", exts, "$"),
                                    allfiles)
-        unlink(allfiles[exclude], recursive = TRUE, force = TRUE,
-               expand = FALSE)
-        setwd(owd)
+        ## exclude contents of excluded directories
+        for (d in allfiles[isdir & exclude])
+            exclude <- exclude |
+                startsWith(allfiles, paste0(d, .Platform$file.sep))
+
+        # create empty directory tree to copy files into
+        srcdirs <- allfiles[isdir & !exclude]
+        for (d in srcdirs) {
+            ddest <- file.path(Tdir, intname, d)
+            dir.create(ddest, FALSE, TRUE, "0755")
+            if (!dir.exists(ddest)) {
+                errorLog(Log, "failed to create build directory structure")
+                do_exit(1L)
+            }
+        }
+        # populate it with files
+        srcfiles <- allfiles[!exclude & !isdir]
+        dstfiles <- file.path(Tdir, intname, srcfiles)
+        if (!all(file.copy(srcfiles, dstfiles, copy.date = TRUE))) {
+            errorLog(Log, "copying to build directory failed")
+            do_exit(1L)
+        }
+        # restore metadata _after_ directories are populated
+        for (d in srcdirs) {
+            ddest <- file.path(Tdir, intname, d)
+            if (!Sys.setFileTime(ddest, file.mtime(d)) ||
+                !Sys.chmod(ddest, file.mode(d), FALSE)) {
+                errorLog(Log, "failed to preserve build directory metadata")
+                do_exit(1L)
+            }
+        }
+
+        setwd(Tdir)
+        pkgname <- intname
+
+        ## prepare the copy
+        messageLog(Log, "preparing ", sQuote(pkgname), ":")
+        prepare_pkg(normalizePath(pkgname, "/"), desc, Log);
 
         ## Fix up man, R, demo inst/doc directories
         res <- .check_package_subdirs(pkgname, TRUE)
