@@ -3361,13 +3361,13 @@ trd2.40 <- mkM(c(-0.00705, -0.00236, -6.97e-5, -4.01e-5, 10.0e-6),
 Axy2c <- wilcoxAsymp(x20, y20 + 200)
 sapply(Axy2c, roundM)
 (dAxy2c <- t(t(A <- simplify2array(Axy2c))[, -6] - A["Xact",]) |> signif(digits=3))
-trd2.2c <- mkM(c(1.36e-5, 1.46e-5, -5.66e-6, -2.47e-6, -1.22e-7), 
+trd2.2c <- mkM(c(1.36e-5, 1.46e-5, -3.45e-6, -2.47e-6, -1.22e-7), 
                c(3.83e-5, 4.16e-5, -8.54e-6, -2.70e-6, -6.56e-7), dAxy2c)
 Axy2m <- wilcoxAsymp(x20, y20 + 2000)
 sapply(Axy2m, roundM)
 (dAxy2m <- t(t(A <- simplify2array(Axy2m))[, -6] - A["Xact",]) |> signif(digits=3))
-trd2.2m <- mkM(c(6.3e-8, 6.79e-8, -1.34e-7, -7.06e-8, 7.31e-8), 
-               c(4.46e-7, 4.77e-7, -5.5e-7, -2.97e-7, 1.43e-7), dAxy2m)
+trd2.2m <- mkM(c(6.3e-8, 6.79e-8, -1.45e-11, -1.45e-11, 7.31e-8), 
+               c(4.46e-7, 4.77e-7, -1.01e-08, -1.01e-08, 1.43e-7), dAxy2m)
 ##
 stopifnot(exprs = {
     all.equal(trA1,  mA1, tolerance = 1e-14)

@@ -407,7 +407,7 @@ function(STAT, n, alternative, correct)
             ## = la4^2 * H() * 35 * 4! *4! / 8! = la4^2 * H() * 35 * 24 / 5*6*7*8 = la4^2 * H() / 2
             e <- e + la4^2 / 2 * z * (((z2 - 21) * z2 + 105) * z2 - 105)
         }
-        y + (if(lower.tail) - e else e) * dnorm(z)
+        min(1, max(y + (if(lower.tail) - e else e) * dnorm(z), 0))
     }
     switch(alternative,
            "less" = F(z),
@@ -771,7 +771,7 @@ function(STAT, n.x, n.y, alternative, correct)
                 (z^6 - 21 * z^4 + 105 * z^2 - 105)
         }
         e <- e * dnorm(z)
-        if(lower.tail) y - e else y + e
+        min(1, max(if(lower.tail) y - e else y + e, 0))
     }
     switch(alternative,
            "less" = F(z),
