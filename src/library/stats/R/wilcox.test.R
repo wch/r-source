@@ -234,7 +234,7 @@ function(x, mu, n = length(x), digits.rank, digits.zap)
     }
     if(ZERO) {
         k <- sum(x == 0)
-        MEAN <- k * (k+1) / 4
+        MEAN <- MEAN - k * (k + 1) / 4
         V <- V - k * (k + 1)^2 / 16
     }
     list(statistic = STATISTIC, ex = MEAN, sd = sqrt(V),
