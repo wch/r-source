@@ -193,11 +193,36 @@ function(x, mu, n = length(x), digits.rank, digits.zap)
         x <- signif(x, digits.rank)
     if(is.finite(digits.zap))
         x <- .zapsmall.r(x, digits.zap)
+    ## In general, with z the ranks of the non-zero observations, mean
+    ## and variance are that of \sum_i z_i U_i, where the U_i are
+    ## i.i.d. Bernoulli(1/2), hence
+    ##   mean = sum(z)/2, variance = sum(z^2)/4.
+    ## If there are no ties or zeros, sort(z) equals 1 : n, and hence
+    ##   mean = n(n+1)/4, variance = n(n+1)(2n+1)/24 = mean * (2n+1)/6.
+    ## If there are ties but no zeros, the mean remains the same, and
+    ## the literature gives a simplified expression for the variance.
+    ## If there are k zeros, they get rank (k+1)/2.
+    ## sum(z)/2 does not use these, so we need to subtract k(k+1)/4
+    ## from the mean.
+    ## sum(z^2)/4 does not use these, so we need to subtract k(k+1)^2/16
+    ## from the variance.
+    ## Of course, we could always use the general expressions (or at
+    ## least when there are ties or zeros).
+    ## Re zeros, see e.g.
+    ## <https://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test#Zeros>.
+    ## In R < 4.6.0, we always removed zeros.  In R 4.6.0, we added
+    ## exact inference based on the conditional/permutation
+    ## distribution which can also handle zeros.  In the non-exact case
+    ## we can simply use the asymptotic normal approximations of these
+    ## distributions, using the above expressions for mean and variance, 
+    ## so now we longer remove zeros also in this case.
+    ## (Note that removing zeros changes z to z - k.)
     ZERO <- any(i0 <- x == 0)
-    if(ZERO) {
-        x <- x[!i0]
-        n <- length(x)
-    }
+    ## Follow Pratt rather than Wilcoxon and do not remove zeros.
+    ## if(ZERO) {
+    ##     x <- x[!i0]
+    ##     n <- length(x)
+    ## }
     r <- rank(abs(x))
     TIES <- length(r) != length(unique(r))
     STATISTIC <- c("V" = sum(r[x > 0]))
@@ -206,6 +231,11 @@ function(x, mu, n = length(x), digits.rank, digits.zap)
     if(TIES) {
         NTIES <- table(r)
         V <- V - sum(NTIES^3 - NTIES) / 48
+    }
+    if(ZERO) {
+        k <- sum(x == 0)
+        MEAN <- k * (k+1) / 4
+        V <- V - k * (k + 1)^2 / 16
     }
     list(statistic = STATISTIC, ex = MEAN, sd = sqrt(V),
          ties = TIES, zero = ZERO)
