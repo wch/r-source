@@ -425,8 +425,8 @@ function(STAT, n, alternative, correct)
         z2 <- z^2
         e <- la4 * z * (z2 - 3)
         if(correct > 1) { # shorten: 1/6! * 576 / 7 = 576 / (7 * 720) = 4 / 35
-                                  ## ___ paper has N^3, R-code{orig} n^2  : which is correct ?
-            n6 <- 4 * (3 * n^4 + 6 * n^3 - 3 * n + 1)
+				##  ___ paper has N^3, R-code{orig} had n^2
+            n6 <- 4 * (((3*n + 6) * n^2 - 3) * n + 1)
             d6 <- 35 * nn2n^2
             la6 <- n6 / d6 # = \lambda_6 / 6!
             ## \frac{\lambda_6}{6!} H_5(z)
@@ -778,27 +778,33 @@ function(STAT, n.x, n.y, alternative, correct)
         ## where e(z) contains max(correct, 3) terms.
         m <- n.x
         n <- n.y
-        n3 <- m^2 + n^2 + m * n + m + n
-        d3 <- 20 * m * n * (m + n + 1)
+        mn <- m * n
+        m2 <- m^2
+        n2 <- n^2
+        mpn <- m + n
+        n3 <- (mpn1 <- mpn+1)*mpn - mn
+        ## = mpn^2 - mn + mpn = m^2 + n^2 + m*n + m+n
+        d3 <- 20 * mn * mpn1
         c3 <- - n3 / d3
         ## c_3 He_3(z)
-        e <- c3 * z * (z^2 - 3)
+        z2 <- z^2
+        e <- c3 * z * (z2 - 3)
         if(correct > 1) {
-            n5 <- (2 * (m^4 + n^4)
-                + 4 * m * n * (m^2 + n^2)
-                + 6 * m^2 * n^2
-                + 4 * (m^3 + n^3)
-                + 7 * m * n * (m + n)
-                + (m^2 + n^2) + 2 * m * n - (m + n))
-            d5 <- 210 * m^2 * n^2 * (m + n + 1)^2
+            n5 <- 2 * (m2^2 + n2^2) +
+                4 * mn * (m2 + n2) +
+                6 * m2 * n2 +
+                4 * (m2*m + n2*n) + # simplification of
+                ## 7 * m * n * (m + n) + (m^2 + n^2) + 2 * m * n - (m + n)
+                (7 * mn + mpn - 1) * mpn
+            d5 <- 210 * m2 * n2 * mpn1^2
             c5 <- n5 / d5
             ## c_5 He_5(z)
-            e <- e + c5 * z * (z^4 - 10 * z^2 + 15)
+            e <- e + c5 * z * ((z2 - 10) * z2 + 15)
         }
         if(correct > 2) {
             ## c_7 He_7(z)
             e <- e + 0.5 * c3^2 * z *
-                (z^6 - 21 * z^4 + 105 * z^2 - 105)
+                (((z2 - 21) * z2 + 105) * z2 - 105)
         }
         e <- e * dnorm(z)
         min(1, max(if(lower.tail) y - e else y + e, 0))
