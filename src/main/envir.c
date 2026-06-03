@@ -4288,11 +4288,10 @@ attribute_hidden SEXP do_unregNS(SEXP call, SEXP op, SEXP args, SEXP rho)
 // .Internal(isRegisteredNamespace (name))  ==  isNamespaceLoaded(name)
 attribute_hidden SEXP do_getRegNS(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP name, val;
     checkArity(op, args);
-    name = checkNSname(call, PROTECT(coerceVector(CAR(args), SYMSXP)));
+    SEXP name = checkNSname(call, PROTECT(coerceVector(CAR(args), SYMSXP)));
     UNPROTECT(1);
-    val = R_findVarInFrame(R_NamespaceRegistry, name);
+    SEXP val = R_findVarInFrame(R_NamespaceRegistry, name);
 
     switch(PRIMVAL(op)) {
     case 0: // get..()

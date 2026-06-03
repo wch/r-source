@@ -110,11 +110,12 @@ void formatLogical(const int *x, R_xlen_t n, int *fieldwidth)
 	if (x[i] == NA_LOGICAL) {
 	    if(*fieldwidth < R_print.na_width)
 		*fieldwidth = R_print.na_width;
-	} else if (x[i] != 0 && *fieldwidth < 4) {
+	} else if (x[i] != 0 && *fieldwidth < 4) { // 'TRUE'
 	    *fieldwidth = 4;
-	} else if (x[i] == 0 && *fieldwidth < 5 ) {
+	} else if (x[i] == 0 && *fieldwidth < 5 ) {// 'FALSE'
 	    *fieldwidth = 5;
 	    break;
+	    // FIXME: Need to ensure that  na_width > 5  is not allowed (*and* document in ?print.default)
 	    /* this is the widest it can be,  so stop */
 	}
     }
@@ -348,16 +349,16 @@ scientific(const double *x, int *neg, int *kpower, int *nsig, bool *roundingwide
         if (abs(kp) <= KP_MAX) {
             if (kp > 0) r_prec /= tbl[kp]; else if (kp < 0) r_prec *= tbl[ -kp];
         }
-#ifdef HAVE_POWL
+#  ifdef HAVE_POWL
 	// powl is C99 but only added to FreeBSD in 2017.
 	else
             r_prec /= powl(10.0, (long double) kp);
-#else
+#  else
         else if (kp <= R_dec_min_exponent)
             r_prec = (r_prec * 1e+303)/Rexp10((double)(kp+303));
         else
             r_prec /= Rexp10((double) kp);
-#endif
+#  endif
         if (r_prec < tbl[R_print.digits - 1]) {
             r_prec *= 10.0;
             kp--;
@@ -460,14 +461,14 @@ void formatReal(const double *x, R_xlen_t n, int *w, int *d, int *e, int nsmall)
 	    if (neg_i) neg = 1;	 /* if any < 0, need extra space for sign */
 
 	    /* Infinite precision "F" Format : */
-	    if (right > rgt) rgt = right;	/* max digits to right of . */
-	    if (left > mxl)  mxl = left;	/* max digits to  left of . */
-	    if (left < mnl)  mnl = left;	/* min digits to  left of . */
-	    if (sleft> mxsl) mxsl = sleft;	/* max left including sign(s)*/
-	    if (nsig > mxns) mxns = nsig;	/* max sig digits */
+	    if (right > rgt)  rgt = right;	/* max digits to right of . */
+	    if (left  > mxl)  mxl = left;	/* max digits to  left of . */
+	    if (left  < mnl)  mnl = left;	/* min digits to  left of . */
+	    if (sleft > mxsl) mxsl = sleft;	/* max left including sign(s)*/
+	    if (nsig  > mxns) mxns = nsig;	/* max sig digits */
 	}
     }
-    /* F Format: use "F" format WHENEVER we use not more space than 'E'
+     /* F Format: use "F" format WHENEVER we use not more space than  'E' + scipen
      *		and still satisfy 'R_print.digits' {but as if nsmall==0 !}
      *
      * E Format has the form   [S]X[.XXX]E+XX[X]
@@ -482,7 +483,7 @@ void formatReal(const double *x, R_xlen_t n, int *w, int *d, int *e, int nsmall)
     if (mxl < 0) mxsl = 1 + neg;  /* we use %#w.dg, so have leading zero */
 
     /* use nsmall only *after* comparing "F" vs "E": */
-    if (rgt < 0) rgt = 0;
+    if (rgt < 0) rgt = 0;// rgt != 0  <==> needs decimal point (OutDec) "."
     int wF = mxsl + rgt + (rgt != 0);	/* width for F format */
 
     /*-- 'see' how "E" Exponential format would be like : */
@@ -508,8 +509,8 @@ void formatReal(const double *x, R_xlen_t n, int *w, int *d, int *e, int nsmall)
     if (naflag && *w < R_print.na_width)
 	*w = R_print.na_width;
     if (nanflag && *w < 3) *w = 3;
-    if (posinf && *w < 3) *w = 3;
-    if (neginf && *w < 4) *w = 4;
+    if (posinf  && *w < 3) *w = 3;
+    if (neginf  && *w < 4) *w = 4;
 }
 
 attribute_hidden
@@ -528,9 +529,9 @@ void formatRealS(SEXP x, R_xlen_t n, int *w, int *d, int *e, int nsmall)
     ITERATE_BY_REGION_PARTIAL(x, px, idx, nb, double, REAL, 0, n,
 		      {
 			  formatReal(px, nb, &tmpw, &tmpd, &tmpe, nsmall);
-			  if(tmpw > *w) *w = tmpw;
+			  if( tmpw > *w ) *w = tmpw;
 			  if(!*d && tmpd) *d = tmpd;
-			  if(tmpe > *e) *e = tmpe;
+			  if( tmpe > *e ) *e = tmpe;
 		      });
 }
 
@@ -542,7 +543,7 @@ void z_prec_r(Rcomplex *r, const Rcomplex *x, double digits);
 #endif
 
 /* From R 2.2.0 to 4.3.z, the number of digits applied to real and imaginary parts
-   together, not separately.  Since R 4.4.0, Re(.) and Im(.) are treated seperately. */
+   together, not separately.  Since R 4.4.0, Re(.) and Im(.) are treated separately. */
 void formatComplex(const Rcomplex *x, R_xlen_t n,
 		   int *wr, int *dr, int *er, // (w,d,e) for Re(.)
 		   int *wi, int *di, int *ei, // (w,d,e) for Im(.)

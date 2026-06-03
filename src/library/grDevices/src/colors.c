@@ -1491,9 +1491,9 @@ rcolor inRGBpar3(SEXP x, int i, rcolor bg)
 	if(!R_FINITE(REAL(x)[i])) return R_TRANWHITE;
 	indx = (int) REAL(x)[i];
 	break;
-	   default:
-	   warning(_("supplied color is neither numeric nor character"));
-	   return bg;
+    default:
+	warning(_("supplied color is neither numeric nor character"));
+	return bg;
     }
     if (indx < 0) 
 	error(_("numerical color values must be >= 0, found %d"), indx);

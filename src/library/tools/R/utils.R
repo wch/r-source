@@ -896,7 +896,7 @@ function(dir, predicate = NULL, recursive = FALSE, .worker = NULL,
                                     .worker(f, "UTF-8")
                             })))
     }
-    
+
     calls
 }
 
@@ -1292,7 +1292,7 @@ function(env, nms = NULL)
 ### ** .get_S3_group_generics
 
 .get_S3_group_generics <-
-function()
+function() # for S4, have methods::getGenerics()
     c("Ops", "Math", "Summary", "Complex", "matrixOps")
 
 ### ** .get_S3_primitive_generics
@@ -1918,7 +1918,7 @@ function()
     sprintf("(%s)((-%s)?)((-%s)?)((-%s)*)((-%s)*)",
             re_language, re_script, re_region, re_variant, re_extension)
 }
-    
+
 ### ** nonS3methods [was .make_S3_methods_stop_list ]
 
 nonS3methods <- function(package)
@@ -2183,7 +2183,7 @@ function(meta, v)
     }
     FALSE
 }
-    
+
 ### ** .package_vignettes_via_call_to_R
 
 .package_vignettes_via_call_to_R <-
@@ -2241,7 +2241,7 @@ function(X, FUN, ...,
 
     out
 }
-    
+
 .Ncpus_default <-
 function()
     getOption("Ncpus", 1L)
@@ -2748,7 +2748,7 @@ function(fun, args = list(), opts = "--no-save --no-restore",
          env = character(), arch = "", drop = TRUE, timeout = 0)
 {
     stopifnot(is.list(args))
-    
+
     .safe_repositories <- function() {
         x <- getOption("repos")
         y <- .get_standard_repository_URLs()
