@@ -1,4 +1,4 @@
-4% -*- coding: utf-8 -*-
+% -*- coding: utf-8 -*-
 \newcommand{\Rlogo}{\if{html}{\figure{../../html/Rlogo.svg}{options: class="toplogo" alt="[R logo]"}}\if{latex}{\figure{Rlogo.pdf}{options: width=0.5in}}}
 
 \name{NEWS}
