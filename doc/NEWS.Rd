@@ -103,6 +103,11 @@
       \code{digits.rank} is changed from \code{Inf} to \code{7},
       addressing bugs \PR{18035} and \PR{19071}, in order to deal with
       both ties of almost equal numbers and almost zeros of differences.
+
+      \item When a source package \file{foo/} folder contains broken
+      symlinks, \command{R CMD build foo} now succeeds, omitting these,
+      thus fixing \PR{18186}, thanks to \I{Ivan Krylov} and others, notably
+      \I{Jenny Brian} and \I{R Dev Day @ useR! 2025} contributors.
     }
   }
 }
@@ -394,7 +399,7 @@
       define the type of binaries supported by that build of \R.
 
       \item If \R uses custom binary type in its
-      \code{.Platform$pkgType} then \code{R CMD INSTALL --build} will
+      \code{.Platform$pkgType} then \command{R CMD INSTALL --build} will
       produce \code{<package>_<ver>_R_<system>-<build>.tar.xz} binary
       files. Please note that future versions may use \code{.zstd}
       compression by default so package tooling should support any of
@@ -405,8 +410,8 @@
       in a package contains \abbr{SHA}-256 hashes, lengths and paths
       of files provided in the package allowing for more reliable integrity
       verification (relative to \file{MD5}). This file is now generated
-      by default in \code{R CMD INSTALL --build} and optionally via
-      \code{R CMD build --sha256}. A package can be signed by creating a
+      by default in \command{R CMD INSTALL --build} and optionally via
+      \command{R CMD build --sha256}. A package can be signed by creating a
       detached GnuPG signature file \file{SHA256.sig} signing the
       entirety of the \file{SHA256} file. Upon installation, the
       signature is verified using GnuPG, thus ensuring the integrity of
@@ -415,7 +420,7 @@
       applies to tar-based packages, and the command-line GnuPG
       \command{gpg} tool (or equivalent tool named in the \code{GPG}
       environment variable) has to be available for signing and
-      verification to work. \code{R CMD INSTALL --sign} can be used to
+      verification to work. \command{R CMD INSTALL --sign} can be used to
       sign binary packages, including its use with \code{--build}.
       System-wide GnuPG keyrings for the \R installation
       can be placed in \code{\var{R_HOME}/etc/keyrings} as files with
@@ -1794,7 +1799,7 @@
       \item \code{tools::checkDocFiles()} notes more cases of
       usage documentation without corresponding \verb{\alias}.
 
-      \item \code{R CMD check} with a true value for environment variable
+      \item \command{R CMD check} with a true value for environment variable
       \env{_R_CHECK_BASHISMS_} checks more thoroughly, including for
       \command{bash} scripts and bashisms in components of
       \command{autoconf}-generated \command{configure} scripts.
@@ -1806,7 +1811,7 @@
       \env{_R_CHECK_PACKAGES_USED_IN_DEMO_} to a true value
       (as done by \command{R CMD check --as-cran}).
 
-      \item \code{R CMD build} now supports \option{--compression=zstd}
+      \item \command{R CMD build} now supports \option{--compression=zstd}
       on platforms with sufficient support for \command{zstd}.
 
       \item \code{tools::texi2pdf(..., texinputs=\var{paths})} now

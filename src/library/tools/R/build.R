@@ -1050,8 +1050,9 @@ inRbuildignore <- function(files, pkgdir) {
         ## Mac resource forks
         exclude <- exclude | startsWith(bases, "._")
         exclude <- exclude | (isdir & grepl("^src.*/[.]deps$", allfiles))
+        pkgname <- intname
         ## Windows DLL resource file
-        exclude <- exclude | (allfiles == paste0("src/", intname, "_res.rc"))
+        exclude <- exclude | (allfiles == paste0("src/", pkgname, "_res.rc"))
         ## inst/doc/.Rinstignore is a mistake
         exclude <- exclude | endsWith(allfiles, "inst/doc/.Rinstignore") |
             endsWith(allfiles, "inst/doc/.build.timestamp") |
@@ -1062,7 +1063,7 @@ inRbuildignore <- function(files, pkgdir) {
         exclude <- exclude | (bases %in% .hidden_file_exclusions)
         ## exclude (old) source tarballs and binary packages (PR#17828)
         exts <- "\\.(tar\\.gz|tar|tar\\.bz2|tar\\.xz|tgz|zip)"
-        exclude <- exclude | grepl(paste0("^", intname, "_[0-9.-]+", exts, "$"),
+        exclude <- exclude | grepl(paste0("^", pkgname, "_[0-9.-]+", exts, "$"),
                                    allfiles)
         ## exclude contents of excluded directories
         for (d in allfiles[isdir & exclude])
@@ -1097,7 +1098,6 @@ inRbuildignore <- function(files, pkgdir) {
         }
 
         setwd(Tdir)
-        pkgname <- intname
 
         ## prepare the copy
         messageLog(Log, "preparing ", sQuote(pkgname), ":")
