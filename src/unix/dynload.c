@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997-2026 The R Core Team
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2023 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -69,7 +69,8 @@ attribute_hidden void InitFunctionHashing(void)
 
 static void getSystemError(char *buf, int len)
 {
-    strcpy(buf, dlerror());
+    strncpy(buf, dlerror(), --len);
+    buf[len] = '\0';
 }
 
 static void *loadLibrary(const char *path, int asLocal, int now,
@@ -218,7 +219,7 @@ getFullDLLPath(SEXP call, char *buf, size_t bufsize, const char *path)
     }
     else {
 	needed = strlen(path);
-	if (bufsize >= needed + 1) 
+	if (bufsize >= needed + 1)
 	    strcpy(buf, path);
     }
     return needed;

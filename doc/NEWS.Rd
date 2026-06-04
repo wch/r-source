@@ -108,6 +108,10 @@
       symlinks, \command{R CMD build foo} now succeeds, omitting these,
       thus fixing \PR{18186}, thanks to \I{Ivan Krylov} and others, notably
       \I{Jenny Brian} and \I{R Dev Day @ useR! 2025} contributors.
+
+      \item Overly long \code{dyn.load()} error messages (C level
+      \code{dlerror()}), should no longer corrupt its state, thanks to
+      \I{Ivan Krylov}'s \PR{19029} report and patch.
     }
   }
 }
