@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-05-22 r90067) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-06-03 r90097) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin25.3.0
 
@@ -9282,7 +9282,7 @@ alternative hypothesis: the CDF of x lies below that of y
 > # with ties, example from Schröer and Trenkler (1995)
 > # D = 3/7, p = 8/33 = 0.242424..
 > ks.test(c(1, 2, 2, 3, 3),
-+         c(1, 2, 3, 3, 4, 5, 6))# -> exact
++         c(1, 2,    3, 3, 4, 5, 6))# -> exact
 
 	Exact two-sample Kolmogorov-Smirnov test
 
@@ -19212,9 +19212,9 @@ difference in location
 	Wilcoxon signed rank exact test
 
 data:  -2:12
-V = 112, p-value = 0.0007324
+V = 112, p-value = 0.001465
 alternative hypothesis: true location is not equal to 0
-95.6 percent confidence interval:
+95.5 percent confidence interval:
  2.5 7.5
 sample estimates:
 (pseudo)median 
@@ -19225,7 +19225,7 @@ sample estimates:
 	Wilcoxon signed rank test with continuity correction
 
 data:  c(-2:11, 1000)
-V = 98, p-value = 0.004708
+V = 112, p-value = 0.003119
 alternative hypothesis: true location is not equal to 0
 95 percent confidence interval:
  2.000036 8.500017

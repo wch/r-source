@@ -169,7 +169,7 @@ ks.test(x, x2, alternative = "l")
 # with ties, example from Schröer and Trenkler (1995)
 # D = 3/7, p = 8/33 = 0.242424..
 ks.test(c(1, 2, 2, 3, 3),
-        c(1, 2, 3, 3, 4, 5, 6))# -> exact
+        c(1, 2,    3, 3, 4, 5, 6))# -> exact
 
 # formula interface, see ?wilcox.test
 ks.test(Ozone ~ Month, data = airquality,
