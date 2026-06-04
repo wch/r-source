@@ -1,7 +1,7 @@
 #  File src/library/methods/R/RMethodUtils.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -746,14 +746,16 @@ assignMethodsMetaData <-
         "base"
 }
 
+getGenericName <- function(x) if(is.list(x)) lapply(x, Recall) else x@generic
+## see also (currently unused)  .genericName  below
+
 getGenerics <- function(where, searchForm = FALSE)
 {
     if(missing(where)) {
         ## all the packages cached ==? all packages with methods
         ## globally visible.  Assertion based on cacheMetaData + setMethod
         fdefs <- as.list(.genericTable, all.names=TRUE, sorted=TRUE)
-        fnames <- mapply(function(nm, obj) if(is.list(obj)) names(obj) else nm,
-                         names(fdefs), fdefs, SIMPLIFY=FALSE)
+        fnames <- lapply(fdefs, getGenericName)
 ### FIXME: at least *optionally*  we want to filter (aka "drop") *non*-exported S4 generics
         packages <- lapply(fdefs, .packageForGeneric)
         new("ObjectsWithPackage", unlist(fnames), package=unlist(packages))
