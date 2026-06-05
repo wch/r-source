@@ -598,7 +598,7 @@ checkAPI <- function() {
                 name %notin% Rdecls()$name &
                 name %in% Rsyms()$name)
     if (nrow(v) != 0)
-        stop(sprintf("API variables not in declared in installed headers: %s",
+        stop(sprintf("API variables not declared in installed headers: %s",
                      paste(v$name, collapse = " ")), domain = NA)
 
     ## check no declared functions or variables are marked for warnings
