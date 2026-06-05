@@ -1559,9 +1559,8 @@ The front page of a @acronym{CRAN} site has a link `Download R for (Mac)
 OS X' which takes you to a new page. Two files are offered for download,
 @file{R-@value{VERSIONno}-arm64.pkg} (for macOS 14 or later, @I{Sonoma},
 @I{Sequoia}, @I{Tahoe}, @dots{}) and
-@file{R-@value{VERSIONno}-x86_64.pkg} (for macOS 11 or later, @I{Big
-Sur}, @I{Monterey}, @I{Ventura}, @I{Sonoma}, @I{Sequoia}, @I{Tahoe},
-@dots{}).
+@file{R-@value{VERSIONno}-x86_64.pkg} (for macOS 11--26, @I{Big
+Sur}, @I{Monterey}, @I{Ventura}, @I{Sonoma}, @I{Sequoia}, @I{Tahoe}).
 
 The first is for `Apple Silicon' (@emph{aka} `M1', `M2', @dots{}) Macs, the
 second for older Macs with an @cputype{x86_64} (Intel) CPU.
@@ -1772,7 +1771,7 @@ versions can be installed together.} of the @R{} framework which it
 finds installed.  This can be avoided by using @command{pkgutil
 --forget} (see the previous section).  However, note that different
 versions are installed under
-@file{/Library/Frameworks/R.framework/Versions} as @file{4.6-arm64} (or
+@file{/Library/Frameworks/R.framework/Versions} as @file{4.6} (or
 @file{4.6-x86_64}), @file{4.5-arm64} and so on, so it is not possible to have
 different @samp{4.x.y} versions installed for the same @samp{x} and CPU
 type.
@@ -2444,13 +2443,13 @@ to load time, how they are resolved is described in @command{man dyld}:
 the role of @env{LD_LIBRARY_PATH} is replaced on macOS by
 @env{DYLD_LIBRARY_PATH} and @env{DYLD_FALLBACK_LIBRARY_PATH}.  Running
 @command{R CMD otool -L} on the package shared object will show where
-(if anywhere) its dependencies are
-resolved.  @env{DYLD_FALLBACK_LIBRARY_PATH} is preferred (and it is that
-which is manipulated by the @R{} script), but as from 10.11 (`@I{El
-Capitan}') the default behaviour had been changed for security reasons
-to discard these environment variables when invoking a shell script (and
-@file{R} is a shell script).  That makes the only portable option to set
-@env{R_LD_LIBRARY_PATH} in the environment, something like
+(if anywhere) its dependencies are resolved.
+@env{DYLD_FALLBACK_LIBRARY_PATH} is preferred (and it is that which is
+manipulated by the @R{} script), but the default behaviour was changed
+for security reasons to discard these environment variables when
+invoking a shell script (and @file{R} is a shell script).  That makes
+the only portable option to set @env{R_LD_LIBRARY_PATH} in the
+environment, something like
 
 @example
 export R_LD_LIBRARY_PATH="`R RHOME`/lib:/opt/local/lib"
