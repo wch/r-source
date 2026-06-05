@@ -49,11 +49,12 @@
     }
   }
 
-  \subsection{Installation}{
+  \subsection{Installation on a Unix-Alike}{
     \itemize{
-      \item Building R, e.g., on Ubuntu 26.04, using \command{--package-metadata}
-        needs to use a different \command{sed} separator than \code{:},
-	fixing \PR{19060}, thanks to \I{Jeroen Ooms} and \I{Dirk Eddelbuettel}.
+      \item Installing \R (creating \file{libR.pc}) no longer fails with a
+      \command{sed} error when the new \option{--package-metadata} linker flag
+      is involved; an \samp{s}-command delimiter other than \samp{:} was needed
+      (\PR{19060}, thanks to \I{Jeroen Ooms} and \I{Dirk Eddelbuettel}).
     }
   }
 
@@ -104,10 +105,14 @@
       addressing bugs \PR{18035} and \PR{19071}, in order to deal with
       both ties of almost equal numbers and almost zeros of differences.
 
-      \item When a source package \file{foo/} folder contains broken
-      symlinks, \command{R CMD build foo} now succeeds, omitting these,
-      thus fixing \PR{18186}, thanks to \I{Ivan Krylov} and others, notably
-      \I{Jenny Brian} and \I{R Dev Day @ useR! 2025} contributors.
+      \item Exclude patterns from \file{.Rbuildignore} are now processed
+      \emph{before} preparing the package directory for the tarball,
+      avoiding redundant file copies from the source directory (\PR{17549}).
+      In particular, when a source package \file{foo/} folder contains broken
+      symlinks matching an exclude pattern, \command{R CMD build foo}
+      now succeeds, omitting these, thus fixing \PR{18186}.  (Thanks to
+      \I{Ivan Krylov} and others, notably \I{Jenny Brian} and \I{R Dev
+      Day @ useR! 2025} contributors.)
 
       \item Overly long \code{dyn.load()} error messages (C level
       \code{dlerror()}), should no longer corrupt its state, thanks to
