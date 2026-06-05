@@ -709,6 +709,7 @@ ISOdate <- function(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 
 as.matrix.POSIXlt <- function(x, ...)
 {
+    x$zone <- NULL # to always get numeric
     as.matrix(as.data.frame(unclass(x)), ...)
 }
 
