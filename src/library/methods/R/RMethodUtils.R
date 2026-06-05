@@ -746,7 +746,7 @@ assignMethodsMetaData <-
         "base"
 }
 
-getGenericName <- function(x) if(is.list(x)) lapply(x, Recall) else x@generic
+getGenericName <- function(x) if(is.list(x)) lapply(x, getGenericName) else x@generic
 ## see also (currently unused)  .genericName  below
 
 getGenerics <- function(where, searchForm = FALSE)
