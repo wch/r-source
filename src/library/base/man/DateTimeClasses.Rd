@@ -233,6 +233,11 @@
   examples).  The \code{\link{as.data.frame}()} or as
   \code{\link{as.matrix}()} methods get the components as columns, in the
   matrix case, as \code{\link{numeric}} without the \code{zone}.
+  \code{\link{data.frame}()} or the \code{\link{as.matrix}()} method get
+  the components as columns, in the matrix case as \code{\link{numeric}}
+  without the \code{zone}.  Note that the \code{as.data.frame} method
+  converts \code{"POSIXlt"} to a \code{"POSIXct"} one column data frame, to
+  treat datetime objects analogously to atomic vectors.
 
   The components of \code{"POSIXlt"} are \code{\link{integer}} vectors,
   except \code{sec} (\code{\link{double}}) and \code{zone}
