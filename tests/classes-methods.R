@@ -182,6 +182,40 @@ err <- tryCatch(f(stop("this is mentioned")), error = identity)
 stopifnot(identical(err$message, "error in evaluating the argument 'x' in selecting a method for function 'f': this is mentioned"))
 
 
+## Upcasting to an S4 class that extends an old class should return the
+## requested S4 class, not just the object's S3 part.
+local({
+    setOldClass(c("oldClassChildForAs",
+                  "oldClassParentForAs",
+                  "oldClassGrandParentForAs"))
+    setClass("GrandParentShimForAs",
+             contains = "oldClassGrandParentForAs")
+    setClass("ParentShimForAs",
+             contains = c("oldClassParentForAs", "GrandParentShimForAs"))
+    setClass("S4ChildForAs",
+             slots = list(extra = "character"),
+             contains = "ParentShimForAs")
+
+    object <- new("S4ChildForAs",
+                  structure(list(),
+                            class = c("oldClassParentForAs",
+                                      "oldClassGrandParentForAs")),
+                  extra = "x")
+
+    parent <- as(object, "ParentShimForAs")
+    grandparent <- as(object, "GrandParentShimForAs")
+
+    stopifnot(
+        isS4(parent),
+        is(parent, "ParentShimForAs"),
+        identical(as.character(class(parent)), "ParentShimForAs"),
+        isS4(grandparent),
+        is(grandparent, "GrandParentShimForAs"),
+        identical(as.character(class(grandparent)), "GrandParentShimForAs")
+    )
+})
+
+
 ## canCoerce(obj, .)  when length(class(obj)) > 1 :
 setOldClass("foo")
 setAs("foo", "A", function(from) new("A", foo=from))
@@ -273,6 +307,5 @@ setMethod("toeplitz", "A", function(x, ...) x)
  (mm <- selectMethod(toeplitz, "numeric"))
 stopifnot(identical(T3, print(toeplitz(x, r))), removeGeneric("toeplitz"))
 ## badly failed since r82364 when stats::toeplitz was generalized to 3 args
-
 
 cat('Time elapsed: ', proc.time(),'\n')

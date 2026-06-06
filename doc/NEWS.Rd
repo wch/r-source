@@ -122,6 +122,10 @@
       generic functions defined in more than one package.  Now it
       lists generic function names, as intended.  Thanks to \I{Michael
       Chirico} for report and patch proposal (\PR{19080}).
+
+      \item In \pkg{methods}, \code{as()} now correctly coerces S4
+      objects to S4 superclasses extending old-style classes, instead
+      of returning only the S3 part.
     }
   }
 }
