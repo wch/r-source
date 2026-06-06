@@ -19,6 +19,35 @@ stopifnot(is(m1, "MethodDefinition"),
           removeClass("zzz"))
 
 
+## PR#19080:
+## getGenerics() when a generic function is defined in more than one
+## top level environment (package namespace or global environment)
+chkgg <-
+function (object = getGenerics(), name = "isDiagonal",
+          package = character(0L), noEponym = ".GlobalEnv") {
+    ## Test that the set of packages defining generic function 'name'
+    ## is exactly 'package' and (only for packages in 'noEponym') that
+    ## <function name> != <package name>
+    stopifnot(is(object, "ObjectsWithPackage"),
+              length(w <- which(object == name)) == length(package),
+              setequal((p <- packageSlot(object))[w], package),
+              noEponym %notin% p[object == p])
+}
+chkgg()
+if (requireNamespace("Matrix", lib.loc = .Library, quietly = TRUE)) {
+    chkgg(package = "Matrix")
+    setGeneric("isDiagonal", function (.) standardGeneric("isDiagonal"))
+    chkgg(package = c("Matrix", ".GlobalEnv"))
+ ## ^^^^^ was Error .... : length(w <- .... is not TRUE
+    ## data part of getGenerics() had package names
+    ##     c("Matrix", ".GlobalEnv")
+    ## in place of function names
+    ##     c("isDiagonal", "isDiagonal")
+    stopifnot(removeGeneric("isDiagonal"))
+    chkgg(package = "Matrix")
+}
+
+
 if(require("Matrix", lib.loc = .Library, quietly = TRUE)) {
     D5. <- Diagonal(x = 5:1)
     D5N <- D5.; D5N[5,5] <- NA
