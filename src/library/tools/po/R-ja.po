@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-06-08 13:06\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -799,27 +799,6 @@ msgstr ""
 msgid "'objdump' is not on the path"
 msgstr ""
 
-msgid "non-API functions declared in installed headers: %s"
-msgstr ""
-
-msgid "non-API variables declared in installed headers: %s"
-msgstr ""
-
-msgid "API funcitons not declared in installed headers: %s"
-msgstr ""
-
-msgid "API variables not in declared in installed headers: %s"
-msgstr ""
-
-msgid "in API but marked for warnings: %s"
-msgstr ""
-
-msgid "API functions listed in nonAPI: %s"
-msgstr ""
-
-msgid "API variables listed in nonAPI: %s"
-msgstr ""
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "%2$s を評価しているときに、%1$s を得ました; しかし欲しかったのは %3$s です"
 
@@ -852,9 +831,6 @@ msgstr ""
 
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "'--compact-vignettes' に対する不正な値です、%s であるとします"
-
-msgid "Error: cannot rename directory to %s"
-msgstr "エラー: ディレクトリの名前を %s に変更できません"
 
 msgid "elapsed-time limit of %g %s reached for sub-process"
 msgstr ""
@@ -1674,6 +1650,9 @@ msgstr[0] "パッケージテストのうち %d 個が失敗しました"
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
+
+#~ msgid "Error: cannot rename directory to %s"
+#~ msgstr "エラー: ディレクトリの名前を %s に変更できません"
 
 #, fuzzy
 #~ msgid "Rd files without \\description:"

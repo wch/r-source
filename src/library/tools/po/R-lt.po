@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tools 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-06-08 13:06\n"
 "PO-Revision-Date: 2021-11-08 10:33+0100\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -785,27 +785,6 @@ msgstr ""
 msgid "'objdump' is not on the path"
 msgstr ""
 
-msgid "non-API functions declared in installed headers: %s"
-msgstr ""
-
-msgid "non-API variables declared in installed headers: %s"
-msgstr ""
-
-msgid "API funcitons not declared in installed headers: %s"
-msgstr ""
-
-msgid "API variables not in declared in installed headers: %s"
-msgstr ""
-
-msgid "in API but marked for warnings: %s"
-msgstr ""
-
-msgid "API functions listed in nonAPI: %s"
-msgstr ""
-
-msgid "API variables listed in nonAPI: %s"
-msgstr ""
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "Gavo %s vertinant %s; reikėjo %s\\"
 
@@ -838,9 +817,6 @@ msgstr "Paleidžia R CMD versiją su --no-build-vignettes siekiant išvengti ats
 
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "neteisinga '--compact-vignettes' reikšmė, darant prielaidą %s"
-
-msgid "Error: cannot rename directory to %s"
-msgstr "Klaida: negalima pervardyti katalogo į %s"
 
 msgid "elapsed-time limit of %g %s reached for sub-process"
 msgstr "praėjusios laiko limitas %g %s, pasiektas antrinio proceso metu"
@@ -1717,6 +1693,9 @@ msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Atitinkamas BibTeX įrašas:"
 msgstr[1] "Atitinkami BibTeX įrašai:"
 msgstr[2] "Atitinkamų BibTeX įrašų:"
+
+#~ msgid "Error: cannot rename directory to %s"
+#~ msgstr "Klaida: negalima pervardyti katalogo į %s"
 
 #, fuzzy
 #~ msgid "Rd files without \\description:"

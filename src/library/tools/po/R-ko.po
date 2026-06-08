@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-06-08 13:06\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -794,27 +794,6 @@ msgstr ""
 msgid "'objdump' is not on the path"
 msgstr ""
 
-msgid "non-API functions declared in installed headers: %s"
-msgstr ""
-
-msgid "non-API variables declared in installed headers: %s"
-msgstr ""
-
-msgid "API funcitons not declared in installed headers: %s"
-msgstr ""
-
-msgid "API variables not in declared in installed headers: %s"
-msgstr ""
-
-msgid "in API but marked for warnings: %s"
-msgstr ""
-
-msgid "API functions listed in nonAPI: %s"
-msgstr ""
-
-msgid "API variables listed in nonAPI: %s"
-msgstr ""
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "%2$s를 평가시 %3$s을 기대했으나 %1$s를 얻었습니다"
 
@@ -847,9 +826,6 @@ msgstr ""
 
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "'--compact-vignettes'의 값이 잘못되었고, %s로 가정합니다"
-
-msgid "Error: cannot rename directory to %s"
-msgstr "에러: 디렉토리 이름을 %s으로 바꿀 수 없습니다"
 
 msgid "elapsed-time limit of %g %s reached for sub-process"
 msgstr ""
@@ -1635,6 +1611,9 @@ msgstr[0] ""
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
+
+#~ msgid "Error: cannot rename directory to %s"
+#~ msgstr "에러: 디렉토리 이름을 %s으로 바꿀 수 없습니다"
 
 #, fuzzy
 #~ msgid "Rd files without \\description:"

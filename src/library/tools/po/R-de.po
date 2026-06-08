@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-06-08 13:06\n"
 "PO-Revision-Date: 2025-07-10 15:25+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -774,27 +774,6 @@ msgstr "'cc' ist kein Pfad"
 msgid "'objdump' is not on the path"
 msgstr "'objdump' ist kein Pfad"
 
-msgid "non-API functions declared in installed headers: %s"
-msgstr ""
-
-msgid "non-API variables declared in installed headers: %s"
-msgstr ""
-
-msgid "API funcitons not declared in installed headers: %s"
-msgstr ""
-
-msgid "API variables not in declared in installed headers: %s"
-msgstr ""
-
-msgid "in API but marked for warnings: %s"
-msgstr ""
-
-msgid "API functions listed in nonAPI: %s"
-msgstr ""
-
-msgid "API variables listed in nonAPI: %s"
-msgstr ""
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "Erhielt %s bei der Auswertung von %s: wollte %s"
 
@@ -827,9 +806,6 @@ msgstr "Starte R CMD build with --no-build-vignettes um das erneute Erzeugen der
 
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "unzulässiger Wert für '--compact-vignettes', nehme %s an"
-
-msgid "Error: cannot rename directory to %s"
-msgstr "Fehler: kann Verzeichnis nicht in %s umbenennen"
 
 msgid "elapsed-time limit of %g %s reached for sub-process"
 msgstr "Grenze für Zeitverbrauch von %g %s für Subprozess erreicht"
@@ -1661,6 +1637,9 @@ msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Zugehöriger BibTeX Eintrag:"
 msgstr[1] "Zugehörige BibTeX Einträge:"
+
+#~ msgid "Error: cannot rename directory to %s"
+#~ msgstr "Fehler: kann Verzeichnis nicht in %s umbenennen"
 
 #~ msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
 #~ msgstr "Benutzt die ACM Lizenz: nur zulässig für ACM TOMS Kode vor 2013"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-06-08 13:06\n"
 "PO-Revision-Date: 2023-10-21 03:05+0000\n"
 "Last-Translator: Natalia Labadie <nlabadie.fbioyf@gmail.com>\n"
 "Language-Team: none\n"
@@ -923,6 +923,9 @@ msgstr "names(hybridPars) deben ser NULL o ser idénticos a los valores por defe
 msgid "'hybrid' is ignored for a 2 x 2 table"
 msgstr "'hybrid' se ignora para una tabla de 2 x 2"
 
+msgid "'pval.only' and 'conf.int' may not both be true"
+msgstr ""
+
 msgid "all groups must contain data"
 msgstr "todos los grupos deben contener datos"
 
@@ -1756,13 +1759,6 @@ msgstr "el argumento 'na.action' será ignorado"
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "se ignoran los límites superior e inferior a menos que el algorithm = \"port\""
-
-#, fuzzy
-msgid "'%s' is not implemented yet"
-msgstr "el tipo '%s' aún no está implementado"
-
-msgid "hatvalues() for nls(*, algorithm='plinear')"
-msgstr ""
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
 msgstr "no se puede calcular la log-verosimilitud REML para objetos \"nls\""
@@ -2600,3 +2596,7 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'_start.innov_' is too short: need %d point"
 msgstr[1] "'start.innov' es demasiado corto: necesita %d puntos"
+
+#, fuzzy
+#~ msgid "'%s' is not implemented yet"
+#~ msgstr "el tipo '%s' aún no está implementado"

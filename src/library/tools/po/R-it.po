@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-06-08 13:06\n"
 "PO-Revision-Date: 2023-01-04 14:29+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -789,27 +789,6 @@ msgstr ""
 msgid "'objdump' is not on the path"
 msgstr ""
 
-msgid "non-API functions declared in installed headers: %s"
-msgstr ""
-
-msgid "non-API variables declared in installed headers: %s"
-msgstr ""
-
-msgid "API funcitons not declared in installed headers: %s"
-msgstr ""
-
-msgid "API variables not in declared in installed headers: %s"
-msgstr ""
-
-msgid "in API but marked for warnings: %s"
-msgstr ""
-
-msgid "API functions listed in nonAPI: %s"
-msgstr ""
-
-msgid "API variables listed in nonAPI: %s"
-msgstr ""
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "Rilevato %s nella valutazione di %s; richiesto %s"
 
@@ -842,9 +821,6 @@ msgstr "Eseguite R CMD build con --no-build-vignettes per prevenire un rebuildin
 
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "valore non valido per '--compact-vignettes', si utilizzerà %s"
-
-msgid "Error: cannot rename directory to %s"
-msgstr "Errore: non posso rinominare la directory in %s"
 
 msgid "elapsed-time limit of %g %s reached for sub-process"
 msgstr "limite elapsed-time di %g %s raggiunto per il processo secondario"
@@ -1686,6 +1662,9 @@ msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Voce BibTeX corrispondente:"
 msgstr[1] "Voci BibTeX corrispondenti:"
+
+#~ msgid "Error: cannot rename directory to %s"
+#~ msgstr "Errore: non posso rinominare la directory in %s"
 
 #~ msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
 #~ msgstr "Utilizza una licenza ACM: appropriata unicamente per codice pre-2013 ACM TOMS"

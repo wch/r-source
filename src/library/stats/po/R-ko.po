@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-06-08 13:06\n"
 "PO-Revision-Date: 2018-04-09 12:10-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -936,6 +936,9 @@ msgstr ""
 msgid "'hybrid' is ignored for a 2 x 2 table"
 msgstr "2 x 2 분할표에서 'hybrid'는 무시됩니다"
 
+msgid "'pval.only' and 'conf.int' may not both be true"
+msgstr ""
+
 msgid "all groups must contain data"
 msgstr "모든 그룹들은 반드시 데이터를 가지고 있어야 합니다"
 
@@ -1796,13 +1799,6 @@ msgstr "인자 'na.action'은 사용되지 않을 것입니다"
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "만약 algorithm에 \"port\"가 주어지지 않는다면 상한과 하한이 무시됩니다"
 
-#, fuzzy
-msgid "'%s' is not implemented yet"
-msgstr "타입 '%s'는 아직 구현되지 않았습니다"
-
-msgid "hatvalues() for nls(*, algorithm='plinear')"
-msgstr ""
-
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
 msgstr "\"nls\" 객체에 대해서 REML log-likelihood를 계산할 수 없습니다"
 
@@ -2621,6 +2617,10 @@ msgstr[0] "NA, NaNs 그리고/또는 Infs를 가지는 %d 개의 관측치들이
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] ""
+
+#, fuzzy
+#~ msgid "'%s' is not implemented yet"
+#~ msgstr "타입 '%s'는 아직 구현되지 않았습니다"
 
 #~ msgid "Cannot compute exact p-value with ties"
 #~ msgstr "tie때문에 정확한 p값을 계산할 수 없습니다"

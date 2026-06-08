@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-06-08 13:06\n"
 "PO-Revision-Date: 2023-12-20 13:03+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -947,6 +947,9 @@ msgstr ""
 msgid "'hybrid' is ignored for a 2 x 2 table"
 msgstr "'hybrid'对2x2的表无用"
 
+msgid "'pval.only' and 'conf.int' may not both be true"
+msgstr ""
+
 msgid "all groups must contain data"
 msgstr "所有的组都必需包含数据"
 
@@ -1817,13 +1820,6 @@ msgstr "参数'na.action'忽略不用"
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "除非algorithm = \"port\"，否则上限或下限将忽略不用"
 
-#, fuzzy
-msgid "'%s' is not implemented yet"
-msgstr "还没有实现'%s'类型"
-
-msgid "hatvalues() for nls(*, algorithm='plinear')"
-msgstr ""
-
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
 msgstr "无法为\"nls\"对象计算REML log-likelihood"
 
@@ -2659,6 +2655,10 @@ msgstr[0] "删除了含NA, NaN或Inf的%d个观察量"
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov'太短了，需要%d个点"
+
+#, fuzzy
+#~ msgid "'%s' is not implemented yet"
+#~ msgstr "还没有实现'%s'类型"
 
 #~ msgid "cannot compute exact confidence intervals with ties"
 #~ msgstr "无法精确计算带连结的置信区间"

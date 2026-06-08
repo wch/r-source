@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-06-08 13:06\n"
 "PO-Revision-Date: 2026-04-14 15:45+0000\n"
 "Last-Translator: Jakub Illík <kubaillik@gmail.com>\n"
 "Language-Team: none\n"
@@ -917,6 +917,9 @@ msgstr ""
 msgid "'hybrid' is ignored for a 2 x 2 table"
 msgstr ""
 
+msgid "'pval.only' and 'conf.int' may not both be true"
+msgstr ""
+
 msgid "all groups must contain data"
 msgstr ""
 
@@ -1743,12 +1746,6 @@ msgid "argument 'na.action' will be ignored"
 msgstr ""
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
-msgstr ""
-
-msgid "'%s' is not implemented yet"
-msgstr ""
-
-msgid "hatvalues() for nls(*, algorithm='plinear')"
 msgstr ""
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"

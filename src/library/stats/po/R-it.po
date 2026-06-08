@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-06-08 13:06\n"
 "PO-Revision-Date: 2023-01-19 18:34+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -930,6 +930,9 @@ msgstr "names(hybridPars) dovrebbero essere NULL o identici ai predefiniti"
 msgid "'hybrid' is ignored for a 2 x 2 table"
 msgstr "'hybrid' è ignorato per una tabella 2 x 2"
 
+msgid "'pval.only' and 'conf.int' may not both be true"
+msgstr ""
+
 msgid "all groups must contain data"
 msgstr "tutti i gruppi devono contenere dati"
 
@@ -1778,13 +1781,6 @@ msgstr "l'argomento 'na.action' sarà ignorato"
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "limite superiore e inferiore ignorati con algorithm = \"port\""
 
-#, fuzzy
-msgid "'%s' is not implemented yet"
-msgstr "tipo '%s' non ancora implementato"
-
-msgid "hatvalues() for nls(*, algorithm='plinear')"
-msgstr ""
-
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
 msgstr "non è possibile calcolare REML log-verosimiglianza per oggetti \"nls\""
 
@@ -2630,6 +2626,10 @@ msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
 msgstr[0] "'start.innov' è troppo corto: richiesto %d punto"
 msgstr[1] "'start.innov' è troppo corto: richiesti %d punti"
+
+#, fuzzy
+#~ msgid "'%s' is not implemented yet"
+#~ msgstr "tipo '%s' non ancora implementato"
 
 #~ msgid "cannot compute exact confidence intervals with ties"
 #~ msgstr "non è possibile calcolare intervalli di confidenza esatti in presenza di ties"

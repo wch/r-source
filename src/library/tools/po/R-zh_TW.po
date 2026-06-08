@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-06-08 13:06\n"
 "PO-Revision-Date: 2021-11-06 22:40+0100\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -798,27 +798,6 @@ msgstr ""
 msgid "'objdump' is not on the path"
 msgstr ""
 
-msgid "non-API functions declared in installed headers: %s"
-msgstr ""
-
-msgid "non-API variables declared in installed headers: %s"
-msgstr ""
-
-msgid "API funcitons not declared in installed headers: %s"
-msgstr ""
-
-msgid "API variables not in declared in installed headers: %s"
-msgstr ""
-
-msgid "in API but marked for warnings: %s"
-msgstr ""
-
-msgid "API functions listed in nonAPI: %s"
-msgstr ""
-
-msgid "API variables listed in nonAPI: %s"
-msgstr ""
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "求值 %2$s 時取得 %1$s；原本是要 %3$s"
 
@@ -851,9 +830,6 @@ msgstr "以 --no-build-vignettes 執行 R 命令組建以避免重新組建。"
 
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "--compact-vignettes 的值不對，假定用 %s"
-
-msgid "Error: cannot rename directory to %s"
-msgstr "錯誤：無法變更目錄名稱到時 %s"
 
 msgid "elapsed-time limit of %g %s reached for sub-process"
 msgstr "%g %s 達到了子行程的經過時間限制"
@@ -1668,6 +1644,9 @@ msgstr[0] "%d 項套件測試失敗"
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "相關的 BibTeX 條目："
+
+#~ msgid "Error: cannot rename directory to %s"
+#~ msgstr "錯誤：無法變更目錄名稱到時 %s"
 
 #, fuzzy
 #~ msgid "Rd files without \\description:"

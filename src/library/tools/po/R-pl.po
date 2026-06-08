@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-06-08 13:06\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -769,27 +769,6 @@ msgstr "'cc' nie znajduje się na ścieżce"
 msgid "'objdump' is not on the path"
 msgstr "'objdump' nie znajduje się na ścieżce"
 
-msgid "non-API functions declared in installed headers: %s"
-msgstr ""
-
-msgid "non-API variables declared in installed headers: %s"
-msgstr ""
-
-msgid "API funcitons not declared in installed headers: %s"
-msgstr ""
-
-msgid "API variables not in declared in installed headers: %s"
-msgstr ""
-
-msgid "in API but marked for warnings: %s"
-msgstr ""
-
-msgid "API functions listed in nonAPI: %s"
-msgstr ""
-
-msgid "API variables listed in nonAPI: %s"
-msgstr ""
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "Otrzymano %s podczas wyznaczania %s; oczekiwano %s"
 
@@ -822,9 +801,6 @@ msgstr "Uruchom 'R CMD build' z opcją '--no-build-vignettes' aby wyłączyć od
 
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "Niepoprawna wartość '--compact-vignettes', zakładanie %s"
-
-msgid "Error: cannot rename directory to %s"
-msgstr "Błąd: nie można zmienić katalogu na %s"
 
 msgid "elapsed-time limit of %g %s reached for sub-process"
 msgstr "osiągnięto limit czasu upłyniętego %g %s dla podprocesu"
@@ -1689,6 +1665,9 @@ msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Odpowiedni wpis BibTeX:"
 msgstr[1] "Odpowiednie wpisy BibTeX:"
 msgstr[2] "Odpowiednie wpisy BibTeX:"
+
+#~ msgid "Error: cannot rename directory to %s"
+#~ msgstr "Błąd: nie można zmienić katalogu na %s"
 
 #, fuzzy
 #~ msgid "Rd files without \\description:"

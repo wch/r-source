@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-06-08 13:06\n"
 "PO-Revision-Date: 2023-11-25 03:05+0000\n"
 "Last-Translator: Mara Geraldina Destefanis <maragdestefanis@gmail.com>\n"
 "Language-Team: none\n"
@@ -756,27 +756,6 @@ msgstr "'cc' no está en la ruta"
 msgid "'objdump' is not on the path"
 msgstr "'objdump' no está en la ruta"
 
-msgid "non-API functions declared in installed headers: %s"
-msgstr ""
-
-msgid "non-API variables declared in installed headers: %s"
-msgstr ""
-
-msgid "API funcitons not declared in installed headers: %s"
-msgstr ""
-
-msgid "API variables not in declared in installed headers: %s"
-msgstr ""
-
-msgid "in API but marked for warnings: %s"
-msgstr ""
-
-msgid "API functions listed in nonAPI: %s"
-msgstr ""
-
-msgid "API variables listed in nonAPI: %s"
-msgstr ""
-
 msgid "Got %s in evaluating %s; wanted %s"
 msgstr "Se obtuvo %s al evaluar %s; se buscaba %s"
 
@@ -809,9 +788,6 @@ msgstr "Ejecute R CMD build con --no-build-vignettes para evitar la reconstrucci
 
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr "valor no válido para '--compact-vignettes', asumiendo %s"
-
-msgid "Error: cannot rename directory to %s"
-msgstr "Error: no se puede cambiar el nombre del directorio a %s"
 
 msgid "elapsed-time limit of %g %s reached for sub-process"
 msgstr "se alcanzó el límite de tiempo %g %s para el subproceso"
@@ -1618,3 +1594,6 @@ msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Entrada BibTeX correspondiente:"
 msgstr[1] "Entradas BibTeX correspondientes:"
+
+#~ msgid "Error: cannot rename directory to %s"
+#~ msgstr "Error: no se puede cambiar el nombre del directorio a %s"
