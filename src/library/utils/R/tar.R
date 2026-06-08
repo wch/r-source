@@ -47,7 +47,7 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
     ## But as all commonly-used tars do (some commercial Unix do not,
     ## but GNU tar is commonly used there).
     ##
-    ## OTOH some (e.g. macOS) need external commands which may not be present.
+    ## OTOH some (e.g. macOS) need external commands which may not be present.
     cflag <- ""
     if (!missing(compressed))
         warning("untar(compressed=) is deprecated", call. = FALSE, domain = NA)

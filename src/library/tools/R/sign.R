@@ -41,11 +41,11 @@
                 return(FALSE)
             }
         } else {
-            if (!quiet) warning("Cannot determine version of gpg (", sQuote(gpg), "), won't use.", domain = NA)
+            if (!quiet) warning("Cannot determine version of 'gpg' (", sQuote(gpg), "), won't use.", domain = NA)
             return(FALSE)
         }
     } else {
-        if (!quiet) warning("gpg (", sQuote(gpg),") is not present", domain = NA)
+        if (!quiet) warning("'gpg' (", sQuote(gpg),") is not present", domain = NA)
         return(FALSE)
     }
     gpg

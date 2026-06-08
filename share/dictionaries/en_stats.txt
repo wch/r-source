@@ -233,6 +233,7 @@ iteratively
 IWLS
 Jacobian
 JASA
+Jeffreys
 jitter
 jittered
 jittering

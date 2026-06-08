@@ -155,7 +155,7 @@ getFunsHdr <- function(fpath, lines, include = R.home("include"), flags = "") {
         new_flags <- paste(flags, "-DHAVE_AQUA -DR_INTERFACE_PTRS")
     else
         new_flags <- paste(flags, "-DR_INTERFACE_PTRS")
-    
+
     lines <- ccE(lines, flags = new_flags, include = include)
     lines <- dropBraces(lines)
 
@@ -354,7 +354,7 @@ cleanRfuns <- function(val) {
     if (any(grepl("^_*Rf_XLENGTH_*$", val)) &&
         any(grepl("^_*XLENGTH_*$", val)))
         val <- val[! grepl("^_*XLENGTH_*$", val)]
-    
+
     ## drop tre_ stuff if it is there and some others
     val[! grepl("tre_|^_*(main|MAIN|start)_*$|yyparse", val)]
 }
@@ -430,7 +430,7 @@ ofile_syms <- function(fname, keep = c("F", "V", "U")) {
     stopifnot(isFALSE(.Platform$OS.type == "windows"))
     v <- suppressWarnings(read_symbols_from_object_file(fname,
                                                         ignore.stderr = TRUE))
-    if (is.character(v) && nrow(v) == 0) 
+    if (is.character(v) && nrow(v) == 0)
         ofile_syms_od(fname, keep)
     else if (is.null(v))
         data.frame(name = character(0), type = character(0))
@@ -443,7 +443,7 @@ ofile_syms <- function(fname, keep = c("F", "V", "U")) {
         val <- val[val$type %in% keep, ]
         val$name <- sub("^_", "", val$name)
         val
-    }    
+    }
 }
 
 ofile_syms_od <- function(fpath, keep = c("F", "V", "U")) {
@@ -612,12 +612,12 @@ checkAPI <- function() {
     v <- subset(funAPI(), apitype != "emb" & unmap(name) %in% unmap(nonAPI)) |>
         subset(! grepl("[Hh]ash", name))
     if (nrow(v) != 0)
-        stop("API functions listed in 'nonAPI': %s",
-             paste(v$name, collapse = " "), domain = NA)
+        stop(sprintf("API functions listed in 'nonAPI': %s",
+                     paste(v$name, collapse = " ")), domain = NA)
 
     ## check no API vars (except emb for now) are in nonAPI
     v <- subset(varAPI(), apitype != "emb" & name %in% nonAPI)
     if (nrow(v) != 0)
-        stop("API variables listed in 'nonAPI': %s",
-             paste(v$name, collapse = " "), domain = NA)
+        stop(sprintf("API variables listed in 'nonAPI': %s",
+                     paste(v$name, collapse = " ")), domain = NA)
 }

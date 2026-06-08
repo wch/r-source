@@ -68,7 +68,7 @@ textConnectionValue(con)
 
   Text connections have slightly unusual semantics: they are always
   open, and throwing away an input text connection without closing it
-  (so it get garbage-collected) does not give a warning.
+  (so it gets garbage-collected) does not give a warning.
 }
 
 \value{

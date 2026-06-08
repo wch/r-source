@@ -15330,7 +15330,7 @@ groups.
 
 @comment FIXME be more explicit as: ask on the R-devel mailing list or
 @comment post a WISHLIST PR
-@comment FIXME should we reference and link to bugdilla?
+@comment FIXME should we reference and link to Bugzilla?
 If you would like to use an entry point or variable that is not
 identified as part of the API in this document, or is currently hidden,
 you can make a request for it to be made available. Entry points or

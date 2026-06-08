@@ -191,7 +191,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
         RVAL <- list(p.value = PVAL, null.value = NVAL)
 
         if(pval.only && conf.int)
-            stop("`pval.only` and `conf.int` may not both be true")
+            stop("'pval.only' and 'conf.int' may not both be true")
 
       if(!pval.only) {
         ## Determine the MLE for ncp by solving E(X) = x, where the

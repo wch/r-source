@@ -1651,7 +1651,7 @@ msgid "No traceback available"
 msgstr "Kein traceback vefügbar"
 
 msgid "'recursive' must be a length-1 vector"
-msgstr "'recursive muss Länge 1 haben"
+msgstr "'recursive' muss Länge 1 haben"
 
 msgid "'recursive' is NA"
 msgstr ""

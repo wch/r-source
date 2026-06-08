@@ -5171,7 +5171,7 @@ sudo tar -xvzf xz-5.8.3-darwin.23-arm64.tar.xz -C /
 
 Downloading these components in a browser can be problematical: if you
 run into problems try removing extended attributes before
-un-@code{tar}-ing by e.g.
+@I{un-@code{tar}-ing} by e.g.
 @example
 xattr -c pcre2-10.47-darwin.23-arm64.tar.gz
 @end example

@@ -840,8 +840,9 @@ hatvalues.nls <- function (model, ...)
 {
     grad <- (mm <- model$m)$gradient()
     if (inherits(mm, "nlsModel.plinear")) {
-        stop("'%s' is not implemented yet", # <- same as in .NotYetImplemented()
-             "hatvalues() for nls(*, algorithm='plinear')")
+        stop(sprintf("%s is not implemented yet", # <- similar to .NotYetImplemented()
+                     "hatvalues() for nls(..., algorithm=\"plinear\")"),
+             domain = NA)
         ## https://stackoverflow.com/a/41759799/161921 --> you only need to update the grad
         ## (with the linear par.s), and then
         Q1 <- qr.Q(qr(grad))

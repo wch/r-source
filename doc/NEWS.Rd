@@ -79,7 +79,7 @@
       \I{Suharto Anggono} in \PR{18989}.
 
       \item In an \R installation without \acronym{NLS}, e.g., from
-      \command{--disable-nls} configuration, the C \code{ngettext()}
+      \option{--disable-nls} configuration, the C \code{ngettext()}
       replacement now also keeps plural for \dQuote{0 things}, thanks to
       \I{Michael Chirico}'s \PR{19065}.
 
@@ -442,7 +442,7 @@
       \command{gpg} tool (or equivalent tool named in the \code{GPG}
       environment variable) has to be available for signing and
       verification to work. \command{R CMD INSTALL --sign} can be used to
-      sign binary packages, including its use with \code{--build}.
+      sign binary packages, including its use with \option{--build}.
       System-wide GnuPG keyrings for the \R installation
       can be placed in \code{\var{R_HOME}/etc/keyrings} as files with
       \file{.gpg} extensions and will be checked first before consulting
@@ -828,7 +828,7 @@
       consistently, fixing \PR{18845}.
 
       \item When \code{browser()} is active or when otherwise debugging, \R code
-      such as \code{if(TRUE)} now longer triggers a new browser level, fixing
+      such as \code{if(TRUE)} no longer triggers a new browser level, fixing
       \PR{18885} (differently than the fix for \PR{15770}), with thanks to
       \I{Ivan Krylov}.
 
