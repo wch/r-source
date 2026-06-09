@@ -47,6 +47,10 @@
       \item Border case \code{zapsmall(x, digits=Inf)} where \code{x} has an
       \code{Inf} entry, no longer returns all \code{NaN} but rather \code{x}.
       Help page improved, also with more non-default examples.
+
+      \item \code{wilcox.test(x, exact=FALSE, correct = k)}'s p-value
+      computation got a missing \code{dnorm(z)} factor, and so did the
+      2-sample case, in addition to more fixes.
     }
   }
 }

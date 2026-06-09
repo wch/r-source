@@ -1,7 +1,7 @@
 #  File src/library/stats/R/wilcox.test.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -168,8 +168,10 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 function(x, mu, n = length(x), digits.rank)
 {
     x <- x - mu
+    if(is.finite(digits.rank))
+        x <- signif(x, digits.rank)
     i <- (x == 0)
-    r <- rank(abs(if(is.finite(digits.rank)) signif(x, digits.rank) else x))
+    r <- rank(abs(x))
     TIES <- length(r) != length(unique(r))
     ZERO <- any(i)
     STATISTIC <- c("V" = sum(r[x > 0]))
@@ -180,12 +182,14 @@ function(x, mu, n = length(x), digits.rank)
 function(x, mu, n = length(x), digits.rank)
 {
     x <- x - mu
+    if(is.finite(digits.rank))
+        x <- signif(x, digits.rank)
     ZERO <- any(x == 0)
     if(ZERO) {
         x <- x[x != 0]
         n <- length(x)
     }
-    r <- rank(abs(if(is.finite(digits.rank)) signif(x, digits.rank) else x))
+    r <- rank(abs(x))
     TIES <- length(r) != length(unique(r))
     STATISTIC <- c("V" = sum(r[x > 0]))
     MEAN <-  n * (n + 1) / 4
@@ -305,7 +309,7 @@ function(x, n, z, alternative, conf.level)
             c(mu, pi)
         }
         upper <- function(alpha) {
-            alpha <- alpha + toler            
+            alpha <- alpha + toler
             pi <- 0
             mu <- Inf
             if(ptail(diffs[n.d] + 1) > alpha)
@@ -321,7 +325,7 @@ function(x, n, z, alternative, conf.level)
             if(!is.finite(mu))
                 mu <- diffs[1L]
             c(mu, pi)
-        }            
+        }
         switch(alternative,
                "two.sided" = {
                    l <- lower(alpha / 2)
@@ -369,24 +373,26 @@ function(STAT, n, alternative, correct)
         if(correct < 1) return(y)
         ## Edgeworth expansion given in Fellingham and Stoker (1964),
         ## <doi:10.1080/01621459.1964.10480738>
-        n4 <- 12 * (3 * n^2 + 3 * n - 1)
-        d4 <- 5 * n * (n + 1) * (2 * n + 1)
-        l4 <- - n4 / d4
-        n6 <- 576 * (3 * n^4 + 6 * n^2 - 3 * n + 1)
-        d6 <- 7 * (n * (n + 1) * (2 * n + 1))^2
-        l6 <- n6 / d6
+        n4 <- (n + 1)* 3 * n - 1 # shorten: 1/4! = 1/24 from below: (12 / 5) / 24 == 1 / 10
+        d4 <- 10 * (nn2n <- n * (n + 1) * (2 * n + 1))
+        la4 <- - n4 / d4 # = \lambda_4 / 4!
         ## \frac{\lambda_4}{4!} H_3(z)
-        e <- l4 / 24 * z * (z^2 - 3)
-        if(correct > 1) {
+        z2 <- z^2
+        e <- la4 * z * (z2 - 3)
+        if(correct > 1) { # shorten: 1/6! * 576 / 7 = 576 / (7 * 720) = 4 / 35
+				##  ___ paper has N^3, R-code{orig} had n^2
+            n6 <- 4 * (((3*n + 6) * n^2 - 3) * n + 1)
+            d6 <- 35 * nn2n^2
+            la6 <- n6 / d6 # = \lambda_6 / 6!
             ## \frac{\lambda_6}{6!} H_5(z)
-            e <- e + l6 / 720 * z * (z^4 - 10 * z^2 + 15)
+            e <- e + la6 * z * ((z2 - 10) * z2 + 15)
         }
         if(correct > 2) {
-            ## \frac{35 \lambda_4^2}{8!} H_7(z)
-            e <- e + 35 * l4^2 / 40320 * z *
-                (z^6 - 21 * z^4 + 105 * z^2 - 105)
+            ## \frac{35 \lambda_4^2}{8!} H_7(z) = 35 * (4!*la4)^2 / 8! * H()
+            ## = la4^2 * H() * 35 * 4! *4! / 8! = la4^2 * H() * 35 * 24 / 5*6*7*8 = la4^2 * H() / 2
+            e <- e + la4^2 / 2 * z * (((z2 - 21) * z2 + 105) * z2 - 105)
         }
-        if(lower.tail) y - e else y + e
+        min(1, max(y + (if(lower.tail) - e else e) * dnorm(z), 0))
     }
     switch(alternative,
            "less" = F(z),
@@ -436,7 +442,7 @@ function(x, n, alternative, conf.level, correct,
         Wmumax <- if(!is.finite(Wmumin)) NA else W(mumax) # if(): warn only once
     }
     if(n == 0 || !is.finite(Wmumax)) { # incl. "all zero / ties" warning above
-        ## FIXME: in the one-sides cases this gives (-Inf, NaN) and
+        ## FIXME: in the one-sided cases this gives (-Inf, NaN) and
         ## (NaN, Inf): is this really what we want?
         CONF.INT <-
             structure(c(if(alternative == "less"   ) -Inf else NaN,
@@ -459,7 +465,7 @@ function(x, n, alternative, conf.level, correct,
                     f.lower = Wmumin - zq, f.upper = Wmumax - zq,
                     tol = tol.root, zq = zq)$root
         }
-        
+
         CONF.INT <-
             switch(alternative,
                    "two.sided" = {
@@ -530,7 +536,7 @@ function(x, y, mu, n.x = length(x), n.y = length(y), digits.rank)
     STATISTIC <- c("W" = sum(r[seq_along(x)]) - n.x * (n.x + 1) / 2)
     list(statistic = STATISTIC, z = if(TIES) r else NULL)
 }
-    
+            
 .wilcox_test_two_stat_asymp <-
 function(x, y, mu, n.x = length(x), n.y = length(y), digits.rank)
 {
@@ -650,7 +656,7 @@ function(x, y, n.x, n.y, z, alternative, conf.level)
             c(mu, pi)
         }
         upper <- function(alpha) {
-            alpha <- alpha + toler            
+            alpha <- alpha + toler
             pi <- 0
             mu <- Inf
             if(ptail(diffs[n.d] + 1) > alpha)
@@ -666,7 +672,7 @@ function(x, y, n.x, n.y, z, alternative, conf.level)
             if(!is.finite(mu))
                 mu <- diffs[1L]
             c(mu, pi)
-        }            
+        }
         switch(alternative,
                "two.sided" = {
                    l <- lower(alpha / 2)
@@ -726,30 +732,36 @@ function(STAT, n.x, n.y, alternative, correct)
         ## where e(z) contains max(correct, 3) terms.
         m <- n.x
         n <- n.y
-        n3 <- m^2 + n^2 + m * n + m + n
-        d3 <- 20 * m * n * (m + n + 1)
+        mn <- m * n
+        m2 <- m^2
+        n2 <- n^2
+        mpn <- m + n
+        n3 <- (mpn1 <- mpn+1)*mpn - mn
+        ## = mpn^2 - mn + mpn = m^2 + n^2 + m*n + m+n
+        d3 <- 20 * mn * mpn1
         c3 <- - n3 / d3
         ## c_3 He_3(z)
-        e <- c3 * z * (z^2 - 3)
+        z2 <- z^2
+        e <- c3 * z * (z2 - 3)
         if(correct > 1) {
-            n5 <- (2 * (m^4 + n^4)
-                + 4 * m * n * (m^2 + n^2)
-                + 6 * m^2 * n^2
-                + 4 * (m^3 + n^3)
-                + 7 * m * n * (m + n)
-                + (m^2 + n^2) + 2 * m * n - (m + n))
-            d5 <- 210 * m^2 * n^2 * (m + n + 1)^2
+            n5 <- 2 * (m2^2 + n2^2) +
+                4 * mn * (m2 + n2) +
+                6 * m2 * n2 +
+                4 * (m2*m + n2*n) + # simplification of
+                ## 7 * m * n * (m + n) + (m^2 + n^2) + 2 * m * n - (m + n)
+                (7 * mn + mpn - 1) * mpn
+            d5 <- 210 * m2 * n2 * mpn1^2
             c5 <- n5 / d5
             ## c_5 He_5(z)
-            e <- e + c5 * z * (z^4 - 10 * z^2 + 15)
+            e <- e + c5 * z * ((z2 - 10) * z2 + 15)
         }
         if(correct > 2) {
-            ## c_7 He_7(z)            
-            e <- 0.5 * c3^2 * z *
-                (z^6 - 21 * z^4 + 105 * z^2 - 105)
+            ## c_7 He_7(z)
+            e <- e + 0.5 * c3^2 * z *
+                (((z2 - 21) * z2 + 105) * z2 - 105)
         }
         e <- e * dnorm(z)
-        if(lower.tail) y - e else y + e
+        min(1, max(if(lower.tail) y - e else y + e, 0))
     }
     switch(alternative,
            "less" = F(z),
