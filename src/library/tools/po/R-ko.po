@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-06-09 14:51\n"
 "PO-Revision-Date: 2018-04-09 12:11-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -690,9 +690,6 @@ msgstr "파일 '%s'를 찾을 수 없습니다"
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr "비니에트 파일명 '%1$s'은 '%2$s' 파일명 패턴들 중 어느것과도 일치하지 않습니다"
 
-msgid "+-+"
-msgstr ""
-
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "'%1$s' 비니에트 내에서 '%2$s'와 '%3$s'은 같은 비니에트 이름을 가지고 있습니다"
 
@@ -980,10 +977,6 @@ msgstr "파일 '%s'에 있는 인덱스 정보를 읽을 수 없습니다"
 msgid ".install_packages() exit status"
 msgstr ""
 
-#, fuzzy
-msgid "restoration failed"
-msgstr "로딩에 실패했습니다"
-
 msgid "error reading file '%s'"
 msgstr "파일 '%s'를 읽는데 에러가 발생했습니다"
 
@@ -1009,18 +1002,6 @@ msgstr "디버그 기호 %s를 생성합니다"
 msgid "no DLL was created"
 msgstr "DLL이 생성되지 않았습니다"
 
-msgid "NOTE: fixed path"
-msgstr ""
-
-msgid "NOTE: fixed library identification name"
-msgstr ""
-
-msgid "NOTE: fixed library path"
-msgstr ""
-
-msgid "NOTE: fixed rpath"
-msgstr ""
-
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr ""
 
@@ -1030,31 +1011,8 @@ msgstr ""
 msgid "staged installation is only possible with locking"
 msgstr ""
 
-msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
-msgstr ""
-
 msgid "patch utility is needed for installation-time patching"
 msgstr ""
-
-msgid "NOTE: Skipping installation-time patch"
-msgstr ""
-
-#, fuzzy
-msgid "which seems to be already applied."
-msgstr "네임스페이스가 반드시 먼저 로드되어져야 합니다"
-
-msgid "WARNING: failed to apply patch"
-msgstr ""
-
-msgid "Applied installation-time patch"
-msgstr ""
-
-msgid "and saved it as"
-msgstr ""
-
-#, fuzzy
-msgid "in package installation"
-msgstr "올바른 패키지 레이아웃(package layout)이 아닙니다."
 
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr ""
@@ -1093,30 +1051,6 @@ msgid "ERROR: no permission to install to directory"
 msgstr "에러: 디렉토리에 설치할 권한이 없습니다"
 
 msgid "building a fake installation is disallowed"
-msgstr ""
-
-msgid "specified C++"
-msgstr ""
-
-msgid "using C compiler:"
-msgstr ""
-
-msgid "using Fortran compiler:"
-msgstr ""
-
-msgid "using C++ compiler:"
-msgstr ""
-
-msgid "using C++"
-msgstr ""
-
-msgid "using SDK:"
-msgstr ""
-
-msgid "WARNING: failed to revert patch"
-msgstr ""
-
-msgid "Reverted installation-time patch"
 msgstr ""
 
 #, fuzzy
@@ -1611,6 +1545,18 @@ msgstr[0] ""
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
+
+#, fuzzy
+#~ msgid "restoration failed"
+#~ msgstr "로딩에 실패했습니다"
+
+#, fuzzy
+#~ msgid "which seems to be already applied."
+#~ msgstr "네임스페이스가 반드시 먼저 로드되어져야 합니다"
+
+#, fuzzy
+#~ msgid "in package installation"
+#~ msgstr "올바른 패키지 레이아웃(package layout)이 아닙니다."
 
 #~ msgid "Error: cannot rename directory to %s"
 #~ msgstr "에러: 디렉토리 이름을 %s으로 바꿀 수 없습니다"

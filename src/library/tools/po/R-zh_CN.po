@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-06-09 14:51\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -718,9 +718,6 @@ msgstr "找不到'%s'文件"
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
 
-msgid "+-+"
-msgstr ""
-
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "'%s'简介里'%s'和'%s'的名称是一样的"
 
@@ -1019,10 +1016,6 @@ msgstr "无法从文件'%s'中读取索引信息"
 msgid ".install_packages() exit status"
 msgstr "程序包无效."
 
-#, fuzzy
-msgid "restoration failed"
-msgstr "载入失败"
-
 msgid "error reading file '%s'"
 msgstr "读取文件'%s'时出了错"
 
@@ -1049,18 +1042,6 @@ msgstr "产生调试符号(%s)"
 msgid "no DLL was created"
 msgstr "无法产生文件'%s'"
 
-msgid "NOTE: fixed path"
-msgstr ""
-
-msgid "NOTE: fixed library identification name"
-msgstr ""
-
-msgid "NOTE: fixed library path"
-msgstr ""
-
-msgid "NOTE: fixed rpath"
-msgstr ""
-
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr ""
 
@@ -1070,32 +1051,8 @@ msgstr ""
 msgid "staged installation is only possible with locking"
 msgstr ""
 
-msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
-msgstr ""
-
 msgid "patch utility is needed for installation-time patching"
 msgstr ""
-
-msgid "NOTE: Skipping installation-time patch"
-msgstr ""
-
-#, fuzzy
-msgid "which seems to be already applied."
-msgstr "这看起来好象是捆绑软件--已经不存在了"
-
-msgid "WARNING: failed to apply patch"
-msgstr ""
-
-#, fuzzy
-msgid "Applied installation-time patch"
-msgstr "程序包安装"
-
-msgid "and saved it as"
-msgstr ""
-
-#, fuzzy
-msgid "in package installation"
-msgstr "程序包安装"
 
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr "R包含目录是空的--也许你需要安装R-devel.rpm或类似的程序包"
@@ -1136,30 +1093,6 @@ msgstr "错误：没有在这个目录里安装的许可"
 
 msgid "building a fake installation is disallowed"
 msgstr "不充许伪造安装"
-
-msgid "specified C++"
-msgstr ""
-
-msgid "using C compiler:"
-msgstr ""
-
-msgid "using Fortran compiler:"
-msgstr ""
-
-msgid "using C++ compiler:"
-msgstr ""
-
-msgid "using C++"
-msgstr ""
-
-msgid "using SDK:"
-msgstr ""
-
-msgid "WARNING: failed to revert patch"
-msgstr ""
-
-msgid "Reverted installation-time patch"
-msgstr ""
 
 #, fuzzy
 msgid "Input must be character"
@@ -1841,102 +1774,11 @@ msgstr[0] ""
 #~ msgid "installing dependencies %s"
 #~ msgstr "安装依赖关系%s"
 
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid ":"
-#~ msgstr "："
-
-#, fuzzy
-#~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
-#~ msgstr "非标准执照规格"
-
 #~ msgid "argument 'file' must be a character string or connection"
 #~ msgstr "参数'document'必需是字符串或联结"
 
-#~ msgid "to logical"
-#~ msgstr "为逻辑值"
-
-#~ msgid "Vignette product"
-#~ msgstr "产品简介："
-
-#~ msgid ")"
-#~ msgstr ")"
-
-#~ msgid "Failed to locate the"
-#~ msgstr "无法找到"
-
-#~ msgid "output file (by engine"
-#~ msgstr "输出文件（由引擎"
-
-#~ msgid "%s::%s"
-#~ msgstr "%s::%s"
-
-#~ msgid ") for vignette with name"
-#~ msgstr ")为带这个名字的简介"
-
-#~ msgid ". The following files exists in directory"
-#~ msgstr "。目录里有这些文件"
-
-#~ msgid "Located more than one"
-#~ msgstr "找到一个以上的"
-
-#~ msgid "Vignette"
-#~ msgstr "简介："
-
-#~ msgid "overwrites the following"
-#~ msgstr "覆盖下面的"
-
-#~ msgid "output by vignette"
-#~ msgstr "简介输出的"
-
-#~ msgid "Detected vignette source files ("
-#~ msgstr "找到了简介的源代码（"
-
-#~ msgid ") with shared names ("
-#~ msgstr "）和分用的名字（"
-
-#~ msgid "None of packages"
-#~ msgstr "所有的程序包都没有"
-
-#~ msgid "Vignette engine"
-#~ msgstr "小简介引擎"
-
-#~ msgid "Engine name"
-#~ msgstr "引擎名字"
-
-#~ msgid "and package"
-#~ msgstr "和程辑包"
-
-#~ msgid "do not match"
-#~ msgstr "不匹配"
-
-#~ msgid "Argument"
-#~ msgstr "参数"
-
-#~ msgid "weave"
-#~ msgstr "weave"
-
-#~ msgid "tangle"
-#~ msgstr "纠缠"
-
-#~ msgid "pattern"
-#~ msgstr "模式"
-
-#~ msgid "Cannot change the"
-#~ msgstr "无法改变"
-
-#~ msgid "Sweave"
-#~ msgstr "Sweave"
-
 #~ msgid "'file' must be a character string or connection"
 #~ msgstr "参数'file'必需是字符串或联结"
-
-#~ msgid "not found"
-#~ msgstr "找不到"
-
-#~ msgid "engine"
-#~ msgstr "引擎"
 
 #, fuzzy
 #~ msgid "Foreign function call without 'PACKAGE' argument:"
@@ -1963,19 +1805,6 @@ msgstr[0] ""
 #~ msgid_plural "Warning: found non-ASCII strings"
 #~ msgstr[0] "警告：没有这种选项"
 
-#~ msgid "name"
-#~ msgstr "名字"
-
-#~ msgid "code"
-#~ msgstr "编码"
-
-#~ msgid "docs"
-#~ msgstr "文件"
-
-#, fuzzy
-#~ msgid "\\VignetteDepends{}"
-#~ msgstr "简介："
-
 #~ msgid "Invalid package name."
 #~ msgstr "程辑包名不对."
 
@@ -1988,126 +1817,17 @@ msgstr[0] ""
 #~ msgid "package must be loaded"
 #~ msgstr "必需载入程序包。"
 
-#~ msgid "lib"
-#~ msgstr "lib"
-
-#~ msgid "pkg"
-#~ msgstr "pkg"
-
-#~ msgid "packageStartupMessage"
-#~ msgstr "packageStartupMessage"
-
-#~ msgid "Good practice"
-#~ msgstr "良好实践"
-
-#, fuzzy
-#~ msgid "\\name"
-#~ msgstr "名字"
-
-#~ msgid "NEWS"
-#~ msgstr "NEWS"
-
-#~ msgid "DESCRIPTION"
-#~ msgstr "DESCRIPTION"
-
-#~ msgid "doc/"
-#~ msgstr "doc/"
-
-#~ msgid "demo/"
-#~ msgstr "demo/"
-
-#~ msgid "ssname"
-#~ msgstr "ssname"
-
-#~ msgid "language"
-#~ msgstr "语言"
-
-#~ msgid "processing"
-#~ msgstr "处理"
-
-#, fuzzy
-#~ msgid "package directory"
-#~ msgstr "程序包目录"
-
 #~ msgid "Unrecognized search field:"
 #~ msgstr "无法识别这个搜索字段："
 
 #~ msgid "running 'zip' failed"
 #~ msgstr "调用'zip'失败"
 
-#~ msgid "as"
-#~ msgstr "如"
-
-#~ msgid "installing via 'install.libs.R' to"
-#~ msgstr "用'install.libs.R'安装到"
-
-#~ msgid "installing to"
-#~ msgstr "安装至"
-
-#, fuzzy
-#~ msgid "running 'src/Makefile.win' ..."
-#~ msgstr "调用src/Makefile.win ..."
-
 #~ msgid "ERROR: failed to lock directory"
 #~ msgstr "错误：无法锁住目录"
 
-#~ msgid ""
-#~ "for modifying\n"
-#~ "Try removing"
-#~ msgstr ""
-#~ "为了修改\n"
-#~ "试一下撤除"
-
 #~ msgid "ERROR: failed to create lock directory"
 #~ msgstr "错误：无法建锁住的目录"
-
-#~ msgid "finding HTML links ..."
-#~ msgstr "搜寻HTML链结…"
-
-#~ msgid "finding level-2 HTML links ..."
-#~ msgstr "搜寻二级HTML链结…"
-
-#~ msgid "Internal error, no tag"
-#~ msgstr "内部错误，没有标签"
-
-#~ msgid "Internal error:  NULL tag"
-#~ msgstr "内部错误：NULL标签"
-
-#~ msgid "Inconsistent arg count for"
-#~ msgstr "参数数目有矛盾"
-
-#~ msgid "Entry for"
-#~ msgstr "项目为"
-
-#~ msgid "already defined to be"
-#~ msgstr "已经定义为"
-
-#~ msgid "found encoding"
-#~ msgstr "找到编码"
-
-#~ msgid "cannot be opened"
-#~ msgstr "打不开"
-
-#~ msgid "comparing"
-#~ msgstr "比较"
-
-#~ msgid "to"
-#~ msgstr "向"
-
-#~ msgid "Comparing"
-#~ msgstr "比较"
-
-#~ msgid "creation of"
-#~ msgstr "建造"
-
-#~ msgid "failed"
-#~ msgstr "失败"
-
-#~ msgid "creating"
-#~ msgstr "建造"
-
-#~ msgid "running code in"
-#~ msgstr "调用程序于"
 
 #~ msgid "running strict specific tests"
 #~ msgstr "执行严格检验"
@@ -2141,54 +1861,6 @@ msgstr[0] ""
 
 #~ msgid "running tests to possibly trigger segfaults"
 #~ msgstr "执行触发程序段故障检验"
-
-#, fuzzy
-#~ msgid "not installing"
-#~ msgstr "安装至"
-
-#~ msgid "Generics g in env ="
-#~ msgstr "同属函数g在env="
-
-#~ msgid "where hasMethods(g, env) errors:"
-#~ msgstr "hasMethods(g, env) 出了错："
-
-#~ msgid "May need something like"
-#~ msgstr "可能应该是这样的"
-
-#~ msgid "importFrom("
-#~ msgstr " importFrom("
-
-#~ msgid "in NAMESPACE."
-#~ msgstr "在NAMESPACE。"
-
-#, fuzzy
-#~ msgid "not insttalling"
-#~ msgstr "安装至"
-
-#, fuzzy
-#~ msgid "running msgmerge failed"
-#~ msgstr "调用'make'失败"
-
-#, fuzzy
-#~ msgid "running msginit failed"
-#~ msgstr "调用'zip'失败"
-
-#, fuzzy
-#~ msgid "running msgconv failed"
-#~ msgstr "调用'make'失败"
-
-#~ msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
-#~ msgstr "错误：--merge-multiarch只适用i386/x64安装"
-
-#~ msgid "--merge-multiarch is Windows-only"
-#~ msgstr "--merge-multiarch只在Windows上有用"
-
-#~ msgid ""
-#~ "running Stangle on vignette '%s' failed with message:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "用Stangle处理标头'%s'失败，诊断信息为:\n"
-#~ "%s"
 
 #~ msgid "Packages required but not available:"
 #~ msgstr "需要有程辑包但它却不存在:"
@@ -2246,26 +1918,8 @@ msgstr[0] ""
 #~ msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
 #~ msgstr "警告：'Depends'有多个于R相关的项"
 
-#~ msgid "only the first will be used in R < 2.7.0"
-#~ msgstr "R < 2.7.0版本只能用第一个"
-
-#~ msgid "'"
-#~ msgstr "'"
-
-#~ msgid "** Options"
-#~ msgstr "**选项"
-
-#~ msgid "are only for '--binary'  and will be ignored"
-#~ msgstr "只能在'--binary'时用，现在略过不用"
-
 #~ msgid "--pkglock applies only to a single package"
 #~ msgstr "--pkglock只适用于单独程序包"
-
-#~ msgid "--no-help overrides"
-#~ msgstr "--no-help覆盖"
-
-#~ msgid "--"
-#~ msgstr "--"
 
 #~ msgid "'--auto-zip' is for Windows only"
 #~ msgstr "'--auto-zip'只在Windows上有用"
@@ -2278,27 +1932,6 @@ msgstr[0] ""
 
 #~ msgid "cannot create HTML package index"
 #~ msgstr "无法建立HTML程辑包索引"
-
-#~ msgid "... done"
-#~ msgstr "…好了"
-
-#~ msgid "Unable to locate help document %s in package %s"
-#~ msgstr "在程序包%s找不到%s这个帮助文件"
-
-#~ msgid "'Suspect' links are those of the form \\link[pkg]{a} where 'a' exists as an alias but not as a filename -- such links will not work in R < 2.10.0, and only in HTML (not PDF) help in current versions."
-#~ msgstr "'可能不对'的链结一般具有\\link[pkg]{a}这样的格式，这里 'a'指的是别名但不是真的文件名字--这种链结不能在小于2.10.0版本的R里用, 而且也只能在这个版本R的HTML帮助里用(PDF不行)。"
-
-#~ msgid "ERROR: this R is version %s, bundle '%s' requires R %s %s"
-#~ msgstr "错误：R的版本是%s，捆程序捆包'%s'要求版本为%s %s的R"
-
-#~ msgid "No package of named %s could be found"
-#~ msgstr "找不到叫%s这样一个程序包。"
-
-#~ msgid "Bundle package:"
-#~ msgstr "程序包捆："
-
-#~ msgid "Bundle 'DESCRIPTION' is missing."
-#~ msgstr "缺少'DESCRIPTION'一捆文件"
 
 #~ msgid "Rd files with syntax errors:"
 #~ msgstr "Rd文件里有语法错误:"
@@ -2350,10 +1983,6 @@ msgstr[0] ""
 
 #~ msgid "Please reinstall using a current version of R."
 #~ msgstr "请用最新版本的R重新安装."
-
-#, fuzzy
-#~ msgid "*** error on file"
-#~ msgstr "文件'%s'里句法分析有错:"
 
 #~ msgid "argument 'lines' must be a character vector"
 #~ msgstr "参数'lines'必需是字符矢量"

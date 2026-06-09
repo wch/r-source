@@ -580,7 +580,7 @@ buildVignettes <-
         enc <- vigns$encodings[i]
         if (enc == "non-ASCII") {
             message(gettextf("Error: Vignette '%s' is non-ASCII but has no declared encoding",
-                             file))
+                             file), domain = NA)
             fails <- c(fails, file)
             next
         }
@@ -613,7 +613,7 @@ buildVignettes <-
             unlink(tf)
         } else {  # --- run in this process
             message(gettextf("--- re-building %s using %s",
-                             sQuote(file), engine$name))
+                             sQuote(file), engine$name), domain = NA)
             tryCatch({
                 engine$weave(file, quiet = quiet, encoding = enc)
                 setwd(startdir) # In case weave/vignette changed it
@@ -629,7 +629,7 @@ buildVignettes <-
                 thisOK <<- FALSE
                 fails <<- c(fails, file)
                 message(gettextf("Error: processing vignette '%s' failed with diagnostics:\n%s",
-                                 file, conditionMessage(e)))
+                                 file, conditionMessage(e)), domain = NA)
             })
         }         # end if (separate)
 
@@ -644,15 +644,17 @@ buildVignettes <-
                 thisOK <<- FALSE
                 fails <<- c(fails, file)
                 message(gettextf("Error: tangling vignette '%s' failed with diagnostics:\n%s",
-                     file, conditionMessage(e)))
+                                 file, conditionMessage(e)), domain = NA)
             })
             sourceList[[file]] <- output
         }
         if (!separate) {
             if (thisOK)
-                message(gettextf("--- finished re-building %s\n", sQuote(file)))
+                message(gettextf("--- finished re-building %s\n", sQuote(file)),
+                        domain = NA)
             else
-                message(gettextf("--- failed re-building %s\n", sQuote(file)))
+                message(gettextf("--- failed re-building %s\n", sQuote(file)),
+                        domain = NA)
         }
     } # end loop over vignettes
 
@@ -696,8 +698,9 @@ buildVignettes <-
     if (length(fails)) {
         message(ngettext(length(fails),
                          "SUMMARY: processing the following file failed:",
-                         "SUMMARY: processing the following files failed:"))
-        message(paste(.pretty_format(fails), collapse = "\n"))
+                         "SUMMARY: processing the following files failed:"),
+                domain = NA)
+        message(paste(.pretty_format(fails), collapse = "\n"), domain = NA)
         message()
     }
 
@@ -752,7 +755,8 @@ buildVignette <-
 		domain = NA)
 
     if (encoding == "non-ASCII")
-    	stop(gettextf("Vignette '%s' is non-ASCII but has no declared encoding", name))
+    	stop(gettextf("Vignette '%s' is non-ASCII but has no declared encoding", name),
+             domain = NA)
 
     # Set output directory temporarily
     file <- file_path_as_absolute(file)
@@ -821,7 +825,7 @@ buildVignette <-
     output <- character()
 
     message(gettextf("--- re-building %s using %s",
-                     sQuote(file), engine$name))
+                     sQuote(file), engine$name), domain = NA)
     tryCatch({
         engine$weave(file, quiet = quiet, encoding = enc)
         setwd(startdir)  # In case weave/vignette changed it
@@ -834,17 +838,19 @@ buildVignette <-
     }, error = function(e) {
         OK <<- FALSE
         message(gettextf("Error: processing vignette '%s' failed with diagnostics:\n%s",
-                         file, conditionMessage(e)))
+                         file, conditionMessage(e)), domain = NA)
     })
 
     if (OK)
-        message(gettextf("--- finished re-building %s\n", sQuote(file)))
+        message(gettextf("--- finished re-building %s\n", sQuote(file)),
+                domain = NA)
     else {
-        message(gettextf("--- failed re-building %s\n", sQuote(file)))
+        message(gettextf("--- failed re-building %s\n", sQuote(file)),
+                domain = NA)
         q("no", status = 9L)
     }
 
-    message("+-+", output)
+    message("+-+", output, domain = NA)
     invisible(output)
 }
 

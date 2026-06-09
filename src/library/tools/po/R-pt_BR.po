@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-06-09 14:51\n"
 "PO-Revision-Date: 2023-09-01 11:37+0000\n"
 "Last-Translator: Caio Lente <lente@ime.usp.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -671,9 +671,6 @@ msgstr "arquivo '%s' não encontrado"
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr "nome de arquivo '%s' da vignette não correspondente a nenhum dos '%s' padrões de nome de arquivo"
 
-msgid "+-+"
-msgstr "+-+"
-
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "Em '%s' as vignettes '%s' e '%s' têm o mesmo nome de vignette"
 
@@ -966,9 +963,6 @@ msgstr "não é possível ler informação de índice no arquivo '%s'"
 msgid ".install_packages() exit status"
 msgstr "status de saída .install_packages()"
 
-msgid "restoration failed"
-msgstr "falha na restauração"
-
 msgid "error reading file '%s'"
 msgstr "erro na leitura do arquivo '%s'"
 
@@ -995,18 +989,6 @@ msgstr "gerando símbolos de depuragem (%s)"
 msgid "no DLL was created"
 msgstr "nenhuma DLL foi criada"
 
-msgid "NOTE: fixed path"
-msgstr "NOTA: o caminho foi corrigido"
-
-msgid "NOTE: fixed library identification name"
-msgstr "NOTA: o nome de identificação da biblioteca foi corrigido"
-
-msgid "NOTE: fixed library path"
-msgstr "NOTA: o caminho da biblioteca foi corrigido"
-
-msgid "NOTE: fixed rpath"
-msgstr "NOTA: o rpath foi corrigido"
-
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr "ALERTA: objetos compartilhados/bibliotecas dinâmicas com caminhos de instalação hard-coded"
 
@@ -1016,33 +998,8 @@ msgstr "instalação faseada não utilizada com --libs-only"
 msgid "staged installation is only possible with locking"
 msgstr "instalação faseada só é possível com travamento"
 
-msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
-msgstr ""
-
 msgid "patch utility is needed for installation-time patching"
 msgstr "O utilitário patch é necessário para a aplicação de patches no momento da instalação"
-
-msgid "NOTE: Skipping installation-time patch"
-msgstr "NOTA: Ignorando o patch de tempo de instalação"
-
-#, fuzzy
-msgid "which seems to be already applied."
-msgstr "isto parecer ser um bundle -- e eles estão extintos"
-
-#, fuzzy
-msgid "WARNING: failed to apply patch"
-msgstr "ALERTA: falha ao aplicar o patch"
-
-#, fuzzy
-msgid "Applied installation-time patch"
-msgstr "Patch de tempo de instalação aplicado"
-
-msgid "and saved it as"
-msgstr "e salvo como"
-
-#, fuzzy
-msgid "in package installation"
-msgstr "layout de pacote inválido"
 
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr "Diretório de include do R está vazio -- talvez seja necessário instalar R-devel.rpm ou similar"
@@ -1082,32 +1039,6 @@ msgstr "ERRO: sem permissão para instalar no diretório"
 
 msgid "building a fake installation is disallowed"
 msgstr "compilar uma instalação falsa não é permitido"
-
-msgid "specified C++"
-msgstr ""
-
-#, fuzzy
-msgid "using C compiler:"
-msgstr "usando o compilador C:"
-
-msgid "using Fortran compiler:"
-msgstr "usando o compilador Fortran:"
-
-msgid "using C++ compiler:"
-msgstr "usando o compilador C++:"
-
-msgid "using C++"
-msgstr "usando C++"
-
-msgid "using SDK:"
-msgstr "usando SDK:"
-
-msgid "WARNING: failed to revert patch"
-msgstr "ALERTA: falhou em reverter o patch"
-
-#, fuzzy
-msgid "Reverted installation-time patch"
-msgstr "Patch de tempo de instalação revertido"
 
 #, fuzzy
 msgid "Input must be character"
@@ -1673,9 +1604,6 @@ msgstr[1] "Registros BibTeX correspondentes:"
 
 #~ msgid "invalid value"
 #~ msgstr "valor inválido"
-
-#~ msgid "for R_CROSS_BUILD"
-#~ msgstr "para R_CROSS_BUILD"
 
 #~ msgid "Comparing %s to %s ..."
 #~ msgstr "Comparando %s com %s ..."

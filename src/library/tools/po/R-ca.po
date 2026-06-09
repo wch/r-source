@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-06-09 14:51\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: none\n"
@@ -765,10 +765,6 @@ msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr "El nom de fitxer de vinyeta «%s» no coincideix amb cap dels patrons de nom de fitxer «%s»"
 
 #, fuzzy
-msgid "+-+"
-msgstr "+-+"
-
-#, fuzzy
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "A «%s» les vinyetes «%s» i «%s» tenen el mateix nom de vinyeta"
 
@@ -1141,10 +1137,6 @@ msgid ".install_packages() exit status"
 msgstr "Estat de sortida de .installpackages()"
 
 #, fuzzy
-msgid "restoration failed"
-msgstr "ha fallat la restauració"
-
-#, fuzzy
 msgid "error reading file '%s'"
 msgstr "s'ha produït un error en llegir el fitxer «%s»"
 
@@ -1175,22 +1167,6 @@ msgid "no DLL was created"
 msgstr "no s'ha creat cap DLL"
 
 #, fuzzy
-msgid "NOTE: fixed path"
-msgstr "NOTA: camí fix"
-
-#, fuzzy
-msgid "NOTE: fixed library identification name"
-msgstr "NOTA: nom d'identificació fix de la biblioteca"
-
-#, fuzzy
-msgid "NOTE: fixed library path"
-msgstr "NOTA: s'ha esmenat el camí de la biblioteca"
-
-#, fuzzy
-msgid "NOTE: fixed rpath"
-msgstr "NOTA: rpath fix"
-
-#, fuzzy
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr "ADVERTÈNCIA: objectes compartits/biblioteques dinàmiques amb camins d'instal·lació temporals codificats"
 
@@ -1203,36 +1179,8 @@ msgid "staged installation is only possible with locking"
 msgstr "la instal·lació per etapes només és possible amb el bloqueig"
 
 #, fuzzy
-msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
-msgstr "AVÍS: els pedaços en temps d'instal·lació no s'aplicaran, no s'ha pogut obtenir l'índex de pedaços"
-
-#, fuzzy
 msgid "patch utility is needed for installation-time patching"
 msgstr "La utilitat de pedaç és necessària per a l'ajustament en temps d'instal·lació"
-
-#, fuzzy
-msgid "NOTE: Skipping installation-time patch"
-msgstr "NOTA: s'omet el pedaç de temps d'instal·lació"
-
-#, fuzzy
-msgid "which seems to be already applied."
-msgstr "que sembla que ja s'aplica."
-
-#, fuzzy
-msgid "WARNING: failed to apply patch"
-msgstr "AVÍS: no s'ha pogut aplicar el pedaç"
-
-#, fuzzy
-msgid "Applied installation-time patch"
-msgstr "S'ha aplicat el pedaç de temps d'instal·lació"
-
-#, fuzzy
-msgid "and saved it as"
-msgstr "i l'ha desat com a"
-
-#, fuzzy
-msgid "in package installation"
-msgstr "en la instal·lació del paquet"
 
 #, fuzzy
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
@@ -1284,37 +1232,6 @@ msgstr "ERROR: no teniu permís per a instal·lar al directori"
 #, fuzzy
 msgid "building a fake installation is disallowed"
 msgstr "no es permet la construcció d'una instal·lació falsa"
-
-msgid "specified C++"
-msgstr ""
-
-#, fuzzy
-msgid "using C compiler:"
-msgstr "utilitzant el compilador de C:"
-
-#, fuzzy
-msgid "using Fortran compiler:"
-msgstr "utilitzant el compilador Fortran:"
-
-#, fuzzy
-msgid "using C++ compiler:"
-msgstr "utilitzant el compilador C++:"
-
-#, fuzzy
-msgid "using C++"
-msgstr "utilitzant C++"
-
-#, fuzzy
-msgid "using SDK:"
-msgstr "s'està utilitzant SDK:"
-
-#, fuzzy
-msgid "WARNING: failed to revert patch"
-msgstr "AVÍS: no s'ha pogut revertir el pedaç"
-
-#, fuzzy
-msgid "Reverted installation-time patch"
-msgstr "S'ha revertit el pedaç del temps d'instal·lació"
 
 #, fuzzy
 msgid "Input must be character"

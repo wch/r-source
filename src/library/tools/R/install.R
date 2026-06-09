@@ -116,7 +116,7 @@ if(FALSE) {
                     ## some shells require that they be run in a known dir
                     setwd(startdir)
                     if(system(paste("mv -f", shQuote(lp), shQuote(pkgdir))))
-                        message("  restoration failed\n")
+                        message("  restoration failed\n", domain = NA)
                 }
             }
         }
@@ -371,14 +371,11 @@ if(FALSE) {
             dir.create(instdir, recursive = TRUE, showWarnings = FALSE)
         }
         if (!dir.exists(instdir)) {
-            message("ERROR: unable to create ", sQuote(instdir), domain = NA)
-            do_exit_on_error()
+            errmsg("unable to create ", sQuote(instdir))
         }
 
         if (!is_subdir(instdir, lib)) {
-            message("ERROR: ", sQuote(pkg_name), " is not a legal package name",
-                    domain = NA)
-            do_exit_on_error()
+            errmsg(sQuote(pkg_name), " is not a legal package name")
         }
 
         ## Make sure we do not attempt installing to srcdir.
@@ -789,10 +786,10 @@ if(FALSE) {
                         qp <- gsub("'", "\\\\'", qp)
                         cmd <- paste0("elfedit -e \"dyn:value -dynndx -s ",
                                      idxs[i], " ", qp, "\" ", shQuote(l))
-                        message(cmd)
+                        message(cmd, domain = NA)
                         ret <- suppressWarnings(system(cmd, intern = FALSE))
                         if (ret == 0)
-                            message("NOTE: fixed path ", sQuote(old_paths[i]))
+                            message("NOTE: fixed path ", sQuote(old_paths[i]), domain = NA)
                     }
                     out <- suppressWarnings(
                         system(paste("elfedit -re dyn:value", shQuote(l)), intern = TRUE))
@@ -817,13 +814,13 @@ if(FALSE) {
                                       oldid, fixed = TRUE)
                         cmd <- paste("install_name_tool -id", shQuote(newid),
                                      shQuote(l))
-                        message(cmd)
+                        message(cmd, domain = NA)
                         ret <- suppressWarnings(system(cmd, intern = FALSE))
                         if (ret == 0)
                             ## NOTE: install_name does not signal an error in
                             ## some cases
                             message("NOTE: fixed library identification name ",
-                                    sQuote(oldid))
+                                    sQuote(oldid), domain = NA)
                     }
 
                     ## change paths to other libraries
@@ -844,13 +841,13 @@ if(FALSE) {
                         cmd <- paste("install_name_tool -change",
                                      shQuote(old_paths[i]), shQuote(paths[i]),
                                      shQuote(l))
-                        message(cmd)
+                        message(cmd, domain = NA)
                         ret <- suppressWarnings(system(cmd, intern = FALSE))
                         if (ret == 0)
                             ## NOTE: install_name does not signal an error in
                             ## some cases
                             message("NOTE: fixed library path ",
-                                    sQuote(old_paths[i]))
+                                    sQuote(old_paths[i]), domain = NA)
                     }
                     out <- suppressWarnings(
                         system(paste("otool -L", shQuote(l)), intern = TRUE))
@@ -880,11 +877,11 @@ if(FALSE) {
                                          shQuote(old_paths[i]),
                                          shQuote(paths[i]),
                                          shQuote(l))
-                            message(cmd)
+                            message(cmd, domain = NA)
                             ret <- suppressWarnings(system(cmd))
                             if (ret == 0)
                                 message("NOTE: fixed rpath ",
-                                        sQuote(old_paths[i]))
+                                        sQuote(old_paths[i]), domain = NA)
                         }
                     }
 
@@ -910,10 +907,10 @@ if(FALSE) {
                         hardcoded_paths <- TRUE
                         cmd <- paste("patchelf", "--set-rpath",
                                          shQuote(rpath), shQuote(l))
-                        message(cmd)
+                        message(cmd, domain = NA)
                         ret <- suppressWarnings(system(cmd))
                         if (ret == 0)
-                            message("NOTE: fixed rpath ", sQuote(old_rpath))
+                            message("NOTE: fixed rpath ", sQuote(old_rpath), domain = NA)
                         rpath <- suppressWarnings(
                             system(paste("patchelf --print-rpath",
                                          shQuote(l)), intern = TRUE))
@@ -940,11 +937,11 @@ if(FALSE) {
                                          shQuote(old_paths[i]),
                                          shQuote(paths[i]),
                                          shQuote(l))
-                            message(cmd)
+                            message(cmd, domain = NA)
                             ret <- suppressWarnings(system(cmd))
                             if (ret == 0)
                                 message("NOTE: fixed library path ",
-                                        sQuote(old_paths[i]))
+                                        sQuote(old_paths[i]), domain = NA)
                         }
                         out <- suppressWarnings(
                             system(paste("readelf -d", shQuote(l)), intern = TRUE))
@@ -972,10 +969,10 @@ if(FALSE) {
                         hardcoded_paths <- TRUE
                         cmd <- paste("chrpath", "-r", shQuote(rpath),
                                      shQuote(l))
-                        message(cmd)
+                        message(cmd, domain = NA)
                         ret <- suppressWarnings(system(cmd))
                         if (ret == 0)
-                            message("NOTE: fixed rpath ", sQuote(old_rpath))
+                            message("NOTE: fixed rpath ", sQuote(old_rpath), domain = NA)
                         out <- suppressWarnings(
                             system(paste("chrpath", shQuote(l)), intern = TRUE))
                         rpath <- grep(".*PATH=", out, value = TRUE)
@@ -1230,7 +1227,7 @@ if(FALSE) {
                     error = function(e) NULL)
 
                 if (is.null(patches_idx))
-                    message("WARNING: installation-time patches will not be applied, could not get the patches index")
+                    message("WARNING: installation-time patches will not be applied, could not get the patches index", domain = NA)
                 else {
                     patches_msg <- FALSE
                     for(p in patches_idx[[pkg_name]]) {
@@ -1256,18 +1253,18 @@ if(FALSE) {
                             if (system2("patch", args = c("--dry-run", "-R", "-p2", "--binary",
                                                           "--force"), stdin = fname) == 0)
                                 message("NOTE: Skipping installation-time patch ", purl,
-                                        " which seems to be already applied.\n")
+                                        " which seems to be already applied.\n", domain = NA)
                             else
-                                message("WARNING: failed to apply patch ", purl, "\n")
+                                message("WARNING: failed to apply patch ", purl, "\n", domain = NA)
                         } else {
                             if (system2("patch", args = c("-p2", "--binary", "--force"),
                                         stdin = fname) != 0)
                                 ## should not happen as dry-run succeeded
-                                message("WARNING: failed to apply patch ", p, "\n")
+                                message("WARNING: failed to apply patch ", p, "\n", domain = NA)
                             else
                                 message("Applied installation-time patch ", purl,
                                         " and saved it as ", fname,
-                                        " in package installation\n")
+                                        " in package installation\n", domain = NA)
                         }
                     }
                 }
@@ -2810,7 +2807,7 @@ if(FALSE) {
                      call. = FALSE, domain = NA)
             }
             if (use_cxxstd %in% c("11", "14")) {
-                message("specified C++", use_cxxstd)
+                message("specified C++", use_cxxstd, domain = NA)
                 use_cxxstd <- NULL
             }
             else if (!checkCXX(use_cxxstd)) {
@@ -2818,7 +2815,7 @@ if(FALSE) {
                             use_cxxstd, " is not defined"),
                      call. = FALSE, domain = NA)
             } else
-                message("specified C++", use_cxxstd)
+                message("specified C++", use_cxxstd, domain = NA)
         }
     }
 
@@ -2923,7 +2920,8 @@ if(FALSE) {
             cc_ver <- try(system(paste(cc, "--version"),
                                  intern = TRUE), silent = TRUE)
             if(!inherits(cc_ver, "try-error"))
-                message("using C compiler: ", sQuote(cc_ver[1L]))
+                message("using C compiler: ", sQuote(cc_ver[1L]),
+                        domain = NA) # grepped in check
         }
         if (with_f77 || with_f9x) {
             fc <- lines[grep("^FC =", lines)]
@@ -2932,7 +2930,8 @@ if(FALSE) {
             fc_ver <- try(system(paste(fc, "--version"),
                                  intern = TRUE), silent = TRUE)
             if(!inherits(fc_ver, "try-error"))
-                message("using Fortran compiler: ", sQuote(fc_ver[1L]))
+                message("using Fortran compiler: ", sQuote(fc_ver[1L]),
+                        domain = NA)
         }
         if (with_cxx) {
             cxx <- lines[grep("^CXX =", lines)]
@@ -2942,9 +2941,10 @@ if(FALSE) {
                 cxx_ver <- try(system(paste(cxx, "--version"),
                                  intern = TRUE), silent = TRUE)
                 if(!inherits(cxx_ver, "try-error")) {
-                    message("using C++ compiler: ", sQuote(cxx_ver[1L]))
+                    message("using C++ compiler: ", sQuote(cxx_ver[1L]),
+                            domain = NA)
                     if(!is.null(use_cxxstd))
-                       message("using C++", use_cxxstd)
+                       message("using C++", use_cxxstd, domain = NA)
                 }
             }
         }
@@ -2957,7 +2957,7 @@ if(FALSE) {
             if(!inherits(sdk, "try-error")) {
                 sdk <- if (length(attr(sdk, "status"))) NA_character_
                        else paste0("MacOSX", sdk, ".sdk")
-                message("using SDK: ", sQuote(sdk))
+                message("using SDK: ", sQuote(sdk), domain = NA)
             }
         }
         if (preclean) system(paste(cmd, "shlib-clean"))
@@ -3213,7 +3213,7 @@ if(FALSE) {
         ## may be slow, so add a message
         if (!silent) message("    finding HTML links ...", appendLF = FALSE, domain = NA)
         Links <- findHTMLlinks(outDir, level = 0:1)
-        if (!silent) message(" done")
+        if (!silent) message(" done", domain = NA)
         Links2 <- character()
     }
 
@@ -3230,7 +3230,7 @@ if(FALSE) {
         tryInvokeRestart("muffleWarning")
     }
     .ehandler <- function(e) {
-        message("", domain = NA) # force newline
+        message() # force newline
         unlink(ff)
         stop(conditionMessage(e), domain = NA, call. = FALSE)
     }
@@ -3398,10 +3398,10 @@ revert_install_time_patches <- function()
             if (system2("patch",
                         args = c("-p2", "--binary", "--force", "--reverse"),
                         stdin = fname) != 0)
-                message("WARNING: failed to revert patch ", p, "\n")
+                message("WARNING: failed to revert patch ", p, "\n", domain = NA)
             else
                 message("Reverted installation-time patch ", p,
-                        " in package installation\n")
+                        " in package installation\n", domain = NA)
         }
         unlink("install_time_patches", recursive = TRUE)
     }

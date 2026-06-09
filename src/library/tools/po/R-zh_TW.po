@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-06-09 14:51\n"
 "PO-Revision-Date: 2021-11-06 22:40+0100\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -694,9 +694,6 @@ msgstr "找不到 '%s' 這個檔案"
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr "簡介檔名 '%s' 不符合任何 '%s' 檔案胚騰"
 
-msgid "+-+"
-msgstr ""
-
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "'%s' 簡介裡 '%s' 和 '%s' 的名稱是一樣的"
 
@@ -987,10 +984,6 @@ msgstr "無法從檔案 '%s' 中讀取索引資訊"
 msgid ".install_packages() exit status"
 msgstr ".install_packages() 離開狀態"
 
-#, fuzzy
-msgid "restoration failed"
-msgstr "載入失敗"
-
 msgid "error reading file '%s'"
 msgstr "讀取檔案 '%s' 時發生錯誤"
 
@@ -1016,18 +1009,6 @@ msgstr "產生除錯符號(%s)"
 msgid "no DLL was created"
 msgstr "無法產生 DLL 檔案"
 
-msgid "NOTE: fixed path"
-msgstr ""
-
-msgid "NOTE: fixed library identification name"
-msgstr ""
-
-msgid "NOTE: fixed library path"
-msgstr ""
-
-msgid "NOTE: fixed rpath"
-msgstr ""
-
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr ""
 
@@ -1037,31 +1018,8 @@ msgstr ""
 msgid "staged installation is only possible with locking"
 msgstr ""
 
-msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
-msgstr ""
-
 msgid "patch utility is needed for installation-time patching"
 msgstr ""
-
-msgid "NOTE: Skipping installation-time patch"
-msgstr ""
-
-#, fuzzy
-msgid "which seems to be already applied."
-msgstr "這看起來好像是梱綁軟體 -- 已經不存在了"
-
-msgid "WARNING: failed to apply patch"
-msgstr ""
-
-msgid "Applied installation-time patch"
-msgstr ""
-
-msgid "and saved it as"
-msgstr ""
-
-#, fuzzy
-msgid "in package installation"
-msgstr "套件版面設置無效"
 
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr "R 包含目錄是空的 -- 也許您需要安裝 R-devel.rpm 或類似的程式套件"
@@ -1101,30 +1059,6 @@ msgstr "錯誤：沒有在這個目錄裡安裝的許可"
 
 msgid "building a fake installation is disallowed"
 msgstr "不充許偽造安裝"
-
-msgid "specified C++"
-msgstr ""
-
-msgid "using C compiler:"
-msgstr ""
-
-msgid "using Fortran compiler:"
-msgstr ""
-
-msgid "using C++ compiler:"
-msgstr ""
-
-msgid "using C++"
-msgstr ""
-
-msgid "using SDK:"
-msgstr ""
-
-msgid "WARNING: failed to revert patch"
-msgstr ""
-
-msgid "Reverted installation-time patch"
-msgstr ""
 
 #, fuzzy
 msgid "Input must be character"

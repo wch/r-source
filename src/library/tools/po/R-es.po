@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-06-09 14:51\n"
 "PO-Revision-Date: 2023-11-25 03:05+0000\n"
 "Last-Translator: Mara Geraldina Destefanis <maragdestefanis@gmail.com>\n"
 "Language-Team: none\n"
@@ -652,9 +652,6 @@ msgstr "archivo '%s' no encontrado"
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
 
-msgid "+-+"
-msgstr "+-+"
-
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "En las viñetas '%s', '%s' y '%s' tienen el mismo nombre de viñeta"
 
@@ -941,9 +938,6 @@ msgstr "no se puede leer la información del índice en el archivo '%s'"
 msgid ".install_packages() exit status"
 msgstr "estado de salida de .install_packages()"
 
-msgid "restoration failed"
-msgstr "la restauración falló"
-
 msgid "error reading file '%s'"
 msgstr "error al leer el archivo '%s'"
 
@@ -969,18 +963,6 @@ msgstr "generando símbolos de depuración (%s)"
 msgid "no DLL was created"
 msgstr "no se creó ninguna DLL"
 
-msgid "NOTE: fixed path"
-msgstr "NOTA: ruta fija"
-
-msgid "NOTE: fixed library identification name"
-msgstr "NOTA: nombre de identificación de biblioteca fijo"
-
-msgid "NOTE: fixed library path"
-msgstr "NOTA: ruta de biblioteca fija"
-
-msgid "NOTE: fixed rpath"
-msgstr "NOTA: ruta fija"
-
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr ""
 
@@ -990,29 +972,8 @@ msgstr "no usar instalación por etapas con --libs-only"
 msgid "staged installation is only possible with locking"
 msgstr "la instalación por etapas sólo es posible con bloqueo"
 
-msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
-msgstr ""
-
 msgid "patch utility is needed for installation-time patching"
 msgstr "la utilidad patch es necesaria para aplicar parches durante la instalación"
-
-msgid "NOTE: Skipping installation-time patch"
-msgstr "NOTA: Se omite el parche en el momento de la instalación"
-
-msgid "which seems to be already applied."
-msgstr "que parece ya estar aplicado."
-
-msgid "WARNING: failed to apply patch"
-msgstr "AVISO: no se pudo aplicar el parche"
-
-msgid "Applied installation-time patch"
-msgstr "Se aplicó un parche de tiempo de instalación"
-
-msgid "and saved it as"
-msgstr "y se guardó como"
-
-msgid "in package installation"
-msgstr "en la instalación del paquete"
 
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr ""
@@ -1052,30 +1013,6 @@ msgstr "ERROR: no hay permiso para instalar en el directorio"
 
 msgid "building a fake installation is disallowed"
 msgstr "no se permite construir una instalación fake"
-
-msgid "specified C++"
-msgstr ""
-
-msgid "using C compiler:"
-msgstr "usando el compilador de C:"
-
-msgid "using Fortran compiler:"
-msgstr "usando el compilador Fortran:"
-
-msgid "using C++ compiler:"
-msgstr "usando el compilador C++:"
-
-msgid "using C++"
-msgstr "usando C++"
-
-msgid "using SDK:"
-msgstr "usando SDK:"
-
-msgid "WARNING: failed to revert patch"
-msgstr "AVISO: no se pudo revertir el parche"
-
-msgid "Reverted installation-time patch"
-msgstr "Parche de tiempo de instalación revertido"
 
 msgid "Input must be character"
 msgstr ""

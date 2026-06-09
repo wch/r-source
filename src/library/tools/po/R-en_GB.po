@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-06-09 14:51\n"
 "PO-Revision-Date: 2024-01-20 16:20+0000\n"
 "Last-Translator: Heather Turner <ht@heatherturner.net>\n"
 "Language-Team: none\n"
@@ -955,9 +955,6 @@ msgstr "cannot read index information in file '%s'"
 msgid ".install_packages() exit status"
 msgstr ".install_packages() exit status"
 
-msgid "restoration failed"
-msgstr "restoration failed"
-
 msgid "error reading file '%s'"
 msgstr "error reading file '%s'"
 
@@ -983,18 +980,6 @@ msgstr "generating debug symbols (%s)"
 msgid "no DLL was created"
 msgstr "no DLL was created"
 
-msgid "NOTE: fixed path"
-msgstr "NOTE: fixed path"
-
-msgid "NOTE: fixed library identification name"
-msgstr "NOTE: fixed library identification name"
-
-msgid "NOTE: fixed library path"
-msgstr "NOTE: fixed library path"
-
-msgid "NOTE: fixed rpath"
-msgstr "NOTE: fixed rpath"
-
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 
@@ -1004,29 +989,8 @@ msgstr "not using staged install with --libs-only"
 msgid "staged installation is only possible with locking"
 msgstr "staged installation is only possible with locking"
 
-msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
-msgstr "WARNING: installation-time patches will not be applied, could not get the patches index"
-
 msgid "patch utility is needed for installation-time patching"
 msgstr "patch utility is needed for installation-time patching"
-
-msgid "NOTE: Skipping installation-time patch"
-msgstr "NOTE: Skipping installation-time patch"
-
-msgid "which seems to be already applied."
-msgstr "which seems to be already applied."
-
-msgid "WARNING: failed to apply patch"
-msgstr "WARNING: failed to apply patch"
-
-msgid "Applied installation-time patch"
-msgstr "Applied installation-time patch"
-
-msgid "and saved it as"
-msgstr "and saved it as"
-
-msgid "in package installation"
-msgstr "in package installation"
 
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
@@ -1066,30 +1030,6 @@ msgstr "ERROR: no permission to install to directory"
 
 msgid "building a fake installation is disallowed"
 msgstr "building a fake installation is disallowed"
-
-msgid "specified C++"
-msgstr ""
-
-msgid "using C compiler:"
-msgstr "using C compiler:"
-
-msgid "using Fortran compiler:"
-msgstr "using Fortran compiler:"
-
-msgid "using C++ compiler:"
-msgstr "using C++ compiler:"
-
-msgid "using C++"
-msgstr "using C++"
-
-msgid "using SDK:"
-msgstr "using SDK:"
-
-msgid "WARNING: failed to revert patch"
-msgstr "WARNING: failed to revert patch"
-
-msgid "Reverted installation-time patch"
-msgstr "Reverted installation-time patch"
 
 #, fuzzy
 msgid "Input must be character"
@@ -1637,27 +1577,3 @@ msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Corresponding BibTeX entry:"
 msgstr[1] "Corresponding BibTeX entries:"
-
-#~ msgid "Error: cannot rename directory to %s"
-#~ msgstr "Error: cannot rename directory to %s"
-
-#~ msgid "Uses ACM license: only appropriate for pre-2013 ACM TOMS code"
-#~ msgstr "Uses ACM licence: only appropriate for pre-2013 ACM TOMS code"
-
-#~ msgid "Rd files without \\description:"
-#~ msgstr "Rd files without \\description:"
-
-#~ msgid "downloading %s ..."
-#~ msgstr "downloading %s ..."
-
-#~ msgid "invalid value"
-#~ msgstr "invalid value"
-
-#~ msgid "for R_CROSS_BUILD"
-#~ msgstr "for R_CROSS_BUILD"
-
-#~ msgid "Comparing %s to %s ..."
-#~ msgstr "Comparing %s to %s ..."
-
-#~ msgid "one of 'package' and 'dir' must be specified."
-#~ msgstr "one of 'package' and 'dir' must be specified."

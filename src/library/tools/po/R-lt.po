@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tools 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-06-09 14:51\n"
 "PO-Revision-Date: 2021-11-08 10:33+0100\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -681,9 +681,6 @@ msgstr "failas '%s' nerastas"
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr "vinjetės failo vardas '%s' neatitinka nė vieno '%s' failo vardo modelio"
 
-msgid "+-+"
-msgstr "+-+"
-
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "'%s' esančios vinjetės '%s' ir '%s' turi tuos pačius pavadinimus"
 
@@ -974,9 +971,6 @@ msgstr "negali skaityti indekso informacijos faile '%s'"
 msgid ".install_packages() exit status"
 msgstr ".install_packages() išėjimo būsena"
 
-msgid "restoration failed"
-msgstr "įkėlimas nepavyko"
-
 msgid "error reading file '%s'"
 msgstr "klaida nuskaitant failą '%s'"
 
@@ -1002,18 +996,6 @@ msgstr "generuojami derinimo simboliai (%s)"
 msgid "no DLL was created"
 msgstr "nebuvo sukurtas DLL"
 
-msgid "NOTE: fixed path"
-msgstr "PASTABA: fiksuotas kelias"
-
-msgid "NOTE: fixed library identification name"
-msgstr "PASTABA: fiksuotos bibliotekos identifikavimo pavadinimas"
-
-msgid "NOTE: fixed library path"
-msgstr "PASTABA: fiksuotas bibliotekos kelias"
-
-msgid "NOTE: fixed rpath"
-msgstr "PASTABA: fiksuotas rpath"
-
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr "ĮSPĖJIMAS: bendrinami objektai/dinaminės bibliotekos su įkoduotais laikinais diegimo keliais"
 
@@ -1023,31 +1005,8 @@ msgstr "nenaudoja etapinio diegimo su --libs-only"
 msgid "staged installation is only possible with locking"
 msgstr "pakopinis montavimas galimas tik užrakinant"
 
-msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
-msgstr ""
-
 msgid "patch utility is needed for installation-time patching"
 msgstr ""
-
-msgid "NOTE: Skipping installation-time patch"
-msgstr ""
-
-#, fuzzy
-msgid "which seems to be already applied."
-msgstr "tai atrodo kaip paketas -- ir yra nepilnas"
-
-msgid "WARNING: failed to apply patch"
-msgstr ""
-
-msgid "Applied installation-time patch"
-msgstr ""
-
-msgid "and saved it as"
-msgstr ""
-
-#, fuzzy
-msgid "in package installation"
-msgstr "netinkamas paketo išdėstymas"
 
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr "R įtrauktas katalogas tuščias - galbūt reikia įdiegti R-devel.rpm ar panašų"
@@ -1087,30 +1046,6 @@ msgstr "KLAIDA: nėra leidimo įdiegti į katalogą"
 
 msgid "building a fake installation is disallowed"
 msgstr "kurti netikrą diegimą yra neleidžiama"
-
-msgid "specified C++"
-msgstr ""
-
-msgid "using C compiler:"
-msgstr ""
-
-msgid "using Fortran compiler:"
-msgstr ""
-
-msgid "using C++ compiler:"
-msgstr ""
-
-msgid "using C++"
-msgstr ""
-
-msgid "using SDK:"
-msgstr ""
-
-msgid "WARNING: failed to revert patch"
-msgstr ""
-
-msgid "Reverted installation-time patch"
-msgstr ""
 
 #, fuzzy
 msgid "Input must be character"
@@ -1706,9 +1641,6 @@ msgstr[2] "Atitinkamų BibTeX įrašų:"
 
 #~ msgid "invalid value"
 #~ msgstr "neleistina reikšmė"
-
-#~ msgid "for R_CROSS_BUILD"
-#~ msgstr "dėl R_CROSS_BUILD"
 
 #~ msgid "Comparing %s to %s ..."
 #~ msgstr "Lyginami %s su %s..."

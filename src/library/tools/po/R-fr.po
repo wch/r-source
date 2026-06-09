@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-06-09 14:51\n"
 "PO-Revision-Date: 2021-02-10 17:55+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -664,9 +664,6 @@ msgstr "le fichier '%s' est introuvable"
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr "le nom de fichier '%s' pour la vignette ne correspond pas au pattern de nom de fichier '%s'"
 
-msgid "+-+"
-msgstr "+-+"
-
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "Dans '%s' les vignettes '%s' et '%s' ont le même nom de vignette"
 
@@ -956,9 +953,6 @@ msgstr "impossible de lire l'indice de l'information dans le fichier '%s'"
 msgid ".install_packages() exit status"
 msgstr "statut de sortie .install_packages()"
 
-msgid "restoration failed"
-msgstr "la restauration a échoué"
-
 msgid "error reading file '%s'"
 msgstr "erreur de lecture dans le fichier '%s'"
 
@@ -984,18 +978,6 @@ msgstr "génération des symboles de débogage (%s)"
 msgid "no DLL was created"
 msgstr "aucune DLL n'a pas été créé"
 
-msgid "NOTE: fixed path"
-msgstr "NOTE : chemin fixé"
-
-msgid "NOTE: fixed library identification name"
-msgstr "NOTE : nom d’identification de bibliothèque fixé"
-
-msgid "NOTE: fixed library path"
-msgstr "NOTE : chemin de bibliothèques fixé"
-
-msgid "NOTE: fixed rpath"
-msgstr "NOTE : chemin rpath fixé"
-
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr "AVIS : objets partagés/librairies dynamiques ayant des répertoires d’installation codés en dur"
 
@@ -1005,29 +987,8 @@ msgstr "pas d’utilisation d’une installation fictive avec --libs-only"
 msgid "staged installation is only possible with locking"
 msgstr "installation fictive seulement possible avec verrouillage"
 
-msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
-msgstr ""
-
 msgid "patch utility is needed for installation-time patching"
 msgstr "l'utilitaire de correction est nécessaire pour appliquer les correctifs d'installation"
-
-msgid "NOTE: Skipping installation-time patch"
-msgstr "NOTE : le correctif d'installation a été ignoré"
-
-msgid "which seems to be already applied."
-msgstr "qui semble avoir déjà été appliqué."
-
-msgid "WARNING: failed to apply patch"
-msgstr "AVIS : échec dans l'application du correctif"
-
-msgid "Applied installation-time patch"
-msgstr "Correctif d'installation appliqué"
-
-msgid "and saved it as"
-msgstr "et sauvegardez-le dans"
-
-msgid "in package installation"
-msgstr "pendant l'installation du paquet"
 
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr "Le répertoire include de R est vide -- il faut peut-être installer R-devel.rpm ou similaire"
@@ -1067,30 +1028,6 @@ msgstr "ERREUR : pas de permission pour installer dans le répertoire"
 
 msgid "building a fake installation is disallowed"
 msgstr "construire une installation fantôme n'est pas permise"
-
-msgid "specified C++"
-msgstr ""
-
-msgid "using C compiler:"
-msgstr "utilisation du compilateur C :"
-
-msgid "using Fortran compiler:"
-msgstr "utilisation du compilateur Fortran :"
-
-msgid "using C++ compiler:"
-msgstr "utilisation du compilateur C++ :"
-
-msgid "using C++"
-msgstr "utilisation de C++"
-
-msgid "using SDK:"
-msgstr "utilisation du SDK :"
-
-msgid "WARNING: failed to revert patch"
-msgstr "AVIS : échec dans l'annulation du correctif"
-
-msgid "Reverted installation-time patch"
-msgstr "Correctif d'installation annulé"
 
 #, fuzzy
 msgid "Input must be character"
@@ -1645,9 +1582,6 @@ msgstr[1] "Entrées BibTeX correspondantes :"
 #~ msgid "invalid value"
 #~ msgstr "valeur incorrecte"
 
-#~ msgid "for R_CROSS_BUILD"
-#~ msgstr "pour R_CROSS_BUILD"
-
 #~ msgid "Comparing %s to %s ..."
 #~ msgstr "Comparaison de %s à %s ..."
 
@@ -1802,96 +1736,12 @@ msgstr[1] "Entrées BibTeX correspondantes :"
 #~ msgid "installing dependencies %s"
 #~ msgstr "installation des dépendances %s"
 
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid ":"
-#~ msgstr " :"
-
 #, fuzzy
 #~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
 #~ msgstr "Spécifications d'encodage incohérentes :"
 
 #~ msgid "argument 'file' must be a character string or connection"
 #~ msgstr "l'argument 'file' doit être une chaîne de caractères ou une connexion"
-
-#~ msgid "with %\\SweaveUTF8"
-#~ msgstr "avec %\\SweaveUTF8"
-
-#~ msgid "to logical"
-#~ msgstr "en valeur logique"
-
-#~ msgid "Vignette product"
-#~ msgstr "Vignette produit"
-
-#~ msgid ")"
-#~ msgstr ")"
-
-#~ msgid "Failed to locate the"
-#~ msgstr "impossible de créer"
-
-#~ msgid "output file (by engine"
-#~ msgstr "fichier en sortie (par engin"
-
-#~ msgid "%s::%s"
-#~ msgstr "%s::%s"
-
-#~ msgid ") for vignette with name"
-#~ msgstr ") pour la vignette avec le nom"
-
-#~ msgid ". The following files exists in directory"
-#~ msgstr ". Les fichiers sont dans ce répertoire"
-
-#~ msgid "Located more than one"
-#~ msgstr "Localisation plus d'une fois"
-
-#~ msgid "Vignette"
-#~ msgstr "Vignette"
-
-#~ msgid "overwrites the following"
-#~ msgstr "remplace le suivant"
-
-#~ msgid "output by vignette"
-#~ msgstr "sortie par vignette"
-
-#~ msgid "Detected vignette source files ("
-#~ msgstr "Fichiers source de vignettes détectés ("
-
-#~ msgid ") with shared names ("
-#~ msgstr ") avec les mêmes noms ("
-
-#~ msgid "None of packages"
-#~ msgstr "Aucun des packages"
-
-#~ msgid "Vignette engine"
-#~ msgstr "Module de traitement de vignette"
-
-#~ msgid "Engine name"
-#~ msgstr "Nom du module de traitement"
-
-#~ msgid "and package"
-#~ msgstr "et le package"
-
-#~ msgid "do not match"
-#~ msgstr "ne correspond pas"
-
-#~ msgid "Argument"
-#~ msgstr "Argument"
-
-#~ msgid "weave"
-#~ msgstr "weave"
-
-#~ msgid "tangle"
-#~ msgstr "tangle"
-
-#~ msgid "pattern"
-#~ msgstr "motif"
-
-#~ msgid "Cannot change the"
-#~ msgstr "impossible de changer le"
-
-#~ msgid "Sweave"
-#~ msgstr "Sweave"
 
 #~ msgid "'file' must be a character string or connection"
 #~ msgstr "'file' doit être une chaîne de caractères ou une connexion"
@@ -1930,19 +1780,6 @@ msgstr[1] "Entrées BibTeX correspondantes :"
 #~ msgstr[0] "Avis : option inconnue"
 #~ msgstr[1] "Avis : option inconnue"
 
-#~ msgid "name"
-#~ msgstr "nom"
-
-#~ msgid "code"
-#~ msgstr "code"
-
-#~ msgid "docs"
-#~ msgstr "docs"
-
-#, fuzzy
-#~ msgid "\\VignetteDepends{}"
-#~ msgstr "Vignettes :"
-
 #~ msgid "Invalid package name."
 #~ msgstr "Nom de package incorrect."
 
@@ -1955,45 +1792,8 @@ msgstr[1] "Entrées BibTeX correspondantes :"
 #~ msgid "package must be loaded"
 #~ msgstr "le package doit être chargé"
 
-#~ msgid "lib"
-#~ msgstr "lib"
-
-#~ msgid "pkg"
-#~ msgstr "pkg"
-
-#~ msgid "packageStartupMessage"
-#~ msgstr "packageStartupMessage"
-
 #~ msgid "Good practice"
 #~ msgstr "Bonne pratique"
-
-#, fuzzy
-#~ msgid "\\name"
-#~ msgstr "nom"
-
-#~ msgid "NEWS"
-#~ msgstr "NEWS"
-
-#~ msgid "DESCRIPTION"
-#~ msgstr "DESCRIPTION"
-
-#~ msgid "doc/"
-#~ msgstr "doc/"
-
-#~ msgid "demo/"
-#~ msgstr "demo/"
-
-#~ msgid "%s (%s)"
-#~ msgstr "%s (%s)"
-
-#~ msgid "ssname"
-#~ msgstr "ssname"
-
-#~ msgid "language"
-#~ msgstr "langage"
-
-#~ msgid "processing"
-#~ msgstr "analyse de "
 
 #, fuzzy
 #~ msgid "package directory"
@@ -2004,9 +1804,6 @@ msgstr[1] "Entrées BibTeX correspondantes :"
 
 #~ msgid "running 'zip' failed"
 #~ msgstr "l'exécution de 'zip' a échoué"
-
-#~ msgid "as"
-#~ msgstr "comme"
 
 #~ msgid "installing via 'install.libs.R' to"
 #~ msgstr "Installation via 'install.libs.R' vers"
@@ -2024,63 +1821,8 @@ msgstr[1] "Entrées BibTeX correspondantes :"
 #~ msgid "ERROR: failed to lock directory"
 #~ msgstr "ERREUR : impossible de verrouiller le répertoire"
 
-#~ msgid ""
-#~ "for modifying\n"
-#~ "Try removing"
-#~ msgstr ""
-#~ "pour modification\n"
-#~ "Essayez d'éliminer"
-
 #~ msgid "ERROR: failed to create lock directory"
 #~ msgstr "ERREUR : impossible de créer le répertoire verrouillé"
-
-#~ msgid "finding HTML links ..."
-#~ msgstr "recherche des liens HTML ..."
-
-#~ msgid "finding level-2 HTML links ..."
-#~ msgstr "recherche des liens HTML de niveau 2 ..."
-
-#~ msgid "Internal error, no tag"
-#~ msgstr "Erreur interne, pas d'étiquette"
-
-#~ msgid "Internal error:  NULL tag"
-#~ msgstr "Erreur interne : étiquette NULL"
-
-#~ msgid "Inconsistent arg count for"
-#~ msgstr "Nombre d'arguments incohérent pour"
-
-#~ msgid "Entry for"
-#~ msgstr "Entrée pour"
-
-#~ msgid "already defined to be"
-#~ msgstr "déjà définie pour être"
-
-#~ msgid "found encoding"
-#~ msgstr "encodage trouvé"
-
-#~ msgid "cannot be opened"
-#~ msgstr "ne peut être ouvert"
-
-#~ msgid "comparing"
-#~ msgstr "comparaison"
-
-#~ msgid "to"
-#~ msgstr "à"
-
-#~ msgid "Comparing"
-#~ msgstr "Comparaison"
-
-#~ msgid "creation of"
-#~ msgstr "la création de"
-
-#~ msgid "failed"
-#~ msgstr "a échoué"
-
-#~ msgid "creating"
-#~ msgstr "création"
-
-#~ msgid "running code in"
-#~ msgstr "exécution du code dans"
 
 #~ msgid "running strict specific tests"
 #~ msgstr "exécution stricte des tests spécifiques"
@@ -2114,47 +1856,6 @@ msgstr[1] "Entrées BibTeX correspondantes :"
 
 #~ msgid "running tests to possibly trigger segfaults"
 #~ msgstr "exécution de tests pour générer éventuellement des 'segfaults'"
-
-#, fuzzy
-#~ msgid "not installing"
-#~ msgstr "installation dans"
-
-#~ msgid "Generics g in env ="
-#~ msgstr "Les génériques g dans env ="
-
-#~ msgid "where hasMethods(g, env) errors:"
-#~ msgstr "où les erreurs hasMethods(g, env) :"
-
-#~ msgid "May need something like"
-#~ msgstr "Il faut quelque chose du genre"
-
-#~ msgid "importFrom("
-#~ msgstr "importFrom("
-
-#~ msgid "in NAMESPACE."
-#~ msgstr "dans NAMESPACE."
-
-#, fuzzy
-#~ msgid "not insttalling"
-#~ msgstr "installation dans"
-
-#, fuzzy
-#~ msgid "running msgmerge failed"
-#~ msgstr "l'exécution de 'make' a échoué"
-
-#, fuzzy
-#~ msgid "running msginit failed"
-#~ msgstr "l'exécution de 'zip' a échoué"
-
-#, fuzzy
-#~ msgid "running msgconv failed"
-#~ msgstr "l'exécution de 'make' a échoué"
-
-#~ msgid "ERROR: --merge-multiarch can only be used on i386/x64 installations"
-#~ msgstr "ERREUR : --merge-multiarch valide seulement sur les systèmes i386/x64"
-
-#~ msgid "--merge-multiarch is Windows-only"
-#~ msgstr "'--merge-multiarch est pour Windows seulement"
 
 #~ msgid ""
 #~ "running Stangle on vignette '%s' failed with message:\n"
@@ -2219,12 +1920,6 @@ msgstr[1] "Entrées BibTeX correspondantes :"
 #~ msgid "WARNING: 'Depends' entry has multiple dependencies on R:"
 #~ msgstr "AVIS : l'entrée 'Depends' a des dépendances multiples sur R :"
 
-#~ msgid "only the first will be used in R < 2.7.0"
-#~ msgstr "seule la première sera utilisée dans R < 2.7.0"
-
-#~ msgid "'"
-#~ msgstr "'"
-
 #~ msgid "--binary is deprecated"
 #~ msgstr "--binary est obsolète "
 
@@ -2237,20 +1932,8 @@ msgstr[1] "Entrées BibTeX correspondantes :"
 #~ msgid "use of '--no-docs' is deprecated: use '--install-args' instead"
 #~ msgstr "l'utilisation de '--no-docs' n'est plus disponible : utilisez '--install-args' à la place"
 
-#~ msgid "** Options"
-#~ msgstr "** Les options"
-
-#~ msgid "are only for '--binary'  and will be ignored"
-#~ msgstr "sont valides avec --binary seulement et seront ignorées"
-
 #~ msgid "--pkglock applies only to a single package"
 #~ msgstr "--pkglock est valide pour un seul package"
-
-#~ msgid "--no-help overrides"
-#~ msgstr "--no-help a priorité sur"
-
-#~ msgid "--"
-#~ msgstr "--"
 
 #~ msgid "'--auto-zip' is for Windows only"
 #~ msgstr "'--auto-zip'  est pour Windows seulement"
@@ -2263,6 +1946,3 @@ msgstr[1] "Entrées BibTeX correspondantes :"
 
 #~ msgid "cannot create HTML package index"
 #~ msgstr "impossible de créer l'index HTML du package"
-
-#~ msgid "... done"
-#~ msgstr "... fini"

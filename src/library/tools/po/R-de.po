@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-06-09 14:51\n"
 "PO-Revision-Date: 2025-07-10 15:25+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
@@ -670,9 +670,6 @@ msgstr "Datei '%s' nicht gefunden"
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr "Vignetten-Dateiname '%s' passt zu keinem der %s' Dateinamenmuster"
 
-msgid "+-+"
-msgstr "+-+"
-
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "In '%s' Vignetten '%s' und '%s' haben denselben Vignetten-Namen"
 
@@ -962,9 +959,6 @@ msgstr "kann die Indexinformation in Datei '%s' nicht lesen"
 msgid ".install_packages() exit status"
 msgstr "install_packages() Exitstatus"
 
-msgid "restoration failed"
-msgstr "Wiederherstellung fehlgeschlagen"
-
 msgid "error reading file '%s'"
 msgstr "Fehler beim Lesen der Datei '%s'"
 
@@ -990,18 +984,6 @@ msgstr "erzeuge Debug-Symbole (%s)"
 msgid "no DLL was created"
 msgstr "keine DLL erzeugt"
 
-msgid "NOTE: fixed path"
-msgstr "Bemerkung: gefixter Pfad"
-
-msgid "NOTE: fixed library identification name"
-msgstr "Bemerkung: gefixter Bibliotheksidentifikationsname"
-
-msgid "NOTE: fixed library path"
-msgstr "Bemerkung: gefixter Bibliothekspfad"
-
-msgid "NOTE: fixed rpath"
-msgstr "Bemerkung: gefixter rpath"
-
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr "Warnung: geteilte Objekte/dynamische Bibliotheken mit fest-kodierten temporären Installationspfaden"
 
@@ -1011,29 +993,8 @@ msgstr "staged install wird nicht genutzt mit --libs-only"
 msgid "staged installation is only possible with locking"
 msgstr "staged install ist nur mit locking möglich"
 
-msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
-msgstr "Warnung: Patches zur Installationszeit werden nicht angewandt, konnte nicht auf den Patchindex zugreifen"
-
 msgid "patch utility is needed for installation-time patching"
 msgstr "Das patch Utility wird für Installationszeit Patches benötigt"
-
-msgid "NOTE: Skipping installation-time patch"
-msgstr "Bemerkung: Überspringe Installationszeit-Patch"
-
-msgid "which seems to be already applied."
-msgstr "welches anscheinend schon angewendet wurde"
-
-msgid "WARNING: failed to apply patch"
-msgstr "Warnung: Anwenden des Patches fehlgeschlagen"
-
-msgid "Applied installation-time patch"
-msgstr "Installations-Zeit Patch angewendet"
-
-msgid "and saved it as"
-msgstr "und gespeichert als"
-
-msgid "in package installation"
-msgstr "in Paketinstallation"
 
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr "Das R include Verzeichnis ist leer -- evtl. muss das R-devel Paket installiert werden"
@@ -1073,30 +1034,6 @@ msgstr "Fehler: keine ausreichenden Rechte zur Installation in das Verzeichnis"
 
 msgid "building a fake installation is disallowed"
 msgstr "eine Scheininstallation ist nicht erlaubt"
-
-msgid "specified C++"
-msgstr ""
-
-msgid "using C compiler:"
-msgstr "nutze C Compiler:"
-
-msgid "using Fortran compiler:"
-msgstr "nutze Fortran Compiler:"
-
-msgid "using C++ compiler:"
-msgstr "nutze C++ Compiler:"
-
-msgid "using C++"
-msgstr "nuzte C++"
-
-msgid "using SDK:"
-msgstr "nutze SDK:"
-
-msgid "WARNING: failed to revert patch"
-msgstr "Warnung: Reverting Patch fehlgeschlagen"
-
-msgid "Reverted installation-time patch"
-msgstr "Kehre Installations-Zeit Patch um"
 
 #, fuzzy
 msgid "Input must be character"

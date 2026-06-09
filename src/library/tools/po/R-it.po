@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-06-09 14:51\n"
 "PO-Revision-Date: 2023-01-04 14:29+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -685,9 +685,6 @@ msgstr "file '%s' non trovato"
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr "il nome file vignetta '%s' non corrisponde a nessuno dei modelli di nome file '%s'"
 
-msgid "+-+"
-msgstr "+-+"
-
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "In '%s' vignette '%s' e '%s' hanno il medesimo nome"
 
@@ -977,9 +974,6 @@ msgstr "non posso leggere le informazioni dell'indice nel file '%s'"
 msgid ".install_packages() exit status"
 msgstr "stato di uscita di .install_packages()"
 
-msgid "restoration failed"
-msgstr "ripristino fallito"
-
 msgid "error reading file '%s'"
 msgstr "errore durante la lettura del file '%s'"
 
@@ -1005,18 +999,6 @@ msgstr "generando simboli di debut (%s)"
 msgid "no DLL was created"
 msgstr "nessuna DLL è stata creata"
 
-msgid "NOTE: fixed path"
-msgstr "NOTA: percorso fisso"
-
-msgid "NOTE: fixed library identification name"
-msgstr "NOTA: nome identificativo fisso della libreria"
-
-msgid "NOTE: fixed library path"
-msgstr "NOTA: percorso libreria fisso"
-
-msgid "NOTE: fixed rpath"
-msgstr "NOTA: rpath fisso"
-
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr "AVVERTIMENTO: oggetti condivisi/librerie dinamiche con percorsi temporanei di installazione presenti nel codice"
 
@@ -1026,29 +1008,8 @@ msgstr "non si utilizza l'installazione staged con --libs-only"
 msgid "staged installation is only possible with locking"
 msgstr "l'installazione staged è possibile unicamente con il locking"
 
-msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
-msgstr "AVVERTIMENTO: le patch durante l'installazione non saranno applicate, non è possibile ottenere l'indice"
-
 msgid "patch utility is needed for installation-time patching"
 msgstr "l'utility patch è richiesta all'uso durante l'installazione"
-
-msgid "NOTE: Skipping installation-time patch"
-msgstr "NOTA: Salta la patch durante l'installazione"
-
-msgid "which seems to be already applied."
-msgstr "il quale sembra già stato applicato."
-
-msgid "WARNING: failed to apply patch"
-msgstr "AVVERTIMENTO: applicazione patch fallita"
-
-msgid "Applied installation-time patch"
-msgstr "Applicata patch durante l'installazione"
-
-msgid "and saved it as"
-msgstr "e salvata come"
-
-msgid "in package installation"
-msgstr "durante l'installazione del pacchetto"
 
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr "La directory degli include di R è vuota -- dovresti installare R-devel.rpm o simili"
@@ -1088,30 +1049,6 @@ msgstr "ERRORE: non ci sono i permessi per installare nella directory"
 
 msgid "building a fake installation is disallowed"
 msgstr "non è ammesso avviare una installazione fake"
-
-msgid "specified C++"
-msgstr ""
-
-msgid "using C compiler:"
-msgstr "con compilatore C:"
-
-msgid "using Fortran compiler:"
-msgstr "con compilatore Fortran:"
-
-msgid "using C++ compiler:"
-msgstr "con compilatore C++:"
-
-msgid "using C++"
-msgstr "con C++"
-
-msgid "using SDK:"
-msgstr "con SDK:"
-
-msgid "WARNING: failed to revert patch"
-msgstr "AVVERTIMENTO: ripristino patch fallito"
-
-msgid "Reverted installation-time patch"
-msgstr "Annullata patch durante l'installazione"
 
 #, fuzzy
 msgid "Input must be character"

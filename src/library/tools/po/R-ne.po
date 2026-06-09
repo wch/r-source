@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-06-09 14:51\n"
 "PO-Revision-Date: 2024-07-13 03:05+0000\n"
 "Last-Translator: Binod Jung Bogati <m1s1ng@outlook.com>\n"
 "Language-Team: none\n"
@@ -644,9 +644,6 @@ msgstr "फाइल '%s' फेला परेन"
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr ""
 
-msgid "+-+"
-msgstr ""
-
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr ""
 
@@ -929,9 +926,6 @@ msgstr ""
 msgid ".install_packages() exit status"
 msgstr ""
 
-msgid "restoration failed"
-msgstr ""
-
 msgid "error reading file '%s'"
 msgstr ""
 
@@ -956,18 +950,6 @@ msgstr ""
 msgid "no DLL was created"
 msgstr ""
 
-msgid "NOTE: fixed path"
-msgstr ""
-
-msgid "NOTE: fixed library identification name"
-msgstr ""
-
-msgid "NOTE: fixed library path"
-msgstr ""
-
-msgid "NOTE: fixed rpath"
-msgstr ""
-
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr ""
 
@@ -977,28 +959,7 @@ msgstr ""
 msgid "staged installation is only possible with locking"
 msgstr ""
 
-msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
-msgstr ""
-
 msgid "patch utility is needed for installation-time patching"
-msgstr ""
-
-msgid "NOTE: Skipping installation-time patch"
-msgstr ""
-
-msgid "which seems to be already applied."
-msgstr ""
-
-msgid "WARNING: failed to apply patch"
-msgstr ""
-
-msgid "Applied installation-time patch"
-msgstr ""
-
-msgid "and saved it as"
-msgstr ""
-
-msgid "in package installation"
 msgstr ""
 
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
@@ -1038,30 +999,6 @@ msgid "ERROR: no permission to install to directory"
 msgstr ""
 
 msgid "building a fake installation is disallowed"
-msgstr ""
-
-msgid "specified C++"
-msgstr ""
-
-msgid "using C compiler:"
-msgstr ""
-
-msgid "using Fortran compiler:"
-msgstr ""
-
-msgid "using C++ compiler:"
-msgstr ""
-
-msgid "using C++"
-msgstr ""
-
-msgid "using SDK:"
-msgstr ""
-
-msgid "WARNING: failed to revert patch"
-msgstr ""
-
-msgid "Reverted installation-time patch"
 msgstr ""
 
 msgid "Input must be character"

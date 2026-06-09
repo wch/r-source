@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-06-09 14:51\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -665,9 +665,6 @@ msgstr "plik '%s' nie został znaleziony"
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr "nazwa pliku ilustracji '%s' nie zgadza się z żadną ze ścieżek nazwy pliku '%s'"
 
-msgid "+-+"
-msgstr "+-+"
-
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "W ilustracjach '%s', '%s' oraz '%s' mają te same nazwy ilustracji"
 
@@ -957,9 +954,6 @@ msgstr "nie można odczytać indeksu informacji w pliku '%s'"
 msgid ".install_packages() exit status"
 msgstr "Status wyjścia dla funkcji '.install_packages()'"
 
-msgid "restoration failed"
-msgstr "przywrócenie nie powiodło się"
-
 msgid "error reading file '%s'"
 msgstr "błąd podczas czytania pliku '%s'"
 
@@ -985,18 +979,6 @@ msgstr "tworzenie symboli debugowania (%s)"
 msgid "no DLL was created"
 msgstr "nie utworzono pliku DLL"
 
-msgid "NOTE: fixed path"
-msgstr "UWAGA: poprawiona ścieżka"
-
-msgid "NOTE: fixed library identification name"
-msgstr "UWAGA: poprawiona nazwa identyfikacyjna biblioteki"
-
-msgid "NOTE: fixed library path"
-msgstr "UWAGA: poprawiona ścieżka do biblioteki"
-
-msgid "NOTE: fixed rpath"
-msgstr "UWAGA: poprawione rpath"
-
 msgid "WARNING: shared objects/dynamic libraries with hard-coded temporary installation paths"
 msgstr "OSTRZEŻENIE: współdzielone obiekty/biblioteki dynamiczne z zakodowanymi na stałe tymczasowymi ścieżkami instalacji"
 
@@ -1006,29 +988,8 @@ msgstr "nieużywanie instalacji etapowej z opcją --libs-only"
 msgid "staged installation is only possible with locking"
 msgstr "instalacja etapowa jest możliwa tylko z blokadą"
 
-msgid "WARNING: installation-time patches will not be applied, could not get the patches index"
-msgstr "OSTRZEŻENIE: poprawki instalacyjne nie zostaną zastosowane, nie można uzyskać indeksu poprawek"
-
 msgid "patch utility is needed for installation-time patching"
 msgstr "narzędzie do poprawek jest potrzebne do instalowania poprawek w czasie instalacji"
-
-msgid "NOTE: Skipping installation-time patch"
-msgstr "UWAGA: Pomijanie łatki instalacyjnej"
-
-msgid "which seems to be already applied."
-msgstr "które wygląda na już zastosowane."
-
-msgid "WARNING: failed to apply patch"
-msgstr "OSTRZEŻENIE: nie udało się zastosować łatki"
-
-msgid "Applied installation-time patch"
-msgstr "Zastosowano łatkę podczas instalacji"
-
-msgid "and saved it as"
-msgstr "oraz zapisano ją jako"
-
-msgid "in package installation"
-msgstr "w instalacji pakietu"
 
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
 msgstr "Katalog 'include' w R jest pusty -- być może trzeba zainstalować R-devel.rpm lub coś podobnego"
@@ -1068,30 +1029,6 @@ msgstr "BŁĄD: brak uprawnień aby zainstalować w katalogu"
 
 msgid "building a fake installation is disallowed"
 msgstr "budowanie fałszywej instalacji jest zabronione"
-
-msgid "specified C++"
-msgstr ""
-
-msgid "using C compiler:"
-msgstr "używanie kompilatora C:"
-
-msgid "using Fortran compiler:"
-msgstr "używanie kompilatora Fortran:"
-
-msgid "using C++ compiler:"
-msgstr "używanie kompilatora C++:"
-
-msgid "using C++"
-msgstr "używanie C++"
-
-msgid "using SDK:"
-msgstr "używanie SDK:"
-
-msgid "WARNING: failed to revert patch"
-msgstr "OSTRZEŻENIE: nie udało się wycofać łatki"
-
-msgid "Reverted installation-time patch"
-msgstr "Wycofano łatkę"
 
 #, fuzzy
 msgid "Input must be character"
@@ -1839,25 +1776,3 @@ msgstr[2] "Odpowiednie wpisy BibTeX:"
 
 #~ msgid "installing dependencies %s"
 #~ msgstr "instalowanie zależności %s"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid ":"
-#~ msgstr ":"
-
-#~ msgid "latin1"
-#~ msgstr "latin1"
-
-#~ msgid "ASCII"
-#~ msgstr "ASCII"
-
-#~ msgid "byte"
-#~ msgstr "byte"
-
-#~ msgid "parsing file %s"
-#~ msgstr "parsowanie pliku %s"
-
-#, fuzzy
-#~ msgid "Inconsistent encoding specifications: %s with %%\\SweaveUTF8"
-#~ msgstr "Niespójne specyfikacje strony kodowej:"
