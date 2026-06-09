@@ -3408,7 +3408,7 @@ stopifnot(exprs = {
 ## Bug 19029 - Overly-long dlerror() may corrupt dyn.load() state
 { try(dyn.load(strrep("A", 1000))); try(library(cluster)) -> ans }
 ## seg.faulted typically  (when 'cluster' was found)
-if(is.character(ans)) detach("package:cluster", unload = TRUE)
+if(!inherits(ans, "try-error")) detach("package:cluster", unload = TRUE)
 
 
 
