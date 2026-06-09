@@ -53,40 +53,45 @@
                    ver1 <- strsplit(ver, ".", fixed = TRUE)[[1L]]
                    ver2 <- ver1[2L]
                    if(ver1[1L] == "10")
-                       ## We bo longer support 10.x, bur user do
+                       ## We no longer support 10.x, but users do
                        ## report on very old versions.
                        sprintf("%s %s %s",
                                ifelse(as.numeric(ver2) < 12, "OS X", "macOS"),
                                switch(ver2,
                                       ## 10.6 is earliest that can be installed
+                                      # officially Mac OS X
                                       "6" = "Snow Leopard",
                                       "7" = "Lion",
+                                      # changed to OS X
                                       "8" = "Mountain Lion",
                                       "9" = "Mavericks",
                                       "10" = "Yosemite",
                                       "11" = "El Capitan",
+                                      # changed to macOS
                                       "12" = "Sierra",
                                       "13" = "High Sierra",
                                       "14" = "Mojave",
                                       "15" = "Catalina",
                                       ## used for early pre-releases of Big Sur
-                                      ## and still reported by Xcode 10's SDK
+                                      ## and reported by Xcode 10's SDK
                                       "16" = "Big Sur ...",
                                       ""),
                                ver)
-                   else if(ver1[1L] <= "15"  ||
-                           (ver1[1L]  >= "26" && ver1[1L]  <= "27"))
-                        sprintf("macOS %s %s",
+                   else if(ver1[1L] %in% c(11:15, 26:27))
+                       sprintf("macOS %s %s",
                                switch(ver1[1L],
                                       "11" = "Big Sur",
                                       "12" = "Monterey",
                                       "13" = "Ventura",
+                                      # minimum supported on arm64 for 4.6.0
                                       "14" = "Sonoma",
                                       "15" = "Sequoia",
+                                      # Apple skipped to 26 in Sept 2025
                                       "26" = "Tahoe",
+                                      # arm64 only
                                       "27" = "Golden Gate"
-                                      ## If you add an entry here, will need
-                                      ## to change the raange above.
+                                      ## If you add an entry here, you
+                                      ## will need to change the raange above.
                                       ),
                                ver)
                    else
