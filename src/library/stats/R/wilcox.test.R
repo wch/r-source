@@ -401,6 +401,7 @@ function(x, n, z, alternative, conf.level, digits.rank, digits.zap)
 function(STAT, n, alternative, correct)
 {
     z <- `names<-`(STAT$statistic, NULL) - STAT$ex
+    if(z == 0 && STAT$sd == 0) return(1)
     ## Edgeworth approximations only work if there are no ties (or
     ## zeroes).
     if((correct > 0) && (STAT$ties || STAT$zero))
@@ -749,6 +750,7 @@ function(x, y, n.x, n.y, z, alternative, conf.level)
 function(STAT, n.x, n.y, alternative, correct)
 {
     z <- `names<-`(STAT$statistic, NULL) - STAT$ex
+    if(z == 0 && STAT$sd == 0) return(1)    
     ## Edgeworth approximations only work if there are no ties.
     if((correct > 0) && STAT$ties)
         correct <- 0
