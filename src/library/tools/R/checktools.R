@@ -848,11 +848,14 @@ function(log, drop_ok = TRUE, ...)
     ## Get footer.
     len <- length(lines)
     pos <- which(lines == "* DONE")
-    if(length(pos) &&
-       ((pos <- pos[length(pos)]) < len) &&
-       startsWith(lines[pos + 1L], "Status: "))
-        lines <- lines[seq_len(pos - 1L)]
-    else {
+    if(length(pos)) {
+        for(pos in rev(pos[pos < len])) {
+            if(startsWith(lines[pos + 1L], "Status: ")) {
+                lines <- lines[seq_len(pos - 1L)]
+                break
+            }
+        }
+    } else {
         ## Not really new style, or failure ... argh.
         ## Some check systems explicitly record the elapsed time in the
         ## last line:
