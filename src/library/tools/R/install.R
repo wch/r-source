@@ -2810,7 +2810,7 @@ if(FALSE) {
                      call. = FALSE, domain = NA)
             }
             if (use_cxxstd %in% c("11", "14")) {
-                message("specified C++", use_cxxstd)
+                message("specified C++", use_cxxstd, domain = NA)
                 use_cxxstd <- NULL
             }
             else if (!checkCXX(use_cxxstd)) {
@@ -2818,7 +2818,7 @@ if(FALSE) {
                             use_cxxstd, " is not defined"),
                      call. = FALSE, domain = NA)
             } else
-                message("specified C++", use_cxxstd)
+                message("specified C++", use_cxxstd, domain = NA)
         }
     }
 
@@ -2923,7 +2923,8 @@ if(FALSE) {
             cc_ver <- try(system(paste(cc, "--version"),
                                  intern = TRUE), silent = TRUE)
             if(!inherits(cc_ver, "try-error"))
-                message("using C compiler: ", sQuote(cc_ver[1L]))
+                message("using C compiler: ", sQuote(cc_ver[1L]),
+                        domain = NA) # grepped in check
         }
         if (with_f77 || with_f9x) {
             fc <- lines[grep("^FC =", lines)]
@@ -2932,7 +2933,8 @@ if(FALSE) {
             fc_ver <- try(system(paste(fc, "--version"),
                                  intern = TRUE), silent = TRUE)
             if(!inherits(fc_ver, "try-error"))
-                message("using Fortran compiler: ", sQuote(fc_ver[1L]))
+                message("using Fortran compiler: ", sQuote(fc_ver[1L]),
+                        domain = NA)
         }
         if (with_cxx) {
             cxx <- lines[grep("^CXX =", lines)]
@@ -2942,9 +2944,10 @@ if(FALSE) {
                 cxx_ver <- try(system(paste(cxx, "--version"),
                                  intern = TRUE), silent = TRUE)
                 if(!inherits(cxx_ver, "try-error")) {
-                    message("using C++ compiler: ", sQuote(cxx_ver[1L]))
+                    message("using C++ compiler: ", sQuote(cxx_ver[1L]),
+                            domain = NA)
                     if(!is.null(use_cxxstd))
-                       message("using C++", use_cxxstd)
+                       message("using C++", use_cxxstd, domain = NA)
                 }
             }
         }
@@ -2957,7 +2960,7 @@ if(FALSE) {
             if(!inherits(sdk, "try-error")) {
                 sdk <- if (length(attr(sdk, "status"))) NA_character_
                        else paste0("MacOSX", sdk, ".sdk")
-                message("using SDK: ", sQuote(sdk))
+                message("using SDK: ", sQuote(sdk), domain = NA)
             }
         }
         if (preclean) system(paste(cmd, "shlib-clean"))
@@ -3213,7 +3216,7 @@ if(FALSE) {
         ## may be slow, so add a message
         if (!silent) message("    finding HTML links ...", appendLF = FALSE, domain = NA)
         Links <- findHTMLlinks(outDir, level = 0:1)
-        if (!silent) message(" done")
+        if (!silent) message(" done", domain = NA)
         Links2 <- character()
     }
 
