@@ -111,7 +111,7 @@
       In particular, when a source package \file{foo/} folder contains broken
       symlinks matching an exclude pattern, \command{R CMD build foo}
       now succeeds, omitting these, thus fixing \PR{18186}.  (Thanks to
-      \I{Ivan Krylov} and others, notably \I{Jenny Brian} and \I{R Dev
+      \I{Ivan Krylov} and others, notably \I{Jenny Bryan} and \I{R Dev
       Day @ useR! 2025} contributors.)
 
       \item Overly long \code{dyn.load()} error messages (C level
