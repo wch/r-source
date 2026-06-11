@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-05-09 r90031) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-06-09 r90126) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin25.4.0
 
@@ -21,6 +21,7 @@ Type 'q()' to quit R.
 > ## Please use the R-internal version for .Rout.save
 > 
 > options(warn = 1L)
+> si <-  sessionInfo()
 > 
 > ## tests of "POSIXlt" objects
 > xU <- strptime("2022-01-01", "%Y-%m-%d", tz = "UTC")
@@ -44,6 +45,28 @@ List of 11
 > 
 > x0 <- strptime("2022-01-01", "%Y-%m-%d") # current time zone
 > ## IGNORE_RDIFF_BEGIN
+> si # sessionInfo() incl "tzcode source" :
+R Under development (unstable) (2026-06-09 r90126)
+Platform: x86_64-pc-linux-gnu
+Running under: Fedora Linux 42 (Adams)
+
+Matrix products: default
+BLAS:   /sfs/u/maechler/R/D/r-devel/F42-64-inst/lib/libRblas.so 
+LAPACK: /usr/lib64/liblapack.so.3.12.0  LAPACK version 3.12.0
+
+locale:
+[1] C
+
+time zone: Europe/Zurich
+tzcode source: system (glibc)
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+[1] compiler_4.7.0
+> (tzCtype <- si[["tzcode_type"]])
+[1] "system (glibc)"
 > x0
 [1] "2022-01-01 GMT"
 > str(unclass(x0))
@@ -144,6 +167,7 @@ List of 11
 > x5 <- strptime("2022-07-01", "%Y-%m-%d", tz ="Pacific/Kiritimati")
 > x5
 [1] "2022-07-01 +14"
+> ## IGNORE_RDIFF_BEGIN
 > str(unclass(x5)) # does not have DST, hence no DST abbreviation except on glibc
 List of 11
  $ sec   : num 0
@@ -159,6 +183,18 @@ List of 11
  $ gmtoff: int NA
  - attr(*, "tzone")= chr [1:3] "Pacific/Kiritimati" "+14" "   "
  - attr(*, "balanced")= logi TRUE
+> ## IGNORE_RDIFF_END
+> u5 <- unclass(x5)
+> u5_ <- `attr<-`(u5, "tzone", NULL)
+> stopifnot(exprs = {
++     identical(attr(u5, "tzone"),
++               c("Pacific/Kiritimati", "+14", if(grepl("glibc", tzCtype)) "+14" else "   "))
++     identical(u5_, structure(
++                   list(sec = 0, min = 0L, hour = 0L, mday = 1L, mon = 6L, year = 122L,
++                        wday = 5L, yday = 181L, isdst = 0L, zone = "+14", gmtoff = NA_integer_),
++                   balanced = TRUE))
++ })
+> 
 > 
 > ## edge of range and out of range offsets
 > strptime("2022-01-01 +1400", "%Y-%m-%d %z", tz = "UTC")

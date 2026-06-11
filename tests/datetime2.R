@@ -74,6 +74,7 @@ for(i in seq_along(years)) {
     y[i] <- strftime(zz)
 }
 ## IGNORE_RDIFF_BEGIN
+(tzCtype <- sessionInfo()[["tzcode_type"]])
 y
 ## IGNORE_RDIFF_END
 
@@ -142,8 +143,18 @@ format(as.POSIXct(x3), "%a, %d %b %Y %H:%M:%S %z") # +10h30m
 # Liberia does/did not have DST
 x4 <- strptime("1971-01-01", "%Y-%m-%d", tz = "Africa/Monrovia")
 y4 <- as.POSIXct(x4)
-str(unclass(as.POSIXlt(y4))) # correct gmtoff, printed wrong  as -44m
+
+## IGNORE_RDIFF_BEGIN
+str(lt4 <- unclass(as.POSIXlt(y4))) # correct gmtoff, printed wrong  as -44m
 # glibc prints an abbreviation for DST.
+## IGNORE_RDIFF_END
+stopifnot(identical(attr(lt4, "tzone"),
+                    c("Africa/Monrovia", "GMT", if(grepl("glibc", tzCtype)) "GMT" else "   ")),
+          identical(`attr<-`(lt4, "tzone", NULL),
+                    structure(list(sec = 0, min = 0L, hour = 0L, mday = 1L, mon = 0L, year = 71L,
+                                   wday = 5L, yday = 0L, isdst = 0L, zone = "MMT", gmtoff = -2670L),
+                              balanced = TRUE)))
+
 format(y4, "%a, %d %b %Y %H:%M:%S %z")
 ## timezones in 1900 might not be supported
 x5 <- strptime("1900-03-01", "%Y-%m-%d", tz = "Europe/Paris")

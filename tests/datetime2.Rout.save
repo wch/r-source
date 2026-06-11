@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-05-09 r90031) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-06-09 r90126) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin25.4.0
 
@@ -318,6 +318,8 @@ attr(,"balanced")
 +     y[i] <- strftime(zz)
 + }
 > ## IGNORE_RDIFF_BEGIN
+> (tzCtype <- sessionInfo()[["tzcode_type"]])
+[1] "internal"
 > y
  [1] "-1000000-07-01" "-100000-07-01"  "-10000-07-01"   "-1000-07-01"   
  [5] "-900-07-01"     "-800-07-01"     "-700-07-01"     "-600-07-01"    
@@ -490,7 +492,9 @@ attr(,"balanced")
 > # Liberia does/did not have DST
 > x4 <- strptime("1971-01-01", "%Y-%m-%d", tz = "Africa/Monrovia")
 > y4 <- as.POSIXct(x4)
-> str(unclass(as.POSIXlt(y4))) # correct gmtoff, printed wrong  as -44m
+> 
+> ## IGNORE_RDIFF_BEGIN
+> str(lt4 <- unclass(as.POSIXlt(y4))) # correct gmtoff, printed wrong  as -44m
 List of 11
  $ sec   : num 0
  $ min   : int 0
@@ -506,6 +510,14 @@ List of 11
  - attr(*, "tzone")= chr [1:3] "Africa/Monrovia" "GMT" "   "
  - attr(*, "balanced")= logi TRUE
 > # glibc prints an abbreviation for DST.
+> ## IGNORE_RDIFF_END
+> stopifnot(identical(attr(lt4, "tzone"),
++                     c("Africa/Monrovia", "GMT", if(grepl("glibc", tzCtype)) "GMT" else "   ")),
++           identical(`attr<-`(lt4, "tzone", NULL),
++                     structure(list(sec = 0, min = 0L, hour = 0L, mday = 1L, mon = 0L, year = 71L,
++                                    wday = 5L, yday = 0L, isdst = 0L, zone = "MMT", gmtoff = -2670L),
++                               balanced = TRUE)))
+> 
 > format(y4, "%a, %d %b %Y %H:%M:%S %z")
 [1] "Fri, 01 Jan 1971 00:00:00 -0044"
 > ## timezones in 1900 might not be supported

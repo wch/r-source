@@ -4,6 +4,7 @@
 ## Please use the R-internal version for .Rout.save
 
 options(warn = 1L)
+si <-  sessionInfo()
 
 ## tests of "POSIXlt" objects
 xU <- strptime("2022-01-01", "%Y-%m-%d", tz = "UTC")
@@ -12,6 +13,8 @@ str(unclass(xU))
 
 x0 <- strptime("2022-01-01", "%Y-%m-%d") # current time zone
 ## IGNORE_RDIFF_BEGIN
+si # sessionInfo() incl "tzcode source" :
+(tzCtype <- si[["tzcode_type"]])
 x0
 str(unclass(x0))
 ## IGNORE_RDIFF_END
@@ -36,7 +39,20 @@ str(unclass(x4)) # abbreviations may be numbers.
 # Kiribati does/did not have DST, so second abbreviation may be repeat or empty
 x5 <- strptime("2022-07-01", "%Y-%m-%d", tz ="Pacific/Kiritimati")
 x5
+## IGNORE_RDIFF_BEGIN
 str(unclass(x5)) # does not have DST, hence no DST abbreviation except on glibc
+## IGNORE_RDIFF_END
+u5 <- unclass(x5)
+u5_ <- `attr<-`(u5, "tzone", NULL)
+stopifnot(exprs = {
+    identical(attr(u5, "tzone"),
+              c("Pacific/Kiritimati", "+14", if(grepl("glibc", tzCtype)) "+14" else "   "))
+    identical(u5_, structure(
+                  list(sec = 0, min = 0L, hour = 0L, mday = 1L, mon = 6L, year = 122L,
+                       wday = 5L, yday = 181L, isdst = 0L, zone = "+14", gmtoff = NA_integer_),
+                  balanced = TRUE))
+})
+
 
 ## edge of range and out of range offsets
 strptime("2022-01-01 +1400", "%Y-%m-%d %z", tz = "UTC")
