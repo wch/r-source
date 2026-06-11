@@ -4398,7 +4398,7 @@ Perl script @command{checkbashisms} if available.  This includes
 reporting scripts using the non-portable @code{#! /bin/bash}.
 (Script @command{checkbashisms} is available in most Linux distributions
 in a package named either @samp{devscripts} or @samp{devscripts-checkbashisms}
-and from @uref{https://sourceforge.net/projects/checkbaskisms/files}.)
+and from @uref{https://sourceforge.net/projects/checkbaskisms/files/}.)
 Default: false (but true for CRAN submission checks except on Windows).
 
 @item _R_CHECK_ORPHANED_

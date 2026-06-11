@@ -1773,7 +1773,7 @@ expansion is a known issue: see
 for this and others.  Some checks can be done by the
 @code{checkbashisms} Perl script at
 @c 'checkbaskisms' really is the correct path
-@uref{https://sourceforge.net/projects/checkbaskisms/files}, also
+@uref{https://sourceforge.net/projects/checkbaskisms/files/}, also
 available in most Linux distributions in a package named either
 @samp{devscripts} or @samp{devscripts-checkbashisms}: a later version
 can be extracted from Debian sources such as the most recent
@@ -3053,7 +3053,7 @@ or
 
 Note that `support' for a standard does not mean complete support: use
 feature tests as well as resources such as
-@uref{https://en.cppreference.com/w/cpp/compiler_support.html},
+@uref{https://en.cppreference.com/cpp/compiler_support},
 @uref{https://gcc.gnu.org/projects/cxx-status.html} and
 @uref{https://clang.llvm.org/cxx_status.html} to see if the features you
 want to use are widely implemented. (In particular, C++20 modules were
