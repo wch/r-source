@@ -1886,6 +1886,13 @@ attribute_hidden SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
     else // !resize
 	setAttrib(r, R_DimSymbol, dimsa);
 
+    /* FIXME:
+       The docs have forever said that all "other" (not dim or dimnames)
+       attributes are copied.  This can easily be achieved via
+         copyMostAttrib(a, r);
+       which seems to break about 15 CRAN packages.
+    */
+
     UNPROTECT(3); /* dimsa, r, dimsr */
     return r;
 }
