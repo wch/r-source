@@ -51,6 +51,11 @@
       \item \code{wilcox.test(x, exact=FALSE, correct = k)}'s p-value
       computation got a missing \code{dnorm(z)} factor, and so did the
       2-sample case, in addition to more fixes.
+
+      \item Data part of \code{getGenerics()} listed package names for
+      generic functions defined in more than one package.  Now it
+      lists generic function names, as intended.  Thanks to \I{Michael
+      Chirico} for report and patch proposal (\PR{19080}).
     }
   }
 }
