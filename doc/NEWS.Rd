@@ -126,6 +126,12 @@
       \item In \pkg{methods}, \code{as()} now correctly coerces S4
       objects to S4 superclasses extending old-style classes, instead
       of returning only the S3 part.
+
+      \item \code{strat_ratio != 1} in \code{rfree1way} did not work as
+      advertised.
+      
+      \item Zeros in \code{prob} argument to \code{power.free1way.test}
+      triggered an error and are now handled correctly.
     }
   }
 }
