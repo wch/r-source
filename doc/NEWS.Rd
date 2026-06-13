@@ -132,7 +132,7 @@
 }
 
 
-\section{\Rlogo Changes in R 4.6.0 patched}{
+\section{\Rlogo Changes in R 4.6.1}{
 
   \subsection{New Features}{
     \itemize{
