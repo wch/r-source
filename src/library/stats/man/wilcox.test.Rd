@@ -144,6 +144,11 @@ wilcox.test(x, \dots)
   confidence interval cannot be computed, in which case the interval
   boundaries and sometimes the \code{estimate} now contain
   \code{\link{NaN}}.
+
+  As from \R 4.7.0, exact zeros are no longer removed when computing
+  asymptotic p-values for the signed rank test (following
+  \bibcitet{R:Pratt:1959} and not \bibcitet{R:Wilcoxon:1949}), in
+  accordance with computing exact p-values for \R 4.6.0 or later.
 }
 \value{
   A list with class \code{"htest"} containing the following components:
