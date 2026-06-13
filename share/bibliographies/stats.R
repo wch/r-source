@@ -3136,3 +3136,48 @@ bibentry(bibtype = "Book",
          year = "1999",
          series = "Statistics and Computing",
          address = "New York, NY")
+
+bibentry(bibtype = "Article",
+         key = "R:Fay:2010",
+         author = person(given = c("Michael", "P."),
+                         family = "Fay"),
+         title = "Two-sided Exact Tests and Matching Confidence Intervals for Discrete Data",
+         journal = "The R Journal",
+         year = "2010",
+         doi = "10.32614/RJ-2010-008",
+         volume = "2",
+         issue = "1",
+         .issn = "2073-4859",
+         pages = "53--58")
+
+bibentry(bibtype = "Book",
+         key = "R:Hirji:2005",
+         author = person(given = c("Karim", "F."),
+                         family = "Hirji"),
+         title = "Exact Analysis of Discrete Data",
+         publisher = "Chapman and Hall/CRC",
+         year = "2005",
+         address = "New York",
+         edition = "First",
+         doi = "10.1201/9781420036190")
+
+bibentry(bibtype = "Article",
+         key = "R:Pratt:1959",
+         author = person(given = c("John", "W."),
+                         family = "Pratt"),
+         title = "Remarks on Zeros and Ties in the {Wilcoxon} Signed Rank Procedures",
+         journal = "Journal of the American Statistical Association",
+         year = "1959",
+         volume = "54",
+         number = "287",
+         pages = "655--667",
+         doi = "10.1080/01621459.1959.10501526")
+
+bibentry(bibtype = "TechReport",
+         key = "R:Wilcoxon:1949",
+         author = person(given = "Frank",
+                         family = "Wilcoxon"),
+         year = "1949",
+         title = "Some Rapid Approximate Statistical Procedures",
+         institution = "American Cyanamid Company",
+         address = "New York")
