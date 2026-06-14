@@ -307,20 +307,23 @@ function(x)
     tab
 }
 
-## This somewhat duplicates the code in the helpers: ideally we could
-## have the same code for extracting the keys ...
 .bibkeys_from_cite <-
 function(x)
 {
     x <- trimws(x)
     m <- gregexpr("|", x, fixed = TRUE)
     if (m[[1L]][1L] == -1L) { # simple keys
-        keys <- strsplit(x, ",[[:space:]]*", perl = TRUE)[[1L]]
-    } else { # a single citespec
+        strsplit(x, ",[[:space:]]*", perl = TRUE)[[1L]]
+    } else { # a single citespec: before|key|after
         parts <- regmatches(x, m, invert = TRUE)[[1L]]
-        keys <- if (length(parts) == 3L) parts[2L] else character()
+        if (length(parts) == 3L) {
+            structure(parts[2L], before = parts[1L], after = parts[3L])
+        } else {
+            warning("Ignoring invalid citation specification\n  ",
+                    sQuote(x), call. = FALSE, domain = NA)
+            character()
+        }
     }
-    keys
 }
 
 .bibkeys_from_show <-
