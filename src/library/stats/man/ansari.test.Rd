@@ -64,7 +64,9 @@ ansari.test(x, \dots)
   there are no ties.  Otherwise, a normal approximation is used.
 
   Optionally, a nonparametric confidence interval and an estimator for
-  \eqn{s} are computed.  If exact p-values are available, an exact
+  \eqn{s} are computed.  This requires that the data have been
+  appropriately centered so that \eqn{m = 0}.
+  If exact p-values are available, an exact
   confidence interval is obtained by the algorithm described in
   \bibcitet{R:Bauer:1972}, and the \I{Hodges}-\I{Lehmann} estimator is
   employed.  Otherwise, the returned confidence interval and point
