@@ -3319,6 +3319,12 @@ stopifnot(exprs = { # on x86_64 F42 Linux, all `tolerance = *` could be 0
 ## The 'correct = 1 | 2 | 3' did *not* improve the p values in R 4.6.0
 
 
+## Bug 19029 - Overly-long dlerror() may corrupt dyn.load() state
+{ try(dyn.load(strrep("A", 1000))); try(library(cluster)) -> ans }
+## seg.faulted typically  (when 'cluster' was found)
+if(!inherits(ans, "try-error")) detach("package:cluster", unload = TRUE)
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1997-2026 The R Core Team
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2023 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -130,8 +130,7 @@ static DL_FUNC getRoutine(DllInfo *info, char const *name)
 
 static void R_getDLLError(char *buf, int len)
 {
-    LPSTR lpMsgBuf, p;
-    char *q;
+    LPSTR lpMsgBuf;
     FormatMessage(
 	FORMAT_MESSAGE_ALLOCATE_BUFFER |
 	FORMAT_MESSAGE_FROM_SYSTEM |
@@ -144,13 +143,16 @@ static void R_getDLLError(char *buf, int len)
 	NULL
 	);
     strcpy(buf, "LoadLibrary failure:  ");
-    q = buf + strlen(buf);
+    char
+	*q = buf + strlen(buf),
+	*e = buf + len - 1;
     /* It seems that Win 7 returns error messages with CRLF terminators */
-    for (p = lpMsgBuf; *p; p++) if (*p != '\r') *q++ = *p;
+    for (LPSTR p = lpMsgBuf; *p && q < e; p++) if (*p != '\r') *q++ = *p;
     LocalFree(lpMsgBuf);
+    *e = '\0';
 }
 
-/* Retuns the number of bytes (excluding the terminator) needed in buf.
+/* Returns the number of bytes (excluding the terminator) needed in buf.
    When bufsize is at least that + 1, buf contains the result
    with terminator. */
 static size_t

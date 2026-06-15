@@ -44,18 +44,23 @@
       Fortran, triggered by a \I{flang 22} compiler optimization bug
       (\command{-O2}).
 
-      \item Border case \code{zapsmall(x, digits=Inf)} where \code{x} has an
-      \code{Inf} entry, no longer returns all \code{NaN} but rather \code{x}.
-      Help page improved, also with more non-default examples.
+      \item The border case \code{zapsmall(x, digits=Inf)} where \code{x}
+      contains an \code{Inf} entry no longer returns all \code{NaN} but
+      rather \code{x}.
+      The improved help page now has more non-default examples.
 
       \item \code{wilcox.test(x, exact=FALSE, correct = k)}'s p-value
       computation got a missing \code{dnorm(z)} factor, and so did the
       2-sample case, in addition to more fixes.
 
-      \item Data part of \code{getGenerics()} listed package names for
+      \item The data part of \code{getGenerics()} listed package names for
       generic functions defined in more than one package.  Now it
       lists generic function names, as intended.  Thanks to \I{Michael
       Chirico} for report and patch proposal (\PR{19080}).
+
+      \item Overly long \code{dyn.load()} error messages (C level
+      \code{dlerror()}), should no longer corrupt its state, thanks to
+      \I{Ivan Krylov}'s \PR{19029} report and patch.
     }
   }
 }
