@@ -158,3 +158,82 @@ function(x, n, p)
         }
     }
 }
+
+.binom_test_two_sided_pval_mlquick <-
+function(x, n, p, quick = TRUE)
+{
+    if(p == 0)
+        return(x == 0)
+    if(p == 1)
+        return(x == n)
+    log_dx <- dbinom(x, n, p, log = TRUE)
+    if(!is.finite(log_dx))
+        return(0)
+    relErr <- 1 + 1e-07
+    log_thresh <- log_dx + log(relErr)
+    if(quick) {
+        ## Fast O(log n) path for large n.
+        ## Contributed by Ravi Varadhan.
+        mode <- floor((n + 1) * p)
+        if(x == mode)
+            1
+        else {
+            yL <- if(x < mode) x
+                  else {
+                      ## Left boundary: largest k <= mode
+                      ## with dbinom(k) <= dbinom(x)*relErr 
+                      lo <- 0L; hi <- mode
+                      while(lo < hi) {
+                          mid <- (lo + hi + 1L) %/% 2L
+                          if(dbinom(mid, n, p, log = TRUE) > log_thresh)
+                              hi <- mid - 1L
+                          else
+                              lo <- mid
+                      }
+                      lo
+                  }
+            yR <- if(x > mode) x
+                  else {
+                      ## Right boundary: smallest k >= mode
+                      ## with dbinom(k) <= dbinom(x)*relErr
+                      lo <- mode; hi <- n
+                      while(lo < hi) {
+                          mid <- (lo + hi) %/% 2L
+                          if(dbinom(mid, n, p, log = TRUE) > log_thresh)
+                              lo <- mid + 1L
+                          else
+                              hi <- mid
+                      }
+                      lo
+                  }
+            pbinom(yL, n, p) +
+                pbinom(yR - 1, n, p, lower.tail = FALSE)
+        }
+    }
+    else {
+        ## Do
+        ##   d <- dbinom(0 : n, n, p)
+        ##   sum(d[d <= dbinom(x, n, p)])
+        ## a bit more efficiently ...
+        ## Note that we need a little fuzz.
+        ## This is tricky: need to be sure
+        ## only to sum values in opposite tail
+        ## and not count x twice.
+        ## For the binomial dist., the mode will
+        ## equal the mean if it is an integer.
+        m <- n * p
+        if (x == m)
+            1
+        else if (x < m) {
+            i <- seq.int(from = ceiling(m), to = n)
+            y <- sum(dbinom(i, n, p, log = TRUE) <= log_thresh)
+            pbinom(x, n, p) +
+                pbinom(n - y, n, p, lower.tail = FALSE)
+        } else {
+            i <- seq.int(from = 0, to = floor(m))
+            y <- sum(dbinom(i, n, p, log = TRUE) <= log_thresh)
+            pbinom(y - 1, n, p) +
+                pbinom(x - 1, n, p, lower.tail = FALSE)
+        }
+    }
+}
