@@ -114,18 +114,14 @@
       \I{Ivan Krylov} and others, notably \I{Jenny Bryan} and \I{R Dev
       Day @ useR! 2025} contributors.)
 
-      \item Overly long \code{dyn.load()} error messages (C level
-      \code{dlerror()}), should no longer corrupt its state, thanks to
-      \I{Ivan Krylov}'s \PR{19029} report and patch.
-
       \item In \pkg{methods}, \code{as()} now correctly coerces S4
       objects to S4 superclasses extending old-style classes, instead
       of returning only the S3 part.
 
       \item \code{strat_ratio != 1} in \code{rfree1way} did not work as
       advertised.
-      
-      \item Zeros in \code{prob} argument to \code{power.free1way.test}
+
+      \item Zeros in the \code{prob} argument to \code{power.free1way.test}
       triggered an error and are now handled correctly.
     }
   }
@@ -170,21 +166,29 @@
       Fortran, triggered by a \I{flang 22} compiler optimization bug
       (\command{-O2}).
 
-      \item Border case \code{zapsmall(x, digits=Inf)} where \code{x} has an
-      \code{Inf} entry, no longer returns all \code{NaN} but rather \code{x}.
-      Help page improved, also with more non-default examples.
+      \item The border case \code{zapsmall(x, digits=Inf)} where \code{x}
+      contains an \code{Inf} entry no longer returns all \code{NaN} but
+      rather \code{x}.
+      The improved help page now has more non-default examples.
 
       \item \code{wilcox.test(x, exact=FALSE, correct = k)}'s p-value
       computation got a missing \code{dnorm(z)} factor, and so did the
       2-sample case, in addition to more fixes.
 
-      \item Data part of \code{getGenerics()} listed package names for
+      \item The data part of \code{getGenerics()} listed package names for
       generic functions defined in more than one package.  Now it
       lists generic function names, as intended.  Thanks to \I{Michael
       Chirico} for report and patch proposal (\PR{19080}).
 
+      \item Overly long \code{dyn.load()} error messages (C level
+      \code{dlerror()}), should no longer corrupt its state, thanks to
+      \I{Ivan Krylov}'s \PR{19029} report and patch.
+
       \item \code{as.matrix(<POSIXlt>)} again produces a \emph{numeric}
-      matrix, thanks to \I{Suharto Anggono}'s \PR{19084}.
+      matrix, and the \code{c()} and subassignment methods for
+      \code{POSIXlt} objects work correctly more often, e.g., without a
+      \code{"tzone"} attribute, back porting a few of the \PR{18989} fixes
+      from R-devel, both thanks to \I{Suharto Anggono}.
     }
   }
 }
