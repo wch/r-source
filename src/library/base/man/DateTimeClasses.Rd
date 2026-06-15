@@ -230,14 +230,12 @@
   \code{\link{str}()}) apply to the abstract date-time vector, as for
   \code{"POSIXct"}.  One can extract and replace \emph{single}
   components via \code{[} indexing with \emph{two} indices (see the
-  examples).  The \code{\link{as.data.frame}()} or as
-  \code{\link{as.matrix}()} methods get the components as columns, in the
-  matrix case, as \code{\link{numeric}} without the \code{zone}.
-  \code{\link{data.frame}()} or the \code{\link{as.matrix}()} method get
-  the components as columns, in the matrix case as \code{\link{numeric}}
-  without the \code{zone}.  Note that the \code{as.data.frame} method
-  converts \code{"POSIXlt"} to a \code{"POSIXct"} one column data frame, to
-  treat datetime objects analogously to atomic vectors.
+  examples).
+  The \code{\link{as.matrix}()} method gets the components as
+  \code{\link{numeric}} columns without the \code{zone}, whereas
+  \code{data.frame()} and the \code{as.data.frame} method
+  convert a \code{"POSIXlt"} to a \code{"POSIXct"} one column data frame,
+  to treat datetime objects analogously to atomic vectors.
 
   The components of \code{"POSIXlt"} are \code{\link{integer}} vectors,
   except \code{sec} (\code{\link{double}}) and \code{zone}
@@ -381,9 +379,9 @@ leapS <- as.POSIXlt(.leap.seconds)
 names(unclass(leapS)) ; is.list(leapS)
 ## str() on inner structure needs unclass(.):
 utils::str(unclass(leapS), vec.len = 7)
-## show all (apart from "tzone" attr):
+## show all components
 data.frame(unclass(leapS))
-## numeric matrix w/ typically 10 components, i.e., for now,  27 x 10
+## Omitting "tzone" attrib, numeric matrix w/ 10 columns (27 x 10, currently) :
 (leapm <- as.matrix(leapS))
 stopifnot(identical(ncol(leapm), 10L), is.numeric(leapm)) # was character in R <= 4.6.0
 
