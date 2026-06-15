@@ -677,7 +677,11 @@ c.POSIXlt <- function(..., recursive = FALSE) {
                 if(is.character(x) || is.factor(x)) as.POSIXlt(x) else x)
     ## s:= fractional part of seconds in all of 'x'
     s <- lapply(x, function(x) if(inherits(x, "POSIXlt")) x$sec - floor(x$sec))
-    n <- lengths(x <- lapply(x, as.POSIXct), use.names = FALSE)
+    x <- lapply(x, function(x) {
+        if(inherits(x, "POSIXlt")) x$sec <- floor(x$sec)
+        as.POSIXct(x)
+    })
+    n <- lengths(x, use.names = FALSE)
     x <- as.POSIXlt(do.call(c, x))
     for(i in seq_along(s)) if(length(si <- s[[i]]) != (ni <- n[[i]]))
         s[[i]] <- if(is.null(si)) double(ni) else rep_len(si, ni)
@@ -707,6 +711,7 @@ ISOdate <- function(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 
 as.matrix.POSIXlt <- function(x, ...)
 {
+    x$zone <- NULL # to always get numeric
     as.matrix(as.data.frame(unclass(x)), ...)
 }
 
@@ -1353,7 +1358,7 @@ function(x, units = c("secs", "mins", "hours", "days", "months", "years"))
             value <- unCfillPOSIXlt(
                 if(inherits(value, "POSIXlt") && identical(tz, attr(value, "tzone")))
                     value
-                else as.POSIXlt(as.POSIXct(value), tz = tz[1L]))
+                else as.POSIXlt(as.POSIXct(value), tz = if(is.null(tz)) "" else tz[1L]))
             if(ici) {
                 for(n in names(x))
                     names(x[[n]]) <- nms
@@ -1600,7 +1605,7 @@ as.list.POSIXlt <- function(x, ...)
     value <- unCfillPOSIXlt(
         if(inherits(value, "POSIXlt") && identical(tz, attr(value, "tzone")))
             value
-        else as.POSIXlt(as.POSIXct(value), tz = tz[1L]))
+        else as.POSIXlt(as.POSIXct(value), tz = if(is.null(tz)) "" else tz[1L]))
     for(n in names(x))
         x[[n]][[i]] <- value[[n]]
 

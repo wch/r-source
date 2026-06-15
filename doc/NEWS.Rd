@@ -61,6 +61,12 @@
       \item Overly long \code{dyn.load()} error messages (C level
       \code{dlerror()}), should no longer corrupt its state, thanks to
       \I{Ivan Krylov}'s \PR{19029} report and patch.
+
+      \item \code{as.matrix(<POSIXlt>)} again produces a \emph{numeric}
+      matrix, and the \code{c()} and subassignment methods for
+      \code{POSIXlt} objects work correctly more often, e.g., without a
+      \code{"tzone"} attribute, back porting a few of the \PR{18989} fixes
+      from R-devel, both thanks to \I{Suharto Anggono}.
     }
   }
 }

@@ -1,6 +1,6 @@
 % File src/library/base/man/DateTimeClasses.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{DateTimeClasses}
@@ -123,6 +123,12 @@
   Be aware that \code{"POSIXlt"} objects will be interpreted as being in
   the current time zone for these operations unless a time zone has been
   specified.
+  \cr
+  Note that these arithmetic, comparison and logical operations
+  \emph{currently} work via coercion to \code{"POSIXct"} which may lose
+  accuracy of (typically fractional) seconds.  Hence, e.g., \code{t1 == t2}
+  may be true where the datetime objects differ slightly and (at least) one
+  of them is \code{POSIXlt}.
 
   Further implemented methods comprise \code{\link{mean}},
   \code{\link{summary}}, \code{\link{unique}}, \code{\link{is.finite}},
@@ -223,6 +229,11 @@
   \code{"POSIXct"}.  One can extract and replace \emph{single}
   components via \code{[} indexing with \emph{two} indices (see the
   examples).
+  The \code{\link{as.matrix}()} method gets the components as
+  \code{\link{numeric}} columns without the \code{zone}, whereas
+  \code{data.frame()} and the \code{as.data.frame} method
+  convert a \code{"POSIXlt"} to a \code{"POSIXct"} one column data frame,
+  to treat datetime objects analogously to atomic vectors.
 
   The components of \code{"POSIXlt"} are \code{\link{integer}} vectors,
   except \code{sec} (\code{\link{double}}) and \code{zone}
@@ -366,8 +377,11 @@ leapS <- as.POSIXlt(.leap.seconds)
 names(unclass(leapS)) ; is.list(leapS)
 ## str() on inner structure needs unclass(.):
 utils::str(unclass(leapS), vec.len = 7)
-## show all (apart from "tzone" attr):
+## show all components
 data.frame(unclass(leapS))
+## Omitting "tzone" attrib, numeric matrix w/ 10 columns (27 x 10, currently) :
+(leapm <- as.matrix(leapS))
+stopifnot(identical(ncol(leapm), 10L), is.numeric(leapm)) # was character in R <= 4.6.0
 
 ## Extracting *single* components of POSIXlt objects:
 leapS[1 : 5, "year"]
