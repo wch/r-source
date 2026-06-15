@@ -14,7 +14,7 @@
 \usage{
 poisson.test(x, T = 1, r = 1,
     alternative = c("two.sided", "less", "greater"),
-    conf.level = 0.95)
+    conf.level = 0.95, two.sided.method = c("minlike", "central"))
 }
 \arguments{
   \item{x}{number of events. A vector of length one or two.}
@@ -25,11 +25,20 @@ poisson.test(x, T = 1, r = 1,
     You can specify just the initial letter.}
   \item{conf.level}{confidence level for the returned confidence
     interval.}
+  \item{two.sided.method}{a character string specifying the method for
+    computing two-sided p-values, must be one of \code{"minlike"}
+    (default) or \code{"central"}, or an abbreviation thereof.
+    See \sQuote{Details} in the help for \code{\link{binom.test}}.
+  }
 }
 \details{
   Confidence intervals are computed similarly to those of
   \code{\link{binom.test}} in the one-sample case, and using
   \code{\link{binom.test}} in the two sample case.
+
+  It is intended to change the default method for computing two-sided
+  p-values from \I{minlike} to central to make these match the confidence
+  intervals.
 }
 \value{
   A list with class \code{"htest"} containing the following components:

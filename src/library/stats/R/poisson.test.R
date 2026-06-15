@@ -1,7 +1,7 @@
 #  File src/library/stats/R/poisson.tests.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2012 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,9 +17,9 @@
 #  https://www.R-project.org/Licenses/
 
 
-poisson.test <- function(x, T = 1, r = 1, alternative =
-                         c("two.sided", "less", "greater"),
-                         conf.level = 0.95)
+poisson.test <-
+function(x, T = 1, r = 1, alternative = c("two.sided", "less", "greater"),
+         conf.level = 0.95, two.sided.method = c("minlike", "central"))
 {
     DNAME <- paste(deparse1(substitute(x)),
                    "time base:", deparse1(substitute(T)))
@@ -53,10 +53,16 @@ poisson.test <- function(x, T = 1, r = 1, alternative =
         conf.level < 0 || conf.level > 1))
         stop("'conf.level' must be a single number between 0 and 1")
 
+    if(alternative == "two.sided")
+        two.sided.method <- match.arg(two.sided.method)
+    
     if (k == 2) {
 
         RVAL <- binom.test(x, sum(x), r * T[1L]/(r * T[1L] + T[2L]),
-                           alternative=alternative, conf.level=conf.level)
+                           alternative = alternative,
+                           conf.level = conf.level,
+                           two.sided.method = two.sided.method
+                           )
 
         RVAL$data.name <- DNAME
         RVAL$statistic <- c(count1 = x[1L])
@@ -74,43 +80,11 @@ poisson.test <- function(x, T = 1, r = 1, alternative =
         PVAL <- switch(alternative,
                        less = ppois(x, m),
                        greater = ppois(x - 1, m, lower.tail = FALSE),
-                       two.sided = {
-                           if(m == 0)
-                               (x == 0)
-                           else {
-                               ## Do
-                               ##   d <- dpois(0 : inf, r * T)
-                               ##   sum(d[d <= dpois(x, r * T)])
-                               ## a bit more efficiently ...
-                               ## Note that we need a little fuzz.
-                               relErr <- 1 + 1e-7
-                               d <- dpois(x, r * T)
-                               ## This is tricky: need to be sure
-                               ## only to sum values in opposite tail
-                               ## and not count x twice.
-
-                               ## For the Poisson dist., the mode will
-                               ## equal the mean if it is an integer.
-                               if (x == m)
-                                   1
-                               else if (x < m) {
-                                   ## Slightly trickier than in the binomial
-                                   ## because we cannot use infinite-length i
-                                   N <- ceiling(2 * m - x)
-                                   while (dpois(N, m) > d)
-                                       N <- 2 * N
-                                   i <- seq.int(from = ceiling(m), to = N)
-                                   y <- sum(dpois(i, m) <= d * relErr)
-                                   ppois(x, m) +
-                                       ppois(N - y, m, lower.tail = FALSE)
-                               } else {
-                                   i <- seq.int(from = 0, to = floor(m))
-                                   y <- sum(dpois(i, m) <= d * relErr)
-                                   ppois(y - 1, m) +
-                                       ppois(x - 1, m, lower.tail = FALSE)
-                               }
-                           }
-                       })
+                       two.sided =
+                           .poisson_test_two_sided_pval(x, m,
+                                                        two.sided.method)
+                       )
+        
         ## Determine m s.t. Prob(Pois(m) >= x) = alpha.
         ## Use that for x > 0,
         ##   Prob(Pois >= x) = pgamma(m, x).
@@ -165,3 +139,57 @@ poisson.test <- function(x, T = 1, r = 1, alternative =
 
 ## eba1977, compare Fredericia to other three cities for ages 55-59
 ## poisson.test(c(11,6+8+7),c(800, 1083+1050+878))
+
+.poisson_test_two_sided_pval <-
+function(x, m, method)
+{
+    switch(method,
+           "central" = .poisson_test_two_sided_pval_central(x, m),
+           "minlike" = .poisson_test_two_sided_pval_minlike(x, m))
+}
+
+.poisson_test_two_sided_pval_central <-
+function(x, m)
+    min(2 * min(ppois(x, m),
+                ppois(x - 1, m, lower.tail = FALSE)),
+        1)
+
+.poisson_test_two_sided_pval_minlike <-
+function(x, m)
+{
+    if(m == 0)
+        (x == 0)
+    else {
+        ## Do
+        ##   d <- dpois(0 : inf, m)
+        ##   sum(d[d <= dpois(x, m)])
+        ## a bit more efficiently ...
+        ## Note that we need a little fuzz.
+        relErr <- 1 + 1e-7
+        d <- dpois(x, m)
+        ## This is tricky: need to be sure
+        ## only to sum values in opposite tail
+        ## and not count x twice.
+
+        ## For the Poisson dist., the mode will
+        ## equal the mean if it is an integer.
+        if (x == m)
+            1
+        else if (x < m) {
+            ## Slightly trickier than in the binomial
+            ## because we cannot use infinite-length i
+            N <- ceiling(2 * m - x)
+            while (dpois(N, m) > d)
+                N <- 2 * N
+            i <- seq.int(from = ceiling(m), to = N)
+            y <- sum(dpois(i, m) <= d * relErr)
+            ppois(x, m) +
+                ppois(N - y, m, lower.tail = FALSE)
+        } else {
+            i <- seq.int(from = 0, to = floor(m))
+            y <- sum(dpois(i, m) <= d * relErr)
+            ppois(y - 1, m) +
+                ppois(x - 1, m, lower.tail = FALSE)
+        }
+    }
+}
