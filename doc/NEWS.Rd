@@ -308,7 +308,7 @@
       define the type of binaries supported by that build of \R.
 
       \item If \R uses custom binary type in its
-      \code{.Platform$pkgType} then \code{R CMD INSTALL --build} will
+      \code{.Platform$pkgType} then \command{R CMD INSTALL --build} will
       produce \code{<package>_<ver>_R_<system>-<build>.tar.xz} binary
       files. Please note that future versions may use \code{.zstd}
       compression by default so package tooling should support any of
@@ -319,8 +319,8 @@
       in a package contains \abbr{SHA}-256 hashes, lengths and paths
       of files provided in the package allowing for more reliable integrity
       verification (relative to \file{MD5}). This file is now generated
-      by default in \code{R CMD INSTALL --build} and optionally via
-      \code{R CMD build --sha256}. A package can be signed by creating a
+      by default in \command{R CMD INSTALL --build} and optionally via
+      \command{R CMD build --sha256}. A package can be signed by creating a
       detached GnuPG signature file \file{SHA256.sig} signing the
       entirety of the \file{SHA256} file. Upon installation, the
       signature is verified using GnuPG, thus ensuring the integrity of
@@ -329,8 +329,8 @@
       applies to tar-based packages, and the command-line GnuPG
       \command{gpg} tool (or equivalent tool named in the \code{GPG}
       environment variable) has to be available for signing and
-      verification to work. \code{R CMD INSTALL --sign} can be used to
-      sign binary packages, including its use with \code{--build}.
+      verification to work. \command{R CMD INSTALL --sign} can be used to
+      sign binary packages, including its use with \option{--build}.
       System-wide GnuPG keyrings for the \R installation
       can be placed in \code{\var{R_HOME}/etc/keyrings} as files with
       \file{.gpg} extensions and will be checked first before consulting
@@ -710,13 +710,13 @@
 
       \item The \code{Pair(x,y)} construction in the formula interface to
       paired tests did not work with the \code{subset} argument, due to the
-      absence of a \code{[.Pair} method, which has now been added.
+      absence of a \code{[.Pair} method, which has now been added (\PR{18898}).
 
       \item Subsetting \code{"table"} objects keeps S3 classes more
       consistently, fixing \PR{18845}.
 
       \item When \code{browser()} is active or when otherwise debugging, \R code
-      such as \code{if(TRUE)} now longer triggers a new browser level, fixing
+      such as \code{if(TRUE)} no longer triggers a new browser level, fixing
       \PR{18885} (differently than the fix for \PR{15770}), with thanks to
       \I{Ivan Krylov}.
 
@@ -1708,7 +1708,7 @@
       \item \code{tools::checkDocFiles()} notes more cases of
       usage documentation without corresponding \verb{\alias}.
 
-      \item \code{R CMD check} with a true value for environment variable
+      \item \command{R CMD check} with a true value for environment variable
       \env{_R_CHECK_BASHISMS_} checks more thoroughly, including for
       \command{bash} scripts and bashisms in components of
       \command{autoconf}-generated \command{configure} scripts.
@@ -1720,7 +1720,7 @@
       \env{_R_CHECK_PACKAGES_USED_IN_DEMO_} to a true value
       (as done by \command{R CMD check --as-cran}).
 
-      \item \code{R CMD build} now supports \option{--compression=zstd}
+      \item \command{R CMD build} now supports \option{--compression=zstd}
       on platforms with sufficient support for \command{zstd}.
 
       \item \code{tools::texi2pdf(..., texinputs=\var{paths})} now
