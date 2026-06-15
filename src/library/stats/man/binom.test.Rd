@@ -27,7 +27,7 @@ binom.test(x, n, p = 0.5,
     interval.}
   \item{two.sided.method}{a character string specifying the method for
     computing two-sided p-values, must be one of \code{"minlike"}
-    (default) or \code{"central"}, or an abbrevation thereof.
+    (default) or \code{"central"}, or an abbreviation thereof.
     See \sQuote{Details}.}
 }
 \details{
@@ -46,10 +46,10 @@ binom.test(x, n, p = 0.5,
   \deqn{\min(2 \min(P(T \le t | \theta_0), P(T \ge t | \theta_0)), 1)}
   (this is called the twice the smaller tail method in
   \bibcitet{R:Hirji:2005}).
-  The \emph{minlike} p-value is the probability of observing a value of
+  The \emph{\I{minlike}} p-value is the probability of observing a value of
   \eqn{T} not more likely than the one observed, i.e., 
   \deqn{\sum_{s: P(T = s | \theta_0) \le P(T = s | \theta_0)} P(T = s | \theta_0)}
-  (this is called the probability based method by Hirji).
+  (this is called the probability based method by \I{Hirji}).
   
   For the exact binomial test, \eqn{T} is the number of successes and
   \eqn{\theta = p} is the probability of success.
@@ -58,10 +58,10 @@ binom.test(x, n, p = 0.5,
   at most \eqn{\alpha} gives central confidence intervals with
   confidence level at least \eqn{1 - \alpha} where both lower and upper
   tails have probability at most \eqn{\alpha / 2}.  For the exact
-  binomial test, these are the Clopper-Pearson intervals.
+  binomial test, these are the \I{Clopper}-\I{Pearson} intervals.
 
   It is intended to change the default method for computing two-sided
-  p-values from minlike to central to make these match the confidence
+  p-values from \I{minlike} to central to make these match the confidence
   intervals.
 }
 \value{
