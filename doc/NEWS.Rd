@@ -67,6 +67,10 @@
       \code{POSIXlt} objects work correctly more often, e.g., without a
       \code{"tzone"} attribute, back porting a few of the \PR{18989} fixes
       from R-devel, both thanks to \I{Suharto Anggono}.
+
+      \item In \pkg{methods}, \code{as()} now correctly coerces S4
+      objects to S4 superclasses extending old-style classes, instead
+      of returning only the S3 part.
     }
   }
 }
