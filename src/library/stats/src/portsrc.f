@@ -9617,8 +9617,9 @@ C
          CALL DV7CPY(N, V(X01), V(STEP1))
          CALL DV7IPR(N, IV(IPI), V(X01))
          L = IV(LMAT)
-         CALL DL7TVM(N, V(X01), V(L), V(X01))
-         CALL DL7VML(N, V(X01), V(L), V(X01))
+         TEMP1 = IV(STLSTG)
+         CALL DL7TVM(N, V(TEMP1), V(L), V(X01))
+         CALL DL7VML(N, V(X01), V(L), V(TEMP1))
 C
 C        *** UNPERMUTE X0 INTO TEMP1 ***
 C

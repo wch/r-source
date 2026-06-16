@@ -196,6 +196,10 @@
       \code{POSIXlt} objects work correctly more often, e.g., without a
       \code{"tzone"} attribute, back porting a few of the \PR{18989} fixes
       from R-devel, both thanks to \I{Suharto Anggono}.
+
+      \item Fix long standing (fortran compiler optimization related) bug
+      in \code{nlminb} with constraints, thanks to \I{Kasper Kristensen}'s
+      \PR{19086} report and patch.
     }
   }
 }
