@@ -481,7 +481,7 @@ static void subRegion(SEXP layout,
 bool allocationRemaining(double initial, double remaining)
 {
     if (initial == 0) {
-        return TRUE;
+        return FALSE;
     } else if (initial > 0) {
         return remaining > 0;
     } else {
