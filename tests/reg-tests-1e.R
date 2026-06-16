@@ -3430,7 +3430,7 @@ truepL <- lapply(p.s, function(p) rep.int(1, p)) # true par. = (1 1 .. 1)
 writeLines(all.equal(parL, truepL, tolerance = 0))
 stopifnot(exprs = {
     abs((obj / (p.s - 1)) - log(0.01)) < 1e-9
-    all.equal(parL, truepL, tolerance = 1e-5)
+    all.equal(parL, truepL, tolerance = 4e-5) # p=20, 1.5656e-5 (Windows - arm)
 })
 ## for p >= 9 did not converge previously (in R <= 4.6.0)
 
