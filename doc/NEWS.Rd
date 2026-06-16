@@ -125,7 +125,11 @@
       triggered an error and are now handled correctly.
 
       \item Fix for \PR{18874};  \code{"null"} widths/heights in
-      \pkg{grid} layouts are zero if widths/heights to allocate are zero.
+      \pkg{grid} layouts are zero if widths/heights to allocate are
+      zero. (Thanks to \I{Maciej Nasinski} and \I{Trevor Davis}.)
+
+      \item Fix for \PR{19055};  additional documentation for
+      \code{embedFonts()}. (Thanks to \I{Chris Danek} and \I{Ivan Krylov}.)
     }
   }
 }
