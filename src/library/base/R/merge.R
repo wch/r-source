@@ -1,7 +1,7 @@
 #  File src/library/base/R/merge.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2018 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -74,7 +74,7 @@ merge.data.frame <-
             names(y)[cnm] <- paste0(nm.y[cnm], suffixes[2L])
         }
         if (nx == 0L || ny == 0L) {
-            res <- cbind(x[FALSE, ], y[FALSE, ])
+            res <- cbind(x[FALSE, , drop = FALSE], y[FALSE, , drop = FALSE])
         } else {
             ij <- expand.grid(seq_len(nx), seq_len(ny))
             res <- cbind(x[ij[, 1L], , drop = FALSE],

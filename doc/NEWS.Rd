@@ -130,6 +130,11 @@
 
       \item Fix for \PR{19055};  additional documentation for
       \code{embedFonts()}. (Thanks to \I{Chris Danek} and \I{Ivan Krylov}.)
+
+      \item \code{merge.data.frame} now returns the correct column names when
+      at least one of the merged data frames has zero rows and at least one of
+      the merged data frames has only one column, fixing \PR{18930}. Thanks to
+      \I{David Molnar} and \I{Gabriel Becker}.
     }
   }
 }

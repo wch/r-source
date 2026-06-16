@@ -3434,7 +3434,20 @@ stopifnot(exprs = {
 })
 ## for p >= 9 did not converge previously (in R <= 4.6.0)
 
+## Bug 18930 -- Merge with zero rows df and single column df
+a <- data.frame(x=numeric())
+b <- data.frame(y=1:2)
 
+ab <- merge(a, b, all.x = TRUE, all.y = TRUE)
+stopifnot(identical(names(ab), c(names(a), names(b))))
+## previously merge dropped column names (in R <= 4.6.0)
+
+k <- data.frame(x=numeric(), y=numeric())
+m <-  data.frame(z=1:2)
+
+km <- merge(k, m, all.x = TRUE, all.y = TRUE)
+stopifnot(identical(names(km), c(names(k), names(m))))
+## previously `y[FALSE, ]` instead of `z` (in R <= 4.6.0)
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
