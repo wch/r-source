@@ -139,6 +139,9 @@
       \item \code{trace()} now works for functions whose S3 class
       attribute has more than one string, e.g., \CRANpkg{S7} generics
       and methods. Thanks to \I{Hadley Wickham} for the patch.
+
+      \item \code{as(object, to) <- value} no longer treats \code{to} 
+      as a class union when it was registered via \code{setOldClass()}.
     }
   }
 }

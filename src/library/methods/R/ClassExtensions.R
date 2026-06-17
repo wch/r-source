@@ -257,10 +257,8 @@ makeExtends <- function(Class,
         }
         else if(simple) {
             replace <- .simpleExtReplace
-            if(isXS3Class(classDef2)) {  # replace the S3 part & slots in class to
-                S3Class <- attr(classDef2@prototype, ".S3Class")
-                if(is.null(S3Class)) # the setOldClass case ?
-                  S3Class <- to
+            S3Class <- attr(classDef2@prototype, ".S3Class")
+            if(!is.null(S3Class)) {
                 body(replace, envir = packageEnv) <-
                   quote({
                       methods::S3Part(from) <- value
