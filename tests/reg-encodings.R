@@ -157,9 +157,10 @@ if (UTF8) {
     ## and that is not invoked when signalled errors are caught, hence:
     capt_err_msg <- function(expr) {
         tmp <- tempfile()
-        on.exit(unlink(tmp))
+        tmp.con <- file(tmp, 'w')
+        on.exit({ close(tmp.con); unlink(tmp) })
         err.con <- getConnection(sink.number(type='message'))
-        sink(file(tmp, 'w'), type='message')
+        sink(tmp.con, type='message')
         withRestarts(expr, abort=function() sink(err.con, type='message'))
         ## add back newlines consumed by readlines; we assume a trailing one
         ## exists, if it doesn't readLines will issue a warning
