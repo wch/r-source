@@ -135,6 +135,10 @@
       at least one of the merged data frames has zero rows and at least one of
       the merged data frames has only one column, fixing \PR{18930}. Thanks to
       \I{David Molnar} and \I{Gabriel Becker}.
+
+      \item \code{trace()} now works for functions whose S3 class
+      attribute has more than one string, e.g., \CRANpkg{S7} generics
+      and methods. Thanks to \I{Hadley Wickham} for the patch.
     }
   }
 }

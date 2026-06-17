@@ -256,10 +256,10 @@
             }
         }
         original <- .untracedFunction(def)
-        traceClass <- .traceClassName(class(original))
+        traceClass <- .traceClassName(.class1(original))
         if(is.null(getClassDef(traceClass))) {
             ## e.g. for a simple S3 class name
-            traceClass <- .makeTraceClass(traceClass, class(original))
+            traceClass <- .makeTraceClass(traceClass, .class1(original))
 ### FIXME: allow this to be NULL and then do *not* "think anymore" of S4 classes ...
         }
         if(doEdit && is.environment(edit)) {
@@ -509,7 +509,7 @@ setCacheOnAssign <- function(env, onOff = cacheOnAssign(env))
     .Object@source <- emptyenv()
     if(missing(def))
         return(.Object)
-    oldClass <- class(def)
+    oldClass <- .class1(def)
     oldClassDef <- getClass(oldClass)
     if(!is.null(oldClassDef) && length(oldClassDef@slots) > 0)
         as(.Object, oldClass) <- def # to get other slots in def
