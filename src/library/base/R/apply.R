@@ -68,9 +68,7 @@ apply <- function(X, MARGIN, FUN, ..., simplify = TRUE)
     }
     ## else
     newX <- aperm(X, c(s.call, s.ans))
-    ## As of 2026-06-12 aperm.default() copies "most" attributes, so get
-    ## rid of them again.
-    attributes(newX) <- list(dim = c(prod(d.call), d2))
+    dim(newX) <- c(prod(d.call), d2)
     ans <- vector("list", d2)
     if(length(d.call) < 2L) {# vector
         if (length(dn.call)) dimnames(newX) <- c(dn.call, list(NULL))
