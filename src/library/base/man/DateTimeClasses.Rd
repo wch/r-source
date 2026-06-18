@@ -381,7 +381,7 @@ names(unclass(leapS)) ; is.list(leapS)
 utils::str(unclass(leapS), vec.len = 7)
 ## show all components
 data.frame(unclass(leapS))
-## Omitting "tzone" attrib, numeric matrix w/ 10 columns (27 x 10, currently) :
+## Omitting "zone" column ==> numeric matrix w/ 10 columns
 (leapm <- as.matrix(leapS))
 stopifnot(identical(ncol(leapm), 10L), is.numeric(leapm)) # was character in R <= 4.6.0
 
