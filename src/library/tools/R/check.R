@@ -3412,7 +3412,7 @@ add_dummies <- function(dir, Log)
                 } else {
                     if (!any) noteLog(Log)
                     any <- TRUE
-                    printLog(Log, "Unable to find GhostScript executable to run checks on size reduction\n")
+                    printLog(Log, "Unable to find Ghostscript executable to run checks on size reduction\n")
                 }
 
             }

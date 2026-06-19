@@ -232,7 +232,7 @@ tiff(filename = "Rplot\%03d.tiff",
 
   \code{\link{bitmap}} provides an alternative way to generate plots in many
   bitmap formats that does not depend on accessing the X11 display but does
-  depend on having \I{GhostScript} installed.
+  depend on having Ghostscript installed.
 
   Ways to write raster images to bitmap formats are available in
   packages \CRANpkg{jpeg}, \CRANpkg{png} and \CRANpkg{tiff}.

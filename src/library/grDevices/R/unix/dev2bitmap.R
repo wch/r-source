@@ -28,7 +28,7 @@ dev2bitmap <- function(file, type = "png16m", height = 7, width = 7, res = 72,
     height <- switch(units, "in"=1, "cm"=1/2.54, "mm"=1/25.4, "px"=1/res) * height
     width <- switch(units, "in"=1, "cm"=1/2.54, "mm"=1/25.4, "px"=1/res) * width
     gsexe <- tools::find_gs_cmd()
-    if(!nzchar(gsexe)) stop("GhostScript was not found")
+    if(!nzchar(gsexe)) stop("Ghostscript was not found")
     check_gs_type(gsexe, type)
     if(missing(pointsize)) pointsize <- 1.5*min(width, height)
     tmp <- tempfile("Rbit")
@@ -71,7 +71,7 @@ bitmap <- function(file, type = "png16m", height = 7, width = 7, res = 72,
     height <- switch(units, "in"=1, "cm"=1/2.54, "mm"=1/25.4, "px"=1/res) * height
     width <- switch(units, "in"=1, "cm"=1/2.54, "mm"=1/25.4, "px"=1/res) * width
     gsexe <- tools::find_gs_cmd()
-    if(!nzchar(gsexe)) stop("GhostScript was not found")
+    if(!nzchar(gsexe)) stop("Ghostscript was not found")
     check_gs_type(gsexe, type)
     if(missing(pointsize)) pointsize <- 1.5*min(width, height)
     extra <- ""

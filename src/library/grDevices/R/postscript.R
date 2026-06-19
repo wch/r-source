@@ -970,7 +970,7 @@ embedFonts <- function(file, # The ps or pdf file to convert
         stop(gettextf("'%s' must be a non-empty character string", "file"),
              domain = NA)
     gsexe <- tools::find_gs_cmd()
-    if(!nzchar(gsexe)) stop("GhostScript was not found")
+    if(!nzchar(gsexe)) stop("Ghostscript was not found")
     if(.Platform$OS.type == "windows") gsexe <- shortPathName(gsexe)
     suffix <- gsub(".+[.]", "", file)
     if (missing(format))
@@ -1017,7 +1017,7 @@ embedGlyphs <- function(file, glyphInfo, outfile = file,
         }
     }
     gsexe <- tools::find_gs_cmd()
-    if(!nzchar(gsexe)) stop("GhostScript was not found")
+    if(!nzchar(gsexe)) stop("Ghostscript was not found")
     if(.Platform$OS.type == "windows") gsexe <- shortPathName(gsexe)
     format <- "pdfwrite"
     check_gs_type(gsexe, format)

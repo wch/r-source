@@ -76,7 +76,7 @@ for(i in seq_along(pdfenc)) {
 ## not found.
 ## ## follow embedFonts
 ## if (!nzchar(tools::find_gs_cmd()))
-##     stop("GhostScript is required and was not found")
+##     stop("Ghostscript is required and was not found")
 ## </FIXME>
 
 for(i in seq_along(pdfenc)) {

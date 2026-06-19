@@ -49,7 +49,7 @@ embedGlyphs(file, glyphInfo, outfile = file, options = character())
 
   You will need \code{ghostscript}: the full path to the executable can
   be set by the environment variable \env{R_GSCMD}. If this is
-  unset, a \I{GhostScript} executable will be looked for by name on your
+  unset, a Ghostscript executable will be looked for by name on your
   path: on a Unix alike \code{"gs"} is used, and on Windows the setting
   of the environment variable \env{GSC} is used, otherwise commands
   \code{"gswi64c.exe"} then \code{"gswin32c.exe"} are tried.
@@ -68,7 +68,7 @@ embedGlyphs(file, glyphInfo, outfile = file, options = character())
   Some other options which can be useful (see your Ghostscript
   documentation) are \option{-dMaxSubsetPct=100},
   \option{-dSubsetFonts=true} and  \option{-dEmbedAllFonts=true}.
-  In particular, while \I{GhostScript} uses \option{-dEmbedAllFonts=true} by
+  In particular, while Ghostscript uses \option{-dEmbedAllFonts=true} by
   default, the standard PDF fonts are on its \verb{NeverEmbed} list. To
   force the base fonts to be embedded, set \code{options = c("-c",
     shQuote("<</NeverEmbed []>> setdistillerparams"), "-f")}.
