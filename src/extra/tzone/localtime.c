@@ -320,10 +320,10 @@ static struct state	gmtmem;
 #endif /* !defined TZ_STRLEN_MAX */
 
 static char		lcl_TZname[TZ_STRLEN_MAX + 1];
-static bool		lcl_is_set;
+static int		lcl_is_set; // 'int' (can be negative); as iana.org's 2026b
 static bool		gmt_is_set;
 
-char * tzname[2] = {
+const char * tzname[2] = {
     wildabbr,
     wildabbr
 };
@@ -1278,8 +1278,8 @@ gmtload(struct state * const sp)
 void
 R_tzsetwall(void)
 {
-    if (!lcl_is_set) return;
-    lcl_is_set = false;
+    if (lcl_is_set < 0) return;
+    lcl_is_set = -1;
 
     if (tzload((char *) NULL, lclptr, TRUE) != 0) gmtload(lclptr);
     settzname();
@@ -1296,7 +1296,7 @@ tzset(void)
 	return;
     }
 
-    if (lcl_is_set && strcmp(lcl_TZname, name) == 0)
+    if (lcl_is_set > 0 && strcmp(lcl_TZname, name) == 0)
 	return;
     lcl_is_set = strlen(name) < sizeof lcl_TZname;
     /* R change: was strcpy before. */

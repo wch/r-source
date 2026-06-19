@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2022  The R Core Team.
+ *  Copyright (C) 2000-2026  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ extern R_time_t R_mktime (stm*);
 extern R_time_t R_timegm(stm*);
 extern void R_tzset(void);
 extern void R_tzsetwall(void);
-extern char *R_tzname[2];
+extern const char *R_tzname[2];
 
 extern size_t
 R_strftime(char * const s, const size_t maxsize, const char *const format,
