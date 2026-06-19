@@ -1071,11 +1071,10 @@ inRbuildignore <- function(files, pkgdir) {
                 startsWith(allfiles, paste0(d, .Platform$file.sep))
 
         ## create empty directory tree to copy files into
+        dir.create(file.path(Tdir, intname), mode = "0755")
         srcdirs <- allfiles[isdir & !exclude]
         for (d in srcdirs) {
-            ddest <- file.path(Tdir, intname, d)
-            dir.create(ddest, FALSE, TRUE, "0755")
-            if (!dir.exists(ddest)) {
+            if (!dir.create(file.path(Tdir, intname, d), mode = "0755")) {
                 errorLog(Log, "failed to create build directory structure")
                 do_exit(1L)
             }
