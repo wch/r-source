@@ -68,7 +68,7 @@ embedGlyphs(file, glyphInfo, outfile = file, options = character())
   Some other options which can be useful (see your Ghostscript
   documentation) are \option{-dMaxSubsetPct=100},
   \option{-dSubsetFonts=true} and  \option{-dEmbedAllFonts=true}.
-  In particular, while GhostScript uses \option{-dEmbedAllFonts=true} by
+  In particular, while \I{GhostScript} uses \option{-dEmbedAllFonts=true} by
   default, the standard PDF fonts are on its \verb{NeverEmbed} list. To
   force the base fonts to be embedded, set \code{options = c("-c",
     shQuote("<</NeverEmbed []>> setdistillerparams"), "-f")}.
