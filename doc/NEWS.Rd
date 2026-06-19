@@ -146,6 +146,10 @@
 
       \item \code{as(object, to) <- value} no longer treats \code{to} 
       as a class union when it was registered via \code{setOldClass()}.
+
+      \item In \pkg{methods}, \code{setOldClass(..., S4Class = )}
+      no longer warns about undefined subclasses when the supplied S4
+      class inherits from a class union.
     }
   }
 }

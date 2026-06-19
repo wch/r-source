@@ -216,6 +216,29 @@ local({
 })
 
 
+## Registering an old class from an existing S4 class should update class
+## union subclass caches after the old class definition itself is available.
+local({
+    where <- environment()
+    setClass("UnionMemberForOldClassRecache", contains = "VIRTUAL", where = where)
+    setClassUnion("UnionForOldClassRecache", "UnionMemberForOldClassRecache",
+                  where = where)
+    setClass("ParentForOldClassRecache",
+             contains = c("UnionForOldClassRecache", "VIRTUAL"), where = where)
+    setClass("ChildForOldClassRecache",
+             contains = c("ParentForOldClassRecache", "VIRTUAL"), where = where)
+    setOldClass(c("ChildForOldClassRecache", "oldClass"),
+                S4Class = "ChildForOldClassRecache", where = where)
+
+    union <- getClass("UnionForOldClassRecache", where = where)
+    child <- getClass("ChildForOldClassRecache", where = where)
+    stopifnot(
+        "ChildForOldClassRecache" %in% names(union@subclasses),
+        "UnionForOldClassRecache" %in% names(child@contains)
+    )
+})
+
+
 ## canCoerce(obj, .)  when length(class(obj)) > 1 :
 setOldClass("foo")
 setAs("foo", "A", function(from) new("A", foo=from))

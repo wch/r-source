@@ -153,7 +153,6 @@ setOldClass <- function(Classes, prototype = NULL,
       superDef@subclasses[[Class]] <- def@contains[[super]]
       assignClassDef(super, superDef, superWhere, TRUE)
     }
-    lapply(oldSupers, addSubclass)
     subcls <- curDef@subclasses
     if(length(subcls) > 0) {
       def@subclasses[names(subcls)]  <- subcls
@@ -164,6 +163,7 @@ setOldClass <- function(Classes, prototype = NULL,
         def@prototype <- proto
     }
     assignClassDef(Class, def, where = where)
+    lapply(oldSupers, addSubclass)
     ## allow an existing superclass relation to remain (it may have a coerce method)
     ## Otherwise, create a simple transformation, which relies on consistency
     ## in the slots.
