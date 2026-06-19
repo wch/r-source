@@ -6,7 +6,8 @@
 tryCmsg <- function(expr) tryCatch(expr, error = conditionMessage) # typically == *$message
 assertErrV <- function(...) tools::assertError(..., verbose=TRUE)
 options(warn = max(1, getOption("warn")))
-
+myInteractive <- function() interactive() ||
+                                as.logical( Sys.getenv("_R_CHECK_INTERACTIVE_datetime3_", FALSE) )
 if(!nzchar(Sys.getenv("_R_CHECK_DATETIME3_NO_TZ_"))) withAutoprint({
   ## For some inter-platform reproducibility, try to set timezone
   ## even though  Sys.setenv(..) does *NOT* always work
@@ -881,32 +882,48 @@ stopifnot(exprs = {
 
 
 ## c.POSIXlt, [<-.POSIXlt , [[, etc, for far (and very far) future -- PR#18989
+show_nonTRUE <- function(v) {
+    if(R <- all(v)) return(R)
+    ## else
+    cat("some not TRUE in ", deparse(substitute(v)),":  ",
+        paste(symnum(v), collapse = " "), "\n", sep="")
+    TRUE
+}
+## "data" to be used below
+ep <- 4^-(1:25)
+x_s25 <- 60 - ep # `$<-.POSIXlt`() effectively *removing* "balanced" :
+(il2d.sec <- round(log2(60 - x_s25))) # -2 -4 .. -46 -Inf -Inf
+stopifnot(identical(il2d.sec, -2*c(1:23, Inf,Inf)))
+ok.s25 <- is.finite(il2d.sec)
 for(thtz in c("UTC", "Europe/Kyiv", "Asia/Kolkata", "Pacific/Auckland"
             , "Asia/Hebron", "Canada/Mountain", "Navajo"
               )) { # dbg: withAutoprint({
   x0 <- as.POSIXlt("9999-12-31 23:59:59.99999", tz=thtz)
-  print(x0)
+  cat("\n>> TZ ", thtz,": ", sep=""); print(x0)
   xx <- x0; xx$year <- x0$year + c(0L, as.integer(10^(0:9)))
-  xx # length 11
+  xx # length 11 , but xx$sec has still length 1
+  if(FALSE) { ## for now -- This kills   attr(lcx, "tzone")[1L] == thtz   {below}
+      xx <- sort(c(xx, .POSIXct(c(.25, .5, .8, .9, .95, .99)*as.numeric(xx[11]))))
+      xx$sec[] <- xx$sec[1]
+  }
   cxx <- c(xx) # differs when "large":
   lrgDT <- function(x) unclass(as.POSIXct(x)) >= 2^53
   lrg <- lrgDT(xx)
-  ok <- !lrg ## NB: exact [small | large] boundary is between the two years  285426850 + 0:1
+  ok <- !lrg ## NB: exact [small | large] boundary is between the two years  1970+285426850 + 0:1
   stopifnot(cxx == xx,
             cxx - xx == 0,
             cxx$sec[ok] == xx$sec)
   ## checking `[` , `[[` , `$<-`
   for(i in seq_along(xx)) { # dbg: withAutoprint({
     x <- xx[i]
-    (ff <- c(format(x), format(x, digits = 6, usetz=TRUE)))
-    ep <- 4^-(1:25)
-    x$sec <- 60 - ep # `$<-.POSIXlt`() effectively *removing* "balanced" :
-    (il2d.sec <- round(log2(60 - x$sec))) # -2 -4 .. -46 -Inf -Inf
+    x$sec <- x_s25 # `$<-.POSIXlt`() effectively *removing* "balanced" :
     lcx <- as.POSIXlt(as.POSIXct(x)) # lossy
-    if(interactive()) utils:::str.default(lcx) # else print(ff)
+    if(myInteractive()) {
+        cat("x: "); ff <- c(format(x), format(x, digits = 6, usetz=TRUE)); print(ff); cat(":\n")
+        utils:::str.default(lcx) # else print(ff)
+    }
     stopifnot(exprs = {
         is.null(attr(x, "balanced"))
-        identical(il2d.sec, -2*c(1:23, Inf,Inf))
         lengths(unclass(lcx)) == length(ep)
         attr(lcx, "balanced")
         attr(lcx, "tzone")[1L] == thtz
@@ -919,10 +936,10 @@ for(thtz in c("UTC", "Europe/Kyiv", "Asia/Kolkata", "Pacific/Auckland"
         (cx <- c(x)) == x  # was all TRUE in R 4.5.3
     })
     ##
-    if(ok[i]) stopifnot(cx$sec[1:23] == x$sec[1:23])
+    if(ok[i]) stopifnot(cx$sec[ok.s25] == x$sec[ok.s25])
     x25 <- x. <- x
     x[1:25] <- x25[1:25]
-    for(i in c(7L, 12L, 20:25)) x.[[i]] <- x25[[i]]
+    for(j in c(7L, 12L, 20:25)) x.[[j]] <- x25[[j]]
     stopifnot(exprs = {
         x[25]$sec == 60
         identical(x, x.)
@@ -932,8 +949,41 @@ for(thtz in c("UTC", "Europe/Kyiv", "Asia/Kolkata", "Pacific/Auckland"
         attr(x25, "tzone") == thtz
         attr(x  , "tzone") == thtz
     })
+    ## new (June 2026) -- TODO: more checks, less show_nonTRUE()
+    xG. <- xG <- as.POSIXlt(.POSIXct(numeric(25), tz = "GMT"))
+    xG[1:25]  <- x25[1:25]
+    xG.[[7]]  <- x25[[7]]
+    xG.[[25]] <- x25[[25]]
+    cat("all.eq(x25, xG):  "); print(all.equal(x25, xG ))
+    stopifnot(exprs = {
+        inherits(xG , "POSIXlt")
+        inherits(xG., "POSIXlt"); inherits(xG.[[7]], "POSIXlt")
+        xG.[[7]]  - x25[[7]]  == 0 # not ok in MM's R-dev./bugzilla May 1, 2026
+        xG.[[25]] - x25[[25]] == 0
+        xG[1:25]  - x25[1:25] == 0 # (even when '==' is not accurate for POSIXlt)
+        if(ok[i]) xG$sec[ok.s25] == x25$sec[ok.s25] else TRUE
+        show_nonTRUE(
+            xG.$sec[c(7, 25)] == x25$sec[c(7, 25)] )
+        show_nonTRUE(
+            xG $wday == x25$wday          ) # ok in R 4.5.3
+        show_nonTRUE(
+            xG.$wday[c(7, 25)] == x25$wday) # ditto
+    })
   }#) ##  for(i in .....)
 }#) ## for(thtz in ..)
+## --- tzone behaviour for Arith "-"  {non-large times}:
+yU <- .POSIXct(0, tz = "UTC")             # midnight, i.e., 00:00
+y  <- .POSIXct(0, tz = "Pacific/Auckland")# "
+stopifnot(y - yU == 0) # (always)
+x2 <- x1 <- as.POSIXlt(yU)
+x2[[1]] <- x1[1] <- y
+stopifnot(exprs = {
+    x1[1] - y == 0
+    x2[1] - y == 0
+    x2[1] == yU
+    y == x1[1] # + Warning in .check_tzones(e1, e2) : 'tzone' attributes are inconsistent
+})
+## these  were all FALSE in R 4.5.3
 
 
 ## PR#19038:- wrong as.POSIXct(x) for POSIXlt object x  w/ x$year close to integer.max
