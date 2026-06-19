@@ -46,6 +46,10 @@
       \item \code{fisher.test()} gains a new option \code{pval.only = TRUE}
       for the 2x2 exact case, with substantial speed gains in the case of large
       counts.
+
+      \item \code{binom.test()} and \code{poisson.test()} can now at
+      least optionally compute central two-sided p-values which match
+      the confidence intervals.
     }
   }
 
