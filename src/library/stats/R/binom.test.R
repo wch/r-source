@@ -123,44 +123,7 @@ function(x, n, p)
         1)
 
 .binom_test_two_sided_pval_minlike <-
-function(x, n, p)
-{
-    if(p == 0)
-        (x == 0)
-    else if(p == 1)
-        (x == n)
-    else {
-        ## Do
-        ##   d <- dbinom(0 : n, n, p)
-        ##   sum(d[d <= dbinom(x, n, p)])
-        ## a bit more efficiently ...
-        ## Note that we need a little fuzz.
-        relErr <- 1 + 1e-7
-        d <- dbinom(x, n, p)
-        ## This is tricky: need to be sure
-        ## only to sum values in opposite tail
-        ## and not count x twice.
-        ## For the binomial dist., the mode will
-        ## equal the mean if it is an integer.
-        m <- n * p
-        if (x == m)
-            1
-        else if (x < m) {
-            i <- seq.int(from = ceiling(m), to = n)
-            y <- sum(dbinom(i, n, p) <= d * relErr)
-            pbinom(x, n, p) +
-                pbinom(n - y, n, p, lower.tail = FALSE)
-        } else {
-            i <- seq.int(from = 0, to = floor(m))
-            y <- sum(dbinom(i, n, p) <= d * relErr)
-            pbinom(y - 1, n, p) +
-                pbinom(x - 1, n, p, lower.tail = FALSE)
-        }
-    }
-}
-
-.binom_test_two_sided_pval_mlquick <-
-function(x, n, p, quick = TRUE)
+function(x, n, p, bisect = (n >= 1234))
 {
     if(p == 0)
         return(x == 0)
@@ -171,7 +134,7 @@ function(x, n, p, quick = TRUE)
         return(0)
     relErr <- 1 + 1e-07
     log_thresh <- log_dx + log(relErr)
-    if(quick) {
+    if(bisect) {
         ## Fast O(log n) path for large n.
         ## Contributed by Ravi Varadhan.
         mode <- floor((n + 1) * p)
