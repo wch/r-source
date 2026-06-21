@@ -293,7 +293,7 @@ setGeneric(name, def= , group=list(), valueClass=character(),
   for the function in the current session.
 
   Note that S4 methods can only be set on those primitives which are
-  \sQuote{\link{internal generic}}, plus \code{\%*\%}.
+  \sQuote{\link{internal generic}}.
 }
 
 \value{
