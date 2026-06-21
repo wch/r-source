@@ -459,7 +459,7 @@
     ## classes is a list of the class(x) for each arg in generic
     ## signature, with "missing" for missing args
     if(!is.environment(table)) {
-        if(is(fdef, "standardGeneric"))
+        if(is(fdef, "genericFunction"))
           stop(gettextf("invalid or unset methods table in generic function %s", sQuote(fdef@generic)), domain = NA)
         else
           stop("trying to find a methods table in a non-generic function")
