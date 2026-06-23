@@ -31,10 +31,10 @@ double pweibull(double x, double shape, double scale, int lower_tail, int log_p)
     if (ISNAN(x) || ISNAN(shape) || ISNAN(scale))
 	return x + shape + scale;
 #endif
-    if(shape <= 0 || scale <= 0) ML_WARN_return_NAN;
+    if(shape < 0 || scale <= 0) ML_WARN_return_NAN;
 
-    if (x <= 0)
-	return R_DT_0;
+    R_P_bounds_01(x, 0., ML_POSINF);
+
     x = -pow(x / scale, shape);
     return lower_tail
 	? (log_p ? R_Log1_Exp(x) : -expm1(x))

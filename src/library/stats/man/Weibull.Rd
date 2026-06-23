@@ -60,6 +60,11 @@ rweibull(n, shape, scale = 1)
   mean is \eqn{E(X) = \sigma \Gamma(1 + 1/a)}{E(X) = b \Gamma(1 + 1/a)}, and
   the variance is \eqn{Var(X) = \sigma^2(\Gamma(1 + 2/a)-(\Gamma(1 + 1/a))^2)}{
                        Var(X) = b^2 * (\Gamma(1 + 2/a) - (\Gamma(1 + 1/a))^2)}.
+
+  The Weibull distribution is defined only for \eqn{a > 0}, but
+  these functions accept the argument \code{shape = 0}. In this case, the
+  return value is determined by the limiting behaviour as
+  \eqn{a \to 0}{a -> 0}.
 }
 \note{
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
