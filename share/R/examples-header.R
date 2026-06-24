@@ -66,6 +66,8 @@ assign("cleanEx", evalq(
            ## also indicating that parallel cluster are still running
            if(Sys.getenv("_R_CHECK_CONNECTIONS_LEFT_OPEN_", FALSE)){
                sC <- showConnections()
+               ## exlcude textConnections as these get garbage collected anyway
+               sC <- sC[is.na(sC[,"class"]) | sC[,"class"] != "textConnection",] 
                if(nrow(sC)){
                    stop("connections left open:\n",
                        paste(apply(sC[,1:2, drop = FALSE], 1L, function(x)
