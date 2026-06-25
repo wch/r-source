@@ -51,6 +51,7 @@ foo(<var>x</var>, <var>y</var>, ...)
 conditional content.
 End(<code style="white-space: pre;">&#8288;#ifdef&#8288;</code>).
 </p>
+
 <p>Escaped backslash <code>\x</code>.
 </p>
 <p><code>%{}</code>

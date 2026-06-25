@@ -655,8 +655,9 @@ Rd2txt <-
                "\\newcommand" =,
                "\\renewcommand" = {},
                COMMENT = {
-                   stripBlankLine()     # drop indentation
-                   linestart <<- FALSE  # eat subsequent \n also for non-indented comments
+                   if (linestart)
+                       linestart <<- FALSE # eat subsequent \n also for non-indented comments
+                   else stripBlankLine()   # drop indentation
                },
                LIST = writeContent(block, tag),
                "\\describe" = {

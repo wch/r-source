@@ -155,6 +155,17 @@
 }
 
 
+\section{\Rlogo Changes in R 4.6.1 patched}{
+  
+  \subsection{Bug Fixes}{
+    \itemize{
+      \item In plain-text help (\code{Rd2txt}), paragraphs are again
+      recognized even when started with a non-indented Rd comment,
+      fixing a regression in \R 4.4.0.
+    }
+  }
+}
+
 \section{\Rlogo Changes in R 4.6.1}{
 
   \subsection{New Features}{
