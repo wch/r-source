@@ -90,6 +90,36 @@ inRbuildignore <- function(files, pkgdir) {
     exclude
 }
 
+build_exclude <- function(allfiles, pkgdir, pkgname) {
+    exclude <- inRbuildignore(allfiles, pkgdir)
+    bases <- basename(allfiles)
+    isdir <- dir.exists(allfiles)
+    ## old (pre-2.10.0) dirnames
+    exclude <- exclude | (isdir & (bases %in%
+                                   c("check", "chm", .vc_dir_names)))
+    exclude <- exclude | (isdir & grepl("([Oo]ld|\\.Rcheck)$", bases))
+    ## FIXME: GNU make uses GNUmakefile (note capitalization)
+    exclude <- exclude | bases %in% c("Read-and-delete-me", "GNUMakefile")
+    ## Mac resource forks
+    exclude <- exclude | startsWith(bases, "._")
+    exclude <- exclude | (isdir & grepl("^src.*/[.]deps$", allfiles))
+    ## Windows DLL resource file
+    exclude <- exclude | (allfiles == paste0("src/", pkgname, "_res.rc"))
+    ## inst/doc/.Rinstignore is a mistake
+    exclude <- exclude | endsWith(allfiles, "inst/doc/.Rinstignore") |
+        endsWith(allfiles, "inst/doc/.build.timestamp") |
+        endsWith(allfiles, "vignettes/.Rinstignore")
+    ## leftovers
+    exclude <- exclude | grepl("^.Rbuildindex[.]", allfiles)
+    ## or simply?  exclude <- exclude | startsWith(allfiles, ".Rbuildindex.")
+    exclude <- exclude | (bases %in% .hidden_file_exclusions)
+    ## exclude (old) source tarballs and binary packages (PR#17828)
+    exts <- "\\.(tar\\.gz|tar|tar\\.bz2|tar\\.xz|tar\\.zst|tgz|zip)"
+    exclude <- exclude | grepl(paste0("^", pkgname, "_[0-9.-]+", exts, "$"),
+                               allfiles)
+    exclude
+}
+
 ### based on Perl build script
 
 .build_packages <- function(args = NULL, no.q = interactive())
@@ -1036,36 +1066,11 @@ inRbuildignore <- function(files, pkgdir) {
         ## exclude ignored files
         allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
                         include.dirs = TRUE)
-        bases <- basename(allfiles)
-
-        exclude <- inRbuildignore(allfiles, pkgdir)
-
-        isdir <- dir.exists(allfiles)
-        ## old (pre-2.10.0) dirnames
-        exclude <- exclude | (isdir & (bases %in%
-                                       c("check", "chm", .vc_dir_names)))
-        exclude <- exclude | (isdir & grepl("([Oo]ld|\\.Rcheck)$", bases))
-        ## FIXME: GNU make uses GNUmakefile (note capitalization)
-        exclude <- exclude | bases %in% c("Read-and-delete-me", "GNUMakefile")
-        ## Mac resource forks
-        exclude <- exclude | startsWith(bases, "._")
-        exclude <- exclude | (isdir & grepl("^src.*/[.]deps$", allfiles))
         pkgname <- intname
-        ## Windows DLL resource file
-        exclude <- exclude | (allfiles == paste0("src/", pkgname, "_res.rc"))
-        ## inst/doc/.Rinstignore is a mistake
-        exclude <- exclude | endsWith(allfiles, "inst/doc/.Rinstignore") |
-            endsWith(allfiles, "inst/doc/.build.timestamp") |
-            endsWith(allfiles, "vignettes/.Rinstignore")
-        ## leftovers
-        exclude <- exclude | grepl("^.Rbuildindex[.]", allfiles)
-        ## or simply?  exclude <- exclude | startsWith(allfiles, ".Rbuildindex.")
-        exclude <- exclude | (bases %in% .hidden_file_exclusions)
-        ## exclude (old) source tarballs and binary packages (PR#17828)
-        exts <- "\\.(tar\\.gz|tar|tar\\.bz2|tar\\.xz|tgz|zip)"
-        exclude <- exclude | grepl(paste0("^", pkgname, "_[0-9.-]+", exts, "$"),
-                                   allfiles)
+        exclude <- build_exclude(allfiles, pkgdir, pkgname)
+
         ## exclude contents of excluded directories
+        isdir <- dir.exists(allfiles)
         for (d in allfiles[isdir & exclude])
             exclude <- exclude |
                 startsWith(allfiles, paste0(d, .Platform$file.sep))
@@ -1101,6 +1106,13 @@ inRbuildignore <- function(files, pkgdir) {
         ## prepare the copy
         messageLog(Log, "preparing ", sQuote(pkgname), ":")
         prepare_pkg(normalizePath(pkgname, "/"), desc, Log)
+
+        ## unlink ignored files that were produced while preparing
+        allfiles <- dir(pkgname, all.files = TRUE, recursive = TRUE,
+                        include.dirs = TRUE)
+        exclude <- build_exclude(allfiles, pkgdir, pkgname)
+        unlink(file.path(pkgname, allfiles[exclude]),
+               recursive = TRUE, expand = FALSE)
 
         ## Fix up man, R, demo inst/doc directories
         res <- .check_package_subdirs(pkgname, TRUE)
