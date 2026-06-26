@@ -121,10 +121,13 @@ function(x, y = NULL, z = NULL,
             ## conditional on the strata margins, similar to the case
             ## for Fisher's exact test (k = 1).  Again, the distribution
             ## of S (in our case, sum(x[2, 1, ]) to be consistent with
-            ## the notation in Mehta et al. (1985), is of the form
+            ## the notation in Mehta et al. (1985)), is of the form
             ##    P(S = s) \propto d(s) * or^s,   lo <= s <= hi
             ## where or is the common odds ratio in the k tables (and
             ## d(.) is a product hypergeometric distribution).
+            ## Reference: Mehta, Patel & Gray (1985),
+            ##   <doi:10.1080/01621459.1985.10478212> or
+            ##   <doi:10.2307/2288562> (JSTOR).
 
             METHOD <- paste("Exact conditional test of independence",
                             "in 2 x 2 x k tables")
