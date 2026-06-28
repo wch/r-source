@@ -30,6 +30,8 @@ foo(\var{x}, \var{y}, ...)
 #endif
   End(\verb{#ifdef}).
 
+% A new paragraph should start here,
+  % regardless of these comment lines.
   Escaped backslash \code{\\x}.
 
   \code{\%\{\}}
