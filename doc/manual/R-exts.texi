@@ -1423,7 +1423,7 @@ to the installation directory.  Subdirectories of @file{inst} should not
 interfere with those used by @R{} (currently, @file{R}, @file{data},
 @file{demo}, @file{exec}, @file{libs}, @file{man}, @file{help},
 @file{html} and @file{Meta}, and earlier versions used @file{latex},
-@file{R-ex}).  The copying of the @file{inst} happens after @file{src}
+@file{R-ex}).  The copying of the @file{inst} contents happens after @file{src}
 is built so its @file{Makefile} can create files to be installed.  To
 exclude files from being installed, one can specify a list of exclude
 patterns in file @file{.Rinstignore} in the top-level source directory.
@@ -1571,7 +1571,7 @@ can speed up installation by providing a file @file{datalist} in the
 @code{data()} will find, in the format @samp{foo} if @code{data(foo)}
 provides @samp{foo}, or @samp{foo: bar bah} if @code{data(foo)} provides
 @samp{bar} and @samp{bah}.  @command{R CMD build} will automatically add
-a @file{datalist} file to @file{data} directories of over 1Mb, using the
+a @file{datalist} file to @file{data} directories of over 1MB, using the
 function @code{tools::add_datalist}.
 
 Tables (@file{.tab}, @file{.txt}, or @file{.csv} files) can be
