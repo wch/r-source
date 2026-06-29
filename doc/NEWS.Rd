@@ -150,6 +150,9 @@
       \item In \pkg{methods}, \code{setOldClass(..., S4Class = )}
       no longer warns about undefined subclasses when the supplied S4
       class inherits from a class union.
+
+      \item Fix for \PR{19094};  fill/stroke path based on text with
+      \code{col=NA}. Thanks to \I{Trevor Davis}.
     }
   }
 }

@@ -1675,7 +1675,7 @@ PangoCairo_Text(double x, double y,
         textstr = str;
     }
 
-    if (R_ALPHA(gc->col) > 0) {
+    if (R_ALPHA(gc->col) > 0 || xd->appending) {
 	gint ascent, lbearing, width;
 	PangoLayout *layout;
 	PangoFontDescription *desc = 
@@ -2043,7 +2043,7 @@ static void Cairo_Text(double x, double y,
     } else {
         textstr = str;
     }
-    if (R_ALPHA(gc->col) > 0) {
+    if (R_ALPHA(gc->col) > 0 || xd->appending) {
 	cairo_save(xd->cc);
 
         bool grouping = false;
