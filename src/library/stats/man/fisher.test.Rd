@@ -16,7 +16,8 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
             control = list(), or = 1, alternative = "two.sided",
             pval.only = FALSE,
             conf.int = !pval.only, conf.level = 0.95,
-            simulate.p.value = FALSE, B = 2000)
+            simulate.p.value = FALSE, B = 2000,
+            two.sided.method = c("minlike", "central"))
 }
 \arguments{
   \item{x}{either a two-dimensional contingency table in matrix form,
@@ -41,12 +42,12 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
     \eqn{2 \times 2}{2 by 2} tables.  This says how many times as much
     space should be allocated to paths as to keys: see file
     \file{fexact.c} in the sources of this package.}
-  \item{or}{the hypothesized odds ratio.  Only used in the
-    \eqn{2 \times 2}{2 by 2} case.}
+  \item{or}{the hypothesized odds ratio.
+    Only used in the \eqn{2 \times 2}{2 by 2} case.}
   \item{alternative}{indicates the alternative hypothesis and must be
     one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.
-    You can specify just the initial letter.  Only used in the
-    \eqn{2 \times 2}{2 by 2} case.}
+    You can specify just the initial letter.
+    Only used in the \eqn{2 \times 2}{2 by 2} case.}
   \item{pval.only}{logical indicating if only the p-value is of interest;
     notably for the \eqn{2 \times 2}{2 by 2} case with large counts,
     setting \code{pval.only = TRUE} is typically orders of magnitude
@@ -55,13 +56,19 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
     odds ratio in a \eqn{2 \times 2}{2 by 2} table should be
     computed (and returned).}
   \item{conf.level}{confidence level for the returned confidence
-    interval.  Only used in the \eqn{2 \times 2}{2 by 2} case and if
+    interval.
+    Only used in the \eqn{2 \times 2}{2 by 2} case and if
     \code{conf.int = TRUE}.}
   \item{simulate.p.value}{a logical indicating whether to compute
     p-values by Monte Carlo simulation, in larger than \eqn{2 \times
       2}{2 by 2} tables.}
   \item{B}{an integer specifying the number of replicates used in the
     Monte Carlo test when \code{simulate.p.value} is true.}
+  \item{two.sided.method}{a character string specifying the method for
+    computing two-sided p-values, must be one of \code{"minlike"}
+    (default) or \code{"central"}, or an abbreviation thereof.
+    See \sQuote{Details} in the help for \code{\link{binom.test}}.
+    Only used in the \eqn{2 \times 2}{2 by 2} case.}
 }
 \value{
   A list with class \code{"htest"} containing the following components:
@@ -111,7 +118,8 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   \code{alternative = "greater"} is a test of the odds ratio being bigger
   than \code{or}.
 
-  Two-sided tests are based on the probabilities of the tables, and take
+  For larger than \eqn{2 \times 2}{2 by 2} tables, two-sided tests are
+  based on the probabilities of the tables, and take 
   as \sQuote{more extreme} all tables with probabilities less than or
   equal to that of the observed table, the p-value being the sum of such
   probabilities.

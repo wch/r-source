@@ -22,7 +22,8 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
          control = list(), or = 1, alternative = "two.sided",
          pval.only = FALSE,
          conf.int = !pval.only, conf.level = 0.95,
-         simulate.p.value = FALSE, B = 2000)
+         simulate.p.value = FALSE, B = 2000,
+         two.sided.method = c("minlike", "central"))
 {
     DNAME <- deparse1(substitute(x))
     METHOD <- "Fisher's Exact Test for Count Data"
@@ -79,6 +80,8 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
             stop("'conf.level' must be a single number between 0 and 1")
         if(!missing(or) && (length(or) > 1L || is.na(or) || or < 0))
             stop("'or' must be a single number between 0 and Inf")
+        if(alternative == "two.sided")
+            two.sided.method <- match.arg(two.sided.method)
     }
 
     if(!have.2x2) {
@@ -179,6 +182,10 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE,
                            as.numeric(x == lo)
                        else if(or == Inf)
                            as.numeric(x == hi)
+                       else if(two.sided.method == "central")
+                           min(2 * min(pnhyper(x, or),
+                                       pnhyper(x, or, upper.tail = TRUE)),
+                               1)
                        else {
                            if(need.logdc) do.logdc()
                            ## Note that we need a little fuzz.

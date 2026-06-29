@@ -14,7 +14,8 @@
 \usage{
 mantelhaen.test(x, y = NULL, z = NULL,
                 alternative = c("two.sided", "less", "greater"),
-                correct = TRUE, exact = FALSE, conf.level = 0.95)
+                correct = TRUE, exact = FALSE, conf.level = 0.95,
+                two.sided.method = c("minlike", "central"))
 }
 \arguments{
   \item{x}{either a 3-dimensional contingency table in array form where
@@ -39,6 +40,12 @@ mantelhaen.test(x, y = NULL, z = NULL,
   \item{conf.level}{confidence level for the returned confidence
     interval.
     Only used in the 2 by 2 by \eqn{K} case.}
+  \item{two.sided.method}{a character string specifying the method for
+    computing two-sided p-values, must be one of \code{"minlike"}
+    (default) or \code{"central"}, or an abbreviation thereof.
+    See \sQuote{Details} in the help for \code{\link{binom.test}}.
+    Only used in the 2 by 2 by \eqn{K} case if an exact conditional test
+    is performed.}
 }
 \value{
   A list with class \code{"htest"} containing the following components:

@@ -19,7 +19,8 @@
 mantelhaen.test <-
 function(x, y = NULL, z = NULL,
          alternative = c("two.sided", "less", "greater"),
-         correct = TRUE, exact = FALSE, conf.level = 0.95)
+         correct = TRUE, exact = FALSE, conf.level = 0.95,
+         two.sided.method = c("minlike", "central"))
 {
     DNAME <- deparse1(substitute(x))
     if(is.array(x)) {
@@ -56,6 +57,7 @@ function(x, y = NULL, z = NULL,
     if((I == 2) && (J == 2)) {
         ## 2 x 2 x K case
         alternative <- match.arg(alternative)
+        
         if(!missing(conf.level) &&
            (length(conf.level) != 1 || !is.finite(conf.level) ||
             conf.level < 0 || conf.level > 1))
@@ -129,6 +131,9 @@ function(x, y = NULL, z = NULL,
             ##   <doi:10.1080/01621459.1985.10478212> or
             ##   <doi:10.2307/2288562> (JSTOR).
 
+            if(alternative == "two.sided")
+                two.sided.method <- match.arg(two.sided.method)
+            
             METHOD <- paste("Exact conditional test of independence",
                             "in 2 x 2 x k tables")
             mn <- apply(x, c(2L, 3L), sum)
@@ -180,10 +185,20 @@ function(x, y = NULL, z = NULL,
                        less = pn2x2xk(s, 1),
                        greater = pn2x2xk(s, 1, upper.tail = TRUE),
                        two.sided = {
-                           ## Note that we need a little fuzz.
-                           relErr <- 1 + 10 ^ (-7)
-                           d <- dc      # same as dn2x2xk(1)
-                           sum(d[d <= d[s - lo + 1] * relErr])
+                           if(two.sided.method == "central")
+                               min(2 * min(pn2x2xk(s, 1),
+                                           pn2x2xk(s, 1,
+                                                   upper.tail = TRUE)),
+                                   1)
+                           else {
+                               ## Note that we need a little fuzz.
+                               relErr <- 1 + 10 ^ (-7)
+                               d <- dc      # same as dn2x2xk(1)
+                               sum(d[d <= d[s - lo + 1] * relErr])
+                               ## <FIXME>
+                               ## Would be better to use logs ...
+                               ## </FIXME>
+                           }
                        })
 
             ## Determine the MLE for ncp by solving E(S) = s, where the
