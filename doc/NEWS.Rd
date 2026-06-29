@@ -153,6 +153,10 @@
 
       \item Fix for \PR{19094};  fill/stroke path based on text with
       \code{col=NA}. Thanks to \I{Trevor Davis}.
+
+      \item Fix for \PR{18842};  better documentation and warnings
+      when specify inappropriate \code{col} to \code{filled.contour()}.
+      Thanks to \I{Darakhshan Nehal}.
     }
   }
 }

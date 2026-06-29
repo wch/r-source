@@ -45,9 +45,12 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
     values is divided into approximately this many levels.}
  \item{color.palette}{a color palette function to be used to assign
     colors in the plot.}
- \item{col}{an explicit set of colors to be used in the plot.
-    This argument overrides any palette function specification.  There
-    should be one less color than levels}
+\item{col}{an explicit set of colors to be used in the plot.
+    This argument overrides any palette function specification.
+    \bold{\code{col} must have \code{length(levels) - 1} elements}: if
+    it does not, a warning is given and the colors will be recycled or
+    ignored when plotted, which can give misleading results (see
+    \sQuote{Details}).}   
  \item{plot.title}{statements which add titles to the main plot.}
  \item{plot.axes}{statements which draw axes (and a \code{\link{box}})
    on the main plot.  This overrides the default axes.}
@@ -79,10 +82,22 @@ filled.contour(x = seq(0, 1, length.out = nrow(z)),
   is a single \code{NA} value the triangle opposite the \code{NA} is
   omitted.
 
-  Values to be plotted can be infinite: the effect is similar to that
+Values to be plotted can be infinite: the effect is similar to that
   described for \code{NA} values.
 
-  \code{.filled.contour} is a \sQuote{bare bones} interface to add
+  If \code{levels} is not specified explicitly, it is computed as
+  \code{pretty(zlim, nlevels)}.  \code{\link{pretty}} chooses a
+  \dQuote{nice} set of levels and the number of levels it returns can
+  differ from \code{nlevels}: hence \code{length(levels) - 1}, the
+  number of colors \code{col} should have, is not always equal to
+  \code{nlevels - 1} or to \code{nlevels}.  If you supply \code{col}
+  explicitly, it is safest to first determine \code{levels} (either by
+  computing \code{pretty(zlim, nlevels)} yourself, or by passing
+  \code{levels} explicitly) and then set
+  \code{col} to have \code{length(levels) - 1} elements, rather than
+  guessing the count from \code{nlevels}.
+
+  \code{.filled.contour} is a \sQuote{bare bones} interface to add  
   just the contour plot to an already-set-up plot region.  It is is
   intended for programmatic use, and the programmer is
   responsible for checking the conditions on the arguments.

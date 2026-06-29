@@ -48,10 +48,14 @@ function (x = seq(0, 1, length.out = nrow(z)),
         y <- x$y
         x <- x$x
     }
-    if (any(diff(x) <= 0) || any(diff(y) <= 0))
-        stop("increasing 'x' and 'y' values expected")
-
-    mar.orig <- (par.orig <- par(c("mar","las","mfrow")))$mar
+  if (any(diff(x) <= 0) || any(diff(y) <= 0))
+    stop("increasing 'x' and 'y' values expected")
+  if (length(col) != length(levels) - 1L)
+    warning(gettextf(
+      "'col' has length %d but should have length %d (= length(levels) - 1, with length(levels) = %d); colors will be recycled or ignored",
+      length(col), length(levels) - 1L, length(levels)),
+      domain = NA)
+  mar.orig <- (par.orig <- par(c("mar","las","mfrow")))$mar    
     on.exit(par(par.orig))
 
     w <- (3 + mar.orig[2L]) * par("csi") * 2.54
