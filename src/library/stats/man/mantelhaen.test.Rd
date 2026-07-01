@@ -1,6 +1,6 @@
 % File src/library/stats/man/mantelhaen.test.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2008 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{mantelhaen.test}
@@ -49,10 +49,11 @@ mantelhaen.test(x, y = NULL, z = NULL,
 }
 \value{
   A list with class \code{"htest"} containing the following components:
-  \item{statistic}{Only present if no exact test is performed.  In the
-    classical case of a 2 by 2 by \eqn{K} table (i.e., of dichotomous
-    underlying variables), the Mantel-\I{Haenszel} chi-squared statistic;
-    otherwise, the generalized Cochran-Mantel-\I{Haenszel} statistic.}
+  \item{statistic}{In the classical case of a 2 by 2 by \eqn{K} table
+    (i.e., of dichotomous underlying variables), the sum of the first
+    elements in each stratum if an exact test is performed and the
+    Mantel-\I{Haenszel} chi-squared statistic otherwise.  For larger
+    tables, the generalized Cochran-Mantel-\I{Haenszel} statistic.}
   \item{parameter}{the degrees of freedom of the approximate chi-squared
     distribution of the test statistic (\eqn{1} in the classical case).
     Only present if no exact test is performed.}
