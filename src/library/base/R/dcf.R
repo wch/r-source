@@ -1,7 +1,7 @@
 #  File src/library/base/R/dcf.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2022 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -15,6 +15,23 @@
 #
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
+
+## Canonicalize 'x' to valid UTF-8: honour any declared encoding via
+## enc2utf8(), then escape bytes that are still invalid as <xx>, as
+## iconv(sub = "byte") does.  DCF files are required to be UTF-8.  This is
+## the same canonicalization strwrap() does inline; non-character input
+## (which carries no encoding) is returned unchanged.
+.enc2utf8_sub <-
+function(x)
+{
+    if(!is.character(x))
+        return(x)
+    x <- enc2utf8(x)
+    bad <- which(!is.na(x) & !validUTF8(x))
+    if(length(bad))
+        x[bad] <- iconv(x[bad], from = "UTF-8", to = "UTF-8", sub = "byte")
+    x
+}
 
 read.dcf <-
 function(file, fields = NULL, all = FALSE, keep.white = NULL)
@@ -73,7 +90,11 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
     ascii_blank <- " \t"
     ascii_space <- " \f\n\r\t\v"
 
-    lines <- readLines(file, skipNul = TRUE, encoding = "bytes")
+    ## DCF files must be encoded in UTF-8.  Read as UTF-8 and repair any
+    ## invalid byte sequences (escaping them as <xx>) so that invalid input
+    ## is preserved visually rather than silently dropped.
+    lines <- readLines(file, skipNul = TRUE, encoding = "UTF-8", warn = FALSE)
+    lines <- .enc2utf8_sub(lines)
 
     ## Ignore comment lines.
     lines <- lines[!startsWith(lines, "#")]
@@ -131,10 +152,6 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
                    c(1L, pos[-length(pos)] + 1L), pos)
     vals[fold] <- trimws(vals[fold])
 
-    ## for back-compatibility, but creates invalid strings
-    Encoding(vals) <- "unknown"
-    Encoding(tags) <- "unknown"
-
     out <- .assemble_things_into_a_data_frame(tags, vals, nums[pos])
 
     if(!is.null(fields))
@@ -149,6 +166,10 @@ function(x, file = "", append = FALSE, useBytes = FALSE,
          width = 0.9 * getOption("width"),
          keep.white = NULL)
 {
+    ## DCF files must be encoded in UTF-8, so output is always written as
+    ## UTF-8 (see the value conversion in fmt() below).  The 'useBytes'
+    ## argument is therefore ignored.
+
     if(file == "")
         file <- stdout()
     else if(is.character(file)) {
@@ -168,6 +189,9 @@ function(x, file = "", append = FALSE, useBytes = FALSE,
 	     gsub("\n[ \t]*\n", "\n .\n ", s, perl = TRUE, useBytes = TRUE),
              perl = TRUE, useBytes = TRUE)
     fmt <- function(tag, val, fold = TRUE) {
+        ## DCF files must be encoded in UTF-8: canonicalize values to UTF-8
+        ## (escaping invalid bytes) before they are reformatted below.
+        val <- .enc2utf8_sub(val)
         s <- if(fold)
             formatDL(rep.int(tag, length(val)), val, style = "list",
                      width = width, indent = indent)
@@ -215,5 +239,9 @@ function(x, file = "", append = FALSE, useBytes = FALSE,
         ## Note that we do not write a trailing blank line.
         eor[ which(diff(c(col(out))[is_not_empty]) >= 1L) ] <- "\n"
     }
-    writeLines(paste0(c(out[is_not_empty]), eor), file, useBytes=useBytes)
+    ## The values were converted to UTF-8 above, so write the bytes
+    ## verbatim (useBytes = TRUE) rather than re-encoding to the session's
+    ## native encoding.  A connection opened with an explicit encoding may
+    ## still re-encode the output, but the default is always UTF-8.
+    writeLines(paste0(c(out[is_not_empty]), eor), file, useBytes = TRUE)
 }

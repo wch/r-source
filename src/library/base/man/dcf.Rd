@@ -40,8 +40,9 @@ write.dcf(x, file = "", append = FALSE, useBytes = FALSE,
     is attempted to coerce \code{x} to a data frame.}
   \item{append}{logical.  If \code{TRUE}, the output is appended to the
     file.  If \code{FALSE}, any existing file of the name is destroyed.}
-  \item{useBytes}{logical to be passed to \code{\link{writeLines}()},
-    see there: \dQuote{for expert use}.}
+  \item{useBytes}{ignored, and retained only for back-compatibility.
+    Since \code{write.dcf} now always writes UTF-8 (see \sQuote{Details}),
+    the output is no longer re-encoded to the session's native encoding.}
   \item{indent}{a positive integer specifying the indentation for
     continuation lines in output entries.}
   \item{width}{a positive integer giving the target column for wrapping
@@ -73,10 +74,16 @@ write.dcf(x, file = "", append = FALSE, useBytes = FALSE,
     length limit was approximately 8191 bytes per line.
   }
 
-  Note that \code{read.dcf(all = FALSE)} reads the file byte-by-byte.
-  This allows a \file{DESCRIPTION} file to be read and only its ASCII
-  fields used, or its \samp{Encoding} field used to re-encode the
-  remaining fields.
+  DCF files are required to be encoded in UTF-8.  \code{read.dcf}
+  therefore returns values in UTF-8 (non-ASCII values being marked as
+  such), and \code{write.dcf} converts values with a declared encoding
+  (such as \code{"latin1"}) to UTF-8 and always writes UTF-8, regardless
+  of the session's locale.  Any bytes which are not valid UTF-8 are not
+  dropped but preserved visually by escaping them as \samp{<xx>} (where
+  \code{xx} is the byte in hexadecimal), as done by
+  \code{\link{iconv}(sub = "byte")}.  As a consequence, the
+  \samp{Encoding} field of a \file{DESCRIPTION} file is no longer used to
+  re-encode the other fields.
 
   \code{write.dcf} does not write \code{NA} fields.
 }
@@ -103,10 +110,8 @@ write.dcf(x, file = "", append = FALSE, useBytes = FALSE,
 }
 
 \references{
-  \url{https://www.debian.org/doc/debian-policy/ch-controlfields.html}.
-
-  Note that \R does not require encoding in UTF-8, which is a recent
-  Debian requirement.
+  \url{https://www.debian.org/doc/debian-policy/ch-controlfields.html},
+  which requires control files to be encoded in UTF-8.
 }
 
 \note{

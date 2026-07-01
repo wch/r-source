@@ -2358,82 +2358,22 @@ function(dfile, keep.white = .keep_white_description_fields)
     if (nrow(out) != 1L)
         stop("contains a blank line", call. = FALSE)
     out <- out[1L, ]
-    if(!is.na(encoding <- out["Encoding"])) {
-        ## could convert everything (valid) to UTF-8
-        if(encoding == "UTF-8") {
-            Encoding(out) <- "UTF-8"
-            ind <- validUTF8(out)
-            if(!all(ind)) {
-                pos <- which(!ind)
-                ## Be as nice as for the other cases ...
-                ## Could also throw an error along the lines of
-                ##   stop(sprintf(ngettext(length(pos),
-                ##                         "field %s is not valid UTF-8",
-                ##                         "fields %s are not valid UTF-8"),
-                ##                paste(sQuote(names(out)[pos]),
-                ##                             collapse = ", ")),
-                ##        call. = FALSE, domain = NA)
-                out[pos] <-
-                    iconv(out[pos], "UTF-8", "UTF-8", sub = "byte")
-            }
-        }
-        else if(encoding == "latin1")
-            Encoding(out) <- "latin1"
-        else
-            out <- iconv(out, encoding, "", sub = "byte")
-    }
+    ## read.dcf() now always returns UTF-8 (repairing any invalid bytes),
+    ## so the legacy Encoding-field post-processing is no longer needed.
     out
 }
 
 .write_description <-
 function(x, dfile, keep.white = .keep_white_description_fields)
 {
-    ## Invert how .read_description() handles package encodings.
-    if(!is.na(encoding <- x["Encoding"])) {
-        ## For UTF-8 or latin1 encodings, .read_description() would
-        ## simply have marked the encoding.  But we might have added
-        ## fields encoded differently ...
-        ind <- is.na(match(Encoding(x), c(encoding, "unknown")))
-        if(any(ind))
-            x[ind] <- mapply(iconv, x[ind], Encoding(x)[ind], encoding,
-                             sub = "byte")
-    } else {
-        ## If there is no declared encoding, we cannot have non-ASCII
-        ## content.
-        ## Cf. tools::showNonASCII():
-        asc <- iconv(x, "latin1", "ASCII")
-        ## fields might have been NA to start with, so use identical.
-        if(!identical(asc, x)) {
-            warning("Unknown encoding with non-ASCII data: converting to ASCII")
-	    ind <- is.na(asc) | (asc != x)
-            x[ind] <- iconv(x[ind], "latin1", "ASCII", sub = "byte")
-        }
-    }
+    ## write.dcf() now always writes valid UTF-8 (converting values with a
+    ## declared encoding and repairing any invalid bytes), so there is no
+    ## need to handle the declared Encoding field here.
     ## Avoid folding for fields where we keep whitespace when reading,
     ## plus two more fields where legacy code does not strip whitespace
     ## and so we should not wrap.
-    ## Unfortunately, wrapping may destroy declared encodings: for the
-    ## fields where we do not keep whitespace, write.dcf() calls
-    ## formatDL() which in turn calls paste() on the results of
-    ## strwrap(), and paste() may change the (common) encoding.
-    ## In particular, pasting a latin1 string comes out in UTF-8 in a
-    ## UTF-8 locale, and with unknown encoding in a C locale.
-    ## Hence, when we have a declared non-UTF-8 encoding, we convert
-    ## to UTF-8 before formatting, and convert back to the declared
-    ## encoding when writing out.
     keep.white <- unique(c(keep.white, "Maintainer", "BugReports"))
-    if(!is.na(encoding) && (encoding != "UTF-8")) {
-        x <- iconv(x, from = encoding, to = "UTF-8")
-        tfile <- tempfile()
-        write.dcf(rbind(x), tfile, keep.white = keep.white,
-                  useBytes = TRUE)
-        writeLines(iconv(readLines(tfile),
-                         from = "UTF-8", to = encoding),
-                   dfile, useBytes = TRUE)
-    } else {
-        write.dcf(rbind(x), dfile, keep.white = keep.white,
-                  useBytes = TRUE)
-    }
+    write.dcf(rbind(x), dfile, keep.white = keep.white)
 }
 
 .expand_package_description_db_R_fields <-

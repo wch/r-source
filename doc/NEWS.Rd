@@ -8,7 +8,18 @@
 \section{\Rlogo Changes in R-devel}{
   \subsection{Significant User-Visible Changes}{
     \itemize{
-      \item .
+      \item \code{read.dcf()} and \code{write.dcf()} now treat \abbr{DCF}
+      files (such as package \file{DESCRIPTION} and repository
+      \file{PACKAGES} files) as \abbr{UTF-8}, as required by the Debian
+      control file format.  \code{read.dcf()} returns values in
+      \abbr{UTF-8} and \code{write.dcf()} always writes \abbr{UTF-8}
+      regardless of the session locale; bytes which are not valid
+      \abbr{UTF-8} are preserved by escaping them as \samp{<xx>} rather
+      than being re-encoded via a \samp{Encoding} field.  As a
+      consequence, the \code{useBytes} argument of \code{write.dcf()} is
+      ignored, and non-\abbr{UTF-8} \file{DESCRIPTION} files (e.g. those
+      declaring \samp{Encoding: latin1}) are no longer re-encoded on
+      reading.
     }
   }
 

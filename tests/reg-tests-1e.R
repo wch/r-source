@@ -3449,6 +3449,125 @@ km <- merge(k, m, all.x = TRUE, all.y = TRUE)
 stopifnot(identical(names(km), c(names(k), names(m))))
 ## previously `y[FALSE, ]` instead of `z` (in R <= 4.6.0)
 
+## read.dcf() and write.dcf() always use UTF-8 (r-dev-day issue 156)
+local({
+    eacute <- intToUtf8(0xe9) # small e with acute, UTF-8
+    ccedil <- intToUtf8(0xe7) # small c with cedilla, UTF-8
+    ## The shared base:::.enc2utf8_sub() helper used by read/write.dcf():
+    ## convert to UTF-8 honouring the declared encoding, escape invalid
+    ## bytes, and pass non-character input through unchanged.
+    lat <- "Fran\xe7ois"; Encoding(lat) <- "latin1"
+    ## A string declared UTF-8 but containing a stray invalid byte: must be
+    ## escaped regardless of the native encoding (an undeclared literal would
+    ## be reinterpreted via the locale codepage on non-UTF-8 platforms).
+    inv <- "a\xffb"; Encoding(inv) <- "UTF-8"
+    stopifnot(
+        identical(.enc2utf8_sub("abc"), "abc"),
+        .enc2utf8_sub(lat) == paste0("Fran", ccedil, "ois"),
+        Encoding(.enc2utf8_sub(lat)) == "UTF-8",
+        .enc2utf8_sub(inv) == "a<ff>b",
+        identical(.enc2utf8_sub(c("a", NA)), c("a", NA)),
+        identical(.enc2utf8_sub(1:3), 1:3)
+    )
+    ## A DCF file with a valid UTF-8 field and a field with an invalid byte.
+    tf <- tempfile()
+    con <- file(tf, "wb")
+    writeBin(charToRaw("Package: testpkg\nTitle: caf\xc3\xa9\nAuthor: Fran\xffois\n"),
+             con)
+    close(con)
+    ## Both the C path (all = FALSE) and the R path (all = TRUE) must agree:
+    ## valid UTF-8 is marked as such, invalid bytes are escaped as <xx>.
+    dC <- read.dcf(tf)
+    dR <- read.dcf(tf, all = TRUE)
+    stopifnot(
+        dC[1, "Title"] == paste0("caf", eacute),
+        Encoding(dC[1, "Title"]) == "UTF-8",
+        dC[1, "Author"] == "Fran<ff>ois",
+        identical(unname(dC[1, "Title"]),  dR$Title),
+        identical(unname(dC[1, "Author"]), dR$Author)
+    )
+    ## write.dcf() converts a declared encoding to UTF-8 and escapes any
+    ## invalid bytes; the output must be valid UTF-8.
+    x <- data.frame(Package = "testpkg",
+                    Author  = "Fran\xe7ois",
+                    Note    = "bad\xffbyte",
+                    stringsAsFactors = FALSE)
+    Encoding(x$Author) <- "latin1"
+    Encoding(x$Note)   <- "UTF-8"   # stray invalid byte, must be escaped
+    tf2 <- tempfile()
+    write.dcf(x, tf2)            # always UTF-8, regardless of locale
+    stopifnot(validUTF8(rawToChar(readBin(tf2, "raw", file.size(tf2)))))
+    y <- read.dcf(tf2)
+    stopifnot(
+        y[1, "Author"] == paste0("Fran", ccedil, "ois"),
+        Encoding(y[1, "Author"]) == "UTF-8",
+        y[1, "Note"] == "bad<ff>byte"
+    )
+    ## An invalid byte on a continuation line is escaped, while a valid
+    ## UTF-8 character on the same field is preserved.
+    tf3 <- tempfile()
+    con <- file(tf3, "wb")
+    writeBin(charToRaw("Package: p\nDescription: one \xff bad\n  caf\xc3\xa9 line\n"),
+             con)
+    close(con)
+    d3C <- read.dcf(tf3)
+    d3R <- read.dcf(tf3, all = TRUE)
+    stopifnot(
+        grepl("<ff>", d3C[1, "Description"], fixed = TRUE),
+        grepl(eacute, d3C[1, "Description"], fixed = TRUE),
+        Encoding(d3C[1, "Description"]) == "UTF-8",
+        identical(unname(d3C[1, "Description"]), d3R$Description)
+    )
+    ## Valid 3- and 4-byte characters are preserved; the various kinds of
+    ## invalid sequence (truncated, overlong, surrogate) are each escaped
+    ## per byte, and a literal "<ff>" is not re-escaped.  C and R agree.
+    euro  <- intToUtf8(0x20AC)   # 3-byte UTF-8
+    emoji <- intToUtf8(0x1F600)  # 4-byte UTF-8
+    rdb <- function(bytes) {
+        f <- tempfile(); cc <- file(f, "wb"); writeBin(as.raw(bytes), cc); close(cc)
+        on.exit(unlink(f))
+        list(C = read.dcf(f)[1, "X"], R = read.dcf(f, all = TRUE)$X)
+    }
+    cases <- list(
+        list(b = c(charToRaw("Package: p\nX: "), charToRaw(euro),
+                   charToRaw(emoji), charToRaw("\n")),    want = paste0(euro, emoji)),
+        list(b = c(charToRaw("Package: p\nX: a"), as.raw(0xc3),
+                   charToRaw("\n")),                       want = "a<c3>"),
+        list(b = c(charToRaw("Package: p\nX: "), as.raw(c(0xc0, 0x80)),
+                   charToRaw("\n")),                       want = "<c0><80>"),
+        list(b = c(charToRaw("Package: p\nX: "), as.raw(c(0xed, 0xa0, 0x80)),
+                   charToRaw("\n")),                       want = "<ed><a0><80>"),
+        list(b = charToRaw("Package: p\nX: a<ff>b\n"),     want = "a<ff>b")
+    )
+    for (cs in cases) {
+        got <- rdb(cs$b)
+        stopifnot(got$C == cs$want, identical(unname(got$C), got$R))
+    }
+    ## An invalid byte in a field name (tag) is escaped; C and R agree.
+    tf4 <- tempfile()
+    con <- file(tf4, "wb")
+    writeBin(c(charToRaw("Package: p\nX"), as.raw(0xff), charToRaw("Y: v\n")), con)
+    close(con)
+    stopifnot("X<ff>Y" %in% colnames(read.dcf(tf4)),
+              identical(colnames(read.dcf(tf4)), names(read.dcf(tf4, all = TRUE))))
+    ## A repeated field with an invalid byte: all = TRUE gives a list column.
+    con <- file(tf4, "wb")
+    writeBin(c(charToRaw("Package: p\nX: a\nX: "), as.raw(0xff), charToRaw("\n")), con)
+    close(con)
+    stopifnot(identical(unlist(read.dcf(tf4, all = TRUE)$X), c("a", "<ff>")))
+    ## A keep.white field uses the non-folding branch of write.dcf();
+    ## a latin1 value is still written as valid UTF-8.
+    v <- "Fran\xe7ois"; Encoding(v) <- "latin1"
+    write.dcf(data.frame(Package = "p", Maintainer = v, stringsAsFactors = FALSE),
+              tf4, keep.white = "Maintainer")
+    stopifnot(validUTF8(rawToChar(readBin(tf4, "raw", file.size(tf4)))),
+              read.dcf(tf4)[1, "Maintainer"] == paste0("Fran", ccedil, "ois"))
+    unlink(c(tf, tf2, tf3, tf4))
+})
+## read.dcf() previously returned values with encoding "unknown", and
+## write.dcf() relied on the Encoding field (in R <= 4.6.0)
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

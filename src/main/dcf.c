@@ -31,6 +31,27 @@
 static SEXP allocMatrixNA(SEXPTYPE, int, int);
 static void transferVector(SEXP s, SEXP t);
 
+/* Build a CHARSXP marked as UTF-8 from the NUL-terminated string 's'.
+   DCF files are required to be UTF-8, so 's' is interpreted as UTF-8
+   regardless of its actual encoding; any invalid byte sequences are
+   repaired by escaping them as "<xx>", exactly as
+   iconv(from = "UTF-8", to = "UTF-8", sub = "byte") does (which the R
+   code paths in read.dcf()/write.dcf() also use).  The common case of
+   already-valid input is handled without conversion. */
+static SEXP mkCharUTF8sub(const char *s)
+{
+    if (utf8Valid(s))
+	return mkCharCE(s, CE_UTF8);
+
+    /* reEnc3() performs the iconv() repair via Riconv(); subst = 1 selects
+       the "<xx>" hexadecimal substitution for invalid bytes.  It returns a
+       string allocated with R_alloc() (and freed at the vmaxset() in
+       do_readDCF()), or 's' itself if iconv is unavailable.  Either way
+       mkCharCE() copies the bytes into the CHARSXP below. */
+    const char *repaired = reEnc3(s, "UTF-8", "UTF-8", 1);
+    return mkCharCE(repaired, CE_UTF8);
+}
+
 static void con_cleanup(void *data)
 {
     Rconnection con = data;
@@ -203,7 +224,7 @@ attribute_hidden SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 			}
 			strcat(buf, line + offset);
 		    }
-		    SET_STRING_ELT(retval, lastm + nwhat * k, mkChar(buf));
+		    SET_STRING_ELT(retval, lastm + nwhat * k, mkCharUTF8sub(buf));
 		}
 	    } else {
 		if(tre_regexecb(&regline, line, 1, regmatch, 0) == 0) {
@@ -230,7 +251,7 @@ attribute_hidden SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 				    line[regmatch[0].rm_so] = '\0';
 			    }
 			    SET_STRING_ELT(retval, m + nwhat * k,
-					   mkChar(line + offset));
+					   mkCharUTF8sub(line + offset));
 			    break;
 			} else {
 			    /* This is a field, but not one prespecified */
@@ -274,7 +295,7 @@ attribute_hidden SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 			}
 			strncpy(buf, line, Rf_strchr(line, ':') - line);
 			buf[Rf_strchr(line, ':') - line] = '\0';
-			SET_STRING_ELT(what, nwhat, mkChar(buf));
+			SET_STRING_ELT(what, nwhat, mkCharUTF8sub(buf));
 			nwhat++;
 			/* lastm uses C indexing, hence nwhat - 1 */
 			lastm = nwhat - 1;
@@ -292,7 +313,7 @@ attribute_hidden SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 				line[regmatch[0].rm_so] = '\0';
 			}
 			SET_STRING_ELT(retval, lastm + nwhat * k,
-				       mkChar(line + offset));
+				       mkCharUTF8sub(line + offset));
 		    }
 		} else {
 		    /* Must be a regular line with no tag ... */
