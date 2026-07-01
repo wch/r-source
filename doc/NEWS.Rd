@@ -60,7 +60,10 @@
 
       \item \code{binom.test()} and \code{poisson.test()} can now at
       least optionally compute central two-sided p-values which match
-      the confidence intervals.
+      the confidence intervals.  Same for \code{fisher.test()} in the
+      \eqn{2 \times 2}{2 by 2} case and \code{mantelhaen.test()} in
+      the \eqn{2 \times 2 \times K}{2 by 2 by K} case if an exact 
+      conditional test is performed.
     }
   }
 
