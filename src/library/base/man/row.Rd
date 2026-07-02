@@ -1,6 +1,6 @@
 % File src/library/base/man/row.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2018 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{row}
@@ -16,8 +16,7 @@ row(x, as.factor = FALSE)
 .row(dim)
 }
 \arguments{
-  \item{x}{a matrix-like object, that is one with a two-dimensional
-    \code{dim}.}
+  \item{x}{a matrix-like object, that is one with a length two \code{dim}.}
   \item{dim}{a matrix dimension, i.e., an integer valued numeric vector of
     length two (with non-negative entries).}
   \item{as.factor}{a logical value indicating whether the value should
