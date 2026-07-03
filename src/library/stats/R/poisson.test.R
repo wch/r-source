@@ -87,7 +87,7 @@ function(x, T = 1, r = 1, alternative = c("two.sided", "less", "greater"),
         
         ## Determine m s.t. Prob(Pois(m) >= x) = alpha.
         ## Use that for x > 0,
-        ##   Prob(Pois >= x) = pgamma(m, x).
+        ##   Prob(Pois(m) >= x) = pgamma(m, x).
         p.L <- function(x, alpha) {
             if(x == 0)                      # No solution
                 0
