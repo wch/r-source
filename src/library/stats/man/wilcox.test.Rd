@@ -103,11 +103,14 @@ wilcox.test(x, \dots)
   \bibcitep{R:Streitberg+Roehmel:1986, R:Streitberg+Roehmel:1987}
   contributed by \I{Torsten Hothorn}.
 
-  If the normal approximation is used and there are no ties, improved
+  If the normal approximation is used, improved
   asymptotic p-values can be obtained via including up to \eqn{k = 3}
-  correction terms of the \I{Edgeworth} series for the normal approximation,
-  as given in \bibcitet{R:Fellingham+Stoker:1964} for the signed rank
-  test and in \bibcitet{R:Fix+Hodges_Jr_:1955} for the rank sum test.
+  correction terms of the \I{Edgeworth} series for the normal
+  approximation.
+  For the signed rank test, this employs the formulas given in
+  \bibcitet{R:Fellingham+Stoker:1964} if there are no ties or zeros.
+  For the rank sum test, this is only available if there are no ties,
+  and uses \bibcitet{R:Fix+Hodges_Jr_:1955}.
 
   For stability reasons, it may be advisable to use rounded data or to set
   \code{digits.rank = 7}, say, such that determination of ties does not

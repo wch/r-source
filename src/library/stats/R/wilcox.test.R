@@ -193,18 +193,18 @@ function(x, mu, n = length(x), digits.rank, digits.zap)
         x <- signif(x, digits.rank)
     if(is.finite(digits.zap))
         x <- .zapsmall.r(x, digits.zap)
-    ## In general, with z the ranks of the non-zero observations, mean
-    ## and variance are that of \sum_i z_i U_i, where the U_i are
+    ## In general, with w the ranks of the non-zero observations, mean
+    ## and variance are that of \sum_i w_i U_i, where the U_i are
     ## i.i.d. Bernoulli(1/2), hence
-    ##   mean = sum(z)/2, variance = sum(z^2)/4.
-    ## If there are no ties or zeros, sort(z) equals 1 : n, and hence
+    ##   mean = sum(w)/2, variance = sum(w^2)/4.
+    ## If there are no ties or zeros, sort(w) equals 1 : n, and hence
     ##   mean = n(n+1)/4, variance = n(n+1)(2n+1)/24 = mean * (2n+1)/6.
     ## If there are ties but no zeros, the mean remains the same, and
     ## the literature gives a simplified expression for the variance.
     ## If there are k zeros, they get rank (k+1)/2.
-    ## sum(z)/2 does not use these, so we need to subtract k(k+1)/4
+    ## sum(w)/2 does not use these, so we need to subtract k(k+1)/4
     ## from the mean.
-    ## sum(z^2)/4 does not use these, so we need to subtract k(k+1)^2/16
+    ## sum(w^2)/4 does not use these, so we need to subtract k(k+1)^2/16
     ## from the variance.
     ## Of course, we could always use the general expressions (or at
     ## least when there are ties or zeros).
@@ -216,7 +216,7 @@ function(x, mu, n = length(x), digits.rank, digits.zap)
     ## we can simply use the asymptotic normal approximations of these
     ## distributions, using the above expressions for mean and variance, 
     ## so now we longer remove zeros also in this case.
-    ## (Note that removing zeros changes z to z - k.)
+    ## (Note that removing zeros changes w to w - k.)
     ZERO <- any(i0 <- x == 0)
     ## Follow Pratt rather than Wilcoxon and do not remove zeros.
     ## if(ZERO) {
@@ -238,7 +238,7 @@ function(x, mu, n = length(x), digits.rank, digits.zap)
         V <- V - k * (k + 1)^2 / 16
     }
     list(statistic = STATISTIC, ex = MEAN, sd = sqrt(V),
-         ties = TIES, zero = ZERO)
+         ties = TIES, zero = ZERO, w = r[!i0])
 }
 
 .wilcox_test_one_pval_exact <-
@@ -398,14 +398,10 @@ function(x, n, z, alternative, conf.level, digits.rank, digits.zap)
 }
 
 .wilcox_test_one_pval_asymp <-
-function(STAT, n, alternative, correct)
+function(STAT, n, alternative, correct, simplify = TRUE)
 {
     z <- `names<-`(STAT$statistic, NULL) - STAT$ex
     if(z == 0 && STAT$sd == 0) return(1)
-    ## Edgeworth approximations only work if there are no ties (or
-    ## zeroes).
-    if((correct > 0) && (STAT$ties || STAT$zero))
-        correct <- 0
     CORRECTION <- if(correct >= 0)
                       switch(alternative,
                              "two.sided" = sign(z) * 0.5,
@@ -417,19 +413,64 @@ function(STAT, n, alternative, correct)
     F <- function(z, lower.tail = TRUE) {
         y <- pnorm(z, lower.tail = lower.tail)
         if(correct < 1) return(y)
-        ## Edgeworth expansion given in Fellingham and Stoker (1964),
-        ## <doi:10.1080/01621459.1964.10480738>
-        n4 <- (n + 1)* 3 * n - 1 # shorten: 1/4! = 1/24 from below: (12 / 5) / 24 == 1 / 10
-        d4 <- 10 * (nn2n <- n * (n + 1) * (2 * n + 1))
-        la4 <- - n4 / d4 # = \lambda_4 / 4!
+        ## Edgeworth expansion for the case without ties or zeroes are
+        ## given in Fellingham and Stoker (1964), 
+        ## <doi:10.1080/01621459.1964.10480738>.
+        ## In general, with w the ranks of the non-zero observations, we
+        ## need to approximate the distribution of \sum_i w_i U_i, where
+        ## the U_i are i.i.d. Bernoulli(1/2).  This has
+        ##   mean = sum(w)/2, variance = sum(w^2)/4.
+        ## The cumulants \lambda_j of the standardized distribution are
+        ##   \lambda_j = \sigma^{-j} \kappa_j(U_i - 1/2) \sum_i w_i^j.
+        ## where from Haldane (1940) <doi:10.1093/biomet/31.3-4.392> the
+        ## cumulants \kappa_j = \kappa_j(U_i - 1/2) are zero when j is
+        ## odd and the first four for even j are given by
+        ##   \kappa_2 = 1/4, \kappa_4 = -1/8,
+        ##   \kappa_6 = 1/4, \kappa_8 = -17/16.
+        ## The Edgeworth series then has 
+        ##   \frac{\lambda_4}{4!} H_3(z) +
+        ##   \frac{\lambda_6}{6!} H_5(z) +
+        ##   \frac{\lambda_8 + 35 \lambda_4^2}{8!} H_7(z)
+        ## see e.g. Kendall and Stuart Vol 1 2nd edition, Eqn 6.48 on
+        ## page 149.  Now if length(w) = N,
+        ##   \sum_i w_i^j ~ N^{j+1}/(j+1)
+        ## so that
+        ##   \lambda_{2j} ~ (N^{2j+1}/(2j+1)) / (N^3/3)^j
+        ## and hence
+        ##   \lambda_4 ~ (N^5/5) / (N^3/3)^2 = O(1/N)
+        ## and
+        ##   \lambda_8 ~ (N^9/9) / (N^3/3)^8 = O(1/N^3)
+        ## so that \lambda_8 = o(\lambda_4^2) and hence neglected by
+        ## Fellingham and Stoker (presumbably because obtaining an
+        ## explicit formula requires too much effort).
+        ## We thus ignore \lambda_8 and in general can use
+        ##   \lambda_4 = (-1/8) * \sum(w^4) / sd^4
+        ##   \lambda_6 = ( 1/4) * \sum(w^6) / sd^6.
+        w <- STAT$w
+        if(STAT$ties || STAT$zero)
+            simplify <- FALSE
+        sd <- STAT$sd
+        if(simplify) {
+            ## shorten: 1/4! = 1/24 from below: (12 / 5) / 24 == 1 / 10
+            n4 <- (n + 1)* 3 * n - 1
+            d4 <- 10 * (nn2n <- n * (n + 1) * (2 * n + 1))
+            la4 <- - n4 / d4 # = \lambda_4 / 4!
+        } else {
+            la4 <- - sum(w^4) / sd^4 / 192
+        }
         ## \frac{\lambda_4}{4!} H_3(z)
         z2 <- z^2
         e <- la4 * z * (z2 - 3)
-        if(correct > 1) { # shorten: 1/6! * 576 / 7 = 576 / (7 * 720) = 4 / 35
-				##  ___ paper has N^3, R-code{orig} had n^2
-            n6 <- 4 * (((3*n + 6) * n^2 - 3) * n + 1)
-            d6 <- 35 * nn2n^2
-            la6 <- n6 / d6 # = \lambda_6 / 6!
+        if(correct > 1) {
+            if(simplify) {
+                ## shorten: 1/6! * 576 / 7 = 576 / (7 * 720) = 4 / 35
+                ##  ___ paper has N^3, R-code{orig} had n^2
+                n6 <- 4 * (((3*n + 6) * n^2 - 3) * n + 1)
+                d6 <- 35 * nn2n^2
+                la6 <- n6 / d6 # = \lambda_6 / 6!
+            } else {
+                la6 <- sum(w^6) / sd^6 / 2880
+            }
             ## \frac{\lambda_6}{6!} H_5(z)
             e <- e + la6 * z * ((z2 - 10) * z2 + 15)
         }
