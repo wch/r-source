@@ -158,7 +158,7 @@
       attribute has more than one string, e.g., \CRANpkg{S7} generics
       and methods. Thanks to \I{Hadley Wickham} for the patch.
 
-      \item \code{as(object, to) <- value} no longer treats \code{to} 
+      \item \code{as(object, to) <- value} no longer treats \code{to}
       as a class union when it was registered via \code{setOldClass()}.
 
       \item In \pkg{methods}, \code{setOldClass(..., S4Class = )}
@@ -171,13 +171,18 @@
       \item Fix for \PR{18842};  better documentation and warnings
       when specify inappropriate \code{col} to \code{filled.contour()}.
       Thanks to \I{Darakhshan Nehal}.
+
+      \item \code{cor(*, method="kendall")} and \code{cov()} now use the fast
+      N*log(N) algorithm suggested in \PR{18934} and offered by \I{David Simcha}
+      on R-devel in 2010.  With thanks to the \I{R Dev Day @ Nantes 2026}
+      contributors, notably \I{Charles Bordet} and \I{Alexis Derumigny}.
     }
   }
 }
 
 
 \section{\Rlogo Changes in R 4.6.1 patched}{
-  
+
   \subsection{Bug Fixes}{
     \itemize{
       \item In plain-text help (\code{Rd2txt}), paragraphs are again
