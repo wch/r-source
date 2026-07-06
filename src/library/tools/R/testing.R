@@ -683,7 +683,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet", "
     Sys.setlocale("LC_COLLATE", "C")
 ### ---- "basic" tests ("devel", etc -------> further down (!)
     ## "strict specific" (test-src-strict-1):
-    tests1 <- c("eval-etc", "simple-true", "arith-true", "lm-tests",
+    tests1 <- c("eval-etc", "simple-true", "arith-true", "arith", "lm-tests",
                 "ok-errors", "method-dispatch", "array-subset",
                 "p-r-random-tests", "d-p-q-r-tst-2",
                 "any-all", "structure", "d-p-q-r-tests")
@@ -698,7 +698,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet", "
                 "classes-methods",
                 ## reg-translation, reg-ex*3 ... see "devel" below
                 "datetime3",
-                "p-qbeta-strict-tst",
+                "p-qbeta-strict-tst", "r-strict-tst",
                 "reg-IO", "reg-IO2", "reg-plot", "reg-S4", "reg-BLAS")
 
     useDiff <- nzchar(Sys.which("diff"))  # only check once
