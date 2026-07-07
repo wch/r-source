@@ -1,7 +1,7 @@
 #  File src/library/tools/R/Rd2pdf.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -922,14 +922,17 @@ function(pkgdir, outfile, title, silent = FALSE,
     ## list another R version, so ensure Rd2pdf finds _this_ R's Rd.sty
     texinputs <- file.path(R.home("share"), "texmf", "tex", "latex")
     res <- try(texi2pdf('Rd2.tex', quiet = quiet, index = index, texinputs = texinputs))
-    if(inherits(res, "try-error")) {
-        res <- try(texi2pdf('Rd2.tex', quiet = quiet, index = index, texinputs = texinputs))
+    ## Previously (r66740) this was retried in case of an error to work around
+    ## edge cases. However, not starting from a clean state can obfuscate real
+    ## issues, so we now try again to stop at and log the initial failure.
+    ##if(inherits(res, "try-error")) {
+    ##  res <- try(texi2pdf('Rd2.tex', quiet = quiet, index = index, texinputs = texinputs))
         if(inherits(res, "try-error")) {
             message("Error in running tools::texi2pdf()")
             do_cleanup()
             q("no", status = 1L, runLast = FALSE)
         }
-    }
+    ##}
 
     setwd(startdir)
     if (!quiet)  cat("Saving output to", sQuote(output), "...\n")
