@@ -1,6 +1,6 @@
 % File src/library/tools/man/texi2dvi.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{texi2dvi}
@@ -26,8 +26,8 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
     the default \abbr{DVI} file (\code{texi2dvi} command line option \option{--pdf}).}
   \item{clean}{logical.  If \code{TRUE}, all auxiliary files created
     during the conversion are removed.}
-  \item{quiet}{logical.  No output unless an error occurs
-    (\code{texi2dvi} command-line option \option{--quiet}).}
+  \item{quiet}{logical.  No output unless an error or a BibTeX warning occurs
+    (using \code{texi2dvi} command-line option \option{--quiet}).}
   \item{texi2dvi}{character string (or \code{NULL}).  Script or program
     used to compile a TeX file to \abbr{DVI} or PDF. The default (selected
     by \code{""} or \code{"texi2dvi"} or \code{NULL}) is to look

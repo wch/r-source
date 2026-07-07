@@ -350,6 +350,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     } else on.exit(Sys.setenv(BSTINPUTS = obstinputs), add = TRUE)
     Sys.setenv(BSTINPUTS = paths2env(c(texinputs, obstinputs, Rbstinputs, "")))
 
+    bibwarnings <- character()
     if(index && nzchar(texi2dvi) && .Platform$OS.type != "windows") {
         ## switch off the use of texindy in texi2dvi >= 1.157
         Sys.setenv(TEXINDY = "false")
@@ -417,6 +418,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         log <- paste0(file_path_sans_ext(file), ".blg")
         if(file_test("-f", log)) {
             lines <- .get_BibTeX_errors_from_blg_file(log)
+            bibwarnings <- attr(lines, "warnings")
             if(length(lines))
                 errors <- paste0("BibTeX errors:\n",
                                  paste(lines, collapse = "\n"))
@@ -485,6 +487,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         logfile <- paste0(base, ".blg")
         if(file_test("-f", logfile)) {
             lines <- .get_BibTeX_errors_from_blg_file(logfile)
+            bibwarnings <- attr(lines, "warnings")
             if(length(lines))
                 msg <- paste(msg, "BibTeX errors:",
                              paste(lines, collapse = "\n"),
@@ -559,6 +562,10 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         }
         do_cleanup(clean)
     }
+    if (length(bibwarnings))
+        message(sprintf("Bibliography warnings for '%s':\n",
+                        basename(file_path_sans_ext(file))),
+                paste(bibwarnings, collapse = "\n"), domain = NA)
     invisible(NULL)
 }
 
@@ -997,13 +1004,14 @@ function(con)
         (any(startsWith(lines, "---")) ||
          regexpr("There (was|were) ([0123456789]+) error messages?",
                  lines[length(lines)]) > -1L)
-    ## (Note that warnings are ignored for now.)
+    warnings <- grepv("(Warning--|WARN - )", lines)
+    warnings <- sub(".*(Warning--|WARN - )", "", warnings)
     ## MiKTeX does not give usage, so '(There were n error messages)' is
     ## last.
     pos <- grep("^(Warning|You've|\\(There)", lines)
-    if(!really_has_errors || !length(pos) ) return(character())
-    ind <- seq.int(from = 3L, length.out = pos[1L] - 3L)
-    lines[ind]
+    ind <- if (really_has_errors && length(pos))
+               seq.int(from = 3L, length.out = pos[1L] - 3L)
+    structure(lines[ind], warnings = warnings)
 }
 
 ### ** .get_LaTeX_errors_from_log_file

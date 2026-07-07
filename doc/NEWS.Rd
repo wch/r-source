@@ -88,6 +88,12 @@
     }
   }
 
+  \subsection{Utilities}{
+    \itemize{
+      \item \code{tools::texi2pdf()} now reports BibTeX warnings.
+    }
+  }
+
   \subsection{Bug Fixes}{
     \itemize{
       \item For \code{x <-  <large-POSIXlt>}, for some boundary cases

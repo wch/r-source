@@ -5468,8 +5468,16 @@ add_dummies <- function(dir, Log)
                 if(R_check_suppress_RandR_message)
                     out <- filtergrep('^Xlib: *extension "RANDR" missing on display',
                                       out, useBytes = TRUE)
-                warns <- grep("^Warning: file .* is not portable",
-                              out, value = TRUE, useBytes = TRUE)
+                bibwarnings <- if (config_val_to_logical(Sys.getenv("_R_CHECK_VIGNETTES_BIB_WARNINGS_", "false"))) # for now
+                    unique(grepv("I didn't find a database entry for",
+                                 out, useBytes = TRUE))
+                warns <- c(
+                    grepv("^Warning: file .* is not portable",
+                          out, useBytes = TRUE),
+                    if (length(bibwarnings))
+                        paste(c("From the bibliography engine:", # BibTeX or biber
+                                bibwarnings), collapse = "\n  ")
+                )
                 ltx_err <- any(grepl("LaTeX error", out, ignore.case = TRUE,
                                      useBytes = TRUE))
                 iskip <- grep("^Note: skipping .* dependencies:", out,
