@@ -1201,6 +1201,7 @@ void setup_Rmainloop(void)
 		 R_Interactive);
 
     /* trying to do this earlier seems to run into bootstrapping issues. */
+#ifndef RMIN_ONLY
     doneit = 0;
     if (SETJMP(R_Toplevel.cjmpbuf))
 	check_session_exit();
@@ -1210,6 +1211,7 @@ void setup_Rmainloop(void)
 	R_init_jit_enabled();
     } else
 	R_Suicide(_("unable to initialize the JIT\n"));
+#endif
     R_Is_Running = 2;
 }
 
