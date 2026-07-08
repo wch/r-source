@@ -1264,7 +1264,8 @@ function(ifile, encoding = "unknown", ...)
     aspell_filter_LaTeX_worker(readLines(ifile, encoding = encoding),
                                ...)
 aspell_filter_LaTeX_worker <-
-function(x, cmds = NULL, envs = NULL, parser = tools::parseLatex, ...)
+function(x, cmds = NULL, envs = NULL, parser = tools::parseLatex,
+         before = NULL, ...)
 {
     ranges <- list()
     chrran <- function(e) getSrcref(e)[c(1L, 5L, 3L, 6L)]
@@ -1317,6 +1318,8 @@ function(x, cmds = NULL, envs = NULL, parser = tools::parseLatex, ...)
         }
     }
 
+    if(is.function(before))
+        x <- before(x)
     recurse(parser(x, ...))
     blank_out_character_ranges(x, ranges)
 }
