@@ -82,6 +82,26 @@ aspell(files, filter, control = list(), encoding = "unknown",
   (\file{.md} and \file{.Rmd} files), and needs packages
   \CRANpkg{commonmark} and \CRANpkg{xml2} to be available.
 
+  Filter \code{"LaTeX"} is an experimental LaTeX filter which allows
+  customized skipping of mandatory arguments to commands (similar to the
+  LaTeX filter provided by Aspell) and skipping environments,
+  controllable via arguments \code{cmds} and \code{envs}.
+  This filter uses the LaTeX parser provided by
+  \code{\link[tools]{parseLatex}()}.
+  Argument \code{cmds} should be a character vector with elements of the
+  form \code{"\var{NAME} \var{ARGS}"} with \code{\var{NAME}} the name of
+  the command and \code{\var{ARGS}} a comma-separated list of either
+  \samp{p} or \samp{P}, with \samp{p} indicating the mandatory arguments
+  to be skipped.  The user-defined list given via \code{cmds} is
+  combined with a built-in list of Aspell LaTeX filter defaults.
+  Argument \code{envs} should be a character vector with the names of
+  environments to be skipped.
+  Argument \code{before} can be used to specify a function to be called
+  for pre-processing the LaTeX source before calling the parser.
+  All other arguments given to the filter are passed to the parser,
+  which can be used in particular to customize the names of the commands
+  and environments holding verbatim text.
+  
   The print method for the objects returned by \code{aspell} has an
   \code{indent} argument controlling the indentation of the positions of
   possibly misspelled words.  The default is 2; Emacs users may find it
