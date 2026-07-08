@@ -2245,14 +2245,8 @@ function(package, dir, file, lib.loc = NULL,
             }
         }
     } else {
-        if(!is.na(enc) &&
-           (Sys.getlocale("LC_CTYPE") %notin% c("C", "POSIX"))) {
-            ## FIXME: what if conversion fails on e.g. UTF-8 comments
-            con <- file(file, encoding=enc)
-            on.exit(close(con))
-        } else con <- file
         exprs <-
-            tryCatch(parse(file = con, n = -1L),
+            tryCatch(.parse_code_file(file, enc),
                      error = function(e)
                      stop(gettextf("parse error in file '%s':\n%s",
                                    file,
@@ -6174,15 +6168,8 @@ function(package, dir, lib.loc = NULL)
         }
     }
     else {
-        enc <- db["Encoding"]
-        if(!is.na(enc) &&
-           (Sys.getlocale("LC_CTYPE") %notin% c("C", "POSIX"))) {
-            ## FIXME: what if conversion fails on e.g. UTF-8 comments
-            con <- file(file, encoding=enc)
-            on.exit(close(con))
-        } else con <- file
         exprs <-
-            tryCatch(parse(file = con, n = -1L),
+            tryCatch(.parse_code_file(file, db["Encoding"]),
                      error = function(e)
                      stop(gettextf("parse error in file '%s':\n%s",
                                    file,
