@@ -548,6 +548,11 @@ set.seed(17)
 stopifnot(rhyper(1, 3024, 27466, 251) == 25,
           rhyper(1,  329,  3059, 225) == 22)
 ## failed for a day after a "thinko" in the above bug fix.
+## integer overflow reported by Jonathan Blood
+t30 <- 2^30 ; set.seed(19)
+stopifnot(t30     < .Machine$integer.max,
+          t30+t30 > .Machine$integer.max,
+          rhyper(3, t30, t30,  18) == c(12, 9, 8)) # no integer overflow
 
 ## *chisq(*, df=0, ncp=0) == Point mass at 0
 stopifnot(rchisq(32,        df=0, ncp=0) == 0,

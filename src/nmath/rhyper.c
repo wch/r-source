@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2000-2025 The R Core Team
+ *  Copyright (C) 2000-2026 The R Core Team
  *  Copyright (C) 2005-2020 The R Foundation
  *  Copyright (C) 1998 Ross Ihaka
  *
@@ -82,8 +82,6 @@ static double afc(int i)
 //     rhyper(NR, NB, n) -- NR 'red', NB 'blue', n drawn, how many are 'red'
 double rhyper(double nn1in, double nn2in, double kkin)
 {
-    /* extern double afc(int); */
-
     /* check parameter validity */
 
     if(!R_FINITE(nn1in) || !R_FINITE(nn2in) || !R_FINITE(kkin))
@@ -92,10 +90,11 @@ double rhyper(double nn1in, double nn2in, double kkin)
     nn1in = R_forceint(nn1in);
     nn2in = R_forceint(nn2in);
     kkin  = R_forceint(kkin);
+    double N = nn1in + nn2in;
 
     if (nn1in < 0 || nn2in < 0 || kkin < 0 || kkin > nn1in + nn2in)
 	ML_WARN_return_NAN;
-    if (nn1in >= INT_MAX || nn2in >= INT_MAX || kkin >= INT_MAX) {
+    if (N > INT_MAX || kkin >= INT_MAX) {
 	/* large n -- evade integer overflow (and inappropriate algorithms)
 	   -------- */
 #ifdef DEBUG_rhyper
@@ -121,7 +120,6 @@ double rhyper(double nn1in, double nn2in, double kkin)
     static int ks = -1, n1s = -1, n2s = -1;
     static int m, minjx, maxjx;
     static int k, n1, n2; // <- not allowing larger integer par
-    static double N;
 
     bool setup1, setup2;
     /* if new parameter values, initialize */
@@ -134,7 +132,6 @@ double rhyper(double nn1in, double nn2in, double kkin)
     }
     if (setup1) { // n1 & n2
 	n1s = nn1; n2s = nn2; // save
-	N = nn1 + (double)nn2; // avoid int overflow
 	if (nn1 <= nn2) {
 	    n1 = nn1; n2 = nn2;
 	} else { // nn2 < nn1

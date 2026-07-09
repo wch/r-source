@@ -1,6 +1,6 @@
 % File src/library/stats/man/Hypergeometric.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Hypergeometric}
@@ -77,7 +77,7 @@ rhyper(nn, m, n, k)
   The quantile is defined as the smallest value \eqn{x} such that
   \eqn{F(x) \ge p}, where \eqn{F} is the distribution function.
 
-  In \code{rhyper()}, if one of \eqn{m, n, k} exceeds \code{\link{.Machine}$integer.max},
+  In \code{rhyper()}, if \eqn{m+n} or \eqn{k} exceeds \code{\link{.Machine}$integer.max},
   currently the equivalent of \code{qhyper(runif(nn), m,n,k)} is used
   which is comparably slow while instead a binomial approximation may be
   considerably more efficient.

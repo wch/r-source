@@ -203,6 +203,11 @@
       \item In plain-text help (\code{Rd2txt}), paragraphs are again
       recognized even when started with a non-indented Rd comment,
       fixing a regression in \R 4.4.0.
+
+      \item \code{rhyper(N, m, n, k)} now switches to the \dQuote{large}
+      scenario when \code{m + n} is larger than
+      \code{.Machine$integer.max}, preventing integer overflow, thanks to
+      \I{Jonathan Blood}'s report on R-devel.
     }
   }
 }
