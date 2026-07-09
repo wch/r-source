@@ -852,3 +852,32 @@ function(full = TRUE)
                          "CRAN_issue_full.rds"
                      else
                          "CRAN_issue_open.rds")
+
+CRAN_check_problems_only_in_some_checks <- 
+function(flavor = ".",
+         status = c("WARNING", "ERROR", "FAILURE"),
+         results = CRAN_check_results())
+{
+    p <- results$Package
+    i <- grepl(flavor, results$Flavor)
+    j <- results$Status %in% status
+    ## If we cross-tabulate i and j according to p, we want the packages
+    ## for which i & j and !i & !j are true once, and i & !j and !i & j
+    ## are never true.
+    x <- split((!i | j) & (i | !j), p)
+    names(x)[vapply(x, all, NA) &
+             vapply(split( i &  j, p), any, NA) &
+             vapply(split(!i & !j, p), any, NA)]
+}
+
+browse_CRAN_package_check_URLs <-
+function(p)
+{
+    n <- length(p)
+    i <- 1
+    while((substr(a <- readline("Next package? "), 1, 1) != "n") &&
+          (i <= n)) {
+        browseURL(tools:::CRAN_package_check_URL(p[i]))
+        i <- i + 1
+    }
+}
