@@ -877,7 +877,7 @@ function(p)
     i <- 1
     while((substr(a <- readline("Next package? "), 1, 1) != "n") &&
           (i <= n)) {
-        browseURL(tools:::CRAN_package_check_URL(p[i]))
-        i <- i + 1
+              utils::browseURL(CRAN_package_check_URL(p[i]))
+              i <- i + 1
     }
 }
