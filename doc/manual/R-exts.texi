@@ -6511,7 +6511,7 @@ object, or to a non-tentative definition.  However,
 @command{gcc}@tie{}10@footnote{see
 @uref{https://gcc.gnu.org/gcc-10/porting_to.html}.} and
 @I{LLVM} @command{clang}@tie{}11@footnote{See
-@uref{https://prereleases.llvm.org/11.0.0/rc2/tools/clang/docs/ReleaseNotes.html#modified-compiler-flags}.}
+@uref{https://releases.llvm.org/11.1.0/tools/clang/docs/ReleaseNotes.html#modified-compiler-flags}.}
 changed their default so that tentative definitions cannot be
 merged and the linker will give an error if the same variable is defined
 in more than one object file.  To avoid this, all but one of the C
