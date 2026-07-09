@@ -7529,7 +7529,8 @@ Usage:
 
 @item \arguments@{@dots{}@}
 @findex \arguments
-Description of the function's arguments, using an entry of the form
+Description of the function's arguments as given in the @code{\usage},
+using an entry of the form
 
 @example
 \item@{@var{arg_i}@}@{@var{Description of arg_i}.@}
