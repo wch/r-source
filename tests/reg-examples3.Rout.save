@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2026-03-06 r89553) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-07-09 r90218) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu
+Platform: aarch64-apple-darwin25.5.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -32,7 +32,7 @@ Loading required package: MASS
 + }
 Loading required package: survival
 Call:
-coxph(formula = Surv(rep(1, 248L), case) ~ spontaneous + induced + 
+coxph(formula = Surv(1 + 0 * case, case) ~ spontaneous + induced + 
     strata(stratum), data = infert, method = "exact")
 
   n= 248, number of events= 83 
@@ -674,7 +674,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Residual standard error: 4.67 on 57 degrees of freedom
 
 Number of iterations to convergence: 5 
-Achieved convergence tolerance: 9.34e-07
+Achieved convergence tolerance: 9.31e-07
 
 > ## IGNORE_RDIFF_END
 > 
@@ -743,7 +743,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Residual standard error: 1.11 on 17 degrees of freedom
 
 Number of iterations to convergence: 8 
-Achieved convergence tolerance: 2.13e-06
+Achieved convergence tolerance: 2.11e-06
 
 > ## IGNORE_RDIFF_END
 > options(od)
