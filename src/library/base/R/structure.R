@@ -1,7 +1,7 @@
 #  File src/library/base/R/structure.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,6 +30,9 @@ structure <- function (.Data, ...)
         ok <- !is.na(m)
         if(any(ok)) {
             replace <- c("dim", "dimnames", "names", "tsp", "levels")
+            pc <- function(nms) paste0(sQuote(nms), collapse = ", ")
+            .Deprecated(msg = paste0("Replacing special names ", pc(attrnames[ok])," is deprecated; use ",
+                                     pc(replace[m[ok]]), " instead."))
             names(attrib)[ok] <- replace[m[ok]]
         }
         ## prior to 2.5.0 factors would deparse to double codes

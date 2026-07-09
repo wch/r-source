@@ -62,7 +62,7 @@
       least optionally compute central two-sided p-values which match
       the confidence intervals.  Same for \code{fisher.test()} in the
       \eqn{2 \times 2}{2 by 2} case and \code{mantelhaen.test()} in
-      the \eqn{2 \times 2 \times K}{2 by 2 by K} case if an exact 
+      the \eqn{2 \times 2 \times K}{2 by 2 by K} case if an exact
       conditional test is performed.
     }
   }
@@ -91,6 +91,15 @@
   \subsection{Utilities}{
     \itemize{
       \item \code{tools::texi2pdf()} now reports BibTeX warnings.
+    }
+  }
+
+  \subsection{Deprecated and Defunct}{
+    \itemize{
+      \item \code{structure()} now deprecates the old \dQuote{special}
+      substitute \code{attributes}' names \code{".Dim", ".Dimnames", ".Names", ".Tsp", ".Label"}
+      in favour of the respective \code{"dim", "dimnames", "names", "tsp", "levels"}
+      names.
     }
   }
 

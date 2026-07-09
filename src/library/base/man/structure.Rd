@@ -1,6 +1,6 @@
 % File src/library/base/man/structure.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{structure}
@@ -22,13 +22,12 @@ structure(.Data, \dots)
   \link{attributes} set.
 }
 \details{
-  Adding a  class \code{"factor"} will ensure that numeric codes are
+  Adding a class \code{"factor"} will ensure that numeric codes are
   given integer storage mode.
 
-  For historical reasons (these names are used when deparsing),
+  The historical feature to rename
   attributes \code{".Dim"}, \code{".Dimnames"}, \code{".Names"},
-  \code{".Tsp"} and \code{".Label"} are renamed to \code{"dim"},
-  \code{"dimnames"}, \code{"names"}, \code{"tsp"} and \code{"levels"}.
+  \code{".Tsp"} and \code{".Label"} is deprecated since \R version 4.7.0.
 
   It is possible to give the same tag more than once, in which case the
   last value assigned wins.  As with other ways of assigning attributes,
