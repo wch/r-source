@@ -3874,6 +3874,16 @@ Default: true (but false for CRAN submission checks).
 If true, check @file{Rd} files for auto-generated content which needs
 editing, and missing argument documentation.
 Default: true.
+@item _R_CHECK_RD_CONTENTS_USAGE_
+If true, report @file{Rd} files documenting @code{\arguments} without
+@code{\usage}.
+Default: false.
+@item _R_CHECK_RD_CONTENTS_VALUE_
+If true, report (some) help pages without @code{\value} documentation.
+It currently ignores @file{Rd} files setting a @code{\docType}
+(such as @samp{data}) or using a graphics-related or the special
+@samp{internal} @code{\keyword}.
+Default: false.
 @item _R_CHECK_RD_LINE_WIDTHS_
 If true, check @file{Rd} line widths in usage and examples sections.
 Default: false (but true for CRAN submission checks).
