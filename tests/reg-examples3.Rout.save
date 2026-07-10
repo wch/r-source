@@ -32,7 +32,7 @@ Loading required package: MASS
 + }
 Loading required package: survival
 Call:
-coxph(formula = Surv(1 + 0 * case, case) ~ spontaneous + induced + 
+coxph(formula = Surv(rep(1, 248L), case) ~ spontaneous + induced + 
     strata(stratum), data = infert, method = "exact")
 
   n= 248, number of events= 83 
