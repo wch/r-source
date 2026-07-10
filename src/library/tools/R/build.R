@@ -1154,7 +1154,15 @@ build_exclude <- function(allfiles, pkgdir, pkgname) {
         ## work on 'data' directory if present
         if(dir.exists(file.path(pkgname, "data")) ||
            file_test("-f", file.path(pkgname, "R", "sysdata.rda"))) {
-            if(!str_parse_logic(desc["LazyData"], FALSE)) {
+            dlfile <- file.path(pkgname, "data", "datalist")
+            has_dlfile <- file.exists(dlfile)
+            if(str_parse_logic(desc["LazyData"], FALSE)) {
+                if(has_dlfile) {
+                    printLog(Log, "WARNING: Removing file 'data/datalist'",
+                             " which is obsolete with 'LazyData'.\n")
+                    unlink(dlfile)
+                }
+            } else if(!has_dlfile) {
                 messageLog(Log,
                            "looking to see if a 'data/datalist' file should be added")
                 ## in some cases data() needs the package installed as

@@ -93,6 +93,9 @@
       \item \code{tools::texi2pdf()} now reports BibTeX warnings;
       in particular, missing references are now noted by
       \command{R CMD check} when re-building PDF vignettes.
+
+      \item \command{R CMD build} now excludes an obsolete
+      \file{data/datalist} file when the package uses \samp{LazyData}.
     }
   }
 
