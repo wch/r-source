@@ -1,15 +1,17 @@
 % File src/library/base/man/dump.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dump}
 \title{Text Representations of R Objects}
+\alias{dump}
+\alias{.OBJSXP}
 \usage{
 dump(list, file = "dumpdata.R", append = FALSE,
      control = "all", envir = parent.frame(), evaluate = TRUE)
+.OBJSXP()
 }
-\alias{dump}
 \description{
   This function takes a vector of names of \R objects and produces
   text representations of the objects on a file or connection.
@@ -85,7 +87,9 @@ dump(list, file = "dumpdata.R", append = FALSE,
 
   Currently environments, external pointers, weak references and objects
   of type \code{S4} are not deparsed in a way that can be
-  \code{source}d.  In addition, \link{language objects} are deparsed in a
+  \code{source}d.  Objects of type \code{"object"} (e.g., instances of
+  \CRANpkg{S7} classes) are deparsed using \code{.OBJSXP()}.  In
+  addition, \link{language objects} are deparsed in a
   simple way whatever the value of \code{control}, and this includes not
   dumping their attributes (which will result in a warning).
 }
@@ -103,6 +107,9 @@ dump(list, file = "dumpdata.R", append = FALSE,
 
   \code{\link{save}} and \code{\link{saveRDS}} for a more reliable way to
   save \R objects.
+
+  \href{https://blog.r-project.org/2024/05/17/generalizing-support-for-functional-oop-in-r/}{R
+  Blog on Generalized OOP} motivating \code{.OBJSXP()}-kind \pkg{S7} package objects.
 }
 \examples{
 x <- 1; y <- 1:10
@@ -110,6 +117,15 @@ fil <- tempfile(fileext=".Rdmped")
 dump(ls(pattern = '^[xyz]'), fil)
 print(.Last.value)
 unlink(fil)
+
+x <- structure(.OBJSXP(), foo = "bar")
+typeof(x)    # "object"
+isS4(x)      # FALSE
+stopifnot(identical(deparse1(x),
+                    'structure(.OBJSXP(), foo = "bar")'))
+
+## the structure underlying a (minimal) S7 object :
+dput(x <- structure(.OBJSXP(), class = "S7obj", int = 1:2))
 }
 \keyword{file}
 \keyword{connection}

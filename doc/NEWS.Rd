@@ -6973,6 +6973,9 @@
       \item New argument \code{symbolfamily} in \I{cairo}-based graphics
       devices and new function \code{cairoSymbolFont()} that can be used
       to provide the value for that argument.
+
+      \item New low-level function \code{.OBJSXP()} enables deparsing of
+      non-S4 \code{"object"} type objects.
     }
   }% end{ New Features }
 

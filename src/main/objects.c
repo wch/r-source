@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2025  The R Core Team.
+ *  Copyright (C) 1999-2026  The R Core Team.
  *  Copyright (C) 2002-2023  The R Foundation
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
@@ -29,7 +29,7 @@
 #define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Internal.h>
-#include <R_ext/RS.h> /* for R_Calloc, R_Realloc and for S4 object bit */
+#include <R_ext/RS.h> /* for R_Calloc, R_Realloc and for S4 object bit, R_allocObject() */
 
 static SEXP GetObject(RCNTXT *cptr)
 {
@@ -274,13 +274,13 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 	PROTECT(table);
 	REPROTECT(val = R_findVarInFrame(table, method), validx);
 	UNPROTECT(1); /* table */
-	if (TYPEOF(val) == PROMSXP) 
+	if (TYPEOF(val) == PROMSXP)
 	    REPROTECT(val = eval(val, rho), validx);
 	if(val != R_UnboundValue) {
 	    UNPROTECT(2); /* top, val */
 	    return val;
 	}
-    } 
+    }
 
     if (top == R_GlobalEnv)
 	top = R_BaseEnv;
@@ -427,7 +427,7 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 		case 2: // don't forward any variables
 		    break;
 		case 3: // forward all, with an error when used
-#ifdef WARN_ON_FORWARDING		    
+#ifdef WARN_ON_FORWARDING
 		    if (TAG(s) != R_dot_defined &&
 			TAG(s) != R_dot_Method &&
 			TAG(s) != R_dot_target &&
@@ -536,7 +536,7 @@ int usemethod(const char *generic, SEXP obj, SEXP call, SEXP args,
 */
 
 /* This is a primitive SPECIALSXP */
-NORET attribute_hidden 
+NORET attribute_hidden
 SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     static SEXP do_usemethod_formals = NULL;
@@ -1804,6 +1804,13 @@ attribute_hidden Rboolean R_seemsOldStyleS4Object(SEXP object)
     klass = getAttrib(object, R_ClassSymbol);
     return (klass != R_NilValue && LENGTH(klass) == 1 &&
 	    getAttrib(klass, R_PackageSymbol) != R_NilValue) ? TRUE: FALSE;
+}
+
+// a bare object of type "object" (OBJSXP without the S4 bit), as used e.g. by S7
+attribute_hidden SEXP do_objsxp(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    return R_allocObject();
 }
 
 attribute_hidden SEXP do_setS4Object(SEXP call, SEXP op, SEXP args, SEXP env)

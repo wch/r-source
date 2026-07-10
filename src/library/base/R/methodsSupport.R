@@ -1,7 +1,7 @@
 #  File src/library/base/R/methodsSupport.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2015 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -57,13 +57,13 @@ untrace <- function(what, signature = NULL, where = topenv(parent.frame())) {
 
 tracingState <- function(on = NULL) .Internal(traceOnOff(on))
 
-
 asS4 <- function(object, flag = TRUE, complete = TRUE)
     .Internal(setS4Object(object, flag, complete))
 
 asS3 <- function(object, flag = TRUE, complete = TRUE)
     .Internal(setS4Object(object, !as.logical(flag), complete))
 
+.OBJSXP <- function() .Internal(objsxp())
 
 .doTrace <- function(expr, msg) {
     on <- tracingState(FALSE)	   # turn it off QUICKLY (via a .Internal)

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2025  The R Core Team
+ *  Copyright (C) 1997--2026  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -776,6 +776,47 @@ static attr_type attr1(SEXP s, LocalParseData *d)
     return attr;
 }
 
+/* deparse a single attribute as `<name> = <value>`, shared by attr2() (the
+   structure(..) form) and the OBJSXP / object(..) deparse below. */
+static void attrEntry(SEXP a, LocalParseData *d)
+{
+    if(TAG(a) == R_DimSymbol) {
+	print2buff("dim", d); // was .Dim
+    }
+    else if(TAG(a) == R_DimNamesSymbol) {
+	print2buff("dimnames", d); // was .Dimnames
+    }
+    else if(TAG(a) == R_NamesSymbol) {
+	print2buff("names", d); // was .Names
+    }
+    else if(TAG(a) == R_TspSymbol) {
+	print2buff("tsp", d); // was .Tsp
+    }
+    else if(TAG(a) == R_LevelsSymbol) {
+	print2buff("levels", d); // was .Label
+    }
+    else {
+	/* TAG(a) might contain spaces etc */
+	const char *tag = CHAR(PRINTNAME(TAG(a)));
+	int d_opts_in = d->opts;
+	d->opts = SIMPLEDEPARSE; /* turn off quote()ing */
+	if(isValidName(tag))
+	    deparse2buff(TAG(a), d);
+	else {
+	    print2buff("\"", d);
+	    deparse2buff(TAG(a), d);
+	    print2buff("\"", d);
+	}
+	d->opts = d_opts_in;
+    }
+    print2buff(" = ", d);
+    bool fnarg = d->fnarg;
+    d->fnarg = true;
+    deparse2buff(CAR(a), d);
+    d->fnarg = fnarg;
+}
+
+// function attr2()  writes full  attributes(s) to 'buff'
 static void attr2(SEXP s, LocalParseData *d, bool not_names)
 {
     SEXP a = ATTRIB(s);
@@ -783,40 +824,7 @@ static void attr2(SEXP s, LocalParseData *d, bool not_names)
 	if(TAG(a) != R_SrcrefSymbol &&
 	   !(TAG(a) == R_NamesSymbol && not_names)) {
 	    print2buff(", ", d);
-	    if(TAG(a) == R_DimSymbol) {
-		print2buff("dim", d); // was .Dim
-	    }
-	    else if(TAG(a) == R_DimNamesSymbol) {
-		print2buff("dimnames", d); // was .Dimnames
-	    }
-	    else if(TAG(a) == R_NamesSymbol) {
-		print2buff("names", d); // was .Names
-	    }
-	    else if(TAG(a) == R_TspSymbol) {
-		print2buff("tsp", d); // was .Tsp
-	    }
-	    else if(TAG(a) == R_LevelsSymbol) {
-		print2buff("levels", d); // was .Label
-	    }
-	    else {
-		/* TAG(a) might contain spaces etc */
-		const char *tag = CHAR(PRINTNAME(TAG(a)));
-		int d_opts_in = d->opts;
-		d->opts = SIMPLEDEPARSE; /* turn off quote()ing */
-		if(isValidName(tag))
-		    deparse2buff(TAG(a), d);
-		else {
-		    print2buff("\"", d);
-		    deparse2buff(TAG(a), d);
-		    print2buff("\"", d);
-		}
-		d->opts = d_opts_in;
-	    }
-	    print2buff(" = ", d);
-	    bool fnarg = d->fnarg;
-	    d->fnarg = true;
-	    deparse2buff(CAR(a), d);
-	    d->fnarg = fnarg;
+	    attrEntry(a, d);
 	}
 	a = CDR(a);
     }
@@ -1510,16 +1518,21 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	d->sourceable = false;
 	print2buff("<weak reference>", d);
 	break;
-    case OBJSXP: {
-	/*
-	print2buff("object(", d);
-	if(attr >= STRUC_ATTR) attr2(s, d, (attr == STRUC_ATTR));
-	 print2buff(")", d);
-	*/
-	d->sourceable = false;
-	print2buff("<object>", d);
+    case OBJSXP:
+	/* a bare OBJSXP, e.g. from S7; objects with the S4 bit
+	   are dealt with above.  Deparse to  .OBJSXP() or  structure(.OBJSXP(), <attrs>)  */
+	if(d_opts_in & SHOW_ATTR_OR_NMS) {
+	    SEXP a = ATTRIB(s);
+	    print2buff("structure(.OBJSXP()", d);
+	    for( ; !isNull(a); a = CDR(a)) {
+		if(TAG(a) != R_SrcrefSymbol) {
+		    print2buff(", ", d);
+		    attrEntry(a, d);
+		}
+	    }
+	}
+	print2buff(")", d);
 	break;
-    }
     default:
 	d->sourceable = false;
 	UNIMPLEMENTED_TYPE("deparse2buff", s);

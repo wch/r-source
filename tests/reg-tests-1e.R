@@ -3449,6 +3449,7 @@ km <- merge(k, m, all.x = TRUE, all.y = TRUE)
 stopifnot(identical(names(km), c(names(k), names(m))))
 ## previously `y[FALSE, ]` instead of `z` (in R <= 4.6.0)
 
+
 ## read.dcf() and write.dcf() always use UTF-8 (r-dev-day issue 156)
 local({
     eacute <- intToUtf8(0xe9) # small e with acute, UTF-8
@@ -3571,6 +3572,21 @@ local({
 ## seq.int(along.with = *) for non-vector objects (PR#19100)
 stopifnot(identical(seq.int(along.with = NULL), integer(0)),
           identical(seq.int(along.with = mean), 1L))
+
+
+## .OBJSXP() and deparse(<bare OBJSXP>), e.g. of S7 objects,  RConsortium/S7#524 :
+exexpr <- quote(structure(.OBJSXP(), class = "S7_object", foo = 1:2))
+obj <- eval(exexpr)
+stopifnot(exprs = {
+    typeof(obj) == "object"
+    !isS4(obj)
+    identical(.OBJSXP(), asS3(getClass("S4")@prototype, complete = FALSE))
+    identical(attributes(obj), list(class = "S7_object", foo = 1:2))
+    identical(eval(parse(text = deparse(obj))[[1]]), obj)
+    identical(deparse(obj), format(exexpr))
+})
+## .OBJSXP() is new; in R <= 4.x, these deparse()d to the non-parseable "<object>".
+
 
 
 ## keep at end
