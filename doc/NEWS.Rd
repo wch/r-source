@@ -193,6 +193,10 @@
       N*log(N) algorithm suggested in \PR{18934} and offered by \I{David Simcha}
       on R-devel in 2010.  With thanks to the \I{R Dev Day @ Nantes 2026}
       contributors, notably \I{Charles Bordet} and \I{Alexis Derumigny}.
+      
+      \item In \code{nls}, follow suggestion by \I{Ben Bolker} to reorder
+      named vectors for \code{lower} and \code{upper} arguments to match
+      names of coefficients (\PR{18415}). 
     }
   }
 }

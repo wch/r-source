@@ -403,6 +403,18 @@ nls.control <- function(maxiter = 50, tol = 0.00001, minFactor = 1/1024,
 
 nls_port_fit <- function(m, start, lower, upper, control, trace, give.v=FALSE)
 {
+    reorder <- function(x) {
+        if (is.null(nx <- names(x)) || is.null(ns <- names(start))) return(x)
+        w <- deparse(substitute(x))
+        if (!setequal(nx, ns)) warning("different names for ",
+                                       sQuote("start"), " and ",
+                                       sQuote(w), ": not reordering to match")
+        x[ns]
+    }
+
+    lower <- reorder(lower)
+    upper <- reorder(upper)
+    
     ## Establish the working vectors and check and set options
     p <- length(par <- as.double(unlist(start)))
     iv <- integer(4L*p + 82L)

@@ -62,7 +62,8 @@ nls(formula, data, start, control, algorithm,
     be as long as \code{start}.  If unspecified, all parameters are
     assumed to be unconstrained.  Bounds can only be used with the
     \code{"port"} algorithm.  They are ignored, with a warning, if given
-    for other algorithms.}
+    for other algorithms. If given as named vectors, they can be reordered to
+    match the coefficient order.}
   \item{\dots}{Additional optional arguments.  None are used at present.}
 }
 \details{
@@ -328,6 +329,23 @@ b <- coef(musc.1)
 musc.2 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th), MASS::muscle,
               start = list(a = rep(b[2], 21), b = rep(b[3], 21), th = b[1]))
 summary(musc.2)
+
+## Example with constraint, using "port" algorithm. Also showing possibility
+## for reordering if using named vector for lower=
+dd <- structure(list(time = c(1L, 2L, 3L, 6L, 12L, 24L, 48L), y = c(1.95, 
+6.43, 10.39, 27.01, 113.72, 251.14, 314.22)), row.names = c(NA, 
+-7L), class = "data.frame")
+
+st0 <- list(Max = 200, k = 0.1, Lag = 0.5)
+lwr <- c(k = 0.1, Max =-Inf, Lag = -Inf)
+form <- y ~ (time > Lag) * Max * (1-exp(-k * (time - Lag)))
+m1 <- nls(form,
+    data = dd,
+    algorithm="port",
+    lower = lwr,
+    start = st0)
+stopifnot(coef(m1)[["k"]] >= lwr[["k"]])
+
 })
 }
 \dontshow{options(od)}
