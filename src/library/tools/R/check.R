@@ -5468,7 +5468,7 @@ add_dummies <- function(dir, Log)
                 if(R_check_suppress_RandR_message)
                     out <- filtergrep('^Xlib: *extension "RANDR" missing on display',
                                       out, useBytes = TRUE)
-                bibwarnings <- if (config_val_to_logical(Sys.getenv("_R_CHECK_VIGNETTES_BIB_WARNINGS_", "false"))) # for now
+                bibwarnings <-
                     unique(grepv("I didn't find a database entry for",
                                  out, useBytes = TRUE))
                 warns <- c(
@@ -5501,7 +5501,8 @@ add_dummies <- function(dir, Log)
                                           out, "", ""), collapse = "\n"))
                 } else if(nw <- length(warns)) {
                     any <- TRUE
-                    if(skip_run_maybe || !ran) warningLog(Log) else noteLog(Log)
+                    if(length(bibwarnings) && nw == 1L) noteLog(Log)
+                    else if(skip_run_maybe || !ran) warningLog(Log) else noteLog(Log)
                     msg <- ngettext(nw,
                                     "Warning in re-building vignettes:\n",
                                     "Warnings in re-building vignettes:\n",

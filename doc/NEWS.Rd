@@ -90,7 +90,9 @@
 
   \subsection{Utilities}{
     \itemize{
-      \item \code{tools::texi2pdf()} now reports BibTeX warnings.
+      \item \code{tools::texi2pdf()} now reports BibTeX warnings;
+      in particular, missing references are now noted by
+      \command{R CMD check} when re-building PDF vignettes.
     }
   }
 
