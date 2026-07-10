@@ -197,6 +197,10 @@
       \item In \code{nls}, follow suggestion by \I{Ben Bolker} to reorder
       named vectors for \code{lower} and \code{upper} arguments to match
       names of coefficients (\PR{18415}). 
+
+      \item Fix for \PR{19100}: \code{seq.int} was not handling
+      non-vector \code{along.width} arguments properly. Thanks to
+      \I{Mitchell O'Hara-Wild}.
     }
   }
 }

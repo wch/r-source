@@ -3568,6 +3568,11 @@ local({
 ## write.dcf() relied on the Encoding field (in R <= 4.6.0)
 
 
+## seq.int(along.with = *) for non-vector objects (PR#19100)
+stopifnot(identical(seq.int(along.with = NULL), integer(0)),
+          identical(seq.int(along.with = mean), 1L))
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

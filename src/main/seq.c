@@ -843,7 +843,7 @@ attribute_hidden SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	goto done;
     }
     if(along != R_MissingArg) {
-	lout = XLENGTH(along);
+	lout = xlength(along);
 	if(One) {
 	    ans = lout ? seq_colon(1.0, (double)lout, call) : allocVector(INTSXP, 0);
 	    goto done;
