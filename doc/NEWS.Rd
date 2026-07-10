@@ -13,6 +13,9 @@
       \item In plain-text help (\code{Rd2txt}), paragraphs are again
       recognized even when started with a non-indented Rd comment,
       fixing a regression in \R 4.4.0.
+      \item Fix for \PR{19100}: \code{seq.int} was not handling
+      non-vector \code{along.width} arguments properly. Thanks to
+      \I{Mitchell O'Hara-Wild}.
     }
   }
 }
