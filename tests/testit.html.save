@@ -158,6 +158,9 @@ two
 <p>Simple 1-arg case with basic substitution in plain text (and legacy HTML):
 <code class="reqn">0 \le \code{x} \leq 1</code>
 </p>
+<p>More symbols: <code class="reqn">\sqrt{\sum_i (\log(x_i)-\mu)^2}</code> <br>
+where <code class="reqn">i \in \{1,\ldots,n\}</code> if <code class="reqn">n \times \pi &lt; \infty</code>.
+</p>
 
 
 <h3><code style="white-space: pre;">&#8288;\deqn&#8288;</code></h3>

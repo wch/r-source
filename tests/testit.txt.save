@@ -90,6 +90,9 @@ _V_a_l_u_e:
      Simple 1-arg case with basic substitution in plain text (and
      legacy HTML): 0 <= 'x' <= 1
 
+     More symbols: sqrt{sum_i (\log(x_i)-mu)^2}
+     where i \in \{1,...,n\} if n \times pi < Inf.
+
 \_d_e_q_n:
 
      1-arg form, centered also in text conversion:
