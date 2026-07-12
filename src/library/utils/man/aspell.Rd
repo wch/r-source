@@ -5,6 +5,7 @@
 
 \name{aspell}
 \alias{aspell}
+\alias{aspell_filter_db}
 \title{Spell Check Interface}
 \description{
   Spell check given files via Aspell, Hunspell or Ispell.
@@ -12,6 +13,8 @@
 \usage{
 aspell(files, filter, control = list(), encoding = "unknown",
        program = NULL, dictionaries = character())
+
+aspell_filter_db
 }
 \arguments{
   \item{files}{a character vector with the names of files to be checked.}
@@ -101,6 +104,9 @@ aspell(files, filter, control = list(), encoding = "unknown",
   All other arguments given to the filter are passed to the parser,
   which can be used in particular to customize the names of the commands
   and environments holding verbatim text.
+
+  \code{aspell_filter_db} is an environment containing all available
+  built-in filters.
   
   The print method for the objects returned by \code{aspell} has an
   \code{indent} argument controlling the indentation of the positions of
