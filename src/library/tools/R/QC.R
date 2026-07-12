@@ -5038,6 +5038,7 @@ function(x, ...)
 .check_package_datasets2 <-
 function(fileName, pkgname)
 {
+    options(warn = 1L) # make sure all warnings are shown
     oldSearch <- search()
     dataEnv <- new.env(hash = TRUE)
     suppressMessages(utils::data(list = fileName, package = pkgname,
@@ -8344,7 +8345,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
     if(foss) {
         available <-
             utils:::available_packages_filters_db$R_version(db)
-        available <- 
+        available <-
             utils:::available_packages_filters_db$duplicates(available)
         ## Modulo the additional Path field, same as
         ##   utils::available.packages(utils::contrib.url(urls, "source"),
