@@ -260,15 +260,15 @@ RweaveLatexOptions(options)
 
     \item{png:}{logical (\code{FALSE}), indicating whether PNG figures
       should be generated.  Ignored if \code{fig = FALSE}.
-      Only available in \eqn{\R \ge 2.13.0}{R >= 2.13.0}.}
+      Only available in \R \eqn{\ge} 2.13.0.}
 
     \item{jpeg:}{logical (\code{FALSE}), indicating whether JPEG figures
       should be generated.  Ignored if \code{fig = FALSE}.
-      Only available in \eqn{\R \ge 2.13.0}{R >= 2.13.0}.}
+      Only available in \R \eqn{\ge} 2.13.0.}
 
     \item{grdevice:}{character (\code{NULL}): see section
       \sQuote{Custom Graphics Devices}.  Ignored if \code{fig = FALSE}.
-      Only available in \eqn{\R \ge 2.13.0}{R >= 2.13.0}.}
+      Only available in \R \eqn{\ge} 2.13.0.}
 
     \item{width:}{numeric (6), width of figures in inches.  See
       \sQuote{Details}.}
