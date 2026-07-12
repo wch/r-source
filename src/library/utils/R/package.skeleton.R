@@ -19,7 +19,7 @@
 package.skeleton <-
     function(name = "anRpackage", list = character(), environment = .GlobalEnv,
 	     path = ".", force = FALSE,
-             code_files = character(), encoding = "unknown")
+             code_files = character(), encoding = "UTF-8")
 {
     if(!grepl(sprintf("^%s$", .standard_regexps()$valid_package_name),
               name))
