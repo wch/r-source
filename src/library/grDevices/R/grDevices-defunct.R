@@ -27,8 +27,7 @@ xfig <- function (file = if(onefile) "Rplots.fig" else "Rplot%03d.fig",
                   pagecentre = TRUE,
                   defaultfont = FALSE, textspecial = FALSE)
 {
-    msg <- gettextf("'%s' was removed in R 4.5.0.\n", "xfig")
-    msg <- paste(msg, "Consider an SVG device instead.")
-    .Defunct(msg = msg)
+    .Defunct(msg = paste(gettextf("'%s' was removed in R 4.5.0.\n", "xfig"),
+                         "Consider an SVG device instead."))
 }
 ## <entry/>
