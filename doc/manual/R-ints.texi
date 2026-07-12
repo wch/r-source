@@ -111,7 +111,7 @@ gap cannot easily be reused.
 
 @cindex @I{SEXPTYPE} table
 @quotation
-@multitable {no} {SPECIALSXPXXX} {S4 classes not of simple type}
+@multitable {no} {SPECIALSXPXXX} {objects not of basic type}
 @headitem no @tab  @I{SEXPTYPE} @tab  Description
 @item @code{0}   @tab @code{NILSXP}      @tab @code{NULL}
 @item @code{1}   @tab @code{SYMSXP}      @tab symbols
@@ -136,7 +136,7 @@ gap cannot easily be reused.
 @item @code{22}   @tab @code{EXTPTRSXP}  @tab external pointer
 @item @code{23}   @tab @code{WEAKREFSXP} @tab weak reference
 @item @code{24}   @tab @code{RAWSXP}     @tab raw vector
-@item @code{25}   @tab @code{OBJSXP}     @tab objects not of simple type
+@item @code{25}   @tab @code{OBJSXP}     @tab objects not of basic type
 @end multitable
 @end quotation
 
@@ -174,8 +174,9 @@ these are sometimes lumped into a pseudo-type @code{FUNSXP} with code
 have formals, body and environment.
 
 @cindex S4 type
-The @code{SEXPTYPE} @code{OBJSXP} is for S4 and other objects which do not
-consist solely of a simple type such as an atomic vector or function.
+The @code{SEXPTYPE} @code{OBJSXP} is used for S4 objects whose class
+does not extend one of the basic types (such as an atomic vector
+or function), and for other objects with no such underlying basic type.
 
 @node Rest of header
 @subsection Rest of header
@@ -1395,7 +1396,7 @@ has not been set.]
 @subsection Representation of S4 objects
 
 S4 objects can be of any @code{SEXPTYPE}.  They are either an object of
-a simple type (such as an atomic vector or function) with S4 class
+a basic type (such as an atomic vector or function) with S4 class
 information or of type @code{OBJSXP}.  In all cases, the `S4 bit' (bit 4
 of the `general purpose' field) is set, and can be tested by the
 macro/function @code{IS_S4_OBJECT}.
