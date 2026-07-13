@@ -743,12 +743,12 @@ function(package, dir, lib.loc = NULL,
     ##   exported S4 generic should have a \usage entry or not ...
     functions_missing_from_usages <-
         if(!has_namespace && !is_base)
-            character()
+            NULL
         else {
-            functions <- functions_in_code_not_in_usages
+            funnms <- functions_in_code_not_in_usages
             if(is_base)
-                functions <-
-                    setdiff(functions,
+                funnms <-
+                    setdiff(funnms,
                             c(sprintf("%s.%s",
                                       .S3_methods_table[, 1L],
                                       .S3_methods_table[, 2L]),
@@ -756,25 +756,41 @@ function(package, dir, lib.loc = NULL,
                                 "+", "-")))
             else {
                 pname <- basename(dir)
-                if(pname == "utils")
-                    functions <- functions %w/o% "?"
-                else if(pname == "grDevices")
-                    functions <- functions %w/o% "x11"
+                if(pname == "utils") {
+                    funnms <- funnms %w/o% "?"
+                    ## We have `?`(e1, e2) which is awkward to document
+                    ## as such.
+                } else if(pname == "grDevices") {
+                    funnms <- funnms %w/o% "x11"
+                    ## Alias for X11().
+                }
             }
             if(.isMethodsDispatchOn()) {
                 ## Drop the functions which have S4 methods.
-                functions <-
-                    setdiff(functions, names(.get_S4_generics(code_env)))
+                funnms <-
+                    setdiff(funnms, names(.get_S4_generics(code_env)))
             }
+            funlst <- mget(funnms, envir = code_env, mode = "function",
+                           ifnotfound = list(NULL), inherits = TRUE)
+            funlst <- funlst[!vapply(funlst, is.null, NA)]
             ## Drop the defunct functions.
             predicate <-
                 .predicate_for_calls_with_names(".Defunct", "base")
             is_defunct <- function(f) {
-                f <- get(f, envir = code_env) # get is expensive
-                if(!is.function(f)) return(FALSE)
                 predicate(.get_top_call_in_fun(f))
             }
-            functions[!vapply(functions, is_defunct, NA, USE.NAMES=FALSE)]
+            funlst <- funlst[!vapply(funnms, is_defunct, NA)]
+            ## For the remaining ones, record whether they come from
+            ## ourselves (which is not the case for re-exports).
+            if(length(funlst))
+                data.frame(name = names(funlst),
+                           self = vapply(funlst,
+                                         function(f)
+                                             identical(environment(f),
+                                                       ns_env),
+                                         NA))
+            else
+                NULL
         }
     objects_missing_from_usages <-
         if(!has_namespace) character() else {
@@ -808,59 +824,75 @@ function(package, dir, lib.loc = NULL,
     bad_doc_objects
 }
 
+## <FIXME>
+## We should really have format.codoc() and print via format ...
+## </FIXME>
+
 print.codoc <-
 function(x, ...)
 {
+    first <- TRUE
+    
     functions_in_usages_not_in_code <-
         attr(x, "functions_in_usages_not_in_code")
     if(length(functions_in_usages_not_in_code)) {
+        first <- FALSE
         for(fname in names(functions_in_usages_not_in_code)) {
             writeLines(gettextf("Functions or methods with usage in Rd file '%s' but not in code:",
                                 fname))
             .pretty_print(sQuote(unique(functions_in_usages_not_in_code[[fname]])))
-            writeLines("")
         }
     }
 
     data_sets_in_usages_not_in_code <-
         attr(x, "data_sets_in_usages_not_in_code")
     if(length(data_sets_in_usages_not_in_code)) {
+        if(!first) writeLines("")
+        first <- FALSE
         for(fname in names(data_sets_in_usages_not_in_code)) {
             writeLines(gettextf("Data with usage in Rd file '%s' but not in code:",
                                 fname))
             .pretty_print(sQuote(unique(data_sets_in_usages_not_in_code[[fname]])))
-            writeLines("")
         }
     }
 
     variables_in_usages_not_in_code <-
         attr(x, "variables_in_usages_not_in_code")
     if(length(variables_in_usages_not_in_code)) {
+        if(!first) writeLines("")
+        first <- FALSE
         for(fname in names(variables_in_usages_not_in_code)) {
             writeLines(gettextf("Variables with usage in Rd file '%s' but not in code:",
                                 fname))
             .pretty_print(sQuote(unique(variables_in_usages_not_in_code[[fname]])))
-            writeLines("")
         }
     }
 
     ## In general, functions in the code which only have an \alias but
     ## no \usage entry are not necessarily a problem---they might be
     ## mentioned in other parts of the Rd object documenting them, or be
-    ## 'internal'.  However, if a package has a namespace, then all
-    ## *exported* functions should have \usage entries (apart from
-    ## defunct functions and S4 generics, see the above comments for
-    ## functions_missing_from_usages).  Currently, this information is
-    ## returned in the codoc object but not shown.  Eventually, we might
-    ## add something like
-    ##     functions_missing_from_usages <-
-    ##         attr(x, "functions_missing_from_usages")
-    ##     if(length(functions_missing_from_usages)) {
-    ##         writeLines("Exported functions without usage information:")
-    ##         .pretty_print(functions_in_code_not_in_usages)
-    ##         writeLines("")
-    ##     }
-    ## similar to the above.
+    ## 'internal'.
+    ## However, if a package has a namespace, then all *exported*
+    ## functions should have \usage entries (apart from defunct
+    ## functions and S4 generics and functions re-exported from 
+    ## other packages), see the above comments for
+    ## functions_missing_from_usages).
+    ## Show this info unless explicitly turned off.
+    functions_missing_from_usages <-
+        attr(x, "functions_missing_from_usages")
+    if(NROW(functions_missing_from_usages) &&
+       config_val_to_logical(Sys.getenv("_R_CHECK_CODOC_FUNCTIONS_MISSING_FROM_USAGES_",
+                                        "FALSE"))) {
+        self <- functions_missing_from_usages$self
+        functions_missing_from_usages <-
+            functions_missing_from_usages$name[self]
+        if(length(functions_missing_from_usages)) {
+            if(!first) writeLines("")
+            first <- FALSE
+            writeLines("Exported functions without usage information:")
+            .pretty_print(functions_missing_from_usages)
+        }
+    }
 
     if(!length(x))
         return(invisible(x))
@@ -955,6 +987,7 @@ function(x, ...)
         }
     }
 
+    if(!first) writeLines("")
     for(fname in names(x)) {
         writeLines(gettextf("Codoc mismatches from Rd file '%s':",
                             fname))

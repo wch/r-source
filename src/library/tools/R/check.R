@@ -2748,7 +2748,19 @@ add_dummies <- function(dir, Log)
                     out <- R_runR2(Rcmd)
                     if (length(out)) {
                         any <- TRUE
-                        warningLog(Log)
+                        ## <FIXME>
+                        ## This is terrible.  For now we only want to
+                        ## give a NOTE when all we report is functions
+                        ## missing from usages, but we cannot easily
+                        ## tell this from the printed (and partially
+                        ## localized) results.
+                        ind <- (nzchar(out) &
+                                (out !=
+                                 "Exported functions without usage information:"))
+                        if(all(startsWith(out[ind], " ")))
+                            noteLog(Log)
+                        else
+                            warningLog(Log)
                         printLog0(Log, paste(c(out, ""), collapse = "\n"))
                     }
                 }
