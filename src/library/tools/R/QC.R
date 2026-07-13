@@ -2019,7 +2019,8 @@ function(package, dir, file, lib.loc = NULL,
         if(!file.create(file)) stop("unable to create ", file, domain = NA)
         if(!all(.file_append_ensuring_LFs(file,
                                           list_files_with_type(code_dir,
-                                                               "code"))))
+                                                               "code"),
+                                          enc = enc)))
             stop("unable to write code files", domain = NA)
     }
     else if(!missing(file)) {
@@ -6061,7 +6062,8 @@ function(package, dir, lib.loc = NULL)
             if(!file.create(file)) stop("unable to create ", file)
             if(!all(.file_append_ensuring_LFs(file,
                                               list_files_with_type(code_dir,
-                                                                   "code"))))
+                                                                   "code"),
+                                              enc = db["Encoding"])))
                 stop("unable to write code files")
         } else return(invisible())
     }

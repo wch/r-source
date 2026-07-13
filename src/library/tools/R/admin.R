@@ -369,7 +369,7 @@ function(dir, outDir)
         ## instead, but this would be much slower ...
         ## use fast version of file.append that ensures LF between files
         lapply(codeFiles, testParse)
-        if(!all(.file_append_ensuring_LFs(outFile, codeFiles)))
+        if(!all(.file_append_ensuring_LFs(outFile, codeFiles, enc = enc)))
             stop("unable to write code files")
         ## </NOTE>
     }

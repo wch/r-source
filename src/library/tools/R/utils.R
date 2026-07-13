@@ -752,11 +752,13 @@ function(db)
 ### ** .file_append_ensuring_LFs
 
 .file_append_ensuring_LFs <-
-function(file1, file2)
+function(file1, file2, enc = NA_character_)
 {
+    if (!is.character(enc))
+        enc <- as.character(enc)
     ## Use a fast version of file.append() that ensures LF between
     ## files.
-    .Call(C_codeFilesAppend, file1, file2)
+    .Call(C_codeFilesAppend, file1, file2, enc)
 }
 
 ### ** .file_path_to_LaTeX_graphicspath
@@ -2507,7 +2509,7 @@ function(dir, envir, meta = character())
                file.path(dir, .read_collate_field(txt[ind[1L]])))
     else
         list_files_with_type(dir, "code")
-    if(!all(.file_append_ensuring_LFs(con, files)))
+    if(!all(.file_append_ensuring_LFs(con, files, enc = meta["Encoding"])))
         stop("unable to write code files")
     if(!is.na(package <- meta["Package"]))
         envir$.packageName <- package

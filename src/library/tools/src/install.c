@@ -132,16 +132,18 @@ SEXP dirchmod(SEXP dr, SEXP gwsxp)
 # define APPENDBUFSIZE 512
 #endif
 
-SEXP codeFilesAppend(SEXP f1, SEXP f2)
+SEXP codeFilesAppend(SEXP f1, SEXP f2, SEXP enc)
 {
-    int n, n1, n2;
-    if (!isString(f1) || (n1 = LENGTH(f1)) != 1)
+    int n;
+    if (!isString(f1) || LENGTH(f1) != 1)
 	error(_("invalid '%s' argument"), "file1");
     if (!isString(f2))
 	error(_("invalid '%s' argument"), "file2");
-    n2 = LENGTH(f2);
-    if (n2 < 1) return allocVector(LGLSXP, 0);
-    n = (n1 > n2) ? n1 : n2; // will be n2.
+    if (!isString(enc) || LENGTH(enc) != 1)
+	error(_("invalid '%s' argument"), "enc");
+    int is_utf8 = STRING_ELT(enc, 0) != NA_STRING &&
+	strncmp(CHAR(STRING_ELT(enc, 0)), "UTF-8", strlen("UTF-8")) == 0;
+    n = LENGTH(f2);
     SEXP ans = PROTECT(allocVector(LGLSXP, n));
     for (int i = 0; i < n; i++) LOGICAL(ans)[i] = 0;  /* all FALSE */
     FILE *fp1, *fp2;
@@ -155,6 +157,11 @@ SEXP codeFilesAppend(SEXP f1, SEXP f2)
 	status = 0;
 	if (STRING_ELT(f2, i) == NA_STRING ||
 	    !(fp2 = RC_fopen(STRING_ELT(f2, i), "rb", TRUE))) continue;
+	if (is_utf8) {
+	    unsigned char bom[3];
+	    if (fread(bom, 1, 3, fp2) != 3 || bom[0] != 0xEF || bom[1] != 0xBB || bom[2] != 0xBF)
+		rewind(fp2);
+	}
 	snprintf(buf, APPENDBUFSIZE, "#line 1 \"%s\"\n",
 		 CHAR(STRING_ELT(f2, i)));
 	if(fwrite(buf, 1, strlen(buf), fp1) != strlen(buf)) goto append_error;
