@@ -33,7 +33,7 @@ conflicts(, TRUE)
 # $.GlobalEnv
 # [1] "lm"
 #
-# $package:base
+# $package:stats
 # [1] "lm"
 
 ## Remove things from your "workspace" that mask others:

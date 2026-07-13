@@ -39,6 +39,8 @@ add_datalist(pkgpath, force = FALSE, small.size = 1024^2)
 \seealso{
   \code{\link{data}}, for a description of the supported data formats.
 
-  \manual{R-exts}{Data in packages}.
+  \code{\link{list_files_with_type}}, to find data files.
+
+  Section \manual{R-exts}{Data in packages}.
 }
 \keyword{utilities}

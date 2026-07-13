@@ -118,7 +118,7 @@
   Packages are not by default installed keeping the source formatting
   (see the \code{keep.source} argument to \code{\link{source}}): this
   can be enabled by the option \option{--with-keep.source} or by setting
-  environment variable \env{R_KEEP_PKG_SOURCE} to \code{yes}.
+  environment variable \env{R_KEEP_PKG_SOURCE} to \samp{yes}.
 
   Specifying the \option{--install-tests} option copies the contents
   of the \file{tests} directory into the package installation. If the
@@ -200,11 +200,11 @@
 
   The Chapter \manual{R-admin}{Add-on packages}
   and the Chapter \manual{R-exts}{Creating R packages}.
-
+  The manuals are accessible \emph{via}
 #ifdef windows
-  (on the Help menu in \code{RGui}),
+  the Help menu in \I{RGui},
 #endif
-  \emph{via} \code{\link{RShowDoc}} or in the \file{doc/manual}
-  subdirectory of the \R source tree.
+  \code{\link{RShowDoc}} or in the \file{manual}
+  subdirectory of \code{\link{R.home}("doc")}.
 }
 \keyword{utilities}
