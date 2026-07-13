@@ -97,9 +97,7 @@ boxplot.matrix <- function(x, use.cols = TRUE, ...)
     ## -------------------------------------------------------------------------
     ## Arguments: x: a numeric matrix; use.cols: logical, columns (T) or rows (F)
     ## <FIXME split.matrix>
-    groups <- if(use.cols) {
-        split(c(x), rep.int(1L:ncol(x), rep.int(nrow(x), ncol(x))))
-    } else split(c(x), seq(nrow(x)))
+    groups <- split(c(x), if(use.cols) col(x) else row(x))
     ## Make use of col/row names if present
     if (length(nam <- dimnames(x)[[1+use.cols]])) names(groups) <- nam
     invisible(boxplot(groups, ...))

@@ -1227,7 +1227,7 @@ xpdrows.data.frame <- function(x, old.rows, new.rows)
 	}
     }
     nm <- c(old.rows, new.rows)
-    if (any(duplicated(nm))) nm <- make.unique(as.character(nm))
+    if (anyDuplicated(nm)) nm <- make.unique(as.character(nm))
     attr(x, "row.names") <- nm
     x
 }

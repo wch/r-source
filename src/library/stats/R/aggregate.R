@@ -69,7 +69,7 @@ function(x, by, FUN, ..., simplify = TRUE, drop = TRUE)
     ## Generate a group identifier vector with integers and dots.
     ident <- function(x) {
         y <- as.factor(x)
-        l <- length(levels(y))
+        l <- nlevels(y)
         s <- as.character(seq_len(l))
         n <- nchar(s)
         levels(y) <- paste0(strrep("0", n[l] - n), s)

@@ -60,7 +60,7 @@
         
 
         # Step-halving loop
-        while (TRUE) {
+        repeat {
             # Newton step halving
             
             new_theta <- theta - step_size * delta # Update parameter vector

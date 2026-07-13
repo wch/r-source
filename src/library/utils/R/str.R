@@ -444,7 +444,7 @@ str.default <-
 		}
 		if(has.class) {
 		    cl <- cl[1L] # and "forget" potential other classes
-		    if(cl != mod && substr(cl, 1L, nchar(mod)) != mod)
+		    if(!startsWith(cl, mod))
 			mod <- paste0("'",cl,"' ", mod)
 		    ## don't show the class *twice*
 		    std.attr <- c(std.attr, "class")
