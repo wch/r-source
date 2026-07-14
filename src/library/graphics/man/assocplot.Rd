@@ -29,7 +29,7 @@ assocplot(x, col = c("black", "red"), space = 0.3,
 }
 \details{
   For a two-way contingency table, the signed contribution to Pearson's
-  \eqn{\chi^2}{chi^2} for cell \eqn{i, j} is \eqn{d_{ij} = (f_{ij} -
+  \eqn{\chi^2} for cell \eqn{i, j} is \eqn{d_{ij} = (f_{ij} -
     e_{ij}) / \sqrt{e_{ij}}}{d_{ij} = (f_{ij} - e_{ij}) / sqrt(e_{ij})},
   where \eqn{f_{ij}} and \eqn{e_{ij}} are the observed and expected
   counts corresponding to the cell.  In the Cohen-Friendly association

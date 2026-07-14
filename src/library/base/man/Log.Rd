@@ -49,7 +49,7 @@ expm1(x)
   negative values of \code{x} is \code{NaN}.  \code{exp(-Inf)} is \code{0}.
 
   For complex inputs to the log functions, the value is a complex number
-  with imaginary part in the range \eqn{[-\pi, \pi]}{[-pi, pi]}: which
+  with imaginary part in the range \eqn{[-\pi, \pi]}: which
   end of the range is used might be platform-specific.
 }
 \details{

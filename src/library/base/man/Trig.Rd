@@ -75,8 +75,8 @@ tanpi(x)
    \bibcitet{|R:Abramowitz+Stegun:1972|figure 4.4 on page 79}.
 
    For \code{asin} and \code{acos}, there are two cuts, both along
-   the real axis: \eqn{\left(-\infty, -1\right]}{(-Inf, -1]} and
-   \eqn{\left[1, \infty\right)}{[1, Inf)}.
+   the real axis: \eqn{\left(-\infty, -1\right]} and
+   \eqn{\left[1, \infty\right)}.
 
    For \code{atan} there are two cuts, both along the pure imaginary
    axis: \eqn{\left(-\infty i, -1i\right]}{(-1i*Inf, -1i]} and
