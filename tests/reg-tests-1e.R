@@ -3588,6 +3588,31 @@ stopifnot(exprs = {
 ## .OBJSXP() is new; in R <= 4.x, these deparse()d to the non-parseable "<object>".
 
 
+# Almost perfect fit in summary.aov() -- same warning as in summary.lm() - PR#18341
+chkFM <- function(mA, mL) {
+    print(smA <- getVaW(summary(mA)))
+    print(smL <- getVaW(summary(mL)))
+    stopifnot(exprs = {
+        identical(coef(mA), coef(mL))
+        !is.null(wA <- attr(smA, "warning"))
+        !is.null(wL <- attr(smL, "warning"))
+        !englishMsgs || grepl("essentially perfect fit", wA)
+        !englishMsgs || grepl("essentially perfect fit", wL)
+    })
+}
+## simple case:
+d30 <- data.frame(x = gl(2, 15), y = 1)
+fmL <- lm (y~x, data=d30)
+fmA <- aov(y~x, data=d30)
+chkFM(fmA, fmL)
+## ex. with 2 y's :
+d30 <- data.frame(group = gl(2, 15), weight = 1, height = 1)
+fmL <- lm (cbind(weight, height) ~ group, data = d30)
+fmA <- aov(cbind(weight, height) ~ group, data = d30)
+chkFM(fmA, fmL)
+## the *A models from aov() / summary.aov()  did not raise the warning in R <= 4.6.z
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

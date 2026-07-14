@@ -1,7 +1,7 @@
 #  File src/library/stats/R/aov.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #  Copyright (C) 1998 B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -299,6 +299,8 @@ summary.aov <- function(object, intercept = FALSE, split,
     nmeffect <- c("(Intercept)", attr(object$terms, "term.labels"))
     coef <- as.matrix(object$coefficients)
     resid <- as.matrix(object$residuals)
+    fit <- as.matrix(object$fitted.values)
+    if(!is.null(object$offset)) fit <- fit - object$offset
     wt <- object$weights
     if(!is.null(wt)) resid <- resid * sqrt(wt)
     nresp <- NCOL(resid)
@@ -333,13 +335,14 @@ summary.aov <- function(object, intercept = FALSE, split,
             ns <- names(split)
         }
     }
-
-    for (y in 1L:nresp) {
+    perfect.fit <- logical(nresp)
+    for (y in seq_len(nresp)) {
         if(is.null(effects)) {
             nterms <- 0L
             df <- ss <- ms <- numeric()
             nmrows <- character()
         } else {
+            ## FIXME: assign to correct final size instead of growing objects 
             df <- ss <- numeric()
             nmrows <- character()
             for(i in seq(nterms)) {
@@ -361,7 +364,12 @@ summary.aov <- function(object, intercept = FALSE, split,
         }
         if(rdf > 0L) {
             df <- c(df, rdf)
-            ss <- c(ss, sum(resid[, y]^2))
+            rss <- sum(resid[, y]^2)
+            ss <- c(ss, rss)
+            resvar <- rss / rdf
+            fitted <- fit[, y]
+            if(is.finite(resvar) && resvar < (mean(fitted)^2 + var(c(fitted))) * 1e-30) # as in lm()
+                perfect.fit[y] <- TRUE
             nmrows <- c(nmrows,  "Residuals")
         }
         nt <- length(df)
@@ -381,6 +389,16 @@ summary.aov <- function(object, intercept = FALSE, split,
         pm <- pmatch("(Intercept)", row.names(x), 0L)
         if(!intercept && pm > 0L) x <- x[-pm ,]
         ans[[y]] <- x
+    }
+    if (any(perfect.fit)) {
+        ## response.names <- colnames(resid) %||% as.character(seq_len(nresp))
+        response.names <- colnames(resid) ## MM why did they drop  %||%   ??????????_________ FIXME ______
+        if(is.null(response.names)) response.names <- as.character(seq_len(nresp))
+        targets <- paste(sQuote(response.names[perfect.fit]), collapse = ", ")
+        warning(sprintf(
+            ngettext(nresp,
+                     "essentially perfect fit for %s: summary may be unreliable",
+                     "essentially perfect fit for response(s) %s: summary may be unreliable"), targets))
     }
     class(ans) <- c("summary.aov", "listof")
     attr(ans, "na.action") <- object$na.action

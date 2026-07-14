@@ -196,14 +196,19 @@
       N*log(N) algorithm suggested in \PR{18934} and offered by \I{David Simcha}
       on R-devel in 2010.  With thanks to the \I{R Dev Day @ Nantes 2026}
       contributors, notably \I{Charles Bordet} and \I{Alexis Derumigny}.
-      
+
       \item In \code{nls}, follow suggestion by \I{Ben Bolker} to reorder
       named vectors for \code{lower} and \code{upper} arguments to match
-      names of coefficients (\PR{18415}). 
+      names of coefficients (\PR{18415}).
 
       \item Fix for \PR{19100}: \code{seq.int} was not handling
       non-vector \code{along.width} arguments properly. Thanks to
       \I{Mitchell O'Hara-Wild}.
+
+      \item \code{summary(<aov>)} for an almost perfect fit now warns
+      analogously to \code{summary(<lm>)}, using the same check.  Fixes
+      fixes \PR{18341} thanks to R Dev Day members \I{Deepansh Khurana},
+      \I{Stefan Linner} and \I{Oscar de Leon}.
     }
   }
 }
