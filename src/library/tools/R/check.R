@@ -3118,7 +3118,7 @@ add_dummies <- function(dir, Log)
                 printLog0(Log, .format_lines_with_indent(out), "\n")
             } else resultLog(Log, "OK")
         }
-        
+
         if(!is_base_pkg &&
            (dir.exists("data") || file.exists("R/sysdata.rda")) &&
            length(bad <- .check_package_data_namespace_loads("."))) {
@@ -6352,7 +6352,9 @@ add_dummies <- function(dir, Log)
                              ## selected re-defining of macros": clang
                              ": warning: .*(M_PI|INT_MIN|FCONE).* \\[-Wmacro-redefined\\]",
                              ## LLVM >= 18 clang++
-                             ": warning: .* \\[-Wdeprecated-literal-operator\\]"
+                             ": warning: .* \\[-Wdeprecated-literal-operator\\]",
+                             ## C23 warnings on some setups of GCC and clang
+                               "\\[-Wdiscarded-qualifiers\\]"
                              )
                 ## macOS ld warnings
                 warn_re <- c(warn_re,
