@@ -448,7 +448,7 @@ attribute_hidden SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	    }
 	    else { /* not '%' : handle string part */
-		char *ch = use_UTF8 ? strchr(curFormat, '%')
+		char *ch = use_UTF8 ? (char *)strchr(curFormat, '%')
 				    /* MBCS-aware version used */
 		                    : Rf_strchr(curFormat, '%');
 		chunk = (ch) ? (size_t) (ch - curFormat) : strlen(curFormat);

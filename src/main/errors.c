@@ -623,7 +623,7 @@ void PrintWarnings(void)
 	    REprintf(_("In %s :"), dcall);
 	    if (mbcslocale) {
 		int msgline1;
-		char *p = strchr(msg, '\n');
+		char *p = (char *) strchr(msg, '\n');
 		if (p) {
 		    *p = '\0';
 		    msgline1 = wd(msg);
@@ -632,7 +632,7 @@ void PrintWarnings(void)
 		if (6 + wd(dcall) + msgline1 > LONGWARN) REprintf("\n ");
 	    } else {
 		size_t msgline1 = strlen(msg);
-		char *p = strchr(msg, '\n');
+		char *p = (char *)strchr(msg, '\n');
 		if (p) msgline1 = (int)(p - msg);
 		if (6 + strlen(dcall) + msgline1 > LONGWARN) REprintf("\n ");
 	    }
@@ -651,7 +651,7 @@ void PrintWarnings(void)
 		REprintf(_("In %s :"), dcall);
 		if (mbcslocale) {
 		    int msgline1;
-		    char *p = strchr(msg, '\n');
+		    char *p = (char *) strchr(msg, '\n');
 		    if (p) {
 			*p = '\0';
 			msgline1 = wd(msg);
@@ -662,7 +662,7 @@ void PrintWarnings(void)
 		    }
 		} else {
 		    size_t msgline1 = strlen(msg);
-		    char *p = strchr(msg, '\n');
+		    char *p = (char *) strchr(msg, '\n');
 		    if (p) msgline1 = (int)(p - msg);
 		    if (10 + strlen(dcall) + msgline1 > LONGWARN) {
 			REprintf("\n ");

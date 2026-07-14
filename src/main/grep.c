@@ -1174,7 +1174,7 @@ static int fgrep_one(const char *pat, const char *target,
 	return -1;
     }
     if (!useBytes && use_UTF8) {
-	char *pos = strstr(target, pat);
+	const char *pos = strstr(target, pat);
 	if (pos) {
 	    int ib = (int) (pos-target);
 	    int jb;
@@ -1199,7 +1199,7 @@ static int fgrep_one(const char *pat, const char *target,
 	    ib += used;
 	}
     } else {
-	char *pos = strstr(target, pat);
+	const char *pos = strstr(target, pat);
 	if (pos) {
 	    i = (int) (pos-target);
 	    if (next != NULL) *next = i + plen;
@@ -1242,7 +1242,7 @@ static int fgrep_one_bytes(const char *pat, size_t patlen, const char *target,
 	    ib += used;
 	}
     } else {
-	char *pos = strstr(target, pat);
+	const char *pos = strstr(target, pat);
 	if (pos) return (int) (pos-target);
     }
     return -1;
