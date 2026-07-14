@@ -634,7 +634,7 @@ suggests and so the user package needs to do so too and include this in
 @c DESCRIPTION field Encoding
 If the @file{DESCRIPTION} file is not entirely in @acronym{ASCII} it
 should contain an @samp{Encoding} field specifying an encoding.  This is
-used as the encoding of the @file{DESCRIPTION} file itself and of the
+used as the encoding of the
 @file{R} and @file{NAMESPACE} files, and as the default encoding of
 @file{.Rd} files.  The examples are assumed to be in this encoding when
 running @command{R CMD check}, and it is used for the encoding of the
