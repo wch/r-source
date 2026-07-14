@@ -506,7 +506,7 @@ function(package, dir, lib.loc = NULL,
                  function_args_in_ns)
         keep <- !duplicated(names(tmp))
         function_args_in_code <- tmp[keep]
-        functions_in_code <- names(function_args_in_code)
+        functions_in_code <- as.character(names(function_args_in_code))
     }
     if(.isMethodsDispatchOn()) {
         ## <NOTE>
