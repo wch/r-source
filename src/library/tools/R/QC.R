@@ -6009,6 +6009,42 @@ function(dir) {
     invisible(x)
 }
 
+## .check_package_code_structure_specials
+
+.check_package_code_structure_specials <-
+function(dir)
+{
+    predicate <- function(e) {
+        specials <- c(".Dim", ".Dimnames", ".Names", ".Tsp", ".Label")
+        identical(deparse(e[[1L]]), "structure") &&
+            any(names(e[-1]) %in% specials)
+    }
+    which <- c("code", "docs", "data", "demo", "tests", "vignettes")
+    calls <-
+        Filter(length,
+               .find_calls_in_package_code(dir,
+                                           predicate,
+                                           recursive = TRUE,
+                                           which = which))
+    class(calls) <- "check_package_code_structure_specials"
+    calls
+}
+
+format.check_package_code_structure_specials <-
+function(x, ...) {
+    if(!length(x))
+        return(character())
+    specials <- c(".Dim", ".Dimnames", ".Names", ".Tsp", ".Label")    
+    one <- function(e) {
+        bad <- lapply(e, function(u) intersect(names(u), specials))
+        bad <- sort(table(unlist(bad, use.names = FALSE)),
+                    decreasing = TRUE)
+        paste(sprintf("%s: %s", names(bad), bad), collapse = ", ")
+    }
+    c("Found calls to structure() using deprecated special names:",
+      sprintf("  %s (%s)", names(x), vapply(x, one, "")))
+}
+
 ### * .check_packages_used
 
 .check_packages_used <-
