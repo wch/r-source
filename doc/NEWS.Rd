@@ -16,6 +16,9 @@
       \item Fix for \PR{19100}: \code{seq.int} was not handling
       non-vector \code{along.width} arguments properly. Thanks to
       \I{Mitchell O'Hara-Wild}.
+      \item Wrappers now duplicate even a wrapped object that might be
+      shared before returning a read-only pointer. This prevents cached
+      read-only pointers from becoming invalid. Reported by \I{Ivan Krylov}.
     }
   }
 }

@@ -1535,13 +1535,17 @@ static void *wrapper_Dataptr(SEXP x, Rboolean writeable)
     if (writeable)
 	return DATAPTR_RW(WRAPPER_WRAPPED_RW(x));
     else
+	/* This has to use WRAPPER_WRAPPED_RW even for a read-only
+	   pointer to make sure a later request for a writable pointer
+	   will return the same address. */
 	/**** could avoid the cast by having separate methods */
-	return (void *) DATAPTR_RO(WRAPPER_WRAPPED(x));
+	return (void *) DATAPTR_RO(WRAPPER_WRAPPED_RW(x));
 }
 
 static const void *wrapper_Dataptr_or_null(SEXP x)
 {
-    return DATAPTR_OR_NULL(WRAPPER_WRAPPED(x));
+    /* This has to use WRAPPER_WRAPPED_RW as above. */
+    return DATAPTR_OR_NULL(WRAPPER_WRAPPED_RW(x));
 }
 
 static SEXP wrapper_Extract_subset(SEXP x, SEXP indx, SEXP call)
