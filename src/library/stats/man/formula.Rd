@@ -123,7 +123,7 @@ as.formula(object, env = parent.frame())
   There is a \code{formula} method for data frames.  When there's
   \code{"terms"} attribute with a formula, e.g., for a
   \code{\link{model.frame}()}, that formula is returned.  If you'd like the
-  previous (\R \eqn{\le}{<=} 3.5.x) behavior, use the auxiliary
+  previous (\R \eqn{\le} 3.5.x) behavior, use the auxiliary
   \code{DF2formula()} which does not consider a \code{"terms"} attribute.
   Otherwise, if
   there is only

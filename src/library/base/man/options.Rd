@@ -757,7 +757,7 @@ getOption(x, default = NULL)
       \code{\link{setRepositories}} and to select from multiple (text)
       help files in \code{\link{help}}.}
 
-    \item{\code{Ncpus}:}{an integer \eqn{n \ge 1}{n >= 1}, used in
+    \item{\code{Ncpus}:}{an integer \eqn{n \ge 1}, used in
       \code{\link{install.packages}} as default for the number of CPUs
       to use in a potentially parallel installation, as
       \code{Ncpus = getOption("Ncpus", 1L)}, i.e., when unset is

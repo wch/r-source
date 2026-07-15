@@ -61,10 +61,10 @@ spectrum(x, \dots, method = c("pgram", "ar"))
   scaling \code{1/\link{frequency}(x)}.
   This makes the spectral density a density over the range
   \code{(-frequency(x)/2, +frequency(x)/2]},
-  whereas a more common scaling is \eqn{2\pi}{2pi} and range
+  whereas a more common scaling is \eqn{2 \pi} and range
   \eqn{(-0.5, 0.5]}
   \bibcitep{e.g.,|R:Bloomfield:1976|} or 1 and range
-  \eqn{(-\pi, \pi]}{(-pi, pi]}.
+  \eqn{(-\pi, \pi]}.
 
   If available, a confidence interval will be plotted by
   \code{plot.spec}: this is asymmetric, and the width of the centre

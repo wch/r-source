@@ -54,7 +54,7 @@ ansari.test(x, \dots)
   unknown nuisance parameter and
   \eqn{s}, the ratio of scales, is the parameter of interest.  The
   \I{Ansari}-\I{Bradley} test is used for testing the null that \eqn{s} equals
-  1, the two-sided alternative being that \eqn{s \ne 1}{s != 1} (the
+  1, the two-sided alternative being that \eqn{s \ne 1} (the
   distributions differ only in variance), and the one-sided alternatives
   being \eqn{s > 1} (the distribution underlying \code{x} has a larger
   variance, \code{"greater"}) or \eqn{s < 1} (\code{"less"}).

@@ -61,7 +61,7 @@ power.prop.test(n = NULL, p1 = NULL, p2 = NULL, sig.level = 0.05,
   you may see errors from it, notably about inability to bracket the
   root when invalid arguments are given.   If one of \code{p1} and
   \code{p2} is computed, then \eqn{p1 < p2} is assumed and will hold,
-  but if you specify both, \eqn{p2 \le p1}{p2 <= p1} is allowed.
+  but if you specify both, \eqn{p2 \le p1} is allowed.
 }
 
 \seealso{\code{\link{prop.test}}, \code{\link{uniroot}}}

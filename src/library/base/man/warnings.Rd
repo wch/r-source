@@ -37,7 +37,7 @@ warnings(\dots)
   \item{tags}{if not \code{\link{missing}}, a \code{\link{character}}
     vector of the same \code{\link{length}} as \code{x}, to \dQuote{label}
     the messages.  Defaults to \code{paste0(seq_len(n), ": ")} for
-    \eqn{n \ge 2}{n >= 2} where \code{n <- length(x)}.}
+    \eqn{n \ge 2} where \code{n <- length(x)}.}
   \item{header}{a character string \code{\link{cat}()}ed before the
       messages are printed.}
 }

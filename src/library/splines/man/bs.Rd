@@ -50,7 +50,7 @@ bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
   When \code{Boundary.knots} are set \emph{inside} \code{range(x)},
   \code{bs()} now uses a \sQuote{pivot} inside the respective boundary
   knot which is important for derivative evaluation.  In \R versions
-  \eqn{\le}{<=} 3.2.2, the boundary knot itself had been used as
+  \eqn{\le} 3.2.2, the boundary knot itself had been used as
   pivot, which lead to somewhat wrong extrapolations.
 
   When used in a model \code{\link{formula}} containing a \code{subset = *}

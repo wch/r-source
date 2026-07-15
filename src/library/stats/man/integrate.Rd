@@ -48,7 +48,7 @@ integrate(f, lower, upper, \dots, subdivisions = 100L,
   \file{\var{R}/src/appl/integrate.c} give more details, particularly about
   reasons for failure (internal error code \code{ier >= 1}).
 
-  In \R versions \eqn{\le}{<=} 3.2.x, the first entries of
+  In \R versions \eqn{\le} 3.2.x, the first entries of
   \code{lower} and \code{upper} were used whereas an error is signalled
   now if they are not of length one.
 }

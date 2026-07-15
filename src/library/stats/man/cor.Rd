@@ -94,8 +94,8 @@ cov2cor(V)
   \code{\link{NA}} when there is only one observation.
 
   For \code{cor()}, if \code{method} is \code{"kendall"} or
-  \code{"spearman"}, Kendall's \eqn{\tau}{tau} or Spearman's
-  \eqn{\rho}{rho} statistic is used to estimate a rank-based measure of
+  \code{"spearman"}, Kendall's \eqn{\tau} or Spearman's
+  \eqn{\rho} statistic is used to estimate a rank-based measure of
   association.  These are more robust and have been recommended if the
   data do not necessarily come from a bivariate normal distribution.\cr
   For \code{cov()}, a non-Pearson method is unusual but available for
@@ -106,7 +106,7 @@ cov2cor(V)
   based on complete observations, or based on pairwise completeness with
   reranking for each pair.
 
-  When there are ties, Kendall's \eqn{\tau_b}{tau_b} is computed, as
+  When there are ties, Kendall's \eqn{\tau_b} is computed, as
   proposed by \bibcitet{R:Kendall:1945}.
 
   Scaling a covariance matrix into a correlation one can be achieved in

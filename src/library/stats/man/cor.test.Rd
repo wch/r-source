@@ -16,7 +16,7 @@
 \description{
   Test for association between paired samples, using one of
   Pearson's product moment correlation coefficient,
-  Kendall's \eqn{\tau}{tau} or Spearman's \eqn{\rho}{rho}.
+  Kendall's \eqn{\tau} or Spearman's \eqn{\rho}.
 }
 \usage{
 cor.test(x, \dots)
@@ -39,15 +39,15 @@ cor.test(x, \dots)
     coefficient is to be  used for the test.  One of \code{"pearson"},
     \code{"kendall"}, or \code{"spearman"}, can be abbreviated.}
   \item{exact}{a logical indicating whether an exact p-value should be
-    computed.  Used for Kendall's \eqn{\tau}{tau} and
-    Spearman's \eqn{\rho}{rho}.
+    computed.  Used for Kendall's \eqn{\tau} and
+    Spearman's \eqn{\rho}.
     See \sQuote{Details} for the meaning of \code{NULL} (the default).}
   \item{conf.level}{confidence level for the returned confidence
     interval.  Currently only used for the Pearson product moment
     correlation coefficient if there are at least 4 complete pairs of
     observations.}
   \item{continuity}{logical: if true, a continuity correction is used
-    for Kendall's \eqn{\tau}{tau} and Spearman's \eqn{\rho}{rho} when
+    for Kendall's \eqn{\tau} and Spearman's \eqn{\rho} when
     not computed exactly.}
   \item{formula}{a formula of the form \code{~ u + v}, where each of
     \code{u} and \code{v} are numeric variables giving the data values
@@ -99,7 +99,7 @@ cor.test(x, \dots)
   interval is given based on Fisher's Z transform.
 
   If \code{method} is \code{"kendall"} or \code{"spearman"}, Kendall's
-  \eqn{\tau}{tau} or Spearman's \eqn{\rho}{rho} statistic is used to
+  \eqn{\tau} or Spearman's \eqn{\rho} statistic is used to
   estimate a rank-based measure of association.  These tests may be used
   if the data do not necessarily come from a bivariate normal
   distribution.

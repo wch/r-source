@@ -28,8 +28,8 @@ loess.control(surface = c("interpolate", "direct"),
  \item{iterations}{the number of iterations used in robust fitting,
    i.e. only if \code{family} is \code{"symmetric"}.}
  \item{iterTrace}{logical (or integer) determining if tracing
-   information during the robust iterations (\code{iterations}\eqn{\ge
-     2}{>= 2}) is produced.}
+   information during the robust iterations
+   (\code{iterations} \eqn{\ge} 2) is produced.}
  \item{\dots}{further arguments which are ignored.}
 }
 \description{

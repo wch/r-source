@@ -72,7 +72,7 @@ rbind2(x, y, ...)
   \code{\link{colnames}} and \code{\link{rownames}} from the
   corresponding column and row names of \code{x} and \code{y} (but not
   from deparsing argument names such as in \code{\link{cbind}(...,
-    deparse.level = d)} for \eqn{d \ge 1}{d >= 1}).
+    deparse.level = d)} for \eqn{d \ge 1}).
 }
 \seealso{
   \code{\link{cbind}},

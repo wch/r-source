@@ -122,7 +122,7 @@ hclust(d, method = "complete", members = NULL)
 
   Two different algorithms are found in the literature for Ward
   clustering.  The one used by option \code{"ward.D"} (equivalent to the
-  only Ward option \code{"ward"} in \R versions \eqn{\le}{<=} 3.0.3)
+  only Ward option \code{"ward"} in \R versions \eqn{\le} 3.0.3)
   \emph{does not} implement the clustering criterion of
   \bibcitet{R:Ward:1963}, whereas option \code{"ward.D2"} implements
   that criterion \bibcitep{R:Murtagh+Legendre:2014}.  With the latter, the
