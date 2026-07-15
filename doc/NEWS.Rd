@@ -201,10 +201,6 @@
       named vectors for \code{lower} and \code{upper} arguments to match
       names of coefficients (\PR{18415}).
 
-      \item Fix for \PR{19100}: \code{seq.int} was not handling
-      non-vector \code{along.width} arguments properly. Thanks to
-      \I{Mitchell O'Hara-Wild}.
-
       \item \code{summary(<aov>)} for an almost perfect fit now warns
       analogously to \code{summary(<lm>)}, using the same check.  Fixes
       fixes \PR{18341} thanks to R Dev Day members \I{Deepansh Khurana},
@@ -226,6 +222,14 @@
       scenario when \code{m + n} is larger than
       \code{.Machine$integer.max}, preventing integer overflow, thanks to
       \I{Jonathan Blood}'s report on R-devel.
+
+      \item Fix for \PR{19100}: \code{seq.int} was not handling
+      non-vector \code{along.width} arguments properly. Thanks to
+      \I{Mitchell O'Hara-Wild}.
+
+      \item Wrappers now duplicate even a wrapped object that might be
+      shared before returning a read-only pointer. This prevents cached
+      read-only pointers from becoming invalid. Reported by \I{Ivan Krylov}.
     }
   }
 }
