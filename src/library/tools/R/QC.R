@@ -6034,15 +6034,24 @@ format.check_package_code_structure_specials <-
 function(x, ...) {
     if(!length(x))
         return(character())
-    specials <- c(".Dim", ".Dimnames", ".Names", ".Tsp", ".Label")    
+    specials <- c(".Dim", ".Dimnames", ".Names", ".Tsp", ".Label")
+    replaces <- c("dim", "dimnames", "names", "tsp", "levels")
     one <- function(e) {
         bad <- lapply(e, function(u) intersect(names(u), specials))
         bad <- sort(table(unlist(bad, use.names = FALSE)),
                     decreasing = TRUE)
-        paste(sprintf("%s: %s", names(bad), bad), collapse = ", ")
+        structure(paste(sprintf("%s: %s", names(bad), bad),
+                        collapse = ", "),
+                  specials = names(bad))
     }
+    sns <- lapply(x, one)
+    pos <- match(unique(unlist(lapply(sns, attr, "specials"),
+                               use.names = FALSE)),
+                 specials)
     c("Found calls to structure() using deprecated special names:",
-      sprintf("  %s (%s)", names(x), vapply(x, one, "")))
+      sprintf("  %s (%s)", names(x), unlist(sns, use.names = FALSE)),
+      sprintf("'%s' should be changed to '%s'.",
+              specials[pos], replaces[pos]))
 }
 
 ### * .check_packages_used
