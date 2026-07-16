@@ -342,7 +342,7 @@ summary.aov <- function(object, intercept = FALSE, split,
             df <- ss <- ms <- numeric()
             nmrows <- character()
         } else {
-            ## FIXME: assign to correct final size instead of growing objects 
+            ## FIXME: assign to correct final size instead of growing objects
             df <- ss <- numeric()
             nmrows <- character()
             for(i in seq(nterms)) {
@@ -391,9 +391,7 @@ summary.aov <- function(object, intercept = FALSE, split,
         ans[[y]] <- x
     }
     if (any(perfect.fit)) {
-        ## response.names <- colnames(resid) %||% as.character(seq_len(nresp))
-        response.names <- colnames(resid) ## MM why did they drop  %||%   ??????????_________ FIXME ______
-        if(is.null(response.names)) response.names <- as.character(seq_len(nresp))
+        response.names <- colnames(resid) %||% as.character(seq_len(nresp))
         targets <- paste(sQuote(response.names[perfect.fit]), collapse = ", ")
         warning(sprintf(
             ngettext(nresp,
