@@ -64,6 +64,9 @@
       \eqn{2 \times 2}{2 by 2} case and \code{mantelhaen.test()} in
       the \eqn{2 \times 2 \times K}{2 by 2 by K} case if an exact
       conditional test is performed.
+
+      \item New low-level function \code{.OBJSXP()} enables deparsing of
+      non-S4 \code{"object"} type objects.
     }
   }
 
@@ -151,10 +154,6 @@
       now succeeds, omitting these, thus fixing \PR{18186}.  (Thanks to
       \I{Ivan Krylov} and others, notably \I{Jenny Bryan} and \I{R Dev
       Day @ useR! 2025} contributors.)
-
-      \item In \pkg{methods}, \code{as()} now correctly coerces S4
-      objects to S4 superclasses extending old-style classes, instead
-      of returning only the S3 part.
 
       \item \code{strat_ratio != 1} in \code{rfree1way} did not work as
       advertised.
@@ -295,6 +294,10 @@
       \code{POSIXlt} objects work correctly more often, e.g., without a
       \code{"tzone"} attribute, back porting a few of the \PR{18989} fixes
       from R-devel, both thanks to \I{Suharto Anggono}.
+
+      \item In \pkg{methods}, \code{as()} now correctly coerces S4
+      objects to S4 superclasses extending old-style classes, instead
+      of returning only the S3 part.
 
       \item Fix long standing (Fortran compiler optimization related) bug
       in \code{nlminb} with constraints, thanks to \I{Kasper Kristensen}'s
@@ -6982,9 +6985,6 @@
       \item New argument \code{symbolfamily} in \I{cairo}-based graphics
       devices and new function \code{cairoSymbolFont()} that can be used
       to provide the value for that argument.
-
-      \item New low-level function \code{.OBJSXP()} enables deparsing of
-      non-S4 \code{"object"} type objects.
     }
   }% end{ New Features }
 
