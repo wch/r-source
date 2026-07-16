@@ -1,7 +1,7 @@
 #  File src/library/stats/R/dummy.coef.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1998-2023 The R Core Team
+#  Copyright (C) 1998-2026 The R Core Team
 #  Copyright (C) 1998 B. D. Ripley
 #
 #  This program is free software; you can redistribute it and/or modify
@@ -32,7 +32,8 @@ dummy.coef.lm <- function(object, use.na=FALSE, ...)
     facs <- attr(Terms, "factors")[-1, , drop=FALSE]
     Terms <- delete.response(Terms)
     mf <- object$model %||% model.frame(object)
-    nvars <- setNames(, vars <- dimnames(facs)[[1]]) # names
+    nvars <- setNames( ,
+		vars <- unlist(lapply(as.list(attr(Terms, "variables"))[-1], deparse1)))
     xtlv <- lapply(nvars, function(i) {
         x <- mf[, i, drop=TRUE] # levels() also for character:
         levels(x) %||% if(is.character(x)) xl[[i]] # NULL e.g. for numeric

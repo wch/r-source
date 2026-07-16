@@ -202,8 +202,13 @@
 
       \item \code{summary(<aov>)} for an almost perfect fit now warns
       analogously to \code{summary(<lm>)}, using the same check.  Fixes
-      fixes \PR{18341} thanks to R Dev Day members \I{Deepansh Khurana},
-      \I{Stefan Linner} and \I{Oscar de Leon}.
+      fixes \PR{18341} thanks to \sQuote{\I{R Dev Day @ useR! 2026}}
+      participants \I{Deepansh Khurana}, \I{Stefan Linner} and \I{Oscar de Leon}.
+
+      \item \code{dummy.coef()} becomes more robust to non-syntactic
+      variable names, fixing \PR{18468}.  Thanks to \I{Bill Dunlap} and
+      \sQuote{\I{R Dev Day}} participants \I{Vincent Arel-Bundock},
+      \I{Cynthia Huang}, \I{Tina Rozsos} and \I{Marina Marinelli}.
     }
   }
 }
