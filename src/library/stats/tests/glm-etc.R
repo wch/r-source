@@ -213,6 +213,7 @@ mydatC2 <- mydatC
 colnames(mydatC2)[2] <- "ch A" # --> used as `ch A`
 dc.Cc2 <- dummy.coef(lm(y ~ .       , data=mydatC2))
 dc.Cc3 <- dummy.coef(lm(y ~ x*`ch A`, data=mydatC2))
+dc.Cc3s<- dummy.coef(lm(y ~ .^2,      data=mydatC2)) # as Cc3 (?)
 dc.Cc4 <- dummy.coef(lm(y ~ x*(function(x){x})(`ch A`), data=mydatC2))
 
 all.equal15 <- function(x,y, ...) all.equal(x,y, tolerance = 1e-15, ...)
