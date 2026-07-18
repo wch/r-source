@@ -779,7 +779,7 @@ function(package, dir, lib.loc = NULL,
             is_defunct <- function(f) {
                 predicate(.get_top_call_in_fun(f))
             }
-            funlst <- funlst[!vapply(funnms, is_defunct, NA)]
+            funlst <- funlst[!vapply(funlst, is_defunct, NA)]
             ## For the remaining ones, record whether they come from
             ## ourselves (which is not the case for re-exports).
             if(length(funlst))
