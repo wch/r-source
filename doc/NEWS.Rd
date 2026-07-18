@@ -14,7 +14,12 @@
       recognized even when started with a non-indented Rd comment,
       fixing a regression in \R 4.4.0.
 
-      \item Fix long standing (fortran compiler optimization related) bug
+      \item \code{rhyper(N, m, n, k)} now switches to the \dQuote{large}
+      scenario when \code{m + n} is larger than
+      \code{.Machine$integer.max}, preventing integer overflow, thanks to
+      \I{Jonathan Blood}'s report on R-devel.
+
+      \item Fix long standing (Fortran compiler optimization related) bug
       in \code{nlminb} with constraints, thanks to \I{Kasper Kristensen}'s
       \PR{19086} report and patch.
 
@@ -86,7 +91,7 @@
       \I{Ivan Krylov}'s \PR{19029} report and patch.
 
       \item \code{as.matrix(<POSIXlt>)} again produces a \emph{numeric}
-      matrix, and the \code{c()} and subassignment methods for
+      matrix, and the \code{c()} and \I{subassignment} methods for
       \code{POSIXlt} objects work correctly more often, e.g., without a
       \code{"tzone"} attribute, back porting a few of the \PR{18989} fixes
       from R-devel, both thanks to \I{Suharto Anggono}.

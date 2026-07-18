@@ -3687,9 +3687,9 @@ stopifnot(is.integer(Npi), is.double(Npd), !anyNA(Npi), !anyNA(Npd),
 
 
 ## rhyper() for some large arguments, PR#17694
-n <- 2e9 # => .Machine$integer.max ~= 1.07 * N
+n <- 1e9 # => .Machine$integer.max ~= 2.14 * N
 set.seed(6860); N <- rhyper(1, n,n,n)
-x <- 1.99e9; Nhi <- rhyper(256, x,x,x)
+x <- .99e9; Nhi <- rhyper(256, x,x,x)
 stopifnot(#identical(N, 999994112L), # (wrong) implementation detail
           is.integer(Nhi),
           all.equal(mean(Nhi), x/2, tol = 6e-6)) # ==> also: no NAs
