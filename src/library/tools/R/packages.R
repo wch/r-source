@@ -390,7 +390,7 @@ function(packages = NULL, db = NULL, which = "strong",
          recursive = FALSE, reverse = FALSE,
          verbose = getOption("verbose"))
 {
-    packages1 <- unique(packages)
+    upackages <- unique(packages)
 
     if(is.null(db)) db <- utils::available.packages()
 
@@ -408,7 +408,7 @@ function(packages = NULL, db = NULL, which = "strong",
                ## For forward non-recursive depends, we can simplify
                ## matters by subscripting the db right away---modulo
                ## boundary cases.
-               match(packages1, db[, "Package"], nomatch = 0L)
+               match(upackages, db[, "Package"], nomatch = 0L)
            } else !duplicated(db[, "Package"])
 
     db <- as.data.frame(db[ind, c("Package", fields), drop = FALSE])
@@ -422,11 +422,10 @@ function(packages = NULL, db = NULL, which = "strong",
 
     if(is.character(recursive)) {
         ## Direct dependencies:
-        d_d <- Recall(packages, db, which, FALSE,
-                      reverse, verbose)
+        d_d <- Recall(packages, db, which, FALSE, reverse, verbose)
         ## Recursive dependencies of all these:
-        d_r <- Recall(unique(unlist(d_d)), db, recursive, TRUE,
-                      reverse, verbose)
+        d_r <- Recall(unique(unlist(d_d, use.names = FALSE)),
+                      db, recursive, TRUE, reverse, verbose)
         ## Now glue together:
         return(lapply(d_d,
                       function(p) {
@@ -443,22 +442,20 @@ function(packages = NULL, db = NULL, which = "strong",
 
     depends <- lapply(depends, unique)
 
-    if(!recursive && !reverse) {
-        names(depends) <- db$Package
-        if(!is.null(packages)) {
-            depends <- depends[match(packages, names(depends))]
-            names(depends) <- packages
-        }
-        return(depends)
-    }
+    apackages <- sort(unique(c(db$Package,
+                               unlist(depends, use.names = FALSE))))
 
-    all_packages <- sort(unique(c(db$Package, unlist(depends))))
-
-    if(!recursive) {
+    if(reverse) {
         ## Need to invert.
         depends <-
             split(rep.int(db$Package, lengths(depends)),
-                  factor(unlist(depends), levels = all_packages))
+                  factor(unlist(depends, use.names = FALSE),
+                         levels = apackages))
+    } else {
+        names(depends) <- db$Package
+    }
+
+    if(!recursive) {
         if(!is.null(packages)) {
             depends <- depends[match(packages, names(depends))]
             names(depends) <- packages
@@ -470,78 +467,67 @@ function(packages = NULL, db = NULL, which = "strong",
     ## We need to compute the transitive closure of the dependency
     ## relation, but e.g. Warshall's algorithm (O(n^3)) is
     ## computationally infeasible.
-    ## Hence, in principle, we do the following.
-    ## Take the current list of pairs (i,j) in the relation.
-    ## Iterate over all j and whenever i R j and j R k add (i,k).
-    ## Repeat this until no new pairs get added.
-    ## To do this in R, we use a 2-column matrix of (i,j) rows.
-    ## We then create two lists which for all j contain the i and k
-    ## with i R j and j R k, respectively, and combine these.
-    ## This works reasonably well, but of course more efficient
-    ## implementations should be possible.
-    matchP <- match(rep.int(db$Package, lengths(depends)),
-		    all_packages)
-    matchD <- match(unlist(depends), all_packages)
-    tab <- unname(if(reverse)
-	split(matchP,
-	      factor(matchD, levels = seq_along(all_packages)))
-    else
-	split(matchD,
-	      factor(matchP, levels = seq_along(all_packages)))
-    )
-    if(is.null(packages)) {
-        if(reverse) {
-            packages1 <- all_packages
-            p_L <- seq_along(all_packages)
-        } else {
-            packages1 <- db$Package
-            p_L <- match(packages1, all_packages)
+
+    trclose <- function(dm0, dm1) {
+        g <- function(u, v) {
+            m <- length(u)
+            w <- unique(c(u, unlist(dm0[v], use.names = FALSE)))
+            n <- length(w)
+            if(n > m)
+                w[seq.int(m + 1L, n)]
+            else
+                NULL
         }
-    } else {
-        p_L <- match(packages1, all_packages, nomatch = 0L)
-        if(any(ind <- (p_L == 0L))) {
-            p_L <- p_L[!ind]
+        pos <- which(lengths(dm1) > 0L)
+        new <- dm1[pos]
+        ctr <- 0L
+        repeat {
+            if(verbose) cat("Cycle:", (ctr <- ctr + 1L), "")
+            new <- Map(g, dm1[pos], new, USE.NAMES = FALSE)
+            ind <- which(lengths(new) > 0L)
+            if(length(ind)) {
+                pos <- pos[ind]
+                new <- new[ind]
+                if(verbose) {
+                    cyc[pos] <<- ctr
+                    cat(sprintf("New: N_packages = %d, N_dependencies = %d\n",
+                                length(ind), sum(lengths(new))))
+                }
+                dm1[pos] <- Map(c, dm1[pos], new, USE.NAMES = FALSE)
+            } else {
+                if(verbose)
+                    cat("New: N_packages = 0, N_dependencies = 0\n")
+                return(dm1)
+            }
         }
     }
-    p_R <- tab[p_L]
-    pos <- cbind(rep.int(p_L, lengths(p_R)), unlist(p_R))
-    ctr <- 0L
 
-    ## posunique() speeds up computing "unique(pos)" in the following loop.
-    ## When the number of packages is small enough, we can easily represent
-    ## an edge from i to j by a single integer number. Finding duplicates in
-    ## a vector of integers is much faster than in rows of a matrix.
-    shift <- as.integer(2^15)  ## allows to fit two numbers to an integer
-    if (length(pos) && max(pos) < shift)
-        posunique <- function(p)
-            p[!duplicated(p[,1L]*shift + p[,2L]), , drop = FALSE]
-    else
-        posunique <- function(p) unique(p)
-
-    repeat {
-        if(verbose) cat("Cycle:", (ctr <- ctr + 1L))
-        p_L <- split(pos[, 1L], pos[, 2L])
-        new <- do.call(rbind,
-                       Map(function(i, k)
-                           cbind(rep.int(i, length(k)),
-                                 rep(k, each = length(i))),
-                           p_L, tab[as.integer(names(p_L))]))
-
-        ## could be just posunique(rbind(pos, new)), but computing this
-        ## iteratively is faster
-        npos <- posunique(rbind(pos, posunique(new)))
-        nnew <- nrow(npos) - nrow(pos)
-        if(verbose) cat(" NNew:", nnew, "\n")
-        if(!nnew) break
-        pos <- npos
-    }
-    depends <-
-        split(all_packages[pos[, 2L]],
-              factor(all_packages[pos[, 1L]], levels = packages1))
+    dm0 <- vector("list", length(apackages))
+    names(dm0) <- apackages
+    nd <- names(depends)
+    ld <- lengths(depends)
+    dm0[match(nd[ld > 0], apackages)] <-
+        split(match(unlist(depends, use.names = FALSE), apackages),
+              rep.int(seq_along(depends), ld))
+    dm1 <- if(is.null(packages))
+               dm0
+           else
+               dm0[match(upackages, apackages)]
+    cyc <- if(verbose)
+               structure(integer(length(dm1)), names = names(dm1))
+           else
+               NULL
+    depends <- lapply(trclose(dm0, dm1), \(x) apackages[x])
+    names(depends) <- if(is.null(packages)) apackages else upackages
+    
     if(!is.null(packages)) {
         depends <- depends[match(packages, names(depends))]
         names(depends) <- packages
     }
+
+    if(verbose)
+        attr(depends, "cycles") <- cyc
+
     depends
 }
 
