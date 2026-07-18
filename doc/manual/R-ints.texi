@@ -4176,15 +4176,15 @@ strings marked as UTF-8, Latin-1 or @code{"bytes"} as part of
 unknown encoding are always reported.
 Default: true, but false prior on @R{} 4.5.0.
 
-@item _R_CHECK_PACKAGES_USED_IN_TESTS_USE_SUBDIRS_
-If set to a true value, also check the R code in common unit test
-subdirectories of @file{tests} for undeclared package dependencies.
-Default: false (but true for CRAN submission checks).
 @item _R_CHECK_PACKAGES_USED_IN_DEMO_
 Control whether R scripts in the @file{demo} directory should be checked
 for packages used but not declared in the @file{DESCRIPTION} file.
 Default: false unless command-line option @option{--run-demo} is
 specified (but true for CRAN submission checks).
+@item _R_CHECK_PACKAGES_USED_IN_TESTS_USE_SUBDIRS_
+If set to a true value, also check the R code in common unit test
+subdirectories of @file{tests} for undeclared package dependencies.
+Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_PERMISSIONS_
 Control whether permissions of files should be checked.
@@ -4328,13 +4328,13 @@ Default: false (but true for CRAN submission checks).
 Comma-separated list of architectures that will be omitted from
 checking in a multi-arch setup.
 Default: none.
-@item _R_CHECK_SKIP_TESTS_ARCH_
-Comma-separated list of architectures that will be omitted from
-running tests in a multi-arch setup.
-Default: none.
 @item _R_CHECK_SKIP_EXAMPLES_ARCH_
 Comma-separated list of architectures that will be omitted from
 running examples in a multi-arch setup.
+Default: none.
+@item _R_CHECK_SKIP_TESTS_ARCH_
+Comma-separated list of architectures that will be omitted from
+running tests in a multi-arch setup.
 Default: none.
 
 @item _R_CHECK_SRC_MINUS_W_IMPLICIT_
