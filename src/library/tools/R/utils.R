@@ -1552,6 +1552,12 @@ function(f)
     b
 }
 
+### ** .gh_repo_URL
+
+.gh_repo_URL <- 
+function(x)
+    sub("^(https?://[^/]+/[^/]+/[^/]+)/.*", "\\1", x)
+
 ### ** .gregexec_at_pos
 
 .gregexec_at_pos <-

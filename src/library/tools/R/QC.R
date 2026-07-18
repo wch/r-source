@@ -8043,10 +8043,15 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         ## Should be a single URL: this is checked in check_meta()
         ## inside .check_packages().
         z <- parse_URI_reference(v)
-        if((endsWith(tolower(z$authority), "github.com") ||
-            endsWith(tolower(z$authority), "gitlab.com")) &&
-           !grepl("/issues(/new)?/?$", z$path)) {
-            w <- sprintf("%s/issues", sub("/$", "", v))
+        w <- if(endsWith(tolower(z$authority), "github.com") && 
+                !grepl("/issues(/new(/choose)?)?/?$", z$path))
+                 paste0(.gh_repo_URL(v), "/issues")
+             else if(endsWith(z$authority, "gitlab.com") &&
+                     !endsWith(z$path, "/-/issues"))
+                 paste0(.gh_repo_URL(v), "/-/issues")
+             else
+                 NULL
+        if(!is.null(w)) {
             out$bugreports <-
                 paste(c("The BugReports field in DESCRIPTION has",
                         sprintf("  %s", v),
