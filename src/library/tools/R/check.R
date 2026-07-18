@@ -5690,6 +5690,10 @@ add_dummies <- function(dir, Log)
         checkingLog(Log, "HTML version of manual")
         any <- FALSE
 
+        R_check_Rd_validate_Rd2HTML_refmans_only <-
+            config_val_to_logical(Sys.getenv("_R_CHECK_RD_VALIDATE_RD2HTML_REFMANS_ONLY_",
+                                             "TRUE"))
+
         t1 <- proc.time()
         if(i1) { ## validate
             Tidy <- .find_tidy_cmd()
@@ -5707,15 +5711,21 @@ add_dummies <- function(dir, Log)
                 ## creating the package HTML refmans via pkg2HTML(),
                 ## which may find additional problems (e.g., duplicated
                 ## anchors). Not sure whether we also want to validate
-                ## the Rd2HTML() outputs for the individual Rd files.
+                ## the Rd2HTML() outputs for the individual Rd files:
+                ## one can use
+                ##   _R_CHECK_RD_VALIDATE_RD2HTML_REFMANS_ONLY_=false
+                ## for force this.
                 results1a <-
-                    lapply(db,
-                           function(x)
-                               tryCatch({
-                                   Rd2HTML(x, out, concordance = TRUE)
-                                   tidy_validate(out, tidy = Tidy)
-                               },
-                               error = identity))
+                    if(R_check_Rd_validate_Rd2HTML_refmans_only)
+                        NULL
+                    else
+                        lapply(db,
+                               function(x)
+                                   tryCatch({
+                                       Rd2HTML(x, out, concordance = TRUE)
+                                       tidy_validate(out, tidy = Tidy)
+                                   },
+                                   error = identity))
                 results1b <-
                     tryCatch({
                         stages <- c("build", "later", "install",
@@ -5734,6 +5744,10 @@ add_dummies <- function(dir, Log)
                     },
                     error = identity)
                 results1 <- c(results1a, list(results1b))
+                paths1 <-
+                    c(if(!R_check_Rd_validate_Rd2HTML_refmans_only)
+                          names(db),
+                      paste0(basename(dir), ".html"))
 
                 ignore <-
                     Sys.getenv("_R_CHECK_RD_VALIDATE_RD2HTML_IGNORE_EMPTY_SPANS_",
@@ -5742,11 +5756,7 @@ add_dummies <- function(dir, Log)
                               "Warning: trimming empty <span>"
                           else
                               character()
-                results1 <- tidy_validate_db(results1,
-                                             c(names(db),
-                                               paste0(basename(dir),
-                                                      ".html")),
-                                             ignore)
+                results1 <- tidy_validate_db(results1, paths1, ignore)
             }
         }
 
