@@ -899,19 +899,21 @@ function(dir, predicate = NULL, recursive = FALSE, .worker = NULL,
         .file_path_relative_to_dir(code_files, dirname(dir))
 
     if("docs" %in% which) {
-        db <- Rd_db(dir = dir)
+        db <- Rd_db(dir = dir, stages = c("build", "later", "install"))
         names(db) <- file.path(basename(dir), "man", names(db))
+        tdir <- tempfile()
+        dir.create(tdir)
+        on.exit(unlink(tdir, recursive = TRUE))
         calls <-
             c(calls,
               Filter(length,
-                     lapply(db,
-                            function(e) {
-                                f <- tempfile()
-                                on.exit(unlink(f))
-                                Rd2ex(e, f)
-                                if(file.exists(f))
-                                    .worker(f, "UTF-8")
-                            })))
+                     Map(function(u, v) {
+                             f <- file.path(tdir, v)
+                             Rd2ex(u, f)
+                             if(file.exists(f))
+                                 .worker(f, "UTF-8")
+                         },
+                         db, basename(names(db)))))
     }
 
     calls
