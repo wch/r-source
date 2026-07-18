@@ -7,15 +7,21 @@
 
 
 \section{\Rlogo Changes in R 4.6.1 patched}{
-  
+
   \subsection{Bug Fixes}{
     \itemize{
       \item In plain-text help (\code{Rd2txt}), paragraphs are again
       recognized even when started with a non-indented Rd comment,
       fixing a regression in \R 4.4.0.
+
+      \item Fix long standing (fortran compiler optimization related) bug
+      in \code{nlminb} with constraints, thanks to \I{Kasper Kristensen}'s
+      \PR{19086} report and patch.
+
       \item Fix for \PR{19100}: \code{seq.int} was not handling
       non-vector \code{along.width} arguments properly. Thanks to
       \I{Mitchell O'Hara-Wild}.
+
       \item Wrappers now duplicate even a wrapped object that might be
       shared before returning a read-only pointer. This prevents cached
       read-only pointers from becoming invalid. Reported by \I{Ivan Krylov}.

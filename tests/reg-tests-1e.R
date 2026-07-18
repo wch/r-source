@@ -3325,10 +3325,34 @@ stopifnot(exprs = { # on x86_64 F42 Linux, all `tolerance = *` could be 0
 if(!inherits(ans, "try-error")) detach("package:cluster", unload = TRUE)
 
 
+## Bug 19086 -- Compiler optimization related  -- nlminb() convergence when bounds are active
+f <- function(x) sum( log(diff(x)^2+.01) + (x[1]-1)^2 )
+p.s <- c(5:10,2*(6:11)); names(p.s) <- paste0("p=", p.s)
+optL <- lapply(p.s, function(p) nlminb(rep(0, p), f, lower=-1, upper=3))
+unique(cbind(msgs <- sapply(optL, `[[`, "message")))
+## indeed still in Fedora 42; R-4.6.0 self-compiled
+## in good case:
+stopifnot(grepl("^relative convergence ", msgs))
+sapply(optL, `[[`, "iterations") # platform dep.
+## p=5  p=6  p=7  p=8  p=9 p=10 p=11 p=12       p=22
+##  28   47   47   55   51   65   77   80  ....  148
+sapply(optL, `[[`, "evaluations") # probably platform dep.
+## Test estimated par and objective function:
+head(obj <- sapply(optL, `[[`, "objective"))
+str(parL <- lapply(optL, `[[`, "par"))
+truepL <- lapply(p.s, function(p) rep.int(1, p)) # true par. = (1 1 .. 1)
+writeLines(all.equal(parL, truepL, tolerance = 0))
+stopifnot(exprs = {
+    abs((obj / (p.s - 1)) - log(0.01)) < 1e-9
+    all.equal(parL, truepL, tolerance = 4e-5) # p=20, 1.5656e-5 (Windows - arm)
+})
+## for p >= 9 did not converge previously (in R <= 4.6.0)
+
 
 ## seq.int(along.with = *) for non-vector objects (PR#19100)
 stopifnot(identical(seq.int(along.with = NULL), integer(0)),
           identical(seq.int(along.with = mean), 1L))
+
 
 
 ## keep at end
