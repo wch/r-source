@@ -5691,7 +5691,7 @@ add_dummies <- function(dir, Log)
         any <- FALSE
 
         R_check_Rd_validate_Rd2HTML_refmans_only <-
-            config_val_to_logical(Sys.getenv("_R_CHECK_RD_VALIDATE_RD2HTML_REFMANS_ONLY_",
+            config_val_to_logical(Sys.getenv("_R_CHECK_RD_VALIDATE_RD2HTML_REFMAN_ONLY_",
                                              "TRUE"))
 
         t1 <- proc.time()
@@ -5713,7 +5713,7 @@ add_dummies <- function(dir, Log)
                 ## anchors). Not sure whether we also want to validate
                 ## the Rd2HTML() outputs for the individual Rd files:
                 ## one can use
-                ##   _R_CHECK_RD_VALIDATE_RD2HTML_REFMANS_ONLY_=false
+                ##   _R_CHECK_RD_VALIDATE_RD2HTML_REFMAN_ONLY_=false
                 ## for force this.
                 results1a <-
                     if(R_check_Rd_validate_Rd2HTML_refmans_only)
