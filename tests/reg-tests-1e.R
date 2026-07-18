@@ -3611,6 +3611,21 @@ fmL <- lm (cbind(weight, height) ~ group, data = d30)
 fmA <- aov(cbind(weight, height) ~ group, data = d30)
 chkFM(fmA, fmL)
 ## the *A models from aov() / summary.aov()  did not raise the warning in R <= 4.6.z
+##
+## A case where length(fitted) == 1 gave var(fitted) |-> NA
+ladyB <- data.frame(
+    ID = factor(1:16), Run = gl(2, 8),
+    DPlant = factor(rep((1:8)*10, 2)),
+    Host = factor(rep(rep(2:1, each=4), 2), labels = c("bean", "trefoil")),
+    Ladybird = factor(rep(rep(2:1, each=2), 4), labels = c("-", "+")),
+    Cadaver = rep(c(5, 10), 8),
+    Live     = c(15, 12, 20, 20, 18, 17, 20, 20, 18, 17, 20, 20, 15, 19, 20, 20),
+    Infected = c(1, 2, 1, 2, 5, 10, 1, 3, 2, 2, 0, 0, 5, 8, 1, 7))
+fm <- aov(log(P/(100 - P)) ~ Host * Cadaver * Ladybird + Error(Run/DPlant),
+          data = transform(ladyB, P = 100 * (Infected + 1)/(Live + 2), Cadaver = factor(Cadaver)))
+summary(fm)
+## a few days ==>  Error in  if (is.finite(resvar) && resvar < (mean(fitted)^2 + var(c(fitted))) * :
+##                                                    missing value where TRUE/FALSE needed
 
 
 

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/lm.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -320,7 +320,8 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
     resvar <- rss/rdf
     ## see thread at https://stat.ethz.ch/pipermail/r-help/2014-March/367585.html
     if (is.finite(resvar) &&
-        resvar < (mean(f)^2 + var(c(f))) * 1e-30)  # a few times .Machine$double.eps^2
+        resvar < (mean(f)^2 + if(length(c(f)) > 1L) var(c(f)) else 0) * 1e-30)
+                                        # 1e-30: a few times .Machine$double.eps^2
         warning("essentially perfect fit: summary may be unreliable")
     p1 <- 1L:p
     R <- chol2inv(Qr$qr[p1, p1, drop = FALSE])

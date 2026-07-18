@@ -367,8 +367,9 @@ summary.aov <- function(object, intercept = FALSE, split,
             rss <- sum(resid[, y]^2)
             ss <- c(ss, rss)
             resvar <- rss / rdf
-            fitted <- fit[, y]
-            if(is.finite(resvar) && resvar < (mean(fitted)^2 + var(c(fitted))) * 1e-30) # as in lm()
+            f <- fit[, y]
+            if(is.finite(resvar) &&
+               resvar < (mean(f)^2 + if(length(f) > 1L) var(f) else 0) * 1e-30) # as in lm()
                 perfect.fit[y] <- TRUE
             nmrows <- c(nmrows,  "Residuals")
         }
