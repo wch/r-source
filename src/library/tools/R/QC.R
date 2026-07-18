@@ -824,49 +824,53 @@ function(package, dir, lib.loc = NULL,
     bad_doc_objects
 }
 
-## <FIXME>
-## We should really have format.codoc() and print via format ...
-## </FIXME>
-
 print.codoc <-
+function(x, ...)    
+{
+    if(length(y <- format(x, ...)))
+        writeLines(paste(y, collapse = "\n\n"))
+    invisible(x)
+}
+
+format.codoc <-
 function(x, ...)
 {
-    first <- TRUE
-    
-    functions_in_usages_not_in_code <-
-        attr(x, "functions_in_usages_not_in_code")
-    if(length(functions_in_usages_not_in_code)) {
-        first <- FALSE
-        for(fname in names(functions_in_usages_not_in_code)) {
-            writeLines(gettextf("Functions or methods with usage in Rd file '%s' but not in code:",
-                                fname))
-            .pretty_print(sQuote(unique(functions_in_usages_not_in_code[[fname]])))
-        }
-    }
+    pcn <- function(x) paste(x, collapse = "\n")
 
-    data_sets_in_usages_not_in_code <-
-        attr(x, "data_sets_in_usages_not_in_code")
-    if(length(data_sets_in_usages_not_in_code)) {
-        if(!first) writeLines("")
-        first <- FALSE
-        for(fname in names(data_sets_in_usages_not_in_code)) {
-            writeLines(gettextf("Data with usage in Rd file '%s' but not in code:",
-                                fname))
-            .pretty_print(sQuote(unique(data_sets_in_usages_not_in_code[[fname]])))
-        }
-    }
+    y <- character()
 
-    variables_in_usages_not_in_code <-
-        attr(x, "variables_in_usages_not_in_code")
-    if(length(variables_in_usages_not_in_code)) {
-        if(!first) writeLines("")
-        first <- FALSE
-        for(fname in names(variables_in_usages_not_in_code)) {
-            writeLines(gettextf("Variables with usage in Rd file '%s' but not in code:",
-                                fname))
-            .pretty_print(sQuote(unique(variables_in_usages_not_in_code[[fname]])))
-        }
-    }
+    a <- attr(x, "functions_in_usages_not_in_code")
+    if(length(a))
+        y <- c(y,
+               vapply(names(a),
+                      function(fname)
+                          pcn(c(gettextf("Functions or methods with usage in Rd file '%s' but not in code:",
+                                         fname),
+                                .strwrap22(sQuote(unique(a[[fname]])))
+                                )),
+                      ""))
+
+    a <- attr(x, "variables_in_usages_not_in_code")
+    if(length(a))
+        y <- c(y,
+               vapply(names(a),
+                      function(fname)
+                          pcn(c(gettextf("Variables with usage in Rd file '%s' but not in code:",
+                                         fname),
+                                .strwrap22(sQuote(unique(a[[fname]])))
+                                )),
+                      ""))
+
+    a <- attr(x, "data_sets_in_usages_not_in_code")
+    if(length(a))
+        y <- c(y,
+               vapply(names(a),
+                      function(fname)
+                          pcn(c(gettextf("Data with usage in Rd file '%s' but not in code:",
+                                         fname),
+                                .strwrap22(sQuote(unique(a[[fname]])))
+                                )),
+                      ""))
 
     ## In general, functions in the code which only have an \alias but
     ## no \usage entry are not necessarily a problem---they might be
@@ -886,17 +890,15 @@ function(x, ...)
         self <- functions_missing_from_usages$self
         functions_missing_from_usages <-
             functions_missing_from_usages$name[self]
-        if(length(functions_missing_from_usages)) {
-            if(!first) writeLines("")
-            first <- FALSE
-            writeLines("Exported functions without usage information:")
-            .pretty_print(functions_missing_from_usages)
-        }
+        if(length(functions_missing_from_usages))
+            y <- c(y,
+                   pcn(c("Exported functions without usage information:",
+                         .strwrap22(functions_missing_from_usages))))
     }
 
     if(!length(x))
-        return(invisible(x))
-
+        return(y)
+    
     has_only_names <- is.character(x[[1L]][[1L]][["code"]])
 
     format_args <- function(s) {
@@ -914,14 +916,17 @@ function(x, ...)
     }
 
     summarize_mismatches_in_names <- function(nfc, nfd) {
+        out <- character()
         if(length(nms <- setdiff(nfc, nfd)))
-            writeLines(c(gettext("  Argument names in code not in docs:"),
-                         strwrap(paste(nms, collapse = " "),
-                                 indent = 4L, exdent = 4L)))
+            out <- c(out,
+                     gettext("  Argument names in code not in docs:"),
+                     strwrap(paste(nms, collapse = " "),
+                             indent = 4L, exdent = 4L))
         if(length(nms <- setdiff(nfd, nfc)))
-            writeLines(c(gettext("  Argument names in docs not in code:"),
-                         strwrap(paste(nms, collapse = " "),
-                                 indent = 4L, exdent = 4L)))
+            out <- c(out,
+                     gettext("  Argument names in docs not in code:"),
+                     strwrap(paste(nms, collapse = " "),
+                             indent = 4L, exdent = 4L))
         len <- min(length(nfc), length(nfd))
         if(len) {
             len <- seq_len(len)
@@ -931,20 +936,23 @@ function(x, ...)
             len <- length(ind)
             if(len) {
                 if(len > 3L) {
-                    writeLines(gettext("  Mismatches in argument names (first 3):"))
+                    out <- c(out,
+                             gettext("  Mismatches in argument names (first 3):"))
                     ind <- ind[1L:3L]
                 } else {
-                    writeLines(gettext("  Mismatches in argument names:"))
+                    out <- c(out,
+                             gettext("  Mismatches in argument names:"))
                 }
-                for(i in ind) {
-                    writeLines(sprintf("    Position: %d Code: %s Docs: %s",
-                                       i, nfc[i], nfd[i]))
-                }
+                out <- c(out,
+                         sprintf("    Position: %d Code: %s Docs: %s",
+                                 ind, nfc[ind], nfd[ind]))
             }
         }
+        out
     }
 
     summarize_mismatches_in_values <- function(ffc, ffd) {
+        out <- character()
         ## Be nice, and match arguments by names first.
         nms <- intersect(names(ffc), names(ffd))
         vffc <- ffc[nms]
@@ -953,10 +961,12 @@ function(x, ...)
         len <- length(ind)
         if(len) {
             if(len > 3L) {
-                writeLines(gettext("  Mismatches in argument default values (first 3):"))
+                out <- c(out,
+                         gettext("  Mismatches in argument default values (first 3):"))
                 ind <- ind[1L:3L]
             } else {
-                writeLines(gettext("  Mismatches in argument default values:"))
+                out <- c(out,
+                         gettext("  Mismatches in argument default values:"))
             }
             for(i in ind) {
                 multiline <- FALSE
@@ -972,40 +982,43 @@ function(x, ...)
                 }
                 dv <- gsub("<unescaped bksl>", "\\", dv, fixed = TRUE)
                 sep <- if(multiline) "\n    " else " "
-                writeLines(sprintf("    Name: '%s'%sCode: %s%sDocs: %s",
-                                   nms[i], sep, cv, sep, dv))
+                out <- c(out,
+                         sprintf("    Name: '%s'%sCode: %s%sDocs: %s",
+                                 nms[i], sep, cv, sep, dv))
             }
         }
+        out
     }
 
     summarize_mismatches <- function(ffc, ffd) {
         if(has_only_names)
             summarize_mismatches_in_names(ffc, ffd)
         else {
-            summarize_mismatches_in_names(names(ffc), names(ffd))
-            summarize_mismatches_in_values(ffc, ffd)
+            c(summarize_mismatches_in_names(names(ffc), names(ffd)),
+              summarize_mismatches_in_values(ffc, ffd))
         }
     }
 
-    if(!first) writeLines("")
-    for(fname in names(x)) {
-        writeLines(gettextf("Codoc mismatches from Rd file '%s':",
-                            fname))
-        xfname <- x[[fname]]
-        for(i in seq_along(xfname)) {
-            ffc <- xfname[[i]][["code"]]
-            ffd <- xfname[[i]][["docs"]]
-            writeLines(c(xfname[[i]][["name"]],
-                         strwrap(gettextf("Code: %s", format_args(ffc)),
-                                 indent = 2L, exdent = 17L),
-                         strwrap(gettextf("Docs: %s", format_args(ffd)),
-                                 indent = 2L, exdent = 17L)))
-            summarize_mismatches(ffc, ffd)
-        }
-        writeLines("")
+    fmt <- function(fname) {
+        xfname <- x[[fname]]                      
+        pcn(c(gettextf("Codoc mismatches from Rd file '%s':", fname),
+              vapply(seq_along(xfname),
+                     function(i) {
+                         ffc <- xfname[[i]][["code"]]
+                         ffd <- xfname[[i]][["docs"]]
+                         pcn(c(xfname[[i]][["name"]],
+                               strwrap(gettextf("Code: %s",
+                                                format_args(ffc)),
+                                       indent = 2L, exdent = 17L),
+                               strwrap(gettextf("Docs: %s",
+                                                format_args(ffd)),
+                                       indent = 2L, exdent = 17L),
+                               summarize_mismatches(ffc, ffd)))
+                     },
+                     "")))
     }
-
-    invisible(x)
+        
+    c(y, vapply(names(x), fmt, ""))
 }
 
 ### * codocClasses
