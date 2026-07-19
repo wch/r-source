@@ -209,6 +209,11 @@
       variable names, fixing \PR{18468}.  Thanks to \I{Bill Dunlap} and
       \sQuote{\I{R Dev Day}} participants \I{Vincent Arel-Bundock},
       \I{Cynthia Huang}, \I{Tina Rozsos} and \I{Marina Marinelli}.
+
+      \item Package \pkg{methods} provides a method for implicit generic
+      function \code{rcond} with signature
+      \code{c(x="ANY", norm="missing")} so that \code{rcond(x)}
+      does not break after \code{setGeneric("rcond")}.
     }
   }
 }

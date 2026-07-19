@@ -207,6 +207,8 @@ utils::globalVariables(".addBasicGeneric")
     setGeneric("rcond", function(x, norm, ...) standardGeneric("rcond"),
 	       useAsDefault = function(x, norm, ...) base::rcond(x, norm, ...),
 	       signature = c("x", "norm"), where = where)
+    setMethod("rcond", signature(x = "ANY", norm = "missing"),
+              function (x, norm, ...) .implicitTable$rcond(x, norm = "O", ...))
     setGenericImplicit("rcond", where, FALSE)
 
     setGeneric("norm", function(x, type, ...) standardGeneric("norm"),

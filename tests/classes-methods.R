@@ -4,18 +4,28 @@
 #### - No *.Rout.save <==> use stopifnot() etc for testing
 #### - Recommended packages allowed, e.g., "Matrix"
 
-## Method for implicit generic 'norm' (x="ANY", type="missing") -- test *before* Matrix is loaded
+## Methods for implicit generic  'norm' (x="ANY", type="missing")
+##                              'rcond' (x="ANY", norm="missing")
+## tested *before* Matrix is loaded
 setClass("zzz", slots = c(x = "NULL"))
-setMethod("norm", c(x = "zzz", type = "character"), function (x, type, ...) "ok")
-m1 <- getMethod("norm", c(x = "ANY", type = "missing"))
-m2 <- selectMethod("norm", c(x = "zzz", type = "missing"))
+setMethod( "norm", c(x = "zzz", type = "character"),
+          function (x, type, ...) type)
+setMethod("rcond", c(x = "zzz", norm = "character"),
+          function (x, norm, ...) norm)
+m4 <- list(getMethod( "norm", c(x = "ANY", type = "missing")),
+           getMethod("rcond", c(x = "ANY", norm = "missing")), # was Error .... : no method found ....
+           selectMethod( "norm", c(x = "zzz", type = "missing")),
+           selectMethod("rcond", c(x = "zzz", norm = "missing")))
+f4 <- lapply(m4, getDataPart)
 x <- new("zzz")
-stopifnot(is(m1, "MethodDefinition"),
-          is(m2, "MethodDefinition"),
-          identical(getDataPart(m1), getDataPart(m2)),
-          identical(norm(x, "O"), "ok"),
-          identical(norm(x     ), "ok"), # was Error .... : invalid 'x': type "S4"
-          removeGeneric("norm"),
+stopifnot(all(vapply(m4, is, FALSE, "MethodDefinition")),
+          identical(f4[3:4], f4[1:2]),
+          identical( norm(x, "O"), "O"),
+          identical( norm(x     ), "O"), # was Error .... : invalid 'x': type "S4"
+          identical(rcond(x, "O"), "O"),
+          identical(rcond(x     ), "O"), # was Error .... : argument "norm" is missing ....
+          removeGeneric( "norm"),
+          removeGeneric("rcond"),
           removeClass("zzz"))
 
 
