@@ -3029,7 +3029,7 @@ SEXP R_makePartialMatchWarningCondition(SEXP call, SEXP argument, SEXP formal)
     PROTECT(cond);
     R_setConditionField(cond, 2, "argument", argument);
     R_setConditionField(cond, 3, "formal", formal);
-    // idealy we would want the function/object in a field also
+    // ideally we would want the function/object in a field also
     UNPROTECT(1); /* cond */
     return cond;
 }
