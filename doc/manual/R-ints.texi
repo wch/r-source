@@ -4289,6 +4289,12 @@ environment variable @env{R_TIDYCMD}).  macOS users are advised to
 install 5.8.0 or later from @uref{https://binaries.html-tidy.org/}.
 Default: false (but true for CRAN submission checks). @option{--as-cran}
 can be overridden by setting this variable to a false value.
+@item _R_CHECK_RD_VALIDATE_RD2HTML_REFMAN_ONLY_
+If true, only use the single-page reference manual (obtained by
+@code{tools::pkg2HTML()} on all package Rd files) for validating the
+package HTML help pages.  Otherwise, also validate the results of
+running @code{tools::Rd2HTML()} on each Rd file).
+Default: true.
 
 @item _R_CHECK_RD_XREFS_
 If true, check the cross-references in @file{.Rd} files.
