@@ -2355,6 +2355,7 @@ NORET void R_ObjectNotFoundError(SEXP sym, SEXP call, const char *mode);
 NORET void R_FunctionNotFoundError(SEXP sym, SEXP call);
 
 SEXP R_makePartialMatchWarningCondition(SEXP call, SEXP argument, SEXP formal);
+SEXP R_makePartialArgumentMatchWarningCondition(SEXP call, SEXP argument, SEXP formal);
 
 void R_setConditionField(SEXP cond, R_xlen_t idx, const char *name, SEXP val);
 SEXP R_makeNotSubsettableError(SEXP x, SEXP call);

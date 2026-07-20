@@ -1328,8 +1328,13 @@ attribute_hidden SEXP R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 		    st = translateChar(target);
 		    break;
 		}
-		warningcall(call, _("partial match of '%s' to '%s'"),
-			    translateChar(input), st);
+		SEXP cond =
+		    R_makePartialMatchWarningCondition(call,
+						       install(translateChar(input)), 
+						       install(st));
+		PROTECT(cond);
+		R_signalWarningCondition(cond);
+		UNPROTECT(1);
 	    }
 	    y = CAR(xmatch);
 	    RAISE_NAMED(y, NAMED(x));
@@ -1386,8 +1391,13 @@ attribute_hidden SEXP R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 		    st = translateChar(target);
 		    break;
 		}
-		warningcall(call, _("partial match of '%s' to '%s'"),
-			    translateChar(input), st);
+		SEXP cond =
+		    R_makePartialMatchWarningCondition(call,
+						       install(translateChar(input)), 
+						       install(st));
+		PROTECT(cond);
+		R_signalWarningCondition(cond);
+		UNPROTECT(1);
 	    }
 	    y = VECTOR_ELT(x, imatch);
 	    RAISE_NAMED(y, NAMED(x));

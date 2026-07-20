@@ -3023,7 +3023,7 @@ SEXP R_makePartialMatchWarningCondition(SEXP call, SEXP argument, SEXP formal)
 {
     SEXP cond =
 	R_makeWarningCondition(call, "partialMatchWarning", NULL, 2,
-			       _("partial argument match of '%s' to '%s'"),
+			       _("partial match of '%s' to '%s'"),
 			       CHAR(PRINTNAME(argument)),//EncodeChar??
 			       CHAR(PRINTNAME(formal)));//EncodeChar??
     PROTECT(cond);
@@ -3034,6 +3034,20 @@ SEXP R_makePartialMatchWarningCondition(SEXP call, SEXP argument, SEXP formal)
     return cond;
 }
 
+SEXP R_makePartialArgumentMatchWarningCondition(SEXP call, SEXP argument, SEXP formal)
+{
+    SEXP cond =
+	R_makeWarningCondition(call, "partialMatchWarning", NULL, 2,
+			       _("partial argument match of '%s' to '%s'"),
+			       CHAR(PRINTNAME(argument)),//EncodeChar??
+			       CHAR(PRINTNAME(formal)));//EncodeChar??
+    PROTECT(cond);
+    R_setConditionField(cond, 2, "argument", argument);
+    R_setConditionField(cond, 3, "formal", formal);
+    // ideally we would want the function/object in a field also
+    UNPROTECT(1); /* cond */
+    return cond;
+}
 
 #define PROT_SO_MSG _("protect(): protection stack overflow")
 #define EXPR_SO_MSG _("evaluation nested too deeply: infinite recursion / options(expressions=)?")

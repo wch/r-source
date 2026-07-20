@@ -540,7 +540,7 @@ attribute_hidden void Rf_check1arg(SEXP arg, SEXP call, const char *formal)
 		  supplied, formal);
     if (R_warn_partial_match_args && ns > 0 && ns < strlen(formal)) {
 	SEXP fsym = install(formal);
-	SEXP cond = R_makePartialMatchWarningCondition(call, tag, fsym);
+	SEXP cond = R_makePartialArgumentMatchWarningCondition(call, tag, fsym);
 	PROTECT(cond);
 	R_signalWarningCondition(cond);
 	UNPROTECT(1);
