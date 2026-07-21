@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2005-2021 The R Core Team
+ *  Copyright (C) 2005-2026 The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -587,7 +587,6 @@ const char *locale2charset(const char *locale)
 
     char la_loc[128];
     char enc[128];
-    int i;
     int  cp;
 #ifndef __APPLE__
     char *value;
@@ -607,13 +606,13 @@ const char *locale2charset(const char *locale)
      */
     memset(la_loc, 0, sizeof(la_loc));
     memset(enc, 0, sizeof(enc));
-    char *p = (char *) strrchr(locale, '.');
+    const char *p = strrchr(locale, '.');
     if(p) {
 	strncpy(enc, p+1, sizeof(enc)-1);
         enc[sizeof(enc) - 1] = '\0';
 	strncpy(la_loc, locale, sizeof(la_loc)-1);
         la_loc[sizeof(la_loc) - 1] = '\0';
-	p = strrchr(la_loc, '.');
+	char *p = strrchr(la_loc, '.');
 	if(p) *p = '\0';
     }
     
@@ -656,7 +655,7 @@ const char *locale2charset(const char *locale)
      * Assume locales are like en_US[.utf8[@euro]]
      */
     /* cut encoding @hoge  no use.
-       for(i=0;enc[i] && enc[i]!='@' && i<sizeof(enc)-1;i++);
+       for(int i = 0;enc[i] && enc[i]!='@' && i<sizeof(enc)-1;i++);
        enc[i]='\0';
     */
 
@@ -664,9 +663,9 @@ const char *locale2charset(const char *locale)
     if (0 == strcmp(enc, "UTF-8")) strcpy(enc, "utf8");
 
     if(strcmp(enc, "") && strcmp(enc, "utf8")) {
-	for(i = 0; enc[i]; i++) enc[i] = (char) tolower(enc[i]);
+	for(int i = 0; enc[i]; i++) enc[i] = (char) tolower(enc[i]);
 
-	for(i = 0; i < known_count; i++)
+	for(int i = 0; i < known_count; i++)
 	    if (0 == strcmp(known[i].name,enc)) return known[i].value;
 
 	/* cut encoding old linux cp- */
@@ -685,11 +684,11 @@ const char *locale2charset(const char *locale)
             charset[sizeof(charset) - 1] = '\0';
 	    if(strncmp(charset, "euc", 3)) {
 		if (charset[3] != '-') {
-		    for(i = (int) strlen(charset)-3; 0 < i; i--)
+		    for(int i = (int) strlen(charset)-3; 0 < i; i--)
 			charset[i+1] = charset[i];
 		    charset[3] = '-';
 		}
-		for(i = 0; charset[i]; i++)
+		for(int i = 0; charset[i]; i++)
 		    charset[i] = (char) toupper(charset[i]);
 		return charset;
 	    }
@@ -755,7 +754,7 @@ main()
     SPRINT(locale2charset("en_IN"));
     SPRINT(locale2charset("C"));
     SPRINT(locale2charset("fran""\xe7""ais"));
-    for(i=0;i<guess_count;i++){
+    for(int i= 0; i<guess_count; i++){
 	locale2charset(guess[i].name);
     }
 #else

@@ -618,25 +618,28 @@ void PrintWarnings(void)
 	if( VECTOR_ELT(R_Warnings, 0) == R_NilValue )
 	    REprintf("%s \n", CHAR(STRING_ELT(names, 0)));
 	else {
-	    const char *dcall, *msg = CHAR(STRING_ELT(names, 0));
-	    dcall = CHAR(STRING_ELT(deparse1s(VECTOR_ELT(R_Warnings, 0)), 0));
+	    const char *msg = CHAR(STRING_ELT(names, 0));
+	    const char *dcall = CHAR(STRING_ELT(deparse1s(VECTOR_ELT(R_Warnings, 0)), 0));
 	    REprintf(_("In %s :"), dcall);
 	    if (mbcslocale) {
 		int msgline1;
-		char *p = (char *) strchr(msg, '\n');
-		if (p) {
+		if (strchr(msg, '\n')) {
+		    // this branch alters msg temporarily
+		    char msg1[strlen(msg)];
+		    strcpy(msg1, msg);
+		    char *p = strchr(msg1, '\n');
 		    *p = '\0';
-		    msgline1 = wd(msg);
-		    *p = '\n';
+		    msgline1 = wd(msg1);
 		} else msgline1 = wd(msg);
 		if (6 + wd(dcall) + msgline1 > LONGWARN) REprintf("\n ");
+		REprintf(" %s\n", msg);
 	    } else {
 		size_t msgline1 = strlen(msg);
-		char *p = (char *)strchr(msg, '\n');
+		const char *p = strchr(msg, '\n');
 		if (p) msgline1 = (int)(p - msg);
 		if (6 + strlen(dcall) + msgline1 > LONGWARN) REprintf("\n ");
+		REprintf(" %s\n", msg);
 	    }
-	    REprintf(" %s\n", msg);
 	}
     } else if( R_CollectWarnings <= 10 ) {
 	REprintf("%s\n", header);
