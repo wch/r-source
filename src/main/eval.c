@@ -4177,7 +4177,6 @@ int DispatchOrEval(SEXP call, SEXP op, const char *generic, SEXP args,
     }
 	/* try to dispatch on the object */
     if( isObject(x) ) {
-	char *pt;
 	/* Try for formal method. */
 	if(IS_S4_OBJECT(x) && R_has_methods(op)) {
 	    SEXP value, argValue;
@@ -4215,6 +4214,7 @@ int DispatchOrEval(SEXP call, SEXP op, const char *generic, SEXP args,
 		argsevald = 1;
 	    }
 	}
+	const char *pt;
 	if (TYPEOF(CAR(call)) == SYMSXP)
 	    pt = Rf_strrchr(CHAR(PRINTNAME(CAR(call))), '.');
 	else
@@ -9153,7 +9153,7 @@ attribute_hidden SEXP do_bcversion(SEXP call, SEXP op, SEXP args, SEXP rho)
    should do that if it wants to */
 char *R_CompiledFileName(char *fname, char *buf, size_t bsize)
 {
-    char *basename, *ext;
+    const char *basename, *ext;
 
     /* find the base name and the extension */
     basename = Rf_strrchr(fname, FILESEP[0]);
