@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file dounzip.c
- *  first part Copyright (C) 2002-2025  The R Core Team
+ *  first part Copyright (C) 2002-2026  The R Core Team
  *  second part Copyright (C) 1998-2010 Gilles Vollant
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -331,7 +331,7 @@ static SEXP ziplist(const char *zipname)
 	/* In theory at least bit 11 of the flag tells us that the
 	   filename is in UTF-8, so FIXME */
 	SET_STRING_ELT(names, i, mkChar(filename_inzip));
-	REAL(lengths)[i] = file_info.uncompressed_size;
+	REAL(lengths)[i] = (double) file_info.uncompressed_size;
 	snprintf(date, 50, "%d-%02d-%02d %02d:%02d",
 		 file_info.tmu_date.tm_year,
 		 file_info.tmu_date.tm_mon + 1,
