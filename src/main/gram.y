@@ -2371,11 +2371,15 @@ static void yyerror(const char *s)
 
     if (!strncmp(s, yyunexpected, sizeof yyunexpected -1)) {
 	int i;
-	/* Edit the error message */
-	expecting = (char *) strstr(s + sizeof yyunexpected -1, yyexpecting);
+	/* Edit the error message: needs a copy */
+	char s1[PARSE_ERROR_SIZE + 1];
+	strncpy(s1, s, PARSE_ERROR_SIZE);
+	s1[PARSE_ERROR_SIZE] = 0;
+	expecting = strstr(s1 + sizeof yyunexpected -1, yyexpecting);
 	if (expecting) *expecting = '\0';
+	
 	for (i = 0; yytname_translations[i]; i += 2) {
-	    if (!strcmp(s + sizeof yyunexpected - 1, yytname_translations[i])) {
+	    if (!strcmp(s1 + sizeof yyunexpected - 1, yytname_translations[i])) {
                 switch(i/2)
                 {
                 case 0:
@@ -2403,7 +2407,7 @@ static void yyerror(const char *s)
                         snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE, _("unexpected end of line"));
                                 break;
                 default:
-		  if (!strcmp(s + sizeof yyunexpected - 1, "PLACEHOLDER")) {
+		  if (!strcmp(s1 + sizeof yyunexpected - 1, "PLACEHOLDER")) {
 		      /* cheat to avoid changing the parse error
 			 message for mis-use of _ */
 		      snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE,
@@ -2419,7 +2423,7 @@ static void yyerror(const char *s)
 	    }
 	}
 	snprintf(R_ParseErrorMsg, PARSE_ERROR_SIZE - 1, _("unexpected %s"),
-                 s + sizeof yyunexpected - 1);
+                 s1 + sizeof yyunexpected - 1);
     } else {
 	strncpy(R_ParseErrorMsg, s, PARSE_ERROR_SIZE - 1);
         R_ParseErrorMsg[PARSE_ERROR_SIZE - 1] = '\0';
