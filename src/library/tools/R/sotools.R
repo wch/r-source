@@ -618,7 +618,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "Rf_printNamedVector", "Rf_printRealVector",
             "Rf_printVector", "Rf_set_iconv",
             "Rf_sortVector", "Rf_strIsASCII", "Rf_strchr",
-            "Rf_strrchr", "Rf_ucstomb", "Rf_utf8towcs",
+            "Rf_strrchr", "Rf_strrchr_const", "Rf_ucstomb", "Rf_utf8towcs",
             "Rf_wcstoutf8", "Rg_PolledEvents", "Rg_set_col_ptrs",
             "Rf_wait_usec", "Ri18n_iswctype", "Ri18n_wcswidth",
             "Ri18n_wctype", "Ri18n_wcwidth", "Rsockclose",
@@ -700,7 +700,7 @@ nonAPI <- c("chol_", "chol2inv_", "cg_", "ch_", "rg_",
             "Rf_utf8clen", "R_strtod5", "Rf_utf8toucs", "Rf_wtransChar",
             "Rf_mbcsValid", "Rf_utf8Valid",
 ## non-API, declared in Rinternals.h
-            "SET_OBJECT", ## no longer used in an example in R-exts 
+            "SET_OBJECT", ## no longer used in an example in R-exts
             "SET_PRENV", "SET_PRVALUE", "SET_PRCODE",
             "R_PromiseExpr",
             ## "R_tryWrap",

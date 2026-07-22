@@ -2453,8 +2453,10 @@ size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
 Rboolean mbcsValid(const char *str);
 char *mbcsTruncateToValid(char *s);
 Rboolean utf8Valid(const char *str);
-char *Rf_strchr(const char *s, int c);
-char *Rf_strrchr(const char *s, int c);
+char *Rf_strchr(char *s, int c);
+char *Rf_strrchr(char *s, int c);
+const char *Rf_strchr_const(const char *s, int c);
+const char *Rf_strrchr_const(const char *s, int c);
 int Rvsnprintf_mbcs(char *buf, size_t size, const char *format, va_list ap)
     R_PRINTF_FORMAT(3,0);
 

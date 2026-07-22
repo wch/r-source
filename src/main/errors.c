@@ -625,7 +625,7 @@ void PrintWarnings(void)
 		int msgline1;
 		if (strchr(msg, '\n')) {
 		    // this branch alters msg temporarily
-		    char msg1[strlen(msg)];
+		    char msg1[strlen(msg) + 1];
 		    strcpy(msg1, msg);
 		    char *p = strchr(msg1, '\n');
 		    *p = '\0';

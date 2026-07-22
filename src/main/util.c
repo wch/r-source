@@ -1733,33 +1733,66 @@ attribute_hidden SEXP do_validEnc(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
-/* MBCS-aware versions of common comparisons.  Only used for ASCII c */
-char *Rf_strchr(const char *s, int c)
+/* MBCS-aware versions of common comparisons.  Only used for ASCII c,
+   so not needed in UTF-8 locales, but likely in DBCS locales and for
+   7-bit encodings such as ISO-2022-JP.
+ */
+char *Rf_strchr(char *s, int c)
 {
-    char *p = (char *)s;
     mbstate_t mb_st;
     size_t used;
 
-    if(!mbcslocale || utf8locale) return (char *)strchr(s, c);
+    if(!mbcslocale || utf8locale) return strchr(s, c);
     mbs_init(&mb_st);
-    while( (used = Mbrtowc(NULL, p, R_MB_CUR_MAX, &mb_st)) ) {
-	if(*p == c) return p;
-	p += used;
+    while( (used = Mbrtowc(NULL, s, R_MB_CUR_MAX, &mb_st)) ) {
+	if(*s == c) return s;
+	s += used;
     }
     return (char *)NULL;
 }
 
-attribute_hidden char *Rf_strrchr(const char *s, int c)
+// not hidden on Windows
+attribute_hidden char *Rf_strrchr(char *s, int c)
 {
-    char *p = (char *)s, *plast = NULL;
+    char *plast = NULL;
     mbstate_t mb_st;
     size_t used;
 
-    if(!mbcslocale || utf8locale) return (char *)strrchr(s, c);
+    if(!mbcslocale || utf8locale) return strrchr(s, c);
     mbs_init(&mb_st);
-    while( (used = Mbrtowc(NULL, p, R_MB_CUR_MAX, &mb_st)) ) {
-	if(*p == c) plast = p;
-	p += used;
+    while( (used = Mbrtowc(NULL, s, R_MB_CUR_MAX, &mb_st)) ) {
+	if(*s == c) plast = s;
+	s += used;
+    }
+    return plast;
+}
+
+const char *Rf_strchr_const(const char *s, int c)
+{
+    mbstate_t mb_st;
+    size_t used;
+
+    if(!mbcslocale || utf8locale) return strchr(s, c);
+    mbs_init(&mb_st);
+    while( (used = Mbrtowc(NULL, s, R_MB_CUR_MAX, &mb_st)) ) {
+	if(*s == c) return s;
+	s += used;
+    }
+    return (const char *)NULL;
+}
+
+// not hidden on Windows
+attribute_hidden const char *Rf_strrchr_const(const char *s, int c)
+{
+    const char *plast = NULL;
+    mbstate_t mb_st;
+    size_t used;
+
+    if(!mbcslocale || utf8locale) return strrchr(s, c);
+    mbs_init(&mb_st);
+    while( (used = Mbrtowc(NULL, s, R_MB_CUR_MAX, &mb_st)) ) {
+	if(*s == c) plast = s;
+	s += used;
     }
     return plast;
 }
