@@ -157,6 +157,7 @@ static SEXP 	xxenv(SEXP, SEXP, SEXP, YYLTYPE *);
 static SEXP     xxnewdef(SEXP, SEXP, YYLTYPE *);
 static SEXP	xxmath(SEXP, YYLTYPE *, bool);
 static SEXP	xxenterMathMode(void);
+static SEXP	xxenterDefMode(int, int);
 static SEXP	xxblock(SEXP, YYLTYPE *);
 static void	xxSetInVerbEnv(SEXP);
 static SEXP	xxpushMode(int, int, int, int);
@@ -255,7 +256,7 @@ newdefine:	NEWCMD  			{ $$ = xxpushMode(2, 1, 0, 0); }
                 Items END_OF_ARGS		{ xxpopMode($2);
 						  $$ = xxnewdef(xxtag($1, MACRO, &@1),
 								$3, &@$); }
-	|	LET_OR_DEF			{ $$ = xxpushMode(2, 1, 0, 1); }
+		LET_OR_DEF			{  $$ = xxenterDefMode(2, 1); }
 		Items END_OF_ARGS
 						{  xxpopMode($2);
 						  $$ = xxnewdef(xxtag($1, MACRO, &@1),
@@ -366,6 +367,10 @@ static SEXP xxenterMathMode(void) {
     parseState.xxMathMode = 1;
     return ans;
 
+}
+
+static SEXP xxenterDefMode(int args, int equals) {
+    return xxpushMode(args, 1, 0, equals);
 }
 
 static SEXP xxpushMode(int getArgs,
@@ -1072,7 +1077,6 @@ static int mkVerb2(const char *s, int c)
     char *st1 = NULL;
     unsigned int nstext = INITBUFSIZE;
     char *stext = st0, *bp = st0;
-    int depth = 1;
     const char *macro = s;
     
     while (*s) TEXT_PUSH(*s++);
@@ -1082,15 +1086,24 @@ static int mkVerb2(const char *s, int c)
       c = xxgetc();
     }
       
-    do {
+    if (c == '}') {
+	char buffer[PARSE_ERROR_SIZE];
+	snprintf(buffer, sizeof(buffer), "unexpected '}'\n'%s' has no argument", macro);
+	yyerror(buffer);
+	return ERROR;
+    } else if (c != '{') { /* it's a one-character argument */
 	TEXT_PUSH(c);
-	c = xxgetc();
-	if (c == '{') depth++;
-	else if (c == '}') depth--;
-    } while (depth > 0 && c != R_EOF);
-
+    } else {
+	int depth = 1;
+	do {
+	    TEXT_PUSH(c);
+	    c = xxgetc();
+	    if (c == '{') depth++;
+	    else if (c == '}') depth--;
+	} while (depth > 0 && c != R_EOF);
+    }
     if (c == R_EOF) {
-	char buffer[256];
+	char buffer[PARSE_ERROR_SIZE];
 	snprintf(buffer, sizeof(buffer), "unexpected END_OF_INPUT\n'%s' is still open", macro);
 	yyerror(buffer);
 	return ERROR;
