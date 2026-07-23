@@ -856,8 +856,11 @@ function(full = TRUE)
 CRAN_check_problems_only_in_some_checks <- 
 function(flavor = ".",
          status = c("WARNING", "ERROR", "FAILURE"),
+         subset = NULL,
          results = CRAN_check_results())
 {
+    if(!is.null(subset))
+        results <- results[grepl(subset, results$Flavor), ]
     p <- results$Package
     i <- grepl(flavor, results$Flavor)
     j <- results$Status %in% status
