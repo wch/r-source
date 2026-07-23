@@ -3022,16 +3022,16 @@ SEXP R_makeWarningCondition(SEXP call,
     return cond;
 }
 
-SEXP R_makePartialMatchWarningCondition(SEXP call, SEXP argument, SEXP formal)
+SEXP R_makePartialMatchWarningCondition(SEXP call, SEXP input, SEXP target)
 {
     SEXP cond =
 	R_makeWarningCondition(call, "partialMatchWarning", NULL, 2,
 			       _("partial match of '%s' to '%s'"),
-			       CHAR(PRINTNAME(argument)),//EncodeChar??
-			       CHAR(PRINTNAME(formal)));//EncodeChar??
+			       CHAR(PRINTNAME(input)),//EncodeChar??
+			       CHAR(PRINTNAME(target)));//EncodeChar??
     PROTECT(cond);
-    R_setConditionField(cond, 2, "argument", argument);
-    R_setConditionField(cond, 3, "formal", formal);
+    R_setConditionField(cond, 2, "input", input);
+    R_setConditionField(cond, 3, "target", target);
     // ideally we would want the function/object in a field also
     UNPROTECT(1); /* cond */
     return cond;
