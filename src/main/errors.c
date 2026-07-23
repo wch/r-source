@@ -3040,7 +3040,8 @@ SEXP R_makePartialMatchWarningCondition(SEXP call, SEXP input, SEXP target)
 SEXP R_makePartialArgumentMatchWarningCondition(SEXP call, SEXP argument, SEXP formal)
 {
     SEXP cond =
-	R_makeWarningCondition(call, "partialMatchWarning", NULL, 2,
+	R_makeWarningCondition(call, "partialMatchWarning",
+			       "partialArgumentMatchWarning", 2,
 			       _("partial argument match of '%s' to '%s'"),
 			       CHAR(PRINTNAME(argument)),//EncodeChar??
 			       CHAR(PRINTNAME(formal)));//EncodeChar??
