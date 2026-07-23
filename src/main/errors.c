@@ -3027,11 +3027,19 @@ SEXP R_makePartialMatchWarningCondition(SEXP call, SEXP input, SEXP target)
     SEXP cond =
 	R_makeWarningCondition(call, "partialMatchWarning", NULL, 2,
 			       _("partial match of '%s' to '%s'"),
-			       CHAR(PRINTNAME(input)),//EncodeChar??
-			       CHAR(PRINTNAME(target)));//EncodeChar??
+ 			       TYPEOF(input) == SYMSXP ? 
+			       CHAR(PRINTNAME(input))  //EncodeChar??
+			       : translateChar(input),
+			       TYPEOF(target) == SYMSXP ?
+			       CHAR(PRINTNAME(target)) //EncodeChar??
+			       : translateChar(target));
     PROTECT(cond);
-    R_setConditionField(cond, 2, "input", input);
-    R_setConditionField(cond, 3, "target", target);
+    R_setConditionField(cond, 2, "input", 
+			TYPEOF(input) == SYMSXP ? input :
+			ScalarString(input));
+    R_setConditionField(cond, 3, "target",
+			TYPEOF(target) == SYMSXP ? target :
+			ScalarString(target));
     // ideally we would want the function/object in a field also
     UNPROTECT(1); /* cond */
     return cond;

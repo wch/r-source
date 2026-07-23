@@ -1318,20 +1318,11 @@ attribute_hidden SEXP R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	}
 	if (havematch == 1) { /* unique partial match */
 	    if(R_warn_partial_match_dollar) {
-		const char *st = "";
 		SEXP target = TAG(xmatch);
-		switch (TYPEOF(target)) {
-		case SYMSXP:
-		    st = CHAR(PRINTNAME(target));
-		    break;
-		case CHARSXP:
-		    st = translateChar(target);
-		    break;
-		}
 		SEXP cond =
 		    R_makePartialMatchWarningCondition(call,
-						       install(translateChar(input)), 
-						       install(st));
+						       input,
+						       target);
 		PROTECT(cond);
 		R_signalWarningCondition(cond);
 		UNPROTECT(1);
@@ -1381,20 +1372,11 @@ attribute_hidden SEXP R_subset3_dflt(SEXP x, SEXP input, SEXP call)
 	}
 	if(havematch == 1) { /* unique partial match */
 	    if(R_warn_partial_match_dollar) {
-		const char *st = "";
 		SEXP target = STRING_ELT(nlist, imatch);
-		switch (TYPEOF(target)) {
-		case SYMSXP:
-		    st = CHAR(PRINTNAME(target));
-		    break;
-		case CHARSXP:
-		    st = translateChar(target);
-		    break;
-		}
 		SEXP cond =
 		    R_makePartialMatchWarningCondition(call,
-						       install(translateChar(input)), 
-						       install(st));
+						       input,
+						       target);
 		PROTECT(cond);
 		R_signalWarningCondition(cond);
 		UNPROTECT(1);
