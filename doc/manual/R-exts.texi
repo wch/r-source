@@ -17951,7 +17951,7 @@ accessed and set with @code{Rf_getAttrib} and @code{Rf_setAttrib}. Attributes
 can be copied from one object to another with @code{DUPLICATE_ATTRIB}
 and @code{SHALLOW_DUPLICATE_ATTRIB}. The @code{CLEAR_ATTRIB} function
 added in @R{} 4.5.0 can be used to remove all attributes. These
-functions ensure can that certain consistency requirements are
+functions ensure that certain consistency requirements are
 maintained, such as setting the object bit according to whether a class
 attribute is present.
 
