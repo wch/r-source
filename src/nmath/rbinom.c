@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
+ *  Copyright (C) 2000-2026 The R Core Team
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2014 The R Core Team
  *  Copyright (C) 2007 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -33,12 +33,16 @@
  *	Binomial random variate generation.
  *	Communications of the ACM 31, 216-222.
  *	(Algorithm BTPEC).
+
+ * Fixed two signs s/+/-/ in Stirling terms -- PR#19049 (2026-04)
  */
 
+#include <R_ext/Random.h>
 #include "nmath.h"
 #include "dpq.h"
 #include <stdlib.h>
 #include <limits.h>
+
 
 #define repeat for(;;)
 
@@ -53,8 +57,8 @@ double rbinom(double nin, double pp)
     static int nsave = -1;
     static int m;
 
-    double f, f1, f2, u, v, w, w2, x, x1, x2, z, z2;
-    double p, q, np, g, r, al, alv, amaxp, ffm, ynorm;
+    double u, v, x;
+    double p, q, np, g, r;
     int i, ix, k, n;
 
     if (!R_FINITE(nin)) ML_WARN_return_NAN;
@@ -84,15 +88,16 @@ double rbinom(double nin, double pp)
     /* FIXING: Want this thread safe
        -- use as little (thread globals) as possible
     */
-    if (pp != psave || n != nsave) {
+    if (pp != psave || n != nsave) { // (n, p) have changed: recompute "constants" if(np >= 30.)
 	psave = pp;
 	nsave = n;
 	if (np < 30.0) {
 	    /* inverse cdf logic for mean less than 30 */
-	    qn = R_pow_di(q, n);
+	    qn = /* (1-p)^n = q^n, but (1-p) may have underflown to 1 : */
+		p > 0.25 ? R_pow_di(q, n) : exp(n * log1p(-p));
 	    goto L_np_small;
 	} else {
-	    ffm = np + p;
+	    double ffm = np + p;
 	    m = (int) ffm;
 	    fm = m;
 	    npq = np * q;
@@ -101,7 +106,7 @@ double rbinom(double nin, double pp)
 	    xl = xm - p1;
 	    xr = xm + p1;
 	    c = 0.134 + 20.5 / (15.3 + fm);
-	    al = (ffm - xl) / (ffm - xl * p);
+	    double al = (ffm - xl) / (ffm - xl * p);
 	    xll = al * (1.0 + 0.5 * al);
 	    al = (xr - ffm) / (xr * q);
 	    xlr = al * (1.0 + 0.5 * al);
@@ -109,12 +114,13 @@ double rbinom(double nin, double pp)
 	    p3 = p2 + c / xll;
 	    p4 = p3 + c / xlr;
 	}
-    } else if (n == nsave) {
-	if (np < 30.0)
+    } else { // pp == psave  &&  n == nsave
+	if (np < 30.0) // use qn {etc}
 	    goto L_np_small;
     }
 
     /*-------------------------- np = n*p >= 30 : ------------------- */
+    Binomtype rbinom_kind = R_binom_kind(); /* ../main/RNG.c */
     repeat {
       u = unif_rand() * p4;
       v = unif_rand();
@@ -123,31 +129,29 @@ double rbinom(double nin, double pp)
 	  ix = (int)(xm - p1 * v + u);
 	  goto finis;
       }
-      /* parallelogram region */
-      if (u <= p2) {
+      /* else -- parallelogram region */
+      if (u <= p2) { /* p1 < u <= p2 */
 	  x = xl + (u - p1) / c;
 	  v = v * c + 1.0 - fabs(xm - x) / p1;
 	  if (v > 1.0 || v <= 0.)
 	      continue;
 	  ix = (int) x;
-      } else {
-	  if (u > p3) {	/* right tail */
-	      ix = (int)(xr - log(v) / xlr);
-	      if (ix > n)
-		  continue;
-	      v = v * (u - p3) * xlr;
-	  } else {/* left tail */
-	      ix = (int)(xl + log(v) / xll);
-	      if (ix < 0)
-		  continue;
-	      v = v * (u - p2) * xll;
-	  }
+      } else if (u > p3) { /* right tail: p3 < u <= p4 */
+	  ix = (int)(xr - log(v) / xlr);
+	  if (ix > n)
+	      continue;
+	  v = v * (u - p3) * xlr;
+      } else { /* left tail:  p2 < u <= p3 */
+	  ix = (int)(xl + log(v) / xll);
+	  if (ix < 0)
+	      continue;
+	  v = v * (u - p2) * xll;
       }
       /* determine appropriate way to perform accept/reject test */
       k = abs(ix - m);
       if (k <= 20 || k >= npq / 2 - 1) {
 	  /* explicit evaluation */
-	  f = 1.0;
+	  double f = 1.;
 	  if (m < ix) {
 	      for (i = m + 1; i <= ix; i++)
 		  f *= (g / i - r);
@@ -157,42 +161,62 @@ double rbinom(double nin, double pp)
 	  }
 	  if (v <= f)
 	      goto finis;
-      } else {
-	  /* squeezing using upper and lower bounds on log(f(x)) */
-	  amaxp = (k / npq) * ((k * (k / 3. + 0.625) + 0.1666666666666) / npq + 0.5);
-	  ynorm = -k * k / (2.0 * npq);
-	  alv = log(v);
+      }
+      else { /* 21 <=  k  <=  npq/2 - 2 : ==> 21 <= npq/2 - 2  <==> npq >= 46
+	      * squeezing using upper and lower bounds on log(f(x)) */
+
+	  const double one_6th = (rbinom_kind == BTPE) ? 0.16666666666666666 : 0.1666666666666;
+	  double
+	      amaxp = (k / npq) * ((k * (k / 3. + 0.625) + one_6th) / npq + 0.5),
+	      ynorm = -k * k / (2.0 * npq),
+	      alv = log(v);
 	  if (alv < ynorm - amaxp)
 	      goto finis;
 	  if (alv <= ynorm + amaxp) {
 	      /* stirling's formula to machine accuracy */
 	      /* for the final acceptance/rejection test */
-	      x1 = ix + 1;
-	      f1 = fm + 1.0;
-	      z = n + 1 - fm;
-	      w = n - ix + 1.0;
-	      z2 = z * z;
-	      x2 = x1 * x1;
-	      f2 = f1 * f1;
-	      w2 = w * w;
-	      if (alv <= xm * log(f1 / x1) + (n - m + 0.5) * log(z / w) + (ix - m) * log(w * p / (x1 * q)) + (13860.0 - (462.0 - (132.0 - (99.0 - 140.0 / f2) / f2) / f2) / f2) / f1 / 166320.0 + (13860.0 - (462.0 - (132.0 - (99.0 - 140.0 / z2) / z2) / z2) / z2) / z / 166320.0 + (13860.0 - (462.0 - (132.0 - (99.0 - 140.0 / x2) / x2) / x2) / x2) / x1 / 166320.0 + (13860.0 - (462.0 - (132.0 - (99.0 - 140.0 / w2) / w2) / w2) / w2) / w / 166320.)
+	      double x1 = ix + 1,
+		  f1 = fm + 1.,
+		  z = n + 1 - fm,
+		  w = n - ix + 1.,
+		  z2 = z * z,
+		  x2 = x1 * x1,
+		  f2 = f1 * f1,
+		  w2 = w * w;
+
+	      if(rbinom_kind == BTPE) {
+		  if (alv <= xm * log(f1 / x1) + (n - m + 0.5) * log(z / w) + (ix - m) * log(w * p / (x1 * q)) +
+		      ((13860. - (462. - (132. - (99. - 140. / f2) / f2) / f2) / f2) / f1 +
+		       (13860. - (462. - (132. - (99. - 140. / z2) / z2) / z2) / z2) / z )/ 166320. - /* was '+' */
+		      ((13860. - (462. - (132. - (99. - 140. / x2) / x2) / x2) / x2) / x1 +
+		       (13860. - (462. - (132. - (99. - 140. / w2) / w2) / w2) / w2) / w )/ 166320.  )
 		  goto finis;
+	      }
+	      else { // rbinom_kind == BUGGY_BTPE
+		  if (alv <= xm * log(f1 / x1) + (n - m + 0.5) * log(z / w) + (ix - m) * log(w * p / (x1 * q)) +
+		      (13860. - (462. - (132. - (99. - 140. / f2) / f2) / f2) / f2) / f1 / 166320. +
+		      (13860. - (462. - (132. - (99. - 140. / z2) / z2) / z2) / z2) / z  / 166320. + // wrong
+		      (13860. - (462. - (132. - (99. - 140. / x2) / x2) / x2) / x2) / x1 / 166320. + // wrong
+		      (13860. - (462. - (132. - (99. - 140. / w2) / w2) / w2) / w2) / w  / 166320.  )
+		  goto finis;
+	      }
 	  }
       }
-  }
+    } // end repeat {}
 
  L_np_small:
     /*---------------------- np = n*p < 30 : ------------------------- */
 
   repeat {
+     // fn(qn, g, r)
      ix = 0;
-     f = qn;
-     u = unif_rand();
+     double f = qn,
+	 u = unif_rand();
      repeat {
 	 if (u < f)
 	     goto finis;
-	 if (ix > 110)
-	     break;
+	 if (ix > 110) // <-- why '110' ? -- always sufficient?
+	     break; // "reject" : try next u = unif()
 	 u -= f;
 	 ix++;
 	 f *= (g / ix - r);

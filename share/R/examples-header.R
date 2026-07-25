@@ -37,7 +37,7 @@ setHook("grid.newpage", get("grid_plot_hook", pos = "CheckExEnv"))
 assign("cleanEx", evalq(
        function(env = .GlobalEnv) {
 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
-           RNGkind("default", "default", "default")
+           RNGkind("default", "default", "default", "default")
 	   set.seed(1)
    	   options(warn = 1)
 	   .CheckExEnv <- as.environment("CheckExEnv")
@@ -87,3 +87,13 @@ grDevices::pdf(paste(pkgname, "-Ex.pdf", sep=""), encoding = "ISOLatin1")
 
 assign("par.postscript", graphics::par(no.readonly = TRUE), pos = "CheckExEnv")
 options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
+
+if(identical("maechler", unname(Sys.getenv("USER")))) {
+  if(identical("true", unname(Sys.getenv("R_MM_PKG_CHECKING")))) ## when using R-pkg-check
+    withAutoprint({
+        commandArgs()
+        strsplit(Sys.getenv("R_LIBS"), ":", fixed=TRUE)
+        dput(.libPaths())
+        library(lib.loc = .libPaths()[1])
+    })
+}

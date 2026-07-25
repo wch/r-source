@@ -764,7 +764,7 @@ x <- sample(length(p), 100000, prob = p, replace = TRUE)
 stopifnot(sum(x == 1) == 994)
 
 ## check for failure of new walker_Probsample
-RNGversion("3.6.0")
+suppressWarnings(RNGversion("3.6.0"))
 set.seed(12345)
 epsilon <- 1e-10
 p201 <- proportions( rep( c(1, epsilon), c(201, 999-201)))

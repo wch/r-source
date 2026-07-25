@@ -57,3 +57,22 @@ stopifnot( is.finite(rH), 3 <= rH, rH <= 24) # allow slack for change
 stopifnot(identical(rgamma(1, Inf), Inf),
 	  identical(rgamma(1, 0, 0), 0))
 ## gave NaN in R <= 3.3.0
+
+
+### PR#19049 by Kate Hudson
+##  -------- rbinom() used wrong formula in the expensive part of the rejection-acceptance algo
+(RNGk <- RNGkind())
+set.seed(428)
+Bn  <- rbinom(25, size = 320, prob = 1/4)
+set.seed(428, binom.kind = "Buggy BTPE") |> tools::assertWarning(verbose = TRUE)
+BnO <- rbinom(25, size = 320, prob = 1/4) # the old "simulation"
+RNGkind(binom.kind = "default") # reverting
+stopifnot(exprs = {
+    identical(sort(Bn),
+              c(72L, 75L, 75:77, 77L, 77:78, 80:81, 81L, 81:83, 83L, 83:84, 84L,
+                87L, 87L, 93:94, 94L, 96:97))
+    Bn [25] ==  96L
+    BnO[25] == 103L
+    identical(Bn[-25], BnO[-25])
+    identical(RNGk, RNGkind()) # reverting worked
+})

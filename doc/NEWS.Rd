@@ -20,6 +20,10 @@
       ignored, and non-\abbr{UTF-8} \file{DESCRIPTION} files (e.g. those
       declaring \samp{Encoding: latin1}) are no longer re-encoded on
       reading.
+
+      \item Fixing \code{rbinom()}, see \PR{19049} below, to reproduce
+      old results needs \code{RNGkind()} to get a new \code{binom.kind}
+      argument and, e.g. \code{RNGversion("4.6")} keeps previous behaviour.
     }
   }
 
@@ -214,6 +218,11 @@
       function \code{rcond} with signature
       \code{c(x="ANY", norm="missing")} so that \code{rcond(x)}
       does not break after \code{setGeneric("rcond")}.
+
+      \item \code{rbinom()}'s BTPE algorithm is fixed thanks to \I{Kate
+	Hudson}'s findings and report in \PR{19049}.  To ensure
+      reproducibility, \code{RNGkind()} gets new argument
+      \code{binom.kind}.
     }
   }
 }
@@ -231,6 +240,10 @@
       scenario when \code{m + n} is larger than
       \code{.Machine$integer.max}, preventing integer overflow, thanks to
       \I{Jonathan Blood}'s report on R-devel.
+
+      \item Fix long standing (Fortran compiler optimization related) bug
+      in \code{nlminb} with constraints, thanks to \I{Kasper Kristensen}'s
+      \PR{19086} report and patch.
 
       \item Fix for \PR{19100}: \code{seq.int} was not handling
       non-vector \code{along.width} arguments properly. Thanks to
@@ -308,10 +321,6 @@
       \item In \pkg{methods}, \code{as()} now correctly coerces S4
       objects to S4 superclasses extending old-style classes, instead
       of returning only the S3 part.
-
-      \item Fix long standing (Fortran compiler optimization related) bug
-      in \code{nlminb} with constraints, thanks to \I{Kasper Kristensen}'s
-      \PR{19086} report and patch.
     }
   }
 }

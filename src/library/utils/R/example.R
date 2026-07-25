@@ -1,7 +1,7 @@
 #  File src/library/utils/R/example.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -91,12 +91,12 @@ function(topic, package = NULL, lib.loc = NULL,
                     add = TRUE)
 	} else {
 	    oldRNG <- RNGkind()
-	    on.exit(RNGkind(oldRNG[1L], oldRNG[2L], oldRNG[3L]), add = TRUE)
+	    on.exit(RNGkind(oldRNG[1L], oldRNG[2L], oldRNG[3L], oldRNG[4L]), add = TRUE)
 	}
 	## set RNG
 	if(is.logical(setRNG)) { # i.e. == TRUE: use the same as R CMD check
 	    ## see share/R/examples-header.R
-	    RNGkind("default", "default", "default")
+	    RNGkind("default", "default", "default", "default")
 	    set.seed(1)
 	} else eval(setRNG)
     }

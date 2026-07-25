@@ -1,6 +1,6 @@
 % File src/library/stats/man/Binomial.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Binomial}
@@ -86,6 +86,12 @@ rbinom(n, size, prob)
   \code{rbinom} (for \code{size < .Machine$integer.max}) is based on
   \bibcitet{R:Kachitvichyanukul+Schmeiser:1988}.
   For larger values it uses inversion.
+  in \PR{19049} (2026-04) it was reported that there were two wrong signs in the
+  above publication (already found by the GSL implementor in 2003!).  Fixing
+  these makes very rarely a difference for \code{(size, prob)}\eqn{= (n,
+  \pi)} combinations.  You can use \code{\link{RNGkind}(binom.kind =
+  "BUGGY_BTPE")} to re-activate the old (very slightly) buggy behaviour,
+  see also \code{\link{RNGkind}}.
 }
 \references{
   \bibshow{*}

@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-07-08 r90212) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-07-22 r90289) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -16476,12 +16476,17 @@ attr(,"kind")[[2]]
 attr(,"kind")[[3]]
 [1] "Rejection"
 
+attr(,"kind")[[4]]
+[1] "BTPE"
+
 > stopifnot(identical(S2, simulate(mod1, nsim = 200, seed = sseed)))
 > 
 > ## To be sure about the proper RNGkind, e.g., after
 > RNGversion("2.7.0")
-Warning in RNGkind("Mersenne-Twister", "Inversion", "Rounding") :
+Warning in RNGkind("Mersenne-Twister", "Inversion", "Rounding", "Buggy BTPE") :
   non-uniform 'Rounding' sampler used
+Warning in RNGkind("Mersenne-Twister", "Inversion", "Rounding", "Buggy BTPE") :
+  Buggy BTPE algorithm used for rbinom()
 > ## first set the RNG kind, then simulate
 > do.call(RNGkind, attr(sseed, "kind"))
 > identical(S2, simulate(mod1, nsim = 200, seed = sseed))
@@ -19802,7 +19807,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.14 0.184 5.327 0 0 
+Time elapsed:  3.059 0.271 3.435 0 0 
 > grDevices::dev.off()
 null device 
           1 

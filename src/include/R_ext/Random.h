@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2022    The R Core Team
+ *  Copyright (C) 1998-2026    The R Core Team
  *
  *  This header file is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -59,6 +59,15 @@ typedef enum {
     REJECTION
 } Sampletype;
 Sampletype R_sample_kind(void);
+
+/* Different kinds of "Bin(n,p)" generators :*/
+typedef enum {
+    BUGGY_BTPE
+  , BTPE
+  // if you add a new option, update Bin_kind()'s check in RNG.c
+} Binomtype;
+Binomtype R_binom_kind(void);
+
 
 void GetRNGstate(void);
 void PutRNGstate(void);
