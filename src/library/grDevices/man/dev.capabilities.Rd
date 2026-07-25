@@ -1,13 +1,15 @@
 % File src/library/grDevices/man/dev.capabilities.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2008-12 R Core Team
+% Copyright 2008-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dev.capabilities}
 \alias{dev.capabilities}
 \title{Query Capabilities of the Current Graphics Device}
 \description{
-  Query the capabilities of the current graphics device.
+  Query the capabilities of the current graphics device, such as
+  transparency, event handling, rastering, clipping, masking, pattern
+  filling, etc.
 }
 \usage{
 dev.capabilities(what = NULL)
@@ -58,7 +60,7 @@ dev.capabilities(what = NULL)
   \item{clippingPaths}{logical:  Does the device support clipping
     paths?}
   \item{masks}{character:  Does the device support masks?
-    One or more of 
+    One or more of
     \code{c("alpha", "luminance")}
     May also be \code{FALSE}.}
   \item{compositing}{character: Does the device support compositing
@@ -78,6 +80,6 @@ dev.capabilities(what = NULL)
   See \code{\link{getGraphicsEvent}} for details on interactive events.
 }
 \examples{
-dev.capabilities()
+utils:: str( dev.capabilities() )
 }
 \keyword{ dplot }

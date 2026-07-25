@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2025-06-09 r88292) -- "Unsuffered Consequences"
-Copyright (C) 2025 The R Foundation for Statistical Computing
+R Under development (unstable) (2026-07-17 r90265) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -2039,51 +2039,22 @@ gray62  65.11425   0.00000   0.00000
 > 
 > ### ** Examples
 > 
-> dev.capabilities()
-$semiTransparency
-[1] TRUE
-
-$transparentBackground
-[1] "semi"
-
-$rasterImage
-[1] "yes"
-
-$capture
-[1] FALSE
-
-$locator
-[1] FALSE
-
-$events
-character(0)
-
-$patterns
-[1] "LinearGradient" "RadialGradient" "TilingPattern" 
-
-$clippingPaths
-[1] TRUE
-
-$masks
-[1] "alpha"     "luminance"
-
-$compositing
- [1] "multiply"    "screen"      "overlay"     "darken"      "lighten"    
- [6] "color.dodge" "color.burn"  "hard.light"  "soft.light"  "difference" 
-[11] "exclusion"  
-
-$transformations
-[1] TRUE
-
-$paths
-[1] TRUE
-
-$glyphs
-[1] TRUE
-
-$variableFonts
-[1] FALSE
-
+> utils:: str( dev.capabilities() )
+List of 14
+ $ semiTransparency     : logi TRUE
+ $ transparentBackground: chr "semi"
+ $ rasterImage          : chr "yes"
+ $ capture              : logi FALSE
+ $ locator              : logi FALSE
+ $ events               : chr(0) 
+ $ patterns             : chr [1:3] "LinearGradient" "RadialGradient" "TilingPattern"
+ $ clippingPaths        : logi TRUE
+ $ masks                : chr [1:2] "alpha" "luminance"
+ $ compositing          : chr [1:11] "multiply" "screen" "overlay" "darken" ...
+ $ transformations      : logi TRUE
+ $ paths                : logi TRUE
+ $ glyphs               : logi TRUE
+ $ variableFonts        : logi FALSE
 > 
 > 
 > 
