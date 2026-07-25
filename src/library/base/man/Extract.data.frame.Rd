@@ -1,6 +1,6 @@
 % File src/library/base/man/Extract.data.frame.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{Extract.data.frame}
@@ -12,7 +12,8 @@
 \alias{$<-.data.frame}
 \title{Extract or Replace Parts of a Data Frame}
 \description{
-  Extract or replace subsets of data frames.
+  Extract or replace subsets of data frames (to replace subsets is also
+  called \sQuote{to subassign}).
 }
 \usage{
 \method{[}{data.frame}(x, i, j, drop = )
@@ -103,6 +104,12 @@
   will if \code{exact = FALSE} (and with a warning if \code{exact =
   NA}).  If you want to exact matching on row names use
   \code{\link{match}}, as in the examples.
+
+  When the replacement methods are used to subassign into a column vector,
+  the vector elements assigned into must correspond to existing rows in the
+  data frame.  If subassignment is used to add a non-existing column, the
+  column will be added as described above, with unassigned elements set
+  to \code{NA}, see \manual{R-lang}{Subset-assignment} for a rationale.
 }
 \section{Coercion}{
   The story over when replacement values are coerced is a complicated
