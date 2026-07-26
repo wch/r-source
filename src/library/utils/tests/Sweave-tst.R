@@ -125,3 +125,37 @@ if (FALSE)
     psize <- as.numeric(strsplit(psize, " ", fixed = TRUE)[[1L]][c(3, 4)])
     stopifnot(psize/72 == c(4, 5))
 }
+
+### ------------------------------------ 9 ----------------------------------
+## option 'strip.white' admits TRUE, FALSE, "all" (with partial
+## matching), and "true" and "false" (with partial matching) for
+## backward compatibility; defaults to TRUE, historically
+## irrespective of the value in '.defaults'
+stopifnot(exprs = {
+    isTRUE (RweaveLatexOptions(list(strip.white = TRUE,    .defaults = NULL))$strip.white)
+    isFALSE(RweaveLatexOptions(list(strip.white = FALSE,   .defaults = NULL))$strip.white)
+    isTRUE (RweaveLatexOptions(list(strip.white = "true",  .defaults = NULL))$strip.white)
+    isTRUE (RweaveLatexOptions(list(strip.white = "t",     .defaults = NULL))$strip.white)
+    isFALSE(RweaveLatexOptions(list(strip.white = "false", .defaults = NULL))$strip.white)
+    isFALSE(RweaveLatexOptions(list(strip.white = "f",     .defaults = NULL))$strip.white)
+    isTRUE (RweaveLatexOptions(list(                       .defaults = NULL))$strip.white)
+    RweaveLatexOptions(list(strip.white = "all", .defaults = NULL))$strip.white == "all"
+    RweaveLatexOptions(list(strip.white = "a",   .defaults = NULL))$strip.white == "all"
+})
+
+## non-lowercase values of 'strip.white' are accepted, with a warning
+## (many variants of TRUE and FALSE are caught by 'as.logical')
+optTR  <- list(strip.white = "TR",  .defaults = NULL)
+optFA  <- list(strip.white = "FA",  .defaults = NULL)
+optALL <- list(strip.white = "ALL", .defaults = NULL)
+optA   <- list(strip.white = "A",   .defaults = NULL)
+tools::assertWarning(resTR  <- RweaveLatexOptions(optTR))
+tools::assertWarning(resFA  <- RweaveLatexOptions(optFA))
+tools::assertWarning(resALL <- RweaveLatexOptions(optALL))
+tools::assertWarning(resA   <- RweaveLatexOptions(optALL))
+stopifnot(exprs = {
+    isTRUE (resTR$strip.white)
+    isFALSE(resFA$strip.white)
+    resALL$strip.white == "all"
+    resA$strip.white   == "all"
+})

@@ -214,10 +214,11 @@ RweaveLatexOptions(options)
     \item{split:}{logical (\code{FALSE}).  If \code{TRUE}, text output
       is written to separate files for each code chunk.}
 
-    \item{strip.white:}{character string (\code{"true"}).  If
-      \code{"true"}, blank lines at the beginning and end of output are
-      removed.  If \code{"all"}, then all blank lines are removed from
-      the output.  If \code{"false"} then blank lines are retained.
+    \item{strip.white:}{logical (\code{TRUE}) or character string
+      (\code{"true"}). If \code{TRUE} or \code{"true"}, blank lines at
+      the beginning and end of output are removed. If \code{"all"}, then
+      all blank lines are removed from the output. If \code{FALSE} or
+      \code{"false"}, then blank lines are retained.
 
       A \sQuote{blank line} is one that is empty or includes only
       whitespace (spaces and tabs).

@@ -1,5 +1,5 @@
 \documentclass{article}
-\SweaveOpts{engine=R,eps=FALSE,pdf=TRUE,strip.white=true,keep.source=TRUE}
+\SweaveOpts{engine=R,eps=FALSE,pdf=TRUE,strip.white=TRUE,keep.source=TRUE}
 
 \usepackage{Sweave}
 
@@ -9,7 +9,6 @@ options(width=70, useFancyQuotes = FALSE, prompt="R> ", continue="+  ")
 @
 \subsection*{Introduction}
 
-We generate 3D gaussian data,
 We generate 3D Gaussian data,
 <<ex1-U3>>=
 set.seed(1)

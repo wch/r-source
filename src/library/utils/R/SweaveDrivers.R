@@ -66,7 +66,7 @@ RweaveLatexSetup <-
                     grdevice = "", width = 6, height = 6, resolution = 300,
                     term = TRUE, echo = TRUE, keep.source = TRUE,
                     results = "verbatim",
-                    split = FALSE, strip.white = "true", include = TRUE,
+                    split = FALSE, strip.white = TRUE, include = TRUE,
                     pdf.version = grDevices::pdf.options()$version,
                     pdf.encoding = grDevices::pdf.options()$encoding,
                     pdf.compress = grDevices::pdf.options()$compress,
@@ -361,7 +361,7 @@ makeRweaveLatexCodeRunner <- function(evalFunc = RweaveEvalWithOpt)
                 }
 
                 output <- paste(output, collapse = "\n")
-                if (options$strip.white %in% c("all", "true")) {
+                if (!isFALSE(options$strip.white)) {
                     output <- sub("^[[:space:]]*\n", "", output)
                     output <- sub("\n[[:space:]]*$", "", output)
                     if (options$strip.white == "all")
@@ -558,8 +558,8 @@ RweaveLatexFinish <- function(object, error = FALSE)
 }
 
 ## This is the check function for the RweaveLatex driver (only).
-## Options may take their values from objects defined in earlier code
-## chunks.
+## Logical and numerical options may take their values from objects
+## defined in earlier code chunks.
 RweaveLatexOptions <- function(options)
 {
     defaults <- options[[".defaults"]]
@@ -586,7 +586,8 @@ RweaveLatexOptions <- function(options)
     NUMOPTS <- c("width", "height", "resolution")
 
     ## character: largely for safety, but 'label' matters as there
-    ## is no default (and someone uses "F")
+    ## is no default (and someone uses "F"); 'strip.white' also
+    ## accepts logicals, but is treated separately
     CHAROPTS <- c("results", "prefix.string", "engine", "label",
                   "strip.white", "pdf.version", "pdf.encoding", "grdevice")
 
@@ -611,21 +612,29 @@ RweaveLatexOptions <- function(options)
     if (!is.null(options$results)) {
         res <- as.character(options$results)
         if(tolower(res) != res) # documented as lower-case
-            warning("value of 'results' option should be lowercase",
+            warning("value of option 'results' should be lowercase",
                     call. = FALSE)
         options$results <- tolower(res)
     }
     options$results <- match.arg(options$results, c("verbatim", "tex", "hide"))
 
-    if (!is.null(options$strip.white)) {
-        res <- as.character(options$strip.white)
-        if(tolower(res) != res)
-            warning("value of 'strip.white' option should be lowercase",
-                    call. = FALSE)
-        options$strip.white <- tolower(res)
-    }
+    ## 'strip.white' admits TRUE (default), FALSE, "all" (with partial
+    ## matching), and "true" and "false" (with partial matching) for
+    ## backward compatibility
     options$strip.white <-
-        match.arg(options$strip.white, c("true", "false", "all"))
+        if (is.null(options$strip.white))
+            TRUE
+        else if (!is.na(newval <- suppressWarnings(as.logical(options$strip.white))))
+            newval
+        else {
+            res <- as.character(options$strip.white)
+            if(tolower(res) != res)
+                warning("value of option 'strip.white' should be lowercase",
+                        call. = FALSE)
+            res <- match.arg(tolower(res), c("true", "false", "all"))
+            if (res != "all") as.logical(res) else res
+        }
+
     options
 }
 
