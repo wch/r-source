@@ -219,8 +219,8 @@
       \code{c(x="ANY", norm="missing")} so that \code{rcond(x)}
       does not break after \code{setGeneric("rcond")}.
 
-      \item \code{rbinom()}'s BTPE algorithm is fixed thanks to \I{Kate
-	Hudson}'s findings and report in \PR{19049}.  To ensure
+      \item \code{rbinom()}'s \abbr{BTPE} algorithm is fixed thanks to
+      \I{Kate Hudson}'s findings and report in \PR{19049}.  To ensure
       reproducibility, \code{RNGkind()} gets new argument
       \code{binom.kind}.
     }

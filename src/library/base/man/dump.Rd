@@ -109,7 +109,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
   save \R objects.
 
   \href{https://blog.r-project.org/2024/05/17/generalizing-support-for-functional-oop-in-r/}{R
-  Blog on Generalized OOP} motivating \code{.OBJSXP()}-kind \pkg{S7} package objects.
+  Blog on Generalized \abbr{OOP}} motivating \code{.OBJSXP()}-kind \pkg{S7} package objects.
 }
 \examples{
 x <- 1; y <- 1:10

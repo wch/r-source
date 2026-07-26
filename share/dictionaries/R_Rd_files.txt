@@ -229,6 +229,7 @@ pushbacks
 quaternary
 quicksort
 radix
+rastering
 rasters
 rebalance
 recalibration
