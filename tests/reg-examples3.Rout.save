@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-03-06 r89553) -- "Unsuffered Consequences"
+R version 4.6.1 Patched (2026-07-27 r90305) -- "Happy Hop"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -32,7 +32,7 @@ Loading required package: MASS
 + }
 Loading required package: survival
 Call:
-coxph(formula = Surv(rep(1, 248L), case) ~ spontaneous + induced + 
+coxph(formula = Surv(1 + 0 * case, case) ~ spontaneous + induced + 
     strata(stratum), data = infert, method = "exact")
 
   n= 248, number of events= 83 
