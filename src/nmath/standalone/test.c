@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 2000--2025  The R Core Team
+ *  Copyright (C) 2000--2026  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,18 +18,18 @@
  *
  */
 
+
+// Checking rbinom() --  wrt RNGkind(normal.kind = *)
+#include <R_ext/Random.h>
+// and redefine it for here
+static Binomtype my_binom_kind = BTPE;
+Binomtype R_binom_kind (void) { return my_binom_kind; }
+
 #define MATHLIB_STANDALONE 1
 #include <Rmath.h>
 
 #include <stdio.h>
-typedef enum {
-    BUGGY_KINDERMAN_RAMAGE,
-    AHRENS_DIETER,
-    BOX_MULLER,
-    USER_NORM,
-    INVERSION,
-    KINDERMAN_RAMAGE
-} N01type;
+
 
 int
 main(int argc, char** argv)
@@ -43,12 +43,23 @@ main(int argc, char** argv)
     printf("qnorm(0.7) = %.12g\n", qn);
     printf("pnorm(qnorm(..)) = %.12g\n", pnorm(qn, 0., 1., 0, 0));
     // several  RNGkind(normal.kind = *) :
-    N01_kind = AHRENS_DIETER;
-    set_seed(123, 456); printf("one normal %f\n", norm_rand());
-    N01_kind = BOX_MULLER;
-    set_seed(123, 456); printf("normal via Box_M %f\n", norm_rand());
-    N01_kind = INVERSION;
-    set_seed(123, 456); printf("normal via Inv.  %f\n", norm_rand());
-
+    N01_kind = AHRENS_DIETER; set_seed(12, 34); printf("one normal       %9.6f\n", norm_rand());
+    N01_kind = BOX_MULLER;    set_seed(12, 34); printf("normal via Box_M %9.6f\n", norm_rand());
+    N01_kind = INVERSION;     set_seed(12, 34); printf("normal via Inv.  %9.6f\n", norm_rand());
+    //  RNGkind(binom.kind = *) -- rbinom()
+    set_seed(428, 1234);
+#define MAX_N 7
+    int N = MAX_N, i, max_i = 20000;
+    for(i = 1; i <= max_i; i++) {
+	unsigned int si_1, si_2;
+	get_seed(&si_1, &si_2); my_binom_kind = BTPE;       double B1 = rbinom(320., 0.25);
+	set_seed( si_1,  si_2); my_binom_kind = BUGGY_BTPE; double B2 = rbinom(320., 0.25);
+	if(B1 != B2) {
+	    printf("rbinom(320, 0.25) difference at i=%5d, w/ seeds (%u, %u)\n", i, si_1, si_2);
+	    printf(" B{ BTPE } =%4.0f,\n B{Buggy..}=%4.0f\n", B1, B2);
+	    N--; if(!N) break;
+	}
+    }
+    if(N == MAX_N) printf("*** Did _not_ find one difference in %d rbinom() calls!\n", max_i);
     return 0;
 }

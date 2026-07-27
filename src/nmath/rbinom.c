@@ -37,6 +37,7 @@
  * Fixed two signs s/+/-/ in Stirling terms -- PR#19049 (2026-04)
  */
 
+#define CALLED_FROM_rbinom
 #include <R_ext/Random.h>
 #include "nmath.h"
 #include "dpq.h"

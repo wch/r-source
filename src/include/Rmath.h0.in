@@ -1,6 +1,6 @@
 /* -*- C -*-
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2025  The R Core Team
+ *  Copyright (C) 1998-2026  The R Core Team
  *  Copyright (C) 2004       The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -189,7 +189,7 @@ double  Rlog1p(double);
 
 #ifdef MATHLIB_STANDALONE
 # ifndef R_EXT_BOOLEAN_H_
-/* "copy-paste" R_ext/Boolean.h if not already included: 
+/* "copy-paste" R_ext/Boolean.h if not already included:
    This is standalone, so we do not worry about the size
 */
  #define R_EXT_BOOLEAN_H_
@@ -549,7 +549,7 @@ double	qnbeta(double, double, double, double, int, int);
     // Rcpp revdeps may also need this declaration to exist for now
     double rnbeta(double, double, double);
 # endif
-    
+
     /* Non-central F Distribution */
 
 double  dnf(double, double, double, double, int);
@@ -814,10 +814,13 @@ int R_finite(double);
 R_EXTERN double NA_REAL;
 R_EXTERN double R_PosInf;
 R_EXTERN double R_NegInf;
+// really, these are named `enumtype`s in R_ext/Random.h:
 R_EXTERN int N01_kind;
+R_EXTERN int R_Binom_kind;
 #  undef R_EXTERN
 #else
 extern int N01_kind;
+extern int R_Binom_kind;
 # endif
 
 #endif /* MATHLIB_STANDALONE and not PRIVATE_H */
