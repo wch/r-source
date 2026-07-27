@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2016--2025   The R Core Team
+ *  Copyright (C) 2016--2026   The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1432,20 +1432,43 @@ static R_altrep_class_t wrap_list_class;
 #define WRAPPER_WRAPPED(x) R_altrep_data1(x)
 #define WRAPPER_SET_WRAPPED(x, v) R_set_altrep_data1(x, v)
 #define WRAPPER_METADATA(x) R_altrep_data2(x)
-#define WRAPPER_SET_METADATA(x, v) R_set_altrep_data2(x, v)
 
 #define WRAPPER_SORTED(x) INTEGER(WRAPPER_METADATA(x))[0]
 #define WRAPPER_NO_NA(x) INTEGER(WRAPPER_METADATA(x))[1]
 
+/* When a wrapper is created, e.g. using structure(), the data may
+   initially be shared. Once it is modified to be modified or a
+   DATAPTR is requested the data has to be remain unchanged and the
+   wrapper should be the only reference. The metadata is marked to
+   reflecth this. The data then has to be duplicated by the duplicate
+   method to ensure that no new references are created. This ensures
+   that a DATAPTR, once obtained, remains valid while the wrapper
+   object is reachable.
+   
+   For now the sxpinfo.gp field is used via PRSEEN for the lock.
+ */
+#define WRAPPER_DATA_IS_LOCKED(x) PRSEEN(WRAPPER_METADATA(x))
+#define WRAPPER_LOCK_DATA(x) SET_PRSEEN(WRAPPER_METADATA(x), 1)
+#define WRAPPER_UNLOCK_DATA(x) SET_PRSEEN(WRAPPER_METADATA(x), 0)
+
 static R_INLINE SEXP WRAPPER_WRAPPED_RW(SEXP x)
 {
-    /* If the data might be shared and is accessed for possible
-       modification, then it needs to be duplicated now. */
     SEXP data = WRAPPER_WRAPPED(x);
-    if (MAYBE_SHARED(data)) {
-	PROTECT(x);
-	WRAPPER_SET_WRAPPED(x, shallow_duplicate(data));
-	UNPROTECT(1);
+    if (WRAPPER_DATA_IS_LOCKED(x)) {
+	/* Once data is locked it's reference cout should remain at one. */
+	if (MAYBE_SHARED(data))
+	    error("REFCNT on locked WRAPPER data increased to %d",
+		  REFCNT(data));
+    }
+    else {
+	/* If the data might be shared and is accessed for possible
+	   modification, then it needs to be duplicated now. */
+	if (MAYBE_SHARED(data)) {
+	    PROTECT(x);
+	    WRAPPER_SET_WRAPPED(x, shallow_duplicate(data));
+	    UNPROTECT(1);
+	}
+	WRAPPER_LOCK_DATA(x);
     }
 
     /* The meta data also needs to be cleared as it may no longer be
@@ -1492,7 +1515,7 @@ static SEXP wrapper_Duplicate(SEXP x, Rboolean deep)
     /* For a shallow copy, mark as immutable in the NAMED world; with
        reference counting the reference count will be incremented when
        the data is installed in the new wrapper object. */
-    if (deep)
+    if (deep || WRAPPER_DATA_IS_LOCKED(x)) // **** shallow duplicate if only locked?
 	data = duplicate(data);
 #ifndef SWITCH_TO_REFCNT
     else
@@ -1515,7 +1538,8 @@ static Rboolean wrapper_Inspect(SEXP x, int pre, int deep, int pvec,
 {
     Rboolean srt = (Rboolean) WRAPPER_SORTED(x);
     Rboolean no_na = (Rboolean) WRAPPER_NO_NA(x);
-    Rprintf(" wrapper [srt=%d,no_na=%d]\n", srt, no_na);
+    Rboolean lck = (Rboolean) WRAPPER_DATA_IS_LOCKED(x);
+    Rprintf(" wrapper [srt=%d,no_na=%d,lck=%d]\n", srt, no_na, lck);
     inspect_subtree(WRAPPER_WRAPPED(x), pre, deep, pvec);
     return TRUE;
 }
@@ -1950,7 +1974,8 @@ static SEXP make_wrapper(SEXP x, SEXP meta)
 	/* make sure no mutation can happen through another reference */
 	MARK_NOT_MUTABLE(x);
 #endif
-    
+
+    WRAPPER_UNLOCK_DATA(ans);
     return ans;
 }
 
