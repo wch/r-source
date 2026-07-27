@@ -44,12 +44,13 @@ UnifInitFun User_unif_init = NULL; /* some picky compilers */
 
 DL_FUNC  User_norm_fun = NULL; /* also in ../nmath/snorm.c */
 
-#include "nmath2.h"
 static RNGtype RNG_kind = RNG_DEFAULT;
-//extern N01type N01_kind; /* from ../nmath/snorm.c */
-//extern double BM_norm_keep;   /* ../nmath/snorm.c */
+#include "nmath2.h" /* ../nmath/nmath2.h : */
+// extern N01type N01_kind; /* from ../nmath/snorm.c */
+// extern double BM_norm_keep;   /* ../nmath/snorm.c */
+// extern Binomtype Binom_kind ; /* ../nmath/rbinom.c */
 static Sampletype Sample_kind = Sample_DEFAULT;
-static Binomtype  Binom_kind = Binom_DEFAULT; /* --> ../nmath/rbinom.c */
+
 
 
 /* typedef unsigned int Int32; in Random.h */
@@ -340,7 +341,7 @@ static SEXP GetSeedsFromVar(void)
 
 static void Randomize(RNGtype kind)
 {
-/* Only called by  GetRNGstate() when there is no .Random.seed */
+/* called by  GetRNGstate() when there is no .Random.seed, also from FixupSeeds()  */
     RNG_Init(kind, TimeToSeed());
 }
 
@@ -918,5 +919,3 @@ double R_unif_index(double dn)
 }
 
 Sampletype R_sample_kind(void) { return Sample_kind; }
-Binomtype  R_binom_kind (void) { return Binom_kind; }
-

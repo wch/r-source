@@ -18,18 +18,16 @@
  *
  */
 
-
-// Checking rbinom() --  wrt RNGkind(normal.kind = *)
+// Checking rbinom() --  wrt RNGkind(binom.kind = *)
 #include <R_ext/Random.h>
-// and redefine it for here
-static Binomtype my_binom_kind = BTPE;
-Binomtype R_binom_kind (void) { return my_binom_kind; }
 
 #define MATHLIB_STANDALONE 1
 #include <Rmath.h>
 
 #include <stdio.h>
 
+// defined in ../rbinom.c , and used in its (..STANDALONE..) R_binom_kind()
+extern Binomtype ML_Binom_kind;
 
 int
 main(int argc, char** argv)
@@ -52,8 +50,8 @@ main(int argc, char** argv)
     int N = MAX_N, i, max_i = 20000;
     for(i = 1; i <= max_i; i++) {
 	unsigned int si_1, si_2;
-	get_seed(&si_1, &si_2); my_binom_kind = BTPE;       double B1 = rbinom(320., 0.25);
-	set_seed( si_1,  si_2); my_binom_kind = BUGGY_BTPE; double B2 = rbinom(320., 0.25);
+	get_seed(&si_1, &si_2); ML_Binom_kind = BTPE;       double B1 = rbinom(320., 0.25);
+	set_seed( si_1,  si_2); ML_Binom_kind = BUGGY_BTPE; double B2 = rbinom(320., 0.25);
 	if(B1 != B2) {
 	    printf("rbinom(320, 0.25) difference at i=%5d, w/ seeds (%u, %u)\n", i, si_1, si_2);
 	    printf(" B{ BTPE } =%4.0f,\n B{Buggy..}=%4.0f\n", B1, B2);

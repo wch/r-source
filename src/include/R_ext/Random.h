@@ -66,11 +66,7 @@ typedef enum {
   , BTPE
   // if you add a new option, update Bin_kind()'s check in RNG.c
 } Binomtype;
-#ifdef CALLED_FROM_rbinom
-extern
-#endif
-Binomtype R_binom_kind(void);
-
+Binomtype R_binom_kind (void);
 
 void GetRNGstate(void);
 void PutRNGstate(void);

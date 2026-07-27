@@ -37,12 +37,19 @@
  * Fixed two signs s/+/-/ in Stirling terms -- PR#19049 (2026-04)
  */
 
-#define CALLED_FROM_rbinom
 #include <R_ext/Random.h>
 #include "nmath.h"
 #include "dpq.h"
 #include <stdlib.h>
 #include <limits.h>
+
+#ifdef MATHLIB_STANDALONE
+ Binomtype ML_Binom_kind = BTPE; // possibly reset where rbinom() will be used
+# define Binom_kind ML_Binom_kind
+#else
+ Binomtype Binom_kind = BTPE;   // set and used in ../main/RNG.c  */
+#endif
+Binomtype R_binom_kind (void) { return Binom_kind; }
 
 
 #define repeat for(;;)
