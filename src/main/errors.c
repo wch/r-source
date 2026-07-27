@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--2025  The R Core Team.
+ *  Copyright (C) 1995--2026  The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -623,8 +623,11 @@ void PrintWarnings(void)
 	    REprintf(_("In %s :"), dcall);
 	    if (mbcslocale) {
 		int msgline1;
-		char *p = strchr(msg, '\n');
-		if (p) {
+		if (strchr(msg, '\n')) {
+		    // this branch alters msg temporarily
+		    char msg1[strlen(msg) + 1];
+		    strcpy(msg1, msg);
+		    char *p = strchr(msg1, '\n');
 		    *p = '\0';
 		    msgline1 = wd(msg);
 		    *p = '\n';
@@ -632,7 +635,7 @@ void PrintWarnings(void)
 		if (6 + wd(dcall) + msgline1 > LONGWARN) REprintf("\n ");
 	    } else {
 		size_t msgline1 = strlen(msg);
-		char *p = strchr(msg, '\n');
+		const char *p = strchr(msg, '\n');
 		if (p) msgline1 = (int)(p - msg);
 		if (6 + strlen(dcall) + msgline1 > LONGWARN) REprintf("\n ");
 	    }
@@ -651,7 +654,7 @@ void PrintWarnings(void)
 		REprintf(_("In %s :"), dcall);
 		if (mbcslocale) {
 		    int msgline1;
-		    char *p = strchr(msg, '\n');
+		    char *p = (char *) strchr(msg, '\n');
 		    if (p) {
 			*p = '\0';
 			msgline1 = wd(msg);
@@ -662,7 +665,7 @@ void PrintWarnings(void)
 		    }
 		} else {
 		    size_t msgline1 = strlen(msg);
-		    char *p = strchr(msg, '\n');
+		    const char *p = strchr(msg, '\n');
 		    if (p) msgline1 = (int)(p - msg);
 		    if (10 + strlen(dcall) + msgline1 > LONGWARN) {
 			REprintf("\n ");
@@ -835,7 +838,7 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
 		    ERRBUFCAT(tail);
 	    } else {
 		size_t msgline1 = strlen(tmp);
-		char *p = strchr(tmp, '\n');
+		const char *p = strchr(tmp, '\n');
 		if (p) msgline1 = (int)(p - tmp);
 		if (14 + strlen(dcall) + msgline1 > LONGWARN)
 		    ERRBUFCAT(tail);

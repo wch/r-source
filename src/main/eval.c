@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2025	The R Core Team.
+ *  Copyright (C) 1998--2026	The R Core Team.
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -4157,7 +4157,6 @@ int DispatchOrEval(SEXP call, SEXP op, const char *generic, SEXP args,
     }
 	/* try to dispatch on the object */
     if( isObject(x) ) {
-	char *pt;
 	/* Try for formal method. */
 	if(IS_S4_OBJECT(x) && R_has_methods(op)) {
 	    SEXP value, argValue;
@@ -4195,8 +4194,9 @@ int DispatchOrEval(SEXP call, SEXP op, const char *generic, SEXP args,
 		argsevald = 1;
 	    }
 	}
+	const char *pt;
 	if (TYPEOF(CAR(call)) == SYMSXP)
-	    pt = Rf_strrchr(CHAR(PRINTNAME(CAR(call))), '.');
+	    pt = Rf_strrchr_const(CHAR(PRINTNAME(CAR(call))), '.');
 	else
 	    pt = NULL;
 
@@ -9138,9 +9138,9 @@ char *R_CompiledFileName(char *fname, char *buf, size_t bsize)
     char *basename, *ext;
 
     /* find the base name and the extension */
-    basename = Rf_strrchr(fname, FILESEP[0]);
+    basename = Rf_strrchr_const(fname, FILESEP[0]);
     if (basename == NULL) basename = fname;
-    ext = Rf_strrchr(basename, '.');
+    ext = Rf_strrchr_const(basename, '.');
 
     if (ext != NULL && strcmp(ext, R_COMPILED_EXTENSION) == 0) {
 	/* the supplied file name has the compiled file extension, so

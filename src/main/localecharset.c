@@ -586,7 +586,7 @@ const char *locale2charset(const char *locale)
     static char charset[128];
 
     char la_loc[128];
-    char enc[128], *p;
+    char enc[128];
     int i;
     int  cp;
 #ifndef __APPLE__
@@ -607,7 +607,7 @@ const char *locale2charset(const char *locale)
      */
     memset(la_loc, 0, sizeof(la_loc));
     memset(enc, 0, sizeof(enc));
-    p = strrchr(locale, '.');
+    char *p = (char *) strrchr(locale, '.');
     if(p) {
 	strncpy(enc, p+1, sizeof(enc)-1);
         enc[sizeof(enc) - 1] = '\0';
