@@ -654,18 +654,20 @@ void PrintWarnings(void)
 		REprintf(_("In %s :"), dcall);
 		if (mbcslocale) {
 		    int msgline1;
-		    char *p = (char *) strchr(msg, '\n');
-		    if (p) {
+		    if (strchr(msg, '\n')) {
+			// this branch alters msg temporarily
+			char msg1[strlen(msg) + 1];
+			strcpy(msg1, msg);
+			char *p = strchr(msg1, '\n');
 			*p = '\0';
-			msgline1 = wd(msg);
-			*p = '\n';
+			msgline1 = wd(msg1);
 		    } else msgline1 = wd(msg);
 		    if (10 + wd(dcall) + msgline1 > LONGWARN) {
 			REprintf("\n ");
 		    }
 		} else {
 		    size_t msgline1 = strlen(msg);
-		    char *p = (char *) strchr(msg, '\n');
+		    const char *p = strchr(msg, '\n');
 		    if (p) msgline1 = (int)(p - msg);
 		    if (10 + strlen(dcall) + msgline1 > LONGWARN) {
 			REprintf("\n ");
@@ -825,6 +827,7 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
 	    else Rsnprintf_mbcs(errbuf, BUFSIZE,  _("Error in %s : "), dcall);
 	    if (mbcslocale) {
 		int msgline1;
+		// tmp is local array, so OK to temporaily edit in place
 		char *p = strchr(tmp, '\n');
 		if (p) {
 		    *p = '\0';
@@ -838,7 +841,7 @@ verrorcall_dflt(SEXP call, const char *format, va_list ap)
 		    ERRBUFCAT(tail);
 	    } else {
 		size_t msgline1 = strlen(tmp);
-		char *p = strchr(tmp, '\n');
+		const char *p = strchr(tmp, '\n');
 		if (p) msgline1 = (int)(p - tmp);
 		if (14 + strlen(dcall) + msgline1 > LONGWARN)
 		    ERRBUFCAT(tail);
