@@ -71,6 +71,10 @@
 
       \item New low-level function \code{.OBJSXP()} enables deparsing of
       non-S4 \code{"object"} type objects.
+
+      \item \code{use()} gets an argument \code{pos} with a help example
+      showing how to attach a \dQuote{chain} of packages to
+      \code{search()}.
     }
   }
 
