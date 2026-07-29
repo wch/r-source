@@ -1446,17 +1446,23 @@ static R_altrep_class_t wrap_list_class;
    object is reachable.
    
    For now the sxpinfo.gp field is used via PRSEEN for the lock.
+   Allow for cases where shallow_duplicate() returns a value with
+   non-zero REFCNT (e.g. returns a value marked not mutable.
  */
-#define WRAPPER_DATA_IS_LOCKED(x) PRSEEN(WRAPPER_METADATA(x))
-#define WRAPPER_LOCK_DATA(x) SET_PRSEEN(WRAPPER_METADATA(x), 1)
-#define WRAPPER_UNLOCK_DATA(x) SET_PRSEEN(WRAPPER_METADATA(x), 0)
+#define WRAPPER_DATA_LOCK(x) PRSEEN(WRAPPER_METADATA(x))
+#define WRAPPER_SET_DATA_LOCK(x, v) SET_PRSEEN(WRAPPER_METADATA(x), v)
+#define WRAPPER_DATA_IS_LOCKED(x) (WRAPPER_DATA_LOCK(x) > 0)
+#define WRAPPER_LOCK_DATA(x) WRAPPER_SET_DATA_LOCK(x, 1)
+#define WRAPPER_UNLOCK_DATA(x) WRAPPER_SET_DATA_LOCK(x, 0)
 
+ 
 static R_INLINE SEXP WRAPPER_WRAPPED_RW(SEXP x)
 {
     SEXP data = WRAPPER_WRAPPED(x);
     if (WRAPPER_DATA_IS_LOCKED(x)) {
-	/* Once data is locked it's reference cout should remain at one. */
-	if (MAYBE_SHARED(data))
+	/* Once data is locked it's reference count should remain at one. */
+	/* Unless duplicate() doesn't produce a zero reference count object */ 
+	if (MAYBE_SHARED(data) && WRAPPER_DATA_LOCK(x) == 1)
 	    error("REFCNT on locked WRAPPER data increased to %d",
 		  REFCNT(data));
     }
@@ -1467,8 +1473,12 @@ static R_INLINE SEXP WRAPPER_WRAPPED_RW(SEXP x)
 	    PROTECT(x);
 	    WRAPPER_SET_WRAPPED(x, shallow_duplicate(data));
 	    UNPROTECT(1);
+	    if (REFCNT(WRAPPER_WRAPPED(x)) == 1)
+		WRAPPER_LOCK_DATA(x);
+	    else
+		WRAPPER_SET_DATA_LOCK(x, 2);
 	}
-	WRAPPER_LOCK_DATA(x);
+	else WRAPPER_LOCK_DATA(x);
     }
 
     /* The meta data also needs to be cleared as it may no longer be
