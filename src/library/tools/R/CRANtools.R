@@ -884,3 +884,19 @@ function(p)
               i <- i + 1
     }
 }
+
+## Given an email address, what are the collaborators we can find?
+## What we can do is
+## (a) look at all packages which have an author with the address
+## (b) if there is any package with an ORCID iD for the address, then
+##     also all packages which have an author with that ORCID iD.
+.CRAN_authors_collaborating_with <-
+function(e, db = CRAN_authors_db())
+{
+    a1 <- subset(db, tolower(email) == tolower(e))
+    id <- a1$ORCID
+    id <- unique(id[!is.na(id)])
+    a1 <- unique(rbind(a1, subset(db, ORCID == id)))
+    a2 <- subset(db, package %in% a1$package)
+    subset(a2, tolower(email) != tolower(e))
+}
