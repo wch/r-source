@@ -2964,7 +2964,7 @@ in late 2026.
 The default standard for compiling @R{} packages was changed to C++17 in
 @R{} 4.4.0: only a C++17 compiler will be selected as the default C++
 compiler.  Such a compiler is available (but not necessarily installed)
-on all known @R{} platforms.  C++20 will become the
+on all known @R{} platforms.  C++20 became the
 default (`where available') in @R{} 4.6.0: it has been supported on all
 known platforms since at least 2021. Since the default changes with @R{}
 version, packages which only compile with C++17 or C++20 should specify
@@ -5069,9 +5069,11 @@ platforms (although it commonly is on macOS to support the GUI), so
 there need not be a file @file{libR.so} nor @file{libR.dylib}.  Users of
 @command{cmake} or @command{rust} have all too frequently assumed
 otherwise, so do ensure your package is checked under a vanilla @R{} build.
-@xref{Configuration options, , ,
+(@xref{Configuration options, , ,
 R-admin, R Installation and Administration}
-for more information.
+for more information.)  And do ensure that @file{-lR} is looked for in
+the version of @R{} used for installation, and not a system version.
+(On macOS @R{} may be a `foundation' and not a library).
 
 @item
 Make use of the abilities of your compilers to check the
@@ -5091,7 +5093,7 @@ for more information.
 
 Portable C++ code needs to follow all of the 2011, 2014 and 2017
 standards (including not using deprecated/removed features) or to
-specify C+11/14/17/20/23 where available (which is not the case on all
+specify C+11/14/17/20/23/26 where available (which is not the case on all
 @R{} platforms).  Currently C++20 support is patchy across @R{}
 platforms.
 
@@ -5132,9 +5134,9 @@ only cancel built-in defines (not portable) and those defined earlier on
 the command line (@R{} does not use any).)
 
 The GNU option @option{-pipe} used to be widely accepted by
-C/C++/Fortran compilers, but was removed in @w{@command{flang-new} 18}.
-In any case, it should not be used in distributed code as it may lead to
-excessive memory use.
+C/C++/Fortran compilers, but was removed in @I{LLVM} @w{@command{flang}
+18}.  In any case, it should not be used in distributed code as it may
+lead to excessive memory use.
 
 People have used @command{configure} to customize @file{src/Makevars},
 including for specific compilers.  This is unsafe for several reasons.
@@ -5348,7 +5350,7 @@ all linkers allow a space after @option{-L} .
 
 @item
 Care is needed with the use of @code{LinkingTo}.  This puts one or more
-directories on the include search path ahead of system headers but
+directories on the include search path ahead of system headers but used
 (prior to @R{} 3.4.0) after those specified in the @code{CPPFLAGS} macro
 of the @R{} build (which normally includes @code{-I/usr/local/include},
 but most platforms ignore that and include it with the system headers).
@@ -5443,7 +5445,7 @@ be for binary packages).
 When specifying a minimum Java version please use the official version
 names, which are (confusingly)
 @example
-1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+1.1 1.2 1.3 1.4 5.0 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
 @end example
 @noindent
 and as from 2018 a year.month scheme such as @samp{18.9} is also in use.
@@ -5500,10 +5502,9 @@ interface.
 
 @c https://endoflife.date/java
 Java 8 is still in widespread use (and may remain so because of licence
-changes and support on older OSes: @I{OpenJDK} has security support until
-March 2026).  On the other hand, newer platforms may only have support
-for recent versions of Java: for @cputype{arm64} macOS the first
-officially supported version was 17.
+changes and support on older OSes..  On the other hand, newer platforms
+may only have support for fairly recent versions of Java: for @cputype{arm64}
+macOS the first officially supported version was 17.
 
 @item
 A package with a hard-to-satisfy system requirement is by definition not
@@ -5663,12 +5664,11 @@ one are silly: numerical tests should always have a tolerance.  That the
 tests on your platform achieve a particular tolerance says little about
 other platforms.  @R{} is configured by default to make use of long
 doubles where available, but they may not be available or be too slow
-for routine use.  Most @R{} platforms use @cputype{ix86} or
+for routine use.  Many @R{} platforms use @cputype{ix86} or
 @cputype{x86_64} CPUs: these may use extended precision registers on
-some but not all of their @abbr{FPU} instructions.  Thus the achieved precision
-can depend on the compiler version and optimization flags---our
-experience is that 32-bit builds tended to be less precise than 64-bit
-ones.  But not all platforms use those CPUs, and not all@footnote{Not
+some but not all of their @abbr{FPU} instructions.  Thus the achieved
+precision can depend on the compiler version and optimization
+flagss. But not all platforms use those CPUs, and not all@footnote{Not
 doing so is the default on Windows, overridden for the @R{}
 executables.} which use them configure them to allow the use of extended
 precision.  In particular, current ARM CPUs do not have extended
@@ -5908,7 +5908,7 @@ of your compiler diagnostics --- this typically means using flags
 @option{-Wall} and @option{-pedantic} for both C and C++ and additionally
 @option{-Werror=implicit-function-declaration} and
 @option{-Wstrict-prototypes} for C (on some platforms and compiler
-versions) these are part of @option{-Wall} or @option{-pedantic}).
+versions these are part of @option{-Wall} or @option{-pedantic}).
 
 @strong{C++ standards}: From version 4.0.0 @R{} required and defaulted
 to C++11; from @R{} 4.1.0 in defaulted to C++14 and from @R{} 4.3.0 to
@@ -15260,9 +15260,7 @@ This remapping can cause problems@footnote{Known problems have been
 defining @code{LENGTH}, @code{error}, @code{length}, @code{match},
 @code{vector} and @code{warning}: whether these matter depends on the OS
 and toolchain, with many problem reports involving Apple or @I{LLVM}
-@command{clang++}.},
-@c As from @I{LLVM} @command{clang} 13.0.0, the remapping of @code{match}
-@c breaks the subsequent inclusion of @file{omp.h}.
+@command{clang++}. Also @code{length} as part of @code{#pragma omp}.},
 and can be eliminated by defining @code{R_NO_REMAP} (before including
 any @R{} headers) and prepending @samp{Rf_} to @emph{all} the function
 names used from @file{Rinternals.h} and @file{R_ext/Error.h}.  These
