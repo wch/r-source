@@ -153,7 +153,7 @@ tools::bibstyle("JSSnumbered", .init = TRUE,
          	    bibpunct = c("[", "]", ";", "n", "", ","), ...)
          )
 cite("R, boot-package", refs, textual = TRUE)
-refs
+sort(refs)
 
 ## restore the old style
 tools::bibstyle(savestyle, .default = TRUE)

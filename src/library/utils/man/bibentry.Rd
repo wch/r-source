@@ -21,7 +21,7 @@ bibentry(bibtype, textVersion = NULL, header = NULL, footer = NULL,
          key = NULL, \dots, other = list(),
          mheader = NULL, mfooter = NULL)
 
-\method{print}{bibentry}(x, style = "text", .bibstyle,
+\method{print}{bibentry}(x, style = "text", .bibstyle = NULL,
       bibtex = length(x) <= getOption("citation.bibtex.max", 1),
       \dots)
 

@@ -8740,7 +8740,7 @@ inserted before and after the citation if not empty.
 
 A @var{keyspec} is either a simple @var{key} or of the form
 @code{@var{pkg}::@var{key}}.
-In the latter case, @var{key} is looked up in the bibentry
+In the latter case, @var{key} is looked up in the installed bibentry
 data base of package @var{pkg}, made available in the packages sources
 either as @file{inst/REFERENCES.R} in R format (an R code file encoded
 in UTF-8 with calls to @code{bibentry()}, as for the
