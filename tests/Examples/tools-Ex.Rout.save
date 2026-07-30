@@ -1,6 +1,6 @@
 
-R Under development (unstable) (2025-10-22 r88964) -- "Unsuffered Consequences"
-Copyright (C) 2025 The R Foundation for Statistical Computing
+R Under development (unstable) (2026-07-30 r90323) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -96,8 +96,8 @@ $status
 
 $stdout
  [1] ""                                                                                 
- [2] "R Under development (unstable) (2025-10-22 r88964) -- \"Unsuffered Consequences\""
- [3] "Copyright (C) 2025 The R Foundation for Statistical Computing"                    
+ [2] "R Under development (unstable) (2026-07-30 r90323) -- \"Unsuffered Consequences\""
+ [3] "Copyright (C) 2026 The R Foundation for Statistical Computing"                    
  [4] "Platform: x86_64-pc-linux-gnu"                                                    
  [5] ""                                                                                 
  [6] "R is free software and comes with ABSOLUTELY NO WARRANTY."                        
@@ -112,10 +112,10 @@ $stdout
 [15] "'help.start()' for an HTML browser interface to help."                            
 [16] "Type 'q()' to quit R."                                                            
 [17] ""                                                                                 
-[18] "> x <- readRDS(\"/tmp/RtmpjrnqE8/runri2309077fd2bc56\")"                          
+[18] "> x <- readRDS(\"/tmp/RtmpLIZJFJ/runri3eaf2b23d78a0b\")"                          
 [19] "> options(repos = x$repos)"                                                       
 [20] "> y <- tryCatch(list(do.call(x$fun, x$args, quote = TRUE)), error = identity)"    
-[21] "> saveRDS(y, \"/tmp/RtmpjrnqE8/runro230907d287351\")"                             
+[21] "> saveRDS(y, \"/tmp/RtmpLIZJFJ/runro3eaf2b4f995a63\")"                            
 [22] "> "                                                                               
 
 $stderr
@@ -277,7 +277,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x55a759bc34c8>
+<environment: 0x55ac67eec978>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -577,6 +577,94 @@ checkRd: (7) <connection>:1: Only 1 column allowed in this table (row 1 has 2)
 > ##D                       check_args = c("--as-cran", ""),
 > ##D                       reverse = list(repos = getOption("repos")["CRAN"]))
 > ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("codetools")
+> ### * codetools
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: codetools
+> ### Title: Find Calls in R Code
+> ### Aliases: find_calls find_calls_in_package_code
+> 
+> ### ** Examples
+> 
+> ## Where is sapply() still used in the 'tools' code?
+> ## If we cannot easily access the unpacked sources:
+> exprs <- as.list(asNamespace("tools"))
+> predicate <- function(e) {
++     is.call(e) && deparse1(e[[1L]]) == "sapply"
++ }
+> find_calls(exprs, predicate, recursive = TRUE)
+[[1]]
+sapply(list(...), function(s) sum(unlist(gregexpr("\n", s, fixed = TRUE)) > 
+    0))
+
+[[2]]
+sapply(loadfiles, getVerLoad)
+
+[[3]]
+sapply(serfiles, getVerSer)
+
+[[4]]
+sapply(engine$pattern, FUN = sub, "", file)
+
+[[5]]
+sapply(ifile, function(s) attr(s, "srcref"))
+
+[[6]]
+sapply(v[lengths(v) > 0], `[[`, 2)
+
+[[7]]
+sapply(Rd[isAlias], as.character)
+
+[[8]]
+sapply(Rd, getDynamicFlags)
+
+> 
+> ## Where is sapply() still used in the demos for 'base'?
+> ## If we cannot easily access the unpacked sources, we can take
+> ## advantage of the fact that the installed package has the copied
+> ## 'demo' subdirectory at top level too:
+> calls <- find_calls_in_package_code(system.file(package = "base"),
++                                     predicate, recursive = TRUE,
++                                     which = "demo")
+> ## This is a named list of calls found in each demo file:
+> names(calls)
+[1] "base/demo/error.catching.R" "base/demo/is.things.R"     
+[3] "base/demo/recursion.R"      "base/demo/scoping.R"       
+> ## Not all of these have calls to sapply():
+> table(lengths(calls))
+
+0 3 
+2 2 
+> ## The ones that do:
+> Filter(length, calls)
+$`base/demo/error.catching.R`
+$`base/demo/error.catching.R`[[1]]
+sapply(r0[c("messages", "warnings")], is.null)
+
+$`base/demo/error.catching.R`[[2]]
+sapply(rI$messages, inherits, what = "message")
+
+$`base/demo/error.catching.R`[[3]]
+sapply(rI$warnings, inherits, what = "warning")
+
+
+$`base/demo/is.things.R`
+$`base/demo/is.things.R`[[1]]
+sapply(ls.base, function(x) is.function(get(x)))
+
+$`base/demo/is.things.R`[[2]]
+sapply(is.fn, is.method)
+
+$`base/demo/is.things.R`[[3]]
+sapply(is0, length)
+
+
 > 
 > 
 > 
@@ -1247,6 +1335,32 @@ function (x, ...)
 > 
 > 
 > cleanEx()
+> nameEx("systools")
+> ### * systools
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: systools
+> ### Title: Invoke a System Command
+> ### Aliases: system_with_capture
+> 
+> ### ** Examples
+> 
+> ## Re-using the example from ?system:
+> system_with_capture("ls", "fizzlipuzzli")
+$status
+[1] 2
+
+$stdout
+character(0)
+
+$stderr
+[1] "ls: cannot access 'fizzlipuzzli': No such file or directory"
+
+> 
+> 
+> 
+> cleanEx()
 > nameEx("testInstalledPackage")
 > ### * testInstalledPackage
 > 
@@ -1264,6 +1378,42 @@ function (x, ...)
 List of 2
  $ base       : chr [1:14] "base" "tools" "utils" "grDevices" ...
  $ recommended: chr [1:15] "MASS" "lattice" "Matrix" "nlme" ...
+> 
+> 
+> 
+> cleanEx()
+> nameEx("texttools")
+> ### * texttools
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: texttools
+> ### Title: Text tools
+> ### Aliases: gsub_with_transformed_matches
+> 
+> ### ** Examples
+> 
+> ## Suppose we want to change <FOO@BaR> to <FOO@bar>.
+> ## We can achieve this via a pattern using parenthesized subexpressions
+> ## for the name and the domain parts, and invoke tolower() on the
+> ## matches domain parts:
+> (s <- "A <B@C> D <E@F> G")
+[1] "A <B@C> D <E@F> G"
+> gsub_with_transformed_matches("<([^>]+)@([^>]+)>",
++                               "<\\1@%s>",
++                               s,
++                               tolower,
++                               2L)
+[1] "A <B@c> D <E@f> G"
+> ## In case we want to also uppercase the name part:
+> (s <- "A <b@C> D <E@f> G")
+[1] "A <b@C> D <E@f> G"
+> gsub_with_transformed_matches("<([^>]+)@([^>]+)>",
++                               "<%s@%s>",
++                               s,
++                               list(toupper, tolower),
++                               c(1L, 2L))
+[1] "A <B@c> D <E@f> G"
 > 
 > 
 > 
@@ -1607,7 +1757,7 @@ needs Deep Thought
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.338 0.018 0.748 0.284 0.109 
+Time elapsed:  0.977 0.033 1.405 0.284 0.111 
 > grDevices::dev.off()
 null device 
           1 
