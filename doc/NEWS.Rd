@@ -75,6 +75,14 @@
       \item \code{use()} gets an argument \code{pos} with a help example
       showing how to attach a \dQuote{chain} of packages to
       \code{search()}.
+
+      \item New higher-order functions \code{Compose()}, \code{Funcall()}
+      and \code{Partial()}.
+
+      \item New functions \code{find_calls()},
+      \code{find_calls_in_package_code()},
+      \code{gsub_with_transformed_matches()} and
+      \code{system_with_capture()} in package \pkg{tools}.
     }
   }
 
