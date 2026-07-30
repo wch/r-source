@@ -893,6 +893,8 @@ function(p)
 .CRAN_authors_collaborating_with <-
 function(e, db = CRAN_authors_db())
 {
+    ## make codetools happy
+    ORCID <- email <- package <- NULL
     a1 <- subset(db, tolower(email) == tolower(e))
     id <- a1$ORCID
     id <- unique(id[!is.na(id)])
