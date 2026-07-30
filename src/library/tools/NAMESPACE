@@ -74,6 +74,11 @@ export("R")
 
 export("analyze_license")
 
+export("find_calls",
+       "find_calls_in_package_code",
+       "gsub_with_transformed_matches",
+       "system_with_capture")
+
 exportPattern("^SIG.+")
 
 S3method("[", "check_details_changes")

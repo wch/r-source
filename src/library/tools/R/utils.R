@@ -795,8 +795,9 @@ function(x, dir, add = FALSE)
     x
 }
 
-### ** .find_calls
+### ** find_calls
 
+find_calls <-
 .find_calls <-
 function(x, predicate = NULL, recursive = FALSE)
 {
@@ -842,11 +843,15 @@ function(file, encoding = NA, predicate = NULL, recursive = FALSE)
     .find_calls(.parse_code_file(file, encoding), predicate, recursive)
 }
 
-### ** .find_calls_in_package_code
+### ** find_calls_in_package_code
 
+find_calls_in_package_code <-
+function(dir, predicate = NULL, recursive = FALSE, which = "code")
+    .find_calls_in_package_code(dir, predicate, recursive, which)
+    
 .find_calls_in_package_code <-
-function(dir, predicate = NULL, recursive = FALSE, .worker = NULL,
-         which = "code")
+function(dir, predicate = NULL, recursive = FALSE, which = "code",
+         .worker = NULL)
 {
     dir <- file_path_as_absolute(dir)
 
@@ -1574,8 +1579,9 @@ function(pattern, x, m, pos)
            use.names = FALSE)
 }
 
-### ** .gsub_with_transformed_matches
+### ** gsub_with_transformed_matches
 
+gsub_with_transformed_matches <-
 .gsub_with_transformed_matches <-
 function(pattern, replacement, x, trafo, count, ...)
 {
@@ -2570,8 +2576,9 @@ function(x)
     } else list(name = x1)
 }
 
-### ** .system_with_capture
+### ** system_with_capture
 
+system_with_capture <-
 .system_with_capture <-
 function(command, args = character(), env = character(),
          stdin = "", input = NULL, timeout = 0)
