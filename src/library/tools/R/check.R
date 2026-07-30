@@ -1225,7 +1225,7 @@ add_dummies <- function(dir, Log)
 
         if(!is.na(lang <- db["Language"])) {
             s <- unlist(strsplit(lang, ", *"), use.names = FALSE)
-            s <- s[!grepl(re_anchor(.make_RFC4646_langtag_regexp()), s)]
+            s <- s[!grepl(re_anchor(.make_RFC_4646_langtag_regexp()), s)]
             if(length(s)) {
                 if(!any) noteLog(Log)
                 any <- TRUE

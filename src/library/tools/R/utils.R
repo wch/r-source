@@ -885,9 +885,13 @@ function(dir, predicate = NULL, recursive = FALSE, which = "code",
              dir.exists(fp <- file.path(dir, "tests")))
               c(list.files(fp, pattern = "\\.[Rr]$",
                            full.names = TRUE),
-                if(dir.exists(fp <- file.path(fp, "testthat")))
-                    list.files(fp, pattern = "\\.[Rr]$",
-                               full.names = TRUE)),
+                unlist(lapply(Filter(dir.exists,
+                                     file.path(dir, "tests",
+                                               c("testthat", "testit",
+                                                 "unitizer", "RUnit"))),
+                              function(fp)
+                                  list.files(fp, pattern = "\\.[Rr]$",
+                                             full.names = TRUE)))),
           if(("vignettes" %in% which) &&
              dir.exists(file.path(dir, "vignettes")) &&
              dir.exists(fp <- file.path(dir, "inst", "doc")))
@@ -1904,9 +1908,9 @@ function(parent = parent.frame())
     }
 })
 
-### ** .make_RFC4646_langtag_regexp
+### ** .make_RFC_4646_langtag_regexp
 
-.make_RFC4646_langtag_regexp <-
+.make_RFC_4646_langtag_regexp <-
 function()
 {
     ## See <https://www.ietf.org/rfc/rfc4646.html>.
