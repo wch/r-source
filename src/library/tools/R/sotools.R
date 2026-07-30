@@ -785,6 +785,17 @@ check_so_symbols <- if(.Platform$OS.type == "windows") {
         if(have_tables) ind[1:4] <- TRUE
         tab <- so_symbol_names_table[ind, , drop = FALSE]
         attr(tab, "file") <- so
+        ignore_emb <- Sys.getenv("_R_CHECK_SO_SYMBOLS_IGNORE_EMB_",
+                                 "true")
+        ignore_emb <- config_val_to_logical(ignore_emb)
+        if(ignore_emb) {
+            ## make codetools happy
+            apitype <- NULL
+            nonAPI <-
+                setdiff(nonAPI,
+                        c(subset(funAPI(), apitype == "emb")$name,
+                          subset(varAPI(), apitype == "emb")$name))
+        }
         tab2 <- intersect(sub("^_", "", nms), nonAPI)
         if ("removeInputHandler" %in% tab2)
             tab2 <- setdiff(tab2, c("R_InputHandlers", "addInputHandler",
@@ -810,7 +821,17 @@ check_so_symbols <- if(.Platform$OS.type == "windows") {
         tab <- so_symbol_names_table[ind, , drop = FALSE]
         attr(tab, "file") <- so
         tab2 <- sub("^_", "", tab2)
-
+        ignore_emb <- Sys.getenv("_R_CHECK_SO_SYMBOLS_IGNORE_EMB_",
+                                 "true")
+        ignore_emb <- config_val_to_logical(ignore_emb)
+        if(ignore_emb) {
+            ## make codetools happy
+            apitype <- NULL
+            nonAPI <-
+                setdiff(nonAPI,
+                        c(subset(funAPI(), apitype == "emb")$name,
+                          subset(varAPI(), apitype == "emb")$name))
+        }
         tab2a <- intersect(tab2, nonAPI)
         if ("removeInputHandler" %in% tab2a)
             tab2a <- setdiff(tab2a, c("R_InputHandlers", "addInputHandler",
