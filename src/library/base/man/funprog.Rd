@@ -1,6 +1,6 @@
 % File src/library/base/man/funprog.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{funprog}
@@ -10,17 +10,25 @@
 \alias{Negate}
 \alias{Reduce}
 \alias{Position}
+\alias{Compose}
+\alias{Funcall}
+\alias{Partial}
 \title{Common Higher-Order Functions in Functional Programming Languages}
 \description{
   \describe{
-    \item{\code{Reduce}}{uses a binary function to successively combine the
-      elements of a given vector and a possibly given initial value.}
-    \item{\code{Filter}}{extracts the elements of a vector for which a predicate
-      (logical) function gives true.}
+    \item{\code{Reduce}}{uses a binary function to successively combine
+      the elements of a given vector and a possibly given initial value.}
+    \item{\code{Filter}}{extracts the elements of a vector for which a
+      predicate (logical) function gives true.}
     \item{\code{Find} and \code{Position}}{give the first or last such
       element and its position in the vector, respectively.}
-    \item{\code{Map}}{applies a function to the corresponding elements of given vectors.}
+    \item{\code{Map}}{applies a function to the corresponding elements
+      of given vectors.}
     \item{\code{Negate}}{creates the negation of a given function.}
+    \item{\code{Partial}}{performs partial application (sometimes
+      incorrectly referred to as currying).} 
+    \item{\code{Compose}}{performs function composition.}
+    \item{\code{Funcall}}{performs function calls.} 
   }
 }
 \usage{
@@ -30,6 +38,9 @@ Find(f, x, right = FALSE, nomatch = NULL)
 Map(f, ...)
 Negate(f)
 Position(f, x, right = FALSE, nomatch = NA_integer_)
+Compose(...)
+Funcall(f, ...)
+Partial(f, ...)
 }
 \arguments{
   \item{f}{a function of the appropriate arity (binary for
@@ -50,8 +61,14 @@ Position(f, x, right = FALSE, nomatch = NA_integer_)
     one.}
   \item{nomatch}{the value to be returned in the case when
     \dQuote{no match} (no element satisfying the predicate) is found.}
-  \item{\dots}{vectors to which the function is \I{\code{Map()}ped}, and other
-    arguments of \code{\link{mapply}} passed to it, e.g., \code{MoreArgs}.}
+  \item{\dots}{
+    For \code{Map}: vectors to which the function is
+    \I{\code{Map()}ped}, and other arguments of \code{\link{mapply}}
+    passed to it, e.g., \code{MoreArgs}.
+    For \code{Compose}, the functions to be composed.
+    For \code{Partial} and \code{Funcall}, suitable arguments to
+    \code{f}.
+  }
 }
 \details{
   If \code{init} is given, \code{Reduce} logically adds it to the start
@@ -101,6 +118,19 @@ Position(f, x, right = FALSE, nomatch = NA_integer_)
   \code{Negate} corresponds to Common Lisp's \code{complement}.  Given a
   (predicate) function \code{f}, it creates a function which returns the
   logical negation of what \code{f} returns.
+
+  \code{Compose} returns a function which iteratively uses the
+  result of the previous function call as argument to the next one.
+  E.g., if \code{g = Compose(f1, f2, f3}, then \code{g(...)} equals
+  \code{f3(f2(f1(...)))}.  All functions except the first one need to be
+  unary.
+
+  \code{Funcall} correponds to Common Lisp's \code{funcall}.
+
+  \code{Partial} returns a function which fixes (\sQuote{binds}) the
+  given arguments of the given function \code{f} to return a new
+  function taking the remaining arguments of \code{f}.  Informally,
+  \code{Partial(f, args)(rest)} equals \code{f(args, rest)}.
 }
 
 \seealso{
@@ -135,8 +165,6 @@ cfrac(c(2, 1, 2, 1, 1, 4, 1, 1, 6, 1, 1, 8))
 Map(`+`, 1,         1 : 3) ;         1 + 1:3
 Map(`+`, numeric(), 1 : 3) ; numeric() + 1:3
 
-## Iterative function application:
-Funcall <- function(f, ...) f(...)
 ## Compute log(exp(acos(cos(0))))
 Reduce(Funcall, list(log, exp, acos, cos), 0, right = TRUE)
 ## n-fold iterate of a function, functional style:
@@ -152,8 +180,19 @@ asqrt <- function(x, n) Iterate(function(t) (t + x / t) / 2, n)
 asqrt(2, 30)(10) # Starting from a positive value => +sqrt(2)
 asqrt(2, 30)(-1) # Starting from a negative value => -sqrt(2)
 
+## Partial application:
+add1 <- Partial(`+`, 1)
+add1(2)
+
+## Composition:
+## A fancy way of doing x |-> 2 * x + 1:
+g <- Compose(Partial(`*`, 2), add1)
+stopifnot(g(3) == 7)
+## Do log(exp(acos(cos(0)))) from above via composition:
+Compose(cos, acos, exp, log)(0)
+
 ## A list of all functions in the base environment:
-funs <- Filter(is.function, sapply(ls(baseenv()), get, baseenv()))
+funs <- Filter(is.function, mget(ls(baseenv()), baseenv()))
 ## Functions in base with more than 10 arguments:
 names(Filter(function(f) length(formals(f)) > 10, funs))
 ## Number of functions in base with a '...' argument:
@@ -162,6 +201,7 @@ length(Filter(function(f)
               funs))
 \donttest{
 ## Find all objects in the base environment which are *not* functions:
-Filter(Negate(is.function),  sapply(ls(baseenv()), get, baseenv()))
-}}
+Filter(Negate(is.function), mget(ls(baseenv()), baseenv()))
+}
+}
 \keyword{programming}

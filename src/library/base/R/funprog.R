@@ -1,7 +1,7 @@
 #  File src/library/base/R/funprog.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -155,3 +155,27 @@ function(x)
     x
 
 dontCheck <- identity
+
+Compose <-
+function(...)
+{
+    funs <- lapply(list(...), match.fun)
+    if(!length(funs))
+        stop("No functions specified")
+    function(...)
+        Reduce(function(e, f) f(e), funs[-1L], funs[[1L]](...))
+}
+
+Funcall <-
+function(f, ...)
+    f(...)
+
+Partial <-
+function(f, ...)
+{
+    f <- match.fun(f)
+    args <- list(...)
+    function(...) {
+        do.call(f, c(args, list(...)))
+    }
+}
