@@ -5668,7 +5668,7 @@ for routine use.  Many @R{} platforms use @cputype{ix86} or
 @cputype{x86_64} CPUs: these may use extended precision registers on
 some but not all of their @abbr{FPU} instructions.  Thus the achieved
 precision can depend on the compiler version and optimization
-flagss. But not all platforms use those CPUs, and not all@footnote{Not
+flags.  But not all platforms use those CPUs, and not all@footnote{Not
 doing so is the default on Windows, overridden for the @R{}
 executables.} which use them configure them to allow the use of extended
 precision.  In particular, current ARM CPUs do not have extended
