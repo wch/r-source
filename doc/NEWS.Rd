@@ -239,6 +239,10 @@
       \item Fix segfault in \code{postscript()} and \code{pdf()} if set
       \code{papersize} option to very long string (\PR{19108}).  Thanks
       to \I{Kevin Ushey}.
+
+      \item Fix segfault in \code{grid::gpar()} if set \code{fontfamily}
+      longer than 200 characters (\PR{19107}).  Thanks
+      to \I{Kevin Ushey}.
     }
   }
 }

@@ -344,6 +344,18 @@ SEXP resolveGPar(SEXP gp, bool byName)
  *    that parent fill because the viewport is a temporary one for
  *    calculating transformations, so the fill is unimportant).
  */
+
+/*
+ * R_GEcontext.fontfamily is char[201], so anything longer overflows it.
+ * 'graphics' enforces the same limit on par(family=).
+ */
+static void setFontFamily(char *dest, const char *family)
+{
+    if (strlen(family) > 200)
+        error(_("graphical parameter 'fontfamily' has a maximum length of 200 bytes"));
+    strcpy(dest, family);
+}
+
 void gcontextFromgpar(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd) 
 {
     /* 
@@ -395,7 +407,7 @@ void gcontextFromgpar(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd)
     gc->ps = gpFontSize(gp, i) * REAL(gridStateElement(dd, GSS_SCALE))[0];
     gc->lineheight = gpLineHeight(gp, i);
     gc->fontface = gpFont(gp, i);
-    strcpy(gc->fontfamily, gpFontFamily(gp, i));
+    setFontFamily(gc->fontfamily, gpFontFamily(gp, i));
 }
 
 SEXP L_setGPar(SEXP gpars) 
@@ -622,7 +634,7 @@ void initGContext(SEXP gp, const pGEcontext gc, pGEDevDesc dd, int* gpIsScalar,
         REAL(gridStateElement(dd, GSS_SCALE))[0];
     gcCache->lineheight = gc->lineheight = gpLineHeight2(gp, i, gpIsScalar);
     gcCache->fontface = gc->fontface = gpFont2(gp, i, gpIsScalar);
-    strcpy(gc->fontfamily, gpFontFamily2(gp, i, gpIsScalar));
+    setFontFamily(gc->fontfamily, gpFontFamily2(gp, i, gpIsScalar));
     strcpy(gcCache->fontfamily, gc->fontfamily);
 }
 void updateGContext(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd, 
@@ -717,6 +729,6 @@ void updateGContext(SEXP gp, int i, const pGEcontext gc, pGEDevDesc dd,
     if (gpIsScalar[GP_FONTFAMILY]) {
         strcpy(gc->fontfamily, gcCache->fontfamily);
     } else {
-        strcpy(gc->fontfamily, gpFontFamily(gp, i));
+        setFontFamily(gc->fontfamily, gpFontFamily(gp, i));
     }
 }
