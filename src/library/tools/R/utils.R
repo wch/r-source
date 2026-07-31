@@ -362,7 +362,7 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ## the current heuristics for finding error messages in log files
         ## have better coverage with the default '!' error indicator, but
         ## texi2dvi enables the file:line:error style, so:
-        out <- .system_with_capture(texi2dvi, "--help")
+        out <- system_with_capture(texi2dvi, "--help")
         if(length(grep("--no-line-error", out$stdout)))
             opt_extra <- "--no-line-error"
 
@@ -377,10 +377,10 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
         ## FIXME: This workaround should be obsolete with Texinfo 6.3.
 ##      if (grepl(" ", Sys.getenv("TMPDIR")))
 ##          env0 <- paste(env0,  "TMPDIR=/tmp")
-        out <- .system_with_capture(texi2dvi,
-                                    c(opt_pdf, opt_quiet, opt_extra,
-                                      shQuote(file)),
-                                    env = env0)
+        out <- system_with_capture(texi2dvi,
+                                   c(opt_pdf, opt_quiet, opt_extra,
+                                     shQuote(file)),
+                                   env = env0)
 
         log <- paste0(file_path_sans_ext(file), ".log")
 
@@ -397,10 +397,10 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 ##         file_test("-f", log) &&
 ##         any(grepl("(Rerun to get|biblatex.*\\(re\\)run)",
 ##                   readLines(log, warn = FALSE), useBytes = TRUE))) {
-##          out <- .system_with_capture(texi2dvi,
-##                                      c(opt_pdf, opt_quiet, opt_extra,
-##                                        shQuote(file)),
-##                                      env = env0)
+##          out <- system_with_capture(texi2dvi,
+##                                     c(opt_pdf, opt_quiet, opt_extra,
+##                                       shQuote(file)),
+##                                     env = env0)
 ##      }
 
         ## We cannot necessarily rely on out$status, hence let us
@@ -840,7 +840,7 @@ function(x, predicate = NULL, recursive = FALSE)
 .find_calls_in_file <-
 function(file, encoding = NA, predicate = NULL, recursive = FALSE)
 {
-    .find_calls(.parse_code_file(file, encoding), predicate, recursive)
+    find_calls(.parse_code_file(file, encoding), predicate, recursive)
 }
 
 ### ** find_calls_in_package_code
@@ -2242,11 +2242,11 @@ function(dir, ..., libpaths = .libPaths()) {
 .pandoc_md_for_CRAN <-
 function(ifile, ofile)
 {
-    .system_with_capture("pandoc",
-                         paste(shQuote(normalizePath(ifile)),
-                               "-s", "--mathjax",
-                               "--email-obfuscation=references",
-                               "-o", shQuote(ofile)))
+    system_with_capture("pandoc",
+                        paste(shQuote(normalizePath(ifile)),
+                              "-s", "--mathjax",
+                              "--email-obfuscation=references",
+                              "-o", shQuote(ofile)))
 }
 
 ### ** .parLapply_on_strings
@@ -2759,8 +2759,8 @@ function(fun, args = list(), opts = "--no-save --no-restore",
                    opts <- c(paste0("--arch=", arch), opts)
                file.path(R.home("bin"), "R")
            }
-    res <- .system_with_capture(cmd, opts, env, input = wrk,
-                                timeout = timeout)
+    res <- system_with_capture(cmd, opts, env, input = wrk,
+                               timeout = timeout)
     ## FIXME: what should the "value" be in case of error?
     if(file.exists(tfo)) {
         val <- readRDS(tfo)

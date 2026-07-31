@@ -1162,9 +1162,9 @@ function(dir)
             !is.na(match(deparse(e[[1L]])[1L], ff_call_names))
     }
 
-    calls <- .find_calls_in_package_code(dir,
-                                         predicate = predicate,
-                                         recursive = TRUE)
+    calls <- find_calls_in_package_code(dir,
+                                        predicate = predicate,
+                                        recursive = TRUE)
     calls <- unlist(Filter(length, calls))
 
     if(!length(calls)) return(NULL)

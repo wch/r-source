@@ -1587,7 +1587,7 @@ function(descfile, dynamic = FALSE, hooks = list()) {
             }
     }
 
-    trfm <- .gsub_with_transformed_matches
+    trfm <- gsub_with_transformed_matches
 
     ## A variant of htmlify() which optionally adds hyperlinks and does
     ## not HTMLify dashes inside these.

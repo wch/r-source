@@ -2761,7 +2761,7 @@ function(package, dir, lib.loc = NULL)
             gennames <- intersect(gen, generics_in_base)
             predicate <- .predicate_for_calls_with_names(gennames,
                                                          "base")
-            calls <- lapply(code_env, .find_calls, predicate,
+            calls <- lapply(code_env, find_calls, predicate,
                             recursive = TRUE)
             used <- (gen[p3] %in% unique(.call_names(unlist(calls))))
             if(!all(used)) {
@@ -5511,8 +5511,8 @@ function(dir)
     }
 
     x <- Filter(length,
-                .find_calls_in_package_code(dir, predicate,
-                                            recursive = TRUE))
+                find_calls_in_package_code(dir, predicate,
+                                           recursive = TRUE))
 
     ## Because we really only need this for calling from R CMD check, we
     ## produce output here in case we found something.
@@ -5543,7 +5543,7 @@ function(dir)
             any(substr(nms, 1L, 3L) != c("lib", "pkg"))))
             out$bad_arg_names <- nms
         ## Look at all calls (not only at top level).
-        calls <- .find_calls(fcode[[3L]], recursive = TRUE)
+        calls <- find_calls(fcode[[3L]], recursive = TRUE)
         if(!length(calls)) return(out)
         cnames <- .call_names(calls)
         ## And pick the ones which should not be there ...
@@ -5667,7 +5667,7 @@ function(file, encoding = NA)
 {
     exprs <- .parse_code_file(file, encoding)
 
-    ## Use a custom gatherer rather than .find_calls() with a suitable
+    ## Use a custom gatherer rather than find_calls() with a suitable
     ## predicate so that we record the name of the startup function in
     ## which the calls were found.
     calls <- list()
@@ -5709,7 +5709,7 @@ function(dir)
         if("..." %notin% nms && (length(nms) != 1L || !startsWith(nms, "lib")))
             out$bad_arg_names <- nms
         ## Look at all calls (not only at top level).
-        calls <- .find_calls(fcode[[3L]], recursive = TRUE)
+        calls <- find_calls(fcode[[3L]], recursive = TRUE)
         if(!length(calls)) return(out)
         cnames <- .call_names(calls)
         ## And pick the ones which should not be there ...
@@ -5802,7 +5802,7 @@ function(file, encoding = NA)
 {
     exprs <- .parse_code_file(file, encoding)
 
-    ## Use a custom gatherer rather than .find_calls() with a suitable
+    ## Use a custom gatherer rather than find_calls() with a suitable
     ## predicate so that we record the name of the unload function in
     ## which the calls were found.
     calls <- list()
@@ -5852,8 +5852,8 @@ function(dir)
     }
 
     x <- Filter(length,
-                .find_calls_in_package_code(dir, predicate,
-                                            recursive = TRUE))
+                find_calls_in_package_code(dir, predicate,
+                                           recursive = TRUE))
 
     ## Because we really only need this for calling from R CMD check, we
     ## produce output here in case we found something.
@@ -5895,8 +5895,8 @@ function(dir)
     }
 
     calls <- Filter(length,
-                    .find_calls_in_package_code(dir, predicate,
-                                                recursive = TRUE))
+                    find_calls_in_package_code(dir, predicate,
+                                               recursive = TRUE))
     class(calls) <- "check_package_code_assign_to_globalenv"
     calls
 }
@@ -5920,8 +5920,8 @@ function(dir)
      (x == "attach"))
 
     calls <- Filter(length,
-                    .find_calls_in_package_code(dir, predicate,
-                                                recursive = TRUE))
+                    find_calls_in_package_code(dir, predicate,
+                                               recursive = TRUE))
     class(calls) <- "check_package_code_attach"
     calls
 }
@@ -5961,8 +5961,8 @@ function(dir)
     }
 
     calls <- Filter(length,
-                    .find_calls_in_package_code(dir, predicate,
-                                                recursive = TRUE))
+                    find_calls_in_package_code(dir, predicate,
+                                               recursive = TRUE))
     class(calls) <- "check_package_code_data_into_globalenv"
     calls
 }
@@ -6007,7 +6007,7 @@ function(dir) {
         FALSE
     }
     x <- Filter(length,
-                .find_calls_in_package_code(dir, funB, recursive = TRUE))
+                find_calls_in_package_code(dir, funB, recursive = TRUE))
     if(length(x)) {
         s <- sprintf("File %s: %s",
                      sQuote(rep.int(names(x), lengths(x))),
@@ -6035,10 +6035,10 @@ function(dir)
     which <- c("code", "docs", "data", "demo", "tests", "vignettes")
     calls <-
         Filter(length,
-               .find_calls_in_package_code(dir,
-                                           predicate,
-                                           recursive = TRUE,
-                                           which = which))
+               find_calls_in_package_code(dir,
+                                          predicate,
+                                          recursive = TRUE,
+                                          which = which))
     class(calls) <- "check_package_code_structure_specials"
     calls
 }
@@ -7131,7 +7131,7 @@ function(package, dir, lib.loc = NULL, details = TRUE)
     if (length(bad_closures) && details) {
         lapply(bad_closures, function(o) {
             v <- get(o, envir = code_env)
-            calls <- .find_calls(v, recursive = TRUE)
+            calls <- find_calls(v, recursive = TRUE)
             if(!length(calls)) return()
             calls <- calls[.call_names(calls) == ".Internal"]
             calls2 <- lapply(calls, `[`, 2L)
@@ -7865,7 +7865,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                           NA)
             if(any(ind))
                 ccalls <- ccalls[!ind]
-            ccalls <- .find_calls(ccalls, recursive = TRUE)
+            ccalls <- find_calls(ccalls, recursive = TRUE)
             cnames <-
                 intersect(unique(.call_names(ccalls)),
                           c("packageDescription", "library", "require"))
@@ -7909,9 +7909,9 @@ function(dir, localOnly = FALSE, pkgSize = NA)
 
         ## Also capture calls to outdated personList() and citEntry()
         if(!installed) {
-            ccalls <- .find_calls(.parse_code_file(cfile,
-                                                   meta["Encoding"]),
-                                  recursive = TRUE)
+            ccalls <- find_calls(.parse_code_file(cfile,
+                                                  meta["Encoding"]),
+                                 recursive = TRUE)
         }
         cnames <- .call_names(ccalls)
         if(any(cnames %in% c("personList", "as.personList")))

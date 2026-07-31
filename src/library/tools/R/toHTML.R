@@ -337,29 +337,29 @@ function(x, header = TRUE, ...)
         if(a) {
             ## Some people have <http://something> as recommended for
             ## in-text URLs.
-            s <- .gsub_with_transformed_matches("&lt;(URL: *)?((https?|ftp)://[^[:space:]]+)[[:space:]]*&gt;",
-                                                "&lt;<a href=\"%s\">\\2</a>&gt;",
-                                                s,
-                                                urlify,
-                                                2L)
+            s <- gsub_with_transformed_matches("&lt;(URL: *)?((https?|ftp)://[^[:space:]]+)[[:space:]]*&gt;",
+                                               "&lt;<a href=\"%s\">\\2</a>&gt;",
+                                               s,
+                                               urlify,
+                                               2L)
             ## Need to ignore results of the above translation ...
             ## Regexp based on Perl HTML::TextToHTML, note that the dash
             ## must be last ...
-            s <- .gsub_with_transformed_matches("([[:space:]])((https?|ftp)://[[:alnum:]/.:@+\\_~%#?=&;,-]+[[:alnum:]/])",
-                                                "\\1<a href=\"%s\">\\2</a>",
-                                                s,
-                                                urlify,
-                                                2L)
-            s <- .gsub_with_transformed_matches("&lt;(DOI|doi):[[:space:]]*([^<[:space:]]+[[:alnum:]])&gt;",
-                                                "&lt;<a href=\"https://doi.org/%s\">doi:\\2</a>&gt;",
-                                                s,
-                                                urlify,
-                                                2L)
-            s <- .gsub_with_transformed_matches("[^>\"](DOI|doi):[[:space:]]*([^<[:space:]&]+[[:alnum:]])",
-                                                "&lt;<a href=\"https://doi.org/%s\">doi:\\2</a>&gt;",
-                                                s,
-                                                urlify,
-                                                2L)
+            s <- gsub_with_transformed_matches("([[:space:]])((https?|ftp)://[[:alnum:]/.:@+\\_~%#?=&;,-]+[[:alnum:]/])",
+                                               "\\1<a href=\"%s\">\\2</a>",
+                                               s,
+                                               urlify,
+                                               2L)
+            s <- gsub_with_transformed_matches("&lt;(DOI|doi):[[:space:]]*([^<[:space:]]+[[:alnum:]])&gt;",
+                                               "&lt;<a href=\"https://doi.org/%s\">doi:\\2</a>&gt;",
+                                               s,
+                                               urlify,
+                                               2L)
+            s <- gsub_with_transformed_matches("[^>\"](DOI|doi):[[:space:]]*([^<[:space:]&]+[[:alnum:]])",
+                                               "&lt;<a href=\"https://doi.org/%s\">doi:\\2</a>&gt;",
+                                               s,
+                                               urlify,
+                                               2L)
         }
         s
     }

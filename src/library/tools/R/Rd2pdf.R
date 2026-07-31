@@ -26,7 +26,7 @@
 .DESCRIPTION_to_latex <- function(descfile, outfile, version = "Unknown",
                                   writeEncoding = TRUE)
 {
-    mytrfm <- .gsub_with_transformed_matches
+    mytrfm <- gsub_with_transformed_matches
     mygsub <- function(pattern, replacement, x)
         .Internal(gsub(pattern, replacement, x, FALSE, FALSE, FALSE, FALSE))
     ## Unlike tools:::psub and tools:::fsub, don't use useBytes = TRUE:
