@@ -235,6 +235,10 @@
       \I{Kate Hudson}'s findings and report in \PR{19049}.  To ensure
       reproducibility, \code{RNGkind()} gets new argument
       \code{binom.kind}.
+
+      \item Fix segfault in \code{postscript()} and \code{pdf()} if set
+      \code{papersize} option to very long string (\PR{19108}).  Thanks
+      to \I{Kevin Ushey}.
     }
   }
 }

@@ -3466,9 +3466,10 @@ PSDeviceDriver(pDevDesc dd, const char *file, const char *paper,
     pd->paperspecial = FALSE;
     if(!strcmp(pd->papername, "Default") ||
        !strcmp(pd->papername, "default")) {
-	SEXP s = STRING_ELT(GetOption1(install("papersize")), 0);
+	SEXP p = GetOption1(install("papersize"));
+        SEXP s = (isString(p) && LENGTH(p) > 0) ? STRING_ELT(p, 0) : NA_STRING;
 	if(s != NA_STRING && strlen(CHAR(s)) > 0)
-	    strcpy(pd->papername, CHAR(s));
+            safestrcpy(pd->papername, CHAR(s), sizeof(pd->papername));
 	else strcpy(pd->papername, "a4");
     }
     if(!strcmp(pd->papername, "A4") ||
@@ -7152,9 +7153,10 @@ PDFDeviceDriver(pDevDesc dd, const char *file, const char *paper,
 
     if(!strcmp(pd->papername, "Default") ||
        !strcmp(pd->papername, "default")) {
-	SEXP s = STRING_ELT(GetOption1(install("papersize")), 0);
+        SEXP p = GetOption1(install("papersize"));
+        SEXP s = (isString(p) && LENGTH(p) > 0) ? STRING_ELT(p, 0) : NA_STRING;
 	if(s != NA_STRING && strlen(CHAR(s)) > 0)
-	    strcpy(pd->papername, CHAR(s));
+            safestrcpy(pd->papername, CHAR(s), sizeof(pd->papername));
 	else strcpy(pd->papername, "a4");
     }
     if(!strcmp(pd->papername, "A4") ||
