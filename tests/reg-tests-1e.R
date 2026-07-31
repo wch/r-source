@@ -974,6 +974,7 @@ stopifnot(exprs = {
 ## the first produced "(averigü{é} 2023)" in R < 4.4.0
 stopifnot(roundtrip(r"(\item text)"))
 ## space was lost in R < 4.4.0
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## PR#18618: match()  incorrect  with POSIXct || POSIXlt || fractional sec
@@ -1998,6 +1999,7 @@ stopifnot(exprs = {
     tt2N$estimate == c(Inf, -Inf)
 })
 ## The t.test() calls errored all in R <= 4.5.1
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## long standing "FIXME" fixed:
@@ -2618,6 +2620,7 @@ strXs2. <- capture.output(str(xs2))
 stopifnot(identical(strX2 , strX2. ), noListof(strX2. ),
           identical(strXs2, strXs2.), noListof(strXs2.))
 ## strXs?2. did have 'List of' in R <= 4.5.z
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## simple test for R_GetBindingType
@@ -3118,6 +3121,7 @@ local({
     f <- function(...) local({ "..." <- 1; ...names() })
     stopifnot(identical(f(a = 1, b = 2), c("a", "b")))
 })
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## checking isa() consistency, notably S3 vs S4
@@ -3156,10 +3160,11 @@ stopifnot(isErr)
 stopifnot(identical(tryCatch(matrix(1:6, nrow = 2)[3, 1],
                              error = identity)$subscript,
                     1L))
+proc.time() - .pt
 
 
 ## Check that headers, WRE, and non-API variables are in sync
-tools:::checkAPI()
+tools:::checkAPI() |> system.time() ; .pt <- proc.time()
 ## New functionality, takes a few secs
 
 
@@ -3221,6 +3226,7 @@ stopifnot(identical(3:2, dim(dftN)),
 assertErrV( all(quote(symbool)) )
 assertErrV( any(quote(symbool)) )
 ## gave warnings but then TRUE or FALSE in R <= 4.6.0
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## Platform dependently, stl(.) could severely misbehave when compiled by flang 22, -O2
@@ -3285,6 +3291,7 @@ stopifnot(exprs = {
     identical(z["zd_4",], z["zdI",])
 })
 ## the last two rows of z[,] were all NaN in R <= 4.6.0
+proc.time() - .pt; .pt <- proc.time()
 
 
 ### wilcox.test(x, exact=FALSE, correct = k), k >= 1  had been missing '* dnorm(z)'
@@ -3403,6 +3410,7 @@ stopifnot(exprs = {
                         noData(wt.e100dI)))
 })
 ## the p-values were  rep((1:2)/8, 3)  in previous R, the first two indeed back compatible.
+proc.time() - .pt; .pt <- proc.time()
 
 
 ## Bug 19029 - Overly-long dlerror() may corrupt dyn.load() state
