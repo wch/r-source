@@ -272,6 +272,9 @@
       \item Wrapper objects make sure data pointers remain once obtained
       remain valid as long as a wrapper object is reachable. Reported by
       \I{Ivan Krylov}.
+
+      \item Now \code{PROTECT()} in \code{SubassignTypeFix}, fixing
+      \PR{19110} thanks to \I{Kevin Ushey}.
     }
   }
 }

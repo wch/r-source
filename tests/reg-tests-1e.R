@@ -3636,6 +3636,22 @@ summary(fm)
 ##                                                    missing value where TRUE/FALSE needed
 
 
+## PR#19110 -- missing protect in SubassignTypeFix invocation
+setClass("A", representation(x = "numeric"))
+as.vector.A <- function(x, mode = "any") x@x + 1
+##
+f <- function(on) {
+    v <- TRUE ; v[1] <- new("A", x = 99) # S4 dispatch _before_ torture (<==> speed)
+    v <- TRUE
+    gctorture(on)
+    v[1] <- new("A", x = 99)
+    gctorture(FALSE)
+    v
+}
+stopifnot(identical(f(FALSE), 100),
+          identical(f(TRUE),  100)) # was '1' (silently)
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
