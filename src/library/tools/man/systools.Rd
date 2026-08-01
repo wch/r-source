@@ -25,5 +25,6 @@ system_with_capture(command, args = character(), env = character(),
 }
 \examples{
 ## Re-using the example from ?system:
-system_with_capture("ls", "fizzlipuzzli")
+## Both the error message and status code are OS-dependent
+\dontdiff{system_with_capture("ls", "fizzlipuzzli")}
 }

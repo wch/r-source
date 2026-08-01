@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2026-07-30 r90323) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-07-31 r90332) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu
+Platform: aarch64-apple-darwin25.6.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -95,28 +95,28 @@ $status
 [1] 0
 
 $stdout
- [1] ""                                                                                 
- [2] "R Under development (unstable) (2026-07-30 r90323) -- \"Unsuffered Consequences\""
- [3] "Copyright (C) 2026 The R Foundation for Statistical Computing"                    
- [4] "Platform: x86_64-pc-linux-gnu"                                                    
- [5] ""                                                                                 
- [6] "R is free software and comes with ABSOLUTELY NO WARRANTY."                        
- [7] "You are welcome to redistribute it under certain conditions."                     
- [8] "Type 'license()' or 'licence()' for distribution details."                        
- [9] ""                                                                                 
-[10] "R is a collaborative project with many contributors."                             
-[11] "Type 'contributors()' for more information and"                                   
-[12] "'citation()' on how to cite R or R packages in publications."                     
-[13] ""                                                                                 
-[14] "Type 'demo()' for some demos, 'help()' for on-line help, or"                      
-[15] "'help.start()' for an HTML browser interface to help."                            
-[16] "Type 'q()' to quit R."                                                            
-[17] ""                                                                                 
-[18] "> x <- readRDS(\"/tmp/RtmpLIZJFJ/runri3eaf2b23d78a0b\")"                          
-[19] "> options(repos = x$repos)"                                                       
-[20] "> y <- tryCatch(list(do.call(x$fun, x$args, quote = TRUE)), error = identity)"    
-[21] "> saveRDS(y, \"/tmp/RtmpLIZJFJ/runro3eaf2b4f995a63\")"                            
-[22] "> "                                                                               
+ [1] ""                                                                                                  
+ [2] "R Under development (unstable) (2026-07-31 r90332) -- \"Unsuffered Consequences\""                 
+ [3] "Copyright (C) 2026 The R Foundation for Statistical Computing"                                     
+ [4] "Platform: aarch64-apple-darwin25.6.0"                                                              
+ [5] ""                                                                                                  
+ [6] "R is free software and comes with ABSOLUTELY NO WARRANTY."                                         
+ [7] "You are welcome to redistribute it under certain conditions."                                      
+ [8] "Type 'license()' or 'licence()' for distribution details."                                         
+ [9] ""                                                                                                  
+[10] "R is a collaborative project with many contributors."                                              
+[11] "Type 'contributors()' for more information and"                                                    
+[12] "'citation()' on how to cite R or R packages in publications."                                      
+[13] ""                                                                                                  
+[14] "Type 'demo()' for some demos, 'help()' for on-line help, or"                                       
+[15] "'help.start()' for an HTML browser interface to help."                                             
+[16] "Type 'q()' to quit R."                                                                             
+[17] ""                                                                                                  
+[18] "> x <- readRDS(\"/var/folders/pk/n4bndnt1287ctrd_ftthnnnr0000gp/T//Rtmpi9mKZG/runrica9512976e7d\")"
+[19] "> options(repos = x$repos)"                                                                        
+[20] "> y <- tryCatch(list(do.call(x$fun, x$args, quote = TRUE)), error = identity)"                     
+[21] "> saveRDS(y, \"/var/folders/pk/n4bndnt1287ctrd_ftthnnnr0000gp/T//Rtmpi9mKZG/runroca9513d6da14\")"  
+[22] "> "                                                                                                
 
 $stderr
 character(0)
@@ -277,7 +277,7 @@ Error in assertWarning(ff()) :
 > bibstyle("unsorted", sortKeys = function(refs) seq_along(refs),
 +     fmtPrefix = function(paper) paste0("[", paper$.index, "]"),
 +        .init = TRUE)
-<environment: 0x55ac67eec978>
+<environment: 0x94b54ae40>
 > print(refs, .bibstyle = "unsorted")
 [1] R Core Team (2013). _R: A Language and Environment for Statistical
 Computing_. R Foundation for Statistical Computing, Vienna, Austria.
@@ -1347,16 +1347,19 @@ function (x, ...)
 > ### ** Examples
 > 
 > ## Re-using the example from ?system:
+> ## Both the error message and status code are OS-dependent
+> ## IGNORE_RDIFF_BEGIN
 > system_with_capture("ls", "fizzlipuzzli")
 $status
-[1] 2
+[1] 1
 
 $stdout
 character(0)
 
 $stderr
-[1] "ls: cannot access 'fizzlipuzzli': No such file or directory"
+[1] "ls: fizzlipuzzli: No such file or directory"
 
+> ## IGNORE_RDIFF_END
 > 
 > 
 > 
@@ -1601,11 +1604,11 @@ An illustration of lexical scoping.
 > ### ** Examples
 > ## IGNORE_RDIFF_BEGIN
 > R_user_dir("FOO", "cache")
-[1] "/home/hornik/.cache/R/FOO"
+[1] "/Users/ripley/Library/Caches/org.R-project.R/R/FOO"
 > 
 > ## Create one, platform agnostically, must work if <normal> :
 > (Rdb <- R_user_dir("base"))
-[1] "/home/hornik/.local/share/R/base"
+[1] "/Users/ripley/Library/Application Support/org.R-project.R/R/base"
 > if(newD <- !dir.exists(Rdb)) # should work user specifically:
 +     newD <- dir.create(Rdb, recursive=TRUE)
 > dir(Rdb) # typically empty
@@ -1757,7 +1760,7 @@ needs Deep Thought
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.977 0.033 1.405 0.284 0.111 
+Time elapsed:  0.534 0.029 0.899 0.234 0.077 
 > grDevices::dev.off()
 null device 
           1 
