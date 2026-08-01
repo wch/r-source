@@ -275,6 +275,10 @@
 
       \item Now \code{PROTECT()} in \code{SubassignTypeFix}, fixing
       \PR{19110} thanks to \I{Kevin Ushey}.
+
+      \item \code{writeChar()} in a multibyte locale counts characters and
+      bytes consistently and no longer overflows, thanks to \I{Kevin
+	Ushey}'s report and patch in \PR{19112}.
     }
   }
 }

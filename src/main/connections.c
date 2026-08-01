@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2025   The R Core Team.
+ *  Copyright (C) 2000-2026   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -89,7 +89,7 @@
   because of the non-dynamic fd limit.
 
   The current implementation of socket connections uses select(). On
-  POSIX systems, only FD_SETSIZE descriptors are supported and they 
+  POSIX systems, only FD_SETSIZE descriptors are supported and they
   must have numbers between 0 and FD_SETSIZE-1, inclusive. On Linux and macOS,
   FD_SETSIZE is normally 1024. On macOS, the limit could be overcome via
   _DARWIN_UNLIMITED_SELECT (not used by R), but a POSIX solution would
@@ -5353,7 +5353,7 @@ attribute_hidden SEXP do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP object, nchars, sep, ans = R_NilValue, si;
     R_xlen_t i, n, len;
     int useBytes;
-    size_t slen, tlen, lenb, lenc;
+    size_t slen, lenb, lenc;
     char *buf;
     const char *s, *ssep = "";
     Rboolean wasopen = TRUE, usesep, isRaw = FALSE;
@@ -5401,26 +5401,52 @@ attribute_hidden SEXP do_writechar(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(isRaw) return allocVector(RAWSXP, 0); else return R_NilValue;
     }
 
+    /* Compute the number of bytes the writing loop below emits for each
+       element.  This has to agree with that loop: 'nchars' is a count of
+       *characters*, but zero-padding extends the *byte* count, so sizing
+       from max(strlen, nchars) is too small in an MBCS locale. */
+    size_t *nbytes = (size_t *) R_alloc(n, sizeof(size_t));
+    for(i = 0; i < n; i++) {
+	SEXP sii = STRING_ELT(object, i);
+	int tt = INTEGER(nchars)[i];
+	if(tt == NA_INTEGER || tt < 0)
+	    error(_("invalid '%s' argument"), "nchars");
+	if(strlen(CHAR(sii)) < LENGTH(sii))
+	    /* embedded nul: the writing loop copies exactly 'tt' bytes */
+	    nbytes[i] = (size_t) tt;
+	else {
+	    const char *ss = useBytes ? CHAR(sii) : translateChar(sii);
+	    size_t nb = strlen(ss),
+		nc = mbcslocale ? mbstowcs(NULL, ss, 0) : nb;
+	    if((size_t) tt > nc)
+		nb += ((size_t) tt - nc); /* zero-padding, counted in bytes */
+	    else if((size_t) tt < nc) {
+		if(mbcslocale) {
+		    mbstate_t mb_st1;
+		    mbs_init(&mb_st1);
+		    const char *p = ss;
+		    nb = 0;
+		    for(int j = 0; j < tt; j++) {
+			size_t used = Mbrtowc(NULL, p, R_MB_CUR_MAX, &mb_st1);
+			p  += used;
+			nb += used;
+		    }
+		} else
+		    nb = (size_t) tt;
+	    }
+	    nbytes[i] = nb;
+	}
+    }
+
     len = 0;
     if (!isRaw) {
-	for(i = 0; i < n; i++) {
-	    /* This is not currently needed, just future-proofing in case
-	       the logic gets changed */
-	    if(useBytes)
-		tlen = strlen(CHAR(STRING_ELT(object, i)));
-	    else
-		tlen = strlen(translateChar(STRING_ELT(object, i)));
-	    if (tlen > len) len = tlen;
-	    int tt = INTEGER(nchars)[i];
-	    if(tt == NA_INTEGER || tt < 0)
-		error(_("invalid '%s' argument"), "nchars");
-	    if (tt > len) len = tt;
-	}
+	for(i = 0; i < n; i++)
+	    if(nbytes[i] > (size_t) len) len = (R_xlen_t) nbytes[i];
 	buf = (char *) R_alloc(len + slen, sizeof(char));
     } else {
 	double dlen = 0;
 	for (i = 0; i < n; i++)
-	    dlen += (double)(INTEGER(nchars)[i] + slen);
+	    dlen += (double)(nbytes[i] + slen);
 	if (dlen > R_XLEN_T_MAX)
 	    error("too much data for a raw vector on this platform");
 	len = (R_xlen_t) dlen;
