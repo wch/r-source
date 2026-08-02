@@ -451,6 +451,7 @@ stopifnot(exprs = {
     identical(s, readChar(tf., nchars=200))
     length(r) == 299L # was 199
 })
+rm(tf, tf.)
 ## (c) heap corruption, repeated in a loop
 su <- strrep("\U0001F600", 100L)   # 100 chars, 400 bytes:
 stopifnot(nchar(su, "chars") == 100, nchar(su, "bytes") == 400)
@@ -463,5 +464,11 @@ for (k in 1:64) {
 ## Gave Abort trap: 6
 ## or   malloc(): invalid size (unsorted)
 ## or   Fatal glibc error: malloc.c:..(_int_malloc): assertion failed: (unsigned long) (size) >= (unsigned long)(nb)
-## now, after fixing:
-stopifnot(all.equal(file.size(tf), 699))
+stopifnot(exprs = {
+    ## Platform difference __FIXME__ ?
+    all.equal(file.size(tf), if(onWindows) 599 else 699)
+    isOpen(f <- file(tf, "rb"))
+    is.character(sr <- readChar(f, nchars = nchar(su)))
+    identical(sr, strrep("😀", nchar(su)))
+})
+
