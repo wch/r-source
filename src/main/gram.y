@@ -797,7 +797,8 @@ static void attachSrcrefs(SEXP val)
 	wholeFile.last_column = ParseState.xxcolno;
 	wholeFile.first_parsed = 1;
 	wholeFile.last_parsed = ParseState.xxparseno;
-	setAttrib(val, R_WholeSrcrefSymbol, makeSrcref(&wholeFile, PS_SRCFILE));
+	setAttrib(val, R_WholeSrcrefSymbol, PROTECT(makeSrcref(&wholeFile, PS_SRCFILE)));
+	UNPROTECT(1);
     }
     PS_SET_SRCREFS(R_NilValue);
     ParseState.didAttach = true;
@@ -1174,7 +1175,8 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body, YYLTYPE *lloc)
     	    ParseState.didAttach = true;
     	} else
     	    srcref = R_NilValue;
-	PRESERVE_SV(ans = lang4(fname, CDR(formals), body, srcref));
+	PRESERVE_SV(ans = lang4(fname, CDR(formals), body, PROTECT(srcref)));
+	UNPROTECT(1);
     } else
 	PRESERVE_SV(ans = R_NilValue);
     RELEASE_SV(body);
