@@ -789,10 +789,10 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   202,   202,   203,   204,   207,   208,   209,   210,   211,
-     212,   214,   215,   217,   218,   221,   224,   225,   227,   228,
-     229,   230,   231,   232,   234,   238,   242,   246,   246,   250,
-     252,   253,   255,   255,   260,   261,   265,   260
+       0,   201,   201,   202,   203,   206,   207,   208,   209,   210,
+     211,   213,   214,   216,   217,   220,   223,   224,   226,   227,
+     228,   229,   230,   231,   233,   237,   241,   245,   245,   249,
+     251,   252,   254,   254,   259,   259,   264,   264
 };
 #endif
 
@@ -2005,10 +2005,10 @@ yyreduce:
                                                 { yyval = xxpushMode(2, 1, 0, 1); }
     break;
 
-  case 37: /* newdefine: NEWENV @3 Items END_OF_ARGS @4 LET_OR_DEF @5 Items END_OF_ARGS  */
-                                                {  xxpopMode(yyvsp[-7]);
-						  yyval = xxnewdef(PROTECT(xxtag(yyvsp[-8], MACRO, &(yylsp[-8]))),
-							yyvsp[-6], &(yyloc));
+  case 37: /* newdefine: LET_OR_DEF @4 Items END_OF_ARGS  */
+                                                {  xxpopMode(yyvsp[-2]);
+						  yyval = xxnewdef(PROTECT(xxtag(yyvsp[-3], MACRO, &(yylsp[-3]))),
+							yyvsp[-1], &(yyloc));
 						  UNPROTECT(1); }
     break;
 
