@@ -3652,6 +3652,15 @@ stopifnot(identical(f(FALSE), 100),
           identical(f(TRUE),  100)) # was '1' (silently)
 
 
+## PR#19109 -- `dim<-` dimension vector product can overflow
+x <- integer()
+er <- tryCid(dim(x) <- rep(2^16, 4))
+stopifnot(inherits(er, "error"))
+if(englishMsgs)
+    stopifnot(grepl("too many", conditionMessage(er)))
+## gave no error but an x of length zero; x[] <- .. would seg.fault
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

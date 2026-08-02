@@ -279,6 +279,9 @@
       \item \code{writeChar()} in a multibyte locale counts characters and
       bytes consistently and no longer overflows, thanks to \I{Kevin
 	Ushey}'s report and patch in \PR{19112}.
+
+      \item \code{dim(a) <- vec} now checks for too large \code{prod(vec)},
+      thanks to \I{Kevin Ushey}'s report and patch in \PR{19109}.
     }
   }
 }

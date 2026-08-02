@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2025  The R Core Team
+ *  Copyright (C) 1997--2026  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1256,15 +1256,18 @@ SEXP dimgets(SEXP vec, SEXP val)
     int ndim = length(val);
     if (ndim == 0)
 	error(_("length-0 dimension vector is invalid"));
-    R_xlen_t total = 1, len = xlength(vec);
+    double dtotal = 1.;
     for (int i = 0; i < ndim; i++) {
 	/* need this test first as NA_INTEGER is < 0 */
 	if (INTEGER(val)[i] == NA_INTEGER)
 	    error(_("the dims contain missing values"));
 	if (INTEGER(val)[i] < 0)
 	    error(_("the dims contain negative values"));
-	total *= INTEGER(val)[i];
+	dtotal *= INTEGER(val)[i];
+	if (dtotal > R_XLEN_T_MAX)
+	    error(_("too many elements specified"));
     }
+    R_xlen_t total = (R_xlen_t)dtotal, len = xlength(vec);
     if (total != len) {
 	error(_("dims [product %lld] do not match the length of object [%lld]"),
 	      (long long)total, (long long)len);
