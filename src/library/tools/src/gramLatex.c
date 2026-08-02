@@ -792,9 +792,9 @@ static const yytype_int8 yytranslate[] =
 static const yytype_int16 yyrline[] =
 {
        0,   202,   202,   203,   204,   207,   208,   209,   210,   211,
-     212,   214,   215,   217,   218,   219,   220,   221,   223,   224,
-     225,   226,   227,   228,   230,   234,   238,   242,   242,   246,
-     248,   249,   251,   251,   255,   256,   259,   255
+     212,   214,   215,   217,   218,   221,   224,   225,   227,   228,
+     229,   230,   231,   232,   234,   238,   242,   246,   246,   250,
+     252,   253,   255,   255,   260,   261,   265,   260
 };
 #endif
 
@@ -1901,11 +1901,15 @@ yyreduce:
     break;
 
   case 14: /* Item: '['  */
-                                                { yyval = xxtag(mkString("["), TEXT, &(yyloc)); }
+                                                { yyval = xxtag(PROTECT(mkString("[")), TEXT, &(yyloc));
+	  UNPROTECT(1);
+	}
     break;
 
   case 15: /* Item: ']'  */
-                                                { yyval = xxtag(mkString("]"), TEXT, &(yyloc)); }
+                                                { yyval = xxtag(PROTECT(mkString("]")), TEXT, &(yyloc));
+	  UNPROTECT(1);
+	}
     break;
 
   case 16: /* Item: COMMENT  */
@@ -1987,8 +1991,9 @@ yyreduce:
 
   case 33: /* newdefine: NEWCMD @2 Items END_OF_ARGS  */
                                                 { xxpopMode(yyvsp[-2]);
-						  yyval = xxnewdef(xxtag(yyvsp[-3], MACRO, &(yylsp[-3])),
-								yyvsp[-1], &(yyloc)); }
+						  yyval = xxnewdef(PROTECT(xxtag(yyvsp[-3], MACRO, &(yylsp[-3]))),
+								yyvsp[-1], &(yyloc));
+						  UNPROTECT(1); }
     break;
 
   case 34: /* @3: %empty  */
@@ -1997,8 +2002,9 @@ yyreduce:
 
   case 35: /* @4: %empty  */
                                                 { xxpopMode(yyvsp[-2]);
-						  yyval = xxnewdef(xxtag(yyvsp[-3], MACRO, &(yylsp[-3])),
-								yyvsp[-1], &(yyloc)); }
+						  yyval = xxnewdef(PROTECT(xxtag(yyvsp[-3], MACRO, &(yylsp[-3]))),
+								yyvsp[-1], &(yyloc));
+						  UNPROTECT(1); }
     break;
 
   case 36: /* @5: %empty  */
@@ -2007,8 +2013,9 @@ yyreduce:
 
   case 37: /* newdefine: NEWENV @3 Items END_OF_ARGS @4 LET_OR_DEF @5 Items END_OF_ARGS  */
                                                 {  xxpopMode(yyvsp[-7]);
-						  yyval = xxnewdef(xxtag(yyvsp[-8], MACRO, &(yylsp[-8])),
-							yyvsp[-6], &(yyloc)); }
+						  yyval = xxnewdef(PROTECT(xxtag(yyvsp[-8], MACRO, &(yylsp[-8]))),
+							yyvsp[-6], &(yyloc));
+						  UNPROTECT(1); }
     break;
 
 
@@ -2470,7 +2477,7 @@ static void xxSetInVerbEnv(SEXP envname)
     char buffer[256];
     if (VerbatimLookup(CHAR(STRING_ELT(envname, 0)))) {
     	snprintf(buffer, sizeof(buffer), "\\end{%s}", CHAR(STRING_ELT(envname, 0)));
-	PRESERVE_SV(parseState.xxInVerbEnv = ScalarString(mkChar(buffer)));
+	PRESERVE_SV(parseState.xxInVerbEnv = mkString(buffer));
     } else parseState.xxInVerbEnv = NULL;
 }
 
@@ -2485,8 +2492,9 @@ static void xxsavevalue(SEXP items, YYLTYPE *lloc)
 	setAttrib(VECTOR_ELT(parseState.Value, 0), LatexTagSymbol, mkString("TEXT"));
     }	
     if (!isNull(parseState.Value)) {
-    	setAttrib(parseState.Value, R_ClassSymbol, mkString("LaTeX"));
-    	setAttrib(parseState.Value, R_SrcrefSymbol, makeSrcref(lloc, parseState.SrcFile));
+    	setAttrib(parseState.Value, R_ClassSymbol, PROTECT(mkString("LaTeX")));
+    	setAttrib(parseState.Value, R_SrcrefSymbol, PROTECT(makeSrcref(lloc, parseState.SrcFile)));
+    	UNPROTECT(2);
     }
 }
 
@@ -2795,11 +2803,16 @@ static void yyerror(const char *s)
     char ErrorTranslation[PARSE_ERROR_SIZE];
     if (!strncmp(s, yyunexpected, sizeof yyunexpected -1)) {
 	int i, translated = FALSE;
+	/* Make local copy so we can modify it */
+	char s1[PARSE_ERROR_SIZE + 1];
+	strncpy(s1, s, PARSE_ERROR_SIZE);
+	s1[PARSE_ERROR_SIZE] = 0;
+
     	/* Edit the error message */    
-    	expecting = (char *) strstr(s + sizeof yyunexpected -1, yyexpecting);
+	expecting = strstr(s1 + sizeof yyunexpected -1, yyexpecting);
     	if (expecting) *expecting = '\0';
     	for (i = 0; yytname_translations[i]; i += 2) {
-    	    if (!strcmp(s + sizeof yyunexpected - 1, yytname_translations[i])) {
+	    if (!strcmp(s1 + sizeof yyunexpected - 1, yytname_translations[i])) {
     	    	if (yychar < 256 || yychar == END_OF_INPUT)
     	    	    snprintf(ErrorTranslation, sizeof(ErrorTranslation),
 			     _(yyshortunexpected), 
@@ -2819,11 +2832,11 @@ static void yyerror(const char *s)
     	    if (yychar < 256 || yychar == END_OF_INPUT) 
     		snprintf(ErrorTranslation, sizeof(ErrorTranslation), 
 			 _(yyshortunexpected),
-			 s + sizeof yyunexpected - 1);
+			 s1 + sizeof yyunexpected - 1);
     	    else
     	    	snprintf(ErrorTranslation, sizeof(ErrorTranslation),
 			 _(yylongunexpected),
-			 s + sizeof yyunexpected - 1, CHAR(STRING_ELT(yylval, 0)));
+			 s1 + sizeof yyunexpected - 1, CHAR(STRING_ELT(yylval, 0)));
     	}
     	if (expecting) {
  	    translated = FALSE;

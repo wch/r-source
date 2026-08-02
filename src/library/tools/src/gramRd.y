@@ -290,28 +290,38 @@ Markup:		LATEXMACRO  LatexArg 		{ $$ = xxmarkup($1, $2, STATIC, &@$); }
 	|	VERBLATEX   VerbatimArg LatexArg2 { $$ = xxmarkup2($1, $2, $3, 2, STATIC, &@$); }
 	
 UserMacro:	NEWCOMMAND  VerbatimArg1 VerbatimArg { $$ = xxnewcommand($1, $2, $3, &@$); }
-	|	USERMACRO			{ $$ = xxusermacro($1, xxnewlist(NULL), &@$); }
-	|	USERMACRO1  VerbatimArg		{ $$ = xxusermacro($1, xxnewlist($2), &@$); }
+	|	USERMACRO			{ $$ = xxusermacro($1, PROTECT(xxnewlist(NULL)), &@$);
+						  UNPROTECT(1); }
+	|	USERMACRO1  VerbatimArg		{ $$ = xxusermacro($1, PROTECT(xxnewlist($2)), &@$);
+						  UNPROTECT(1); }
 	|	USERMACRO2  VerbatimArg VerbatimArg
-						{ $$ = xxusermacro($1, xxnewlist2($2, $3), &@$); }
+						{ $$ = xxusermacro($1, PROTECT(xxnewlist2($2, $3)), &@$);
+						  UNPROTECT(1); }
 	|	USERMACRO3  VerbatimArg VerbatimArg VerbatimArg
-						{ $$ = xxusermacro($1, xxnewlist3($2, $3, $4), &@$); }
+						{ $$ = xxusermacro($1, PROTECT(xxnewlist3($2, $3, $4)), &@$);
+						  UNPROTECT(1); }
 	|	USERMACRO4  VerbatimArg VerbatimArg VerbatimArg VerbatimArg 
-						{ $$ = xxusermacro($1, xxnewlist4($2, $3, $4, $5), &@$); }
+						{ $$ = xxusermacro($1, PROTECT(xxnewlist4($2, $3, $4, $5)), &@$);
+						  UNPROTECT(1); }
 /* We currently allow at most 4 arguments; the following are placeholders: */
 	|	USERMACRO5  VerbatimArg VerbatimArg VerbatimArg VerbatimArg VerbatimArg
-						{ $$ = xxusermacro($1, xxnewlist5($2, $3, $4, $5, $6), &@$); }
+						{ $$ = xxusermacro($1, PROTECT(xxnewlist5($2, $3, $4, $5, $6)), &@$);
+						  UNPROTECT(1); }
 	|	USERMACRO6  VerbatimArg VerbatimArg VerbatimArg VerbatimArg VerbatimArg 
-			    VerbatimArg		{ $$ = xxusermacro($1, xxnewlist6($2, $3, $4, $5, $6, $7), &@$); }
+			    VerbatimArg		{ $$ = xxusermacro($1, PROTECT(xxnewlist6($2, $3, $4, $5, $6, $7)), &@$);
+						  UNPROTECT(1); }
 	|	USERMACRO7  VerbatimArg VerbatimArg VerbatimArg VerbatimArg VerbatimArg
 			    VerbatimArg VerbatimArg 
-			    			{ $$ = xxusermacro($1, xxnewlist7($2, $3, $4, $5, $6, $7, $8), &@$); }
+			    			{ $$ = xxusermacro($1, PROTECT(xxnewlist7($2, $3, $4, $5, $6, $7, $8)), &@$);
+			    			  UNPROTECT(1); }
 	|	USERMACRO8  VerbatimArg VerbatimArg VerbatimArg VerbatimArg VerbatimArg
 			    VerbatimArg VerbatimArg VerbatimArg
-			    			{ $$ = xxusermacro($1, xxnewlist8($2, $3, $4, $5, $6, $7, $8, $9), &@$); }
+			    			{ $$ = xxusermacro($1, PROTECT(xxnewlist8($2, $3, $4, $5, $6, $7, $8, $9)), &@$);
+			    			  UNPROTECT(1); }
 	|	USERMACRO9  VerbatimArg VerbatimArg VerbatimArg VerbatimArg VerbatimArg
 			    VerbatimArg VerbatimArg VerbatimArg VerbatimArg
-			    			{ $$ = xxusermacro($1, xxnewlist9($2, $3, $4, $5, $6, $7, $8, $9, $10), &@$); }
+			    			{ $$ = xxusermacro($1, PROTECT(xxnewlist9($2, $3, $4, $5, $6, $7, $8, $9, $10)), &@$);
+			    			  UNPROTECT(1); }
 						
 	
 LatexArg:	goLatexLike Arg		 	{ xxpopMode($1); $$ = $2; }
@@ -346,7 +356,8 @@ VerbatimArg1:	goVerbatim1 Arg			{ xxpopMode($1); $$ = $2; }
 VerbatimArg2:   '{' goVerbatim2 ArgItems '}'    { xxpopMode($2); $$ = $3; }
 	|	'{' goVerbatim2 '}'		{ xxpopMode($2); $$ = xxnewlist(NULL); }
 
-IfDefTarget:	goLatexLike TEXT	{ xxpopMode($1); $$ = xxnewlist(xxtag($2, TEXT, &@$)); }
+IfDefTarget:	goLatexLike TEXT	{ xxpopMode($1); $$ = xxnewlist(PROTECT(xxtag($2, TEXT, &@$)));
+						  UNPROTECT(1); }
 
 
 goLatexLike:	/* empty */			{ $$ = xxpushMode(LATEXLIKE, UNKNOWN, FALSE); }
@@ -531,7 +542,8 @@ static SEXP xxmarkup(SEXP header, SEXP body, int flag, YYLTYPE *lloc)
 	setAttrib(ans, R_RdTagSymbol, header);
 	RELEASE_SV(header);
     }
-    setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setAttrib(ans, R_SrcrefSymbol, PROTECT(makeSrcref(lloc, SrcFile)));
+    UNPROTECT(1);
     setDynamicFlag(ans, flag);
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
@@ -590,9 +602,9 @@ static SEXP xxnewcommand(SEXP cmd, SEXP name, SEXP defn, YYLTYPE *lloc)
     PROTECT(ans = ScalarInteger(USERMACRO + maxarg));
     setAttrib(ans, R_RdTagSymbol, cmd);
     setAttrib(ans, R_DefinitionSymbol, thedefn);
-    setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setAttrib(ans, R_SrcrefSymbol, PROTECT(makeSrcref(lloc, SrcFile)));
     defineVar(installTrChar(STRING_ELT(thename, 0)), ans, parseState.xxMacroList);
-    UNPROTECT(2); /* thedefn, ans */
+    UNPROTECT(3); /* thedefn, ans, srcref */
 
     PRESERVE_SV(ans);
     RELEASE_SV(cmd);
@@ -700,7 +712,8 @@ static SEXP xxusermacro(SEXP macro, SEXP args, YYLTYPE *lloc)
     xxungetc(START_MACRO);
     
     setAttrib(ans, R_RdTagSymbol, mkString("USERMACRO"));
-    setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setAttrib(ans, R_SrcrefSymbol, PROTECT(makeSrcref(lloc, SrcFile)));
+    UNPROTECT(1);
     setAttrib(ans, R_MacroSymbol, macro);
     RELEASE_SV(macro);
 #if DEBUGVALS
@@ -723,7 +736,8 @@ static SEXP xxOptionmarkup(SEXP header, SEXP option, SEXP body, int flag, YYLTYP
     flag |= getDynamicFlag(option);
     setAttrib(ans, R_RdOptionSymbol, option);
     RELEASE_SV(option);
-    setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setAttrib(ans, R_SrcrefSymbol, PROTECT(makeSrcref(lloc, SrcFile)));
+    UNPROTECT(1);
     setDynamicFlag(ans, flag);    
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
@@ -757,7 +771,8 @@ static SEXP xxmarkup2(SEXP header, SEXP body1, SEXP body2, int argcount, int fla
     }
     setAttrib(ans, R_RdTagSymbol, header);
     RELEASE_SV(header);
-    setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setAttrib(ans, R_SrcrefSymbol, PROTECT(makeSrcref(lloc, SrcFile)));
+    UNPROTECT(1);
     setDynamicFlag(ans, flag);
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
@@ -798,7 +813,8 @@ static SEXP xxmarkup3(SEXP header, SEXP body1, SEXP body2, SEXP body3, int flag,
     }    
     setAttrib(ans, R_RdTagSymbol, header);
     RELEASE_SV(header);
-    setAttrib(ans, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setAttrib(ans, R_SrcrefSymbol, PROTECT(makeSrcref(lloc, SrcFile)));
+    UNPROTECT(1);
     setDynamicFlag(ans, flag);
 #if DEBUGVALS
     Rprintf(" result: %p\n", ans);    
@@ -812,7 +828,8 @@ static void xxsavevalue(SEXP Rd, YYLTYPE *lloc)
     PRESERVE_SV(parseState.Value = PairToVectorList(CDR(Rd)));
     if (!isNull(parseState.Value)) {
     	setAttrib(parseState.Value, R_ClassSymbol, mkString("Rd"));
-    	setAttrib(parseState.Value, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    	setAttrib(parseState.Value, R_SrcrefSymbol, PROTECT(makeSrcref(lloc, SrcFile)));
+    	UNPROTECT(1);
     	setDynamicFlag(parseState.Value, flag);
     }
     RELEASE_SV(Rd);
@@ -821,7 +838,8 @@ static void xxsavevalue(SEXP Rd, YYLTYPE *lloc)
 static SEXP xxtag(SEXP item, int type, YYLTYPE *lloc)
 {
     setAttrib(item, R_RdTagSymbol, mkString(yytname[YYTRANSLATE(type)]));
-    setAttrib(item, R_SrcrefSymbol, makeSrcref(lloc, SrcFile));
+    setAttrib(item, R_SrcrefSymbol, PROTECT(makeSrcref(lloc, SrcFile)));
+    UNPROTECT(1);
     return item;
 }
 
@@ -1351,11 +1369,16 @@ static void yyerror(const char *s)
     
     if (!strncmp(s, yyunexpected, sizeof yyunexpected -1)) {
 	int i, translated = FALSE;
+	/* Make local copy so we can modify it */
+	char s1[PARSE_ERROR_SIZE + 1];
+	strncpy(s1, s, PARSE_ERROR_SIZE);
+	s1[PARSE_ERROR_SIZE] = 0;
+
     	/* Edit the error message */    
-    	expecting = (char *)strstr(s + sizeof yyunexpected -1, yyexpecting);
+	expecting = strstr(s1 + sizeof yyunexpected -1, yyexpecting);
     	if (expecting) *expecting = '\0';
     	for (i = 0; yytname_translations[i]; i += 2) {
-    	    if (!strcmp(s + sizeof yyunexpected - 1, yytname_translations[i])) {
+	    if (!strcmp(s1 + sizeof yyunexpected - 1, yytname_translations[i])) {
     	    	if (yychar < 256)
     	    	    snprintf(ParseErrorMsg, PARSE_ERROR_SIZE,
 			     _(yyshortunexpected), 
@@ -1374,10 +1397,10 @@ static void yyerror(const char *s)
     	if (!translated) {
     	    if (yychar < 256) 
     		snprintf(ParseErrorMsg, PARSE_ERROR_SIZE, _(yyshortunexpected),
-			s + sizeof yyunexpected - 1);
+			 s1 + sizeof yyunexpected - 1);
     	    else
     	    	snprintf(ParseErrorMsg, PARSE_ERROR_SIZE, _(yylongunexpected),
-			 s + sizeof yyunexpected - 1, CHAR(STRING_ELT(yylval, 0)));
+			 s1 + sizeof yyunexpected - 1, CHAR(STRING_ELT(yylval, 0)));
 	}
     	if (expecting) {
  	    translated = FALSE;
@@ -2106,7 +2129,7 @@ SEXP deparseRd(SEXP e, SEXP state)
     }
     *out = '\0';
     PROTECT(result = allocVector(VECSXP, 2));
-    SET_VECTOR_ELT(result, 0, ScalarString(mkChar(outbuf)));
+    SET_VECTOR_ELT(result, 0, mkString(outbuf));
     SET_VECTOR_ELT(result, 1, duplicate(state));
     R_chk_free(outbuf);
 
