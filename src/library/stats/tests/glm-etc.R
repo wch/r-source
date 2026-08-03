@@ -205,7 +205,17 @@ stopifnot(exprs = {
 ## x:                 19.84943
 ## ch:                       A           B           C           a           b           c           d
 ##                   0.0000000  -0.8240301  -1.3309157 -31.7032317 -32.8819084 -33.3519985 -34.6249161
+
 dummy.coef(fmCf)   -> dc.Cf # the same
+
+# PR #18468 - stats::dummy.coef fails with non-syntactic variable names
+mydatC2 <- mydatC
+colnames(mydatC2)[2] <- "ch A" # --> used as `ch A`
+dc.Cc2 <- dummy.coef(lm(y ~ .       , data=mydatC2))
+dc.Cc3 <- dummy.coef(lm(y ~ x*`ch A`, data=mydatC2))
+dc.Cc3s<- dummy.coef(lm(y ~ .^2,      data=mydatC2)) # as Cc3 (?)
+dc.Cc4 <- dummy.coef(lm(y ~ x*(function(x){x})(`ch A`), data=mydatC2))
+
 all.equal15 <- function(x,y, ...) all.equal(x,y, tolerance = 1e-15, ...)
 stopifnot(exprs = {
     all.equal15(dc.Cc, dc.Cf) # *not* in R <= 4.3.2
@@ -214,6 +224,13 @@ stopifnot(exprs = {
     is.character(names(dcCf) <- sub("[.]", "", names(dcCf)))
     all.equal15(dcCf[i2 <- 1:2], cf.f[i2], check.attributes = FALSE)
     all.equal15(dcCf[-i2], c(chA = 0, cf.f[-i2]))
+    ## non-syntactic
+    all.equal15(dc.Cc3, dc.Cc3s)
+    local({cc <- dc.Cc; names(cc)[3] <- names(dc.Cc2)[3]
+        all.equal15(dc.Cc2, cc) })
+    all.equal15(dc.Cc3, `names<-`(dc.Cc4,
+                                  sub("(function(x) {\n    x\n})(`ch A`)", "`ch A`",
+                                      names(dc.Cc4), fixed=TRUE)))
 })
 
 ##============= + 2 way interactions ============================================

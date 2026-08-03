@@ -30,6 +30,11 @@
       \item Wrapper objects make sure data pointers remain once obtained
       remain valid as long as a wrapper object is reachable. Reported by
       \I{Ivan Krylov}.
+
+      \item \code{dummy.coef()} becomes more robust to non-syntactic
+      variable names, fixing \PR{18468}.  Thanks to \I{Bill Dunlap} and
+      \sQuote{\I{R Dev Day}} participants \I{Vincent Arel-Bundock},
+      \I{Cynthia Huang}, \I{Tina Rozsos} and \I{Marina Marinelli}.
     }
   }
 }
