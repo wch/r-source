@@ -3665,9 +3665,9 @@ if(englishMsgs)
 m <- matrix(1:4, 2); mm <- m; mm[[-1, 1]] <- 99L; mm[, 1] # 1 99
 RR <- replicate(1000, {
     invisible(lapply(1:200, function(i) c(2L, 2L)))   # churn the heap
-    tryCatch(as.character(m[[-1L, 1L]]), error = function(e) "<error>")
+    as.character(m[[-1L, 1L]])
 })
-stopifnot(RR == "<error>", length(RR) == 1000L)
+stopifnot(RR == "2", length(RR) == 1000L)
 ## RR was '2' "randomly" in R <= 4.6.1
 
 
