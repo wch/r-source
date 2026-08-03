@@ -282,6 +282,13 @@
 
       \item \code{dim(a) <- vec} now checks for too large \code{prod(vec)},
       thanks to \I{Kevin Ushey}'s report and patch in \PR{19109}.
+      
+      \item Tweaks (including to the parsers) for the C23 behaviour
+      (preserving \code{const}) of \code{strchr}, \code{strrchr} and
+      \code{strstr}.  (By Brian Ripley and Duncan Murdoch.)
+
+      \item \command{make check-devel} now works without recommended
+      packages.
     }
   }
 }
