@@ -40,7 +40,6 @@
 \alias{showMlist}
 \alias{print.MethodsList}
 \alias{emptyMethodsList}
-\alias{insertMethodInEmptyList}
 \alias{mergeMethods}
 \alias{MethodsListSelect}
 % already removed:
