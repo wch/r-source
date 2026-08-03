@@ -221,11 +221,6 @@
       fixes \PR{18341} thanks to \sQuote{\I{R Dev Day @ useR! 2026}}
       participants \I{Deepansh Khurana}, \I{Stefan Linner} and \I{Oscar de Leon}.
 
-      \item \code{dummy.coef()} becomes more robust to non-syntactic
-      variable names, fixing \PR{18468}.  Thanks to \I{Bill Dunlap} and
-      \sQuote{\I{R Dev Day}} participants \I{Vincent Arel-Bundock},
-      \I{Cynthia Huang}, \I{Tina Rozsos} and \I{Marina Marinelli}.
-
       \item Package \pkg{methods} provides a method for implicit generic
       function \code{rcond} with signature
       \code{c(x="ANY", norm="missing")} so that \code{rcond(x)}
@@ -273,6 +268,11 @@
       remain valid as long as a wrapper object is reachable. Reported by
       \I{Ivan Krylov}.
 
+      \item \code{dummy.coef()} becomes more robust to non-syntactic
+      variable names, fixing \PR{18468}.  Thanks to \I{Bill Dunlap} and
+      \sQuote{\I{R Dev Day}} participants \I{Vincent Arel-Bundock},
+      \I{Cynthia Huang}, \I{Tina Rozsos} and \I{Marina Marinelli}.
+
       \item Now \code{PROTECT()} in \code{SubassignTypeFix}, fixing
       \PR{19110} thanks to \I{Kevin Ushey}.
 
@@ -289,6 +289,10 @@
 
       \item \command{make check-devel} now works without recommended
       packages.
+
+      \item \code{<matrix>[[i, j]]} with negative \code{i} occasionally
+      gives no error but accesses \code{previous content}; thanks to
+      \I{Kevin Ushey}'s report and very simple fix in \PR{19116}.
     }
   }
 }
