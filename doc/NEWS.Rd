@@ -1765,8 +1765,7 @@
       the \code{"MethodsList"} class for S4 method handling were removed
       from package \pkg{methods}.
       Deprecated functions \code{balanceMethodsList}, \code{emptyMethodsList},
-      \code{inheritedSubMethodLists}, \code{insertMethod},
-      \code{makeMethodsList},
+      \code{insertMethod}, \code{makeMethodsList},
       \code{mergeMethods}, \code{MethodsList}, \code{MethodsListSelect}, and
       \code{SignatureMethod} were made defunct, as were the
       \code{"MethodsList"} branches of functions \code{assignMethodsMetaData},

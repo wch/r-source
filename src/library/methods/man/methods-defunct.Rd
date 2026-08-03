@@ -36,7 +36,6 @@
 \alias{makeMethodsList}
 \alias{SignatureMethod}
 \alias{insertMethod}
-\alias{inheritedSubMethodLists}
 \alias{showMlist}
 \alias{print.MethodsList}
 \alias{emptyMethodsList}
