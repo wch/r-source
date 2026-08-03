@@ -40,8 +40,8 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL, binom.kind =
     string, set the method of Normal generation.  Use \code{"default"}
     to return to the \R default.  \code{NULL} makes no change.}
   \item{sample.kind}{character string or \code{NULL}.  If it is a character
-    string, set the method of discrete uniform generation (used in 
-    \code{\link{sample}}, for instance).  Use \code{"default"} to return to 
+    string, set the method of discrete uniform generation (used in
+    \code{\link{sample}}, for instance).  Use \code{"default"} to return to
     the \R default.  \code{NULL} makes no change.}
   \item{binom.kind}{character string or \code{NULL}.  If it is a character
     string, set the method of \code{\link{rbinom}()}.  Use \code{"default"} to return to
@@ -50,7 +50,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL, binom.kind =
     (see \sQuote{Details}).}
   \item{vstr}{a character string containing a version number,
     e.g., \code{"1.6.2"}.  The default RNG configuration of the current
-    \R version is used if \code{vstr} is greater than the current version.} 
+    \R version is used if \code{vstr} is greater than the current version.}
   \item{rng.kind}{integer code in \code{0:k} for the above \code{kind}.}
   \item{n1, n2, \dots}{integers.  See the details for how many are required
     (which depends on \code{rng.kind}).}
@@ -242,11 +242,12 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL, binom.kind =
 }
 \value{
   \code{.Random.seed} is an \code{\link{integer}} vector whose first
-  element \emph{codes} the kind of RNG and normal generator. The lowest
-  two decimal digits are in \code{0:(k-1)}
-  where \code{k} is the number of available \abbr{RNG}s.  The hundreds
-  represent the type of normal generator (starting at \code{0}), and
-  the ten thousands represent the type of discrete uniform sampler.
+  element \emph{codes} each of the kinds of the RNG, normal, \dots (see
+  \code{RNGkind}) generator: The lowest two decimal digits are in
+  \code{0:(k-1)} where \code{k} is the number of available \abbr{RNG}s.
+  The hundreds represent the type of normal generator (starting at \code{0}),
+  the ten thousands the type of discrete uniform sampler,
+  and the hundred thousands the type of binomial generator.
 
   In the underlying C, \code{.Random.seed[-1]} is \code{unsigned};
   therefore in \R \code{.Random.seed[-1]} can be negative or perhaps
@@ -255,7 +256,7 @@ set.seed(seed, kind = NULL, normal.kind = NULL, sample.kind = NULL, binom.kind =
 
   \code{RNGkind} returns the character vector of the RNG and other kinds
   selected \emph{before} the call, invisibly if
-  either argument is not \code{NULL}.  A type starts a session as the 
+  either argument is not \code{NULL}.  Each kind starts a session as the
   default, and is selected either by a call to \code{RNGkind} or by setting
   \code{.Random.seed} in the workspace. (NB: prior to \R 3.6.0 the first
   two kinds were returned in a two-element character vector.)
