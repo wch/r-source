@@ -1240,7 +1240,7 @@ attribute_hidden SEXP do_dimgets(SEXP call, SEXP op, SEXP args, SEXP env)
     return x;
 }
 
-// called from setAttrib(vec, R_DimSymbol, val) :
+// called from setAttrib(vec, R_DimSymbol, val) and do_array()
 SEXP dimgets(SEXP vec, SEXP val)
 {
     PROTECT(vec);
@@ -1254,20 +1254,8 @@ SEXP dimgets(SEXP vec, SEXP val)
     PROTECT(val);
 
     int ndim = length(val);
-    if (ndim == 0)
-	error(_("length-0 dimension vector is invalid"));
-    double dtotal = 1.;
-    for (int i = 0; i < ndim; i++) {
-	/* need this test first as NA_INTEGER is < 0 */
-	if (INTEGER(val)[i] == NA_INTEGER)
-	    error(_("the dims contain missing values"));
-	if (INTEGER(val)[i] < 0)
-	    error(_("the dims contain negative values"));
-	dtotal *= INTEGER(val)[i];
-	if (dtotal > R_XLEN_T_MAX)
-	    error(_("too many elements specified"));
-    }
-    R_xlen_t total = (R_xlen_t)dtotal, len = xlength(vec);
+    R_xlen_t total = dim2total(val, ndim, _("too many elements specified")),
+	len = xlength(vec);
     if (total != len) {
 	error(_("dims [product %lld] do not match the length of object [%lld]"),
 	      (long long)total, (long long)len);

@@ -822,7 +822,7 @@ const char * R_typeToChar2(SEXP, SEXPTYPE);
 
 /*
    These are the private inlinable functions that are provided in
-   Rinlinedfuns.h It is *essential* that these do not appear in any
+   Rinlinedfuns.h.  It is *essential* that these do not appear in any
    other header file, with or without the Rf_ prefix.
 */
 
@@ -2159,6 +2159,7 @@ SEXP deparse1w(SEXP,bool,int);
 SEXP deparse1line (SEXP, bool);
 SEXP deparse1line_ex(SEXP, bool, int);
 SEXP deparse1s(SEXP call);
+R_xlen_t dim2total(SEXP, int, char *);
 int DispatchAnyOrEval(SEXP, SEXP, const char *, SEXP, SEXP, SEXP*, int, int);
 int DispatchOrEval(SEXP, SEXP, const char *, SEXP, SEXP, SEXP*, int, int);
 int DispatchGroup(const char *, SEXP,SEXP,SEXP,SEXP,SEXP*);
