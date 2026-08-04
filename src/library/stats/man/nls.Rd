@@ -59,11 +59,15 @@ nls(formula, data, start, control, algorithm,
   \item{model}{logical.  If true, the model frame is returned as part of
     the object. Default is \code{FALSE}.}
   \item{lower, upper}{vectors of lower and upper bounds, replicated to
-    be as long as \code{start}.  If unspecified, all parameters are
+    be as long as \code{start}, if unnamed.  If unspecified, all parameters are
     assumed to be unconstrained.  Bounds can only be used with the
     \code{"port"} algorithm.  They are ignored, with a warning, if given
-    for other algorithms. If given as named vectors, they can be reordered to
-    match the coefficient order.}
+    for other algorithms. If given as named vectors, only the
+    corresponding parameters are constrained, other bounds set to
+    \code{-Inf} or \code{Inf} as appropriate. They can also be given as
+    named lists (corresponding to \code{start}); in that case, names are
+    stripped from the list elements, so vector elements must be specified
+    in full and in correct order.}
   \item{\dots}{Additional optional arguments.  None are used at present.}
 }
 \details{
@@ -330,6 +334,9 @@ musc.2 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th), MASS::muscle,
               start = list(a = rep(b[2], 21), b = rep(b[3], 21), th = b[1]))
 summary(musc.2)
 
+
+
+
 ## Example with constraint, using "port" algorithm. Also showing possibility
 ## for reordering if using named vector for lower=
 dd <- structure(list(time = c(1L, 2L, 3L, 6L, 12L, 24L, 48L), y = c(1.95, 
@@ -346,6 +353,26 @@ m1 <- nls(form,
     start = st0)
 stopifnot(coef(m1)[["k"]] >= lwr[["k"]])
 
+## Simplified form naming specific elements of lwr, upr
+st0 <- list(Max = 200, k = 0.1, Lag = 0.5)
+lwr <- c(k = 0.09)
+upr <- c(Lag = 5.5)
+m2 <- nls(form,
+    data = dd,
+    algorithm="port",
+    lower = lwr,
+    upper = upr,
+    start = st0)
+stopifnot(coef(m2)[["k"]] >= lwr[["k"]] && coef(m2)[["Lag"]] <= upr[["Lag"]])
+
+## Example using indexing features and bounds
+## (Notice that constructions like this make e.g. start$a a named
+## vector with strange names, so these are stripped internally.)
+musc.3 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th), MASS::muscle,
+start = list(a = rep(b[2], 21), b = rep(b[3], 21), th = b[1]),
+upper = list(a = rep(35, 21)),
+ algorithm="port")
+summary(musc.3)
 })
 }
 \dontshow{options(od)}

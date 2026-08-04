@@ -214,7 +214,10 @@
 
       \item In \code{nls}, follow suggestion by \I{Ben Bolker} to reorder
       named vectors for \code{lower} and \code{upper} arguments to match
-      names of coefficients (\PR{18415}).
+      names of the starting values (\PR{18415}). This has been extended so that
+      you can now specify \emph{only} the parameters that you wish to
+      constrain, and also so that it works when parameters are in the
+      form of named lists.
 
       \item \code{summary(<aov>)} for an almost perfect fit now warns
       analogously to \code{summary(<lm>)}, using the same check.  Fixes
