@@ -9,13 +9,14 @@
 \title{Class \code{"LinearMethodsList"}}
 \description{
   A version of methods lists that has been \sQuote{linearized}
-  for producing summary information.  The actual objects from class
-  \code{"MethodsList"} used for method dispatch are defined recursively
-  over the arguments involved.
+  for producing summary information.
+% The actual objects from class \code{"\linkS4class{MethodsList}"} used
+% for method dispatch are defined recursively over the arguments involved.
 }
 \section{Objects from the Class}{
-  The function \code{\link{linearizeMlist}} converts an ordinary methods
-  list object into the linearized form.
+  Created by \code{\link{listFromMethods}}.
+% The function \code{\link{linearizeMlist}} converts an ordinary methods
+% list object into the linearized form.
 }
 \section{Slots}{
   \describe{
@@ -33,16 +34,13 @@
 }
 
 \section{Future Note}{
-  The current version of \code{linearizeMlist} does not take advantage of
-  the \code{MethodDefinition} class, and therefore does more work for less
-  effect than it could.  In particular, we may move to redefine both the
-  function and the class to take advantage of the stored signatures.
+% The current version of \code{\link{linearizeMlist}} does not take
+% advantage of the \code{"\linkS4class{MethodDefinition}"} class,
+% and therefore does more work for less effect than it could.
+% In particular, we may move to redefine both the function and the class
+% to take advantage of the stored signatures.
   Don't write code depending precisely on the present form, although all
   the current information will be obtainable in the future.
-}
-\seealso{ Function \code{\link{linearizeMlist}} for the computation,
-  and class \code{\linkS4class{MethodsList}} for the original, recursive
-  form.
 }
 
 \keyword{classes}

@@ -27,17 +27,13 @@
 \alias{MethodsList-class}
 \alias{body<-,MethodDefinition-method}
 %-----
-\alias{listFromMlist}%  only used in listFromMlist()
-\alias{linearizeMlist}% only used in showMlist()
 % finalDefaultMethod() [somewhat important]:
 \alias{finalDefaultMethod}
-%% were deprecated since R 3.2.0:
+%% were deprecated since R 3.2.0, defunct in 4.5.0:
 \alias{MethodsList}
 \alias{makeMethodsList}
 \alias{SignatureMethod}
 \alias{insertMethod}
-\alias{showMlist}
-\alias{print.MethodsList}
 \alias{emptyMethodsList}
 \alias{mergeMethods}
 \alias{MethodsListSelect}
@@ -70,7 +66,7 @@ seemsS4Object(object)
 % Defunct in 2.9.0;  removed for 4.0.0
 allGenerics()
 
-% Removed in 2.11.0
+% Defunct in 2.11.0; removed for 3.0.0
 trySilent(expr)
 
 % Defunct in 3.0.0;  removed for 4.0.0
