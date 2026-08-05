@@ -583,12 +583,19 @@ function(package, dir, lib.loc = NULL,
     else
         Rd_db(dir = dir)
 
+    db_aliases_in_package_defunct_Rd <- NULL
     ## <FIXME>
     ## How exactly do we recognize docs for defunct/deprecated?
-    db_names <- .Rd_get_names_from_Rd_db(db)
-    ## pkg-defunct.Rd is not expected to list arguments
-    ind <- db_names %in% paste0(package_name, "-defunct")
-    db <- db[!ind]
+    ## pkg-defunct.Rd is not expected to list arguments.
+    ind <- which(.Rd_get_names_from_Rd_db(db) %in%
+                 paste0(package_name, "-defunct"))
+    if(length(ind)) {
+        db_aliases_in_package_defunct_Rd <-
+            unlist(lapply(db[ind], .Rd_get_metadata, "alias"),
+                   use.names = FALSE)
+        db <- db[-ind]
+    }
+    ## See also below ...
     ## </FIXME>
 
     db_usages <- lapply(db, .Rd_get_section, "usage")
@@ -774,12 +781,23 @@ function(package, dir, lib.loc = NULL,
                            ifnotfound = list(NULL), inherits = TRUE)
             funlst <- funlst[!vapply(funlst, is.null, NA)]
             ## Drop the defunct functions.
-            predicate <-
-                .predicate_for_calls_with_names(".Defunct", "base")
-            is_defunct <- function(f) {
-                predicate(.get_top_call_in_fun(f))
-            }
-            funlst <- funlst[!vapply(funlst, is_defunct, NA)]
+            ## This is not so easy.  The original idea was that such
+            ## functions would add a call to .Defunct() at top level, in
+            ## which case we could use code analysis to realiably
+            ## determine these, using something like
+            ##   predicate <-
+            ##       .predicate_for_calls_with_names(".Defunct", "base")
+            ##   is_defunct <- function(f) {
+            ##       predicate(.get_top_call_in_fun(f))
+            ##   }
+            ##   funlst <- funlst[!vapply(funlst, is_defunct, NA)]
+            ## However, packages could add their wrappers to provide
+            ## more convenient messages ... 
+            ## Hence simply drop everything that has an alias in
+            ## <PKGNAME>-defunct.Rd.
+            if(length(db_aliases_in_package_defunct_Rd))
+                funlst <- funlst[names(funlst) %notin%
+                                 db_aliases_in_package_defunct_Rd]
             ## For the remaining ones, record whether they come from
             ## ourselves (which is not the case for re-exports).
             if(length(funlst))
@@ -794,7 +812,7 @@ function(package, dir, lib.loc = NULL,
         }
     objects_missing_from_usages <-
         if(!has_namespace) character() else {
-            c(functions_missing_from_usages,
+            c(functions_missing_from_usages$name,
               setdiff(objects_in_code_not_in_usages,
                       c(functions_in_code, data_sets_in_code)))
                                        }
