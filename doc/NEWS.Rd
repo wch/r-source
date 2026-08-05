@@ -241,6 +241,14 @@
       \item Fix segfault in \code{grid::gpar()} if set \code{fontfamily}
       longer than 200 characters (\PR{19107}).  Thanks
       to \I{Kevin Ushey}.
+
+      \item Fix cases where \code{M} and \code{X} matrices could be
+      spanning the same subspace in \code{mauchly.test()},
+      \code{anova.mlm}, \code{anova.mlmlist}. (\PR{16166}, originally
+      reported in 2015 by \I{Florent Aubry}, essentially analyzed
+      Feb. 2020 just before the corona crisis, triaged 2026 by
+      \I{Michael Chirico})
+      
     }
   }
 }

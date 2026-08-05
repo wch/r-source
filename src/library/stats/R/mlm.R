@@ -142,7 +142,7 @@ mauchly.test.SSD <- function(object, Sigma=diag(nrow=p),
         orig.M <- M
 	if (inherits(M, "formula")) M <- model.matrix(M, idata)
 	if (inherits(X, "formula")) X <- model.matrix(X, idata)
-        if (Rank(cbind(M,X)) != Rank(M))
+        if (Rank(cbind(M,X)) != Rank(M) || Rank(X) >= Rank(M))
             stop("X does not define a subspace of M")
     }
     Psi <- T %*% Sigma %*% t(T)
@@ -197,7 +197,7 @@ sphericity <- function(object, Sigma=diag(nrow=p),
     if (missing(T)){
 	if (inherits(M, "formula")) M <- model.matrix(M, idata)
 	if (inherits(X, "formula")) X <- model.matrix(X, idata)
-        if (Rank(cbind(M,X)) != Rank(M))
+        if (Rank(cbind(M,X)) != Rank(M) || Rank(X) >= Rank(M))
             stop("X does not define a subspace of M")
     }
     Psi <- T %*% Sigma %*% t(T)
@@ -234,7 +234,7 @@ anova.mlm <-
             orig.X <- X
 	    if (inherits(M, "formula")) M <- model.matrix(M, idata)
 	    if (inherits(X, "formula")) X <- model.matrix(X, idata)
-            if (Rank(cbind(M,X)) != Rank(M))
+            if (Rank(cbind(M,X)) != Rank(M) || Rank(X) >= Rank(M))
                 stop("X does not define a subspace of M")
         }
         title <- "Analysis of Variance Table\n"
@@ -423,7 +423,7 @@ anova.mlmlist <- function (object, ...,
         orig.X <- X
 	if (inherits(M, "formula")) M <- model.matrix(M, idata)
 	if (inherits(X, "formula")) X <- model.matrix(X, idata)
-        if (Rank(cbind(M,X)) != Rank(M))
+        if (Rank(cbind(M,X)) != Rank(M) || Rank(X) >= Rank(M))
             stop("X does not define a subspace of M")
     }
     pp <- nrow(T)
