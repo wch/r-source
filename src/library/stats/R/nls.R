@@ -633,9 +633,8 @@ nls <-
         if (length(x) == length(start)){
             if(!setequal(nx, ns)) {
                 ## we may want to make this an error condition eventually
-                    warning("different names for ",
-                            sQuote("start"), " and ",
-                            sQuote(w), ": names ignored")
+                warning(gettextf("different names for %s and %s: names ignored",
+                                 sQuote("start"), sQuote(w)))
                     return(x)
             }
             else
@@ -644,15 +643,15 @@ nls <-
         else {
             if (any(!is.element(nx, ns))){
                 w <- deparse(substitute(x))
-                stop("mismatched names for ",
-                            sQuote("start"), " and ",
-                            sQuote(w))
+                stop(gettextf("mismatched names for %s and %s",
+                            sQuote("start"),
+                            sQuote(w)))
             }
 
             if (any(duplicated(nx))){
                 w <- deparse(substitute(x))
-                stop("duplicated names in ",
-                     sQuote(w))
+                stop(gettextf("duplicated names in %s",
+                     sQuote(w)))
             }
 
             ## (or xx <- start; xx[] <- default, but likely too cryptic)
