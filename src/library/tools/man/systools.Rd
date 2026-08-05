@@ -16,7 +16,7 @@ system_with_capture(command, args = character(), env = character(),
 }
 \arguments{
   \item{command, args, env, stdin, input, timeout}{as for
-    \code{link{system2}}.}
+    \code{\link{system2}}.}
 }
 \value{
   A list with elements \code{status}, \code{stdout} and \code{stderr}

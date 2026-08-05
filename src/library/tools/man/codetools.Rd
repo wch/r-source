@@ -18,7 +18,7 @@ find_calls_in_package_code(dir, predicate = NULL, recursive = FALSE,
 }
 \arguments{
   \item{x}{an object of type \code{"\link{expression}"} as obtained from
-    \code{link{parse}}.}
+    \code{\link{parse}}.}
   \item{predicate}{a unary function for selecting the calls of interest.
     Only the calls \code{e} with \code{any(predicate(e))} are returned.
     By default, all calls are selected.}
