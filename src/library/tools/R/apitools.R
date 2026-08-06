@@ -210,13 +210,14 @@ getVarsHdr <- function(fpath, lines, include = R.home("include"), flags = "") {
 }
 
 ccE <- function(lines, include = R.home("include"), flags, clean = TRUE) {
-    if (Sys.which("cc") == "")
-        stop("'cc' is not on the path")
+    CC <- Rcmd(c("config", "CC"), stdout = TRUE)
+    if (Sys.which(CC) == "")
+        stop(paste(sQuote(CC, q = FALSE), "is not on the path"))
     tfile <- tempfile(fileext = ".h")
     on.exit(unlink(tfile))
     writeLines(lines, tfile)
     include <- paste(sprintf("-I%s", include), collapse = " ")
-    cmd <- sprintf("cc -E %s %s", include, tfile)
+    cmd <- sprintf("%s -E %s %s", CC, include, tfile)
     if (! missing(flags))
         cmd <- paste(cmd, flags)
     val <- system(cmd, intern=TRUE)
@@ -227,7 +228,7 @@ ccE <- function(lines, include = R.home("include"), flags, clean = TRUE) {
 
 ccEclean <- function(lines, pattern = "Rtmp") {
     fline <- grepl("^#", lines)
-    keep <- grepl(pattern, lines[fline])
+    keep <- grepl(basename(pattern), lines[fline])
     len <- diff(c(which(fline), length(lines) + 1))
     keep <- unlist(mapply(rep, keep, len, USE.NAMES = FALSE))
     lines <- lines[keep & ! fline]
