@@ -1,6 +1,6 @@
 % File src/library/tools/man/codoc.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{codoc}
@@ -20,7 +20,7 @@ codocData(package, lib.loc = NULL)
 \description{
   Find inconsistencies between actual and documented \sQuote{structure}
   of \R objects in a package.  \code{codoc} compares names and
-  optionally also corresponding positions and default values of the
+  positions and optionally also the default values of the
   arguments of functions.  \code{codocClasses} and \code{codocData}
   compare slot names of S4 classes and variable names of data sets,
   respectively.
@@ -39,12 +39,7 @@ codocData(package, lib.loc = NULL)
     when comparing code and docs.  Otherwise, compare \emph{all} default
     values if \code{TRUE}, and only the ones documented in the usage
     otherwise (default).}
-  \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
-    printed.}
-}
-\note{
-  The default for \code{use.values} has been changed from
-  \code{FALSE} to \code{NULL}, for \R versions 1.9.0 and later.
+  \item{verbose}{currently unused.}
 }
 \details{
   The purpose of \code{codoc} is to check whether the documented usage
@@ -81,7 +76,7 @@ codocData(package, lib.loc = NULL)
 
   Help files named \file{\var{pkgname}-defunct.Rd} for the
   appropriate \var{pkgname} are checked more loosely, as they may
-  have undocumented arguments.
+  have undocumented arguments and usage entries for removed objects.
 }
 \value{
   \code{codoc} returns an object of class \code{"codoc"}.  Currently,
