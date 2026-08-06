@@ -211,6 +211,7 @@ getVarsHdr <- function(fpath, lines, include = R.home("include"), flags = "") {
 
 ccE <- function(lines, include = R.home("include"), flags, clean = TRUE) {
     CC <- Rcmd(c("config", "CC"), stdout = TRUE)
+    CC <- sub("\\s+.*", "", CC) ## clear out commant line arguments
     if (Sys.which(CC) == "")
         stop(paste(sQuote(CC, q = FALSE), "is not on the path"))
     tfile <- tempfile(fileext = ".h")
