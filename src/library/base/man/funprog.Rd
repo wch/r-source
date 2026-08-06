@@ -125,7 +125,7 @@ Partial(f, ...)
   \code{f3(f2(f1(...)))}.  All functions except the first one need to be
   unary.
 
-  \code{Funcall} correponds to Common Lisp's \code{funcall}.
+  \code{Funcall} corresponds to Common Lisp's \code{funcall}.
 
   \code{Partial} returns a function which fixes (\sQuote{binds}) the
   given arguments of the given function \code{f} to return a new

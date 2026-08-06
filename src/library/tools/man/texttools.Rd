@@ -24,7 +24,7 @@ gsub_with_transformed_matches(pattern, replacement, x, trafo, count, ...)
   given pattern with replacements featuring transformations of matches.
   Character string (\samp{\%s}) conversion specifications in
   \code{replacement} are replaced by applying the respective
-  transformations in \code{trafo} tp the respective matches
+  transformations in \code{trafo} to the respective matches
   (parenthesized subexpressions of \code{pattern}) specified by
   \code{count}.
 }
