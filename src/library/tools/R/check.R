@@ -2370,7 +2370,7 @@ add_dummies <- function(dir, Log)
         }
 
         if(!is_base_pkg && R_check_use_codetools && R_check_dot_internal) {
-            details <- pkgname != "relax" # has .Internal in a 10,000 line fun
+            details <- TRUE
             Rcmd <- paste(opWarn_string, "\n",
                           if (do_install)
                               sprintf("tools:::.check_dotInternal(package = \"%s\",details=%s)\n", pkgname, details)
