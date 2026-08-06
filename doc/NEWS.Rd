@@ -243,8 +243,8 @@
       to \I{Kevin Ushey}.
 
       \item Fix cases where \code{M} and \code{X} matrices could be
-      spanning the same subspace in \code{mauchly.test()},
-      \code{anova.mlm}, \code{anova.mlmlist}. (\PR{16166}, originally
+      spanning the same subspace in \code{mauchly.test()}, \code{sphericity()}
+      \code{anova.mlm()}, \code{anova.mlmlist()}. (\PR{16166}, originally
       reported in 2015 by \I{Florent Aubry}, essentially analyzed
       Feb. 2020 just before the corona crisis, triaged 2026 by
       \I{Michael Chirico})
