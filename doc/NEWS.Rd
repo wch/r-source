@@ -248,6 +248,9 @@
       reported in 2015 by \I{Florent Aubry}, essentially analyzed
       Feb. 2020 just before the corona crisis, triaged 2026 by
       \I{Michael Chirico})
+
+      \item Changed \code{model.frame.glm()} to use same logic as
+      \code{model.frame.lm()} (\PR{19036}, \I{Isaac Gravestock}).
       
     }
   }

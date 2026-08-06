@@ -895,18 +895,29 @@ residuals.glm <-
 
 ## KH on 1998/06/22: update.default() is now used ...
 
+## PD 2026/08/06 changed to follow the logic of the "lm" method.
+##  See PR#19036
+##  It is actually not quite true that these function mimic
+##  (g)lm(method="model.frame") because lm/glm does not know about xlev.
 model.frame.glm <- function (formula, ...)
 {
     dots <- list(...)
     nargs <- dots[match(c("data", "na.action", "subset"), names(dots), 0L)]
     if (length(nargs) || is.null(formula$model)) {
-	fcall <- formula$call
-	fcall$method <- "model.frame"
+        ## mimic glm(method = "model.frame")
+        fcall <- formula$call
+        m <- match(c("formula", "data", "subset", "weights", "na.action",
+                     "offset"), names(fcall), 0L)
+        fcall <- fcall[c(1L, m)]
+        fcall$drop.unused.levels <- TRUE
         ## need stats:: for non-standard evaluation
-	fcall[[1L]] <- quote(stats::glm)
+        fcall[[1L]] <- quote(stats::model.frame)
+        fcall$xlev <- formula$xlevels
+        ## We want to copy over attributes here, especially predvars.
+        fcall$formula <- terms(formula)
         fcall[names(nargs)] <- nargs
-	env <- environment(formula$terms) %||% parent.frame()
-	eval(fcall, env)
+        env <- environment(formula$terms) %||% parent.frame()
+        eval(fcall, env) # 2-arg form as env is an environment
     }
     else formula$model
 }
