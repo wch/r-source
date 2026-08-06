@@ -299,7 +299,7 @@ R_xlen_t dim2total(SEXP dim, int ndim, char *ErrMsg)
 #else
     if (dn > INT_MAX)
 #endif
-	error(ErrMsg);
+	error("%s", ErrMsg); // avoid -Wformat-security warning
     return (R_xlen_t) dn;
 }
 
