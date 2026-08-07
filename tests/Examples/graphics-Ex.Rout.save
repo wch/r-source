@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2026-04-30 r89988) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-08-07 r90371) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin25.3.0
+Platform: aarch64-apple-darwin25.6.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -60,8 +60,23 @@ Type 'q()' to quit R.
 > abline(mC <- lm(dist ~ 1, data = cars)) ## the same as
 > abline(a = coef(mC), b = 0, col = "blue")
 > 
+> ## untf=TRUE for lines in log space
+> x = 10^(0:5)
+> r = 2^(-1:1)
+> opar <- par(mfrow = c(2, 2))
+> plot(x, x, main='x:y')
+> for (s in r) abline(a = 0, b = s)
+> plot(x, x, log='x', main='log(x):y')
+> for (s in r) abline(a = 0, b = s, untf = TRUE, col = 'blue')
+> plot(x, x, log='y', main='x:log(y)')
+> for (s in r) abline(a = 0, b = s, untf = TRUE, col = 'blue')
+> plot(x, x, log='xy', main='log(x):log(y)')
+> for (s in r) abline(a = 0, b = s, untf = TRUE, col = 'blue')
+> par(opar)
 > 
 > 
+> 
+> graphics::par(get("par.postscript", pos = 'CheckExEnv'))
 > cleanEx()
 > nameEx("arrows")
 > ### * arrows
@@ -2348,7 +2363,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0x77204aa18>
+<bytecode: 0x767d90078>
 <environment: namespace:graphics>
 > 
 > 
@@ -3217,7 +3232,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0x772b2c820>
+<bytecode: 0x767eaa548>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3298,7 +3313,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.5 0.097 1.6 0 0 
+Time elapsed:  1.093 0.112 1.551 0 0 
 > grDevices::dev.off()
 null device 
           1 

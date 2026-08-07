@@ -98,5 +98,19 @@ abline(coef = coef(z))
 ## trivial intercept model
 abline(mC <- lm(dist ~ 1, data = cars)) ## the same as
 abline(a = coef(mC), b = 0, col = "blue")
+
+## untf=TRUE for lines in log space (from Michael Chirico)
+x = 10^(0:5)
+r = 2^(-1:1)
+opar <- par(mfrow = c(2, 2))
+plot(x, x, main='x:y')
+for (s in r) abline(a = 0, b = s)
+plot(x, x, log='x', main='log(x):y')
+for (s in r) abline(a = 0, b = s, untf = TRUE, col = 'blue')
+plot(x, x, log='y', main='x:log(y)')
+for (s in r) abline(a = 0, b = s, untf = TRUE, col = 'blue')
+plot(x, x, log='xy', main='log(x):log(y)')
+for (s in r) abline(a = 0, b = s, untf = TRUE, col = 'blue')
+par(opar)
 }
 \keyword{aplot}
