@@ -70,7 +70,7 @@ el <-
 
 "el<-" <-
   ## set the element of a vector; numeric index only.
-  .Primitive("[[<-")
+  `[[<-`
 
 elNamed <-
   ## get the element of the vector corresponding to name.  No partial matching.
