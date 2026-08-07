@@ -52,17 +52,16 @@ function(keys)
     brp <- if(!all(ind)) {
                ## Bibentries for base R and current package maybe.
                rdfile <- processRdChunk_data_store()$Rdfile
-               dir <- dirname(normalizePath(rdfile, mustWork = FALSE))
-               if(basename(dir) %in% c("unix", "windows"))
-                   dir <- dirname(dir)
-               dir <- if(basename(dir) == "man") {
-                          dir <- dirname(dir)
-                          c(dir, file.path(dir, "inst"))
-                      } else character()
-               pkg <- if(length(dir)) {
-                          basename(dir[1L])
-                      } else character()
-               c(.bibentries_from_REFERENCES(dir, pkg),
+               if (length(rdfile)) {
+                   dir <- dirname(normalizePath(rdfile, mustWork = FALSE))
+                   if(basename(dir) %in% c("unix", "windows"))
+                       dir <- dirname(dir)
+                   dir <- if(basename(dir) == "man") {
+                              file.path(dirname(dir), "inst")
+                          } else character()
+               } else # assume current directory is package root (as in build)
+                   dir <- "inst"
+               c(.bibentries_from_REFERENCES(dir, "."),
                  R_bibentries())
            } else NULL
     if(!any(ind)) {
