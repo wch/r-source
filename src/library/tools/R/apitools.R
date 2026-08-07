@@ -227,9 +227,13 @@ ccE <- function(lines, include = R.home("include"), flags, clean = TRUE) {
     else val
 }
 
-ccEclean <- function(lines, pattern = "Rtmp") {
+## cceclean remove lines brought in from header files, keeping only
+## ones corresponding to tfile
+ccEclean <- function(lines, tfile) {
     fline <- grepl("^#", lines)
-    keep <- grepl(basename(pattern), lines[fline])
+    ## using basename should be sufficient and avoids dealing with
+    ## Windows path issues
+    keep <- grepl(basename(tfile), lines[fline])
     len <- diff(c(which(fline), length(lines) + 1))
     keep <- unlist(mapply(rep, keep, len, USE.NAMES = FALSE))
     lines <- lines[keep & ! fline]
