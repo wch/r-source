@@ -660,8 +660,9 @@ function(package, dir, lib.loc = NULL,
         ## And also unary/binary operators
         ind <- (functions %notin% c("<-", "=", "+", "-"))
         exprs <- exprs[ind]
-        functions <- functions[ind]
-        functions <- .transform_S3_method_markup(as.character(functions))
+        functions <- as.character(functions[ind])
+        functions <- structure(.transform_S3_method_markup(functions),
+                               names = functions)
         ind <- functions %in% functions_in_code
         bad_functions <-
             mapply(functions[ind],
@@ -676,7 +677,9 @@ function(package, dir, lib.loc = NULL,
                               function(e) as.character(e[[2L]][[1L]]),
                               ""),
                        "<-")
-            replace_funs <- .transform_S3_method_markup(replace_funs)
+            replace_funs <-
+                structure(.transform_S3_method_markup(replace_funs),
+                          names = replace_funs)
             functions <- c(functions, replace_funs)
             ind <- (replace_funs %in% functions_in_code)
             if(any(ind)) {
