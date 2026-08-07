@@ -91,18 +91,18 @@ Sys.timezone <- function(location = TRUE)
         } else tzdir <- ""
     }
 
-    ## First try timedatectl: should work on any modern (post 2015)
+    ## First try timedatectl show: should work on any modern (post 2018)
     ## glibc-based Linux as part of systemd (and probably nowhere else)
     ## https://www.freedesktop.org/software/systemd/man/sd_booted.html
     ## systemd is (in 2025) an optional part of musl
     if (dir.exists("/run/systemd/system") && nzchar(Sys.which("timedatectl"))) {
-        inf <- system("timedatectl", intern = TRUE)
-        ## typical format:
-        ## "       Time zone: Europe/London (GMT, +0000)"
-        ## "       Time zone: Europe/Vienna (CET, +0100)"
-        lines <- grep("Time zone: ", inf)
-        if (length(lines)) {
-            tz <- sub(" .*", "", sub(" *Time zone: ", "", inf[lines[1L]]))
+        ## Ubuntu 18.04 had systemd < 239 and would thus error with
+        ##   Unknown operation show
+        ##   timedatectl: unrecognized option '--property=Timezone'
+        ## but is covered by subsequent heuristics.
+        tz <- system("timedatectl show --property=Timezone --value",
+                     intern = TRUE) |> suppressWarnings()
+        if (length(tz) == 1L && nzchar(tz)) {
             ## quick sanity check
             if(nzchar(tzdir)) {
                 if(file.exists(file.path(tzdir, tz))) {
@@ -116,7 +116,9 @@ Sys.timezone <- function(location = TRUE)
                 cacheIt(tz)
                 return(tz)
             }
-        }
+        } else
+            message("unable to deduce timezone name from ",
+                    sQuote("timedatectl"))
     }
 
     ## Debian/Ubuntu Linux do things differently, so try that next.
