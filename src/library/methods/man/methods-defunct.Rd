@@ -1,6 +1,6 @@
 % File src/library/methods/man/methods-defunct.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{methods-defunct}
@@ -23,7 +23,6 @@
 \alias{traceOn}
 \alias{traceOff}
 %--------------- former \code{MethodsList} Objects ------------------------------
-% \code{MethodsList-class}:   ~~~~~~~~~~~
 \alias{MethodsList-class}
 \alias{body<-,MethodDefinition-method}
 %-----
@@ -42,7 +41,6 @@
 % \alias{listFromMlist}
 % \alias{showMlist}
 
-%--------------------------- former {MethodsList} Objects -----------------------
 \description{
   Defunct functions in package \pkg{methods}.
 }
@@ -72,6 +70,17 @@ trySilent(expr)
 % Defunct in 3.0.0;  removed for 4.0.0
 traceOn(what, tracer=browseAll, exit=NULL)
 traceOff(what)
+
+% Class "MethodsList" is defunct since 3.2.0.
+% Corresponding functions defunct in 4.5.0:
+MethodsList(.ArgName, ...)
+makeMethodsList(object, level)
+SignatureMethod(names, signature, definition)
+insertMethod(mlist, signature, args, def, cacheOnly)
+emptyMethodsList(mlist, thisClass, sublist)
+mergeMethods(m1, m2, genericLabel)
+MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
+                  useInherited, fdef, resetAllowed)
 }
 \details{
   The first block of functions should be replaced by direct access to
