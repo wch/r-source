@@ -602,8 +602,8 @@ Rd2txt <-
         ii <- lapply(regmatches(x, m),
                      function(mm) if (length(mm)) match(mm[2,], math_replacements[,"name"]))
         regmatches(x, gregexpr(rx, x, perl = TRUE)) <- lapply(ii, function(i) math_replacements[i, replacement])
-        ## FIXME: are these needed?
-        x <- psub("\\\\(bold|strong|emph|var)\\{([^}]*)\\}", "\\2", x)
+        ## handle frequently used markup:
+        x <- psub("\\\\(bold|emph|mathbf|boldsymbol|mbox)\\{([^}]*)\\}", "\\2", x)
         x <- psub("\\\\(code|samp)\\{([^}]*)\\}",
                   sprintf("%s\\2%s", LSQM, RSQM), x)
         x
