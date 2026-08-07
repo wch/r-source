@@ -22,6 +22,9 @@ Sweave(file, driver = RweaveLatex(),
 
 Stangle(file, driver = Rtangle(),
         syntax = getOption("SweaveSyntax"), encoding = "", ...)
+
+SweaveSyntaxNoweb
+SweaveSyntaxLatex
 }
 \arguments{
   \item{file}{Path to Sweave source file.  Note that this can be
