@@ -583,18 +583,10 @@ function(package, dir, lib.loc = NULL,
     else
         Rd_db(dir = dir)
 
-    db_aliases_in_package_defunct_Rd <- NULL
     ## <FIXME>
     ## How exactly do we recognize docs for defunct/deprecated?
     ## pkg-defunct.Rd is not expected to list arguments.
-    ind <- which(.Rd_get_names_from_Rd_db(db) %in%
-                 paste0(package_name, "-defunct"))
-    if(length(ind)) {
-        db_aliases_in_package_defunct_Rd <-
-            unlist(lapply(db[ind], .Rd_get_metadata, "alias"),
-                   use.names = FALSE)
-        db <- db[-ind]
-    }
+    db_name_defunct <- paste0(package_name, "-defunct.Rd")
     ## See also below ...
     ## </FIXME>
 
@@ -631,7 +623,7 @@ function(package, dir, lib.loc = NULL,
             variables <- vapply(exprs[ind], deparse, "")
             variables_in_usages <- c(variables_in_usages, variables)
             variables <- setdiff(variables, objects_as_in)
-            if(length(variables))
+            if(length(variables) && (nm != db_name_defunct))
                 variables_in_usages_not_in_code[[nm]] <- variables
             exprs <- exprs[!ind]
         }
@@ -645,7 +637,7 @@ function(package, dir, lib.loc = NULL,
                                 "")
             data_sets_in_usages <- c(data_sets_in_usages, data_sets)
             data_sets <- setdiff(data_sets, data_sets_in_code)
-            if(length(data_sets))
+            if(length(data_sets) && (nm != db_name_defunct))
                 data_sets_in_usages_not_in_code[[nm]] <- data_sets
             exprs <- exprs[!ind]
         }
@@ -697,7 +689,7 @@ function(package, dir, lib.loc = NULL,
         }
 
         bad_functions <- do.call(c, bad_functions)
-        if(length(bad_functions))
+        if(length(bad_functions) && (nm != db_name_defunct))
             bad_doc_objects[[nm]] <- bad_functions
 
         ## Determine functions with a \usage entry in the documentation
@@ -719,7 +711,7 @@ function(package, dir, lib.loc = NULL,
             functions <- functions[!ind]
         ## </FIXME>
         bad_functions <- setdiff(functions, objects_as_in)
-        if(length(bad_functions))
+        if(length(bad_functions) && (nm != db_name_defunct))
             functions_in_usages_not_in_code[[nm]] <- bad_functions
 
         functions_in_usages <- c(functions_in_usages, functions)
@@ -797,20 +789,48 @@ function(package, dir, lib.loc = NULL,
             ## However, packages could add their wrappers to provide
             ## more convenient messages ... 
             ## Hence simply drop everything that has an alias in
-            ## <PKGNAME>-defunct.Rd.
-            if(length(db_aliases_in_package_defunct_Rd))
+            if(length(ind <- which(names(db) == db_name_defunct))) {
+                db_aliases_in_package_defunct_Rd <-
+                    unlist(lapply(db[ind], .Rd_get_metadata, "alias"),
+                           use.names = FALSE)
                 funlst <- funlst[names(funlst) %notin%
                                  db_aliases_in_package_defunct_Rd]
+            }
             ## For the remaining ones, record whether they come from
             ## ourselves (which is not the case for re-exports).
-            if(length(funlst))
+            ## In addition, packages may
+            ## (a) Provide explicit usage for method(s) but not the
+            ##     generic, or for the generic but not exported methods
+            ## (b) "Document" internal functions without usage
+            ## So record this info as well.
+            if(length(funlst)) {
+                funnms <- names(funlst)
+                fiu <- functions_in_usages
+                ## Very crude approximation for (a) based on simple
+                ## GEN.CLS name matching:
+                ns3 <- (is.na(charmatch(paste0(funnms, "."), fiu)) &
+                        !vapply(funnms,
+                                function(e)
+                                    any(startsWith(e, paste0(fiu, "."))),
+                                NA))
+                keywords <- lapply(db, .Rd_get_metadata, "keyword")
+                ind <- which(vapply(keywords,
+                                    function(k) "internal" %in% k,
+                                    NA))
+                db_aliases_from_internal <-
+                    unlist(lapply(db[ind], .Rd_get_metadata, "alias"),
+                           use.names = FALSE)
+                ext <- funnms %notin% db_aliases_from_internal
                 data.frame(name = names(funlst),
-                           self = vapply(funlst,
+                           self = if(is_base) TRUE else
+                                  vapply(funlst,
                                          function(f)
                                              identical(environment(f),
                                                        ns_env),
-                                         NA))
-            else
+                                         NA),
+                           ns3 = ns3,
+                           ext = ext)
+            } else
                 NULL
         }
     objects_missing_from_usages <-
