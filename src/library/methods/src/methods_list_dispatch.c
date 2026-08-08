@@ -48,17 +48,14 @@ static SEXP R_selectByPackage(SEXP f, SEXP classes, int nargs);
 
 /* objects, mostly symbols, that are initialized once to save a little time */
 static int initialized = 0;
-static SEXP s_dot_Methods, s_skeleton, s_expression, s_function,
-    s_getAllMethods, s_objectsEnv, s_MethodsListSelect,
-    s_sys_dot_frame, s_sys_dot_call, s_sys_dot_function, s_generic,
-    s_missing, s_generic_dot_skeleton, s_subset_gets, s_element_gets,
+static SEXP s_dot_Methods, s_MethodsListSelect, s_generic, s_missing,
     s_argument, s_allMethods, s_base;
 static SEXP R_FALSE, R_TRUE;
 static bool table_dispatch_on = true;
 
 /* precomputed skeletons for special primitive calls */
 static SEXP R_short_skeletons, R_empty_skeletons;
-static SEXP f_x_i_skeleton, fgets_x_i_skeleton, f_x_skeleton, fgets_x_skeleton;
+//static SEXP f_x_i_skeleton, fgets_x_i_skeleton, f_x_skeleton, fgets_x_skeleton;
 
 
 SEXP R_quick_method_check(SEXP object, SEXP fsym, SEXP fdef);
@@ -157,19 +154,19 @@ SEXP R_initMethodDispatch(SEXP envir)
 	return(envir);
 
     s_dot_Methods = install(".Methods");
-    s_skeleton = install("skeleton");
-    s_expression = install("expression");
-    s_function = install("function");
-    s_getAllMethods = install("getAllMethods");
-    s_objectsEnv = install("objectsEnv");
+    install("skeleton");
+    install("expression");
+    install("function");
+    install("getAllMethods");
+    install("objectsEnv");
     s_MethodsListSelect = install("MethodsListSelect");
-    s_sys_dot_frame = install("sys.frame");
-    s_sys_dot_call = install("sys.call");
-    s_sys_dot_function = install("sys.function");
+    install("sys.frame");
+    install("sys.call");
+    install("sys.function");
     s_generic = install("generic");
-    s_generic_dot_skeleton = install("generic.skeleton");
-    s_subset_gets = install("[<-");
-    s_element_gets = install("[[<-");
+    install("generic.skeleton");
+    install("[<-");
+    install("[[<-");
     s_argument = install("argument");
     s_allMethods = install("allMethods");
 
@@ -211,10 +208,12 @@ SEXP R_initMethodDispatch(SEXP envir)
     if(R_short_skeletons == R_UnboundValue ||
        R_empty_skeletons == R_UnboundValue)
 	error(_("could not find the skeleton calls for 'methods' (package detached?): expect very bad things to happen"));
+/*
     f_x_i_skeleton = VECTOR_ELT(R_short_skeletons, 0);
     fgets_x_i_skeleton = VECTOR_ELT(R_short_skeletons, 1);
     f_x_skeleton = VECTOR_ELT(R_empty_skeletons, 0);
     fgets_x_skeleton = VECTOR_ELT(R_empty_skeletons, 1);
+*/
     init_loadMethod();
     initialized = 1;
     return(envir);
@@ -261,11 +260,11 @@ SEXP R_set_el_named(SEXP object, SEXP what, SEXP value)
 }
 
 /*  */
-static int n_ov = 0;
+//static int n_ov = 0;
 
 SEXP R_clear_method_selection(void)
 {
-    n_ov = 0;
+//    n_ov = 0;
     return R_NilValue;
 }
 

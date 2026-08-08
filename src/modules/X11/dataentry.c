@@ -194,7 +194,7 @@ static char copycontents[sizeof(buf)+1] ;
 static Status           status;
 static XFontSet         font_set = NULL;
 static XFontStruct	**fs_list;
-static int		font_set_cnt;
+// static int		font_set_cnt;
 static char             fontset_name[]="-*-fixed-medium-r-*-*-*-120-*-*-*-*-*-*";
 static XIM		ioim;
 static XIMStyle         ioim_style;
@@ -1964,10 +1964,10 @@ static Rboolean initwin(DEstruct DE, const char *title) /* TRUE = Error */
     DE->box_w = twidth + 4;
     if(mbcslocale) {
 	XFontSetExtents *extent = XExtentsOfFontSet(font_set);
-	char **ml;
+//      char **ml;
 	DE->box_h = (extent->max_logical_extent.height)
 	    + (extent->max_logical_extent.height / 5) + 4;
-	font_set_cnt = XFontsOfFontSet(font_set, &fs_list, &ml);
+//	font_set_cnt = XFontsOfFontSet(font_set, &fs_list, &ml);
 	DE->text_offset = 2 + fs_list[0]->max_bounds.descent;
     } else {
 	DE->box_h = DE->font_info->max_bounds.ascent

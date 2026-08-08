@@ -50,7 +50,7 @@ typedef struct {
 /* Add/delete Tcl/Tk event handler */
 
 static void (* OldHandler)(void);
-static int OldRwait;
+//static int OldRwait;
 static int Tcl_loaded = 0;
 static int Tcl_lock = 0; /* reentrancy guard */
 
@@ -96,7 +96,7 @@ static void addTcl(void)
     if (Tcl_loaded) return; // error(_("Tcl already loaded"));
     Tcl_loaded = 1;
     OldHandler = R_PolledEvents;
-    OldRwait = R_wait_usec;
+//    OldRwait = R_wait_usec;
     R_PolledEvents = TclHandler;
     if (R_wait_usec > 10000 || R_wait_usec == 0) R_wait_usec = 10000;
 }

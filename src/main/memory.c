@@ -2200,7 +2200,8 @@ NORET static void mem_err_malloc(R_size_t size)
 /* This includes: stack space, node space and vector space */
 
 #define PP_REDZONE_SIZE 1000L
-static int R_StandardPPStackSize, R_RealPPStackSize;
+// static int R_StandardPPStackSize, R_RealPPStackSize;
+static int R_RealPPStackSize;
 
 attribute_hidden void InitMemory(void)
 {
@@ -2218,7 +2219,7 @@ attribute_hidden void InitMemory(void)
 	gc_fail_on_error = FALSE;
 
     gc_reporting = R_Verbose;
-    R_StandardPPStackSize = R_PPStackSize;
+    //R_StandardPPStackSize = R_PPStackSize;
     R_RealPPStackSize = R_PPStackSize + PP_REDZONE_SIZE;
     if (!(R_PPStack = (SEXP *) malloc(R_RealPPStackSize * sizeof(SEXP))))
 	R_Suicide("couldn't allocate memory for pointer stack");
