@@ -6364,8 +6364,10 @@ add_dummies <- function(dir, Log)
                              ## LLVM >= 18 clang++
                              ": warning: .* \\[-Wdeprecated-literal-operator\\]",
                              ## C23 warnings on some setups of GCC and clang
-                               "\\[-Wdiscarded-qualifiers\\]"
-                             )
+                             "\\[-Wdiscarded-qualifiers\\]",
+                             ## clang 23
+                             "\\[-Wunused-but-set-global\\]"
+                            )
                 ## macOS ld warnings
                 warn_re <- c(warn_re,
                              "^ld: warning: search path .* not found",
