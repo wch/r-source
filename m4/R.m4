@@ -1,6 +1,6 @@
 ### R.m4 -- extra macros for configuring R		-*- Autoconf -*-
 ###
-### Copyright (C) 1998-2025 R Core Team
+### Copyright (C) 1998-2026 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -4644,6 +4644,10 @@ case "${FC}" in
   *flang|*flang-*)
     R_SYSTEM_ABI="${R_SYSTEM_ABI},flang,flang"
     ;;
+  dnl renamed in LLVM 20, but maybe still in use.
+  *flang-new|*flang-new-*)
+    R_SYSTEM_ABI="${R_SYSTEM_ABI},flang,flang"
+    ;;
   ## We need not consider ifort as it will be discontinued in 2023,
   ## but it seems to have the same runtime as ifx.
   *ifx|*ifort)
@@ -4651,6 +4655,7 @@ case "${FC}" in
     ;;
   *)
     case "${host_os}" in
+      dnl kept for legacy systems
       solaris*)
       R_SYSTEM_ABI="${R_SYSTEM_ABI},solf95,solf95"
       ;;

@@ -29718,6 +29718,9 @@ case "${FC}" in
   *flang|*flang-*)
     R_SYSTEM_ABI="${R_SYSTEM_ABI},flang,flang"
     ;;
+    *flang-new|*flang-new-*)
+    R_SYSTEM_ABI="${R_SYSTEM_ABI},flang,flang"
+    ;;
   ## We need not consider ifort as it will be discontinued in 2023,
   ## but it seems to have the same runtime as ifx.
   *ifx|*ifort)
@@ -29725,7 +29728,7 @@ case "${FC}" in
     ;;
   *)
     case "${host_os}" in
-      solaris*)
+            solaris*)
       R_SYSTEM_ABI="${R_SYSTEM_ABI},solf95,solf95"
       ;;
       *)
