@@ -6364,8 +6364,9 @@ add_dummies <- function(dir, Log)
                              ## LLVM >= 18 clang++
                              ": warning: .* \\[-Wdeprecated-literal-operator\\]",
                              ## C23 warnings on some setups of GCC and clang
+                             ## see slso -Wincompatible-pointer-types-discards-qualifiers above
                              "\\[-Wdiscarded-qualifiers\\]",
-                             ## clang 23
+                             ## LLVM >= 23
                              "\\[-Wunused-but-set-global\\]"
                             )
                 ## macOS ld warnings
@@ -6515,7 +6516,9 @@ add_dummies <- function(dir, Log)
                 if (!config_val_to_logical(check_src_flag)) {
                     lines <- filtergrep("warning: unused", lines,
                                         ignore.case = TRUE, useBytes = TRUE)
-                    lines <- filtergrep("\\[-Wunused-but-set-variable", lines,
+                    ## maybe in future unused-but-set-variable
+                    ## to allow through unused-but-set-global
+                    lines <- filtergrep("\\[-Wunused-but-set", lines,
                                         ignore.case = TRUE, useBytes = TRUE)
                 }
                 ## (gfortran seems to use upper case.)
