@@ -6515,7 +6515,7 @@ add_dummies <- function(dir, Log)
                 if (!config_val_to_logical(check_src_flag)) {
                     lines <- filtergrep("warning: unused", lines,
                                         ignore.case = TRUE, useBytes = TRUE)
-                    lines <- filtergrep("warning: .* set but not used", lines,
+                    lines <- filtergrep("\\[-Wunused-but-set-variable", lines,
                                         ignore.case = TRUE, useBytes = TRUE)
                 }
                 ## (gfortran seems to use upper case.)
