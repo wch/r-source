@@ -4641,12 +4641,8 @@ if test "${ac_cv_fc_compiler_gnu}" = yes; then
   R_SYSTEM_ABI="${R_SYSTEM_ABI},gfortran,gfortran"
 else
 case "${FC}" in
-  *flang-new|*flang-new-*)
-    R_SYSTEM_ABI="${R_SYSTEM_ABI},flang-new,flang-new"
-    ;;
-  ## This means Classic flang
-  *flang)
-    R_SYSTEM_ABI="${R_SYSTEM_ABI},ClassicFlang,ClassicFlang"
+  *flang|*flang-*)
+    R_SYSTEM_ABI="${R_SYSTEM_ABI},flang,flang"
     ;;
   ## We need not consider ifort as it will be discontinued in 2023,
   ## but it seems to have the same runtime as ifx.
