@@ -35,6 +35,13 @@
       variable names, fixing \PR{18468}.  Thanks to \I{Bill Dunlap} and
       \sQuote{\I{R Dev Day}} participants \I{Vincent Arel-Bundock},
       \I{Cynthia Huang}, \I{Tina Rozsos} and \I{Marina Marinelli}.
+      
+      \item Tweaks (including to the parsers) for the C23 behaviour
+      (preserving \code{const}) of \code{strchr}, \code{strrchr} and
+      \code{strstr}.  (By Brian Ripley and Duncan Murdoch.)
+
+      \item \command{make check-devel} now works without recommended
+      packages.
     }
   }
 }
