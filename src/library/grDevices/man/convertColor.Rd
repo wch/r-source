@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/convertColor.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{convertColor}
@@ -14,6 +14,8 @@
 \usage{
 convertColor(color, from, to, from.ref.white, to.ref.white,
              scale.in = 1, scale.out = 1, clip = TRUE)
+
+colorspaces
 }
 \arguments{
   \item{color}{A matrix whose rows specify colors.
@@ -67,6 +69,10 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
   
   For the named color spaces \code{color} must be a matrix of values in
   the \code{from} color space: in particular opaque colors.
+
+  The converters for these color spaces are available in the list
+  \code{colorspaces}, with those names, for example
+  \code{colorspaces$XYZ}. 
 }
 \value{
   A 3-column matrix whose rows specify the colors.
