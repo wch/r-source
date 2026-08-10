@@ -1,7 +1,7 @@
 library(parallel)
 
 if(require(boot, quietly = TRUE)) {
-    cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
+    cd4.rg <- function(data, mle) parallel:::mvrnorm0(nrow(data), mle$m, mle$v)
     cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
     mc <- getOption("mc.cores", 2)
     run1 <- function(...) boot(cd4, corr, R = 500, sim = "parametric",
