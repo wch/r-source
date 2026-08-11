@@ -2767,9 +2767,14 @@ add_dummies <- function(dir, Log)
                         ind <- (nzchar(out) &
                                 (out !=
                                  "Exported functions without usage information:"))
-                        if(all(startsWith(out[ind], " ")))
-                            noteLog(Log)
-                        else
+                        if(all(startsWith(out[ind], " "))) {
+                            val <- Sys.getenv("_R_CHECK_CODOC_FUNCTIONS_MISSING_FROM_USAGES_",
+                                              "FALSE")
+                            if(is.na(config_val_to_logical(val)))
+                                infoLog(Log)
+                            else
+                                noteLog(Log)
+                        } else
                             warningLog(Log)
                         printLog0(Log, paste(c(out, ""), collapse = "\n"))
                     }
@@ -7677,7 +7682,7 @@ add_dummies <- function(dir, Log)
 ##        Sys.setenv("_R_CHECK_XREFS_PKGS_ARE_DECLARED_" = "TRUE")
 ##        Sys.setenv("_R_CHECK_XREFS_MIND_SUSPECT_ANCHORS_" = "TRUE")
         ## allow this to be overridden if there is a problem elsewhere
-        prev <- Sys.getenv("_R_CHECK_MATRIX_DATA_",  NA_character_)
+        prev <- Sys.getenv("_R_CHECK_MATRIX_DATA_", NA_character_)
         if(is.na(prev)) Sys.setenv("_R_CHECK_MATRIX_DATA_" = "TRUE")
 ##        Sys.setenv("_R_NO_S_TYPEDEFS_" = "TRUE")
         Sys.setenv("_R_CHECK_NEWS_IN_PLAIN_TEXT_" = "TRUE")
@@ -7693,6 +7698,11 @@ add_dummies <- function(dir, Log)
         Sys.setenv("_R_CHECK_PACKAGES_USED_IN_DEMO_" = "TRUE")
         Sys.setenv("_R_CHECK_RCPP_NOT_NEEDED_" = "TRUE")
         Sys.setenv("_R_CHECK_URLS_SHOW_301_STATUS_" = "TRUE")
+        prev <-
+            Sys.getenv("_R_CHECK_CODOC_FUNCTIONS_MISSING_FROM_USAGES_",
+                       NA_character_)
+        if(is.na(prev))
+            Sys.setenv("_R_CHECK_CODOC_FUNCTIONS_MISSING_FROM_USAGES_" = "NA")
         R_check_vc_dirs <- TRUE
         R_check_executables_exclusions <- FALSE
         R_check_doc_sizes2 <- TRUE

@@ -926,11 +926,13 @@ function(x, ...)
     functions_missing_from_usages <-
         attr(x, "functions_missing_from_usages")
     if(NROW(functions_missing_from_usages) &&
-       config_val_to_logical(Sys.getenv("_R_CHECK_CODOC_FUNCTIONS_MISSING_FROM_USAGES_",
-                                        "FALSE"))) {
-        self <- functions_missing_from_usages$self
+       (!isFALSE(val <- config_val_to_logical(Sys.getenv("_R_CHECK_CODOC_FUNCTIONS_MISSING_FROM_USAGES_",
+                                                          "FALSE"))))) {
+        ind <- functions_missing_from_usages$self
+        if(is.na(val))
+            ind <- ind & functions_missing_from_usages$ext
         functions_missing_from_usages <-
-            functions_missing_from_usages$name[self]
+            functions_missing_from_usages$name[ind]
         if(length(functions_missing_from_usages))
             y <- c(y,
                    pcn(c("Exported functions without usage information:",
