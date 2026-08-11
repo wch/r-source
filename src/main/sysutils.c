@@ -3058,14 +3058,21 @@ attribute_hidden int R_is_redirection_tty(int fd)
     fnInfo->FileNameLength = fnLength;
     r = GetFileInformationByHandleEx(h, FileNameInfo, fnInfo, size);
     int res = 0;
-    if (r)
-	/* note that fnInfo->FileName is not null terminated */
+    /* defensively check that the name did not grow between calls and that its
+       byte length contains an integral number of WCHARs */
+    if (r && fnInfo->FileNameLength <= fnLength &&
+	fnInfo->FileNameLength % sizeof(WCHAR) == 0) {
+	/* FileNameLength is in bytes and excludes the null
+	   terminator.  The allocation has room for it because
+	   FILE_NAME_INFO includes FileName[1]. */
+	fnInfo->FileName[fnInfo->FileNameLength / sizeof(WCHAR)] = L'\0';
 	/* e.g. msys-1888ae32e00d56aa-pty0-from-master,
 	        cygwin-e022582115c10879-pty0-from-master */
 	/* test borrowed from git */
 	res = ((wcsstr(fnInfo->FileName, L"msys-") ||
 	        wcsstr(fnInfo->FileName, L"cygwin-")) &&
 		wcsstr(fnInfo->FileName, L"-pty"));
+    }
     free(fnInfo);
     return res;
 }
