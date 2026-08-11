@@ -3969,8 +3969,10 @@ additional arguments, corresponding to using @code{skipWith = TRUE},
 TRUE}.
 
 @item _R_CHECK_CODOC_FUNCTIONS_MISSING_FROM_USAGES_
-If true, have @code{codoc()} also report (most) functions which are
-exported but have no usage.
+If true or @code{NA}, have @code{codoc()} also report (most) functions
+which are exported but have no usage.  If @code{NA} (which is used for
+the CRAN submission checks by default), functions documented as internal
+are ignored, and functions missing are reported via @samp{INFO} only.
 Default: false.
 @item _R_CHECK_CODOC_S4_METHODS_
 Control whether @code{codoc()} testing is also performed on S4 methods.
