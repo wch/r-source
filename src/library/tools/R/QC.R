@@ -834,11 +834,12 @@ function(package, dir, lib.loc = NULL,
                 NULL
         }
     objects_missing_from_usages <-
-        if(!has_namespace) character() else {
+        if(!has_namespace) character()
+        else {
             c(functions_missing_from_usages$name,
               setdiff(objects_in_code_not_in_usages,
                       c(functions_in_code, data_sets_in_code)))
-                                       }
+        }
 
     attr(bad_doc_objects, "objects_in_code_not_in_usages") <-
         objects_in_code_not_in_usages
@@ -859,6 +860,9 @@ function(package, dir, lib.loc = NULL,
         objects_missing_from_usages
     attr(bad_doc_objects, "functions_missing_from_usages") <-
         functions_missing_from_usages
+    attr(bad_doc_objects, "functions_in_usages") <- functions_in_usages
+    attr(bad_doc_objects, "variables_in_usages") <- variables_in_usages
+    attr(bad_doc_objects, "data_sets_in_usages") <- data_sets_in_usages
     attr(bad_doc_objects, "has_namespace") <- has_namespace
     attr(bad_doc_objects, "bad_lines") <- bad_lines
     class(bad_doc_objects) <- "codoc"
