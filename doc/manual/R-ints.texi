@@ -3977,6 +3977,10 @@ Default: false.
 @item _R_CHECK_CODOC_S4_METHODS_
 Control whether @code{codoc()} testing is also performed on S4 methods.
 Default: true.
+@item _R_CHECK_CODOC_VARIABLES_IN_USAGES_
+If true, have @code{codoc()} also report variables shown in the usages
+but missing from the code.
+Default: false (but true for CRAN submission checks).
 
 @item _R_CHECK_COMPACT_DATA_
 If true, check data for ascii and uncompressed saves, and also check if
