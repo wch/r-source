@@ -24,6 +24,10 @@
       \item Fixing \code{rbinom()}, see \PR{19049} below, to reproduce
       old results needs \code{RNGkind()} to get a new \code{binom.kind}
       argument and, e.g. \code{RNGversion("4.6")} keeps previous behaviour.
+
+      \item The Sweave syntax definition objects
+      \code{SweaveSyntaxNoweb} and \code{SweaveSyntaxLatex} now each have
+      their own detailed help page.
     }
   }
 
