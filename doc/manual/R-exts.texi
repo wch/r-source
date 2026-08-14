@@ -1575,9 +1575,10 @@ a @file{datalist} file to @file{data} directories of over 1MB, using the
 function @code{tools::add_datalist}.
 
 Tables (@file{.tab}, @file{.txt}, or @file{.csv} files) can be
-compressed by @command{gzip}, @command{bzip2} or @command{xz},
-optionally with additional extension @file{.gz}, @file{.bz2} or
-@file{.xz}.
+compressed by @command{gzip}, @command{bzip2}, @command{xz} or
+@command{zstd} (if supported by the build) optionally with additional
+extension @file{.gz}, @file{.bz2} or @file{.xz}, or (from @R{} 4.7.0)
+@file{.xst} or @file{.xstd}.
 
 If your package is to be distributed, do consider the resource
 implications of large datasets for your users: they can make packages

@@ -1,7 +1,7 @@
 #  File src/library/utils/R/data.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
     fileExt <- function(x) {
         db <- grepl("\\.[^.]+\\.(gz|bz2|xz)$", x)
         ans <- sub(".*\\.", "", x)
-        ans[db] <-  sub(".*\\.([^.]+\\.)(gz|bz2|xz)$", "\\1\\2", x[db])
+        ans[db] <-  sub(".*\\.([^.]+\\.)(gz|bz2|xz|zst|zstd)$", "\\1\\2", x[db])
         ans
     }
 

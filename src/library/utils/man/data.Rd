@@ -1,6 +1,6 @@
 % File src/library/utils/man/data.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2022 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{data}
@@ -60,7 +60,10 @@ data(\dots, list = character(), package = NULL, lib.loc = NULL,
   If more than one matching file name is found, the first on this list
   is used.  (Files with extensions \file{.txt}, \file{.tab} or
   \file{.csv} can be compressed, with or without further extension
-  \file{.gz}, \file{.bz2} or \file{.xz}.)
+  \file{.gz}, \file{.bz2} or \file{.xz}. As from \R 4.7.0, further
+  extensions \file{.zst} and \file{.zstd} are accepted. On builds with
+  support for \command{zstd}, \command{zstd}-compressed files can be
+  used without a further extension.
 
   The data sets to be loaded can be specified as a set of character
   strings or names, or as the character vector \code{list}, or as both.

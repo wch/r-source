@@ -87,6 +87,10 @@
       \code{find_calls_in_package_code()},
       \code{gsub_with_transformed_matches()} and
       \code{system_with_capture()} in package \pkg{tools}.
+
+      \item \command{data()} will accept text files with further
+      extension \file{.zst} or \file{.zstd}, and read them on builds
+      with \command{zstd} support.
     }
   }
 
