@@ -6715,7 +6715,7 @@ SEXP R_decompress1(SEXP in, Rboolean *err)
     Bytef *buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
     int res = uncompress(buf, &outlen, (Bytef *)(p + 4), inlen - 4);
     if(res != Z_OK) {
-	warning("internal error %d in R_decompress1", res);
+	warning("internal error %d in R_decompress2", res);
 	*err = TRUE;
 	return R_NilValue;
     }
