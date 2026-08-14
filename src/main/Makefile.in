@@ -141,6 +141,7 @@ R: Makedeps
 @WANT_R_STATIC_TRUE@	@$(MAKE) install-static-local
 	@$(MAKE) install-bin-local
 
+datetime.o: $(top_srcdir)/src/main/datetime.c $(top_srcdir)/src/main/Rstrptime.h
 
 ## is this portable?  Documented as GNU extension.
 ../include/config.h ../include/Rversion.h:
