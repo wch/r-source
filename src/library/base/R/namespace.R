@@ -1170,9 +1170,13 @@ namespaceImportMethods <- function(self, ns, vars, from = NULL)
 }
 
 importIntoEnv <- function(impenv, impnames, expenv, expnames) {
+        ## Avoid computing `names(exports)` here. `exports` is an environment
+        ## so computing the names requires a full walk. This causes problematic
+        ## super-linear performance when there are many `importFrom()` directives.
     exports <- getNamespaceInfo(expenv, "exports")
-    ex <- names(exports)
-    if(!all(eie <- expnames %in% ex)) {
+    expvals <- mget(expnames, envir = exports, inherits = FALSE,
+                    ifnotfound = list(NULL))
+    if(!all(eie <- lengths(expvals) != 0L)) {
         miss <- expnames[!eie]
         ## if called (indirectly) for namespaceImportClasses
         ## these are all classes
@@ -1193,7 +1197,7 @@ importIntoEnv <- function(impenv, impnames, expenv, expnames) {
                  call. = FALSE, domain = NA)
         }
     }
-    expnames <- unlist(mget(expnames, envir = exports, inherits = FALSE), recursive=FALSE)
+    expnames <- unlist(expvals, recursive = FALSE)
     if (is.null(impnames)) impnames <- character()
     if (is.null(expnames)) expnames <- character()
     .Internal(importIntoEnv(impenv, impnames, expenv, expnames))
