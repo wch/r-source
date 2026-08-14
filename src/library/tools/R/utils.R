@@ -574,16 +574,16 @@ function(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
 ### ** .vc_dir_names
 
 ## Version control directory names: CVS, .svn (Subversion), .arch-ids
-## (arch), .bzr, .git, .hg (mercurial) and _darcs (Darcs)
+## (arch), .bzr, .git, .hg (mercurial), _darcs (Darcs), and .jj (jujutsu)
 ## And it seems .metadata (eclipse) is in the same category.
 
 .vc_dir_names <-
-    c("CVS", ".svn", ".arch-ids", ".bzr", ".git", ".hg", "_darcs", ".metadata")
+    c("CVS", ".svn", ".arch-ids", ".bzr", ".git", ".hg", "_darcs", ".jj", ".metadata")
 
 ## and RE version (beware of the need for escapes if amending)
 
 .vc_dir_names_re <-
-    "/(CVS|\\.svn|\\.arch-ids|\\.bzr|\\.git|\\.hg|_darcs|\\.metadata)(/|$)"
+    R"[/(CVS|\.svn|\.arch-ids|\.bzr|\.git|\.hg|_darcs|\.jj|\.metadata)(/|$)]"
 
 ## We are told
 ## .Rproj.user is Rstudio

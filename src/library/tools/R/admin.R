@@ -786,6 +786,56 @@ function(dir, outDir, keep.source = TRUE)
     invisible()
 }
 
+### * mergeImportFroms
+
+## Merge adjacent `importFrom()` directives for the same package into a single
+## entry. This allows the import loop in `loadNamespace()` to process all these
+## imports in a single iteration, which is much more efficient.
+mergeImportFroms <- function(imports) {
+    n <- length(imports)
+    if (n <= 1L)
+        return(imports)
+
+    ## Three possibilities:
+    ## - `importFrom()`: `list("packageName", c("import1", "import2", ...))`
+    ## - `import()`: `"packageName"`
+    ## - `import(except = )`: `list("packageName", except = )`
+    isImportFrom <- vapply(imports, function(i) !is.character(i) && is.null(i$except), NA)
+    pkgs <- character(n)
+    pkgs[isImportFrom] <- vapply(imports[isImportFrom], \(x) x[[1]], "")
+
+    ## A group continues only between two importFrom()s of the same package
+    joins <- isImportFrom[-n] & isImportFrom[-1L] & pkgs[-n] == pkgs[-1L]
+    groups <- cumsum(c(TRUE, !joins))
+
+    merged <- lapply(split(seq_len(n), groups), function(index) {
+        ## A singleton group is a non-mergeable directive (`import()`,
+        ## `import(except = )`, or a lone `importFrom()`) and passes through.
+        if (length(index) == 1L)
+            return(imports[index])
+
+        sources <- unlist(lapply(imports[index], `[[`, 2L), recursive = FALSE)
+
+        targets <- names(sources)
+        if (is.null(targets))
+            targets <- sources
+        else
+            targets[!nzchar(targets)] <- sources[!nzchar(targets)]
+
+        ## Merge only when each local name is imported once. If a local name
+        ## repeats, leave the directives separate so `loadNamespace()` validates
+        ## and resolves at load-time.
+        if (anyDuplicated(targets))
+            imports[index]
+        else
+            list(list(pkgs[index[[1L]]], sources))
+    })
+
+    ## Each group yields a list of entries (one if merged, several if left
+    ## separate)
+    unlist(merged, recursive = FALSE, use.names = FALSE)
+}
+
 ### * .install_package_namespace_info
 
 .install_package_namespace_info <-
@@ -797,6 +847,7 @@ function(dir, outDir)
     nsInfoFilePath <- file.path(outDir, "Meta", "nsInfo.rds")
     if(file_test("-nt", nsInfoFilePath, nsFile)) return(invisible())
     nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
+    nsInfo$imports <- mergeImportFroms(nsInfo$imports)
     outMetaDir <- file.path(outDir, "Meta")
     if(!dir.exists(outMetaDir) && !dir.create(outMetaDir))
         stop(gettextf("cannot open directory '%s'", outMetaDir),
