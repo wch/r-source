@@ -47,8 +47,22 @@ function(f, tidy = "tidy") {
     m <- unique(do.call(rbind, m[lengths(m) == 4L]))
     p <- m[, 2L]
     concordance <- as.Rconcordance(grep("^<!-- concordance:", s, value = TRUE))
-    result <- cbind(line = p, col = m[, 3L], msg = m[, 4L], txt = s[as.numeric(p)])
-    
+    result <- cbind(line = p, col = m[, 3L], msg = m[, 4L],
+                    txt = s[as.numeric(p)])
+    ## <FIXME>
+    ## Argh.  Nowadays in HTML5 'type' again is a valid attribute of
+    ## <ol>, but as of 2026-08-15 HTML Tidy still complains: already
+    ## fixed in the upstream sources 4 yours ago, but there never was a
+    ## new release.
+    ## See <https://github.com/htacg/tidy-html5/issues/1012>.
+    ## So filter out ourselves for the time being ...
+    if(NROW(result)) {
+        ind <- (result[, 3L] ==
+                "Warning: <ol> attribute \"type\" not allowed for HTML5")
+        if(any(ind))
+            result <- result[!ind, , drop = FALSE]
+    }
+    ## </FIXME>
     if (!is.null(concordance))
     	result <- cbind(result, matchConcordance(p, concordance = concordance))
     
