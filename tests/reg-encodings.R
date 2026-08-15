@@ -2,9 +2,11 @@
 
 str(INFO <- l10n_info())
 UTF8 <- INFO[["UTF-8"]]
+osType <- .Platform$OS.type
+onWindows <- osType == "windows"
 LATIN1OR9 <- !UTF8 && (
     INFO[["Latin-1"]] ||
-    switch(.Platform$OS.type,
+    switch(osType,
            windows = identical(INFO[["codepage"]], 28605L),
            unix = tolower(gsub("-", "", INFO[["codeset"]], fixed = TRUE)) == "iso885915")
 )
@@ -385,3 +387,46 @@ options(OutDec = ".") # back to normal
 stopifnot(grepl("·", fx, fixed=TRUE),
           identical(sub("·", ".", fx), sapply(x, format)))
 options(op)
+
+
+## PR#19112 -- writeChar() overflows its output buffer .. multibyte ..
+s <- strrep("é", 100L)          # 100 characters, 200 bytes:
+stopifnot(nchar(s, "chars") == 100, nchar(s, "bytes") == 200)
+## (a) connection path: 200-byte buffer, 299 bytes written
+tf <- tempfile(); f <- file(tf, "wb")
+suppressWarnings(writeChar(s, f, nchars = 199L, eos = NULL))
+close(f)
+tf. <- tempfile(); f <- file(tf., "wb")
+suppressWarnings(writeChar(s, f, eos = NULL))# using default nchars = nchar(.) = 200
+close(f)
+## (b) raw path: 199-byte vector allocated, 299 bytes written
+r <- suppressWarnings(writeChar(s, raw(), nchars = 199L, eos = NULL))
+stopifnot(exprs = {
+    all.equal(file.size(tf), 100+199)
+    identical(s, suppressWarnings(readChar(tf, nchars=200))) # was FALSE
+    identical(s, readChar(tf, nchars=100)) # TRUE  (no warning)
+    all.equal(file.size(tf.), 200)
+    identical(s, readChar(tf., nchars=200))
+    length(r) == 299L # was 199
+})
+rm(tf, tf.)
+## (c) heap corruption, repeated in a loop
+su <- strrep("\U0001F600", 100L)   # 100 chars, 400 bytes:
+stopifnot(nchar(su, "chars") == 100, nchar(su, "bytes") == 400)
+tf <- tempfile()
+for (k in 1:64) {
+    f <- file(tf, "wb")
+    suppressWarnings(writeChar(su, f, nchars = 399L, eos = NULL))
+    close(f)
+}
+## Gave Abort trap: 6
+## or   malloc(): invalid size (unsorted)
+## or   Fatal glibc error: malloc.c:..(_int_malloc): assertion failed: (unsigned long) (size) >= (unsigned long)(nb)
+stopifnot(exprs = {
+    ## Platform difference __FIXME__ ?
+    all.equal(file.size(tf), if(onWindows) 599 else 699)
+    isOpen(f <- file(tf, "rb"))
+    is.character(sr <- readChar(f, nchars = nchar(su)))
+    identical(sr, strrep("😀", nchar(su)))
+})
+
