@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2025  The R Core Team
+ *  Copyright (C) 1997--2026  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -488,7 +488,12 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, R_xlen_t stretch,
     case 1625: /* character <- S4|OBJ */
     case 2425: /* raw       <- S4|OBJ */
         if (dispatch_asvector(y, call, rho)) {
-            return SubassignTypeFix(x, y, stretch, level, call, rho);
+	    /*^^^^^^^^^^^^^^^ creates an unprotected *y; call below may allocate (coerceVector),
+	      so the new value has to be protected: */
+            PROTECT(*y);
+            which = SubassignTypeFix(x, y, stretch, level, call, rho);
+            UNPROTECT(1);
+            return which;
         }
 
     default:

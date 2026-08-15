@@ -42,6 +42,9 @@
 
       \item \command{make check-devel} now works without recommended
       packages.
+
+      \item Now \code{PROTECT()} in \code{SubassignTypeFix}, fixing
+      \PR{19110} thanks to \I{Kevin Ushey}.
     }
   }
 }
