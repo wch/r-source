@@ -3412,6 +3412,23 @@ stopifnot(identical(f(FALSE), 100),
           identical(f(TRUE),  100)) # was '1' (silently)
 
 
+## PR#19109 -- `dim<-` dimension vector product can overflow
+x <- integer()
+er <- tryCid(dim(x) <- rep(2^16, 4))
+stopifnot(inherits(er, "error"))
+if(englishMsgs)
+    stopifnot(grepl("too many", conditionMessage(er)))
+## gave no error but an x of length zero; x[] <- .. would seg.fault
+t30 <- 2^30
+for(nd in c(2:4, 33:37)) { # 
+    d. <- c(rep(t30, nd), 0)
+    x <- integer();   dim(x) <- d.
+    y <- array(integer(), dim = d.)
+    stopifnot(identical(x, y), is.integer(d <- dim(x)), all.equal(d., d))
+}
+## above creation of x & y failed for a couple of hours in R-devel
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
