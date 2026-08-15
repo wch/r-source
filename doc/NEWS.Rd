@@ -259,7 +259,12 @@
 
       \item Changed \code{model.frame.glm()} to use same logic as
       \code{model.frame.lm()} (\PR{19036}, \I{Isaac Gravestock}).
-      
+
+      \item \code{strptime()} now also returns \code{NA} for out of range
+      \code{"\%OS"} and a correct error message in some wrong multibyte
+      cases, fixing \PR{19117} comment #1 and \PR{19122} by \I{Michael
+	Chirico}; additionally, some overflow to \code{Inf} times no longer
+      result in \code{NA}.
     }
   }
 }
@@ -304,7 +309,7 @@
 
       \item \code{dim(a) <- vec} now checks for too large \code{prod(vec)},
       thanks to \I{Kevin Ushey}'s report and patch in \PR{19109}.
-      
+
       \item Tweaks (including to the parsers) for the C23 behaviour
       (preserving \code{const}) of \code{strchr}, \code{strrchr} and
       \code{strstr}.  (By Brian Ripley and Duncan Murdoch.)

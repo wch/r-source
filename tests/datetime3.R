@@ -997,6 +997,24 @@ if(grepl("^system", print(sessionInfo()$tzcode))) # tzcode "internal" still givi
 stopifnot(d_sec == 365*24*3600)
 ## the negative value stemming from C level integer addition overflow
 
+## Error message deconfusion: PR#19117#c1 _comment 1_ only
+curLCtime <- Sys.getlocale("LC_TIME")
+curLCCtyp <- Sys.getlocale("LC_CTYPE")
+set.T.C <- \(c1, c2) c(tim = Sys.setlocale("LC_TIME", c1),
+                       ctp = Sys.setlocale("LC_CTYPE",c2))
+set.T.C("zh_CN", "zh_CN.utf8")
+(chD <- strftime(as.Date('2000-11-01'), fmt <- '%Y %d %b')) #  "2000 01 11\xd4\xc2"
+stopifnot(grepl('multibyte', print(tryCmsg(strptime(chD, fmt))), fixed=TRUE))
+## was   "input string is too long"
+set.T.C(curLCtime, curLCCtyp) # reset (and show)
+
+
+## Invalid %OS -> NA -- PR#19122
+stopifnot(identical(
+    strptime("2023-01-01 12:00:99", "%Y-%m-%d %H:%M:%S") -> tt,
+    strptime("2023-01-01 12:00:99", "%Y-%m-%d %H:%M:%OS")
+  ), is.na(tt))
+
 
 
 ## keep at end

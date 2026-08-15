@@ -53,10 +53,10 @@ static void get_locale_w_strings(void);
 
 /* we guarantee to have strncasecmp in R */
 #if defined __GNUC__ && __GNUC__ >= 2
-# define match_string(cs1, s2) \
-  (__extension__ ({ size_t len = strlen (cs1);						      \
-     int result = strncasecmp ((cs1), (s2), len) == 0;			      \
-     if (result) (s2) += len;						      \
+# define match_string(cs1, s2)				\
+  (__extension__ ({ size_t len = strlen (cs1);		\
+     int result = strncasecmp ((cs1), (s2), len) == 0;	\
+     if (result) (s2) += len;				\
      result; }))
 #else
 /* Oh come on.  Get a reasonable compiler.  */
@@ -66,27 +66,27 @@ static void get_locale_w_strings(void);
 
 /* We intentionally do not use isdigit() for testing because this will
    lead to problems with the wide character version.  */
-#define get_number(from, to, n) \
-  do {									      \
-    int __n = n;							      \
-    val = 0;								      \
-    while (*rp == ' ')							      \
-      ++rp;								      \
-    if (*rp < '0' || *rp > '9')						      \
-      return NULL;							      \
-    do {								      \
-      val *= 10;							      \
-      val += *rp++ - '0';						      \
-/*  } while (--__n > 0 && val * 10 <= to && *rp >= '0' && *rp <= '9');*/      \
-    } while (--__n > 0 && *rp >= '0' && *rp <= '9');	      \
-    if (val < from || val > to)						      \
-      return NULL;							      \
+#define get_number(from, to, n)						\
+  do {									\
+    int __n = n;							\
+    val = 0;								\
+    while (*rp == ' ')							\
+      ++rp;								\
+    if (*rp < '0' || *rp > '9')						\
+      return NULL;							\
+    do {								\
+      val *= 10;							\
+      val += *rp++ - '0';						\
+/*  } while (--__n > 0 && val * 10 <= to && *rp >= '0' && *rp <= '9');*/ \
+    } while (--__n > 0 && *rp >= '0' && *rp <= '9');	      		\
+    if (val < from || val > to)						\
+      return NULL;							\
   } while (0)
-# define get_alt_number(from, to, n) \
-  /* We don't have the alternate representation.  */			      \
+# define get_alt_number(from, to, n)			\
+  /* We don't have the alternate representation.  */	\
   get_number(from, to, n)
-#define recursive(new_fmt) \
-  (*(new_fmt) != '\0'							      \
+#define recursive(new_fmt)				\
+  (*(new_fmt) != '\0'					\
    && (rp = strptime_internal (rp, (new_fmt), tm, psecs, poffset)) != NULL)
 
 /* This version: may overwrite these with versions for the locale,
@@ -579,12 +579,17 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 		/* Match seconds using alternate numeric symbols.
 		get_alt_number (0, 61, 2); */
 		{
-		    double sval;
 		    wchar_t *end;
-		    sval = wcstod(rp, &end);
-		    if( sval >= 0.0 && sval <= 61.0) {
+		    double sval = wcstod(rp, &end);
+		    /*            ^^^^^^ FIXME need a R_strtod()-like R_wcstod() --> ./util.c */
+		    if(sval >= 0.0 && sval <= 61.0) {
 			tm->tm_sec = (int) sval;
 			*psecs = sval;
+		    } else if(sval == INFINITY || sval == -INFINITY) {
+			*psecs = sval;
+		    } else {
+			tm->tm_sec = NA_INTEGER;
+			*psecs = NA_REAL;
 		    }
 		    rp = end;
 		}
@@ -1064,12 +1069,16 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 		/* Match seconds using alternate numeric symbols.
 		   get_alt_number (0, 61, 2); */
 		   {
-		       double sval;
 		       char *end;
-		       sval = strtod(rp, &end);
-		       if( sval >= 0.0 && sval <= 61.0) {
+		       double sval = R_strtod(rp, &end); /* R_*() to read "Inf" */
+		       if(sval >= 0.0 && sval <= 61.0) {
 			   tm->tm_sec = (int) sval;
 			   *psecs = sval;
+		       } else if(sval == INFINITY || sval == -INFINITY) {
+			   *psecs = sval;
+		       } else {
+			   tm->tm_sec = NA_INTEGER;
+			   *psecs = NA_REAL;
 		       }
 		       rp = end;
 		   }
@@ -1128,7 +1137,7 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 	    /* have_yday, so this must have come from %j */
 	    /* We don't have tm_mon and/or tm_mday, compute them. */
 	    int t_mon = 0;
-	    int yr = 1900 + tm->tm_year;	    
+	    int yr = 1900 + tm->tm_year;
 	    if(tm->tm_yday > (__isleap(yr) ? 365 : 364)) {
 		warning("day-of-year %d in year %d is invalid\n",
 			tm->tm_yday+1, yr);
@@ -1298,15 +1307,15 @@ R_strptime (const char *buf, const char *format, stm *tm,
 	// GCC 12 does not ignore third arg, contradicting the glibc man page
 	// but seems content with 0 rather than 1000.
 	// (Not mentioned by C99/C11).
-	n = mbstowcs(NULL, buf, 0); 
+	n = mbstowcs(NULL, buf, 0);
+	if(n == -1) error(_("invalid multibyte input string"));
 	if(n > 1000) error(_("input string is too long"));
 	n = mbstowcs(wbuf, buf, 1000);
-	if(n == -1) error(_("invalid multibyte input string"));
 
 	n = mbstowcs(NULL, format, 0); // ditto
+	if(n == -1) error(_("invalid multibyte format string"));
 	if(n > 1000) error(_("format string is too long"));
 	n = mbstowcs(wfmt, format, 1000);
-	if(n == -1) error(_("invalid multibyte format string"));
 	return (void *) w_strptime_internal (wbuf, wfmt, tm, psecs, poffset);
     } else
 #endif
