@@ -3660,7 +3660,7 @@ if(englishMsgs)
     stopifnot(grepl("too many", conditionMessage(er)))
 ## gave no error but an x of length zero; x[] <- .. would seg.fault
 t30 <- 2^30
-for(nd in c(2:4, 33:37)) { # 
+for(nd in c(2:4, 33:37)) {
     d. <- c(rep(t30, nd), 0)
     x <- integer();   dim(x) <- d.
     y <- array(integer(), dim = d.)
@@ -3677,6 +3677,12 @@ RR <- replicate(1000, {
 })
 stopifnot(RR == "2", length(RR) == 1000L)
 ## RR was '2' "randomly" in R <= 4.6.1
+
+
+## PR#19049
+save("save", file=(tf <- tempfile("saveRdata")))
+sys.load.image(tf, FALSE); rm(tf, save)
+## had called .Internal(RNGkind(..)) with wrong number of args
 
 
 

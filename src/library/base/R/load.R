@@ -1,7 +1,7 @@
 #  File src/library/base/R/load.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2024 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -90,7 +90,7 @@ save <- function(..., list = character(),
             }
         }
         if (is.character(file)) {
-	    if(!nzchar(file)) 
+	    if(!nzchar(file))
                 stop(gettextf("'%s' must be a non-empty character string", "file"), domain = NA)
 	    if(!is.character(compress)) {
 		if(!is.logical(compress))
@@ -175,7 +175,7 @@ sys.load.image <- function(name, quiet)
 {
     if (file.exists(name)) {
         load(name, envir = .GlobalEnv)
-        sample.kind <- .Internal(RNGkind(NULL, NULL, NULL))[3L]
+        sample.kind <- .Internal(RNGkind(NULL, NULL, NULL, NULL))[3L]
         if (sample.kind == 0L)
             warning("non-uniform 'Rounding' sampler used", domain = NA)
         if (! quiet)
