@@ -1002,10 +1002,12 @@ curLCtime <- Sys.getlocale("LC_TIME")
 curLCCtyp <- Sys.getlocale("LC_CTYPE")
 set.T.C <- \(c1, c2) c(tim = Sys.setlocale("LC_TIME", c1),
                        ctp = Sys.setlocale("LC_CTYPE",c2))
-set.T.C("zh_CN", "zh_CN.utf8")
-(chD <- strftime(as.Date('2000-11-01'), fmt <- '%Y %d %b')) #  "2000 01 11\xd4\xc2"
-stopifnot(grepl('multibyte', print(tryCmsg(strptime(chD, fmt))), fixed=TRUE))
-## was   "input string is too long"
+val <- set.T.C("zh_CN", "zh_CN.utf8")
+if(all(nzchar(val))) {
+    (chD <- strftime(as.Date('2000-11-01'), fmt <- '%Y %d %b')) #  "2000 01 11\xd4\xc2"
+    stopifnot(grepl('multibyte', print(tryCmsg(strptime(chD, fmt))), fixed=TRUE))
+    ## was   "input string is too long"
+}
 set.T.C(curLCtime, curLCCtyp) # reset (and show)
 
 
