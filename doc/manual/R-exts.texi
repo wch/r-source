@@ -7677,8 +7677,8 @@ include a comment in the @code{\donttest} section explaining why it is
 needed.
 
 @findex \dontdiff
-Output from code marked with @code{\dontdiff} (requires @R{} >= 4.4.0)
-or between comment lines
+Output from code marked with @code{\dontdiff} at the beginning of a line
+(requires @R{} >= 4.4.0) or between comment lines
 @example
 ## IGNORE_RDIFF_BEGIN
 ## IGNORE_RDIFF_END
