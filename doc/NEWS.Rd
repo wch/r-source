@@ -291,9 +291,9 @@
       non-vector \code{along.width} arguments properly. Thanks to
       \I{Mitchell O'Hara-Wild}.
 
-      \item Wrapper objects make sure data pointers remain once obtained
-      remain valid as long as a wrapper object is reachable. Reported by
-      \I{Ivan Krylov}.
+      \item Wrappers now duplicate even a wrapped object that might be
+      shared before returning a read-only pointer. This prevents cached
+      read-only pointers from becoming invalid. Reported by \I{Ivan Krylov}.
 
       \item \code{dummy.coef()} becomes more robust to non-syntactic
       variable names, fixing \PR{18468}.  Thanks to \I{Bill Dunlap} and
