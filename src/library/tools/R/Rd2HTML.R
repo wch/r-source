@@ -405,17 +405,18 @@ createRedirects <- function(file, Rdobj)
 staticLogoPath <- function(package, lib.loc = NULL,
                            relative = FALSE, Rhome = "../../..", dir = FALSE) {
     ## This may be called with package="" (e.g., for standalone Rd files)
-    if (!nzchar(package)) file <- R.home("doc/html/Rlogo.svg")
+    file0 <- file.path(R.home("doc"), "html", "Rlogo.svg", fsep = "/")
+    if (!nzchar(package)) file <- file0
     else if (dir) {
         file <- file.path(package, "man", "figures", "logo.png")
         if (!file.exists(file)) file <- file.path(package, "man", "figures", "logo.svg")
-        if (!file.exists(file)) file <- R.home("doc/html/Rlogo.svg")
+        if (!file.exists(file)) file <- file0
     } else {
         file <- system.file("help", "figures", "logo.png",
                             package = package, lib.loc = lib.loc)
         if (!nzchar(file)) file <- system.file("help", "figures", "logo.svg",
                                                package = package, lib.loc = lib.loc)
-        if (!nzchar(file)) file <- R.home("doc/html/Rlogo.svg")
+        if (!nzchar(file)) file <- file0
     }
     if (relative) {
         file <- if (endsWith(file, "/logo.png")) "figures/logo.png"
