@@ -107,16 +107,8 @@ vhtmlify <- function(x, inEqn = FALSE) { # code version
     x <- fsub("<", "&lt;", x)
     x <- fsub(">", "&gt;", x)
     x <- fsub('"\\{"', '"{"', x)
-    ## http://htmlhelp.com/reference/html40/entities/symbols.html
-    if(inEqn) {
-        rx <- paste0("\\\\(",
-                     paste(math_replacements[,"name"], collapse = "|"),
-                     ")(?![a-zA-Z])")
-        m <- gregexec(rx, x, perl = TRUE)
-        ii <- lapply(regmatches(x, m),
-                     function(mm) if (length(mm)) match(mm[2,], math_replacements[,"name"]))
-        regmatches(x, gregexpr(rx, x, perl = TRUE)) <- lapply(ii, function(i) math_replacements[i, "html"])
-    }
+    if(inEqn)
+        x <- eqn_to_text(x, "html", c("&#8216;", "&#8217;"))
     x
 }
 
