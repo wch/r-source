@@ -1340,17 +1340,19 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE)
     parseDirective <- function(e) {
         ## trying to get more helpful error message:
 	asChar <- function(cc) {
-            ## <FIXME>
-            ## <https://bugs.r-project.org/show_bug.cgi?id=19132>
-            ## Simply 
-	    ##   r <- vapply(cc, as.character, "")
-            ## does not work, as
-            ## R> as.character(parse(text = "NULL")[[1]])
-            ## character(0)
-            ## R> as.character(parse(text = "foo::bar")[[1]])
-            ## [1] "::"  "foo" "bar"
-            r <- as.character(cc)
-            ## </FIXME>
+            r <- if(length(cc) <= 1L)
+                     as.character(cc)
+                 else vapply(cc,
+                             function(e) {
+                                 if(is.character(e))
+                                     e
+                                 else if(is.name(e))
+                                     as.character(e)
+                                 else
+                                     deparse1(e)
+                             },
+                             "",
+                             USE.NAMES = FALSE)
 	    if(any(r == ""))
 		stop(gettextf("empty name in directive '%s' in 'NAMESPACE' file",
 			      as.character(e[[1L]])),
