@@ -79,9 +79,9 @@ symnum(x, cutpoints = c(0.3, 0.6, 0.8, 0.9, 0.95),
   If \code{legend} is \code{TRUE} (as by default when there are more
   than two classes), the result has an attribute \code{"legend"}
   containing a legend of the returned character codes, in the form
-  \deqn{c_1 s_1 c_2 s_2 \dots s_n c_{n+1}}{c[1] \sQuote{s[1]} c[2] \sQuote{s[2]} \dots \sQuote{s[n]} c_[n+1]}
+  \deqn{c_1 s_1 c_2 s_2 \dots s_n c_{n+1}}{c[1] s[1] c[2] s[2] \dots s[n] c_[n+1]}
   where \eqn{c_j}{c[j]}\code{ = cutpoints[j]} and
-  \eqn{s_j}{s[j]}\code{ = symbols[j]}.
+  \eqn{s_j}{s[j]}\code{ = sQuote(symbols[j])}.
 }
 \author{Martin Maechler \email{maechler@stat.math.ethz.ch}}
 \seealso{
