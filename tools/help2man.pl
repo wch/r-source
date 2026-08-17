@@ -162,7 +162,19 @@ my ($help_text, $version_text) = map {
 	or die "$this_program: can't get `--$_' info from $ARGV[0]\n"
 } qw(help version);
 
-my $date = strftime "%B %Y", localtime;
+# By default the generated manual pages will include the current date.  This may
+# however be overridden by setting the environment variable $SOURCE_DATE_EPOCH
+# to an integer value of the seconds since the UNIX epoch.  This is primarily
+# intended to support reproducible builds (wiki.debian.org/ReproducibleBuilds)
+# and will additionally ensure that the output date string is UTC.
+my $epoch_secs = time;
+if (exists $ENV{SOURCE_DATE_EPOCH} and $ENV{SOURCE_DATE_EPOCH} =~ /^(\d+)$/)
+{
+    $epoch_secs = $1;
+    $ENV{TZ} = 'UTC0';
+}
+
+my $date = strftime "%B %Y", localtime $epoch_secs;
 (my $program = $ARGV[0]) =~ s!.*/!!;
 my $package = $program;
 my $version;
