@@ -3394,7 +3394,7 @@ add_dummies <- function(dir, Log)
                 } else {
                     if (!any) noteLog(Log)
                     any <- TRUE
-                    printLog(Log, "Unable to find GhostScript executable to run checks on size reduction\n")
+                    printLog(Log, "Unable to find Ghostscript executable to run checks on size reduction\n")
                 }
 
             }
@@ -6303,8 +6303,13 @@ add_dummies <- function(dir, Log)
                              ## selected re-defining of macros": clang
                              ": warning: .*(M_PI|INT_MIN|FCONE).* \\[-Wmacro-redefined\\]",
                              ## LLVM >= 18 clang++
-                             ": warning: .* \\[-Wdeprecated-literal-operator\\]"
-                             )
+                             ": warning: .* \\[-Wdeprecated-literal-operator\\]",
+                             ## C23 warnings on some setups of GCC and clang
+                             ## see slso -Wincompatible-pointer-types-discards-qualifiers above
+                             "\\[-Wdiscarded-qualifiers\\]",
+                             ## LLVM >= 23
+                             "\\[-Wunused-but-set-global\\]"
+                            )
                 ## macOS ld warnings
                 warn_re <- c(warn_re,
                              "^ld: warning: search path .* not found",
@@ -6452,7 +6457,9 @@ add_dummies <- function(dir, Log)
                 if (!config_val_to_logical(check_src_flag)) {
                     lines <- filtergrep("warning: unused", lines,
                                         ignore.case = TRUE, useBytes = TRUE)
-                    lines <- filtergrep("warning: .* set but not used", lines,
+                    ## maybe in future unused-but-set-variable
+                    ## to allow through unused-but-set-global
+                    lines <- filtergrep("\\[-Wunused-but-set", lines,
                                         ignore.case = TRUE, useBytes = TRUE)
                 }
                 ## (gfortran seems to use upper case.)
