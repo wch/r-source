@@ -265,6 +265,9 @@
       cases, fixing \PR{19117} comment #1 and \PR{19122} by \I{Michael
 	Chirico}; additionally, some overflow to \code{Inf} times no longer
       result in \code{NA}.
+
+      \item \code{drop1.glm()} misbehaved for models fitted with 
+      \code{y = FALSE} (\PR{19128}, \I{Amal Tawfik}).
     }
   }
 }

@@ -517,6 +517,12 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Rao", "LRT", "Ch
         y <- model.response(model.frame(object))
         if(!is.factor(y)) storage.mode(y) <- "double"
     }
+    if(NCOL(y) == 2) {
+        ## Binomial with matrix response fitted with y=FALSE, PR#19128
+        n <- y[, 1] + y[, 2]
+        y <- ifelse(n == 0, 0, y[, 1]/n)
+    }
+
 #    na.coef <- seq_along(object$coefficients)[!is.na(object$coefficients)]
     wt <- object$prior.weights %||% rep.int(1, n)
     for(i in seq_len(ns)) {
