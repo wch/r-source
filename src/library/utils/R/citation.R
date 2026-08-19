@@ -199,7 +199,7 @@ function(role)
     pos <- which(is.na(match(role, MARC_relator_db$code)))
     if(length(pos)) {
         ind <- pmatch(tolower(role[pos]),
-                      tolower(MARC_relator_db$name),
+                      tolower(MARC_relator_db$term),
                       0L)
         role[pos[ind > 0L]] <- MARC_relator_db$code[ind]
         if(any(ind <- (ind == 0L))) {
