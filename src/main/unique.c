@@ -1650,6 +1650,9 @@ attribute_hidden SEXP do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     } else {
 	HashData data = { 0 };
 	HashTableSetup(target, &data, NA_INTEGER);
+	/* the table is only referenced from the C struct, and shash() can
+	   allocate via translateCharUTF8() -> R_alloc() */
+	PROTECT(data.HashTable);
 	data.useUTF8 = useUTF8;
 	data.nomatch = 0;
 	DoHashing(target, &data);
@@ -1662,6 +1665,7 @@ attribute_hidden SEXP do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 	    ians[i] = j;
 	    nexact++;
 	}
+	UNPROTECT(1); /* data.HashTable */
     }
 
     if(nexact < n_input) {
