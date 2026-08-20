@@ -5713,7 +5713,6 @@ int isValidName(const char *name)
     return 1;
 }
 
-
 static int SymbolValue(int c)
 {
     int kw;
