@@ -262,7 +262,7 @@ newdefine:	NEWCMD  			{ $$ = xxpushMode(2, 1, 0, 0); }
 						  $$ = xxnewdef(PROTECT(xxtag($1, MACRO, &@1)),
 								$3, &@$);
 						  UNPROTECT(1); }
-		LET_OR_DEF			{  $$ = xxenterDefMode(2, 1); }
+        |	LET_OR_DEF			{  $$ = xxenterDefMode(2, 1); }
 		Items END_OF_ARGS
 						{  xxpopMode($2);
 						  $$ = xxnewdef(PROTECT(xxtag($1, MACRO, &@1)),
