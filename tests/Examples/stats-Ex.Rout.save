@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-07-22 r90289) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-08-19 r90426) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -5177,7 +5177,7 @@ function (V)
         r[seq.int(from = 1L, by = p + 1L, length.out = p)] <- 1
     r
 }
-<bytecode: 0x5651c796f7b0>
+<bytecode: 0x564f1628bcf0>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -7831,7 +7831,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x5651c7933aa0>
+<environment: 0x564f14668d10>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -7876,7 +7876,8 @@ circumference ~ A/(1 + exp((B - age)/C))
 > ### Title: Distribution-free Inference in a Stratified One-Way Layout
 > ### Aliases: free1way free1way.formula free1way.table free1way.numeric
 > ###   free1way.factor print.free1way coef.free1way vcov.free1way
-> ###   logLik.free1way summary.free1way confint.free1way
+> ###   logLik.free1way summary.free1way confint.free1way summary.MPLfree1way
+> ###   confint.MPLfree1way
 > ### Keywords: htest
 > 
 > ### ** Examples
@@ -11496,6 +11497,46 @@ Nonlinear regression model
 + musc.2 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th), MASS::muscle,
 +               start = list(a = rep(b[2], 21), b = rep(b[3], 21), th = b[1]))
 + summary(musc.2)
++ 
++ 
++ 
++ 
++ ## Example with constraint, using "port" algorithm. Also showing possibility
++ ## for reordering if using named vector for lower=
++ dd <- structure(list(time = c(1L, 2L, 3L, 6L, 12L, 24L, 48L), y = c(1.95, 
++ 6.43, 10.39, 27.01, 113.72, 251.14, 314.22)), row.names = c(NA, 
++ -7L), class = "data.frame")
++ 
++ st0 <- list(Max = 200, k = 0.1, Lag = 0.5)
++ lwr <- c(k = 0.1, Max =-Inf, Lag = -Inf)
++ form <- y ~ (time > Lag) * Max * (1-exp(-k * (time - Lag)))
++ m1 <- nls(form,
++     data = dd,
++     algorithm="port",
++     lower = lwr,
++     start = st0)
++ stopifnot(coef(m1)[["k"]] >= lwr[["k"]])
++ 
++ ## Simplified form naming specific elements of lwr, upr
++ st0 <- list(Max = 200, k = 0.1, Lag = 0.5)
++ lwr <- c(k = 0.09)
++ upr <- c(Lag = 5.5)
++ m2 <- nls(form,
++     data = dd,
++     algorithm="port",
++     lower = lwr,
++     upper = upr,
++     start = st0)
++ stopifnot(coef(m2)[["k"]] >= lwr[["k"]] && coef(m2)[["Lag"]] <= upr[["Lag"]])
++ 
++ ## Example using indexing features and bounds
++ ## (Notice that constructions like this make e.g. start$a a named
++ ## vector with strange names, so these are stripped internally.)
++ musc.3 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th), MASS::muscle,
++ start = list(a = rep(b[2], 21), b = rep(b[3], 21), th = b[1]),
++ upper = list(a = rep(35, 21)),
++  algorithm="port")
++ summary(musc.3)
 + })
 > with(MASS::muscle, table(Strip))
 Strip
@@ -11575,6 +11616,78 @@ th     0.797      0.127    6.30  8.0e-06 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 Residual standard error: 1.11 on 17 degrees of freedom
+
+> dd <- structure(list(time = c(1L, 2L, 3L, 6L, 12L, 24L, 48L), y = c(1.95, 
++     6.43, 10.39, 27.01, 113.72, 251.14, 314.22)), row.names = c(NA, -7L), class = "data.frame")
+> st0 <- list(Max = 200, k = 0.1, Lag = 0.5)
+> lwr <- c(k = 0.1, Max = -Inf, Lag = -Inf)
+> form <- y ~ (time > Lag) * Max * (1 - exp(-k * (time - Lag)))
+> m1 <- nls(form, data = dd, algorithm = "port", lower = lwr, start = st0)
+> stopifnot(coef(m1)[["k"]] >= lwr[["k"]])
+> st0 <- list(Max = 200, k = 0.1, Lag = 0.5)
+> lwr <- c(k = 0.09)
+> upr <- c(Lag = 5.5)
+> m2 <- nls(form, data = dd, algorithm = "port", lower = lwr, upper = upr, 
++     start = st0)
+> stopifnot(coef(m2)[["k"]] >= lwr[["k"]] && coef(m2)[["Lag"]] <= upr[["Lag"]])
+> musc.3 <- nls(Length ~ a[Strip] + b[Strip] * exp(-Conc/th), MASS::muscle, 
++     start = list(a = rep(b[2], 21), b = rep(b[3], 21), th = b[1]), upper = list(a = rep(35, 
++         21)), algorithm = "port")
+> summary(musc.3)
+
+Formula: Length ~ a[Strip] + b[Strip] * exp(-Conc/th)
+
+Parameters:
+    Estimate Std. Error t value Pr(>|t|)    
+a1    23.050      0.845   27.28  1.8e-15 ***
+a2    27.964      0.844   33.13  < 2e-16 ***
+a3    28.951      1.587   18.25  1.3e-12 ***
+a4    22.606      2.676    8.45  1.7e-07 ***
+a5    20.031      2.570    7.79  5.2e-07 ***
+a6    17.993      2.230    8.07  3.2e-07 ***
+a7    32.975      1.683   19.59  4.2e-13 ***
+a8    34.521      3.210   10.75  5.3e-09 ***
+a9    29.398      3.000    9.80  2.1e-08 ***
+a10   35.000      2.805   12.48  5.5e-10 ***
+a11   32.727      2.751   11.89  1.2e-09 ***
+a12   35.000      1.759   19.90  3.3e-13 ***
+a13   29.922      1.695   17.66  2.3e-12 ***
+a14   31.151      3.135    9.94  1.7e-08 ***
+a15   35.000      3.006   11.64  1.6e-09 ***
+a16   30.499      0.892   34.19  < 2e-16 ***
+a17   30.770      0.859   35.81  < 2e-16 ***
+a18   19.688      1.064   18.50  1.1e-12 ***
+a19   35.000      1.077   32.49  < 2e-16 ***
+a20   31.819      1.125   28.29  9.7e-16 ***
+a21   29.802      1.088   27.38  1.7e-15 ***
+b1   -37.778     12.855   -2.94  0.00917 ** 
+b2   -37.191     12.737   -2.92  0.00955 ** 
+b3   -32.028      2.947  -10.87  4.5e-09 ***
+b4   -30.682      3.950   -7.77  5.4e-07 ***
+b5   -28.288      3.945   -7.17  1.6e-06 ***
+b6   -19.613      3.929   -4.99  0.00011 ***
+b7   -25.379     12.873   -1.97  0.06518 .  
+b8   -43.463      3.994  -10.88  4.4e-09 ***
+b9   -31.614      7.508   -4.21  0.00059 ***
+b10  -34.525      3.966   -8.71  1.1e-07 ***
+b11  -32.341      3.954   -8.18  2.7e-07 ***
+b12  -45.363     15.195   -2.99  0.00831 ** 
+b13  -29.185     13.240   -2.20  0.04157 *  
+b14  -36.478      7.527   -4.85  0.00015 ***
+b15  -31.830      7.509   -4.24  0.00055 ***
+b16  -64.874     18.877   -3.44  0.00315 ** 
+b17  -47.557     14.919   -3.19  0.00539 ** 
+b18  -21.747     10.549   -2.06  0.05489 .  
+b19  -30.015     11.713   -2.56  0.02018 *  
+b20  -49.822     15.262   -3.26  0.00457 ** 
+b21  -35.563     12.618   -2.82  0.01184 *  
+th     0.614      0.107    5.74  2.4e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.3 on 17 degrees of freedom
+
+Algorithm "port", convergence message: relative convergence (4)
 
 > ## IGNORE_RDIFF_END
 > ## Don't show: 
@@ -12776,14 +12889,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x5651c88b56e0>
-<environment: 0x5651c8871bd8>
+<bytecode: 0x564f16fadfa0>
+<environment: 0x564f16f2e1e8>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x5651c88b5590>
-<environment: 0x5651c8871bd8>
+<bytecode: 0x564f16fade50>
+<environment: 0x564f16f2e1e8>
 
 > 
 > 
@@ -17176,8 +17289,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x5651c7aec8d8>
-<environment: 0x5651c3164e58>
+<bytecode: 0x564f16411288>
+<environment: 0x564f12eb36c8>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -19807,7 +19920,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.059 0.271 3.435 0 0 
+Time elapsed:  3.735 0.1 3.85 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -51,7 +51,13 @@
         gradthe <- gradient(theta)     # Compute the gradient vector
         hessthe <- hessian(theta)      # Compute the Hessian matrix
 
-        delta <- Matrix::solve(hessthe, gradthe, tol = control$tolsolve)
+        delta <- tryCatch(Matrix::solve(hessthe, gradthe, 
+                                        tol = control$tolsolve),
+                          error = function(e) NULL)
+        if (is.null(delta))
+            stop(gettextf("computing Newton updated failed in %s",
+                          ".NewtonRaphson"),
+                 domain = NA)
 
         if (control$trace)
             cat(iter, ': ', theta, "\n", sep = "")
@@ -114,9 +120,10 @@
 
 .free1wayML <- function(x, link, mu = 0, start = NULL, fix = NULL, 
                         residuals = TRUE, score = TRUE, hessian = TRUE, 
-                        MPL_Jeffreys = FALSE,
-                        ### use nlminb for small sample sizes
-                        dooptim = c(".NewtonRaphson", "nlminb")[1 + (sum(x) < 20)],                         
+                        logdet = FALSE, MPL_Jeffreys = FALSE,
+                        ### use nlminb for small sample sizes or MPL
+                        dooptim = c(".NewtonRaphson", "nlminb")[1 + 
+                            ((sum(x) < 20) || (MPL_Jeffreys > 0))],
                         control = list(
                             "nlminb" = list(trace = trace, iter.max = 200,
                                             eval.max = 200, rel.tol = 1e-10,
@@ -143,8 +150,8 @@
     }
 
     ### short-cuts for link functions
-    F <- function(q) .p(link, q = q)
-    Q <- function(p) .q(link, p = p)
+    F <- function(q, ...) .p(link, q = q, ...)
+    Q <- function(p, ...) .q(link, p = p, ...)
     f <- function(q) .d(link, x = q)
     fp <- function(q) .dd(link, x = q)
 
@@ -152,6 +159,9 @@
         stop(gettextf("%s needs package 'Matrix' correctly installed",
                       ".free1wayML"),
                  domain = NA)
+
+    if (length(MPL_Jeffreys) > 1L || any(MPL_Jeffreys < 0L))
+        stop(gettextf("invalid argument '%s'", "MPL_Jeffreys"), domain = NA)
 
     # setup and starting values
     
@@ -190,13 +200,24 @@
 
     for (b in seq_len(B)) {
         xb <- matrix(x[,,b, drop = TRUE], ncol = K)
-        xw <- rowSums(abs(xb)) > 0
+        ### remove undefined shift parameters 
+        xw <- (rowSums(abs(xb)) > 0L) | 
+            ### except for
+            (MPL_Jeffreys > 0L && ### penalised likelihoods 
+             C <= 5L &&           ### small number of categories
+             B >  1L &&           ### in the presence of blocks
+             is.null(xrc)         ### absence of right-censoring
+            )
         if (sum(xw) > 1L) {
             ### do not remove last parameter if there are corresponding
             ### right-censored observations
             wm <- which(xw)[sum(xw)]
-            if (!is.null(xrc) && any(xrc[wm:dx[1],,b,drop = TRUE] > 0))
-                xw[length(xw)] <- TRUE
+            if (!is.null(xrc) && any(xrc[wm:dx[1],,b,drop = TRUE] > 0)) {
+                ### determine last right-censoring time in this block
+                wrc <- rowSums(abs(xrc[,,b,drop = TRUE])) > 0
+                lastrc <- which(wrc)[sum(wrc)]
+                xw[lastrc] <- TRUE
+            }
             xlist[[b]] <- xb[xw,,drop = FALSE]
             Cidx <- rep.int(1L, times = C)
             Cidx[xw] <- Cidx[xw] + seq_len(sum(xw))
@@ -244,7 +265,6 @@
     
     .nll <- function(parm, x, mu = 0, rightcensored = FALSE) 
     {
-
         # parm to prob
         
         bidx <- seq_len(ncol(x) - 1L)
@@ -253,17 +273,21 @@
         tmb <- intercepts - matrix(delta, nrow = length(intercepts),  
                                           ncol = ncol(x),
                                           byrow = TRUE)
-        Ftmb <- F(tmb)
+
+        Ftmb <- exp(logFtmb <- F(tmb, log = TRUE))
+        ### log-sum-exp trick
         if (rightcensored) {
-            prb <- 1 - Ftmb[- nrow(Ftmb), , drop = FALSE]
+            logprb <- log1p(- Ftmb[- nrow(Ftmb), , drop = FALSE])
         } else {
-            prb <- Ftmb[- 1L, , drop = FALSE] - 
-                   Ftmb[- nrow(Ftmb), , drop = FALSE]
+
+            logprb <- logFtmb[- 1L, , drop = FALSE] +
+                      log1p(- exp(pmin(0, logFtmb[- nrow(Ftmb), , drop = FALSE] - 
+                                          logFtmb[- 1L, , drop = FALSE])))
         } 
+        ### not needed for log-likelihood but for gradients and hessians
+        prb <- exp(logprb)
         
-        if (any(prb < .Machine$double.eps^10)) 
-            return(Inf)
-        return(- sum(x * log(prb)))
+        return(- sum(x * logprb))
     }
     
     # negative score
@@ -279,13 +303,19 @@
         tmb <- intercepts - matrix(delta, nrow = length(intercepts),  
                                           ncol = ncol(x),
                                           byrow = TRUE)
-        Ftmb <- F(tmb)
+
+        Ftmb <- exp(logFtmb <- F(tmb, log = TRUE))
+        ### log-sum-exp trick
         if (rightcensored) {
-            prb <- 1 - Ftmb[- nrow(Ftmb), , drop = FALSE]
+            logprb <- log1p(- Ftmb[- nrow(Ftmb), , drop = FALSE])
         } else {
-            prb <- Ftmb[- 1L, , drop = FALSE] - 
-                   Ftmb[- nrow(Ftmb), , drop = FALSE]
+
+            logprb <- logFtmb[- 1L, , drop = FALSE] +
+                      log1p(- exp(pmin(0, logFtmb[- nrow(Ftmb), , drop = FALSE] - 
+                                          logFtmb[- 1L, , drop = FALSE])))
         } 
+        ### not needed for log-likelihood but for gradients and hessians
+        prb <- exp(logprb)
         
 
         # density prob ratio
@@ -319,13 +349,19 @@
         tmb <- intercepts - matrix(delta, nrow = length(intercepts),  
                                           ncol = ncol(x),
                                           byrow = TRUE)
-        Ftmb <- F(tmb)
+
+        Ftmb <- exp(logFtmb <- F(tmb, log = TRUE))
+        ### log-sum-exp trick
         if (rightcensored) {
-            prb <- 1 - Ftmb[- nrow(Ftmb), , drop = FALSE]
+            logprb <- log1p(- Ftmb[- nrow(Ftmb), , drop = FALSE])
         } else {
-            prb <- Ftmb[- 1L, , drop = FALSE] - 
-                   Ftmb[- nrow(Ftmb), , drop = FALSE]
+
+            logprb <- logFtmb[- 1L, , drop = FALSE] +
+                      log1p(- exp(pmin(0, logFtmb[- nrow(Ftmb), , drop = FALSE] - 
+                                          logFtmb[- 1L, , drop = FALSE])))
         } 
+        ### not needed for log-likelihood but for gradients and hessians
+        prb <- exp(logprb)
         
 
         # density prob ratio
@@ -337,6 +373,49 @@
         
 
         ret <- .rowSums(zl - zu, m = nrow(zl), n = ncol(zl)) / 
+               .rowSums(x, m = nrow(x), n = ncol(x))
+        ret[!is.finite(ret)] <- 0
+        return(- ret)
+    }
+    
+    # negative scale score residuals
+    
+    .nssr <- function(parm, x, mu = 0, rightcensored = FALSE) 
+    {
+
+        # parm to prob
+        
+        bidx <- seq_len(ncol(x) - 1L)
+        delta <- c(0, mu + parm[bidx])
+        intercepts <- c(-Inf, parm[- bidx], Inf)
+        tmb <- intercepts - matrix(delta, nrow = length(intercepts),  
+                                          ncol = ncol(x),
+                                          byrow = TRUE)
+
+        Ftmb <- exp(logFtmb <- F(tmb, log = TRUE))
+        ### log-sum-exp trick
+        if (rightcensored) {
+            logprb <- log1p(- Ftmb[- nrow(Ftmb), , drop = FALSE])
+        } else {
+
+            logprb <- logFtmb[- 1L, , drop = FALSE] +
+                      log1p(- exp(pmin(0, logFtmb[- nrow(Ftmb), , drop = FALSE] - 
+                                          logFtmb[- 1L, , drop = FALSE])))
+        } 
+        ### not needed for log-likelihood but for gradients and hessians
+        prb <- exp(logprb)
+        
+
+        # density prob ratio
+        
+        ftmb <- f(tmb)
+        zu <- x * ftmb[- 1, , drop = FALSE] / prb
+        if (rightcensored) zu[] <- 0 ### derivative of a constant
+        zl <- x * ftmb[- nrow(ftmb), , drop = FALSE] / prb
+        
+
+        ret <- .rowSums(zl * c(0, parm[-bidx]) - zu * c(parm[-bidx], 0), 
+                        m = nrow(zl), n = ncol(zl)) / 
                .rowSums(x, m = nrow(x), n = ncol(x))
         ret[!is.finite(ret)] <- 0
         return(- ret)
@@ -355,13 +434,19 @@
         tmb <- intercepts - matrix(delta, nrow = length(intercepts),  
                                           ncol = ncol(x),
                                           byrow = TRUE)
-        Ftmb <- F(tmb)
+
+        Ftmb <- exp(logFtmb <- F(tmb, log = TRUE))
+        ### log-sum-exp trick
         if (rightcensored) {
-            prb <- 1 - Ftmb[- nrow(Ftmb), , drop = FALSE]
+            logprb <- log1p(- Ftmb[- nrow(Ftmb), , drop = FALSE])
         } else {
-            prb <- Ftmb[- 1L, , drop = FALSE] - 
-                   Ftmb[- nrow(Ftmb), , drop = FALSE]
+
+            logprb <- logFtmb[- 1L, , drop = FALSE] +
+                      log1p(- exp(pmin(0, logFtmb[- nrow(Ftmb), , drop = FALSE] - 
+                                          logFtmb[- 1L, , drop = FALSE])))
         } 
+        ### not needed for log-likelihood but for gradients and hessians
+        prb <- exp(logprb)
         
 
         # Hessian prep
@@ -561,6 +646,7 @@
                 H$A <- H$A + Hrc$A
                 H$Z <- H$Z + Hrc$Z
             }
+            ### needs Matrix::solve
             sAH <- tryCatch(Matrix::solve(H$A, H$X), error = function(e) NULL)
             if (is.null(sAH))
                 stop(gettextf("error computing the Hessian in %s",
@@ -597,6 +683,63 @@
             ret <- c(ret, sr[idx])
         }
         return(ret)
+    }
+    
+    # stratified negative scale score residual
+    
+    .snssr <- function(parm, x, mu = 0, rightcensored = FALSE) 
+    {
+
+        # stratum prep
+        
+        C <- vapply(x, NROW, 0L) ### might differ by stratum
+        K <- unique(do.call("c", lapply(x, ncol))) ### the same
+        B <- length(x)
+        sidx <- factor(rep(seq_len(B), times = pmax(0, C - 1L)), 
+                       levels = seq_len(B))
+        bidx <- seq_len(K - 1L)
+        delta <- parm[bidx]
+        intercepts <- split(parm[-bidx], sidx)
+        
+
+        ret <- c()
+        for (b in seq_len(B)) {
+            idx <- attr(x[[b]], "idx")
+            ### idx == 1L means zero residual, see definition of idx
+            sr <- c(0, .nssr(c(delta, intercepts[[b]]), x[[b]], mu = mu,
+                             rightcensored = rightcensored))
+            ret <- c(ret, sr[idx])
+        }
+        return(ret)
+    }
+    
+    # logdet
+    
+    ld <- function(H) {
+        bidx <- seq_len(K - 1)
+        Z <- as.matrix(H[bidx, bidx, drop = FALSE])
+        X <- as.matrix(H[-bidx, bidx, drop = FALSE])
+        A <- H[-bidx,-bidx, drop = FALSE]
+       
+        ### needs Matrix::solve
+        sAX <- tryCatch(Matrix::solve(A, X), error = function(e) NULL)
+        if (is.null(sAX))
+            stop(gettextf("error computing the Hessian determinant in %s",
+                          "free1way"),
+                 domain = NA)
+
+        ret <- determinant(Z - crossprod(X, as.matrix(sAX)), logarithm = TRUE)$modulus
+
+        dm1 <- log(A[1,1])
+        dm2 <- 0
+        for (i in seq_len(nrow(A))[-1L]) {
+            loga <- log(A[i, i]) + dm1
+            logb <- (2 * log(abs(A[i-1, i])) + dm2)
+            dm2 <- dm1
+            dm1 <- loga + log1p(-exp(logb - loga))
+        }
+        ret <- ret + dm1
+        ret
     }
     
     # profile
@@ -678,85 +821,15 @@
            }
         }
 
-        if (isTRUE(MPL_Jeffreys)) {
-            # Jeffreys penalisation
-            
-            .pll_Jeffreys <- function(cf, start) 
-            {
-                fix <- seq_along(cf)
-                start[fix] <- cf
-                ### compute profile likelihood w/o warnings
-                ret <- suppressWarnings(.profile(start, fix = fix))
-                Hfull <- he(ret$par)
-                Hfix <- as.matrix(solve(solve(Hfull)[fix, fix]))
-                return(ret$value - 
-                       .5 * determinant(Hfix, logarithm = TRUE)$modulus)
-            }
-            if (K == 2) {
-                MLcf <- ret$par[seq_len(K - 1)]
-                Fret <- optim(MLcf, fn = .pll_Jeffreys, start = ret$par,
-                              method = "Brent", lower = MLcf - 5, 
-                              upper = MLcf + 5)
-            } else {
-                ### Nelder-Mead
-                Fret <- optim(ret$par[seq_len(K - 1)], fn = .pll_Jeffreys, 
-                              start = ret$par)
-            }
-            if (Fret$convergence == 0) {
-                start <- ret$par
-                start[seq_len(K - 1)] <- Fret$par
-                ret <- .profile(start, fix = seq_len(K - 1))
-                ret$objective <- ret$value
-            }
-            
-        } else {
-            if (ret$convergence > 0) {
-                if (is.na(MPL_Jeffreys)) { ### only after failure
-                    warning(gettextf("Jeffreys penalisation was applied in %s because initial optimisation failed with:",
-                                     "free1way"),
-                            "\n  ", ret$message, domain = NA)
-                    MPL_Jeffreys <- TRUE
-                    # Jeffreys penalisation
-                    
-                    .pll_Jeffreys <- function(cf, start) 
-                    {
-                        fix <- seq_along(cf)
-                        start[fix] <- cf
-                        ### compute profile likelihood w/o warnings
-                        ret <- suppressWarnings(.profile(start, fix = fix))
-                        Hfull <- he(ret$par)
-                        Hfix <- as.matrix(solve(solve(Hfull)[fix, fix]))
-                        return(ret$value - 
-                               .5 * determinant(Hfix, logarithm = TRUE)$modulus)
-                    }
-                    if (K == 2) {
-                        MLcf <- ret$par[seq_len(K - 1)]
-                        Fret <- optim(MLcf, fn = .pll_Jeffreys, start = ret$par,
-                                      method = "Brent", lower = MLcf - 5, 
-                                      upper = MLcf + 5)
-                    } else {
-                        ### Nelder-Mead
-                        Fret <- optim(ret$par[seq_len(K - 1)], fn = .pll_Jeffreys, 
-                                      start = ret$par)
-                    }
-                    if (Fret$convergence == 0) {
-                        start <- ret$par
-                        start[seq_len(K - 1)] <- Fret$par
-                        ret <- .profile(start, fix = seq_len(K - 1))
-                        ret$objective <- ret$value
-                    }
-                    
-                }
-           }
-        }
         if (ret$convergence > 0)
             warning(gettextf("unsuccessful optimisation in %s", "free1way"),
                     ": ", ret$message, domain = NA)
 
-        ret$MPL_Jeffreys <- MPL_Jeffreys
         ret$value <- ret$objective
         ret$objective <- NULL
         
+
+        ret$MPL_Jeffreys <- MPL_Jeffreys
 
         p <- numeric(length(start))
         p[fix] <- delta
@@ -768,10 +841,22 @@
     # optim
     
     if (!length(fix)) {
-        opargs <- list(start = start, 
-                       objective = fn, 
-                       gradient = gr,
-                       hessian = he)
+        if ((MPL_Jeffreys > 0L) && dooptim == "nlminb") {
+            opargs <- list(start = start, 
+                           ### note: negative log-likelihood!
+                           objective = function(par) {
+                               ret <- fn(par) 
+                               if (!is.finite(ret)) return(Inf)
+                               return(ret - .5 * MPL_Jeffreys * ld(he(par)))
+                           },
+                           gradient = NULL,
+                           hessian = NULL)
+        } else {
+            opargs <- list(start = start, 
+                           objective = fn, 
+                           gradient = gr,
+                           hessian = he)
+        }
         opargs$control <- control[[1L]]
         # do optim
         
@@ -788,88 +873,18 @@
            }
         }
 
-        if (isTRUE(MPL_Jeffreys)) {
-            # Jeffreys penalisation
-            
-            .pll_Jeffreys <- function(cf, start) 
-            {
-                fix <- seq_along(cf)
-                start[fix] <- cf
-                ### compute profile likelihood w/o warnings
-                ret <- suppressWarnings(.profile(start, fix = fix))
-                Hfull <- he(ret$par)
-                Hfix <- as.matrix(solve(solve(Hfull)[fix, fix]))
-                return(ret$value - 
-                       .5 * determinant(Hfix, logarithm = TRUE)$modulus)
-            }
-            if (K == 2) {
-                MLcf <- ret$par[seq_len(K - 1)]
-                Fret <- optim(MLcf, fn = .pll_Jeffreys, start = ret$par,
-                              method = "Brent", lower = MLcf - 5, 
-                              upper = MLcf + 5)
-            } else {
-                ### Nelder-Mead
-                Fret <- optim(ret$par[seq_len(K - 1)], fn = .pll_Jeffreys, 
-                              start = ret$par)
-            }
-            if (Fret$convergence == 0) {
-                start <- ret$par
-                start[seq_len(K - 1)] <- Fret$par
-                ret <- .profile(start, fix = seq_len(K - 1))
-                ret$objective <- ret$value
-            }
-            
-        } else {
-            if (ret$convergence > 0) {
-                if (is.na(MPL_Jeffreys)) { ### only after failure
-                    warning(gettextf("Jeffreys penalisation was applied in %s because initial optimisation failed with:",
-                                     "free1way"),
-                            "\n  ", ret$message, domain = NA)
-                    MPL_Jeffreys <- TRUE
-                    # Jeffreys penalisation
-                    
-                    .pll_Jeffreys <- function(cf, start) 
-                    {
-                        fix <- seq_along(cf)
-                        start[fix] <- cf
-                        ### compute profile likelihood w/o warnings
-                        ret <- suppressWarnings(.profile(start, fix = fix))
-                        Hfull <- he(ret$par)
-                        Hfix <- as.matrix(solve(solve(Hfull)[fix, fix]))
-                        return(ret$value - 
-                               .5 * determinant(Hfix, logarithm = TRUE)$modulus)
-                    }
-                    if (K == 2) {
-                        MLcf <- ret$par[seq_len(K - 1)]
-                        Fret <- optim(MLcf, fn = .pll_Jeffreys, start = ret$par,
-                                      method = "Brent", lower = MLcf - 5, 
-                                      upper = MLcf + 5)
-                    } else {
-                        ### Nelder-Mead
-                        Fret <- optim(ret$par[seq_len(K - 1)], fn = .pll_Jeffreys, 
-                                      start = ret$par)
-                    }
-                    if (Fret$convergence == 0) {
-                        start <- ret$par
-                        start[seq_len(K - 1)] <- Fret$par
-                        ret <- .profile(start, fix = seq_len(K - 1))
-                        ret$objective <- ret$value
-                    }
-                    
-                }
-           }
-        }
         if (ret$convergence > 0)
             warning(gettextf("unsuccessful optimisation in %s", "free1way"),
                     ": ", ret$message, domain = NA)
 
-        ret$MPL_Jeffreys <- MPL_Jeffreys
         ret$value <- ret$objective
         ret$objective <- NULL
         
+        ret$MPL_Jeffreys <- MPL_Jeffreys
     } else if (length(fix) == length(start)) {
         ret <- list(par = start, 
-                    value = fn(start))
+                    value = fn(start),
+                    MPL_Jeffreys = FALSE)
     } else {
         ret <- .profile(start, fix = fix)
     }
@@ -889,7 +904,6 @@
     par <- ret$par
     intercepts <- function(parm, x) 
     {
-
         # stratum prep
         
         C <- vapply(x, NROW, 0L) ### might differ by stratum
@@ -901,7 +915,6 @@
         delta <- parm[bidx]
         intercepts <- split(parm[-bidx], sidx)
         
-
         return(intercepts)
     }
     ret$intercepts <- intercepts(par, x = xlist)
@@ -930,10 +943,25 @@
             rcr <- .snsr(par, x = xrclist, mu = mu, rightcensored = TRUE)
             ret$negresiduals <- c(rbind(matrix(ret$negresiduals, nrow = C),
                                         matrix(rcr, nrow = C)))
-         }
+        }
+        ret$negscaleresiduals <- .snssr(par, x = xlist, mu = mu)
+        if (!is.null(xrc)) {
+            rcr <- .snssr(par, x = xrclist, mu = mu, rightcensored = TRUE)
+            ret$negscaleresiduals <- 
+                c(rbind(matrix(ret$negscaleresiduals, nrow = C),
+                        matrix(rcr, nrow = C)))
+        }
     }
+
+    if (logdet && hessian) ret$logdet <- ld(he(par))
+    
+    # profile function
+    
     ret$profile <- function(start, fix)
-        .free1wayML(xt, link = link, mu = mu, start = start, fix = fix, tol = tol, 
+        .free1wayML(xt, link = link, mu = mu, start = start, fix = fix, 
+                    residuals = residuals, score = score, hessian = hessian,
+                    logdet = logdet, MPL_Jeffreys = MPL_Jeffreys, 
+                    dooptim = dooptim, control = control, trace = trace, tol = tol, 
                     ...) 
     ret$table <- xt
 
@@ -946,8 +974,11 @@
     }
     
 
-    class(ret) <- "free1wayML"
-    ret
+    if (MPL_Jeffreys > 0L)
+        class(ret) <- c("MPLfree1wayML", "free1wayML")
+    else
+        class(ret) <- "free1wayML"
+    return(ret)
 }
 
 # free1way generic and table method (main workhorse)
@@ -956,7 +987,7 @@ free1way <- function(y, ...)
     UseMethod("free1way")
 
 free1way.table <- function(y, link = c("logit", "probit", "cloglog", "loglog"), 
-                           mu = 0, B = 0, exact = FALSE, ...)
+                           mu = 0, B = 0, exact = FALSE, MPL_Jeffreys = FALSE, ...)
 {
 
     cl <- match.call()
@@ -986,7 +1017,8 @@ free1way.table <- function(y, link = c("logit", "probit", "cloglog", "loglog"),
         mu <- rep(mu, length.out = d[2L] - 1L)
     }
 
-    ret <- .free1wayML(y, link = link, mu = mu, ...)
+    ret <- .free1wayML(y, link = link, mu = mu, MPL_Jeffreys = MPL_Jeffreys, 
+                       ...)
     ret$link <- link
     ret$data.name <- DNAME
     ret$call <- cl
@@ -1149,11 +1181,13 @@ free1way.table <- function(y, link = c("logit", "probit", "cloglog", "loglog"),
     ret$perm <- .resample(res, y, B = B)
     
 
-    if (ret$MPL_Jeffreys) 
+    if (ret$MPL_Jeffreys > 0L) { 
         ret$method <- paste(ret$method, 
             "with Jeffreys prior penalisation", sep = ", ")
-
-    class(ret) <- "free1way"
+        class(ret) <- c("MPLfree1way", "free1way")
+    } else {
+        class(ret) <- "free1way"
+    }
     return(ret)
 }
 
@@ -1378,9 +1412,9 @@ summary.free1way <- function(object, test,
     }
     cfmat <- cbind(ESTIMATE, SE, STATISTIC, PVAL)
     colnames(cfmat) <- c(object$link$parm, "Std. Error", "z value",
-                         switch(alternative, "two.sided" = "P(>|z|)",
-                                             "less" = "P(<z)",
-                                             "greater" = "P(>z)"))
+                         switch(alternative, "two.sided" = "Pr(>|z|)",
+                                             "less" = "Pr(<z)",
+                                             "greater" = "Pr(>z)"))
     ret <- list(call = object$call, coefficients = cfmat)
     class(ret) <- "summary.free1way"
     return(ret)
@@ -1408,6 +1442,7 @@ confint.free1way <- function(object, parm,
     if (missing(parm)) 
         parm <- seq_along(cf)
 
+    att.level <- NULL
     CINT <- confint.default(object, level = level)
     if (test != "Wald") {
         wlevel <- level
@@ -1520,7 +1555,7 @@ confint.free1way <- function(object, parm,
                     rs <- object$perm$permStat
                     qu <- .pq(round(rs, 10), alpha = 1 - conf.level)
                     att.level <- mean(rs > qu[1] & rs < qu[2])
-                    attr(CINT, "Attained level") <- att.level
+
                 }
             }
             
@@ -1609,8 +1644,36 @@ confint.free1way <- function(object, parm,
     CINT <- switch(what, "shift" = CINT,
                          "PI" = object$link$parm2PI(CINT),
                          "AUC" = object$link$parm2PI(CINT), ### same as PI 
-                         "OVL" = object$link$parm2OVL(CINT))
+                         "OVL" = object$link$parm2OVL(CINT))[parm, , drop = FALSE]
+    if (!is.null(att.level))
+        attr(CINT, "Attained level") <- att.level
     return(CINT)
+}
+
+# MPLfree1way methods
+
+confint.MPLfree1way <- function(object, parm,
+    level = .95, test = "Wald", 
+    what = c("shift", "PI", "AUC", "OVL"), ...) {
+
+    test <- match.arg(test)
+    return(confint.free1way(object, parm = parm, level = level, 
+                            test = test, what = what, ...))
+}
+
+summary.MPLfree1way <- function(object, test = "Wald", 
+                                alternative = c("two.sided", "less", "greater"), 
+                                tol = .Machine$double.eps, ...) {
+
+    test <- match.arg(test)
+    return(summary.free1way(object, test = test, 
+                            alternative = alternative, tol = tol, ...))
+}
+
+print.MPLfree1way <- function(x, test = "Wald", ...) {
+
+    test <- match.arg(test)
+    return(invisible(print.free1way(x, test = test, ...)))
 }
 
 # free1way formula
@@ -2025,16 +2088,18 @@ rfree1way <- function(n, prob = NULL, alloc_ratio = 1,
     ctrl <- "Control"
     colnames(N) <- c(ctrl, names(delta))
 
-    if (length(offset) != K)
-        offset <- rep_len(offset, K)
-
     trt <- gl(K, 1, labels = colnames(N))
     blk <- gl(B, 1, labels = rownames(N))
     ret <- expand.grid(blocks = blk, groups = trt)
     if (B == 1L) ret$blocks <- NULL
     ret <- ret[rep(seq_len(nrow(ret)), times = N), , drop = FALSE]
+
+    if (length(offset) <= K)
+        offset <- rep_len(offset, K)[ret$groups]
+    if (length(offset) != nrow(ret))
+        stop(gettextf("invalid argument '%s'", "offset"), domain = NA)
     ret$y <- .rfree1way(nrow(ret), 
-                        delta = offset[ret$groups] + c(0, delta)[ret$groups], 
+                        delta = offset + c(0, delta)[ret$groups], 
                         link = link)
     if (is.null(prob)) return(ret)
 

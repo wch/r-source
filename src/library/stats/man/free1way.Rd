@@ -15,6 +15,8 @@
 \alias{logLik.free1way}
 \alias{summary.free1way}
 \alias{confint.free1way}
+\alias{summary.MPLfree1way}
+\alias{confint.MPLfree1way}
 \title{
 Distribution-free Inference in a Stratified One-Way Layout
 }
@@ -34,12 +36,17 @@ free1way(y, ...)
 \S3method{free1way}{factor}(y, groups, blocks = NULL, event = NULL, weights = NULL, 
          varnames = NULL, ...)
 \S3method{free1way}{table}(y, link = c("logit", "probit", "cloglog", "loglog"), 
-         mu = 0, B = 0, exact = FALSE, ...)
+         mu = 0, B = 0, exact = FALSE, MPL_Jeffreys = FALSE, ...)
 \S3method{summary}{free1way}(object, test, alternative = c("two.sided", "less", "greater"), 
+        tol = .Machine$double.eps, ...)
+\S3method{summary}{MPLfree1way}(object, test = "Wald", alternative = c("two.sided", "less", "greater"), 
         tol = .Machine$double.eps, ...)
 \S3method{coef}{free1way}(object, what = c("shift", "PI", "AUC", "OVL"), ...)
 \S3method{confint}{free1way}(object, parm, level = .95, 
         test = c("Permutation", "Wald", "LRT", "Rao"), 
+        what = c("shift", "PI", "AUC", "OVL"), ...)
+\S3method{confint}{MPLfree1way}(object, parm, level = .95, 
+        test = "Wald", 
         what = c("shift", "PI", "AUC", "OVL"), ...)
 \S3method{vcov}{free1way}(object, ...)
 \S3method{logLik}{free1way}(object, ...)
@@ -94,6 +101,14 @@ free1way(y, ...)
   \item{exact}{a logical requesting the exact permutation distribution
     to be computed. Only available for unstratified two-sample proportional odds
     models.}
+ \item{MPL_Jeffreys}{a logical, or positive numeric, leading to
+    minus one-half of the log-determinant of the observed Fisher information to be
+    added as a penality to the log-likelihood. If the argument is positive,
+    the penality term is multiplied by this value. Penalised estimation helps
+    to debias maximum likelihood estimators especially in the presence of
+    many small blocks. For binary outcomes, it is equivalent to Firth'
+    method. Only Wald-type inference is available after penalised
+    estimation.}
   \item{object}{an object of class \code{free1way} as returned by
     \code{free1way}.}
   \item{test}{a character vector defining the global test procedure for all
