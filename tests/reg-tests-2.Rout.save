@@ -1,5 +1,5 @@
-﻿
-R Under development (unstable) (2026-07-23 r90290) -- "Unsuffered Consequences"
+
+R Under development (unstable) (2026-08-19 r90430) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -6394,7 +6394,7 @@ function(given = NULL) {
     if (is.null(given)) callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x5ab0d0f733e8>
+<bytecode: 0x55c39c52c7c8>
 > print(foo, useSource = FALSE)
 function (given = NULL) 
 {
@@ -6405,7 +6405,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x5ab0d0f733e8>
+<bytecode: 0x55c39c52c7c8>
 > attr(foo, "srcref") <- NULL
 > foo
 function (given = NULL) 
@@ -6417,7 +6417,7 @@ function (given = NULL)
         callObj$default <- TRUE
     callObj
 }
-<bytecode: 0x5ab0d0f733e8>
+<bytecode: 0x55c39c52c7c8>
 > (f <- structure(function(){}, note = "just a note",
 +                 yada = function() "not the same"))
 function(){}
@@ -8370,7 +8370,7 @@ Error in f() : argument is missing, with no default
 >     withAutoprint({ show.srcref() })
  language show.srcref()
  - attr(*, "srcref")= 'srcref' int [1:8] 1 21 1 33 21 33 3 3
-  ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0x5ab0ce13c1d8> 
+  ..- attr(*, "srcfile")=Classes 'srcfilealias', 'srcfile' <environment: 0x55c39a761340> 
 > ## no   attr(*, "src..")   in R <= 4.3.1
 > ##
 > withAutoprint({
@@ -8380,8 +8380,38 @@ Error in f() : argument is missing, with no default
 [1] 3
 > ## temporarily wrongly showed " withAutoprint({ "
 > 
+> s = '
++ #line 1 "foo.R"
++ # comment 1
++ 1
++ {
++ #line 2 "bar.R"
++ 2
++ }
++ {
++ # comment 2
++ #line 3 "baz.R"
++ # comment 3
++ 3
++ }
++ '
+> pd <- getParseData(parse(text = s))
+> ld <- pd[pd$token == "LINE_DIRECTIVE", ]
+> num_1_parent <- pd$parent[pd$token == "NUM_CONST" & pd$text == "1"]
+> com_1_parent <- pd$parent[pd$text == "# comment 1"]
+> num_2_parent <- pd[as.character(pd$parent[pd$token == "NUM_CONST" & pd$text == "2"]), "parent"]
+> num_3_parent <- pd[as.character(pd$parent[pd$token == "NUM_CONST" & pd$text == "3"]), "parent"]
+> stopifnot(exprs = {
++   # this directive attaches to the following literal, just like the comment
++   ld$parent[startsWith(ld$text, "#line 1")] == com_1_parent
++   ld$parent[startsWith(ld$text, "#line 1")] == -num_1_parent
++   ld$parent[startsWith(ld$text, "#line 2")] == num_2_parent
++   pd$parent[pd$text == "# comment 2"]       == num_3_parent
++   ld$parent[startsWith(ld$text, "#line 3")] == num_3_parent
++   pd$parent[pd$text == "# comment 3"]       == num_3_parent
++ })
 > 
 > # ----- Last line -------------
 > cat('Time elapsed: ', proc.time(),'\n')
-Time elapsed:  1.054 0.213 1.518 0.008 0.004 
+Time elapsed:  1.429 0.324 1.759 0.002 0.004 
 > 

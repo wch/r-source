@@ -4039,6 +4039,11 @@ static bool checkForPipeBind(SEXP arg)
     return false;
 }
 
+static bool isCommentLike(int token)
+{
+	return token == COMMENT || token == LINE_DIRECTIVE;
+}
+
 static SEXP R_Parse1(ParseStatus *status)
 {
     Status = 1; /* safety */
@@ -6550,7 +6555,7 @@ static void finalizeData(void){
       */
 
     for(i = nloc-1; i >= 0; i--) {
-	if (_TOKEN(i) == COMMENT) {
+	if (isCommentLike(_TOKEN(i))) {
 	    int orphan = 1;
 	    int istartl = _FIRST_PARSED(i);
 	    int istartc = _FIRST_COLUMN(i);
@@ -6589,7 +6594,7 @@ static void finalizeData(void){
     int orphan ;
 
     for( i=0; i<nloc; i++){
-	if( _TOKEN(i) == COMMENT ){
+	if( isCommentLike(_TOKEN(i)) ){
 	    comment_line = _FIRST_PARSED( i ) ;
 	    comment_first_col = _FIRST_COLUMN( i ) ;
 
@@ -6625,10 +6630,9 @@ static void finalizeData(void){
 
     for( i=0; i<nloc; i++){
 	int token = _TOKEN(i); 
-	if( token == COMMENT && _PARENT(i) == 0 ){
+	if( isCommentLike(token) && _PARENT(i) == 0 ){
 	    for( j=i; j<nloc; j++){
-		int token_j = _TOKEN(j); 
-		if( token_j == COMMENT ) continue ;
+		if( isCommentLike(_TOKEN(j)) ) continue ;
 		if( _PARENT(j) != 0 ) continue ;
 		_PARENT(i) = - _ID(j) ;
 		break ;
