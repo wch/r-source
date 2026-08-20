@@ -6262,7 +6262,9 @@ add_dummies <- function(dir, Log)
                              "\\[-Warray-parameter\\]",
                              "\\[-Wuse-after-free\\]",
                              ## rustc
-                             "^warning: use of deprecated"
+                             "^warning: use of deprecated",
+                             ## GCC only at 2026-08
+                             ": warning: .* \\[-Wdeprecated-openmp\\]",
                              )
 
                 ## warning most seen with -D_FORTIFY_SOURCE
