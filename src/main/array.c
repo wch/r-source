@@ -1783,7 +1783,6 @@ attribute_hidden SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	PROTECT(r);
 	setAttrib(r, R_DimSymbol, dimsa);
-	copyMostAttrib(a, r);
 	UNPROTECT(2);
         return r;
     }
