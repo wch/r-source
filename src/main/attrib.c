@@ -1253,8 +1253,7 @@ SEXP dimgets(SEXP vec, SEXP val)
     UNPROTECT(1);
     PROTECT(val);
 
-    int ndim = length(val);
-    R_xlen_t total = dim2total(val, ndim, _("too many elements specified")),
+    R_xlen_t total = dim2total(val, _("too many elements specified")),
 	len = xlength(vec);
     if (total != len) {
 	error(_("dims [product %lld] do not match the length of object [%lld]"),
@@ -1262,6 +1261,7 @@ SEXP dimgets(SEXP vec, SEXP val)
     }
 #if 0
 // currently it is documented that `dim<-` removes dimnames() .. but ..
+    int ndim = LENGTH(val);
     SEXP odim = getAttrib0(vec, R_DimSymbol); // keep dimnames(.) if dim() entries are unchanged
     if((LENGTH(odim) != ndim) || memcmp((void *)INTEGER(odim),
 					(void *)INTEGER(val), ndim * sizeof(int)))

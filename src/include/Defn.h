@@ -2159,7 +2159,7 @@ SEXP deparse1w(SEXP,bool,int);
 SEXP deparse1line (SEXP, bool);
 SEXP deparse1line_ex(SEXP, bool, int);
 SEXP deparse1s(SEXP call);
-R_xlen_t dim2total(SEXP, int, char *);
+R_xlen_t dim2total(SEXP, const char *);
 int DispatchAnyOrEval(SEXP, SEXP, const char *, SEXP, SEXP, SEXP*, int, int);
 int DispatchOrEval(SEXP, SEXP, const char *, SEXP, SEXP, SEXP*, int, int);
 int DispatchGroup(const char *, SEXP,SEXP,SEXP,SEXP,SEXP*);
