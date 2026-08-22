@@ -283,7 +283,7 @@
       \item \code{summary(<free1way>)} renames p-values to \code{Pr(..)} and
       thus \code{printCoefmat} recognises them.
 
-      \item \code{strptime(ch, "...%OS<n>...")} now disregards contiguous
+      \item \code{strptime(ch, "...\%OS<n>...")} now disregards contiguous
       digits in "<n>", for symmetry with \code{strftime()}, fulfilling
       \I{Frederick Eaton}'s wish in \PR{17209}, thanks to a patch by
       \I{Suharto Anggono}.
