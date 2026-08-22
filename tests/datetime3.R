@@ -1018,6 +1018,15 @@ stopifnot(identical(
   ), is.na(tt))
 
 
+## strptime(., "...%OS<n>...") disregards <n> for symmetry with strftime() -- PR#17209
+chd <- "17_35_14.1234.mp3"
+fff <- paste0("%H_%M_%OS", c("",0:6), ".mp3")
+cD <- format(Sys.Date())
+str(td <- unique(lapply(fff, \(fmt) strptime(chd, fmt))))
+stopifnot(length(td) == 1, identical(format(td[[1]]), paste(cD, "17:35:14")))
+## strptime() gave  NA  but for the first in R <= 4.6.z
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

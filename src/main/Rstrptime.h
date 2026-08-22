@@ -577,7 +577,8 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 		break;
 	    case L'S':
 		/* Match seconds using alternate numeric symbols.
-		get_alt_number (0, 61, 2); */
+		 * get_alt_number (0, 61, 2); */
+		if(*fmt >= L'0' && *fmt <= L'9') ++fmt;
 		{
 		    wchar_t *end;
 		    double sval = wcstod(rp, &end);
@@ -1067,7 +1068,8 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 		break;
 	    case 'S':
 		/* Match seconds using alternate numeric symbols.
-		   get_alt_number (0, 61, 2); */
+		 * get_alt_number (0, 61, 2); */
+		   if(*fmt >= '0' && *fmt <= '9') ++fmt;
 		   {
 		       char *end;
 		       double sval = R_strtod(rp, &end); /* R_*() to read "Inf" */

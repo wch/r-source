@@ -274,14 +274,19 @@
 	Chirico}; additionally, some overflow to \code{Inf} times no longer
       result in \code{NA}.
 
-      \item \code{drop1.glm()} misbehaved for models fitted with 
+      \item \code{drop1.glm()} misbehaved for models fitted with
       \code{y = FALSE} (\PR{19128}, \I{Amal Tawfik}).
 
-      \code{confint(<free1way>, parm)} returned confidence intervals for
+      \item \code{confint(<free1way>, parm)} returned confidence intervals for
       all parameters when \code{parm} requested a subset.
 
-      \code{summary(<free1way>)} renames p-values to \code{Pr()} and
+      \item \code{summary(<free1way>)} renames p-values to \code{Pr(..)} and
       thus \code{printCoefmat} recognises them.
+
+      \item \code{strptime(ch, "...%OS<n>...")} now disregards contiguous
+      digits in "<n>", for symmetry with \code{strftime()}, fulfilling
+      \I{Frederick Eaton}'s wish in \PR{17209}, thanks to a patch by
+      \I{Suharto Anggono}.
     }
   }
 }
