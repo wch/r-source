@@ -30,6 +30,11 @@ function(x)
     bad <- which(!is.na(x) & !validUTF8(x))
     if(length(bad))
         x[bad] <- iconv(x[bad], from = "UTF-8", to = "UTF-8", sub = "byte")
+    ## On some older macOS, the above may not suffice. As a last resort, convert 
+    ## offending bytes to ASCII
+    bad <- which(!is.na(x) & !validUTF8(x))
+    if(length(bad))
+        x[bad] <- iconv(x[bad], from="ASCII", to = "ASCII", sub = "byte")
     x
 }
 
@@ -52,8 +57,17 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
     ##                  function(s)
     ##                  if(is.atomic(s)) s
     ##                  else mapply("[[", s, lengths(s))))
-    if(!all) return(.Internal(readDCF(file, fields, keep.white)))
-
+    if(!all) {
+        out <- .Internal(readDCF(file, fields, keep.white))
+        ## On some macOS versions, invalid UTF-8 can slip through, so
+        ##   we check and fix here. (Might move to C code, but hardly worth it.)
+        ## Note: .Internal version returns character matrix, not data frame
+	bad <- apply(out, 2, function(y) !all(validUTF8(y)))
+        if (any(bad))
+            for ( i in which(bad))
+                out[,i] <- .enc2utf8_sub(out[,i])
+        return(out)
+    }
     .assemble_things_into_a_data_frame <- function(tags, vals, nums) {
         tf <- factor(tags, levels = unique(tags))
 
