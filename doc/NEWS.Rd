@@ -287,6 +287,9 @@
       digits in "<n>", for symmetry with \code{strftime()}, fulfilling
       \I{Frederick Eaton}'s wish in \PR{17209}, thanks to a patch by
       \I{Suharto Anggono}.
+
+      \item \code{strptime("0", "\%w")} in a \code{"C"} locale now
+      works in valid cases, fixing \PR{19124} thanks to \I{Michael Chirico}.
     }
   }
 }

@@ -1173,10 +1173,12 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
       if (have_mon)
 	  tm->tm_mon = save_mon;
 
-      if (!have_yday)
+      if (!have_yday) {
 	  tm->tm_yday = ((7 - (tm->tm_wday - w_offset)) % 7
 			 + (week_no - 1) *7
 			 + save_wday - w_offset);
+	  if(tm->tm_yday < 0) tm->tm_yday += 7;
+      }
 
       if (!have_mday || !have_mon)
       {
