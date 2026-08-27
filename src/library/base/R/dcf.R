@@ -99,7 +99,7 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
 
         out
     }
- 
+
     ## [:blank:] and [:space:] are locale specific
     ascii_blank <- " \t"
     ascii_space <- " \f\n\r\t\v"
@@ -113,9 +113,11 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
     ## Ignore comment lines.
     lines <- lines[!startsWith(lines, "#")]
 
+    ## lines is known to be UTF-8 (or ASCII), so perl = TRUE is more efficient.
+
     ## Try to find out about invalid things: mostly, lines which do not
     ## start with blanks but have no ':' ...
-    ind <- grep(paste0("^[^", ascii_blank, "][^:]*$"), lines)
+    ind <- grep(paste0("^[^", ascii_blank, "][^:]*$"), lines, perl = TRUE)
     if(length(ind)) {
         lines <- substr(lines[ind], 1L, 0.7 * getOption("width"))
         stop(gettextf("Invalid DCF format.\nRegular lines must have a tag.\nOffending lines start with:\n%s",
@@ -123,7 +125,8 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
              domain = NA)
     }
 
-    line_is_not_empty <- !grepl(paste0("^[", ascii_space, "]*$"), lines)
+    line_is_not_empty <- !grepl(paste0("^[", ascii_space, "]*$"),
+                                lines, perl = TRUE)
     nums <- cumsum(diff(c(FALSE, line_is_not_empty) > 0L) > 0L)
     ## Remove the empty ones so that nums knows which record each line
     ## belongs to.
@@ -133,11 +136,13 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
     ## Deal with escaped blank lines (used by Debian at least for the
     ## Description: values, see man 5 deb-control):
     line_is_escaped_blank <- grepl(paste0("^[", ascii_space, "]+\\.[",
-                                          ascii_space, "]*$"), lines)
+                                          ascii_space, "]*$"),
+                                   lines, perl = TRUE)
     if(any(line_is_escaped_blank))
         lines[line_is_escaped_blank] <- ""
 
-    line_has_tag <- grepl(paste0("^[^", ascii_blank, "][^:]*:"), lines)
+    line_has_tag <- grepl(paste0("^[^", ascii_blank, "][^:]*:"),
+                          lines, perl= TRUE)
 
     ## Check that records start with tag lines.
     pos <- c(1L, which(diff(nums) > 0L) + 1L)
@@ -155,11 +160,12 @@ function(file, fields = NULL, all = FALSE, keep.white = NULL)
 
     tags <- sub(":.*", "", lines[line_has_tag])
     lines[line_has_tag] <-
-        sub(paste0("[^:]*:[", ascii_space, "]*"), "", lines[line_has_tag])
+        sub(paste0("[^:]*:[", ascii_space, "]*"), "", lines[line_has_tag],
+            perl = TRUE)
     fold <- is.na(match(tags, keep.white))
     foldable <- rep.int(fold, lengths)
-    lines[foldable] <- sub("^[[:space:]]*", "", lines[foldable])
-    lines[foldable] <- sub("[[:space:]]*$", "", lines[foldable])
+    lines[foldable] <- sub("^[[:space:]]*", "", lines[foldable], perl = TRUE)
+    lines[foldable] <- sub("[[:space:]]*$", "", lines[foldable], perl = TRUE)
 
     vals <- mapply(function(from, to) paste(lines[from:to],
                                             collapse = "\n"),
