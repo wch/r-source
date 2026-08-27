@@ -287,14 +287,21 @@ R_xlen_t dim2total(SEXP dim /* INTSXP */, bool *err)
     *err = false;
     double dn = 1.;
     for (int i = 0; i < ndim; i++) {
-	/* need this test first as NA_INTEGER is < 0 */
-	if (INTEGER(dim)[i] == NA_INTEGER)
-	    error(_("the dims contain missing values"));
-	if (INTEGER(dim)[i] < 0)
-	    error(_("the dims contain negative values"));
-	if(INTEGER(dim)[i])
-	    dn *= INTEGER(dim)[i];
-	else dn = 0.; // but continue checking ..
+        int d;
+
+	d = INTEGER(dim)[i];
+        /* Actually, NA_INTEGER is < 0, so we don't need to test for it
+           explicitly, but the value might change, so better be safe... 
+           An optimizing compiler will likely strip the && part.
+         */
+	if (d >= 0 && d != NA_INTEGER)
+            dn *= d;
+        else {
+            if (d == NA_INTEGER)
+	        error(_("the dims contain missing values"));
+            else
+	        error(_("the dims contain negative values"));
+        }
     }
 #ifdef LONG_VECTOR_SUPPORT
     if (dn > R_XLEN_T_MAX)
