@@ -289,7 +289,11 @@
       \I{Suharto Anggono}.
 
       \item \code{strptime("0", "\%w")} in a \code{"C"} locale now
-      works in valid cases, fixing \PR{19124} thanks to \I{Michael Chirico}.
+      works in valid cases, fixing \PR{19124} thanks to \I{Michael
+        Chirico}.
+
+      \item Fix for \PR{19035} (piping \code{postscript()} output)
+      thanks to \I{Jeroen Ooms} and \I{Ivan Krylov}.
     }
   }
 }
