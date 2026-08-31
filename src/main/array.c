@@ -290,16 +290,19 @@ R_xlen_t dim2total(SEXP dim /* INTSXP */, bool *err)
         int d;
 
 	d = INTEGER(dim)[i];
-        /* Actually, NA_INTEGER is < 0, so we don't need to test for it
+	/* dn *= d can overflow, but the result is 0 if any dimension is
+	 * (unless NA, so we can't simply break here).
+	 */
+        if (d == 0)
+            dn = 0.0;
+       /* Actually, NA_INTEGER is < 0, so we don't need to test for it
            explicitly, but the value might change, so better be safe... 
            An optimizing compiler will likely strip the && part.
          */
-        // this can overflow, but the result is 0 if any dimenston is.
-        if (d == 0)
-            dn = 0.0;
-	else if (d >= 0 && d != NA_INTEGER)
+	if (d >= 0 && d != NA_INTEGER) {
             dn *= d;
-        else {
+	// Better to check for total here to avoid f/p overflow.
+        } else {
             if (d == NA_INTEGER)
 	        error(_("the dims contain missing values"));
             else
@@ -311,7 +314,7 @@ R_xlen_t dim2total(SEXP dim /* INTSXP */, bool *err)
 #else
     if (dn > INT_MAX)
 #endif
-	*err = true;
+	*err = true; // and callers should not use the return value.
     return (R_xlen_t) dn;
 }
 

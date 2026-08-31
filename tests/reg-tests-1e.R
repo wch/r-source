@@ -3667,6 +3667,8 @@ for(nd in c(2:4, 33:37)) {
     stopifnot(identical(x, y), is.integer(d <- dim(x)), all.equal(d., d))
 }
 ## above creation of x & y failed for a couple of hours in R-devel
+## r90452 overflowed the computation of the product of dimeensions.
+## giving a negative answer on some platforms (x86_64, not macOS).
 
 
 ## PR#19116 -- <matrix>[[i, j]]: stochastic error with negative i
@@ -3684,7 +3686,7 @@ save("save", file=(tf <- tempfile("saveRdata")))
 sys.load.image(tf, FALSE); rm(tf, save)
 ## had called .Internal(RNGkind(..)) with wrong number of args
 
-## aperm and 
+## aperm and
 m <- matrix(1:10, 2, 5, dimnames = list(X = paste0("x", 1:2), Y = paste0("y", 1:5)))
 a <- array(m, dim = c(2, 5, 1), dimnames = list(X = paste0("x", 1:2), Y = paste0("y", 1:5), Z = "z1"))
 

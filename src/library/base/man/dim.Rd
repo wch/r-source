@@ -1,6 +1,6 @@
 % File src/library/base/man/dim.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{dim}
@@ -18,7 +18,8 @@ dim(x) <- value
 \arguments{
   \item{x}{an \R object, for example a matrix, array or data frame.}
   \item{value}{for the default method, either \code{NULL} or
-    a numeric vector, which is coerced to integer (by truncation).}
+    a numeric vector, which is coerced to integer (by truncation).  After
+    coercion all the elements must be non-negative and not \code{NA}.}
 }
 \details{
   The functions \code{dim} and \code{dim<-} are \link{internal generic}
@@ -34,8 +35,8 @@ dim(x) <- value
   of mode \code{\link{integer}}.
 
   The replacement method changes the \code{"dim"} attribute (provided the
-  new value is compatible) and removes any \code{"dimnames"} \emph{and}
-  \code{"names"} attributes.
+  new value is compatible with the length) and removes any
+  \code{"dimnames"} \emph{and} \code{"names"} attributes.
 }
 \references{
   \bibshow{R:Becker+Chambers+Wilks:1988}
