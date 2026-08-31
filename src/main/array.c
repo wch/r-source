@@ -294,7 +294,10 @@ R_xlen_t dim2total(SEXP dim /* INTSXP */, bool *err)
            explicitly, but the value might change, so better be safe... 
            An optimizing compiler will likely strip the && part.
          */
-	if (d >= 0 && d != NA_INTEGER)
+        // this can overflow, but the result is 0 if any dimenston is.
+        if (d == 0)
+            dn = 0.0;
+	else if (d >= 0 && d != NA_INTEGER)
             dn *= d;
         else {
             if (d == NA_INTEGER)
