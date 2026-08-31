@@ -3747,7 +3747,8 @@ static void PS_Open(pDevDesc dd, PostScriptDesc *pd)
 	    char errbuf[strlen(pd->command) + 1];
 	    strcpy(errbuf, pd->command);
 	    PS_cleanup(4, dd, pd);
-	    error(_("cannot open 'postscript' pipe to '%s'"), errbuf);
+	    error(_("cannot open 'postscript' pipe to '%s' (reason: %s)"), 
+                  errbuf, strerror(errno));
 	    return;
 	}
     } else if (pd->filename[0] == '|') {
@@ -3757,8 +3758,8 @@ static void PS_Open(pDevDesc dd, PostScriptDesc *pd)
 	    char errbuf[strlen(pd->filename + 1) + 1];
 	    strcpy(errbuf, pd->filename + 1);
 	    PS_cleanup(4, dd, pd);
-	    error(_("cannot open 'postscript' pipe to '%s'"),
-		     errbuf);
+	    error(_("cannot open 'postscript' pipe to '%s' (reason: %s)"), 
+                  errbuf, strerror(errno));
 	    return;
 	}
     } else {
@@ -8206,7 +8207,8 @@ static void PDF_Open(pDevDesc dd, PDFDesc *pd)
 	    char errbuf[strlen(pd->cmd) + 1];
 	    strcpy(errbuf, pd->cmd);
 	    PDFcleanup(7, pd);
-	    error(_("cannot open 'pdf' pipe to '%s'"), errbuf);
+	    error(_("cannot open 'pdf' pipe to '%s' (reason: %s)"), 
+                  errbuf, strerror(errno));
 	    return;
 	}
 	pd->open_type = 1;
