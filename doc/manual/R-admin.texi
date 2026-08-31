@@ -3713,7 +3713,8 @@ in use: Build @R{} with @option{--with-blas} to select the OS version of
 the reference BLAS, and then use @command{update-alternatives} to switch
 between the available BLAS libraries.  See
 @uref{https://wiki.debian.org/DebianScience/LinearAlgebraLibraries}.
-(ATLAS, @I{MKL} and @I{OpenBLAS} alternatives are currently available.)
+(ATLAS, @I{BLIS}, @I{MKL} and @I{OpenBLAS} alternatives are currently
+available.)
 
 Fedora 33 and later offer `@I{FlexiBLAS}', a similar mechanism for
 switching the BLAS in use
@@ -3855,12 +3856,12 @@ libblisp.so
 libbliso.so
 @end example
 @noindent
-(@code{p} for `threads', @code{o} for @abbr{OpenMP} as for @I{OpenBLAS}) which can
-also be used as a shared BLAS.  The Fedora builds do not include LAPACK
-in the @I{BLIS} libraries and so cannot currently be used with internal
-LAPACK as they do not provide @code{dgemmtr}.
+(@code{p} for `threads', @code{o} for @abbr{OpenMP} as for @I{OpenBLAS})
+which can also be used as a shared BLAS.  The Fedora builds do not
+include LAPACK in the @I{BLIS} libraries: recent versions
+(e.g. @code{2.0}) do provide @code{dgemmtr} and @code{gemmtr}
 
-AMD maintain a branch of @I{BLIS} optimized for their CPUS called
+AMD distribute a branch of @I{BLIS} optimized for their CPUs called
 @I{AOCL}.
 @c https://www.amd.com/en/developer/aocl.html
 @c https://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms calls
@@ -3880,13 +3881,13 @@ see
 (which at the time of writing selected the Intel library for linking with
 GCC).
 
-There are also versions of @I{MKL} for macOS@footnote{The issue for macOS
+There are also versions of @I{MKL} for Intel macOS@footnote{The issue for macOS
 has been the use of double-complex routines.} and Windows, but when
 these have been tried they did not work with the default compilers used
 for @R{} on those platforms.
 
 The following examples have been used with @I{MKL} versions 10.3 to
-2023.2.0, for GCC compilers on @cputype{x86_64} CPUs.  (See also
+2026.1.0, for GCC compilers on @cputype{x86_64} CPUs.  (See also
 @ref{Intel compilers}.)
 
 To use a sequential version of @I{MKL} we used
@@ -4107,9 +4108,10 @@ with an `enhanced' BLAS such as ATLAS, @I{MKL} or @I{OpenBLAS} which
 contains a full LAPACK (to avoid possible conflicts), or
 
 @item
-When using an `enhanced' BLAS such as @I{BLIS} that does @strong{not}
-contain a full LAPACK and does not contain the LAPACK 3.12.1 additions
-to BLAS: then an external LAPACK version 3.12.0 or earlier is required.
+When using an `enhanced' BLAS (such as earlier versions of @I{BLIS})
+that does @strong{not} contain a full LAPACK and does not contain the
+LAPACK 3.12.1 additions to BLAS: then an external LAPACK version 3.12.0
+or earlier is required.
 
 @item
 on Debian/Ubuntu systems to select the system @code{liblapack} which can
