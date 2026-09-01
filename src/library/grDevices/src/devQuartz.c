@@ -1769,6 +1769,7 @@ CGFontRef RQuartz_Font(CTXDESC)
 #define RQUARTZ_FILL   (1)
 #define RQUARTZ_STROKE (1<<1)
 #define RQUARTZ_LINE   (1<<2)
+#define RQUARTZ_FILL_WITH_STROKE (1<<3)
 
 static void RQuartz_SetFont(CGContextRef ctx, const pGEcontext gc, QuartzDesc *xd) {
     CGFontRef font = RQuartz_Font(gc, NULL);
@@ -1783,6 +1784,40 @@ static void RQuartz_SetFont(CGContextRef ctx, const pGEcontext gc, QuartzDesc *x
     CGContextSetFontSize(ctx, gc->cex * gc->ps);
 }
 
+static CGLineCap Quartz_GetLineCap(const pGEcontext gc) {
+        CGLineCap cap = kCGLineCapButt;
+        switch(gc->lend) {
+            case GE_ROUND_CAP:  cap = kCGLineCapRound;  break;
+            case GE_BUTT_CAP:   cap = kCGLineCapButt;   break;
+            case GE_SQUARE_CAP: cap = kCGLineCapSquare; break;
+        }
+        return cap;
+}
+
+static CGLineJoin Quartz_GetLineJoin(const pGEcontext gc) {
+    CGLineJoin join = kCGLineJoinRound;
+    switch(gc->ljoin) {
+        case GE_ROUND_JOIN: join = kCGLineJoinRound; break;
+        case GE_MITRE_JOIN: join = kCGLineJoinMiter; break;
+        case GE_BEVEL_JOIN: join = kCGLineJoinBevel; break;
+    }
+    return join;
+}
+
+static int Quartz_GetLineDash(const pGEcontext gc, CGFloat *dashlist, int max_len) {
+    int   i, ndash = 0;
+    int   lty = gc->lty;
+    float lwd = (float)(gc->lwd * 0.75);
+
+    if (max_len > 8) max_len = 8; /* we can't store more than 8 in 32 bits */
+    for(i = 0; i < max_len && lty; i++) {
+	dashlist[ndash++] = (lwd >= 1 ? lwd : 1) * (lty & 15);
+	lty >>= 4;
+    }
+    return ndash;
+}
+
+
 /* pre-10.5 doesn't have kCGColorSpaceGenericRGB so fall back to kCGColorSpaceGenericRGB */
 #if MAC_OS_X_VERSION_10_4 >= MAC_OS_X_VERSION_MAX_ALLOWED
 #define kCGColorSpaceSRGB kCGColorSpaceGenericRGB
@@ -1790,8 +1825,8 @@ static void RQuartz_SetFont(CGContextRef ctx, const pGEcontext gc, QuartzDesc *x
 
 void RQuartz_Set(CGContextRef ctx,const pGEcontext gc,int flags) {
     CGColorSpaceRef cs = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
-    if(flags & RQUARTZ_FILL) {
-        int fill = gc->fill;
+    if((flags & RQUARTZ_FILL) || (flags & RQUARTZ_FILL_WITH_STROKE)) {
+        int fill = (flags & RQUARTZ_FILL) ? gc->fill : gc->col;
         CGFloat fillColor[] = { R_RED(fill)/255.0, 
                                 R_GREEN(fill)/255.0, 
                                 R_BLUE(fill)/255.0, 
@@ -1812,29 +1847,13 @@ void RQuartz_Set(CGContextRef ctx,const pGEcontext gc,int flags) {
     }
     if(flags & RQUARTZ_LINE) {
         CGFloat dashlist[8];
-        int   i, ndash = 0;
-        int   lty = gc->lty;
+	int ndash = Quartz_GetLineDash(gc, dashlist, 8);
 	float lwd = (float)(gc->lwd * 0.75);
         CGContextSetLineWidth(ctx, lwd);
-
-        for(i = 0; i < 8 && lty; i++) {
-            dashlist[ndash++] = (lwd >= 1 ? lwd : 1) * (lty & 15);
-            lty >>= 4;
-        }
         CGContextSetLineDash(ctx, 0, dashlist, ndash);
-        CGLineCap cap = kCGLineCapButt;
-        switch(gc->lend) {
-            case GE_ROUND_CAP:  cap = kCGLineCapRound;  break;
-            case GE_BUTT_CAP:   cap = kCGLineCapButt;   break;
-            case GE_SQUARE_CAP: cap = kCGLineCapSquare; break;
-        }
+        CGLineCap cap = Quartz_GetLineCap(gc);
         CGContextSetLineCap(ctx,cap);
-        CGLineJoin join = kCGLineJoinRound;
-        switch(gc->ljoin) {
-            case GE_ROUND_JOIN: join = kCGLineJoinRound; break;
-            case GE_MITRE_JOIN: join = kCGLineJoinMiter; break;
-            case GE_BEVEL_JOIN: join = kCGLineJoinBevel; break;
-        }
+        CGLineJoin join = Quartz_GetLineJoin(gc);
         CGContextSetLineJoin(ctx, join);
         CGContextSetMiterLimit(ctx, gc->lmitre);
     }
@@ -2414,6 +2433,21 @@ static void RQuartz_Line(double x1, double y1, double x2, double y2, CTXDESC)
     }
 }
 
+/* returns a CGPath object constructed from the points.
+   The path is closed if close_path is != 0.
+   Must be released using CGPathRelease() */
+static CGPathRef QuartzCreatePath(int n, const double *x, const double *y, int close_path) {
+    CGMutablePathRef path = CGPathCreateMutable();
+    int i = 0;
+    if (n < 1) return (CGPathRef) path;
+    CGPathMoveToPoint(path, NULL, x[0], y[0]);
+    while (++i < n)
+        CGPathAddLineToPoint(path, NULL, x[i], y[i]);
+    if (close_path)
+        CGPathCloseSubpath(path);
+    return (CGPathRef) path;
+}
+
 static void QuartzPolylinePath(int n, double *x, double *y,
                                CGContextRef ctx)
 {
@@ -2433,15 +2467,50 @@ static void QuartzPolylinePath(int n, double *x, double *y,
 
 static void QuartzPolyline(int n, double *x, double *y,
                            CGContextRef ctx, const pGEcontext gc, 
-                           QuartzDesc *xd)
+                           QuartzDesc *xd, int close_path)
 {
     CGContextRef savedCTX = ctx;
     CGLayerRef layer;
 
     bool grouping = QuartzBegin(&ctx, &layer, xd);
-    CGContextBeginPath(ctx);
-    QuartzPolylinePath(n, x, y, ctx);
-    QuartzStroke(ctx, gc, xd);
+    if (n > 0) {
+        /* Apple's stroker is broken in that it cannot create a stroke of
+           more than 128 points, regardless of the actual number of points
+           in the path, so it will end the path after 127 points and start
+           a new path. This has two problems: a) semi-transparent lines
+           will overlap after the break and b) dashing will re-start with
+           the phase being reset, creating wrong dash patterns.
+           The solution is to create a path, use CGPathCreateCopyByDashingPath
+           to dash it (if needed) and the use CGPathCreateCopyByStrokingPath
+           to create a polygon path that corresponds to the entire path,
+           and only then push it to the CG context and  fill it with the
+           stroke color. Note: that API requires Mac OS X 10.7+.
+           Some crude benchmarking showed no difference in performance.
+           (NB: some may think that CALayer will be better, but it is not,
+           because it falls back to software rendering when drawing to Quartz).
+        */
+        CGPathRef path = QuartzCreatePath(n, x, y, close_path);
+        float lwd = (float)(gc->lwd * 0.75);
+        CGFloat dashlist[8];
+        int ndash = Quartz_GetLineDash(gc, dashlist, 8);
+        CGPathRef dashedPath = (ndash < 1) ? path :
+            CGPathCreateCopyByDashingPath(path, NULL, 0.0,
+                                          dashlist, ndash);
+        CGPathRef polygonPath =
+            CGPathCreateCopyByStrokingPath(dashedPath, NULL, lwd,
+                                           Quartz_GetLineCap(gc),
+                                           Quartz_GetLineJoin(gc),
+                                           gc->lmitre);
+        CGContextAddPath(ctx, polygonPath);
+        /* NB: we don't need RQUARTZ_LINE since we have already
+           converted the stroke to a polygon */
+        SET(RQUARTZ_FILL_WITH_STROKE);
+        CGContextDrawPath(ctx, kCGPathFill);
+        CGPathRelease(polygonPath);
+        if (path != dashedPath)
+            CGPathRelease(dashedPath);
+        CGPathRelease(path);
+    }
     QuartzEnd(grouping, layer, ctx, savedCTX, xd);
 }
 
@@ -2455,9 +2524,8 @@ static void RQuartz_Polyline(int n, double *x, double *y, CTXDESC)
         QuartzPolylinePath(n, x, y, ctx);
     } else {
         bool stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
-        if (stroke) {
-            QuartzPolyline(n, x, y, ctx, gc, xd);
-        }        
+        if (stroke)
+            QuartzPolyline(n, x, y, ctx, gc, xd, 0);
     }
 }
 
@@ -2479,12 +2547,15 @@ static void QuartzPolygon(int n, double *x, double *y,
     CGLayerRef layer;
 
     bool grouping = QuartzBegin(&ctx, &layer, xd);
-    CGContextBeginPath(ctx);
-    QuartzPolygonPath(n, x, y, ctx);
-    if (op) {
-        QuartzFill(ctx, gc, xd);
-    } else {
-        QuartzStroke(ctx, gc, xd);
+    if (n > 0) {
+        CGPathRef path = QuartzCreatePath(n, x, y, 1);
+        CGContextAddPath(ctx, path);
+	if (op) {
+	    QuartzFill(ctx, gc, xd);
+	} else {
+	    QuartzStroke(ctx, gc, xd);
+	}
+	CGPathRelease(path);
     }
     QuartzEnd(grouping, layer, ctx, savedCTX, xd);
 }
@@ -2501,14 +2572,10 @@ static void RQuartz_Polygon(int n, double *x, double *y, CTXDESC)
         bool fill = (gc->patternFill != R_NilValue) || 
             (R_ALPHA(gc->fill) > 0);
         bool stroke = (R_ALPHA(gc->col) > 0 && gc->lty != -1);
-        if (fill && stroke) {
+        if (fill)
             QuartzPolygon(n, x, y, ctx, gc, xd, 1); /* fill */
-            QuartzPolygon(n, x, y, ctx, gc, xd, 0); /* stroke */
-        } else if (fill) {
-            QuartzPolygon(n, x, y, ctx, gc, xd, 1);
-        } else if (stroke) {
-            QuartzPolygon(n, x, y, ctx, gc, xd, 0);
-        }        
+	if (stroke)
+            QuartzPolyline(n, x, y, ctx, gc, xd, 1); /* close + stroke */
     }
 }
 
