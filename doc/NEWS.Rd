@@ -349,6 +349,11 @@
       \item \code{<matrix>[[i, j]]} with negative \code{i} occasionally
       gives no error but accesses \code{previous content}; thanks to
       \I{Kevin Ushey}'s report and very simple fix in \PR{19116}.
+
+      \item Quartz device now correctly draws long paths (work-around
+      for Quartz built-in stroker breaking long paths). Thanks to
+      \I{R Dev Day @ useR! 2026} contributors, notably
+      \I{Tomek Gieorgijewski}, report in \PR{18680}.
     }
   }
 }
