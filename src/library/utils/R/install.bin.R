@@ -1,7 +1,7 @@
 #  File src/library/utils/R/unix/mac.install.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -84,19 +84,15 @@
              type = .Platform$pkgType,
              ...)
 {
-    untar0 <- function(what, where)
-    {
-        ## FIXME: should this look for Sys.getenv('TAR')?
-        ## Leopard has GNU tar, SL has BSD tar.
-        xcode <- system(paste0("tar zxf \"", path.expand(what), "\" -C \"",
-                               path.expand(where), "\""), intern=FALSE)
-        if (xcode)
-            warning(gettextf("'tar' returned non-zero exit code %d", xcode),
-                    domain = NA, call. = FALSE)
+    ## in addition to tar balls, we also allow zip files (for compatibility
+    ## with Windows binaries), so we use magic bytes to pick the right function
+    untar <- function(what, where) {
+        magic <- readBin(what, "raw", n = 4L)
+        if (identical(magic, as.raw(c(0x50, 0x4b, 0x03, 0x04))))
+            unzip(what, exdir = where)
+        else
+            utils::untar(what, exdir = where)
     }
-
-    ## not sure why the above was used - possibly it pre-dates utils::untar()?
-    untar <- function(what, where) utils::untar(what, exdir=where)
 
     unpackPkg <- function(pkg, pkgname, lib, lock = FALSE)
     {

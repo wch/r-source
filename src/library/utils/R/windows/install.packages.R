@@ -1,7 +1,7 @@
 #  File src/library/utils/R/windows/install.packages.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,13 @@ unpackPkgZip <- function(pkg, pkgname, lib, libs_only = FALSE,
     .zip.unpack <- function(zipname, dest)
     {
         if(file.exists(zipname)) {
-            if((unzip <- getOption("unzip")) != "internal") {
+            ## normally, zipname should be a zip file, but for custom binaries
+            ## we want to allow tar balls, so we try to make sure we use the correct
+            ## function based on the magic bytes, just in case
+            magic <- readBin(zipname, "raw", n = 4L)
+            if(!identical(magic, as.raw(c(0x50, 0x4b, 0x03, 0x04))))
+                utils::untar(zipname, exdir = dest)
+            else if((unzip <- getOption("unzip")) != "internal") {
                 system(paste(shQuote(unzip), "-oq", zipname, "-d", dest),
                        show.output.on.console = FALSE, invisible = TRUE)
             } else unzip(zipname, exdir = dest)
