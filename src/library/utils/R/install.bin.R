@@ -75,7 +75,7 @@
     }
 }
 
-.install.macbinary <-
+.install.binary <-
     function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos, type=type),
              method, available = NULL, destdir = NULL,

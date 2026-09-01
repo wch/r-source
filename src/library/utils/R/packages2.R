@@ -16,10 +16,6 @@
 #  A copy of the GNU General Public License is available at
 #  https://www.R-project.org/Licenses/
 
-## FIXME: at some point we may want to allow custom binary installs on Windows as well
-if (.Platform$OS.type == "windows")
-    .install.macbinary <- function(...) NULL	# globalVariables isn't available, so use this to suppress the warning
-
 isBasePkg <- function(pkg) {
   priority <- tryCatch(packageDescription(pkg, fields = "Priority", encoding = NA),
                        error = function(e) e, warning = function(e) e)
@@ -563,7 +559,7 @@ install.packages <-
                                    libs_only = libs_only,
                                    quiet = quiet, ...)
             else
-                .install.macbinary(pkgs = bins, lib = lib,
+                .install.binary(pkgs = bins, lib = lib,
                                    contriburl = contrib.url(repos, type2),
                                    method = method, available = av2,
                                    destdir = destdir,
@@ -633,8 +629,8 @@ install.packages <-
         }
     }
 
-    if(.Platform$OS.type == "windows") {
-        ## FIXME: we may want allow custom binaries on Windows as well...
+    ## This is legacy zip and source handling only; custom binaries carry on
+    if(.Platform$OS.type == "windows" && tools:::.pkg.type(type) != "other.binary") {
         if(!startsWith(type, "win.binary") && type != "source")
             stop("cannot install binary packages from other operating systems on Windows")
 
@@ -664,10 +660,10 @@ install.packages <-
             stop("cannot install Windows binary packages on this platform")
 
         if(grepl("^[[:lower:]]+[.]binary", type)) {
-            .install.macbinary(pkgs = pkgs, lib = lib, contriburl = contriburl,
-                               method = method, available = available,
-                               destdir = destdir,
-                               dependencies = dependencies, quiet = quiet, ...)
+            .install.binary(pkgs = pkgs, lib = lib, contriburl = contriburl,
+                            method = method, available = available,
+                            destdir = destdir,
+                            dependencies = dependencies, quiet = quiet, ...)
             return(invisible())
         }
 
