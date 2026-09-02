@@ -1,6 +1,6 @@
 % File src/library/stats/man/lm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{lm}
@@ -59,6 +59,8 @@ lm(formula, data, subset, weights, na.action,
   \item{model, x, y, qr}{logicals.  If \code{TRUE} the corresponding
     components of the fit (the model frame, the model matrix, the
     response, the QR decomposition) are returned.
+    Notably, (the default) \code{model = TRUE} is needed for further
+    \code{\link{update}(<lm_result>)}.
   }
 
   \item{singular.ok}{logical. If \code{FALSE} (the default in S but
@@ -146,6 +148,12 @@ lm(formula, data, subset, weights, na.action,
   \code{effects}, \code{fitted.values} and \code{residuals} extract
   various useful features of the value returned by \code{lm}.
 
+  Such models can be updated, both for changed \code{data} or
+  \code{formula}, via \code{\link{update}()}.
+  Note that \code{lm()} now % R-devel: Sep 2, 2026; R >= 4.7.0
+  may fix up the resulting \code{call} component such that \code{update()}
+  has more chance to work as intented, as e.g., in \PR{17463} and \PR{17476}.
+
   An object of class \code{"lm"} is a list containing at least the
   following components:
 
@@ -155,7 +163,8 @@ lm(formula, data, subset, weights, na.action,
   \item{rank}{the numeric rank of the fitted linear model.}
   \item{weights}{(only for weighted fits) the specified weights.}
   \item{df.residual}{the residual degrees of freedom.}
-  \item{call}{the matched call.}
+  \item{call}{the matched call, possibly fixed up to contain a valid
+    \code{formula = *} or \code{data = *} part.}
   \item{terms}{the \code{\link{terms}} object used.}
   \item{contrasts}{(only where relevant) the contrasts used.}
   \item{xlevels}{(only where relevant) a record of the levels of the

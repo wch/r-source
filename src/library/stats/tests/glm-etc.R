@@ -350,6 +350,52 @@ all.equal(resid(fit), resid(fitF100), tolerance = 1e-15)# Mean rel..diff.: 2.24.
 stopifnot(identical(iDiff, 2:3))
 
 
+###--- update(<lm.fit>) in  *a*typical cases
+## [Bug  1861]  update() can not find objects    --- 1 Aug 2002
+## [Bug 17463]  update() on lm(data) will fail?  --- 4 Sep 2018
+## [Bug 17476]  eval in update.lm fails
+##--------------------
+## Six "equivalent" models:
+rock.mod0 <- lm(area ~ . , data = rock)
+rock.mod1 <- lm(area ~ peri + shape + perm, data = rock)
+rock.mod2 <- lm(rock)
+form <- formula(rock.mod1); form0 <- area ~ . # as _variable_ (not in call, R <= 4.6.0)
+rock.modf0<- lm(form0, data = rock)
+rock.modf <- lm(form , data = rock)
+rock.modf2<- lm(formula(rock.mod1), data = rock)
+## update() used to fail on the 3rd one
+(umod0 <- update(rock.mod0, . ~ . -perm))
+ umod1 <- update(rock.mod1, . ~ . -perm)
+ umod2 <- update(rock.mod2, . ~ . -perm)# Error in eval(..) : object 'area' not found
+ umodf <- update(rock.modf, . ~ . -perm)
+ umodf0<- update(rock.modf0,. ~ . -perm)
+ umodf2<- update(rock.modf2,. ~ . -perm)
+(c1 <- rock.mod1$call)
+ c2 <- rock.mod2$call
+wls2 <- function(x) {
+  res2 <- residuals(x)^2 # a _local_ variable
+  update(x, weights = 1/res2)
+}
+all.EQ.0 <- function(x,y) all.equal(x,y, tolerance = 0)
+stopifnot(exprs = { # the fitted models now have identical 'call':
+    identical(umod0, umod1) # TRUE (always) even when rock.mod0 & rock*1 _differ_ in call
+    identical(c1, c2) # TRUE!
+    all.EQ.0(rock.mod1, rock.mod2)
+    all.EQ.0(rock.modf, rock.mod2)
+    all.EQ.0(rock.modf, rock.modf2)
+    all.EQ.0( umod1, umod2)
+    all.EQ.0( umodf, umod2)
+    all.EQ.0( umodf, umodf2)
+    all.EQ.0(umod1$call, umod2$call) # non identical environment(.$formula)
+    ##
+    all.EQ.0( wls2(rock.mod1), wls2(rock.mod2) -> wu2) # Error in eval(..) : object 'res2' not found
+    all.EQ.0( wls2(rock.modf) -> wuf, wu2)
+    all.EQ.0( wuf, wls2(rock.modf2))
+    all.EQ.0( wuf, wls2(rock.modf0))
+    ## but wls2(umod0) or  wls2(umod*)  all fail
+})
+
+
 
 ### Local variables:
 ### mode: R
