@@ -3507,16 +3507,15 @@ Configure variable @env{JAVA_HOME} can be set to point to a specific
 Principal amongst these settings are some paths to the Java
 libraries and JVM, which are stored in environment variable
 @enindex R_JAVA_LD_LIBRARY_PATH
-@env{R_JAVA_LD_LIBRARY_PATH} in file @file{@var{R_HOME}/etc/ldpaths} (or
-a sub-architecture-specific version).  A typical setting for
-@cputype{x86_64} Linux is
+@env{R_JAVA_LD_LIBRARY_PATH} in file @file{@var{R_HOME}/etc/ldpaths}.  A
+typical setting for @cputype{x86_64} Linux is
 
 @example
-JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.322.b06-6.fc34.x86_64/jre
-R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib/amd64/server
+JAVA_HOME=/usr/lib/jvm/java-25-openjdk
+R_JAVA_LD_LIBRARY_PATH=$@{JAVA_HOME@}/lib//server
 @end example
 
-Unfortunately this depends on the exact version of the @abbr{JRE}/@abbr{JDK}
+Unfortunately this depends on the version of the @abbr{JRE}/@abbr{JDK}
 installed, and so may need updating if the Java installation is updated.
 This can be done by running @code{R CMD javareconf} which updates
 settings in both @file{@var{R_HOME}/etc/Makeconf} and
@@ -3531,7 +3530,7 @@ Another way of overriding those settings is to set the environment variable
 Java-using packages.  For example
 
 @example
-R_JAVA_LD_LIBRARY_PATH=/usr/lib/jvm/java-1.8.0/jre/lib/amd64/server
+R_JAVA_LD_LIBRARY_PATH=/usr/lib/jvm/java-25-openjdk/lib/server
 @end example
 
 It may be possible to avoid this by specifying an invariant link as the
@@ -3539,31 +3538,28 @@ path when configuring. For example, on that system any of
 
 @example
 JAVA_HOME=/usr/lib/jvm/java
-JAVA_HOME=/usr/lib/jvm/java-1.8.0
-JAVA_HOME=/usr/lib/jvm/java-1.8.0/jre
-JAVA_HOME=/usr/lib/jvm/jre-1.8.0
+JAVA_HOME=/usr/lib/jvm/java-25
+JAVA_HOME=/usr/lib/jvm/jre
 @end example
 
 @noindent
-worked (since the `auto' setting of @command{/etc/alternatives} chose
-Java 8 aka 1.8.0).
+worked.
 
 `Non-server' Oracle distributions of Java as from version 11 are of a
 full @abbr{JDK}.  However, Linux distributions can be confusing: for example
-Fedora 38 had
+Fedora 44 had
 @example
-java-1.8.0-openjdk
-java-1.8.0-openjdk-devel
-java-11-openjdk
-java-11-openjdk-devel
-java-17-openjdk
-java-17-openjdk-devel
+java-25-openjdk
+java-25-openjdk-devel
 java-latest-openjdk
 java-latest-openjdk-devel
 @end example
 @noindent
-where the @code{-devel} @abbr{RPM}s are needed to complete the @abbr{JDK}. Debian/Ubuntu use
-@samp{-jre} and @samp{-jdk}, e.g.
+where the @code{-devel} @abbr{RPM}s are needed to complete the
+@abbr{JDK}. Note that @code{-latest-} may be a non-LTS version such as
+27 and so not recommended.
+
+Debian/Ubuntu use @samp{-jre} and @samp{-jdk}, e.g.
 @example
 sudo apt install default-jdk
 @end example
