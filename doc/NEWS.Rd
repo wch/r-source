@@ -299,6 +299,11 @@
 
       \item Fix for \PR{19035} (piping \code{postscript()} output)
       thanks to \I{Jeroen Ooms} and \I{Ivan Krylov}.
+
+      \item \code{lm(.., weights = *)} gets a new optional argument
+      \code{wtol}, defaulting to 0 currently for back compatibility.
+      Setting \code{wtol = 1e-30} fixes \PR{17475} thanks to the
+      \sQuote{\I{R Dev Day}} 2025 participants \I{Kelly Bodwin} et al.
     }
   }
 }

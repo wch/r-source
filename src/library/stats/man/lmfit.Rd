@@ -1,16 +1,16 @@
 % File src/library/stats/man/lmfit.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{lm.fit}
 \title{Fitter Functions for Linear Models}
 \usage{
 lm.fit (x, y,    offset = NULL, method = "qr", tol = 1e-7,
-       singular.ok = TRUE, \dots)
+                  singular.ok = TRUE, \dots)
 
 lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7,
-        singular.ok = TRUE, \dots)
+        wtol = 0, singular.ok = TRUE, \dots)
 
 .lm.fit(x, y, tol = 1e-7)
 }
@@ -45,6 +45,9 @@ lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7,
 
   \item{tol}{tolerance for the \code{\link{qr}} decomposition.  Default
     is 1e-7.}
+  \item{wtol}{tolerance for treating small positive weights as zero.
+    Default is currently 0 for back compatibility, indicating that only
+    exact zeros are treated as zero.}
 
   \item{singular.ok}{logical. If \code{FALSE}, a singular model is an
     error.}
