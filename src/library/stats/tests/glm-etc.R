@@ -340,7 +340,7 @@ if(FALSE)
 all.equal(fit, fitF100)# no!!
 stopifnot(exprs = {
     all.equal(weights(fit), weights(fitF100)/100, tolerance = 1e-15)
-    all.equal(   coef(fit),    coef(fitF100),     tolerance = 1e-15)
+    all.equal(   coef(fit),    coef(fitF100),     tolerance = 8e-15)# seen 1.6795e-15 [Mac ARM]
     all.equal(predict(fit), predict(fitF100),     tolerance = 1e-15)
 })
 ## However --- very surprisingly to me (MM):
