@@ -68,9 +68,9 @@ lm <- function (formula, data, subset, weights, na.action,
     }
     else {
 	x <- model.matrix(mt, mf, contrasts)
-	z <- if(is.null(w)) lm.fit(x, y, offset = offset,
-                                   singular.ok=singular.ok, ...)
-	else lm.wfit(x, y, w, offset = offset, singular.ok=singular.ok, ...)
+	z <- if(is.null(w))
+		  lm.fit (x, y,    offset = offset, singular.ok=singular.ok, ...)
+	     else lm.wfit(x, y, w, offset = offset, singular.ok=singular.ok, ...)
     }
     class(z) <- c(if(mlm) "mlm", "lm")
     z$na.action <- attr(mf, "na.action")
@@ -176,10 +176,10 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
 	ok <- w != 0
 	nok <- !ok
 	w <- w[ok]
-	x0 <- x[!ok, , drop = FALSE]
-	x <- x[ok,  , drop = FALSE]
+	x0 <- x[nok, , drop = FALSE]
+	x  <- x[ ok, , drop = FALSE]
 	n <- nrow(x)
-	y0 <- if (ny > 1L) y[!ok, , drop = FALSE] else y[!ok]
+	y0 <- if (ny > 1L) y[nok, , drop = FALSE] else y[nok]
 	y  <- if (ny > 1L) y[ ok, , drop = FALSE] else y[ok]
     }
     p <- ncol(x)
@@ -217,7 +217,6 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
     z$coefficients <- coef
     z$residuals <- z$residuals/wts
     z$fitted.values <- y - z$residuals
-    z$weights <- w
     if (zero.weights) {
 	coef[is.na(coef)] <- 0
 	f0 <- x0 %*% coef
@@ -236,7 +235,8 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
 	z$residuals <- save.r
 	z$fitted.values <- save.f
 	z$weights <- save.w
-    }
+    } else
+	z$weights <- w
     if(!is.null(offset))
         z$fitted.values <- z$fitted.values + offset
     if(z$pivoted) colnames(z$qr) <- colnames(x)[z$pivot]
