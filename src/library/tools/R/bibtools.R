@@ -51,16 +51,8 @@ function(keys)
     ind <- grepl("::", keys, fixed = TRUE)
     brp <- if(!all(ind)) {
                ## Bibentries for base R and current package maybe.
-               rdfile <- processRdChunk_data_store()$Rdfile
-               if (length(rdfile)) {
-                   dir <- dirname(normalizePath(rdfile, mustWork = FALSE))
-                   if(basename(dir) %in% c("unix", "windows"))
-                       dir <- dirname(dir)
-                   dir <- if(basename(dir) == "man") {
-                              file.path(dirname(dir), "inst")
-                          } else character()
-               } else # assume current directory is package root (as in build)
-                   dir <- "inst"
+               dir <- file.path(Rd_macros_package_dir(), "inst")
+               ## Using pkg="." to cache separately from installed version.
                c(.bibentries_from_REFERENCES(dir, "."),
                  R_bibentries())
            } else NULL

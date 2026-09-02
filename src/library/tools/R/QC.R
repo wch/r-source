@@ -7313,11 +7313,6 @@ function(dir, silent = FALSE, def_enc = FALSE, minlevel = -1)
     if(is.na(enc)) enc <- "ASCII"
     else def_enc <- TRUE
     macros <- loadPkgRdMacros(dir)
-    ## UGLY! FIXME: add (something like) 'dir' as argument to checkRd() below!
-    oenv <- Sys.getenv("_R_RD_MACROS_PACKAGE_DIR_", unset = NA)
-    on.exit(if (!is.na(oenv)) Sys.setenv("_R_RD_MACROS_PACKAGE_DIR_" = oenv)
-            else Sys.unsetenv("_R_RD_MACROS_PACKAGE_DIR_"))
-    Sys.setenv("_R_RD_MACROS_PACKAGE_DIR_" = normalizePath(dir))
 
     pg <- list_files_with_type(file.path(dir, "man"), "docs", full.names = TRUE,
                                OS_subdirs = c("unix", "windows"))

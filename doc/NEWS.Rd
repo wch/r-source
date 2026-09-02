@@ -310,6 +310,14 @@
       fixing \PR{17463} and \PR{17476} and part of \PR{1861}, thanks to
       \I{Ben Tyner}, \I{Elin Waring}, \I{Kevin Tappe} and other bugzilla
       contributors.
+
+      \item \code{pkg2HTML(dir="pkg")} and other \pkg{tools}
+      consuming the \code{Rd_db()} of a source package, e.g., the
+      \code{undoc()} \acronym{QC} function (\PR{18960}, thanks to
+      \I{Michael Chirico}), % as well as (Rd-preview-help) in ESS,
+      no longer fail from processing \file{DESCRIPTION}-based Rd macros
+      such as \verb{\packageTitle} when the current directory is not the
+      source package's root directory.
     }
   }
 }

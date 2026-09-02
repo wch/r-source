@@ -36,7 +36,17 @@ function(x)
 
 Rd_macros_package_dir <-
 function()
-    Sys.getenv("_R_RD_MACROS_PACKAGE_DIR_", ".")
+{
+    if (nzchar(dir <- Sys.getenv("_R_RD_MACROS_PACKAGE_DIR_")))
+        return(dir)
+    if (is.null(rdfile <- processRdChunk_data_store()$Rdfile))
+        return(".") # assume build scenario (current dir is package root)
+    ## else we know we are processing an Rd \Sexpr in man/ or an OS subdir:
+    dir <- dirname(normalizePath(rdfile, mustWork = FALSE))
+    if(basename(dir) %in% c("unix", "windows"))
+        dir <- dirname(dir)
+    dirname(dir)
+}
 
 Rd_package_title <-
 function(pkg, dir = Rd_macros_package_dir())
