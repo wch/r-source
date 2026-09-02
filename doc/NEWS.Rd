@@ -99,6 +99,10 @@
       \item \code{rfree1way} also accepts \code{offset} terms equal to
       the number of simulated observations, allowing to sample from more
       complex models.
+
+      \item \code{tools::add_datalist()} now returns a logical
+      (invisibly, instead of \code{NULL}), indicating if it did add
+      a \file{data/datalist} file (addressing parts of \PR{18015}).
     }
   }
 
@@ -130,7 +134,8 @@
       \command{R CMD check} when re-building PDF vignettes.
 
       \item \command{R CMD build} now excludes an obsolete
-      \file{data/datalist} file when the package uses \samp{LazyData}.
+      \file{data/datalist} file when the package uses \samp{LazyData},
+      and reports when it added one.
     }
   }
 

@@ -36,6 +36,10 @@ add_datalist(pkgpath, force = FALSE, small.size = 1024^2)
   packages whose datasets have many dependencies, including loading the
   packages itself (and maybe others).
 }
+\value{
+  A logical, returned invisibly: \code{TRUE} if a \file{data/datalist}
+  file was written, \code{FALSE} otherwise.
+}
 \seealso{
   \code{\link{data}}, for a description of the supported data formats.
 

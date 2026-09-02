@@ -1277,11 +1277,11 @@ format.compactPDF <- function(x, ratio = 0.9, diff = 1e4, ...)
 add_datalist <- function(pkgpath, force = FALSE, small.size = 1024^2)
 {
     dlist <- file.path(pkgpath, "data", "datalist")
-    if (!force && file.exists(dlist)) return()
+    if (!force && file.exists(dlist)) return(invisible(FALSE))
     size <- sum(file.size(Sys.glob(file.path(pkgpath, "data", "*"))))
-    if(size <= small.size) return()
+    if(size <= small.size) return(invisible(FALSE))
     z <- list_data_in_pkg(dir = pkgpath, use_datalist = FALSE)
-    if(!length(z)) return()
+    if(!length(z)) return(invisible(FALSE))
     con <- file(dlist, "w")
     for (nm in names(z)) {
         zz <- z[[nm]]
@@ -1290,7 +1290,7 @@ add_datalist <- function(pkgpath, force = FALSE, small.size = 1024^2)
                  sep = "", file = con)
     }
     close(con)
-    invisible()
+    invisible(TRUE)
 }
 
 

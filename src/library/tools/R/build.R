@@ -1163,13 +1163,16 @@ build_exclude <- function(allfiles, pkgdir, pkgname) {
                     unlink(dlfile)
                 }
             } else if(!has_dlfile) {
-                messageLog(Log,
-                           "looking to see if a 'data/datalist' file should be added")
+                checkingLog(Log, "if a 'data/datalist' file should be added")
                 ## in some cases data() needs the package installed as
                 ## there are links to the package's namespace
-                tryCatch(add_datalist(pkgname),
-                         error = function(e)
-                             printLog(Log, "  unable to create a 'datalist' file: may need the package to be installed\n"))
+                added <- tryCatch(add_datalist(pkgname),
+                                  error = function(e) NA)
+                if (is.na(added)) {
+                    resultLog(Log, "WARNING")
+                    printLog(Log, "  unable to create a 'datalist' file: may need the package to be installed\n")
+                } else
+                    resultLog(Log, if (added) "yes (done)" else "no")
             }
             ## allow per-package override
             resave_data1 <- parse_description_field(desc, "BuildResaveData",
