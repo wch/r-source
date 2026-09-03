@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2023-09-01 11:37+0000\n"
 "Last-Translator: Caio Lente <lente@ime.usp.br>\n"
 "Language-Team: none\n"
@@ -31,6 +31,13 @@ msgstr "'X' deve ter dimnames nomeados"
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "nem todos os elementos de 'MARGIN' são nomes de dimensões"
 
+#, fuzzy
+msgid "incompatible arguments"
+msgstr "argumento 'jobs' inválido"
+
+msgid "'Sigma' is not positive definite"
+msgstr ""
+
 msgid "no cluster 'cl' supplied and none is registered"
 msgstr "nenhum cluster 'cl' fornecido e nenhum está registrado"
 
@@ -50,9 +57,7 @@ msgid "node of a socket cluster on host %s with pid %d"
 msgstr ""
 
 msgid "Connection setup failed or timed out."
-msgstr ""
-"A configuração da conexão falhou ou demorou "
-"muito."
+msgstr "A configuração da conexão falhou ou demorou muito."
 
 msgid "PORT must be specified"
 msgstr "PORT deve ser especificado"
@@ -76,9 +81,7 @@ msgid "'child' must be a valid child process"
 msgstr "'filho' deve ser um processo filho válido"
 
 msgid "'what' must be a character or raw vector"
-msgstr ""
-"'what' deve ser um caractere ou vetor bruto "
-"(raw vector)"
+msgstr "'what' deve ser um caractere ou vetor bruto (raw vector)"
 
 msgid "'mc.cores' must be >= 1"
 msgstr "'mc.cores' deve ser >= 1"
@@ -86,10 +89,8 @@ msgstr "'mc.cores' deve ser >= 1"
 msgid "affinity.list and X must have the same length"
 msgstr "affinity.list e X devem ter o mesmo comprimento"
 
-
 msgid "%d function calls resulted in an error"
-msgstr ""
-"chamadas da função %d resultaram em um erro"
+msgstr "chamadas da função %d resultaram em um erro"
 
 #, fuzzy
 msgid "'mc.preschedule' must be false if 'affinity.list' is used"
@@ -111,9 +112,7 @@ msgid "some results may be missing, folded or caused an error"
 msgstr ""
 
 msgid "fork clusters are not supported on Windows"
-msgstr ""
-"clusters de bifurcação não são suportados no "
-"Windows"
+msgstr "clusters de bifurcação não são suportados no Windows"
 
 msgid "'mc.cores' > 1 is not supported on Windows"
 msgstr "'mc.cores' > 1 não é suportado no Windows"

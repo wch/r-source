@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: none\n"
@@ -934,6 +934,9 @@ msgstr "all groups must contain data"
 msgid "not enough observations"
 msgstr "not enough observations"
 
+msgid "computing Newton updated failed in %s"
+msgstr ""
+
 #, fuzzy
 msgid "incorrect dimensions"
 msgstr "incorrect dimensions for 'xi'"
@@ -951,7 +954,7 @@ msgstr ""
 msgid "error computing the Hessian in %s"
 msgstr ""
 
-msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgid "error computing the Hessian determinant in %s"
 msgstr ""
 
 msgid "unsuccessful optimisation in %s"
@@ -1358,6 +1361,9 @@ msgstr "incompatible dimensions"
 
 msgid "missing or negative weights not allowed"
 msgstr "missing or negative weights not allowed"
+
+msgid "weights smaller than tolerance wtol*sum(w) = %g treated as zero"
+msgstr ""
 
 msgid "invalid 'lm' object:  no 'terms' component"
 msgstr "invalid 'lm' object:  no 'terms' component"
@@ -1769,6 +1775,16 @@ msgstr "argument 'subset' will be ignored"
 
 msgid "argument 'na.action' will be ignored"
 msgstr "argument 'na.action' will be ignored"
+
+msgid "different names for %s and %s: names ignored"
+msgstr ""
+
+#, fuzzy
+msgid "mismatched names for %s and %s"
+msgstr "mismatched 'x' and 'y'"
+
+msgid "duplicated names in %s"
+msgstr ""
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "upper and lower bounds ignored unless algorithm = \"port\""
@@ -2499,6 +2515,12 @@ msgid "unknown name %s in the 'split' list"
 msgid_plural "unknown names %s in the 'split' list"
 msgstr[0] "unknown name %s in the 'split' list"
 msgstr[1] "unknown names %s in the 'split' list"
+
+#, fuzzy
+msgid "essentially perfect fit for %s: summary may be unreliable"
+msgid_plural "essentially perfect fit for response(s) %s: summary may be unreliable"
+msgstr[0] "essentially perfect fit: summary may be unreliable"
+msgstr[1] "essentially perfect fit: summary may be unreliable"
 
 #, fuzzy
 msgid "extra argument %s is not of class \"%s\""

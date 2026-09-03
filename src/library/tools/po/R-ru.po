@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-09 14:51\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2024-03-25 14:56+0300\n"
 "Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
@@ -65,11 +65,11 @@ msgstr "папка '%s' не содержит Rd-объектов"
 msgid "Functions or methods with usage in Rd file '%s' but not in code:"
 msgstr "Функции или методы использованы в Rd файле '%s', но не в коде:"
 
-msgid "Data with usage in Rd file '%s' but not in code:"
-msgstr "Данные использованы в Rd файле '%s', но не в коде:"
-
 msgid "Variables with usage in Rd file '%s' but not in code:"
 msgstr "Переменные использованы в Rd файле '%s', но не в коде:"
+
+msgid "Data with usage in Rd file '%s' but not in code:"
+msgstr "Данные использованы в Rd файле '%s', но не в коде:"
 
 msgid "Argument names in code not in docs:"
 msgstr "Имена аргументов в коде, но не в документации:"
@@ -766,9 +766,6 @@ msgstr "ОШИБКА: это R версии %s, а требуется R %s %s"
 msgid "loading failed"
 msgstr "загрузка не удалась"
 
-msgid "'cc' is not on the path"
-msgstr ""
-
 msgid "'objdump' is not on the path"
 msgstr ""
 
@@ -1049,6 +1046,21 @@ msgstr ""
 "Подробности см. в\n"
 "  %s\n"
 "."
+
+#, fuzzy
+msgid "must specify 'address'"
+msgstr "Вы должны задать 'dir' или 'file'"
+
+msgid "'subject' is missing"
+msgstr ""
+
+msgid "Sending email to %s"
+msgstr ""
+
+msgid ""
+"Sending email failed!\n"
+"The unsent msg can be found in file %s."
+msgstr ""
 
 msgid "namespace must not be already loaded"
 msgstr "должно быть уже загружено пространство имен"
@@ -1401,9 +1413,6 @@ msgstr "файл '%s' не является правильным форматом DCF"
 msgid "contains a blank line"
 msgstr "содержит пустую строку"
 
-msgid "Unknown encoding with non-ASCII data: converting to ASCII"
-msgstr "Неизвестная кодировка с не-ASCII данными: конвертирую в ASCII"
-
 msgid "cannot source package code:"
 msgstr "не могу выполнить код пакета:"
 
@@ -1616,6 +1625,9 @@ msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Соответствующая запись BibTeX:"
 msgstr[1] "Соответствующие записи BibTeX:"
 msgstr[2] "Соответствующие записи BibTeX:"
+
+#~ msgid "Unknown encoding with non-ASCII data: converting to ASCII"
+#~ msgstr "Неизвестная кодировка с не-ASCII данными: конвертирую в ASCII"
 
 #~ msgid "Error: cannot rename directory to %s"
 #~ msgstr "Ошибка: не могу переименовать папку в %s"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -88,10 +88,12 @@ msgstr "o arquivo de saída '%s' desapareceu"
 msgid "invalid value for %s : %s"
 msgstr "entrada inválida para %s: %s"
 
-msgid "value of 'results' option should be lowercase"
+#, fuzzy
+msgid "value of option 'results' should be lowercase"
 msgstr "valor da opção 'results' deveria ser em letras minúsculas"
 
-msgid "value of 'strip.white' option should be lowercase"
+#, fuzzy
+msgid "value of option 'strip.white' should be lowercase"
 msgstr "valor da opção 'strip.white' deveria ser em letras minúsculas"
 
 msgid "using default value %s"
@@ -547,6 +549,56 @@ msgstr "Arquivo DESCRIPTION do pacote '%s' está ausente ou quebrado"
 msgid "Invalid \"Built\":"
 msgstr "\"Built\" inválido:"
 
+msgid "Built: value is not a string"
+msgstr ""
+
+msgid "unable to create temporary directory %s"
+msgstr "não é possível criar diretório temporário %s"
+
+#, fuzzy
+msgid "file %s is not a binary package"
+msgstr "arquivo %s não é um pacote binário de macOS"
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
+
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "pacote %s desempacotado com sucesso e somas MD5 verificadas"
+
+#, fuzzy
+msgid "package %s signature verified (%s %s)"
+msgstr "pacote %s não está disponível %s"
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
+msgstr ""
+"ERRO: falha ao bloquear diretório %s para modificação\n"
+"Tente remover %s"
+
+msgid "ERROR: failed to create lock directory %s"
+msgstr "ERRO: falha ao criar o diretório de bloqueio %s"
+
+msgid "restored %s"
+msgstr "%s restaurado"
+
+msgid "unable to move temporary installation %s to %s"
+msgstr "não foi possível mover a instalação temporária %s para %s"
+
+msgid "cannot remove prior installation of package %s"
+msgstr "não foi possível remover a instalação prévia do pacote %s"
+
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"Os pacotes binários baixados estão em\n"
+"\t%s"
+
 msgid "cannot update HTML package index"
 msgstr "não é possível atualizar índice HTML do pacote"
 
@@ -760,9 +812,6 @@ msgstr "não é possível criar %s"
 
 msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr "inferindo 'repos = NULL' de 'pkgs'"
-
-msgid "unable to create temporary directory %s"
-msgstr "não é possível criar diretório temporário %s"
 
 msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
 msgstr ""
@@ -1214,56 +1263,6 @@ msgstr "método inválido:"
 msgid "download had nonzero exit status"
 msgstr "download teve status de saída diferente de zero"
 
-msgid "Built: value is not a string"
-msgstr ""
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr "'tar' retornou código de saída diferente de zero %d"
-
-#, fuzzy
-msgid "file %s is not a binary package"
-msgstr "arquivo %s não é um pacote binário de macOS"
-
-msgid "binary package %s is not compatible with this build of R"
-msgstr ""
-
-#, fuzzy
-msgid "package %s successfully unpacked and %s sums checked"
-msgstr "pacote %s desempacotado com sucesso e somas MD5 verificadas"
-
-#, fuzzy
-msgid "package %s signature verified (%s %s)"
-msgstr "pacote %s não está disponível %s"
-
-msgid "Valid signature is required, but package %s could not be successfully verified."
-msgstr ""
-
-msgid ""
-"ERROR: failed to lock directory %s for modifying\n"
-"Try removing %s"
-msgstr ""
-"ERRO: falha ao bloquear diretório %s para modificação\n"
-"Tente remover %s"
-
-msgid "ERROR: failed to create lock directory %s"
-msgstr "ERRO: falha ao criar o diretório de bloqueio %s"
-
-msgid "restored %s"
-msgstr "%s restaurado"
-
-msgid "unable to move temporary installation %s to %s"
-msgstr "não foi possível mover a instalação temporária %s para %s"
-
-msgid "cannot remove prior installation of package %s"
-msgstr "não foi possível remover a instalação prévia do pacote %s"
-
-msgid ""
-"The downloaded binary packages are in\n"
-"\t%s"
-msgstr ""
-"Os pacotes binários baixados estão em\n"
-"\t%s"
-
 msgid "'memory.size()' is no longer supported"
 msgstr "'memory.size()' não é mais suportado"
 
@@ -1474,6 +1473,9 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "algarismo romano inválido: %s"
 msgstr[1] "algarismos romanos inválidos: %s"
+
+#~ msgid "'tar' returned non-zero exit code %d"
+#~ msgstr "'tar' retornou código de saída diferente de zero %d"
 
 #~ msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
 #~ msgstr "type == \"both\" só pode ser usado no Windows ou em um build do CRAN para macOS"

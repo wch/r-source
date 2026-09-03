@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.6.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-04-25 10:47-0700\n"
+"POT-Creation-Date: 2026-09-02 17:50-0700\n"
 "PO-Revision-Date: 2026-04-14 15:45+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: none\n"
@@ -149,7 +149,7 @@ msgstr "file afm '%s' tidak dapat dibuka"
 msgid "unknown AFM entity encountered"
 msgstr "menemukan entitas AFM yang tidak dikenal"
 
-#: devPS.c:774 devPS.c:777 devPS.c:4770 devPS.c:9362 devPicTeX.c:477
+#: devPS.c:774 devPS.c:777 devPS.c:4770 devPS.c:9363 devPicTeX.c:477
 #: devPicTeX.c:479
 #, c-format
 msgid "invalid string in '%s'"
@@ -262,11 +262,11 @@ msgstr "Gagal merekam pengkodean perangkat"
 msgid "object '.ps.prolog' is not a character vector"
 msgstr "objek '.ps.prolog' bukan vektor karakter"
 
-#: devPS.c:2790 devPS.c:7483 devWindows.c:810
+#: devPS.c:2790 devPS.c:7484 devWindows.c:810
 msgid "invalid line end"
 msgstr "Akhir baris tidak valid"
 
-#: devPS.c:2809 devPS.c:7503 devWindows.c:823
+#: devPS.c:2809 devPS.c:7504 devWindows.c:823
 msgid "invalid line join"
 msgstr "Bergabung dengan Jalur Tidak Valid"
 
@@ -274,8 +274,8 @@ msgstr "Bergabung dengan Jalur Tidak Valid"
 msgid "invalid line mitre"
 msgstr ""
 
-#: devPS.c:3022 devPS.c:3959 devPS.c:4408 devPS.c:4435 devPS.c:9166
-#: devPS.c:9237
+#: devPS.c:3022 devPS.c:3959 devPS.c:4408 devPS.c:4435 devPS.c:9167
+#: devPS.c:9238
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr ""
@@ -300,7 +300,7 @@ msgstr ""
 msgid "failed to load encoding file in %s()"
 msgstr ""
 
-#: devPS.c:3343 devPS.c:3406 devPS.c:7019 devPS.c:7075 devPS.c:8965
+#: devPS.c:3343 devPS.c:3406 devPS.c:7019 devPS.c:7075 devPS.c:8966
 msgid "invalid font type"
 msgstr ""
 
@@ -324,21 +324,21 @@ msgstr ""
 msgid "'postscript(print.it=TRUE)' used with an empty 'print' command"
 msgstr ""
 
-#: devPS.c:3510
+#: devPS.c:3511
 #, c-format
 msgid "invalid page type '%s' (postscript)"
 msgstr ""
 
-#: devPS.c:3639 devWindows.c:2363
+#: devPS.c:3640 devWindows.c:2363
 msgid "semi-transparency is not supported on this device: reported only once per page"
 msgstr ""
 
 #: devPS.c:3750 devPS.c:3761
 #, c-format
-msgid "cannot open 'postscript' pipe to '%s'"
+msgid "cannot open 'postscript' pipe to '%s' (reason: %s)"
 msgstr ""
 
-#: devPS.c:3772 devPS.c:8226 qdPDF.c:102
+#: devPS.c:3772 devPS.c:8227 qdPDF.c:102
 #, c-format
 msgid "cannot open file '%s'"
 msgstr ""
@@ -380,7 +380,7 @@ msgstr ""
 msgid "failed open converter to encoding '%s'"
 msgstr ""
 
-#: devPS.c:4756 devPS.c:9337
+#: devPS.c:4756 devPS.c:9338
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr ""
@@ -437,7 +437,7 @@ msgstr ""
 msgid "unable to allocate raster image"
 msgstr ""
 
-#: devPS.c:6710 devPS.c:6754 devPS.c:8287
+#: devPS.c:6710 devPS.c:6754 devPS.c:8288
 msgid "write failed"
 msgstr ""
 
@@ -477,91 +477,91 @@ msgstr ""
 msgid "failed to allocate definitions"
 msgstr ""
 
-#: devPS.c:7201
+#: devPS.c:7202
 #, c-format
 msgid "invalid paper type '%s' (pdf)"
 msgstr ""
 
-#: devPS.c:7225
+#: devPS.c:7226
 msgid "invalid foreground/background color (pdf)"
 msgstr ""
 
-#: devPS.c:7332
+#: devPS.c:7333
 msgid "increasing the PDF version to 1.4"
 msgstr ""
 
-#: devPS.c:7376 devPS.c:7424
+#: devPS.c:7377 devPS.c:7425
 msgid "unknown 'colormodel', using 'srgb'"
 msgstr ""
 
-#: devPS.c:7648
+#: devPS.c:7649
 msgid "failed to load sRGB colorspace file"
 msgstr ""
 
-#: devPS.c:7987
+#: devPS.c:7988
 msgid "corrupt encodings in PDF device"
 msgstr ""
 
-#: devPS.c:8068
+#: devPS.c:8069
 msgid "increasing the PDF version to 1.3"
 msgstr ""
 
 #: devPS.c:8210
 #, c-format
-msgid "cannot open 'pdf' pipe to '%s'"
+msgid "cannot open 'pdf' pipe to '%s' (reason: %s)"
 msgstr ""
 
-#: devPS.c:8216
+#: devPS.c:8217
 msgid "file = \"|cmd\" implies 'onefile = TRUE'"
 msgstr ""
 
-#: devPS.c:8360
+#: devPS.c:8361
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
 "  please shut down the PDF device"
 msgstr ""
 
-#: devPS.c:8381
+#: devPS.c:8382
 #, c-format
 msgid "Cannot open temporary file '%s' for compression (reason: %s); compression has been turned off for this device"
 msgstr ""
 
-#: devPS.c:8990 devPS.c:9494 devPS.c:9541
+#: devPS.c:8991 devPS.c:9495 devPS.c:9542
 msgid "failed to find or load PDF font"
 msgstr ""
 
-#: devPS.c:9173 devPS.c:9232
+#: devPS.c:9174 devPS.c:9233
 msgid "Text not added to path containing other drawing"
 msgstr ""
 
-#: devPS.c:9282 devPS.c:9449
+#: devPS.c:9283 devPS.c:9450
 msgid "failed to find or load PDF CID font"
 msgstr ""
 
-#: devPS.c:9948 devPicTeX.c:763
+#: devPS.c:9949 devPicTeX.c:763
 #, c-format
 msgid "invalid 'file' parameter in %s"
 msgstr ""
 
-#: devPS.c:9957 devPS.c:9961 devPS.c:10059 devPS.c:10063
+#: devPS.c:9958 devPS.c:9962 devPS.c:10060 devPS.c:10064
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr ""
 
-#: devPS.c:9979 devPS.c:10075
+#: devPS.c:9980 devPS.c:10076
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr ""
 
-#: devPS.c:9985 devPS.c:10085 devPS.c:10088 devPS.c:10091 devPS.c:10094
+#: devPS.c:9986 devPS.c:10086 devPS.c:10089 devPS.c:10092 devPS.c:10095
 #: devWindows.c:3776 devWindows.c:3780 devWindows.c:3788 devWindows.c:3799
 #: devWindows.c:3805 devWindows.c:3812 devWindows.c:3819 devWindows.c:3823
 #, c-format
 msgid "invalid value of '%s'"
 msgstr ""
 
-#: devPS.c:9998 devPS.c:10109 devPicTeX.c:776 devPicTeX.c:781 devWindows.c:3864
+#: devPS.c:9999 devPS.c:10110 devPicTeX.c:776 devPicTeX.c:781 devWindows.c:3864
 #, c-format
 msgid "unable to start %s() device"
 msgstr ""
@@ -657,44 +657,44 @@ msgstr ""
 msgid "no font could be found for family \"%s\""
 msgstr ""
 
-#: devQuartz.c:2742 cairo/cairoFns.c:528
+#: devQuartz.c:2809 cairo/cairoFns.c:528
 msgid "Attempt to reuse non-existent clipping path"
 msgstr ""
 
-#: devQuartz.c:2763 cairo/cairoFns.c:541
+#: devQuartz.c:2830 cairo/cairoFns.c:541
 msgid "Attempt to release non-existent clipping path"
 msgstr ""
 
-#: devQuartz.c:2814 cairo/cairoFns.c:688
+#: devQuartz.c:2881 cairo/cairoFns.c:688
 msgid "Attempt to release non-existent mask"
 msgstr ""
 
-#: devQuartz.c:3172
+#: devQuartz.c:3239
 #, c-format
 msgid "Invalid font path: \"%s\""
 msgstr ""
 
-#: devQuartz.c:3216
+#: devQuartz.c:3283
 msgid "Failed to load font"
 msgstr ""
 
-#: devQuartz.c:3309 devQuartz.c:3314
+#: devQuartz.c:3376 devQuartz.c:3381
 msgid "invalid 'file' argument"
 msgstr ""
 
-#: devQuartz.c:3341
+#: devQuartz.c:3408
 msgid "invalid quartz() device size"
 msgstr ""
 
-#: devQuartz.c:3369
+#: devQuartz.c:3436
 msgid "unable to create device description"
 msgstr ""
 
-#: devQuartz.c:3419
+#: devQuartz.c:3486
 msgid "unable to create quartz() device target, given type may not be supported"
 msgstr ""
 
-#: devQuartz.c:3549
+#: devQuartz.c:3616
 msgid "Quartz device is not available on this platform"
 msgstr ""
 

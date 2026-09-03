@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:17\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2024-03-20 03:05+0000\n"
 "Last-Translator: Joan Maspons <joanmaspons@gmail.com>\n"
 "Language-Team: none\n"
@@ -260,9 +260,9 @@ msgstr ""
 msgid "Axis values must be numeric"
 msgstr "la matriu rgb ha de ser numèrica"
 
-#, fuzzy
 msgid "Font file longer than 500 will be truncated"
 msgstr ""
+
 #, fuzzy
 msgid "Font family longer than 200 will be truncated"
 msgstr "Es truncarà la família del tipus de lletra més llarga de 200"
@@ -429,7 +429,7 @@ msgid "'%s' must be a non-empty character string"
 msgstr "«%s» ha de ser una cadena de caràcters no buida"
 
 #, fuzzy
-msgid "GhostScript was not found"
+msgid "Ghostscript was not found"
 msgstr "No s'ha trobat GhostScript"
 
 #, fuzzy

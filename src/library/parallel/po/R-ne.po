@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2024-07-13 03:05+0000\n"
 "Last-Translator: Binod Jung Bogati <m1s1ng@outlook.com>\n"
 "Language-Team: none\n"
@@ -29,6 +29,12 @@ msgid "'X' must have named dimnames"
 msgstr "'X' ले dimnames नाम गरेको हुनुपर्छ"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
+msgstr ""
+
+msgid "incompatible arguments"
+msgstr ""
+
+msgid "'Sigma' is not positive definite"
 msgstr ""
 
 msgid "no cluster 'cl' supplied and none is registered"

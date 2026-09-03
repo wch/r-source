@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -86,10 +86,12 @@ msgstr "出力ファイル '%s' がなくなりました"
 msgid "invalid value for %s : %s"
 msgstr "%s に対する不正な値: %s"
 
-msgid "value of 'results' option should be lowercase"
+#, fuzzy
+msgid "value of option 'results' should be lowercase"
 msgstr "'results' オプションの値は小文字でなければなりません"
 
-msgid "value of 'strip.white' option should be lowercase"
+#, fuzzy
+msgid "value of option 'strip.white' should be lowercase"
 msgstr "'strip.white' オプションの値は小文字でなければなりません"
 
 msgid "using default value %s"
@@ -547,6 +549,56 @@ msgstr "パッケージ '%s' に対する DESCRIPTION ファイルは存在し�
 msgid "Invalid \"Built\":"
 msgstr ""
 
+msgid "Built: value is not a string"
+msgstr ""
+
+msgid "unable to create temporary directory %s"
+msgstr "一時的ディレクトリ %s を作ることが出来ません"
+
+#, fuzzy
+msgid "file %s is not a binary package"
+msgstr "ファイル %s は OS X 用バイナリパッケージではありません"
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
+
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "パッケージ %s は無事に展開され、MD5 サムもチェックされました"
+
+#, fuzzy
+msgid "package %s signature verified (%s %s)"
+msgstr "パッケージ %s が利用できません (%s)"
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
+msgstr ""
+"エラー: ディレクトリ%sの変更を禁止にできません。\n"
+"%sを削除してください"
+
+msgid "ERROR: failed to create lock directory %s"
+msgstr "エラー: 排他的ディレクトリ %s を作ることが出来ません"
+
+msgid "restored %s"
+msgstr "%s を復帰させました"
+
+msgid "unable to move temporary installation %s to %s"
+msgstr "一時的なインストール %s を %s へ移動できませんでした"
+
+msgid "cannot remove prior installation of package %s"
+msgstr "パッケージ %s の既存のインストールを取り除くことが出来ませんでした"
+
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"ダウンロードされたパッケージは、以下にあります\n"
+"\t%s"
+
 msgid "cannot update HTML package index"
 msgstr "HTML パッケージ索引を更新出来ません"
 
@@ -765,9 +817,6 @@ msgstr "%s を生成できませんでした"
 
 msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr "'pkgs'から 'repos = NULL' を推測"
-
-msgid "unable to create temporary directory %s"
-msgstr "一時的ディレクトリ %s を作ることが出来ません"
 
 msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
 msgstr ""
@@ -1227,56 +1276,6 @@ msgstr "不正な書式:"
 msgid "download had nonzero exit status"
 msgstr "ダウンロードはゼロ以外の終了状態を持ちました"
 
-msgid "Built: value is not a string"
-msgstr ""
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr "'tar' がゼロでない終了コード %d を返しました"
-
-#, fuzzy
-msgid "file %s is not a binary package"
-msgstr "ファイル %s は OS X 用バイナリパッケージではありません"
-
-msgid "binary package %s is not compatible with this build of R"
-msgstr ""
-
-#, fuzzy
-msgid "package %s successfully unpacked and %s sums checked"
-msgstr "パッケージ %s は無事に展開され、MD5 サムもチェックされました"
-
-#, fuzzy
-msgid "package %s signature verified (%s %s)"
-msgstr "パッケージ %s が利用できません (%s)"
-
-msgid "Valid signature is required, but package %s could not be successfully verified."
-msgstr ""
-
-msgid ""
-"ERROR: failed to lock directory %s for modifying\n"
-"Try removing %s"
-msgstr ""
-"エラー: ディレクトリ%sの変更を禁止にできません。\n"
-"%sを削除してください"
-
-msgid "ERROR: failed to create lock directory %s"
-msgstr "エラー: 排他的ディレクトリ %s を作ることが出来ません"
-
-msgid "restored %s"
-msgstr "%s を復帰させました"
-
-msgid "unable to move temporary installation %s to %s"
-msgstr "一時的なインストール %s を %s へ移動できませんでした"
-
-msgid "cannot remove prior installation of package %s"
-msgstr "パッケージ %s の既存のインストールを取り除くことが出来ませんでした"
-
-msgid ""
-"The downloaded binary packages are in\n"
-"\t%s"
-msgstr ""
-"ダウンロードされたパッケージは、以下にあります\n"
-"\t%s"
-
 #, fuzzy
 msgid "'memory.size()' is no longer supported"
 msgstr "'memory.size()' は Windows 固有の関数です"
@@ -1454,6 +1453,9 @@ msgstr[0] "最後の記録が不完全で、%d 行が捨て去られました"
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "不正なローマ数字です: %s"
+
+#~ msgid "'tar' returned non-zero exit code %d"
+#~ msgstr "'tar' がゼロでない終了コード %d を返しました"
 
 #, fuzzy
 #~ msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"

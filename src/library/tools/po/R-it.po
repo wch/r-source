@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-09 14:51\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2023-01-04 14:29+0100\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -65,12 +65,12 @@ msgid "Functions or methods with usage in Rd file '%s' but not in code:"
 msgstr "Funzioni o metodi con utilizzo nell'oggetto documentazione '%s' ma non nel codice:"
 
 #, fuzzy
-msgid "Data with usage in Rd file '%s' but not in code:"
-msgstr "Dati con utilizzo nell'oggetto documentazione '%s' ma non nel codice:"
-
-#, fuzzy
 msgid "Variables with usage in Rd file '%s' but not in code:"
 msgstr "Variabili in uso nell'oggetto documentazione '%s' ma non nel codice:"
+
+#, fuzzy
+msgid "Data with usage in Rd file '%s' but not in code:"
+msgstr "Dati con utilizzo nell'oggetto documentazione '%s' ma non nel codice:"
 
 msgid "Argument names in code not in docs:"
 msgstr "Nomi argomenti nel codice e non nella documentazione:"
@@ -780,9 +780,6 @@ msgstr "ERRORE: l'attuale versione di R è %s, quella richiesta è %s %s"
 msgid "loading failed"
 msgstr "caricamento fallito"
 
-msgid "'cc' is not on the path"
-msgstr ""
-
 msgid "'objdump' is not on the path"
 msgstr ""
 
@@ -1062,6 +1059,21 @@ msgstr ""
 "Vedi\n"
 "  %s\n"
 "per maggiori informazioni."
+
+#, fuzzy
+msgid "must specify 'address'"
+msgstr "specificare 'dir' o 'file'"
+
+msgid "'subject' is missing"
+msgstr ""
+
+msgid "Sending email to %s"
+msgstr ""
+
+msgid ""
+"Sending email failed!\n"
+"The unsent msg can be found in file %s."
+msgstr ""
 
 msgid "namespace must not be already loaded"
 msgstr "il namespace dovrebbe essere già caricato"
@@ -1417,9 +1429,6 @@ msgstr "il file '%s' non è in formato DCF valido"
 msgid "contains a blank line"
 msgstr "contiene una linea vuota"
 
-msgid "Unknown encoding with non-ASCII data: converting to ASCII"
-msgstr "Codifica sconosciuta con dati non-ASCII: conversione in ASCII"
-
 msgid "cannot source package code:"
 msgstr "non è possibile eseguire il codice del pacchetto:"
 
@@ -1599,6 +1608,9 @@ msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Voce BibTeX corrispondente:"
 msgstr[1] "Voci BibTeX corrispondenti:"
+
+#~ msgid "Unknown encoding with non-ASCII data: converting to ASCII"
+#~ msgstr "Codifica sconosciuta con dati non-ASCII: conversione in ASCII"
 
 #~ msgid "Error: cannot rename directory to %s"
 #~ msgstr "Errore: non posso rinominare la directory in %s"

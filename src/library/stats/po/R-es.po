@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2023-10-21 03:05+0000\n"
 "Last-Translator: Natalia Labadie <nlabadie.fbioyf@gmail.com>\n"
 "Language-Team: none\n"
@@ -196,7 +196,7 @@ msgid "not enough 'y' observations"
 msgstr "sin observaciones suficientes en 'y'"
 
 msgid "samples differ in location: cannot compute confidence set, returning NA"
-msgstr ""
+msgstr "las muestras difieren en la ubicación: no se puede calcular el conjunto de confianza, devolviendo NA"
 
 msgid "cannot compute confidence set, returning NA"
 msgstr "no se puede calcular el conjunto de confianza, devolviendo NA"
@@ -313,10 +313,10 @@ msgid "'seasonal$order' must be a non-negative numeric vector of length 3"
 msgstr "'seasonal$order' debe ser un vector numérico no negativo de longitud 3"
 
 msgid "if not a list, 'seasonal' must be a non-negative numeric vector of length 3"
-msgstr ""
+msgstr "si no es una lista, 'seasonal' debe ser un vector numérico no negativo de largo 3"
 
 msgid "'seasonal' is neither a list with component 'order' nor a numeric vector of length 3"
-msgstr ""
+msgstr "'seasonal' no es ni una lista con componente 'order' no un vector numérico de extensión 3"
 
 msgid "lengths of 'x' and 'xreg' do not match"
 msgstr "las longitudes de 'x' y 'xreg' no coinciden"
@@ -523,7 +523,7 @@ msgid "contrasts not defined for %d degrees of freedom"
 msgstr "contrastes no definidos para %d grados de libertad"
 
 msgid "orthogonal polynomials cannot be represented accurately enough for %d degrees of freedom"
-msgstr ""
+msgstr "Los polinomios ortogonales no se pueden representar con suficiente precisión para %d grados de libertad"
 
 msgid "'scores' argument is of the wrong length"
 msgstr "El argumento 'scores' tiene una longitud incorrecta"
@@ -595,7 +595,7 @@ msgid "'V' is not a square numeric matrix"
 msgstr "'V' no es una matriz numérica cuadrada"
 
 msgid "diag(V) had non-positive or NA entries; the non-finite result may be dubious"
-msgstr ""
+msgstr "diag(V) tenía entradas no positivas o NA; el resultado no finito puede ser dudoso"
 
 msgid "'x' must be a numeric vector"
 msgstr "'x' debe ser un vector numérico"
@@ -637,7 +637,7 @@ msgid "elements of 'k' must be between 1 and %d"
 msgstr "los elementos de 'k' deben estar entre 1 y %d"
 
 msgid "dendrogram entries must be 1,2,..,%d (in any order), to be coercible to \"hclust\""
-msgstr ""
+msgstr "las entradas del dendrograma deben ser 1,2,..,%d (en cualquier orden), para que sean coercibles a \"hclust\""
 
 msgid "dendrogram node with non-positive #{branches}"
 msgstr "nodo de dendrograma con #{branches} no positivo"
@@ -815,7 +815,7 @@ msgstr "no se proporcionan valores iniciales"
 
 #, fuzzy
 msgid "invalid argument '%s'"
-msgstr "valor invalido de %s"
+msgstr "argumento no válido 'n'"
 
 msgid "%s link not recognised"
 msgstr "enlace no reconocido %s"
@@ -864,7 +864,7 @@ msgid "positive values only are allowed for the 'inverse.gaussian' family"
 msgstr "solo se permiten valores positivos para la familia 'inverse.gaussian'"
 
 msgid "need CRAN package 'SuppDists' for simulation from the 'inverse.gaussian' family"
-msgstr ""
+msgstr "necesita el paquete CRAN 'SuppDists' para la simulación de la familia 'inverse.gaussian'"
 
 msgid "using weights as inverse variances"
 msgstr "usando pesos (weigths) como varianzas inversas"
@@ -932,14 +932,19 @@ msgstr "todos los grupos deben contener datos"
 msgid "not enough observations"
 msgstr "no hay suficientes observaciones"
 
-msgid "incorrect dimensions"
+msgid "computing Newton updated failed in %s"
 msgstr ""
+
+#, fuzzy
+msgid "incorrect dimensions"
+msgstr "dimensiones incorrectas para 'xi'"
 
 msgid "at least two response categories required"
 msgstr ""
 
+#, fuzzy
 msgid "at least two groups required"
-msgstr ""
+msgstr "se requiere una fórmula de dos miembros"
 
 msgid "%s currently only allows independent right-censoring"
 msgstr ""
@@ -947,7 +952,7 @@ msgstr ""
 msgid "error computing the Hessian in %s"
 msgstr ""
 
-msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgid "error computing the Hessian determinant in %s"
 msgstr ""
 
 msgid "unsuccessful optimisation in %s"
@@ -956,20 +961,24 @@ msgstr ""
 msgid "incompatible length of argument 'mu' in %s"
 msgstr ""
 
+#, fuzzy
 msgid "cannot compute exact permutation distribution in %s"
-msgstr ""
+msgstr "no se puede calcular el valor p exacto con empates"
 
+#, fuzzy
 msgid "cannot compute one-sided p-values in %s"
-msgstr ""
+msgstr "no se puede calcular el valor p exacto con empates"
 
 msgid "permutation confidence intervals only available for 2-sample comparisons in %s"
 msgstr ""
 
+#, fuzzy
 msgid "failed to compute confidence interval in %s"
-msgstr ""
+msgstr "no se puede calcular el intervalo de confianza exacto con observaciones empatadas"
 
+#, fuzzy
 msgid "incorrect specification for '%s'"
-msgstr ""
+msgstr "especificación incorrecta para 'row.vars'"
 
 msgid "cannot have both a 'Surv()' response and an 'event' argument in %s"
 msgstr ""
@@ -977,14 +986,17 @@ msgstr ""
 msgid "incorrect argument 'groups' in %s: at least two groups needed"
 msgstr ""
 
+#, fuzzy
 msgid "%s is not defined for unordered responses"
-msgstr ""
+msgstr "'proj' no está implementado para múltiples variables respuesta"
 
+#, fuzzy
 msgid "incorrect number of columns for 'prob' in %s"
-msgstr ""
+msgstr "número incorrecto de columnas en 'x'"
 
+#, fuzzy
 msgid "exactly one of 'n', 'delta', 'power', and 'sig.level' must be NULL"
-msgstr ""
+msgstr "exactamente uno de 'n', 'delta', 'sd', 'power' y 'sig.level' debe ser NULL"
 
 msgid "effect size can only be computed for two-sample problems in %s"
 msgstr ""
@@ -992,8 +1004,9 @@ msgstr ""
 msgid "%s only allows two-sided alternatives in the presence of more than two groups"
 msgstr ""
 
+#, fuzzy
 msgid "NAs are not allowed in 'groups' or 'blocks'"
-msgstr ""
+msgstr "NA's no permitidos en 'groups' o 'blocks'"
 
 msgid "'y', 'groups' and 'blocks' must have the same length"
 msgstr "'y', 'groups' y 'blocks' deben tener la misma longitud"
@@ -1050,7 +1063,7 @@ msgid "up"
 msgstr "arriba"
 
 msgid "profiling has found a better solution, so original fit had not converged"
-msgstr ""
+msgstr "el perfilamiento encontró una mejor solución, por lo que el ajuste original no había convergido"
 
 msgid "'family' not recognized"
 msgstr "'family' no reconocida"
@@ -1068,7 +1081,7 @@ msgid "number of offsets is %d should equal %d (number of observations)"
 msgstr "el número de offsets es %d debe ser igual a %d (número de observaciones)"
 
 msgid "fitting to calculate the null deviance did not converge -- increase 'maxit'?"
-msgstr ""
+msgstr "el ajuste para calcular la desviación nula no convergió: ¿quizá aumentando 'maxit'?"
 
 msgid "value of 'epsilon' must be > 0"
 msgstr "el valor de 'epsilon' debe ser > 0"
@@ -1086,7 +1099,7 @@ msgid "invalid fitted means in empty model"
 msgstr "medios ajustados no válidos en modelo vacío"
 
 msgid "length of 'start' should equal %d and correspond to initial coefs for %s"
-msgstr ""
+msgstr "longitud de 'start' debe ser igual a %d y corresponder a los coeficientes iniciales de %s"
 
 msgid "NAs in V(mu)"
 msgstr "NA en V(mu)"
@@ -1107,7 +1120,7 @@ msgid "singular fit encountered"
 msgstr "ajuste singular encontrado"
 
 msgid "no valid set of coefficients has been found: please supply starting values"
-msgstr ""
+msgstr "no se ha encontrado ningún conjunto válido de coeficientes: proporcione valores iniciales"
 
 msgid "step size truncated due to divergence"
 msgstr "tamaño de paso truncado debido a divergencia"
@@ -1155,7 +1168,7 @@ msgid "observations with zero weight not used for calculating dispersion"
 msgstr "observaciones con peso cero no utilizadas para calcular la dispersión"
 
 msgid "The \"ward\" method has been renamed to \"ward.D\"; note new \"ward.D2\""
-msgstr ""
+msgstr "El método \"ward\" ha sido renombrado a \"ward.D\"; note el nuevo \"ward.D2\""
 
 msgid "invalid clustering method"
 msgstr "método de clusterización no válido"
@@ -1314,7 +1327,7 @@ msgid "argument 'q' must be numeric"
 msgstr "el argumento 'q' debe ser numérico"
 
 msgid "computation of exact probability failed, returning Monte Carlo approximation"
-msgstr ""
+msgstr "el cálculo de la probabilidad exacta falló, se devuelve una aproximación de Monte Carlo"
 
 msgid "argument 'p' must be numeric"
 msgstr "el argumento 'p' debe ser numérico"
@@ -1347,6 +1360,9 @@ msgstr "dimensiones incompatibles"
 msgid "missing or negative weights not allowed"
 msgstr "no se permiten pesos faltantes o negativos"
 
+msgid "weights smaller than tolerance wtol*sum(w) = %g treated as zero"
+msgstr ""
+
 msgid "invalid 'lm' object:  no 'terms' component"
 msgstr "objeto 'lm' no válido: ningún componente 'terms'"
 
@@ -1354,7 +1370,7 @@ msgid "calling summary.lm(<fake-lm-object>) ..."
 msgstr "llamando a summary.lm() con un objeto lm falso ..."
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
-msgstr ""
+msgstr "los grados de libertad de los residuos en el objeto sugieren que este no es un ajuste de \"lm\""
 
 msgid "essentially perfect fit: summary may be unreliable"
 msgstr "ajuste (fit) esencialmente perfecto: el resumen puede no ser confiable"
@@ -1400,10 +1416,10 @@ msgid "predictions on current data refer to _future_ responses"
 msgstr "las predicciones sobre datos actuales se refieren a respuestas _futuras_"
 
 msgid "assuming prediction variance inversely proportional to weights used for fitting"
-msgstr ""
+msgstr "asumiendo una varianza de predicción inversamente proporcional a los pesos utilizados para el ajuste"
 
 msgid "Assuming constant prediction variance even though model fit is weighted"
-msgstr ""
+msgstr "Suponiendo una varianza de predicción constante aunque el ajuste del modelo esté ponderado"
 
 msgid "'weights' as formula should be one-sided"
 msgstr "'weights' dado como fórmula debe ser una formula de un solo lado"
@@ -1448,10 +1464,10 @@ msgid "invalid 'y'"
 msgstr "'y' no válido"
 
 msgid "specified the square of a factor predictor to be dropped when degree = 1"
-msgstr ""
+msgstr "se especificó que el cuadrado de un predictor de factor se elimine cuando degree = 1"
 
 msgid "specified the square of a predictor to be dropped with only one numeric predictor"
-msgstr ""
+msgstr "se especificó que el cuadrado de un predicto se elimine cuando haya solo un predictor numérico"
 
 msgid "specified parametric for all predictors"
 msgstr "se especificó 'parametic' para todos los predictores"
@@ -1614,7 +1630,7 @@ msgid "'%s' must be a character string"
 msgstr "'%s' debe ser una cadena de caracteres"
 
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
-msgstr ""
+msgstr "¡'response' \"%s\" no es parseable!; su uso es obsoleto. Utilice as.name(.) o `..`!"
 
 msgid "'termobj' must be a object of class %s"
 msgstr "'termobj' debe ser un objeto de clase %s"
@@ -1623,7 +1639,7 @@ msgid "setting '%s' in terms.formula() is deprecated"
 msgstr "establecer '%s' en terms.formula() es obsoleto"
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
-msgstr ""
+msgstr "la variable '%s' fue ajustada con el tipo \"%s\" pero se proporcionó el tipo \"%s\""
 
 msgid "variables %s were specified with different types from the fit"
 msgstr "las variables %s se especificaron con tipos diferentes respecto del ajuste"
@@ -1695,7 +1711,7 @@ msgid "no sign change found in %d iterations"
 msgstr "no se encontró ningún cambio de signo en %d iteraciones"
 
 msgid "did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0"
-msgstr ""
+msgstr "no se logró extender los extremos del intervalo para f(lower) * f(upper) <= 0"
 
 msgid "f() values at end points not of opposite sign"
 msgstr "valores de f() en los extremos son de signo opuesto"
@@ -1757,6 +1773,16 @@ msgstr "el argumento 'subset' será ignorado"
 msgid "argument 'na.action' will be ignored"
 msgstr "el argumento 'na.action' será ignorado"
 
+msgid "different names for %s and %s: names ignored"
+msgstr ""
+
+#, fuzzy
+msgid "mismatched names for %s and %s"
+msgstr "'x' y 'y' no coinciden"
+
+msgid "duplicated names in %s"
+msgstr ""
+
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "se ignoran los límites superior e inferior a menos que el algorithm = \"port\""
 
@@ -1794,7 +1820,7 @@ msgid "'trace != 0' needs 'REPORT >= 1'"
 msgstr "'trace != 0' necesita 'REPORT >= 1'"
 
 msgid "method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
-msgstr ""
+msgstr "El método L-BFGS-B usa 'factr' (y 'pgtol') en lugar de 'reltol' y 'abstol'"
 
 msgid ""
 "one-dimensional optimization by Nelder-Mead is unreliable:\n"
@@ -1866,7 +1892,7 @@ msgid "'r' must be a single positive number"
 msgstr "'r' debe ser un único número positivo"
 
 msgid "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
-msgstr ""
+msgstr "exactamente uno de 'n', 'delta', 'sd', 'power' y 'sig.level' debe ser NULL"
 
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
 msgstr "exactamente uno de 'n', 'p1', 'p2', 'power' y 'sig.level' debe ser NULL"
@@ -1878,7 +1904,7 @@ msgid "No p2 in [p1, 1] can be found to achieve the desired power"
 msgstr "No se puede encontrar p2 en [p1, 1] para lograr el poder estadístico deseado"
 
 msgid "No significance level [0, 1] can be found to achieve the desired power"
-msgstr ""
+msgstr "No se puede encontrar ningún nivel de significancia en [0, 1] para lograr la potencia deseada"
 
 msgid "'%s' must be numeric in [0, 1]"
 msgstr "'%s' debe ser numérico en [0, 1]"
@@ -1920,7 +1946,7 @@ msgid "'newdata' must be a matrix or data frame"
 msgstr "'newdata' debe ser una matriz o un data frame"
 
 msgid "'newdata' does not have named columns matching one or more of the original columns"
-msgstr ""
+msgstr "'newdata' no tiene columnas con nombre que coincidan con una o más de las columnas originales"
 
 msgid "'newdata' does not have the correct number of columns"
 msgstr "'newdata' no tiene el número correcto de columnas"
@@ -2028,7 +2054,7 @@ msgid "length of 'v.names' does not evenly divide length of 'varying'"
 msgstr "la longitud de 'v.names' no divide uniformemente la longitud de 'varying'"
 
 msgid "length of 'varying' must be the product of length of 'v.names' and length of 'times'"
-msgstr ""
+msgstr "la longitud de 'varying' debe ser el producto de la longitud de 'v.names' y la longitud de 'times'"
 
 msgid "'k' must be positive"
 msgstr "'k' debe ser positivo"
@@ -2352,7 +2378,7 @@ msgid "too many replacement values supplied"
 msgstr "demasiados valores de reemplazo suministrados"
 
 msgid "number of values supplied is not a sub-multiple of the number of values to be replaced"
-msgstr ""
+msgstr "el número de valores proporcionados no es un submúltiplo del número de valores que se reemplazarán"
 
 msgid "only replacement of elements is allowed"
 msgstr "solo el remplazo de elementos está permitido"
@@ -2395,10 +2421,10 @@ msgstr "no hay suficientes observaciones (no faltantes) en 'x'"
 
 #, fuzzy
 msgid "'correct' must be an integer between 0 and 3"
-msgstr "'by' debe ser una lista"
+msgstr "'o' debe ser un único número entre 0 e Inf"
 
 msgid "cannot compute confidence interval when all observations are zero or tied"
-msgstr ""
+msgstr "No se puede calcular el intervalo de confianza cuando todas las observaciones son cero o están empatadas"
 
 msgid "requested conf.level not achievable"
 msgstr "nivel de confianza conf.level solicitado no alcanzable"
@@ -2406,8 +2432,9 @@ msgstr "nivel de confianza conf.level solicitado no alcanzable"
 msgid "cannot compute confidence interval when all observations are tied"
 msgstr "no se puede calcular el intervalo de confianza cuando todas las observaciones están empatadas"
 
+#, fuzzy
 msgid "'z' is not a rank vector"
-msgstr ""
+msgstr "'x' no es un vector"
 
 msgid "must supply 'formula' or 'data'"
 msgstr "debe proporcionar 'formula' o 'data'"
@@ -2481,6 +2508,12 @@ msgid "unknown name %s in the 'split' list"
 msgid_plural "unknown names %s in the 'split' list"
 msgstr[0] "unknown name %s in the '_split_' list"
 msgstr[1] "nombres desconocidos %s en la lista 'split'"
+
+#, fuzzy
+msgid "essentially perfect fit for %s: summary may be unreliable"
+msgid_plural "essentially perfect fit for response(s) %s: summary may be unreliable"
+msgstr[0] "ajuste (fit) esencialmente perfecto: el resumen puede no ser confiable"
+msgstr[1] "ajuste (fit) esencialmente perfecto: el resumen puede no ser confiable"
 
 msgid "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\""

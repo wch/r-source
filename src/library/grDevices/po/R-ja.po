@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:17\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2024-03-18 21:25+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -347,7 +347,8 @@ msgstr "フォントエンコーディングがミスマッチです '%s'/'%s'"
 msgid "'%s' must be a non-empty character string"
 msgstr "'%s' は空でない文字列でなければなりません"
 
-msgid "GhostScript was not found"
+#, fuzzy
+msgid "Ghostscript was not found"
 msgstr "GhostScript が見つかりません"
 
 msgid "invalid output format"

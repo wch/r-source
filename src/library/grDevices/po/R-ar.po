@@ -1,0 +1,571 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.2.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
+"PO-Revision-Date: 2026-06-23 16:44+0000\n"
+"Last-Translator: Abdulrahman Alswaji <alswajiab@gmail.com>\n"
+"Language-Team: none\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 5.11.4\n"
+
+msgid "invalid 'filename'"
+msgstr "'filename' غير صالح"
+
+msgid "svg: Cairo-based devices are not available for this platform"
+msgstr "svg: الأجهزة المعتمدة على Cairo غير متاحة لهذا النظام"
+
+msgid "cairo_pdf: Cairo-based devices are not available for this platform"
+msgstr "cairo_pdf: الأجهزة المعتمدة على Cairo غير متاحة لهذا النظام"
+
+msgid "cairo_ps: Cairo-based devices are not available for this platform"
+msgstr "cairo_ps: الأجهزة المعتمدة على Cairo غير متاحة لهذا النظام"
+
+msgid "'coef' must not be negative"
+msgstr "يجب ألا تكون قيمة 'coef' سالبة"
+
+msgid "no 'z' matrix specified"
+msgstr "لم تُحدَّد مصفوفة 'z'"
+
+msgid "increasing 'x' and 'y' values expected"
+msgstr "كان من المتوقع أن تكون قيم 'x' و'y' متزايدة"
+
+msgid "no proper 'z' matrix specified"
+msgstr "لم تُحدَّد مصفوفة 'z' مناسبة"
+
+msgid "dimensions of 'x', 'y' and 'z' do not match"
+msgstr "أبعاد 'x' و'y' و'z' غير متطابقة"
+
+msgid "finite coordinates are needed"
+msgstr "يلزم إحداثيات منتهية"
+
+msgid "'bias' must be positive"
+msgstr "يجب أن تكون قيمة 'bias' موجبة"
+
+msgid "'alpha' must be false if 'space' is specified"
+msgstr "يجب أن تكون 'alpha' بقيمة false إذا حُدِّدت 'space'"
+
+msgid "at least 3 columns needed"
+msgstr "يلزم 3 أعمدة على الأقل"
+
+msgid "rgb matrix must be numeric"
+msgstr "يجب أن تكون مصفوفة rgb رقمية"
+
+msgid "rgb matrix must have 3 rows"
+msgstr "يجب أن تحتوي مصفوفة rgb على 3 صفوف"
+
+msgid "rgb values must be in [0, maxColorValue]"
+msgstr "يجب أن تكون قيم rgb ضمن [0, maxColorValue]"
+
+msgid "'start' and 'end' must be distinct and in [0, 1]."
+msgstr "يجب أن تكون 'start' و'end' مختلفتين وضمن [0, 1]."
+
+msgid "'palette' does not match any given palette"
+msgstr "لا تطابق 'palette' أي لوحة ألوان معطاة"
+
+msgid "'palette' is ambiguous"
+msgstr "'palette' ملتبسة"
+
+msgid "'n' set to %s, the maximum available for %s palette"
+msgstr "تم ضبط 'n' على %s، وهو الحد الأقصى المتاح للوحة ألوان %s"
+
+msgid "'gamma' must be a scalar or 'sRGB'"
+msgstr "يجب أن تكون 'gamma' عددًا قياسيًا أو 'sRGB'"
+
+msgid "Color space converter: %s"
+msgstr "محول فضاء الألوان: %s"
+
+msgid "Reference white: %s"
+msgstr "الأبيض المرجعي: %s"
+
+msgid "display gamma = %s"
+msgstr "غاما العرض = %s"
+
+msgid "'from' must be a \"colorConverter\" object or a string"
+msgstr "يجب أن يكون 'from' كائن \"colorConverter\" أو سلسلة نصية"
+
+msgid "'to' must be a \"colorConverter\" object or a string"
+msgstr "يجب أن يكون 'to' كائن \"colorConverter\" أو سلسلة نصية"
+
+msgid "'from.ref.white' disagrees with definition of %s"
+msgstr "تختلف 'from.ref.white' مع تعريف %s"
+
+msgid "'to.ref.white' disagrees with definition of %s"
+msgstr "تختلف 'to.ref.white' مع تعريف %s"
+
+msgid "color spaces use different reference whites"
+msgstr "تستخدم فضاءات الألوان درجات بياض مرجعية مختلفة"
+
+msgid "'name' must be a character vector"
+msgstr "يجب أن يكون 'name' متجهًا نصيًا"
+
+msgid "cannot shut down device 1 (the null device)"
+msgstr "لا يمكن إغلاق الجهاز 1 (الجهاز الفارغ)"
+
+msgid "cannot supply 'which' and 'device' at the same time"
+msgstr "لا يمكن تمرير 'which' و'device' في الوقت نفسه"
+
+msgid "cannot copy from the null device"
+msgstr "لا يمكن النسخ من الجهاز الفارغ"
+
+msgid "cannot copy to the null device"
+msgstr "لا يمكن النسخ إلى الجهاز الفارغ"
+
+msgid "cannot copy device to itself"
+msgstr "لا يمكن نسخ الجهاز إلى نفسه"
+
+msgid "'device' should be a function"
+msgstr "ينبغي أن يكون 'device' دالة"
+
+msgid "no device to print from"
+msgstr "لا يوجد جهاز للطباعة منه"
+
+msgid "can only print from a screen device"
+msgstr "لا يمكن الطباعة إلا من جهاز شاشة"
+
+msgid "need to specify one of 'width' and 'height'"
+msgstr "يلزم تحديد أحد 'width' و'height'"
+
+msgid "dev.control() called without an open graphics device"
+msgstr "استُدعيت dev.control() دون وجود جهاز رسومي مفتوح"
+
+msgid "argument is missing with no default"
+msgstr "الوسيط مفقود ولا توجد قيمة افتراضية"
+
+msgid "dev.displaylist() called without an open graphics device"
+msgstr "استُدعيت dev.displaylist() دون وجود جهاز رسومي مفتوح"
+
+msgid "invalid setting for 'getOption(\"device\")'"
+msgstr "إعداد 'getOption(\"device\")' غير صالح"
+
+msgid "device '%s' not found"
+msgstr "لم يُعثر على الجهاز الرسومي '%s'"
+
+msgid "no suitable unused file name for pdf()"
+msgstr "لا يوجد اسم ملف غير مستخدم مناسب لـ pdf()"
+
+msgid "dev.new(): using pdf(file=\"%s\")"
+msgstr "dev.new(): يتم استخدام pdf(file=\"%s\")"
+
+msgid "no suitable unused file name for postscript()"
+msgstr "لا يوجد اسم ملف غير مستخدم مناسب لـ postscript()"
+
+msgid "dev.new(): using postscript(file=\"%s\")"
+msgstr "dev.new(): يتم استخدام postscript(file=\"%s\")"
+
+msgid "Invalid capabilities - alert the device maintainer"
+msgstr "القدرات غير صالحة - نبّه مشرف صيانة الجهاز"
+
+msgid "Invalid span weight"
+msgstr "وزن الامتداد غير صالح"
+
+msgid "length of arguments must match (and be greater than 0)"
+msgstr "يجب أن تتطابق أطوال الوسائط (وأن تكون أكبر من 0)"
+
+msgid "Invalid glyph width(s)"
+msgstr "عرض/عروض الرموز الرسومية غير صالحة"
+
+msgid "Invalid glyph width"
+msgstr "عرض الرمز الرسومي غير صالح"
+
+msgid "Unknown width; using left anchor"
+msgstr "العرض غير معروف؛ سيتم استخدام المرساة اليسرى"
+
+msgid "Invalid glyph height(s)"
+msgstr "ارتفاع/ارتفاعات الرموز الرسومية غير صالحة"
+
+msgid "Invalid glyph height"
+msgstr "ارتفاع الرمز الرسومي غير صالح"
+
+msgid "Unknown height; using bottom anchor"
+msgstr "الارتفاع غير معروف؛ سيتم استخدام المرساة السفلية"
+
+msgid "Invalid glyph anchor"
+msgstr "مرساة الرمز الرسومي غير صالحة"
+
+msgid "Registered axis names must be lower case"
+msgstr ""
+
+msgid "Custom axis names must be upper case"
+msgstr ""
+
+#, fuzzy
+msgid "Axis value(s) out of range"
+msgstr "الفهرس خارج النطاق"
+
+#, fuzzy
+msgid "No axes specified"
+msgstr "لم تُحدَّد مصفوفة 'z'"
+
+msgid "Axis names must be 4 ASCII letters long"
+msgstr ""
+
+#, fuzzy
+msgid "Axis values must be numeric"
+msgstr "يجب أن تكون مصفوفة rgb رقمية"
+
+msgid "Font file longer than 500 will be truncated"
+msgstr "سيتم اقتطاع ملف الخط إذا تجاوز طوله 500"
+
+msgid "Font family longer than 200 will be truncated"
+msgstr "سيتم اقتطاع عائلة الخط إذا تجاوز طولها 200"
+
+msgid "PostScript font name longer than 200 will be truncated"
+msgstr "سيتم اقتطاع اسم خط PostScript إذا تجاوز طوله 200"
+
+msgid "Font information is inconsistent"
+msgstr "معلومات الخط غير متسقة"
+
+msgid "List must include at least one font"
+msgstr "يجب أن تتضمن القائمة خطًا واحدًا على الأقل"
+
+msgid "Invalid glyph font"
+msgstr "خط الرمز الرسومي غير صالح"
+
+msgid "Invalid font list"
+msgstr "قائمة الخطوط غير صالحة"
+
+msgid "Unknown font"
+msgstr "خط غير معروف"
+
+msgid "There must be anchors named \"left\" and \"bottom\""
+msgstr "يجب أن توجد مراسٍ باسم \"left\" و\"bottom\""
+
+msgid "Invalid glyph info"
+msgstr "معلومات الرمز الرسومي غير صالحة"
+
+msgid "'%s' was removed in R 4.5.0."
+msgstr "أُزيل '%s' في R 4.5.0."
+
+msgid "Invalid compositing operator"
+msgstr "عامل التركيب غير صالح"
+
+msgid "wrong 'type'; should never happen, please report!"
+msgstr "قيمة 'type' خاطئة؛ لا يفترض أن يحدث هذا، يُرجى الإبلاغ!"
+
+msgid "Invalid mask type"
+msgstr "نوع القناع غير صالح"
+
+msgid "Invalid fill rule"
+msgstr "قاعدة الملء غير صالحة"
+
+msgid "Invalid pattern type"
+msgstr "نوع النمط غير صالح"
+
+msgid "Invalid 'extend' value"
+msgstr "قيمة 'extend' غير صالحة"
+
+msgid "'%s' is deprecated."
+msgstr "أصبح '%s' مهملًا."
+
+msgid "invalid arguments in '%s' (need named args)"
+msgstr "وسائط غير صالحة في '%s' (يلزم وسائط مسماة)"
+
+msgid "'name.opt' must be character, name of an existing list"
+msgstr "يجب أن تكون 'name.opt' نصية، واسمًا لقائمة موجودة"
+
+msgid "cannot reset non-existent '%s'"
+msgstr "لا يمكن إعادة ضبط '%s' غير الموجود"
+
+msgid "invalid options in '%s'"
+msgstr "خيارات غير صالحة في '%s'"
+
+msgid "NOT changing %s"
+msgstr "لن يتم تغيير %s"
+
+msgid "argument 'append' is for back-compatibility and will be ignored"
+msgstr "الوسيط 'append' مخصص للتوافق العكسي وسيتم تجاهله"
+
+msgid "unknown family '%s'"
+msgstr "عائلة غير معروفة '%s'"
+
+msgid "invalid 'family' argument"
+msgstr "الوسيط 'family' غير صالح"
+
+msgid "'title' argument \"%s\" contains invalid characters"
+msgstr "يحتوي الوسيط 'title' \"%s\" على محارف غير صالحة"
+
+msgid "invalid 'file' argument '%s'"
+msgstr "الوسيط 'file' غير صالح '%s'"
+
+msgid "invalid PDF version"
+msgstr "إصدار PDF غير صالح"
+
+msgid "Invalid font type"
+msgstr "نوع الخط غير صالح"
+
+msgid "invalid family name in font specification"
+msgstr "اسم العائلة غير صالح في مواصفة الخط"
+
+msgid "invalid metric information in font specification"
+msgstr "معلومات القياسات غير صالحة في مواصفة الخط"
+
+msgid "invalid encoding in font specification"
+msgstr "ترميز غير صالح في مواصفة الخط"
+
+msgid "Not a CID font"
+msgstr "ليس خط CID"
+
+msgid "invalid CMap name in font specification"
+msgstr "اسم CMap غير صالح في مواصفة الخط"
+
+msgid "invalid 'cmapEncoding' in font specification"
+msgstr "القيمة 'cmapEncoding' غير صالحة في مواصفة الخط"
+
+msgid "invalid PDF resource in font specification"
+msgstr "مورد PDF غير صالح في مواصفة الخط"
+
+msgid "Invalid font database name"
+msgstr "اسم قاعدة بيانات الخطوط غير صالح"
+
+msgid "font %s already in use"
+msgstr "الخط %s مستخدم بالفعل"
+
+msgid "invalid arguments in '%s' (must be font names)"
+msgstr "وسائط غير صالحة في '%s' (يجب أن تكون أسماء خطوط)"
+
+msgid "unknown font"
+msgstr "خط غير معروف"
+
+msgid "font encoding mismatch '%s'/'%s'"
+msgstr "عدم تطابق ترميز الخط '%s'/'%s'"
+
+msgid "'%s' must be a non-empty character string"
+msgstr "يجب أن يكون '%s' سلسلة نصية غير فارغة"
+
+#, fuzzy
+msgid "Ghostscript was not found"
+msgstr "لم يُعثر على GhostScript"
+
+msgid "invalid output format"
+msgstr "تنسيق الإخراج غير صالح"
+
+msgid "status %d in running command '%s'"
+msgstr "الحالة %d عند تشغيل الأمر '%s'"
+
+msgid "Invalid 'glyphInfo'"
+msgstr "'glyphInfo' غير صالح"
+
+msgid "failed to add more ticks; 'min.n' too large?"
+msgstr "فشل في إضافة المزيد من علامات التدريج؛ هل 'min.n' كبير جدًا؟"
+
+msgid "a raster matrix must be character, or numeric, or logical"
+msgstr "يجب أن تكون مصفوفة raster نصية أو رقمية أو منطقية"
+
+msgid "a raster array must be numeric"
+msgstr "يجب أن تكون مصفوفة raster متعددة الأبعاد رقمية"
+
+msgid "a raster array must have exactly 3 dimensions"
+msgstr "يجب أن تحتوي مصفوفة raster متعددة الأبعاد على 3 أبعاد بالضبط"
+
+msgid "a raster array must have exactly 3 or 4 planes"
+msgstr "يجب أن تحتوي مصفوفة raster متعددة الأبعاد على 3 أو 4 مستويات بالضبط"
+
+msgid "'drop' is always implicitly FALSE in '[.raster'"
+msgstr "تكون 'drop' دائمًا FALSE ضمنيًا في '[.raster'"
+
+msgid "invalid raster subsetting"
+msgstr "أخذ المجموعة الجزئية من raster غير صالح"
+
+msgid "invalid raster subassignment"
+msgstr "الإسناد الجزئي في raster غير صالح"
+
+msgid "operator not meaningful for raster objects"
+msgstr "العامل غير ذي معنى لكائنات raster"
+
+msgid "no current device to record from"
+msgstr "لا يوجد جهاز حالي للتسجيل منه"
+
+msgid "argument is not of class %s"
+msgstr "الوسيط ليس من الصنف %s"
+
+msgid "invalid \"recordedplot\":"
+msgstr "\"recordedplot\" غير صالح:"
+
+msgid "snapshot recorded in different R version (pre 3.3.0)"
+msgstr "سُجِّلت اللقطة في إصدار R مختلف (قبل 3.3.0)"
+
+msgid "snapshot recorded in different R version (%s)"
+msgstr "سُجِّلت اللقطة في إصدار R مختلف (%s)"
+
+msgid "snapshot contains invalid graphics call"
+msgstr "تحتوي اللقطة على استدعاء رسومي غير صالح"
+
+msgid "'nbin' must be numeric of length 1 or 2"
+msgstr "يجب أن تكون 'nbin' رقمية بطول 1 أو 2"
+
+msgid "'bandwidth' must be numeric"
+msgstr "يجب أن تكون 'bandwidth' رقمية"
+
+msgid "'bandwidth' must be positive"
+msgstr "يجب أن تكون 'bandwidth' موجبة"
+
+msgid "Must have the ('Recommended') package \"KernSmooth\" installed"
+msgstr "يجب أن تكون الحزمة ('Recommended') \"KernSmooth\" مثبتة"
+
+msgid "'r' must be a \"range\", hence of length 2"
+msgstr "يجب أن تكون 'r' من نوع \"range\"، وبالتالي بطول 2"
+
+msgid "points cut off after point[%d]"
+msgstr "قُطعت النقاط بعد point[%d]"
+
+msgid "invalid first argument"
+msgstr "الوسيط الأول غير صالح"
+
+msgid "'x' is a list, but does not have components 'x' and 'y'"
+msgstr "'x' قائمة، لكنها لا تحتوي على المكونين 'x' و'y'"
+
+msgid "'x' and 'y' lengths differ"
+msgstr "يختلف طولا 'x' و'y'"
+
+msgid "invalid first argument [bad language object]"
+msgstr "الوسيط الأول غير صالح [كائن لغة غير صالح]"
+
+msgid "at least 2 columns needed"
+msgstr "يلزم عمودان على الأقل"
+
+msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
+msgstr "'x' قائمة، لكنها لا تحتوي على المكونات 'x' و'y' و'z'"
+
+msgid "'x', 'y' and 'z' lengths differ"
+msgstr "تختلف أطوال 'x' و'y' و'z'"
+
+msgid "'file' is missing with no default"
+msgstr "'file' مفقود ولا توجد قيمة افتراضية"
+
+msgid "'file' must be a non-empty character string"
+msgstr "يجب أن يكون 'file' سلسلة نصية غير فارغة"
+
+msgid "unrecognized format of gs -help"
+msgstr "تنسيق gs -help غير معروف"
+
+msgid "device '%s' is not available"
+msgstr "الجهاز الرسومي '%s' غير متاح"
+
+msgid ""
+"Available devices are:\n"
+"%s"
+msgstr ""
+"الأجهزة المتاحة هي:\n"
+"%s"
+
+msgid "invalid width"
+msgstr "العرض غير صالح"
+
+msgid "invalid height"
+msgstr "الارتفاع غير صالح"
+
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr "يجب تحديد 'res' ما لم تكن 'units = \"px\"'"
+
+msgid "'filename' must be a non-empty character string"
+msgstr "يجب أن يكون 'filename' سلسلة نصية غير فارغة"
+
+msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
+msgstr "type = \"quartz\" غير متاح. تجري محاولة استخدام \"Xlib\""
+
+msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
+msgstr "type = \"cairo\" غير متاح. تجري محاولة استخدام \"Xlib\""
+
+msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
+msgstr "type = \"cairo-png\" غير متاح. تجري محاولة استخدام \"Xlib\""
+
+msgid "compression is not supported for type = \"quartz\""
+msgstr "الضغط غير مدعوم عندما type = \"quartz\""
+
+msgid "invalid 'title'"
+msgstr "'title' غير صالح"
+
+msgid "invalid 'file'"
+msgstr "'file' غير صالح"
+
+msgid "invalid Quartz font:  must be 4 strings"
+msgstr "خط Quartz غير صالح: يجب أن يتكون من 4 سلاسل نصية"
+
+msgid "invalid arguments in 'quartzFonts' (must be font names)"
+msgstr "وسائط غير صالحة في 'quartzFonts' (يجب أن تكون أسماء خطوط)"
+
+msgid "invalid arguments in 'quartzFonts' (need named args)"
+msgstr "وسائط غير صالحة في 'quartzFonts' (يلزم وسائط مسماة)"
+
+msgid "cairo-based types are not supported on this build - using \"Xlib\""
+msgstr "الأنواع المعتمدة على cairo غير مدعومة في هذا البناء - سيتم استخدام \"Xlib\""
+
+msgid "unknown family for X11(type = \"XLib\")"
+msgstr "عائلة غير معروفة لـ X11(type = \"XLib\")"
+
+msgid "invalid X11 font specification:"
+msgstr "مواصفة خط X11 غير صالحة:"
+
+msgid "invalid arguments in 'X11Fonts' (must be font names)"
+msgstr "وسائط غير صالحة في 'X11Fonts' (يجب أن تكون أسماء خطوط)"
+
+msgid "invalid arguments in 'X11Fonts' (need named args)"
+msgstr "وسائط غير صالحة في 'X11Fonts' (يلزم وسائط مسماة)"
+
+msgid "no such device"
+msgstr "لا يوجد مثل هذا الجهاز الرسومي"
+
+msgid "can only copy from 'X11(type=\"*cairo\")' devices"
+msgstr "لا يمكن النسخ إلا من أجهزة 'X11(type=\"*cairo\")'"
+
+msgid "invalid value for 'rescale'"
+msgstr "قيمة 'rescale' غير صالحة"
+
+msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
+msgstr "الاستدعاءات مثل '%s' غير آمنة وينبغي استبدالها بـ '%s'"
+
+msgid "can only bring windows devices to the front"
+msgstr "لا يمكن إحضار سوى أجهزة windows إلى المقدمة"
+
+msgid "'type' not applicable to the R console"
+msgstr "'type' غير قابل للتطبيق على وحدة تحكم R"
+
+msgid "can only manipulate windows devices"
+msgstr "لا يمكن التعامل إلا مع أجهزة windows"
+
+msgid "can only copy from 'windows' devices"
+msgstr "لا يمكن النسخ إلا من أجهزة 'windows'"
+
+msgid "subscript out of range"
+msgstr "الفهرس خارج النطاق"
+
+msgid "invalid Windows font:  must be a single font family name"
+msgstr "خط Windows غير صالح: يجب أن يكون اسم عائلة خط واحدًا"
+
+msgid "invalid arguments in 'windowsFonts' (must be font names)"
+msgstr "وسائط غير صالحة في 'windowsFonts' (يجب أن تكون أسماء خطوط)"
+
+msgid "invalid arguments in 'windowsFonts' (need named args)"
+msgstr "وسائط غير صالحة في 'windowsFonts' (يلزم وسائط مسماة)"
+
+msgid "invalid argument name %s in '%s'"
+msgid_plural "invalid argument names %s in '%s'"
+msgstr[0] "لا توجد أسماء وسائط غير صالحة %s في '%s'"
+msgstr[1] "اسم الوسيط %s غير صالح في '%s'"
+msgstr[2] "اسما الوسيطين %s غير صالحين في '%s'"
+msgstr[3] "أسماء الوسائط %s غير صالحة في '%s'"
+msgstr[4] "أسماء الوسائط %s غير صالحة في '%s'"
+msgstr[5] "اسم الوسيط %s غير صالح في '%s'"
+
+msgid "differs between new and previous"
+msgid_plural "differ between new and previous"
+msgstr[0] "تختلف بين الجديد والسابق"
+msgstr[1] "يختلف بين الجديد والسابق"
+msgstr[2] "يختلفان بين الجديد والسابق"
+msgstr[3] "تختلف بين الجديد والسابق"
+msgstr[4] "تختلف بين الجديد والسابق"
+msgstr[5] "يختلف بين الجديد والسابق"
+
+msgid "%d %s value <= 0 omitted from logarithmic plot"
+msgid_plural "%d %s values <= 0 omitted from logarithmic plot"
+msgstr[0] "حُذفت %d من قيم %s <= 0 من الرسم اللوغاريتمي"
+msgstr[1] "حُذفت قيمة %2$s واحدة <= 0 من الرسم اللوغاريتمي (%1$d)"
+msgstr[2] "حُذفت قيمتان من %2$s <= 0 من الرسم اللوغاريتمي (%1$d)"
+msgstr[3] "حُذفت %d قيم من %s <= 0 من الرسم اللوغاريتمي"
+msgstr[4] "حُذفت %d قيمة من %s <= 0 من الرسم اللوغاريتمي"
+msgstr[5] "حُذفت %d قيمة من %s <= 0 من الرسم اللوغاريتمي"

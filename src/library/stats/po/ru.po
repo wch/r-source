@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:47-0700\n"
+"POT-Creation-Date: 2026-07-08 08:22-0700\n"
 "PO-Revision-Date: 2024-03-25 14:52+0300\n"
 "Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
@@ -94,31 +94,31 @@ msgstr "ввод не определил количество классов"
 msgid "not all arguments have the same length"
 msgstr "не все аргументы имеют одинаковую длину"
 
-#: cov.c:563
+#: cov.c:546
 msgid "missing observations in cov/cor"
 msgstr "пропущенные наблюдения в cov/cor"
 
-#: cov.c:644
+#: cov.c:627
 msgid "'x' is NULL"
 msgstr "'x' -- это NULL"
 
-#: cov.c:676 cov.c:682
+#: cov.c:659 cov.c:665
 msgid "incompatible dimensions"
 msgstr "несовместимые размерности"
 
-#: cov.c:701 cov.c:742 cov.c:775
+#: cov.c:684 cov.c:725 cov.c:758
 msgid "no complete element pairs"
 msgstr "нет полных пар элементов"
 
-#: cov.c:714
+#: cov.c:697
 msgid "invalid 'use' (computational method)"
 msgstr "неправильный 'use' (метод вычисления)"
 
-#: cov.c:717
+#: cov.c:700
 msgid "'x' is empty"
 msgstr "'x' пусто"
 
-#: cov.c:811
+#: cov.c:794
 msgid "the standard deviation is zero"
 msgstr "стандартное отклонение нулевое"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2023-04-22 22:05+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -14,16 +14,16 @@ msgstr ""
 "X-Generator: Pootle 2.1.6\n"
 
 msgid "'a' is overridden by 'reg'"
-msgstr "»a« overskrives af »reg«"
+msgstr "'a' overskrives af 'reg'"
 
 msgid "only using the first two of %d regression coefficients"
 msgstr "bruger kun de første to af %d-regressionskoefficienter"
 
 msgid "'a' and 'b' are overridden by 'coef'"
-msgstr "»a« og »b« er overskrevet af »coef«"
+msgstr "'a' og 'b' er overskrevet af 'coef'"
 
 msgid "one of 'x1' and 'y1' must be given"
-msgstr "en af »x1« og »y1« skal angives"
+msgstr "en af 'x1' og 'y1' skal angives"
 
 msgid "'length', 'angle', or 'code' greater than length 1; values after the first are ignored"
 msgstr ""
@@ -32,34 +32,34 @@ msgid "'x' must be a 2-d contingency table"
 msgstr ""
 
 msgid "all entries of 'x' must be nonnegative and finite"
-msgstr ""
+msgstr "alle indgange af 'x' skal være ikke-negative og endelige"
 
 msgid "at least one entry of 'x' must be positive"
-msgstr ""
+msgstr "mindst én indgang af 'x' skal være positive"
 
 msgid "incorrect 'col': must be length 2"
 msgstr ""
 
 msgid "only for 1-D table"
-msgstr "kun 1D-tabel"
+msgstr "kun for 1D-tabel"
 
 msgid "'side' must be in {1:4}"
-msgstr "»side« skal være i {1:4}"
+msgstr "'side' skal være i {1:4}"
 
 msgid "invalid 'axp'"
-msgstr "ugyldig »axp«"
+msgstr "ugyldig 'axp'"
 
 msgid "invalid 'log'"
-msgstr "ugyldig »log«"
+msgstr "ugyldig 'log'"
 
 msgid "invalid positive 'axp[3]'"
 msgstr ""
 
 msgid "invalid 'usr'"
-msgstr "ugyldig »usr«"
+msgstr "ugyldig 'usr'"
 
 msgid "'height' must be a vector or a matrix"
-msgstr "»height« skal være en vektor eller en matrix"
+msgstr "'height' skal være en vektor eller en matrix"
 
 msgid "Cannot use shading lines in bars when log scale is used"
 msgstr ""
@@ -77,7 +77,7 @@ msgid "incorrect number of names"
 msgstr ""
 
 msgid "'formula' missing or incorrect"
-msgstr ""
+msgstr "'formula' mangler eller er forkert"
 
 msgid "formula must specify 1 or 2 categorical variables"
 msgstr ""
@@ -89,7 +89,7 @@ msgid "formula with cbind() must specify 1 categorical variable"
 msgstr ""
 
 msgid "invalid first argument"
-msgstr ""
+msgstr "ugyldigt første argument"
 
 msgid "'at' must have same length as 'z$n', i.e. %d"
 msgstr ""
@@ -98,7 +98,7 @@ msgid "panel.first ignored, it is not a function"
 msgstr ""
 
 msgid "invalid boxplot widths"
-msgstr ""
+msgstr "ugyldig boksplot bredde"
 
 msgid "some notches went outside hinges ('box'): maybe set notch=FALSE"
 msgstr ""
@@ -122,7 +122,7 @@ msgid "increasing 'x' and 'y' values expected"
 msgstr ""
 
 msgid "no proper 'z' matrix specified"
-msgstr ""
+msgstr "ingen korrekt 'z-matrix' angivet"
 
 msgid "'labels' is length zero.  Use 'drawlabels = FALSE' to suppress labels."
 msgstr ""
@@ -176,6 +176,9 @@ msgid "'x' must be a numeric vector or matrix"
 msgstr ""
 
 msgid "'x' is neither a vector nor a matrix: using as.numeric(x)"
+msgstr ""
+
+msgid "'col' has length %d but should have length %d (= length(levels) - 1, with length(levels) = %d); colors will be recycled or ignored"
 msgstr ""
 
 msgid "'x' must be an array"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: parallel 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2020-11-29 16:30+0200\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -29,6 +29,13 @@ msgstr "'X' turi turėti įvardytus dimnames"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "ne visi 'MARGIN' elementai yra matavimo skaičių vardai"
+
+#, fuzzy
+msgid "incompatible arguments"
+msgstr "neteisingas 'jobs' argumentas"
+
+msgid "'Sigma' is not positive definite"
+msgstr ""
 
 msgid "no cluster 'cl' supplied and none is registered"
 msgstr "nepateiktas 'cl' klasteris arba nėra joks registruotas"

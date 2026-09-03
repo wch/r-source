@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2023-09-01 18:31+0000\n"
 "Last-Translator: Abdulrahman Alswaji <alswajiab@gmail.com>\n"
 "Language-Team: none\n"
@@ -19,1344 +19,1390 @@ msgid ""
 msgstr ""
 
 msgid "no documentation for %s found in package %s"
-msgstr ""
+msgstr "لم يتم العثور على توثيق لـ %s في الحزمة %s"
 
 msgid "document not found"
-msgstr ""
+msgstr "لم يتم العثور على المستند"
 
 msgid "some options in argument 'restrict' were not recognized and hence ignored"
-msgstr ""
+msgstr "لم يتم التعرف على بعض الخيارات في الوسيط 'restrict' ولذلك تم تجاهلها"
 
 msgid "argument 'format' is deprecated and has no effect on search results"
-msgstr ""
+msgstr "الوسيط 'format' مهمل وليس له تأثير في نتائج البحث"
 
 msgid "A search query has been submitted to %s"
-msgstr ""
+msgstr "تم إرسال استعلام بحث إلى %s"
 
 msgid "The results page should open in your browser shortly"
-msgstr ""
+msgstr "ينبغي أن تفتح صفحة النتائج في متصفحك بعد قليل"
 
 msgid "reference to unknown chunk %s"
-msgstr ""
+msgstr "إشارة إلى مقطع غير معروف %s"
 
 msgid "no Sweave file with name %s found"
-msgstr ""
+msgstr "لم يتم العثور على ملف Sweave بالاسم %s"
 
 msgid "more than one syntax specification found, using the first one"
-msgstr ""
+msgstr "تم العثور على أكثر من مواصفة صياغة؛ سيُستخدم أولها"
 
 msgid "object %s does not have class \"SweaveSyntax\""
-msgstr ""
+msgstr "الكائن %s ليس من الصنف \"SweaveSyntax\""
 
 msgid "recursive Sweave input %s in stack"
-msgstr ""
+msgstr "إدخال Sweave عودي %s في المكدس"
 
 msgid "target syntax not of class %s"
-msgstr ""
+msgstr "صياغة الهدف ليست من الصنف %s"
 
 msgid "target syntax contains no translation table"
-msgstr ""
+msgstr "صياغة الهدف لا تحتوي على جدول ترجمة"
 
 msgid ""
 "parse error or empty option in\n"
 "%s"
 msgstr ""
+"خطأ في التحليل أو خيار فارغ في\n"
+"%s"
 
 msgid "Warning: unknown option '--clean='%s"
-msgstr ""
+msgstr "تحذير: خيار غير معروف '--clean='%s"
 
 msgid "Warning: unknown option %s"
-msgstr ""
+msgstr "تحذير: خيار غير معروف %s"
 
 msgid "Compacting PDF document"
-msgstr ""
+msgstr "جارٍ ضغط مستند PDF"
 
 msgid "path to %s contains spaces,"
-msgstr ""
+msgstr "المسار إلى %s يحتوي على مسافات،"
 
 msgid "this may cause problems when running LaTeX"
-msgstr ""
+msgstr "قد يسبب هذا مشكلات عند تشغيل LaTeX"
 
 msgid "the output file '%s' has disappeared"
-msgstr ""
+msgstr "اختفى ملف الإخراج '%s'"
 
 msgid "invalid value for %s : %s"
-msgstr ""
+msgstr "قيمة غير صالحة لـ %s : %s"
 
-msgid "value of 'results' option should be lowercase"
-msgstr ""
+#, fuzzy
+msgid "value of option 'results' should be lowercase"
+msgstr "ينبغي أن تكون قيمة خيار 'results' بحروف صغيرة"
 
-msgid "value of 'strip.white' option should be lowercase"
-msgstr ""
+#, fuzzy
+msgid "value of option 'strip.white' should be lowercase"
+msgstr "ينبغي أن تكون قيمة خيار 'strip.white' بحروف صغيرة"
 
 msgid "using default value %s"
-msgstr ""
+msgstr "جارٍ استخدام القيمة الافتراضية %s"
 
 msgid "this function cannot be used from an interactive session"
-msgstr ""
+msgstr "لا يمكن استخدام هذه الدالة من جلسة تفاعلية"
 
 msgid "unrecognized Sweave call"
-msgstr ""
+msgstr "استدعاء Sweave غير معروف"
 
 msgid "elements of 'what' after the first will be ignored"
-msgstr ""
+msgstr "سيتم تجاهل عناصر 'what' بعد العنصر الأول"
 
 msgid "Yes"
-msgstr ""
+msgstr "نعم"
 
 msgid "No"
-msgstr ""
+msgstr "لا"
 
 msgid "Cancel"
-msgstr "إلغاء الأمر"
+msgstr "إلغاء"
 
 msgid "Unrecognized response"
-msgstr ""
+msgstr "استجابة غير معروفة"
 
 msgid "No suitable spell-checker program found"
-msgstr ""
+msgstr "لم يتم العثور على برنامج مناسب للتدقيق الإملائي"
 
 msgid "Filter '%s' is not available."
-msgstr ""
+msgstr "المرشح '%s' غير متاح."
 
 msgid "Invalid 'filter' argument."
-msgstr ""
+msgstr "الوسيط 'filter' غير صالح."
 
 msgid ""
 "The following dictionaries were not found:\n"
 "%s"
 msgstr ""
+"لم يتم العثور على القواميس التالية:\n"
+"%s"
 
 msgid "Processing file %s"
-msgstr ""
+msgstr "جارٍ معالجة الملف %s"
 
 msgid ""
 "Running aspell failed with diagnostics:\n"
 "%s"
 msgstr ""
+"فشل تشغيل aspell مع التشخيصات:\n"
+"%s"
 
 msgid "No suitable spell check program found."
-msgstr ""
+msgstr "لم يتم العثور على برنامج مناسب للتدقيق الإملائي."
 
 msgid "Performing query %s"
-msgstr ""
+msgstr "جارٍ تنفيذ الاستعلام %s"
 
 msgid "Unsupported object"
-msgstr ""
+msgstr "كائن غير مدعوم"
 
 msgid ""
 "Use <code> %s </code> \n"
 " to list the vignettes in all <strong>available</strong> packages."
 msgstr ""
+"استخدم <code> %s </code> \n"
+" لسرد الـ vignettes في جميع الحزم <strong>المتاحة</strong>."
 
 msgid "No vignettes found by %s"
-msgstr ""
+msgstr "لم يتم العثور على vignettes بواسطة %s"
 
 msgid "Package %s: DESCRIPTION file not found"
-msgstr ""
+msgstr "الحزمة %s: لم يتم العثور على ملف DESCRIPTION"
 
 msgid "'file' must be NULL, a character string or a connection"
-msgstr ""
+msgstr "يجب أن يكون 'file' هو NULL أو سلسلة نصية أو اتصالًا"
 
 msgid "'full.names' must be TRUE for multiple paths."
-msgstr ""
+msgstr "يجب أن يكون 'full.names' هو TRUE عند وجود مسارات متعددة."
 
 msgid "Timestamp file no longer exists."
-msgstr ""
+msgstr "ملف الطابع الزمني لم يعد موجودًا."
 
 msgid "Not all arguments are of the same length, the following need to be recycled: %s"
-msgstr ""
+msgstr "ليست كل الوسائط بالطول نفسه؛ العناصر التالية تحتاج إلى إعادة تدوير: %s"
 
 msgid "Use either %s or %s/%s but not both."
-msgstr ""
+msgstr "استخدم إما %s أو %s/%s ولكن ليس كليهما."
 
 msgid "It is recommended to use %s instead of %s."
-msgstr ""
+msgstr "يوصى باستخدام %s بدلًا من %s."
 
 msgid "Use either %s or %s but not both."
-msgstr ""
+msgstr "استخدم إما %s أو %s ولكن ليس كليهما."
 
 msgid "Arguments of person() should be character or NULL"
-msgstr ""
+msgstr "يجب أن تكون وسائط person() نصية أو NULL"
 
 msgid "subscript out of bounds"
 msgstr "الكتابة السفلية خارج الحدود"
 
 msgid "must have some non-empty fields"
-msgstr ""
+msgstr "يجب أن تحتوي على بعض الحقول غير الفارغة"
 
 msgid "method is only applicable to %s objects"
-msgstr ""
+msgstr "الطريقة قابلة للتطبيق فقط على كائنات %s"
 
 msgid "all arguments must be of class %s"
-msgstr ""
+msgstr "يجب أن تكون كل الوسائط من الصنف %s"
 
 msgid "all fields have to be named"
-msgstr ""
+msgstr "يجب تسمية جميع الحقول"
 
 msgid "%s has to be one of %s"
-msgstr ""
+msgstr "يجب أن يكون %s واحدًا من %s"
 
 msgid "%s should be one of %s"
-msgstr ""
+msgstr "ينبغي أن يكون %s واحدًا من %s"
 
 msgid "To cite package %s in publications use:"
-msgstr ""
+msgstr "للاستشهاد بالحزمة %s في المنشورات استخدم:"
 
 msgid "A BibTeX entry for LaTeX users is"
-msgstr ""
+msgstr "مدخل BibTeX لمستخدمي LaTeX هو"
 
 msgid ""
 "Dropping invalid entry %d:\n"
 "%s"
 msgstr ""
+"إسقاط المدخل غير الصالح %d:\n"
+"%s"
 
 msgid "package %s has no %s file: only auto-generation is possible"
-msgstr ""
+msgstr "الحزمة %s لا تحتوي على ملف %s: لا يمكن إلا التوليد التلقائي"
 
 msgid "could not determine year for %s from package DESCRIPTION file"
-msgstr ""
+msgstr "تعذّر تحديد السنة لـ %s من ملف DESCRIPTION الخاص بالحزمة"
 
 msgid "ATTENTION: This citation information has been auto-generated from the package DESCRIPTION file and may need manual editing, see %s."
 msgstr ""
 
 msgid "'FUN' must be a function or NULL"
-msgstr ""
+msgstr "يجب أن يكون 'FUN' دالة أو NULL"
 
 msgid "cannot handle S4 methods yet"
-msgstr ""
+msgstr "لا يمكن التعامل مع طرق S4 حتى الآن"
 
 msgid "'package' must be a character vector or NULL"
-msgstr ""
+msgstr "يجب أن يكون 'package' متجهًا نصيًا أو NULL"
 
 msgid "data index for package %s is invalid and will be ignored"
-msgstr ""
+msgstr "فهرس البيانات للحزمة %s غير صالح وسيتم تجاهله"
 
 msgid "data set %s not found"
-msgstr ""
+msgstr "لم يتم العثور على مجموعة البيانات %s"
 
 msgid "an object named %s already exists and will not be overwritten"
-msgstr ""
+msgstr "يوجد كائن بالاسم %s مسبقًا ولن تتم الكتابة فوقه"
 
 msgid "only 'html = TRUE' is supported on this platform"
-msgstr ""
+msgstr "لا يُدعم إلا 'html = TRUE' على هذه المنصة"
 
 msgid "kind '%s' not yet implemented"
-msgstr ""
+msgstr "النوع '%s' لم يُنفذ بعد"
 
 msgid "wrong number of table row entries"
-msgstr ""
+msgstr "عدد مدخلات صف الجدول غير صحيح"
 
 msgid "wrong argument to 'dataentry'"
-msgstr ""
+msgstr "وسيط غير صحيح إلى 'dataentry'"
 
 msgid "could not restore type information"
-msgstr ""
+msgstr "تعذّر استعادة معلومات النوع"
 
 msgid "'modes' argument ignored"
-msgstr ""
+msgstr "تم تجاهل الوسيط 'modes'"
 
 msgid "'names' argument ignored"
-msgstr ""
+msgstr "تم تجاهل الوسيط 'names'"
 
 msgid "could not restore variables properly"
-msgstr ""
+msgstr "تعذّرت استعادة المتغيرات بشكل صحيح"
 
 msgid "did not assign() anything"
-msgstr ""
+msgstr "لم يُعيّن assign() أي شيء"
 
 msgid "Cannot debug primitive functions unless they are implicit generics (requires loading the methods package)"
-msgstr ""
+msgstr "لا يمكن تنقيح الدوال البدائية إلا إذا كانت دوال عامة ضمنية (يتطلب تحميل حزمة methods)"
 
 msgid "error in trying to evaluate the expression for argument %s (%s)"
-msgstr ""
+msgstr "خطأ أثناء محاولة تقييم التعبير للوسيط %s ‏(%s)"
 
 msgid "Browsing in the environment with call:"
-msgstr ""
+msgstr "تصفح في البيئة ذات الاستدعاء:"
 
 msgid "'dump' is not an object of class %s"
-msgstr ""
+msgstr "'dump' ليس كائنًا من الصنف %s"
 
 msgid "Message:"
-msgstr ""
+msgstr "الرسالة:"
 
 msgid "'dump' is empty"
-msgstr ""
+msgstr "'dump' فارغ"
 
 msgid "Available environments had calls:"
-msgstr ""
+msgstr "كانت البيئات المتاحة ذات الاستدعاءات:"
 
 msgid "Enter an environment number, or 0 to exit"
-msgstr ""
+msgstr "أدخل رقم بيئة، أو 0 للخروج"
 
 msgid "recover called non-interactively; frames dumped, use debugger() to view"
-msgstr ""
+msgstr "تم استدعاء recover بشكل غير تفاعلي؛ تم تفريغ الإطارات، استخدم debugger() للعرض"
 
 msgid "Enter a frame number, or 0 to exit"
-msgstr ""
+msgstr "أدخل رقم إطار، أو 0 للخروج"
 
 msgid "No suitable frames for recover()"
-msgstr ""
+msgstr "لا توجد إطارات مناسبة لـ recover()"
 
 msgid "No demo found for topic %s"
-msgstr ""
+msgstr "لم يتم العثور على عرض توضيحي للموضوع %s"
 
 msgid ""
 "Demo for topic %s' found more than once,\n"
 "using the one found in %s"
 msgstr ""
+"تم العثور على عرض توضيحي للموضوع %s أكثر من مرة،\n"
+"سيُستخدم الموجود في %s"
 
 msgid "invalid 'data' argument"
-msgstr ""
+msgstr "'data' غير صالح"
 
 msgid "invalid 'modes' argument"
-msgstr ""
+msgstr "الوسيط 'modes' غير صالح"
 
 msgid "invalid 'x' argument"
-msgstr ""
+msgstr "الوسيط 'x' غير صالح"
 
 msgid "can only handle vector and factor elements"
-msgstr ""
+msgstr "يمكن التعامل فقط مع عناصر المتجهات والعوامل"
 
 msgid "invalid factor levels in '%s'"
-msgstr ""
+msgstr "مستويات عامل غير صالحة في '%s'"
 
 msgid "added factor levels in '%s'"
-msgstr ""
+msgstr "تمت إضافة مستويات عامل في '%s'"
 
 msgid "edited row names contain duplicates and will be ignored"
-msgstr ""
+msgstr "تحتوي أسماء الصفوف المحررة على تكرارات وسيتم تجاهلها"
 
 msgid "invalid input matrix"
-msgstr ""
+msgstr "مصفوفة الإدخال غير صالحة"
 
 msgid "class of 'name' will be discarded"
-msgstr ""
+msgstr "سيتم إسقاط صنف 'name'"
 
 msgid "cannot edit NULL row names"
-msgstr ""
+msgstr "لا يمكن تحرير أسماء صفوف NULL"
 
 msgid "no help found for %s"
-msgstr ""
+msgstr "لم يتم العثور على مساعدة لـ %s"
 
 msgid "%s has a help file but no examples"
-msgstr ""
+msgstr "%s لديه ملف مساعدة ولكن لا توجد أمثلة"
 
 msgid "Line number missing"
-msgstr ""
+msgstr "رقم السطر مفقود"
 
 msgid "'fix' requires a name"
-msgstr ""
+msgstr "'fix' يتطلب اسمًا"
 
 msgid "too many list items (at most up to %d)"
-msgstr ""
+msgstr "عدد عناصر القائمة كبير جدًا (حتى %d كحد أقصى)"
 
 msgid "no vector columns were selected"
-msgstr ""
+msgstr "لم يتم اختيار أي أعمدة متجهية"
 
 msgid "non-vector columns will be ignored"
-msgstr ""
+msgstr "سيتم تجاهل الأعمدة غير المتجهية"
 
 msgid "at least one vector element is required"
-msgstr ""
+msgstr "يلزم عنصر متجهي واحد على الأقل"
 
 msgid "non-vector elements will be ignored"
-msgstr ""
+msgstr "سيتم تجاهل العناصر غير المتجهية"
 
 msgid "'form' must be a two-sided formula"
-msgstr ""
+msgstr "يجب أن تكون 'form' صيغة ذات طرفين"
 
 msgid "'form' must be a two-sided formula with one term on each side"
-msgstr ""
+msgstr "يجب أن تكون 'form' صيغة ذات طرفين وبحد واحد في كل طرف"
 
 msgid "invalid object for 'as.environment'"
-msgstr ""
+msgstr "كائن لـ 'as.environment' غير صالح"
 
 msgid "invalid 'n' - must contain at least one non-missing element, got none."
-msgstr ""
+msgstr "القيمة 'n' غير صالحة - يجب أن تحتوي على عنصر واحد غير مفقود على الأقل، ولم يُعطَ أي عنصر."
 
 msgid "invalid 'n' - must be numeric, possibly NA."
-msgstr ""
+msgstr "القيمة 'n' غير صالحة - يجب أن تكون رقمية، وربما NA."
 
 msgid "invalid 'n' - must have length one when dim(x) is NULL, got %d"
-msgstr ""
+msgstr "القيمة 'n' غير صالحة - يجب أن يكون طولها واحدًا عندما تكون dim(x) هي NULL، وتم الحصول على %d"
 
 msgid "invalid 'n' - length(n) must be <= length(dim(x)), got %d > %d"
-msgstr ""
+msgstr "القيمة 'n' غير صالحة - يجب أن يكون length(n) <= length(dim(x))، وتم الحصول على %d > %d"
 
 msgid "no method found for %s(., n=%s) and class %s"
-msgstr ""
+msgstr "لم يتم العثور على طريقة لـ %s(., n=%s) والصنف %s"
 
 msgid ""
 "tail(., addrownums = V) is deprecated.\n"
 "Use"
 msgstr ""
+"tail(., addrownums = V) مهمل.\n"
+"استخدم"
 
 msgid "tail(., keepnums = V) instead."
-msgstr ""
+msgstr "tail(., keepnums = V) بدلًا من ذلك."
 
 msgid "tail(., addrownums=.) is"
-msgstr ""
+msgstr "tail(., addrownums=.) هو"
 
 msgid ""
 "deprecated.\n"
 "Use"
 msgstr ""
+"مهمل.\n"
+"استخدم"
 
 msgid "tail(., keepnums=.) instead."
-msgstr ""
+msgstr "tail(., keepnums=.) بدلًا من ذلك."
 
 msgid "'topic' should be a name, length-one character vector or reserved word"
-msgstr ""
+msgstr "ينبغي أن يكون 'topic' اسمًا، أو متجهًا نصيًا بطول واحد، أو كلمة محجوزة"
 
 msgid "No documentation for %s in specified packages and libraries:"
-msgstr ""
+msgstr "لا يوجد توثيق لـ %s في الحزم والمكتبات المحددة:"
 
 msgid "you could try %s"
-msgstr ""
+msgstr "يمكنك تجربة %s"
 
 msgid "Help for topic %s is not in any loaded package but can be found in the following packages:"
-msgstr ""
+msgstr "المساعدة للموضوع %s ليست في أي حزمة محملة، ولكن يمكن العثور عليها في الحزم التالية:"
 
 msgid "Package"
-msgstr ""
+msgstr "الحزمة"
 
 msgid "Library"
-msgstr ""
+msgstr "المكتبة"
 
 msgid "Help on topic %s was found in the following packages:"
-msgstr ""
+msgstr "تم العثور على مساعدة للموضوع %s في الحزم التالية:"
 
 msgid "Choose one"
-msgstr ""
+msgstr "اختر واحدًا"
 
 msgid "Using the first match ..."
-msgstr ""
+msgstr "جارٍ استخدام أول تطابق ..."
 
 msgid "HTML help is unavailable"
-msgstr ""
+msgstr "مساعدة HTML غير متاحة"
 
 msgid "R Help on %s"
-msgstr ""
+msgstr "مساعدة R حول %s"
 
 msgid "invalid %s argument"
 msgstr "الوسيطة %s غير صالحة"
 
 msgid "package %s exists but was not installed under R >= 2.10.0 so help cannot be accessed"
-msgstr ""
+msgstr "الحزمة %s موجودة ولكن لم يتم تثبيتها تحت R >= 2.10.0، لذلك لا يمكن الوصول إلى المساعدة"
 
 msgid "creation of %s failed"
-msgstr ""
+msgstr "فشل إنشاء %s"
 
 msgid "Saving help page to %s"
-msgstr ""
+msgstr "جارٍ حفظ صفحة المساعدة إلى %s"
 
 msgid "Cancelled by user"
-msgstr ""
+msgstr "ألغى المستخدم العملية"
 
 msgid "Unable to connect to CRAN to check R version."
-msgstr ""
+msgstr "تعذّر الاتصال بـ CRAN للتحقق من إصدار R."
 
 msgid "'%s' must be a character string"
 msgstr "يجب أن تكون \"%s\" سلسلة أحرف"
 
 msgid "incorrect field specification"
-msgstr ""
+msgstr "مواصفة الحقل غير صحيحة"
 
 msgid "do not know what to search"
-msgstr ""
+msgstr "لا أعرف ما الذي يجب البحث عنه"
 
 msgid "argument 'help.db' is deprecated"
-msgstr ""
+msgstr "الوسيط 'help.db' مهمل"
 
 msgid "incorrect type specification"
-msgstr ""
+msgstr "مواصفة النوع غير صحيحة"
 
 msgid "no information in the database for package %s: need 'rebuild = TRUE'?"
-msgstr ""
+msgstr "لا توجد معلومات في قاعدة البيانات للحزمة %s: هل تحتاج إلى 'rebuild = TRUE'؟"
 
 msgid "incorrect 'agrep' specification"
-msgstr ""
+msgstr "مواصفة 'agrep' غير صحيحة"
 
 msgid "package %s has empty hsearch data - strangely"
-msgstr ""
+msgstr "الحزمة %s لديها بيانات hsearch فارغة - وهذا غريب"
 
 msgid "removing all entries with invalid multi-byte character data"
-msgstr ""
+msgstr "جارٍ إزالة جميع المدخلات التي تحتوي على بيانات محارف متعددة البايت غير صالحة"
 
 msgid "invalid browser name, check options(\"browser\")."
-msgstr ""
+msgstr "اسم المتصفح غير صالح، تحقق من options(\"browser\")."
 
 msgid "help.start() requires the HTTP server to be running"
-msgstr ""
+msgstr "يتطلب help.start() أن يكون خادم HTTP قيد التشغيل"
 
 msgid ""
 "If nothing happens, you should open\n"
 "%s yourself"
 msgstr ""
+"إذا لم يحدث شيء، فينبغي أن تفتح\n"
+"%s بنفسك"
 
 msgid "If the browser launched by '%s' is already running, it is *not* restarted, and you must switch to its window."
 msgstr ""
 
 msgid "Otherwise, be patient ..."
-msgstr ""
+msgstr "وإلا فتحلَّ بالصبر ..."
 
 msgid "'%s' must be a non-empty character string"
-msgstr ""
+msgstr "يجب أن يكون '%s' سلسلة نصية غير فارغة"
 
 msgid "no package '%s' was found"
-msgstr ""
+msgstr "لم يتم العثور على حزمة '%s'"
 
 msgid "metadata of package '%s' is corrupt"
-msgstr ""
+msgstr "البيانات الوصفية للحزمة '%s' تالفة"
 
 msgid "DESCRIPTION file of package '%s' is corrupt"
-msgstr ""
+msgstr "ملف DESCRIPTION للحزمة '%s' تالف"
 
 msgid "'DESCRIPTION' file has an 'Encoding' field and re-encoding is not possible"
-msgstr ""
+msgstr "ملف 'DESCRIPTION' يحتوي على حقل 'Encoding' ولا يمكن إعادة الترميز"
 
 msgid "DESCRIPTION file of package '%s' is missing or broken"
-msgstr ""
+msgstr "ملف DESCRIPTION للحزمة '%s' مفقود أو معطوب"
 
 msgid "Invalid \"Built\":"
+msgstr "قيمة \"Built\" غير صالحة:"
+
+msgid "Built: value is not a string"
+msgstr "Built: القيمة ليست سلسلة نصية"
+
+msgid "unable to create temporary directory %s"
+msgstr "تعذّر إنشاء الدليل المؤقت %s"
+
+msgid "file %s is not a binary package"
+msgstr "الملف %s ليس حزمة ثنائية"
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr "الحزمة الثنائية %s غير متوافقة مع هذا البناء من R"
+
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "تم فك حزمة %s بنجاح وفُحصت مجاميع %s"
+
+msgid "package %s signature verified (%s %s)"
+msgstr "تم التحقق من توقيع الحزمة %s ‏(%s %s)"
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr "التوقيع الصالح مطلوب، ولكن تعذّر التحقق من الحزمة %s بنجاح."
+
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
 msgstr ""
+"خطأ: فشل قفل الدليل %s للتعديل\n"
+"جرّب إزالة %s"
+
+msgid "ERROR: failed to create lock directory %s"
+msgstr "خطأ: فشل إنشاء دليل القفل %s"
+
+msgid "restored %s"
+msgstr "تمت استعادة %s"
+
+msgid "unable to move temporary installation %s to %s"
+msgstr "تعذّر نقل التثبيت المؤقت %s إلى %s"
+
+msgid "cannot remove prior installation of package %s"
+msgstr "لا يمكن إزالة التثبيت السابق للحزمة %s"
+
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"الحزم الثنائية التي تم تنزيلها موجودة في\n"
+"\t%s"
 
 msgid "cannot update HTML package index"
-msgstr ""
+msgstr "لا يمكن تحديث فهرس حزم HTML"
 
 msgid "done"
 msgstr "منجز"
 
 msgid "Source must be a seekable connection"
-msgstr ""
+msgstr "يجب أن يكون المصدر اتصالًا قابلًا للبحث"
 
 msgid "menu() cannot be used non-interactively"
-msgstr ""
+msgstr "لا يمكن استخدام menu() بشكل غير تفاعلي"
 
 msgid "Enter an item from the menu, or 0 to exit"
-msgstr ""
+msgstr "أدخل عنصرًا من القائمة، أو 0 للخروج"
 
 msgid "%d errors caught in %s.  The error messages and their frequencies are"
-msgstr ""
+msgstr "تم التقاط %d أخطاء في %s. رسائل الخطأ وتكراراتها هي"
 
 msgid "invalid query"
-msgstr ""
+msgstr "استعلام غير صالح"
 
 msgid "For SI units, specify 'standard = \"SI\"'"
-msgstr ""
+msgstr "لوحدات SI، حدد 'standard = \"SI\"'"
 
 msgid "Unit \"%s\" is not part of standard \"%s\""
-msgstr ""
+msgstr "الوحدة \"%s\" ليست جزءًا من المعيار \"%s\""
 
 msgid "'%s' is a formal generic function; S3 methods will not likely be found"
-msgstr ""
+msgstr "'%s' دالة عامة صورية؛ غالبًا لن يتم العثور على طرق S3"
 
 msgid "some methods may be unavailable outside of their namespace"
-msgstr ""
+msgstr "قد لا تتاح بعض الطرق خارج نطاق الأسماء الخاص بها"
 
 msgid "no function '%s' is visible"
-msgstr ""
+msgstr "لا توجد دالة '%s' مرئية"
 
 msgid "generic function '%s' dispatches methods for generic '%s'"
-msgstr ""
+msgstr "الدالة العامة '%s' توزع الطرق للدالة العامة '%s'"
 
 msgid "function '%s' appears not to be S3 generic; found functions that look like S3 methods"
-msgstr ""
+msgstr "يبدو أن الدالة '%s' ليست دالة S3 عامة؛ تم العثور على دوال تبدو مثل طرق S3"
 
 msgid "'class' is of length > 1; only the first element will be used"
-msgstr ""
+msgstr "'class' طوله > 1؛ سيُستخدم العنصر الأول فقط"
 
 msgid "must supply 'generic.function' or 'class'"
-msgstr ""
+msgstr "يجب توفير 'generic.function' أو 'class'"
 
 msgid "no function '%s' could be found"
-msgstr ""
+msgstr "تعذّر العثور على الدالة '%s'"
 
 msgid "S3 method '%s' not found"
-msgstr ""
+msgstr "لم يتم العثور على طريقة S3 '%s'"
 
 msgid "environment specified is not a package"
-msgstr ""
+msgstr "البيئة المحددة ليست حزمة"
 
 msgid "changing locked binding for %s in %s whilst loading %s"
-msgstr ""
+msgstr "جارٍ تغيير ربط مقفل لـ %s في %s أثناء تحميل %s"
 
 msgid "changing locked binding for %s in %s"
-msgstr ""
+msgstr "جارٍ تغيير ربط مقفل لـ %s في %s"
 
 msgid "'fixInNamespace' requires a name"
-msgstr ""
+msgstr "'fixInNamespace' يتطلب اسمًا"
 
 msgid "only numeric indices can be used"
-msgstr ""
+msgstr "يمكن استخدام الفهارس الرقمية فقط"
 
 msgid "Malformed package name."
-msgstr ""
+msgstr "اسم الحزمة مشوه."
 
 msgid "cannot create directory '%s'"
-msgstr ""
+msgstr "لا يمكن إنشاء الدليل '%s'"
 
 msgid "'code_files' must be a character vector"
-msgstr ""
+msgstr "يجب أن يكون 'code_files' متجهًا نصيًا"
 
 msgid "'list' must be a character vector naming R objects"
-msgstr ""
+msgstr "يجب أن يكون 'list' متجهًا نصيًا يسمي كائنات R"
 
 msgid "directory '%s' already exists"
-msgstr ""
+msgstr "الدليل '%s' موجود مسبقًا"
 
 msgid "generic functions and other S4 objects (e.g., '%s') cannot be dumped; use the 'code_files' argument"
-msgstr ""
+msgstr "لا يمكن تفريغ الدوال العامة وكائنات S4 الأخرى (مثل '%s')؛ استخدم الوسيط 'code_files'"
 
 msgid "'download.file()' error code '%d'"
-msgstr ""
+msgstr "رمز خطأ 'download.file()' هو '%d'"
 
 msgid "unable to access index for repository %s"
-msgstr ""
+msgstr "تعذّر الوصول إلى الفهرس للمستودع %s"
 
 msgid "invalid 'filters' argument."
-msgstr ""
+msgstr "الوسيط 'filters' غير صالح."
 
 msgid "specifying 'contriburl' or 'available' requires a single type, not type = \"both\""
-msgstr ""
+msgstr "يتطلب تحديد 'contriburl' أو 'available' نوعًا واحدًا، وليس type = \"both\""
 
 msgid "package '%s' in library '%s' will not be updated"
-msgstr ""
+msgstr "لن يتم تحديث الحزمة '%s' في المكتبة '%s'"
 
 msgid "invalid 'oldPkgs'; must be a character vector or a result from old.packages()"
-msgstr ""
+msgstr "'oldPkgs' غير صالح؛ يجب أن يكون متجهًا نصيًا أو نتيجة من old.packages()"
 
 msgid "ill-formed 'instPkgs' matrix"
-msgstr ""
+msgstr "مصفوفة 'instPkgs' سيئة التكوين"
 
 msgid "no installed packages for (invalid?) 'lib.loc=%s'"
-msgstr ""
+msgstr "لا توجد حزم مثبتة لـ 'lib.loc=%s' (غير صالح ربما؟)"
 
 msgid "no new packages are available"
-msgstr ""
+msgstr "لا توجد حزم جديدة متاحة"
 
 msgid "metadata of %s is corrupt"
-msgstr ""
+msgstr "البيانات الوصفية لـ %s تالفة"
 
 msgid "'priority' must be character or NULL"
-msgstr ""
+msgstr "يجب أن يكون 'priority' نصيًا أو NULL"
 
 msgid "Updating HTML index of packages in '.Library'"
-msgstr ""
+msgstr "جارٍ تحديث فهرس HTML للحزم في '.Library'"
 
 msgid "'destdir' is not a directory"
-msgstr ""
+msgstr "'destdir' ليس دليلًا"
 
 msgid "no package %s at the repositories"
-msgstr ""
+msgstr "لا توجد حزمة %s في المستودعات"
 
 msgid "package %s does not exist on the local repository"
-msgstr ""
+msgstr "الحزمة %s غير موجودة في المستودع المحلي"
 
 msgid "download of package %s failed"
-msgstr ""
+msgstr "فشل تنزيل الحزمة %s"
 
 msgid "--- Please select a CRAN mirror for use in this session ---"
-msgstr ""
+msgstr "--- يرجى اختيار مرآة CRAN لاستخدامها في هذه الجلسة ---"
 
 msgid "trying to use CRAN without setting a mirror"
-msgstr ""
+msgstr "محاولة استخدام CRAN دون تعيين مرآة"
 
 msgid "invalid 'type'"
-msgstr ""
+msgstr "قيمة 'type' غير صالحة"
 
 msgid "failed to download mirrors file (%s); using local file '%s'"
-msgstr ""
+msgstr "فشل تنزيل ملف المرايا (%s)؛ جارٍ استخدام الملف المحلي '%s'"
 
 msgid "cannot choose a"
-msgstr ""
+msgstr "لا يمكن اختيار"
 
 msgid "mirror non-interactively"
-msgstr ""
+msgstr "مرآة بشكل غير تفاعلي"
 
 msgid "cannot set repositories non-interactively"
-msgstr ""
+msgstr "لا يمكن تعيين المستودعات بشكل غير تفاعلي"
 
 msgid "invalid options(\"pkgType\"); must be a character string"
-msgstr ""
+msgstr "قيمة options(\"pkgType\") غير صالحة؛ يجب أن تكون سلسلة نصية"
 
 msgid "No matching repositories found for"
-msgstr ""
+msgstr "لم يتم العثور على مستودعات مطابقة لـ"
 
 msgid ","
-msgstr ""
+msgstr "،"
 
 msgid "--- Please select repositories for use in this session ---"
-msgstr ""
+msgstr "--- يرجى اختيار المستودعات لاستخدامها في هذه الجلسة ---"
 
 msgid "%s must be supplied"
-msgstr ""
+msgstr "يجب توفير %s"
 
 msgid "every package depends on at least one other"
-msgstr ""
+msgstr "كل حزمة تعتمد على حزمة أخرى واحدة على الأقل"
 
 msgid "packages %s are mutually dependent"
-msgstr ""
+msgstr "الحزم %s تعتمد بعضها على بعض"
 
 msgid ""
 "Do not know which element of 'lib' to install dependencies into\n"
 "skipping dependencies"
 msgstr ""
+"لا أعرف أي عنصر من 'lib' يجب تثبيت الاعتماديات فيه\n"
+"سيتم تخطي الاعتماديات"
 
 msgid "type 'binary' is not supported on this platform"
-msgstr ""
+msgstr "النوع 'binary' غير مدعوم على هذه المنصة"
 
 msgid "no packages were specified"
-msgstr ""
+msgstr "لم يتم تحديد أي حزم"
 
 msgid "'lib = \"%s\"' is not writable"
-msgstr ""
+msgstr "'lib = \"%s\"' غير قابل للكتابة"
 
 msgid "Would you like to use a personal library instead?"
-msgstr ""
+msgstr "هل ترغب في استخدام مكتبة شخصية بدلًا من ذلك؟"
 
 msgid "unable to install packages"
-msgstr ""
+msgstr "تعذّر تثبيت الحزم"
 
 msgid ""
 "Would you like to create a personal library\n"
 "%s\n"
 "to install packages into?"
 msgstr ""
+"هل ترغب في إنشاء مكتبة شخصية\n"
+"%s\n"
+"لتثبيت الحزم فيها؟"
 
 msgid "unable to create %s"
-msgstr ""
+msgstr "تعذّر إنشاء %s"
 
 msgid "inferring 'repos = NULL' from 'pkgs'"
-msgstr ""
-
-msgid "unable to create temporary directory %s"
-msgstr ""
+msgstr "جارٍ استنتاج 'repos = NULL' من 'pkgs'"
 
 msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
 msgstr ""
 
 msgid "type == \"both\" cannot be used with 'repos = NULL'"
-msgstr ""
+msgstr "لا يمكن استخدام type == \"both\" مع 'repos = NULL'"
 
 msgid "source repository is unavailable to check versions"
-msgstr ""
+msgstr "مستودع المصدر غير متاح للتحقق من الإصدارات"
 
 msgid "cannot install binary packages from other operating systems on Windows"
-msgstr ""
+msgstr "لا يمكن تثبيت الحزم الثنائية لأنظمة تشغيل أخرى على Windows"
 
 msgid "cannot install Windows binary packages on this platform"
-msgstr ""
+msgstr "لا يمكن تثبيت حزم Windows الثنائية على هذه المنصة"
 
 msgid ""
 "This version of R is not set up to install source packages\n"
 "If it was installed from an RPM, you may need the R-devel RPM"
 msgstr ""
+"هذا الإصدار من R غير مُعد لتثبيت حزم المصدر\n"
+"إذا كان مثبتًا من RPM، فقد تحتاج إلى R-devel RPM"
 
 msgid "system (cmd0): %s"
-msgstr ""
+msgstr "النظام (cmd0): %s"
 
 msgid "installation of package %s had non-zero exit status"
-msgstr ""
+msgstr "كان لتثبيت الحزمة %s حالة خروج غير صفرية"
 
 msgid "foundpkgs: %s"
-msgstr ""
+msgstr "foundpkgs: %s"
 
 msgid "files: %s"
-msgstr ""
+msgstr "الملفات: %s"
 
 msgid "Windows default 'timeout' command is not usable for parallel installs"
-msgstr ""
+msgstr "أمر Windows الافتراضي 'timeout' غير قابل للاستخدام للتثبيتات المتوازية"
 
 msgid "timeouts for parallel installs require the 'timeout' command"
-msgstr ""
+msgstr "تتطلب مهلات التثبيتات المتوازية الأمر 'timeout'"
 
 msgid "installation of package %s failed"
-msgstr ""
+msgstr "فشل تثبيت الحزمة %s"
 
 msgid "installation of %d packages failed:  %s"
-msgstr ""
+msgstr "فشل تثبيت %d حزم:  %s"
 
 msgid ""
 "installation of %d packages failed:\n"
 "  %s"
 msgstr ""
+"فشل تثبيت %d حزم:\n"
+"  %s"
 
 msgid ""
 "The downloaded source packages are in\n"
 "\t%s"
 msgstr ""
+"حزم المصدر التي تم تنزيلها موجودة في\n"
+"\t%s"
 
 msgid "The namespace for package \"%s\" is locked; no changes in the global variables list may be made."
-msgstr ""
+msgstr "نطاق الأسماء للحزمة \"%s\" مقفل؛ لا يمكن إجراء تغييرات في قائمة المتغيرات العامة."
 
 msgid "'env' must be an environment"
-msgstr ""
+msgstr "يجب أن يكون 'env' بيئة"
 
 msgid "no object named '%s' to show"
-msgstr ""
+msgstr "لا يوجد كائن باسم '%s' لعرضه"
 
 msgid "'file' must be \"\" or an open connection object"
-msgstr ""
+msgstr "يجب أن يكون 'file' هو \"\" أو كائن اتصال مفتوح"
 
 msgid "'char' must have a non-zero width"
-msgstr ""
+msgstr "يجب أن يكون لـ 'char' عرض غير صفري"
 
 msgid "must have 'max' > 'min'"
-msgstr ""
+msgstr "يجب أن يكون 'max' > 'min'"
 
 msgid "'pb' is not from class %s"
 msgstr "\"pb\" ليس من الفئة ‫‪%s"
 
 msgid "cannot determine a usable name"
-msgstr ""
+msgstr "تعذّر تحديد اسم قابل للاستخدام"
 
 msgid "Created file named %s."
-msgstr ""
+msgstr "تم إنشاء ملف باسم %s."
 
 msgid "Edit the file and move it to the appropriate directory."
-msgstr ""
+msgstr "حرر الملف وانقله إلى الدليل المناسب."
 
 msgid "cannot determine import name"
-msgstr ""
+msgstr "تعذّر تحديد اسم الاستيراد"
 
 msgid "no documentation of type %s and topic %s (or error in processing help)"
-msgstr ""
+msgstr "لا يوجد توثيق من النوع %s والموضوع %s (أو حدث خطأ في معالجة المساعدة)"
 
 msgid "the object of class %s in the function call %s could not be used as a documentation topic"
-msgstr ""
+msgstr "تعذّر استخدام الكائن من الصنف %s في استدعاء الدالة %s كموضوع توثيق"
 
 msgid "no methods for %s and no documentation for it as a function"
-msgstr ""
+msgstr "لا توجد طرق لـ %s ولا توثيق له كدالة"
 
 msgid "no method defined for function %s and signature %s"
-msgstr ""
+msgstr "لا توجد طريقة معرفة للدالة %s والتوقيع %s"
 
 msgid "no documentation for function %s and signature %s"
-msgstr ""
+msgstr "لا يوجد توثيق للدالة %s والتوقيع %s"
 
 msgid "No DIF data on clipboard"
-msgstr ""
+msgstr "لا توجد بيانات DIF في الحافظة"
 
 msgid "file had no lines"
-msgstr ""
+msgstr "لم يحتوِ الملف على أي أسطر"
 
 msgid "row and column counts not found"
-msgstr ""
+msgstr "لم يتم العثور على عدد الصفوف والأعمدة"
 
 msgid "More rows than specified in header; maybe use 'transpose=TRUE'"
-msgstr ""
+msgstr "عدد الصفوف أكثر مما هو محدد في الرأس؛ ربما استخدم 'transpose=TRUE'"
 
 msgid "Unrecognized special data value"
-msgstr ""
+msgstr "قيمة بيانات خاصة غير معروفة"
 
 msgid "More columns than specified in header; maybe use 'transpose=TRUE'"
-msgstr ""
+msgstr "عدد الأعمدة أكثر مما هو محدد في الرأس؛ ربما استخدم 'transpose=TRUE'"
 
 msgid "Unrecognized value indicator"
-msgstr ""
+msgstr "مؤشر قيمة غير معروف"
 
 msgid "no lines available in input"
-msgstr ""
+msgstr "لا توجد أسطر متاحة في الإدخال"
 
 msgid "header and 'col.names' are of different lengths"
-msgstr ""
+msgstr "الرأس و'col.names' بطولين مختلفين"
 
 msgid "more columns than column names"
-msgstr ""
+msgstr "عدد الأعمدة أكثر من أسماء الأعمدة"
 
 msgid "more column names than columns"
-msgstr ""
+msgstr "عدد أسماء الأعمدة أكثر من الأعمدة"
 
 msgid "rows are empty: giving up"
-msgstr ""
+msgstr "الصفوف فارغة: جارٍ التوقف"
 
 msgid "not all columns named in 'colClasses' exist"
-msgstr ""
+msgstr "ليست كل الأعمدة المسماة في 'colClasses' موجودة"
 
 msgid "invalid numeric 'as.is' expression"
-msgstr ""
+msgstr "تعبير 'as.is' الرقمي غير صالح"
 
 msgid "not all columns named in 'as.is' exist"
-msgstr ""
+msgstr "ليست كل الأعمدة المسماة في 'as.is' موجودة"
 
 msgid "'as.is' has the wrong length %d  != cols = %d"
-msgstr ""
+msgstr "طول 'as.is' غير صحيح %d  != cols = %d"
 
 msgid "invalid 'row.names' specification"
-msgstr ""
+msgstr "مواصفة 'row.names' غير صالحة"
 
 msgid "invalid 'row.names' length"
-msgstr ""
+msgstr "طول 'row.names' غير صالح"
 
 msgid "duplicate 'row.names' are not allowed"
-msgstr ""
+msgstr "لا يُسمح بتكرار 'row.names'"
 
 msgid "missing values in 'row.names' are not allowed"
-msgstr ""
+msgstr "لا يُسمح بالقيم المفقودة في 'row.names'"
 
 msgid "missing lengths for some fields"
-msgstr ""
+msgstr "الأطوال مفقودة لبعض الحقول"
 
 msgid "invalid format"
-msgstr ""
+msgstr "تنسيق غير صالح"
 
 msgid "transfer failure"
-msgstr ""
+msgstr "فشل النقل"
 
 msgid "%s option must be a length one character vector or NULL"
-msgstr ""
+msgstr "يجب أن يكون خيار %s متجهًا نصيًا بطول واحد أو NULL"
 
 msgid "'file' must be a character string or connection"
-msgstr ""
+msgstr "يجب أن يكون 'file' سلسلة نصية أو اتصال"
 
 msgid "'as.is' should be specified by the caller; using TRUE"
-msgstr ""
+msgstr "ينبغي أن يحدد المستدعي 'as.is'؛ سيتم استخدام TRUE"
 
 msgid "empty beginning of file"
-msgstr ""
+msgstr "بداية الملف فارغة"
 
 msgid "first five rows are empty: giving up"
-msgstr ""
+msgstr "الصفوف الخمسة الأولى فارغة: جارٍ التوقف"
 
 msgid "relist() requires recursively unlisted objects."
-msgstr ""
+msgstr "تتطلب relist() كائنات غير مدرجة عوديًا."
 
 msgid "The 'flesh' argument does not contain a skeleton attribute."
-msgstr ""
+msgstr "الوسيط 'flesh' لا يحتوي على سمة skeleton."
 
 msgid "Either ensure you unlist a relistable object, or specify the skeleton separately."
-msgstr ""
+msgstr "إما أن تتأكد من إلغاء إدراج كائن قابل لإعادة الإدراج، أو أن تحدد skeleton بشكل منفصل."
 
 msgid "cannot coerce 'x' to roman"
-msgstr ""
+msgstr "لا يمكن تحويل 'x' قسريًا إلى أرقام رومانية"
 
 msgid "Could not create file %s, aborting"
-msgstr ""
+msgstr "تعذّر إنشاء الملف %s، جارٍ الإجهاض"
 
 msgid "no valid packages were specified"
-msgstr ""
+msgstr "لم يتم تحديد حزم صالحة"
 
 msgid "invalid 'socket' argument"
-msgstr ""
+msgstr "الوسيط 'socket' غير صالح"
 
 msgid "'port' must be integer of length 1"
-msgstr ""
+msgstr "يجب أن يكون 'port' عددًا صحيحًا بطول 1"
 
 msgid "'host' must be character of length 1"
-msgstr ""
+msgstr "يجب أن يكون 'host' نصيًا بطول 1"
 
 msgid "can only receive calls on local machine"
-msgstr ""
+msgstr "يمكن استقبال الاستدعاءات على الجهاز المحلي فقط"
 
 msgid "socket not established"
-msgstr ""
+msgstr "لم يتم إنشاء socket"
 
 msgid "argument is not a function or language object:"
-msgstr ""
+msgstr "الوسيط ليس دالة أو كائن لغة:"
 
 msgid "str.data.frame() called with non-data.frame -- coercing to one."
-msgstr ""
+msgstr "تم استدعاء str.data.frame() مع كائن غير data.frame -- جارٍ تحويله قسريًا إلى واحد."
 
 msgid "invalid options(\"str\") -- using defaults instead"
-msgstr ""
+msgstr "خيارات options(\"str\") غير صالحة -- سيتم استخدام الافتراضيات بدلًا منها"
 
 msgid "invalid components in options(\"str\"): %s"
-msgstr ""
+msgstr "مكونات غير صالحة في options(\"str\"): %s"
 
 msgid "'str.default': 'le' is NA, so taken as 0"
-msgstr ""
+msgstr "'str.default': القيمة 'le' هي NA، لذلك عُدت 0"
 
 msgid "'nchar.max = %d' is too small"
-msgstr ""
+msgstr "'nchar.max = %d' صغير جدًا"
 
 msgid "Not a validObject():"
-msgstr ""
+msgstr "ليس validObject():"
 
 msgid "'object' does not have valid levels()"
-msgstr ""
+msgstr "'object' لا يحتوي على levels() صالحة"
 
 msgid "'digits' and 'digits.d' are both specified and the latter is not used"
-msgstr ""
+msgstr "تم تحديد كل من 'digits' و'digits.d'، ولن تُستخدم الثانية"
 
 msgid "The number of captures in 'pattern' != 'length(proto)'"
-msgstr ""
+msgstr "عدد الالتقاطات في 'pattern' != 'length(proto)'"
 
 msgid "The number of tokens != 'length(proto)'"
-msgstr ""
+msgstr "عدد الرموز != 'length(proto)'"
 
 msgid "The number of tokens is not consistent across 'x'"
-msgstr ""
+msgstr "عدد الرموز غير متسق عبر 'x'"
 
 msgid "cannot coerce %s to TRUE or FALSE"
-msgstr ""
+msgstr "لا يمكن تحويل %s قسريًا إلى TRUE أو FALSE"
 
 msgid "no lines found in %s"
-msgstr ""
+msgstr "لم يتم العثور على أسطر في %s"
 
 msgid "profile does not contain memory information"
-msgstr ""
+msgstr "لا يحتوي ملف التعريف على معلومات الذاكرة"
 
 msgid "profile does not contain line information"
-msgstr ""
+msgstr "لا يحتوي ملف التعريف على معلومات الأسطر"
 
 msgid "no events were recorded"
-msgstr ""
+msgstr "لم يتم تسجيل أي أحداث"
 
 msgid "argument 'compressed' is ignored for the internal method"
-msgstr ""
+msgstr "يتم تجاهل الوسيط 'compressed' للطريقة الداخلية"
 
 msgid "invalid 'tarfile' argument"
-msgstr ""
+msgstr "الوسيط 'tarfile' غير صالح"
 
 msgid "'compressed' must be logical or character"
-msgstr ""
+msgstr "يجب أن يكون 'compressed' منطقيًا أو نصيًا"
 
 msgid "No %s command found"
-msgstr ""
+msgstr "لم يتم العثور على أمر %s"
 
 msgid "gzip"
-msgstr ""
+msgstr "gzip"
 
 msgid "bzip2"
-msgstr ""
+msgstr "bzip2"
 
 msgid "xz"
-msgstr ""
+msgstr "xz"
 
 msgid "zstd"
-msgstr ""
+msgstr "zstd"
 
 msgid "failed to create directory %s"
-msgstr ""
+msgstr "فشل إنشاء الدليل %s"
 
 msgid "invalid octal digit"
-msgstr ""
+msgstr "رقم ثماني غير صالح"
 
 msgid "removing leading '/' from '%s'"
-msgstr ""
+msgstr "جارٍ إزالة '/' البادئة من '%s'"
 
 msgid "removing drive '%s'"
-msgstr ""
+msgstr "جارٍ إزالة محرك الأقراص '%s'"
 
 msgid "path starts with '~'"
-msgstr ""
+msgstr "المسار يبدأ بـ '~'"
 
 msgid "path contains '..'"
-msgstr ""
+msgstr "المسار يحتوي على '..'"
 
 msgid "cannot extract through symlink"
-msgstr ""
+msgstr "لا يمكن الاستخراج عبر رابط رمزي"
 
 msgid "'tarfile' must be a character string or a connection"
-msgstr ""
+msgstr "يجب أن يكون 'tarfile' سلسلة نصية أو اتصالًا"
 
 msgid "incomplete block on file"
-msgstr ""
+msgstr "كتلة غير مكتملة في الملف"
 
 msgid "incomplete block: rather use gzfile(.) created connection?"
-msgstr ""
+msgstr "كتلة غير مكتملة: يُفضّل استخدام اتصال منشأ بواسطة gzfile(.)؟"
 
 msgid "invalid name field in tarball"
-msgstr ""
+msgstr "حقل اسم غير صالح في tarball"
 
 msgid "checksum error for entry '%s'"
-msgstr ""
+msgstr "خطأ في المجموع الاختباري للمدخل '%s'"
 
 msgid "failed to copy %s to %s"
-msgstr ""
+msgstr "فشل نسخ %s إلى %s"
 
 msgid "cannot restore symbolic link from %s to %s as a file copy, because the source doesn't exist; try extracting again?"
 msgstr ""
 
 msgid "unsupported entry type"
-msgstr ""
+msgstr "نوع مدخل غير مدعوم"
 
 msgid "file '%s' not found"
-msgstr ""
+msgstr "لم يتم العثور على الملف '%s'"
 
 msgid "file '%s' did not have execute permissions: corrected"
-msgstr ""
+msgstr "لم يكن للملف '%s' صلاحيات تنفيذ: تم التصحيح"
 
 msgid "file size is limited to 8GB"
-msgstr ""
+msgstr "حجم الملف محدود بـ 8GB"
 
 msgid "invalid uid value replaced by that for user 'nobody'"
-msgstr ""
+msgstr "تم استبدال قيمة uid غير الصالحة بقيمة المستخدم 'nobody'"
 
 msgid "invalid gid value replaced by that for user 'nobody'"
-msgstr ""
+msgstr "تم استبدال قيمة gid غير الصالحة بقيمة المستخدم 'nobody'"
 
 msgid ""
 "vignette %s found more than once,\n"
 "using the one found in %s"
 msgstr ""
+"تم العثور على vignette %s أكثر من مرة،\n"
+"سيُستخدم الموجود في %s"
 
 msgid "vignette %s not found"
-msgstr ""
+msgstr "لم يتم العثور على vignette %s"
 
 msgid "vignette %s has no PDF/HTML"
-msgstr ""
+msgstr "vignette %s لا يحتوي على PDF/HTML"
 
 msgid "vignette %s has no R code"
-msgstr ""
+msgstr "vignette %s لا يحتوي على كود R"
 
 msgid "select.list() cannot be used non-interactively"
-msgstr ""
+msgstr "لا يمكن استخدام select.list() بشكل غير تفاعلي"
 
 msgid "'title' must be NULL or a length-1 character vector"
-msgstr ""
+msgstr "يجب أن يكون 'title' هو NULL أو متجهًا نصيًا بطول 1"
 
 msgid "Enter one or more numbers separated by spaces and then ENTER, or 0 to cancel"
-msgstr ""
+msgstr "أدخل رقمًا واحدًا أو أكثر مفصولة بمسافات ثم ENTER، أو 0 للإلغاء"
 
 msgid "Invalid input, please try again"
-msgstr ""
+msgstr "إدخال غير صالح، يرجى المحاولة مرة أخرى"
 
 msgid "'quote' must be 'TRUE', 'FALSE' or numeric"
-msgstr ""
+msgstr "يجب أن يكون 'quote' هو 'TRUE' أو 'FALSE' أو رقميًا"
 
 msgid "invalid numbers in 'quote'"
-msgstr ""
+msgstr "أرقام غير صالحة في 'quote'"
 
 msgid "invalid 'quote' specification"
-msgstr ""
+msgstr "مواصفة 'quote' غير صالحة"
 
 msgid "'col.names = NA' makes no sense when 'row.names = FALSE'"
-msgstr ""
+msgstr "'col.names = NA' لا معنى له عندما تكون 'row.names = FALSE'"
 
 msgid "invalid 'col.names' specification"
-msgstr ""
+msgstr "مواصفة 'col.names' غير صالحة"
 
 msgid "appending column names to file"
-msgstr ""
+msgstr "جارٍ إلحاق أسماء الأعمدة بالملف"
 
 msgid "attempt to set '%s' ignored"
-msgstr ""
+msgstr "تم تجاهل محاولة تعيين '%s'"
 
 msgid "'files' must be a character vector specifying one or more filepaths"
-msgstr ""
+msgstr "يجب أن يكون 'files' متجهًا نصيًا يحدد مسار ملف واحدًا أو أكثر"
 
 msgid "cannot find program to open 'mailto:' URIs: reverting to 'method=\"none\"'"
-msgstr ""
+msgstr "لا يمكن العثور على برنامج لفتح معرفات URI من نوع 'mailto:': جارٍ الرجوع إلى 'method=\"none\"'"
 
 msgid "Using the browser to open a mailto: URI"
-msgstr ""
+msgstr "جارٍ استخدام المتصفح لفتح URI من نوع mailto:"
 
 msgid "must specify 'address'"
-msgstr ""
+msgstr "يجب تحديد 'address'"
 
 msgid "'subject' is missing"
-msgstr ""
+msgstr "'subject' مفقود"
 
 msgid "'ccaddress' must be of length 1"
-msgstr ""
+msgstr "يجب أن يكون 'ccaddress' بطول 1"
 
 msgid "'url' must be a length-one character vector"
-msgstr ""
+msgstr "يجب أن يكون 'url' متجهًا نصيًا بطول واحد"
 
 msgid "'headers' must have names and must not be NA"
-msgstr ""
+msgstr "يجب أن تكون لـ 'headers' أسماء وألا تكون NA"
 
 msgid "'destfile' must be a length-one character vector"
-msgstr ""
+msgstr "يجب أن يكون 'destfile' متجهًا نصيًا بطول واحد"
 
 msgid "'wget' call had nonzero exit status"
-msgstr ""
+msgstr "كان لاستدعاء 'wget' حالة خروج غير صفرية"
 
 msgid "'curl' call had nonzero exit status"
-msgstr ""
+msgstr "كان لاستدعاء 'curl' حالة خروج غير صفرية"
 
 msgid "invalid method:"
-msgstr ""
+msgstr "طريقة غير صالحة:"
 
 msgid "download had nonzero exit status"
-msgstr ""
-
-msgid "Built: value is not a string"
-msgstr ""
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr ""
-
-msgid "file %s is not a binary package"
-msgstr ""
-
-msgid "binary package %s is not compatible with this build of R"
-msgstr ""
-
-msgid "package %s successfully unpacked and %s sums checked"
-msgstr ""
-
-msgid "package %s signature verified (%s %s)"
-msgstr ""
-
-msgid "Valid signature is required, but package %s could not be successfully verified."
-msgstr ""
-
-msgid ""
-"ERROR: failed to lock directory %s for modifying\n"
-"Try removing %s"
-msgstr ""
-
-msgid "ERROR: failed to create lock directory %s"
-msgstr ""
-
-msgid "restored %s"
-msgstr ""
-
-msgid "unable to move temporary installation %s to %s"
-msgstr ""
-
-msgid "cannot remove prior installation of package %s"
-msgstr ""
-
-msgid ""
-"The downloaded binary packages are in\n"
-"\t%s"
-msgstr ""
+msgstr "كان للتنزيل حالة خروج غير صفرية"
 
 msgid "'memory.size()' is no longer supported"
-msgstr ""
+msgstr "لم يعد 'memory.size()' مدعومًا"
 
 msgid "'memory.limit()' is no longer supported"
-msgstr ""
+msgstr "لم يعد 'memory.limit()' مدعومًا"
 
 msgid "method 'mailx' is Unix-only"
-msgstr ""
+msgstr "الطريقة 'mailx' خاصة بـ Unix فقط"
 
 msgid "zip file %s not found"
-msgstr ""
+msgstr "لم يتم العثور على ملف zip ‏%s"
 
 msgid "cannot extract package from %s"
-msgstr ""
+msgstr "لا يمكن استخراج الحزمة من %s"
 
 msgid "failed to create %s"
-msgstr ""
+msgstr "فشل إنشاء %s"
 
 msgid "there is no 'libs' directory in package %s"
-msgstr ""
+msgstr "لا يوجد دليل 'libs' في الحزمة %s"
 
 msgid "unable to move temporary installation %s to %s, copying instead"
-msgstr ""
+msgstr "تعذّر نقل التثبيت المؤقت %s إلى %s، جارٍ النسخ بدلًا من ذلك"
 
 msgid "unable to copy temporary installation %s to %s"
-msgstr ""
+msgstr "تعذّر نسخ التثبيت المؤقت %s إلى %s"
 
 msgid "Only '*.zip' and '*.tar.gz' files can be installed."
-msgstr ""
+msgstr "يمكن تثبيت ملفات '*.zip' و'*.tar.gz' فقط."
 
 msgid "winDialog() cannot be used non-interactively"
-msgstr ""
+msgstr "لا يمكن استخدام winDialog() بشكل غير تفاعلي"
 
 msgid "winDialogString() cannot be used non-interactively"
-msgstr ""
+msgstr "لا يمكن استخدام winDialogString() بشكل غير تفاعلي"
 
 msgid "%d Sweave file for basename %s found"
 msgid_plural "%d Sweave files for basename %s found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "تم العثور على %d ملف Sweave للاسم الأساسي %s"
+msgstr[1] "تم العثور على %d ملف Sweave للاسم الأساسي %s"
+msgstr[2] "تم العثور على %d ملفي Sweave للاسم الأساسي %s"
+msgstr[3] "تم العثور على %d ملفات Sweave للاسم الأساسي %s"
+msgstr[4] "تم العثور على %d ملف Sweave للاسم الأساسي %s"
+msgstr[5] "تم العثور على %d ملف Sweave للاسم الأساسي %s"
 
 msgid "Output file:  "
 msgid_plural "Output files:  "
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "ملفات الإخراج:  "
+msgstr[1] "ملف الإخراج:  "
+msgstr[2] "ملفا الإخراج:  "
+msgstr[3] "ملفات الإخراج:  "
+msgstr[4] "ملفات الإخراج:  "
+msgstr[5] "ملفات الإخراج:  "
 
 msgid "Output/used file:  "
 msgid_plural "Output/used files:  "
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "ملفات الإخراج/المستخدمة:  "
+msgstr[1] "ملف الإخراج/المستخدم:  "
+msgstr[2] "ملفا الإخراج/المستخدمان:  "
+msgstr[3] "ملفات الإخراج/المستخدمة:  "
+msgstr[4] "ملفات الإخراج/المستخدمة:  "
+msgstr[5] "ملفات الإخراج/المستخدمة:  "
 
 msgid "%d occurrence in %s"
 msgid_plural "%d occurrences in %s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "عدد مرات الحدوث %d في %s"
+msgstr[1] "عدد مرات الحدوث %d في %s"
+msgstr[2] "عدد مرات الحدوث %d في %s"
+msgstr[3] "عدد مرات الحدوث %d في %s"
+msgstr[4] "عدد مرات الحدوث %d في %s"
+msgstr[5] "عدد مرات الحدوث %d في %s"
 
 msgid "Invalid role specification: %s."
 msgid_plural "Invalid role specifications: %s."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "مواصفات دور غير صالحة: %s."
+msgstr[1] "مواصفة دور غير صالحة: %s."
+msgstr[2] "مواصفتا دور غير صالحتين: %s."
+msgstr[3] "مواصفات أدوار غير صالحة: %s."
+msgstr[4] "مواصفات أدوار غير صالحة: %s."
+msgstr[5] "مواصفات أدوار غير صالحة: %s."
 
 msgid "Invalid ORCID iD: %s."
 msgid_plural "Invalid ORCID iDs: %s."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "معرفات ORCID iD غير صالحة: %s."
+msgstr[1] "معرف ORCID iD غير صالح: %s."
+msgstr[2] "معرفا ORCID iD غير صالحين: %s."
+msgstr[3] "معرفات ORCID iD غير صالحة: %s."
+msgstr[4] "معرفات ORCID iD غير صالحة: %s."
+msgstr[5] "معرفات ORCID iD غير صالحة: %s."
 
 msgid "Invalid ROR ID: %s."
 msgid_plural "Invalid ROR IDs: %s."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "معرفات ROR ID غير صالحة: %s."
+msgstr[1] "معرف ROR ID غير صالح: %s."
+msgstr[2] "معرفا ROR ID غير صالحين: %s."
+msgstr[3] "معرفات ROR ID غير صالحة: %s."
+msgstr[4] "معرفات ROR ID غير صالحة: %s."
+msgstr[5] "معرفات ROR ID غير صالحة: %s."
 
 msgid "A bibentry of bibtype %s has to specify the field: %s"
 msgid_plural "A bibentry of bibtype %s has to specify the fields: %s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "يجب أن يحدد bibentry من نوع bibtype %s الحقول: %s"
+msgstr[1] "يجب أن يحدد bibentry من نوع bibtype %s الحقل: %s"
+msgstr[2] "يجب أن يحدد bibentry من نوع bibtype %s الحقلين: %s"
+msgstr[3] "يجب أن يحدد bibentry من نوع bibtype %s الحقول: %s"
+msgstr[4] "يجب أن يحدد bibentry من نوع bibtype %s الحقول: %s"
+msgstr[5] "يجب أن يحدد bibentry من نوع bibtype %s الحقول: %s"
 
 msgid "class discarded from column %s"
 msgid_plural "classes discarded from columns %s"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "تم إسقاط الأصناف من الأعمدة %s"
+msgstr[1] "تم إسقاط الصنف من العمود %s"
+msgstr[2] "تم إسقاط الصنفين من العمودين %s"
+msgstr[3] "تم إسقاط الأصناف من الأعمدة %s"
+msgstr[4] "تم إسقاط الأصناف من الأعمدة %s"
+msgstr[5] "تم إسقاط الأصناف من الأعمدة %s"
 
 msgid "matched %d object."
 msgid_plural "matched %d objects."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "طابق %d كائن."
+msgstr[1] "طابق %d كائن."
+msgstr[2] "طابق %d كائن."
+msgstr[3] "طابق %d كائنات."
+msgstr[4] "طابق %d كائنًا."
+msgstr[5] "طابق %d كائن."
 
 msgid "%d error caught in %s: %s"
 msgid_plural "%d times caught the same error in %s: %s"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "تم التقاط %d خطأ في %s: %s"
+msgstr[1] "تم التقاط %d خطأ في %s: %s"
+msgstr[2] "تم التقاط الخطأ نفسه %d مرات في %s: %s"
+msgstr[3] "تم التقاط الخطأ نفسه %d مرات في %s: %s"
+msgstr[4] "تم التقاط الخطأ نفسه %d مرة في %s: %s"
+msgstr[5] "تم التقاط الخطأ نفسه %d مرة في %s: %s"
 
 msgid "object '%s' not found"
 msgid_plural "objects '%s' not found"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لم يتم العثور على الكائنات '%s'"
+msgstr[1] "لم يتم العثور على الكائن '%s'"
+msgstr[2] "لم يتم العثور على الكائنين '%s'"
+msgstr[3] "لم يتم العثور على الكائنات '%s'"
+msgstr[4] "لم يتم العثور على الكائنات '%s'"
+msgstr[5] "لم يتم العثور على الكائنات '%s'"
 
 msgid "package %s is a base package, and cannot be removed"
 msgid_plural "packages %s are base packages, and cannot be removed"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "الحزم %s هي حزم أساسية ولا يمكن إزالتها"
+msgstr[1] "الحزمة %s حزمة أساسية ولا يمكن إزالتها"
+msgstr[2] "الحزمتان %s حزمتان أساسيتان ولا يمكن إزالتهما"
+msgstr[3] "الحزم %s حزم أساسية ولا يمكن إزالتها"
+msgstr[4] "الحزم %s حزم أساسية ولا يمكن إزالتها"
+msgstr[5] "الحزم %s حزم أساسية ولا يمكن إزالتها"
 
 msgid ""
 "Removing package from %s\n"
@@ -1369,12 +1415,12 @@ msgstr[1] ""
 
 msgid "package %s is a base package, and should not be updated"
 msgid_plural "packages %s are base packages, and should not be updated"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "الحزم %s هي حزم أساسية ولا ينبغي تحديثها"
+msgstr[1] "الحزمة %s حزمة أساسية ولا ينبغي تحديثها"
+msgstr[2] "الحزمتان %s حزمتان أساسيتان ولا ينبغي تحديثهما"
+msgstr[3] "الحزم %s حزم أساسية ولا ينبغي تحديثها"
+msgstr[4] "الحزم %s حزم أساسية ولا ينبغي تحديثها"
+msgstr[5] "الحزم %s حزم أساسية ولا ينبغي تحديثها"
 
 msgid ""
 "A version of this package for your version of R might be available elsewhere,\n"
@@ -1387,39 +1433,39 @@ msgstr[1] ""
 
 msgid "package %s is not available %s"
 msgid_plural "packages %s are not available %s"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "الحزم %s غير متاحة %s"
+msgstr[1] "الحزمة %s غير متاحة %s"
+msgstr[2] "الحزمتان %s غير متاحتين %s"
+msgstr[3] "الحزم %s غير متاحة %s"
+msgstr[4] "الحزم %s غير متاحة %s"
+msgstr[5] "الحزم %s غير متاحة %s"
 
 msgid "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "الاعتماديات %s غير متاحة"
+msgstr[1] "الاعتمادية %s غير متاحة"
+msgstr[2] "الاعتماديتان %s غير متاحتين"
+msgstr[3] "الاعتماديات %s غير متاحة"
+msgstr[4] "الاعتماديات %s غير متاحة"
+msgstr[5] "الاعتماديات %s غير متاحة"
 
 msgid "also installing the dependency %s"
 msgid_plural "also installing the dependencies %s"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "جارٍ أيضًا تثبيت الاعتماديات %s"
+msgstr[1] "جارٍ أيضًا تثبيت الاعتمادية %s"
+msgstr[2] "جارٍ أيضًا تثبيت الاعتماديتين %s"
+msgstr[3] "جارٍ أيضًا تثبيت الاعتماديات %s"
+msgstr[4] "جارٍ أيضًا تثبيت الاعتماديات %s"
+msgstr[5] "جارٍ أيضًا تثبيت الاعتماديات %s"
 
 msgid "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "الحزم %s قيد الاستخدام ولن يتم تثبيتها"
+msgstr[1] "الحزمة %s قيد الاستخدام ولن يتم تثبيتها"
+msgstr[2] "الحزمتان %s قيد الاستخدام ولن يتم تثبيتهما"
+msgstr[3] "الحزم %s قيد الاستخدام ولن يتم تثبيتها"
+msgstr[4] "الحزم %s قيد الاستخدام ولن يتم تثبيتها"
+msgstr[5] "الحزم %s قيد الاستخدام ولن يتم تثبيتها"
 
 msgid ""
 "Installing package into %s\n"
@@ -1432,81 +1478,84 @@ msgstr[1] ""
 
 msgid "'lib' element %s is not a writable directory"
 msgid_plural "'lib' elements %s are not writable directories"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "عناصر 'lib' ‏%s ليست أدلة قابلة للكتابة"
+msgstr[1] "عنصر 'lib' ‏%s ليس دليلًا قابلًا للكتابة"
+msgstr[2] "عنصرا 'lib' ‏%s ليسا دليلين قابلين للكتابة"
+msgstr[3] "عناصر 'lib' ‏%s ليست أدلة قابلة للكتابة"
+msgstr[4] "عناصر 'lib' ‏%s ليست أدلة قابلة للكتابة"
+msgstr[5] "عناصر 'lib' ‏%s ليست أدلة قابلة للكتابة"
 
 msgid "There is a binary version available but the source version is later"
 msgid_plural "There are binary versions available but the source versions are later"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "توجد إصدارات ثنائية متاحة ولكن إصدارات المصدر أحدث"
+msgstr[1] "يوجد إصدار ثنائي متاح ولكن إصدار المصدر أحدث"
+msgstr[2] "يوجد إصداران ثنائيان متاحان ولكن إصداري المصدر أحدث"
+msgstr[3] "توجد إصدارات ثنائية متاحة ولكن إصدارات المصدر أحدث"
+msgstr[4] "توجد إصدارات ثنائية متاحة ولكن إصدارات المصدر أحدث"
+msgstr[5] "توجد إصدارات ثنائية متاحة ولكن إصدارات المصدر أحدث"
 
 msgid "Do you want to install from sources the package which needs compilation?"
 msgid_plural "Do you want to install from sources the packages which need compilation?"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "هل تريد تثبيت الحزم التي تحتاج إلى ترجمة من المصادر؟"
+msgstr[1] "هل تريد تثبيت الحزمة التي تحتاج إلى ترجمة من المصادر؟"
+msgstr[2] "هل تريد تثبيت الحزمتين اللتين تحتاجان إلى ترجمة من المصادر؟"
+msgstr[3] "هل تريد تثبيت الحزم التي تحتاج إلى ترجمة من المصادر؟"
+msgstr[4] "هل تريد تثبيت الحزم التي تحتاج إلى ترجمة من المصادر؟"
+msgstr[5] "هل تريد تثبيت الحزم التي تحتاج إلى ترجمة من المصادر؟"
 
 msgid "Package which is only available in source form, and may need compilation of C/C++/Fortran"
 msgid_plural "Packages which are only available in source form, and may need compilation of C/C++/Fortran"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "حزم متاحة فقط بصيغة مصدرية، وقد تحتاج إلى ترجمة C/C++/Fortran"
+msgstr[1] "حزمة متاحة فقط بصيغة مصدرية، وقد تحتاج إلى ترجمة C/C++/Fortran"
+msgstr[2] "حزمتان متاحتان فقط بصيغة مصدرية، وقد تحتاجان إلى ترجمة C/C++/Fortran"
+msgstr[3] "حزم متاحة فقط بصيغة مصدرية، وقد تحتاج إلى ترجمة C/C++/Fortran"
+msgstr[4] "حزم متاحة فقط بصيغة مصدرية، وقد تحتاج إلى ترجمة C/C++/Fortran"
+msgstr[5] "حزم متاحة فقط بصيغة مصدرية، وقد تحتاج إلى ترجمة C/C++/Fortran"
 
 msgid "installing the source package %s"
 msgid_plural "installing the source packages %s"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "جارٍ تثبيت حزم المصدر %s"
+msgstr[1] "جارٍ تثبيت حزمة المصدر %s"
+msgstr[2] "جارٍ تثبيت حزمتَي المصدر %s"
+msgstr[3] "جارٍ تثبيت حزم المصدر %s"
+msgstr[4] "جارٍ تثبيت حزم المصدر %s"
+msgstr[5] "جارٍ تثبيت حزم المصدر %s"
 
 msgid "package %s is available as a source package but not as a binary"
 msgid_plural "packages %s are available as source packages but not as binaries"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "الحزم %s متاحة كحزم مصدر ولكن ليست كحزم ثنائية"
+msgstr[1] "الحزمة %s متاحة كحزمة مصدر ولكن ليست كحزمة ثنائية"
+msgstr[2] "الحزمتان %s متاحتان كحزمتي مصدر ولكن ليستا كحزمتين ثنائيتين"
+msgstr[3] "الحزم %s متاحة كحزم مصدر ولكن ليست كحزم ثنائية"
+msgstr[4] "الحزم %s متاحة كحزم مصدر ولكن ليست كحزم ثنائية"
+msgstr[5] "الحزم %s متاحة كحزم مصدر ولكن ليست كحزم ثنائية"
 
 msgid "There is a binary version available (and will be installed) but the source version is later"
 msgid_plural "There are binary versions available (and will be installed) but the source versions are later"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "توجد إصدارات ثنائية متاحة (وسيتم تثبيتها) ولكن إصدارات المصدر أحدث"
+msgstr[1] "يوجد إصدار ثنائي متاح (وسيتم تثبيته) ولكن إصدار المصدر أحدث"
+msgstr[2] "يوجد إصداران ثنائيان متاحان (وسيتم تثبيتهما) ولكن إصداري المصدر أحدث"
+msgstr[3] "توجد إصدارات ثنائية متاحة (وسيتم تثبيتها) ولكن إصدارات المصدر أحدث"
+msgstr[4] "توجد إصدارات ثنائية متاحة (وسيتم تثبيتها) ولكن إصدارات المصدر أحدث"
+msgstr[5] "توجد إصدارات ثنائية متاحة (وسيتم تثبيتها) ولكن إصدارات المصدر أحدث"
 
 msgid "last record incomplete, %d line discarded"
 msgid_plural "last record incomplete, %d lines discarded"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "السجل الأخير غير مكتمل، تم تجاهل %d سطر"
+msgstr[1] "السجل الأخير غير مكتمل، تم تجاهل %d سطر"
+msgstr[2] "السجل الأخير غير مكتمل، تم تجاهل %d سطر"
+msgstr[3] "السجل الأخير غير مكتمل، تم تجاهل %d أسطر"
+msgstr[4] "السجل الأخير غير مكتمل، تم تجاهل %d سطرًا"
+msgstr[5] "السجل الأخير غير مكتمل، تم تجاهل %d سطر"
 
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "أرقام رومانية غير صالحة: %s"
+msgstr[1] "رقم روماني غير صالح: %s"
+msgstr[2] "رقمان رومانيان غير صالحين: %s"
+msgstr[3] "أرقام رومانية غير صالحة: %s"
+msgstr[4] "أرقام رومانية غير صالحة: %s"
+msgstr[5] "أرقام رومانية غير صالحة: %s"
+
+#~ msgid "'tar' returned non-zero exit code %d"
+#~ msgstr "أرجع 'tar' رمز خروج غير صفري %d"

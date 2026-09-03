@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2012-01-28 01:18+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -220,7 +220,7 @@ msgid "cannot compute exact confidence interval with ties"
 msgstr ""
 
 msgid "'formula' missing or incorrect"
-msgstr "»formula« mangler eller er ukorrekt"
+msgstr "'formula' mangler eller er forkert"
 
 msgid "grouping factor must have exactly 2 levels"
 msgstr "grupperingsfaktor skal have præcis 2 niveauer"
@@ -463,10 +463,10 @@ msgid "'x' and 'y' must have at least 2 levels"
 msgstr ""
 
 msgid "all entries of 'x' must be nonnegative and finite"
-msgstr ""
+msgstr "alle indgange af 'x' skal være ikke-negative og endelige"
 
 msgid "at least one entry of 'x' must be positive"
-msgstr ""
+msgstr "mindst én indgang af 'x' skal være positive"
 
 msgid "cannot compute simulated p-value with zero marginals"
 msgstr ""
@@ -938,6 +938,9 @@ msgstr ""
 msgid "not enough observations"
 msgstr ""
 
+msgid "computing Newton updated failed in %s"
+msgstr ""
+
 msgid "incorrect dimensions"
 msgstr ""
 
@@ -953,7 +956,7 @@ msgstr ""
 msgid "error computing the Hessian in %s"
 msgstr ""
 
-msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgid "error computing the Hessian determinant in %s"
 msgstr ""
 
 msgid "unsuccessful optimisation in %s"
@@ -1355,6 +1358,9 @@ msgid "incompatible dimensions"
 msgstr ""
 
 msgid "missing or negative weights not allowed"
+msgstr ""
+
+msgid "weights smaller than tolerance wtol*sum(w) = %g treated as zero"
 msgstr ""
 
 msgid "invalid 'lm' object:  no 'terms' component"
@@ -1769,6 +1775,15 @@ msgid "argument 'subset' will be ignored"
 msgstr ""
 
 msgid "argument 'na.action' will be ignored"
+msgstr ""
+
+msgid "different names for %s and %s: names ignored"
+msgstr ""
+
+msgid "mismatched names for %s and %s"
+msgstr ""
+
+msgid "duplicated names in %s"
 msgstr ""
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
@@ -2497,6 +2512,11 @@ msgid "unknown name %s in the 'split' list"
 msgid_plural "unknown names %s in the 'split' list"
 msgstr[0] "ukendte navne i listen »split«"
 msgstr[1] "ukendte navne i listen »split«"
+
+msgid "essentially perfect fit for %s: summary may be unreliable"
+msgid_plural "essentially perfect fit for response(s) %s: summary may be unreliable"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\""

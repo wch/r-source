@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2022-10-14 10:12+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -183,6 +183,9 @@ msgstr "'x' dev'essere un vettore numerico o una matrice"
 
 msgid "'x' is neither a vector nor a matrix: using as.numeric(x)"
 msgstr "'x' non è ne un vettore ne una matrice: si utilizza as.numeric(x)"
+
+msgid "'col' has length %d but should have length %d (= length(levels) - 1, with length(levels) = %d); colors will be recycled or ignored"
+msgstr ""
 
 msgid "'x' must be an array"
 msgstr "'x' dev'essere un array"

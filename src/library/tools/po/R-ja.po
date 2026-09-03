@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-09 14:51\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -62,11 +62,11 @@ msgid "Functions or methods with usage in Rd file '%s' but not in code:"
 msgstr "ドキュメントオブジェクト '%s' 中に使用法があるが、コード中にはない関数もしくはメソッド:"
 
 #, fuzzy
-msgid "Data with usage in Rd file '%s' but not in code:"
+msgid "Variables with usage in Rd file '%s' but not in code:"
 msgstr "ドキュメントオブジェクト '%s' 中に使用法があるが、コード中にはないデータセット:"
 
 #, fuzzy
-msgid "Variables with usage in Rd file '%s' but not in code:"
+msgid "Data with usage in Rd file '%s' but not in code:"
 msgstr "ドキュメントオブジェクト '%s' 中に使用法があるが、コード中にはないデータセット:"
 
 msgid "Argument names in code not in docs:"
@@ -790,9 +790,6 @@ msgstr "エラー: この R はバージョン %s です。 R %s %s を必要と
 msgid "loading failed"
 msgstr "ロードに失敗しました"
 
-msgid "'cc' is not on the path"
-msgstr ""
-
 msgid "'objdump' is not on the path"
 msgstr ""
 
@@ -1071,6 +1068,21 @@ msgid ""
 "See\n"
 "  %s\n"
 "for details."
+msgstr ""
+
+#, fuzzy
+msgid "must specify 'address'"
+msgstr "'dir' もしくは 'file' を指定しなければなりません"
+
+msgid "'subject' is missing"
+msgstr ""
+
+msgid "Sending email to %s"
+msgstr ""
+
+msgid ""
+"Sending email failed!\n"
+"The unsent msg can be found in file %s."
 msgstr ""
 
 msgid "namespace must not be already loaded"
@@ -1432,9 +1444,6 @@ msgstr "ファイル '%s' は有効な DCF フォーマットではありませ�
 msgid "contains a blank line"
 msgstr "空白行があります"
 
-msgid "Unknown encoding with non-ASCII data: converting to ASCII"
-msgstr "非 ASCII データをもつ未知のエンコーディングです: ASCII に変換します"
-
 msgid "cannot source package code:"
 msgstr "パッケージコードを読み込めません:"
 
@@ -1583,6 +1592,9 @@ msgstr[0] "パッケージテストのうち %d 個が失敗しました"
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
+
+#~ msgid "Unknown encoding with non-ASCII data: converting to ASCII"
+#~ msgstr "非 ASCII データをもつ未知のエンコーディングです: ASCII に変換します"
 
 #~ msgid "Error: cannot rename directory to %s"
 #~ msgstr "エラー: ディレクトリの名前を %s に変更できません"

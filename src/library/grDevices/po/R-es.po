@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:17\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2023-08-31 11:06+0000\n"
 "Last-Translator: Geraldine Gomez Millan <geralidine.gomez@javeriana.edu.co>\n"
 "Language-Team: none\n"
@@ -22,11 +22,8 @@ msgstr "svg: los dispositivos basados en Cairo no están disponibles para esta p
 msgid "cairo_pdf: Cairo-based devices are not available for this platform"
 msgstr "cairo_pdf: dispositivos basados en Cairo no están disponibles para esta plataforma"
 
-
 msgid "cairo_ps: Cairo-based devices are not available for this platform"
-msgstr ""
-"cairo_pdf: dispositivos basados en Cairo no están disponibles para esta "
-"plataforma"
+msgstr "cairo_pdf: dispositivos basados en Cairo no están disponibles para esta plataforma"
 
 msgid "'coef' must not be negative"
 msgstr "«coef» no debe ser negativo"
@@ -191,22 +188,22 @@ msgid "Invalid glyph anchor"
 msgstr "Anclaje de glifo no válido"
 
 msgid "Registered axis names must be lower case"
-msgstr ""
+msgstr "Los nombres de ejes registrados deben estar en minúscula"
 
 msgid "Custom axis names must be upper case"
-msgstr ""
+msgstr "Los nombres de ejes personalizados deben estar en mayúsculas"
 
 msgid "Axis value(s) out of range"
-msgstr ""
+msgstr "Valor(es) de eje fuera de rango"
 
 msgid "No axes specified"
-msgstr ""
+msgstr "No se especificaron ejes"
 
 msgid "Axis names must be 4 ASCII letters long"
-msgstr ""
+msgstr "Los nombres de eje deben tener una extensión de 4 letras ASCII"
 
 msgid "Axis values must be numeric"
-msgstr ""
+msgstr "Los valores de eje deben ser numéricos"
 
 msgid "Font file longer than 500 will be truncated"
 msgstr "El archivo de fuentes mayor a 500 se truncará"
@@ -233,8 +230,7 @@ msgid "Unknown font"
 msgstr "Fuente desconocida"
 
 msgid "There must be anchors named \"left\" and \"bottom\""
-msgstr ""
-"Debe haber anclajes llamados \"left\" (izquierda) y \"bottom\" (inferior)"
+msgstr "Debe haber anclajes llamados \"left\" (izquierda) y \"bottom\" (inferior)"
 
 msgid "Invalid glyph info"
 msgstr "Información de glifo no válida"
@@ -267,8 +263,7 @@ msgid "invalid arguments in '%s' (need named args)"
 msgstr "Argumentos no válidos en '%s' (se requieren argumentos con nombre)"
 
 msgid "'name.opt' must be character, name of an existing list"
-msgstr ""
-"'name.opt' debe ser de tipo carácter (el nombre de una lista existente)"
+msgstr "'name.opt' debe ser de tipo carácter (el nombre de una lista existente)"
 
 msgid "cannot reset non-existent '%s'"
 msgstr "no se pueden restablecer los '%s' inexistentes"
@@ -280,9 +275,7 @@ msgid "NOT changing %s"
 msgstr "no se cambia/n %s"
 
 msgid "argument 'append' is for back-compatibility and will be ignored"
-msgstr ""
-"El argumento 'append' es para compatibilidad con versiones anteriores y se "
-"ignorará"
+msgstr "El argumento 'append' es para compatibilidad con versiones anteriores y se ignorará"
 
 msgid "unknown family '%s'"
 msgstr "familia desconocida '%s'"
@@ -341,7 +334,8 @@ msgstr "codificación de fuentes no coincide: '%s'/'%s'"
 msgid "'%s' must be a non-empty character string"
 msgstr "'%s' debe ser una cadena de caracteres no vacía"
 
-msgid "GhostScript was not found"
+#, fuzzy
+msgid "Ghostscript was not found"
 msgstr "no se encontró GhostScript"
 
 msgid "invalid output format"
@@ -354,8 +348,7 @@ msgid "Invalid 'glyphInfo'"
 msgstr "'glyphInfo' no válido"
 
 msgid "failed to add more ticks; 'min.n' too large?"
-msgstr ""
-"no se pueden agregar más marcas de graduación; ¿'min.n' demasiado grande?"
+msgstr "no se pueden agregar más marcas de graduación; ¿'min.n' demasiado grande?"
 
 msgid "a raster matrix must be character, or numeric, or logical"
 msgstr "una matriz ráster debe ser de caracteres, numérica o lógica"
@@ -494,13 +487,10 @@ msgid "invalid arguments in 'quartzFonts' (must be font names)"
 msgstr "argumentos no válidos en 'quartzFonts' (deben ser nombres de fuentes)"
 
 msgid "invalid arguments in 'quartzFonts' (need named args)"
-msgstr ""
-"argumentos no válidos en 'quartzFonts' (se requieren argumentos con nombre)"
+msgstr "argumentos no válidos en 'quartzFonts' (se requieren argumentos con nombre)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
-msgstr ""
-"los tipos basados en Cairo no son soportados en esta compilación - usando "
-"\"Xlib\""
+msgstr "los tipos basados en Cairo no son soportados en esta compilación - usando \"Xlib\""
 
 msgid "unknown family for X11(type = \"XLib\")"
 msgstr "familia desconocida para X11(type = \"XLib\")"
@@ -512,8 +502,7 @@ msgid "invalid arguments in 'X11Fonts' (must be font names)"
 msgstr "argumentos no válidos en 'X11Fonts' (deben ser nombres de fuente)"
 
 msgid "invalid arguments in 'X11Fonts' (need named args)"
-msgstr ""
-"argumentos no válidos en 'X11Fonts' (se requieren argumentos con nombre)"
+msgstr "argumentos no válidos en 'X11Fonts' (se requieren argumentos con nombre)"
 
 msgid "no such device"
 msgstr "no existe el dispositivo"
@@ -543,15 +532,13 @@ msgid "subscript out of range"
 msgstr "subíndice fuera de rango"
 
 msgid "invalid Windows font:  must be a single font family name"
-msgstr ""
-"fuente de Windows no válida:  debe ser un solo nombre de familia de fuentes"
+msgstr "fuente de Windows no válida:  debe ser un solo nombre de familia de fuentes"
 
 msgid "invalid arguments in 'windowsFonts' (must be font names)"
 msgstr "argumentos no válidos en 'windowsFonts' (deben ser nombres de fuente)"
 
 msgid "invalid arguments in 'windowsFonts' (need named args)"
-msgstr ""
-"argumentos no válidos en 'windowsFonts' (se requieren argumentos con nombre)"
+msgstr "argumentos no válidos en 'windowsFonts' (se requieren argumentos con nombre)"
 
 msgid "invalid argument name %s in '%s'"
 msgid_plural "invalid argument names %s in '%s'"

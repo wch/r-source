@@ -80,7 +80,8 @@ msgstr "estado gráfico no válido"
 
 #: graphics.c:2618
 msgid "graphics device closed during call to locator or identify"
-msgstr "gráfico cerrado durante la llamada al localizador o identificador"
+msgstr ""
+"gráfico cerrado durante la llamada al localizador o identificador"
 
 #: graphics.c:2668
 msgid "No graphics device is active"
@@ -110,7 +111,9 @@ msgstr "la familia de par�metros gr�ficos tiene un tama�o m�ximo de 200 bytes"
 #: par.c:159
 #, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
-msgstr "el valor especificado para el parámetro del gráfico \"%s\" no es válido"
+msgstr ""
+"el valor especificado para el parámetro del gráfico \"%s\" no es "
+"válido"
 
 #: par.c:166
 #, c-format
@@ -449,7 +452,9 @@ msgstr "'thermometers[, %s]' no válidos"
 #: plot.c:3903
 #, c-format
 msgid "'thermometers[, %s]' not in [0,1] -- may look funny"
-msgstr "'termómetros[,%s]' no están en el intervalo [0,1] - quizás este error puede parecer gracioso"
+msgstr ""
+"'termómetros[,%s]' no están en el intervalo [0,1] - quizás este "
+"error puede parecer gracioso"
 
 #: plot.c:3906
 msgid "invalid 'thermometers[, 1:2]'"

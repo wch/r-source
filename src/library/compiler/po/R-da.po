@@ -14,10 +14,10 @@ msgstr ""
 "X-Generator: Pootle 2.1.6\n"
 
 msgid "namespace found within local environments"
-msgstr ""
+msgstr "navnerum fundet i lokalt miljø"
 
 msgid "not a proper evaluation environment"
-msgstr "ikke et korrekt evuleringsmiljø"
+msgstr "ikke et korrekt evalueringsmiljø"
 
 #, fuzzy
 msgid "non-namespace found within namespace environments"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphics 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2020-11-29 17:23+0200\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -177,6 +177,9 @@ msgstr "'x' turi būti skaitinis vektorius arba matrica"
 
 msgid "'x' is neither a vector nor a matrix: using as.numeric(x)"
 msgstr "'x' nėra nei vektorius, nei matrica: naudojama as.numeric(x)"
+
+msgid "'col' has length %d but should have length %d (= length(levels) - 1, with length(levels) = %d); colors will be recycled or ignored"
+msgstr ""
 
 msgid "'x' must be an array"
 msgstr "'x' turi būti masyvas"

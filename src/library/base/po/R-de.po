@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2026-05-01 14:17+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -69,6 +69,10 @@ msgstr "'%s' ist keine gültige Abkürzung für einen RNG"
 
 msgid "'%s' must be a character string"
 msgstr "'%s' muss eine Zeichenkette sein"
+
+#, fuzzy
+msgid "'%s' is not valid for '%s'"
+msgstr "'%s' ist keine gültige Wahl"
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s' ist keine gültige Wahl"
@@ -433,6 +437,9 @@ msgstr "'lag' and 'differences' müssen ganze Zahlen >=1 sein"
 msgid "unable to deduce timezone name from"
 msgstr "kann Zeitzone nicht ableiten aus"
 
+msgid "timedatectl"
+msgstr ""
+
 msgid "wrong class"
 msgstr "falsche Klasse"
 
@@ -702,6 +709,10 @@ msgstr "'input.d.mark' enthält keine Zeichen"
 
 msgid "'subset' must be logical"
 msgstr "'subset' muss boolesch sein"
+
+#, fuzzy
+msgid "No functions specified"
+msgstr "Keine Faktoren angegeben"
 
 msgid "value for %s not found"
 msgstr "Wert für '%s' nicht gefunden"

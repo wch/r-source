@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2011-04-02 \n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -968,6 +968,9 @@ msgstr "tüm gruplar veri içermeli"
 msgid "not enough observations"
 msgstr "yetersiz gözlem sayısı"
 
+msgid "computing Newton updated failed in %s"
+msgstr ""
+
 #, fuzzy
 msgid "incorrect dimensions"
 msgstr "'xi' için hatalı boyutlar"
@@ -985,7 +988,7 @@ msgstr ""
 msgid "error computing the Hessian in %s"
 msgstr ""
 
-msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgid "error computing the Hessian determinant in %s"
 msgstr ""
 
 msgid "unsuccessful optimisation in %s"
@@ -1406,6 +1409,9 @@ msgstr "uyumsuz boyutlar"
 
 msgid "missing or negative weights not allowed"
 msgstr "eksik veya negatif sıklıklara izin verilmiyor"
+
+msgid "weights smaller than tolerance wtol*sum(w) = %g treated as zero"
+msgstr ""
 
 msgid "invalid 'lm' object:  no 'terms' component"
 msgstr ""
@@ -1837,6 +1843,16 @@ msgstr "'subset' argümanı görmezden gelinecek"
 
 msgid "argument 'na.action' will be ignored"
 msgstr "'na.action' argümanı görmezden gelinecek"
+
+msgid "different names for %s and %s: names ignored"
+msgstr ""
+
+#, fuzzy
+msgid "mismatched names for %s and %s"
+msgstr "uyuşmayan 'x' ve 'y'"
+
+msgid "duplicated names in %s"
+msgstr ""
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr ""
@@ -2595,6 +2611,11 @@ msgid "unknown name %s in the 'split' list"
 msgid_plural "unknown names %s in the 'split' list"
 msgstr[0] "'split' listesinde bilinmeyen isim(ler)"
 msgstr[1] "'split' listesinde bilinmeyen isim(ler)"
+
+msgid "essentially perfect fit for %s: summary may be unreliable"
+msgid_plural "essentially perfect fit for response(s) %s: summary may be unreliable"
+msgstr[0] ""
+msgstr[1] ""
 
 #, fuzzy
 msgid "extra argument %s is not of class \"%s\""

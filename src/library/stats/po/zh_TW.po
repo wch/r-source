@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:47-0700\n"
+"POT-Creation-Date: 2026-07-08 08:22-0700\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -91,31 +91,31 @@ msgstr "不可使用輸入來確定個案數目"
 msgid "not all arguments have the same length"
 msgstr "不是所有的引數都一樣長"
 
-#: cov.c:563
+#: cov.c:546
 msgid "missing observations in cov/cor"
 msgstr "cov/cor 中有缺值"
 
-#: cov.c:644
+#: cov.c:627
 msgid "'x' is NULL"
 msgstr "'x' 為 NULL"
 
-#: cov.c:676 cov.c:682
+#: cov.c:659 cov.c:665
 msgid "incompatible dimensions"
 msgstr "不相容的量度"
 
-#: cov.c:701 cov.c:742 cov.c:775
+#: cov.c:684 cov.c:725 cov.c:758
 msgid "no complete element pairs"
 msgstr "不存在完的一對"
 
-#: cov.c:714
+#: cov.c:697
 msgid "invalid 'use' (computational method)"
 msgstr "'use' 不對(計算方法)"
 
-#: cov.c:717
+#: cov.c:700
 msgid "'x' is empty"
 msgstr "'x' 是空的"
 
-#: cov.c:811
+#: cov.c:794
 msgid "the standard deviation is zero"
 msgstr "標準差為零"
 

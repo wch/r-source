@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-4-3-BRANCH\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2022-10-14 10:34+0200\n"
 "Last-Translator: Daniele Medri <dmedri@gmail.com>\n"
 "Language-Team: Italian https://github.com/dmedri/R-italian-lang\n"
@@ -35,6 +35,13 @@ msgstr "'X' deve avere nomi dimensioni nominate"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "non tutti gli elementi di 'MARGIN' sono nomi di dimensioni"
+
+#, fuzzy
+msgid "incompatible arguments"
+msgstr "argomento 'jobs' non valido"
+
+msgid "'Sigma' is not positive definite"
+msgstr ""
 
 msgid "no cluster 'cl' supplied and none is registered"
 msgstr "nessun cluster 'cl' fornito e nessuno è registrato"

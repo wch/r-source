@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stats 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2021-10-15 18:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -936,6 +936,9 @@ msgstr "visose grupėse turi būti duomenys"
 msgid "not enough observations"
 msgstr "nepakanka stebėjimų"
 
+msgid "computing Newton updated failed in %s"
+msgstr ""
+
 #, fuzzy
 msgid "incorrect dimensions"
 msgstr "neteisingi 'xi' matavimo skaičiai"
@@ -953,7 +956,7 @@ msgstr ""
 msgid "error computing the Hessian in %s"
 msgstr ""
 
-msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgid "error computing the Hessian determinant in %s"
 msgstr ""
 
 msgid "unsuccessful optimisation in %s"
@@ -1365,6 +1368,9 @@ msgstr "nesuderinami matavimo skaičiai"
 
 msgid "missing or negative weights not allowed"
 msgstr "trūkstami arba neigiami svoriai negalimi"
+
+msgid "weights smaller than tolerance wtol*sum(w) = %g treated as zero"
+msgstr ""
 
 msgid "invalid 'lm' object:  no 'terms' component"
 msgstr "neteisingas 'lm' objektas: nėra 'terms' komponentas"
@@ -1781,6 +1787,16 @@ msgstr "argumentas 'subset' bus ignoruojamas"
 
 msgid "argument 'na.action' will be ignored"
 msgstr "argumentas 'na.action' bus ignoruojamas"
+
+msgid "different names for %s and %s: names ignored"
+msgstr ""
+
+#, fuzzy
+msgid "mismatched names for %s and %s"
+msgstr "'x' ir 'y' nesutampa"
+
+msgid "duplicated names in %s"
+msgstr ""
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "viršutiniai ir apatiniai rėžiai ignoruojami, nebent algorithm = \"port\""
@@ -2521,6 +2537,13 @@ msgid_plural "unknown names %s in the 'split' list"
 msgstr[0] "nežinomas vardas %s 'split' sąraše"
 msgstr[1] "nežinomi vardai %s 'split' sąraše"
 msgstr[2] "nežinomų vardų %s 'split' sąraše"
+
+#, fuzzy
+msgid "essentially perfect fit for %s: summary may be unreliable"
+msgid_plural "essentially perfect fit for response(s) %s: summary may be unreliable"
+msgstr[0] "iš esmės puikiai tinka: santrauka gali būti nepatikima"
+msgstr[1] "iš esmės puikiai tinka: santrauka gali būti nepatikima"
+msgstr[2] "iš esmės puikiai tinka: santrauka gali būti nepatikima"
 
 #, fuzzy
 msgid "extra argument %s is not of class \"%s\""

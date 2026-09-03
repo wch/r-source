@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2018-04-09 12:05-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -71,6 +71,10 @@ msgstr "'%s'는 올바른 RNG(난수생성기)의 약자가 아닙니다."
 #, fuzzy
 msgid "'%s' must be a character string"
 msgstr "'object'인자는 반드시 하나의 문자열로 만들어져야 합니다."
+
+#, fuzzy
+msgid "'%s' is not valid for '%s'"
+msgstr "'%s'는 유효한 선택이 아닙니다"
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s'는 유효한 선택이 아닙니다"
@@ -446,6 +450,9 @@ msgstr "'lag'과 'differences'는 반드시 1 이상의 정수여야 합니다"
 msgid "unable to deduce timezone name from"
 msgstr ""
 
+msgid "timedatectl"
+msgstr ""
+
 msgid "wrong class"
 msgstr "잘못된 클래스입니다"
 
@@ -707,6 +714,10 @@ msgstr "'input.d.mark'는 어떠한 문자도 가지고 있습니다."
 
 msgid "'subset' must be logical"
 msgstr "'subset'은 반드시 논리적이어야 합니다"
+
+#, fuzzy
+msgid "No functions specified"
+msgstr "지정된 요인들이 없습니다"
 
 msgid "value for %s not found"
 msgstr "%s에 대한 찾을 찾을 수 없습니다"

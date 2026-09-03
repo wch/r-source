@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.6.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2026-04-14 15:46+0000\n"
 "Last-Translator: Erika Siregar <erika.mukhlisina@gmail.com>\n"
 "Language-Team: none\n"
@@ -83,10 +83,10 @@ msgstr ""
 msgid "invalid value for %s : %s"
 msgstr ""
 
-msgid "value of 'results' option should be lowercase"
+msgid "value of option 'results' should be lowercase"
 msgstr ""
 
-msgid "value of 'strip.white' option should be lowercase"
+msgid "value of option 'strip.white' should be lowercase"
 msgstr ""
 
 msgid "using default value %s"
@@ -522,6 +522,49 @@ msgstr ""
 msgid "Invalid \"Built\":"
 msgstr ""
 
+msgid "Built: value is not a string"
+msgstr ""
+
+msgid "unable to create temporary directory %s"
+msgstr ""
+
+msgid "file %s is not a binary package"
+msgstr ""
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
+
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr ""
+
+msgid "package %s signature verified (%s %s)"
+msgstr ""
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
+msgstr ""
+
+msgid "ERROR: failed to create lock directory %s"
+msgstr ""
+
+msgid "restored %s"
+msgstr ""
+
+msgid "unable to move temporary installation %s to %s"
+msgstr ""
+
+msgid "cannot remove prior installation of package %s"
+msgstr ""
+
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+
 msgid "cannot update HTML package index"
 msgstr ""
 
@@ -729,9 +772,6 @@ msgid "unable to create %s"
 msgstr ""
 
 msgid "inferring 'repos = NULL' from 'pkgs'"
-msgstr ""
-
-msgid "unable to create temporary directory %s"
 msgstr ""
 
 msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
@@ -1172,49 +1212,6 @@ msgid "invalid method:"
 msgstr ""
 
 msgid "download had nonzero exit status"
-msgstr ""
-
-msgid "Built: value is not a string"
-msgstr ""
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr ""
-
-msgid "file %s is not a binary package"
-msgstr ""
-
-msgid "binary package %s is not compatible with this build of R"
-msgstr ""
-
-msgid "package %s successfully unpacked and %s sums checked"
-msgstr ""
-
-msgid "package %s signature verified (%s %s)"
-msgstr ""
-
-msgid "Valid signature is required, but package %s could not be successfully verified."
-msgstr ""
-
-msgid ""
-"ERROR: failed to lock directory %s for modifying\n"
-"Try removing %s"
-msgstr ""
-
-msgid "ERROR: failed to create lock directory %s"
-msgstr ""
-
-msgid "restored %s"
-msgstr ""
-
-msgid "unable to move temporary installation %s to %s"
-msgstr ""
-
-msgid "cannot remove prior installation of package %s"
-msgstr ""
-
-msgid ""
-"The downloaded binary packages are in\n"
-"\t%s"
 msgstr ""
 
 msgid "'memory.size()' is no longer supported"

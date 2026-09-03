@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2023-02-02 16:05+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: none\n"
@@ -62,6 +62,9 @@ msgid "'%s' is not a valid abbreviation of an RNG"
 msgstr ""
 
 msgid "'%s' must be a character string"
+msgstr ""
+
+msgid "'%s' is not valid for '%s'"
 msgstr ""
 
 msgid "'%s' is not a valid choice"
@@ -421,6 +424,9 @@ msgstr ""
 msgid "unable to deduce timezone name from"
 msgstr ""
 
+msgid "timedatectl"
+msgstr ""
+
 msgid "wrong class"
 msgstr ""
 
@@ -676,6 +682,9 @@ msgid "'input.d.mark' has no characters"
 msgstr ""
 
 msgid "'subset' must be logical"
+msgstr ""
+
+msgid "No functions specified"
 msgstr ""
 
 msgid "value for %s not found"

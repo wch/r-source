@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -185,6 +185,9 @@ msgstr "'x' 要麼是數值向量，要麼是矩陣"
 
 msgid "'x' is neither a vector nor a matrix: using as.numeric(x)"
 msgstr "既不是一個向量也不是矩陣：使用 as.numeric(x)"
+
+msgid "'col' has length %d but should have length %d (= length(levels) - 1, with length(levels) = %d); colors will be recycled or ignored"
+msgstr ""
 
 msgid "'x' must be an array"
 msgstr "'x' 必須為排列"

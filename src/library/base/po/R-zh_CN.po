@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2023-12-20 13:03+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -68,6 +68,10 @@ msgstr "'%s'不是有效的RNG缩写"
 
 msgid "'%s' must be a character string"
 msgstr "'%s' 必需是字符串"
+
+#, fuzzy
+msgid "'%s' is not valid for '%s'"
+msgstr "'%s'不是有效的选择"
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s'不是有效的选择"
@@ -431,6 +435,9 @@ msgstr "'lag'和'differences'的值必需为大于等于一的整数"
 msgid "unable to deduce timezone name from"
 msgstr "无法推断时区名称从"
 
+msgid "timedatectl"
+msgstr ""
+
 msgid "wrong class"
 msgstr "类别有误"
 
@@ -697,6 +704,10 @@ msgstr "“input.d.mark”中没有字符"
 
 msgid "'subset' must be logical"
 msgstr "'subset'必需是逻辑值"
+
+#, fuzzy
+msgid "No functions specified"
+msgstr "未指定因素"
 
 msgid "value for %s not found"
 msgstr "%s的值没有"

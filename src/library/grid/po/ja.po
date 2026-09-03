@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51+0200\n"
+"POT-Creation-Date: 2026-08-01 04:41-0700\n"
 "PO-Revision-Date: 2026-04-14 15:39+0000\n"
 "Last-Translator: Reiko Okamoto <reiko.okamoto17@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -14,7 +14,11 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 5.11.4\n"
 
-#: gpar.c:632
+#: gpar.c:355
+msgid "graphical parameter 'fontfamily' has a maximum length of 200 bytes"
+msgstr ""
+
+#: gpar.c:644
 msgid "updateGContext must only be called after initGContext"
 msgstr ""
 

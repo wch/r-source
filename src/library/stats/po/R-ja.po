@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2024-03-19 03:05+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -945,6 +945,9 @@ msgstr "全てのグループはデータを含まなければなりません"
 msgid "not enough observations"
 msgstr "十分な観測値がありません"
 
+msgid "computing Newton updated failed in %s"
+msgstr ""
+
 #, fuzzy
 msgid "incorrect dimensions"
 msgstr "'xi' の次元が不正確です"
@@ -962,7 +965,7 @@ msgstr ""
 msgid "error computing the Hessian in %s"
 msgstr ""
 
-msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgid "error computing the Hessian determinant in %s"
 msgstr ""
 
 msgid "unsuccessful optimisation in %s"
@@ -1376,6 +1379,9 @@ msgstr "矛盾した次元です"
 
 msgid "missing or negative weights not allowed"
 msgstr "欠損もしくは負の重みは許されません"
+
+msgid "weights smaller than tolerance wtol*sum(w) = %g treated as zero"
+msgstr ""
 
 msgid "invalid 'lm' object:  no 'terms' component"
 msgstr "無効な 'lm' オブジェクト: 項 ('terms') 成分がありません"
@@ -1802,6 +1808,16 @@ msgstr "引数 'subset' は無視されます"
 
 msgid "argument 'na.action' will be ignored"
 msgstr "引数 'na.action' は無視されます"
+
+msgid "different names for %s and %s: names ignored"
+msgstr ""
+
+#, fuzzy
+msgid "mismatched names for %s and %s"
+msgstr "'x' 及び 'y' が合致しません"
+
+msgid "duplicated names in %s"
+msgstr ""
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "algorithm = \"port\" でない限り upper および lower の制約は無視されます"
@@ -2543,6 +2559,11 @@ msgstr[0] "%d 個のエラー項があります。1 つだけが許されます"
 msgid "unknown name %s in the 'split' list"
 msgid_plural "unknown names %s in the 'split' list"
 msgstr[0] "'split' リスト中に未知の名前 %s があります"
+
+#, fuzzy
+msgid "essentially perfect fit for %s: summary may be unreliable"
+msgid_plural "essentially perfect fit for response(s) %s: summary may be unreliable"
+msgstr[0] "ほぼ完全なフィットなので，summary には信頼性がない場合があります"
 
 #, fuzzy
 msgid "extra argument %s is not of class \"%s\""

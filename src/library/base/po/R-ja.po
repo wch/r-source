@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2024-03-19 03:05+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -67,6 +67,10 @@ msgstr "'%s' は RNG の有効な省略名ではありません"
 #, fuzzy
 msgid "'%s' must be a character string"
 msgstr "引数 'object' は空でない単一の文字列でなければなりません"
+
+#, fuzzy
+msgid "'%s' is not valid for '%s'"
+msgstr "'%s' は有効な選択 (choice) ではありません"
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s' は有効な選択 (choice) ではありません"
@@ -447,6 +451,9 @@ msgstr "'lag' そして 'differences' は 1 以上の整数でなければなり
 msgid "unable to deduce timezone name from"
 msgstr "タイムゾーン名を推測することができません"
 
+msgid "timedatectl"
+msgstr ""
+
 msgid "wrong class"
 msgstr "間違ったクラスです"
 
@@ -722,6 +729,10 @@ msgstr "'input' そして 'target' は文字ベクトルでなければなりま
 
 msgid "'subset' must be logical"
 msgstr "'subset' は論理値でなければなりません"
+
+#, fuzzy
+msgid "No functions specified"
+msgstr "因子が指定されていません"
 
 msgid "value for %s not found"
 msgstr "%s の値が見付かりません"

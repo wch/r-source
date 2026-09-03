@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-09 14:51\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -65,11 +65,11 @@ msgid "Functions or methods with usage in Rd file '%s' but not in code:"
 msgstr "函数或文件的使用方法在使用文档对象'%s'里有记录但不在编码里:"
 
 #, fuzzy
-msgid "Data with usage in Rd file '%s' but not in code:"
+msgid "Variables with usage in Rd file '%s' but not in code:"
 msgstr "数据的使用方法在使用文档对象'%s'里有记录但不在编码里:"
 
 #, fuzzy
-msgid "Variables with usage in Rd file '%s' but not in code:"
+msgid "Data with usage in Rd file '%s' but not in code:"
 msgstr "数据的使用方法在使用文档对象'%s'里有记录但不在编码里:"
 
 msgid "Argument names in code not in docs:"
@@ -820,9 +820,6 @@ msgstr "错误：R的版本是%s，需要的是版本为%s %s的R"
 msgid "loading failed"
 msgstr "载入失败"
 
-msgid "'cc' is not on the path"
-msgstr ""
-
 msgid "'objdump' is not on the path"
 msgstr ""
 
@@ -1102,6 +1099,21 @@ msgid ""
 "See\n"
 "  %s\n"
 "for details."
+msgstr ""
+
+#, fuzzy
+msgid "must specify 'address'"
+msgstr "你必需在'dir'或'files'中选一个"
+
+msgid "'subject' is missing"
+msgstr ""
+
+msgid "Sending email to %s"
+msgstr ""
+
+msgid ""
+"Sending email failed!\n"
+"The unsent msg can be found in file %s."
 msgstr ""
 
 msgid "namespace must not be already loaded"
@@ -1461,9 +1473,6 @@ msgstr "文件'%s'不含正确的DCF格式"
 msgid "contains a blank line"
 msgstr "带空行"
 
-msgid "Unknown encoding with non-ASCII data: converting to ASCII"
-msgstr "没有这样带非ASCII数据的编码: 转换为ASCII"
-
 #, fuzzy
 msgid "cannot source package code:"
 msgstr "无法读取程序包源编码"
@@ -1621,6 +1630,9 @@ msgstr[0] ""
 msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] ""
+
+#~ msgid "Unknown encoding with non-ASCII data: converting to ASCII"
+#~ msgstr "没有这样带非ASCII数据的编码: 转换为ASCII"
 
 #~ msgid "Error: cannot rename directory to %s"
 #~ msgstr "错误：无法改变目录名称到时%s"

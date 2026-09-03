@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2021-02-10 17:38+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -184,6 +184,9 @@ msgstr "'y' doit être un vecteur numérique ou une matrice"
 msgid "'x' is neither a vector nor a matrix: using as.numeric(x)"
 msgstr "'x' n'est ni un vecteur ni une matrice : utilisation de as.numeric(x)"
 
+msgid "'col' has length %d but should have length %d (= length(levels) - 1, with length(levels) = %d); colors will be recycled or ignored"
+msgstr ""
+
 msgid "'x' must be an array"
 msgstr "'x' doit être un tableau"
 
@@ -226,11 +229,8 @@ msgstr "'breaks = %g' est trop large et est mis à 1e6"
 msgid "hist.default: pretty() error, breaks=%s"
 msgstr "hist.default : erreur pour pretty(), breaks=%s"
 
-
 msgid "Invalid breakpoints produced by 'breaks(x)': %s"
-msgstr ""
-"Coupures incorrectes des intervalles produits par 'breaks(x)' : "
-"%s"
+msgstr "Coupures incorrectes des intervalles produits par 'breaks(x)' : %s"
 
 msgid "invalid length(breaks)"
 msgstr "length(breaks) incorrects"
@@ -431,10 +431,8 @@ msgstr "'nrpoints' doit être un scalaire numérique >= 0."
 msgid "a 2-way table has to be specified"
 msgstr "une table à double entrée doit être spécifiée"
 
-
 msgid "weights are not supported for 2-way table specification"
-msgstr ""
-"les poids ne sont pas pris en charge pour les tables à 2entrées"
+msgstr "les poids ne sont pas pris en charge pour les tables à 2entrées"
 
 msgid "x axis is on a cumulative probability scale, 'xlim' must be in [0,1]"
 msgstr "l'axe x a une échelle de probabilités cumulées, 'xlim' doit être dans l'intervalle [0,1]"

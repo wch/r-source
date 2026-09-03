@@ -647,11 +647,10 @@ msgstr ""
 msgid "shutting down all devices when unloading 'grid' namespace"
 msgstr ""
 
-#, fuzzy
 msgid "invalid grob name"
 msgid_plural "invalid grob names"
-msgstr[0] "Ugyldig »grob«"
-msgstr[1] "Ugyldig »grob«"
+msgstr[0] "Ugyldigt 'grob' navn"
+msgstr[1] "Ugyldige grob navne"
 
 #, fuzzy
 msgid "invalid viewport name"

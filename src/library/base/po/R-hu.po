@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2023-09-01 11:37+0000\n"
 "Last-Translator: Norbert Solymosi <solymosi.norbert@gmail.com>\n"
 "Language-Team: none\n"
@@ -65,6 +65,10 @@ msgstr "'%s' az RNG-hez nem érvényes rövidítés"
 #, fuzzy
 msgid "'%s' must be a character string"
 msgstr "'file' karakterlánc vagy összeköttetés kell hogy legyen"
+
+#, fuzzy
+msgid "'%s' is not valid for '%s'"
+msgstr "'%s' nem érvényes választás"
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s' nem érvényes választás"
@@ -429,6 +433,9 @@ msgstr "a 'lag' és a 'differences' egész szám kell hogy legyen, >= 1"
 msgid "unable to deduce timezone name from"
 msgstr ""
 
+msgid "timedatectl"
+msgstr ""
+
 msgid "wrong class"
 msgstr "rossz osztály"
 
@@ -697,6 +704,10 @@ msgstr ""
 
 msgid "'subset' must be logical"
 msgstr "'subset' logikai kell hogy legyen"
+
+#, fuzzy
+msgid "No functions specified"
+msgstr "érvénytelen egységek lettek megadva"
 
 msgid "value for %s not found"
 msgstr ""

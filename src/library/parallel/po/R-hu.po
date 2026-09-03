@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2023-09-01 11:37+0000\n"
 "Last-Translator: Norbert Solymosi <solymosi.norbert@gmail.com>\n"
 "Language-Team: none\n"
@@ -32,6 +32,13 @@ msgstr "'X' dimenziónévvel (dimnames) kell, hogy rendelkezzen"
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "a 'MARGIN' nem minden eleme dimenziónév"
 
+#, fuzzy
+msgid "incompatible arguments"
+msgstr "Érvénytelen \"állások\" argumentum"
+
+msgid "'Sigma' is not positive definite"
+msgstr ""
+
 msgid "no cluster 'cl' supplied and none is registered"
 msgstr "Nincs megadva \"CL\" fürt, és nincs regisztrálva"
 
@@ -52,8 +59,7 @@ msgid "node of a socket cluster on host %s with pid %d"
 msgstr "Szoftvercsatornafürt csomópontja a %s gazdagépen PID %d"
 
 msgid "Connection setup failed or timed out."
-msgstr ""
-"A kapcsolat beállítása sikertelen vagy időtúllépést okozott."
+msgstr "A kapcsolat beállítása sikertelen vagy időtúllépést okozott."
 
 #, fuzzy
 msgid "PORT must be specified"
@@ -69,18 +75,14 @@ msgid "invalid 'child' argument"
 msgstr "Érvénytelen \"gyermek\" argumentum"
 
 msgid "'children' must be a list of processes or a single process"
-msgstr ""
-"A \"gyermekek\" a folyamatok listájának vagy egyetlen "
-"folyamatnak kell lenniük"
+msgstr "A \"gyermekek\" a folyamatok listájának vagy egyetlen folyamatnak kell lenniük"
 
 #, fuzzy
 msgid "'process' must be of class %s"
 msgstr "A \"folyamatnak\" %s osztályba kell tartoznia"
 
 msgid "'child' must be a valid child process"
-msgstr ""
-"A \"gyermek\" kifejezésnek érvényes gyermekfolyamatnak kell "
-"lennie"
+msgstr "A \"gyermek\" kifejezésnek érvényes gyermekfolyamatnak kell lennie"
 
 msgid "'what' must be a character or raw vector"
 msgstr "A \"mit\" karakternek vagy nyers vektornak kell lennie"
@@ -95,9 +97,7 @@ msgid "%d function calls resulted in an error"
 msgstr "A(z) %d függvényhívások hibát eredményeztek"
 
 msgid "'mc.preschedule' must be false if 'affinity.list' is used"
-msgstr ""
-"Az \"mc.preschedule\" paraméternek hamisnak kell lennie, ha az "
-"\"affinity.list\" függvényt használja"
+msgstr "Az \"mc.preschedule\" paraméternek hamisnak kell lennie, ha az \"affinity.list\" függvényt használja"
 
 msgid "all scheduled cores encountered errors in user code"
 msgstr "Minden ütemezett mag hibát észlelt a felhasználói kódban"
@@ -112,9 +112,7 @@ msgid "'v' must be a vector"
 msgstr "\"v\"-nek vektornak kell lennie"
 
 msgid "some results may be missing, folded or caused an error"
-msgstr ""
-"Előfordulhat, hogy egyes eredmények hiányoznak, összecsukódnak "
-"vagy hibát okoznak"
+msgstr "Előfordulhat, hogy egyes eredmények hiányoznak, összecsukódnak vagy hibát okoznak"
 
 msgid "fork clusters are not supported on Windows"
 msgstr "Az elágazási fürtöket a Windows nem támogatja"
@@ -130,8 +128,7 @@ msgstr[1] ""
 msgid "socket cluster with %d nodes on host %s"
 msgid_plural "socket cluster with %d nodes on hosts %s"
 msgstr[0] ""
-msgstr[1] ""
-"Szoftvercsatorna-fürt %d csomópontokkal a %s gazdagépeken"
+msgstr[1] "Szoftvercsatorna-fürt %d csomópontokkal a %s gazdagépeken"
 
 msgid "%d parallel function call did not deliver a result"
 msgid_plural "%d parallel function calls did not deliver results"

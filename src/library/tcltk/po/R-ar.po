@@ -90,7 +90,7 @@ msgid "OK"
 msgstr "موافق"
 
 msgid "Cancel"
-msgstr "إلغاء الأمر"
+msgstr "إلغاء"
 
 msgid "'pb' is not from class %s"
 msgstr "\"pb\" ليس من الفئة ‫‪%s"

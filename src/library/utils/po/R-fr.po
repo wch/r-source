@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -93,10 +93,12 @@ msgstr "le fichier en sortie '%s' a disparu"
 msgid "invalid value for %s : %s"
 msgstr "valeur incorrecte pour %s : %s"
 
-msgid "value of 'results' option should be lowercase"
+#, fuzzy
+msgid "value of option 'results' should be lowercase"
 msgstr "la valeur de l'option 'results' doit être en minuscules"
 
-msgid "value of 'strip.white' option should be lowercase"
+#, fuzzy
+msgid "value of option 'strip.white' should be lowercase"
 msgstr "la valeur de l'option 'strip.white' doit être en minuscules"
 
 msgid "using default value %s"
@@ -552,6 +554,56 @@ msgstr "Le fichier DESCRIPTION du package '%s' est manquant ou incorrect"
 msgid "Invalid \"Built\":"
 msgstr "\"Built\" incorrect :"
 
+msgid "Built: value is not a string"
+msgstr ""
+
+msgid "unable to create temporary directory %s"
+msgstr "impossible de créer le répertoire temporaire %s"
+
+#, fuzzy
+msgid "file %s is not a binary package"
+msgstr "le fichier %s n'est pas un package binaire macOS"
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
+
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "le package %s a été décompressé et les sommes MD5 ont été vérifiées avec succès"
+
+#, fuzzy
+msgid "package %s signature verified (%s %s)"
+msgstr "le package %s n'est pas disponible %s"
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
+msgstr ""
+"ERREUR : impossible de verrouiller le répertoire %s pour modification\n"
+"Essayez d'effacer %s"
+
+msgid "ERROR: failed to create lock directory %s"
+msgstr "ERREUR : impossible de créer le répertoire verrouillé %s"
+
+msgid "restored %s"
+msgstr "%s restauré"
+
+msgid "unable to move temporary installation %s to %s"
+msgstr "impossible de déplacer l'installation temporaire %s vers %s"
+
+msgid "cannot remove prior installation of package %s"
+msgstr "impossible de supprimer l'installation précédente du package %s"
+
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"Les packages binaires téléchargés sont dans\n"
+"\t%s"
+
 msgid "cannot update HTML package index"
 msgstr "impossible de mettre à jour l'index HTML des packages"
 
@@ -765,9 +817,6 @@ msgstr "impossible de créer %s"
 
 msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr "supposition de 'repos = NULL' à partir de 'pkgs'"
-
-msgid "unable to create temporary directory %s"
-msgstr "impossible de créer le répertoire temporaire %s"
 
 msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
 msgstr ""
@@ -1219,56 +1268,6 @@ msgstr "méthode incorrecte :"
 msgid "download had nonzero exit status"
 msgstr "le téléchargement a a eu un statut de sortie non nul"
 
-msgid "Built: value is not a string"
-msgstr ""
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr "'tar' a renvoyé un code de sortie non nul %d"
-
-#, fuzzy
-msgid "file %s is not a binary package"
-msgstr "le fichier %s n'est pas un package binaire macOS"
-
-msgid "binary package %s is not compatible with this build of R"
-msgstr ""
-
-#, fuzzy
-msgid "package %s successfully unpacked and %s sums checked"
-msgstr "le package %s a été décompressé et les sommes MD5 ont été vérifiées avec succès"
-
-#, fuzzy
-msgid "package %s signature verified (%s %s)"
-msgstr "le package %s n'est pas disponible %s"
-
-msgid "Valid signature is required, but package %s could not be successfully verified."
-msgstr ""
-
-msgid ""
-"ERROR: failed to lock directory %s for modifying\n"
-"Try removing %s"
-msgstr ""
-"ERREUR : impossible de verrouiller le répertoire %s pour modification\n"
-"Essayez d'effacer %s"
-
-msgid "ERROR: failed to create lock directory %s"
-msgstr "ERREUR : impossible de créer le répertoire verrouillé %s"
-
-msgid "restored %s"
-msgstr "%s restauré"
-
-msgid "unable to move temporary installation %s to %s"
-msgstr "impossible de déplacer l'installation temporaire %s vers %s"
-
-msgid "cannot remove prior installation of package %s"
-msgstr "impossible de supprimer l'installation précédente du package %s"
-
-msgid ""
-"The downloaded binary packages are in\n"
-"\t%s"
-msgstr ""
-"Les packages binaires téléchargés sont dans\n"
-"\t%s"
-
 #, fuzzy
 msgid "'memory.size()' is no longer supported"
 msgstr "'memory.size()' est spécifique à Windows"
@@ -1481,6 +1480,9 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "nombre roman incorrect : %s"
 msgstr[1] "nombres romans incorrects : %s"
+
+#~ msgid "'tar' returned non-zero exit code %d"
+#~ msgstr "'tar' a renvoyé un code de sortie non nul %d"
 
 #~ msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
 #~ msgstr "type == \"both\" peut seulement être utilisé sous Windows ou une compilation CRAN pour MacOS"

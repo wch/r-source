@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2022-08-31 15:04+0000\n"
 "Last-Translator: Krye Kuzhinieri <sundley.12345@gmail.com>\n"
 "Language-Team: Albanian <https://translate.rx.studio/projects/r-project/base-r/sq/>\n"
@@ -65,6 +65,10 @@ msgstr "'%s' nuk është shkurtim i vlefshëm i një RNG-je"
 #, fuzzy
 msgid "'%s' must be a character string"
 msgstr "'sample.kind' duhet të jetë varg karakteresh të gjatësisë 1"
+
+#, fuzzy
+msgid "'%s' is not valid for '%s'"
+msgstr "'%s' nuk është zgjedhje e saktë"
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s' nuk është zgjedhje e saktë"
@@ -425,6 +429,9 @@ msgstr ""
 msgid "unable to deduce timezone name from"
 msgstr ""
 
+msgid "timedatectl"
+msgstr ""
+
 msgid "wrong class"
 msgstr ""
 
@@ -681,6 +688,9 @@ msgid "'input.d.mark' has no characters"
 msgstr ""
 
 msgid "'subset' must be logical"
+msgstr ""
+
+msgid "No functions specified"
 msgstr ""
 
 msgid "value for %s not found"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:17\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2024-03-25 14:29+0300\n"
 "Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
@@ -344,7 +344,8 @@ msgstr "несоответствие кодировки шрифта '%s'/'%s'"
 msgid "'%s' must be a non-empty character string"
 msgstr "'%s' должен быть непустой символьной строкой"
 
-msgid "GhostScript was not found"
+#, fuzzy
+msgid "Ghostscript was not found"
 msgstr "GhostScript не найден"
 
 msgid "invalid output format"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: none\n"
@@ -88,10 +88,12 @@ msgstr "el archivo de salida '%s' ha desaparecido"
 msgid "invalid value for %s : %s"
 msgstr "valor no válido para %s: %s"
 
-msgid "value of 'results' option should be lowercase"
+#, fuzzy
+msgid "value of option 'results' should be lowercase"
 msgstr "el valor de la opción 'results' debe estar en minúsculas"
 
-msgid "value of 'strip.white' option should be lowercase"
+#, fuzzy
+msgid "value of option 'strip.white' should be lowercase"
 msgstr "el valor de la opción 'strip.white' debe estar en minúsculas"
 
 msgid "using default value %s"
@@ -309,7 +311,7 @@ msgid "recover called non-interactively; frames dumped, use debugger() to view"
 msgstr "recover llamado de forma no interactiva; marcos de pila volcados, utilice debugger() para ver"
 
 msgid "Enter a frame number, or 0 to exit"
-msgstr ""
+msgstr "Introduce un número de frame, o 0 para salir"
 
 msgid "No suitable frames for recover()"
 msgstr "No hay marcos de pila adecuados para hacer recover()"
@@ -546,6 +548,56 @@ msgstr "El archivo DESCRIPTION del paquete '%s' falta o está roto"
 msgid "Invalid \"Built\":"
 msgstr "\"Build\" no válido:"
 
+msgid "Built: value is not a string"
+msgstr "Built: el valor no es una cadena de texto"
+
+msgid "unable to create temporary directory %s"
+msgstr "no se puede crear el directorio temporal %s"
+
+#, fuzzy
+msgid "file %s is not a binary package"
+msgstr "el archivo %s no es un paquete binario de macOS"
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
+
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "paquete %s descomprimido exitosamente y sumas MD5 verificadas"
+
+#, fuzzy
+msgid "package %s signature verified (%s %s)"
+msgstr "el paquete %s no está disponible %s"
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
+msgstr ""
+"ERROR: no se pudo bloquear el directorio %s para modificarlo\n"
+"Intente eliminar %s"
+
+msgid "ERROR: failed to create lock directory %s"
+msgstr "ERROR: no se pudo crear el directorio de bloqueo %s"
+
+msgid "restored %s"
+msgstr "%s restaurados"
+
+msgid "unable to move temporary installation %s to %s"
+msgstr "no se puede mover la instalación temporal %s a %s"
+
+msgid "cannot remove prior installation of package %s"
+msgstr "no se puede eliminar la instalación anterior del paquete %s"
+
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"Los paquetes binarios descargados están en\n"
+"\t%s"
+
 msgid "cannot update HTML package index"
 msgstr "no se puede actualizar el índice del paquete HTML"
 
@@ -688,7 +740,7 @@ msgid "trying to use CRAN without setting a mirror"
 msgstr "Intentando usar CRAN sin configurar un sitio espejo"
 
 msgid "invalid 'type'"
-msgstr "'type' no válido"
+msgstr "'type' inválido"
 
 msgid "failed to download mirrors file (%s); using local file '%s'"
 msgstr "no se pudo descargar el archivo de sitios espejo (%s); usando el archivo local '%s'"
@@ -760,9 +812,6 @@ msgstr "no se puede crear %s"
 msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr "infiriendo 'repos = NULL' de 'pkgs'"
 
-msgid "unable to create temporary directory %s"
-msgstr "no se puede crear el directorio temporal %s"
-
 msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
 msgstr ""
 
@@ -772,8 +821,9 @@ msgstr "tipo == \"ambos\" no se puede utilizar con 'repos = NULL'"
 msgid "source repository is unavailable to check versions"
 msgstr "el repositorio de origen no está disponible para comprobar las versiones"
 
+#, fuzzy
 msgid "cannot install binary packages from other operating systems on Windows"
-msgstr ""
+msgstr "no se pueden instalar paquetes binarios de macOS en Windows"
 
 msgid "cannot install Windows binary packages on this platform"
 msgstr "no se pueden instalar paquetes binarios de Windows en esta plataforma"
@@ -1067,10 +1117,11 @@ msgid "failed to create directory %s"
 msgstr "no se pudo crear el directorio %s"
 
 msgid "invalid octal digit"
-msgstr ""
+msgstr "dígito octal no válido"
 
+#, fuzzy
 msgid "removing leading '/' from '%s'"
-msgstr ""
+msgstr "eliminando el '/' inicial"
 
 msgid "removing drive '%s'"
 msgstr "eliminando la unidad '%s'"
@@ -1081,8 +1132,9 @@ msgstr "la ruta comienza con '~'"
 msgid "path contains '..'"
 msgstr "la ruta contiene '..'"
 
+#, fuzzy
 msgid "cannot extract through symlink"
-msgstr ""
+msgstr "no es posible extraer paquete de %s"
 
 msgid "'tarfile' must be a character string or a connection"
 msgstr "'tarfile' debe ser una cadena de caracteres o una conexión"
@@ -1211,55 +1263,6 @@ msgstr "método no válido:"
 msgid "download had nonzero exit status"
 msgstr "download devolvió un estado de salida distinto de cero"
 
-msgid "Built: value is not a string"
-msgstr ""
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr ""
-
-msgid "file %s is not a binary package"
-msgstr ""
-
-msgid "binary package %s is not compatible with this build of R"
-msgstr ""
-
-#, fuzzy
-msgid "package %s successfully unpacked and %s sums checked"
-msgstr "paquete %s descomprimido exitosamente y sumas MD5 verificadas"
-
-#, fuzzy
-msgid "package %s signature verified (%s %s)"
-msgstr "el paquete %s no está disponible %s"
-
-msgid "Valid signature is required, but package %s could not be successfully verified."
-msgstr ""
-
-msgid ""
-"ERROR: failed to lock directory %s for modifying\n"
-"Try removing %s"
-msgstr ""
-"ERROR: no se pudo bloquear el directorio %s para modificarlo\n"
-"Intente eliminar %s"
-
-msgid "ERROR: failed to create lock directory %s"
-msgstr "ERROR: no se pudo crear el directorio de bloqueo %s"
-
-msgid "restored %s"
-msgstr "%s restaurados"
-
-msgid "unable to move temporary installation %s to %s"
-msgstr "no se puede mover la instalación temporal %s a %s"
-
-msgid "cannot remove prior installation of package %s"
-msgstr "no se puede eliminar la instalación anterior del paquete %s"
-
-msgid ""
-"The downloaded binary packages are in\n"
-"\t%s"
-msgstr ""
-"Los paquetes binarios descargados están en\n"
-"\t%s"
-
 msgid "'memory.size()' is no longer supported"
 msgstr "'memory.size()' ya no está soportado"
 
@@ -1273,7 +1276,7 @@ msgid "zip file %s not found"
 msgstr "archivo zip %s no encontrado"
 
 msgid "cannot extract package from %s"
-msgstr ""
+msgstr "no es posible extraer paquete de %s"
 
 msgid "failed to create %s"
 msgstr "no se pudo crear %s"
@@ -1301,11 +1304,10 @@ msgid_plural "%d Sweave files for basename %s found"
 msgstr[0] "%d archivo Sweave para (basename) %s encontrado"
 msgstr[1] "%d archivos Sweave para (basename) %s encontrados"
 
-#, fuzzy
 msgid "Output file:  "
 msgid_plural "Output files:  "
-msgstr[0] "Archivo de salida:"
-msgstr[1] "Archivo de salida:"
+msgstr[0] "Archivo de salida:  "
+msgstr[1] "Archivos de salida:  "
 
 msgid "Output/used file:  "
 msgid_plural "Output/used files:  "
@@ -1458,6 +1460,9 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "número romano no válido: %s"
 msgstr[1] "números romanos no válidos: %s"
+
+#~ msgid "'tar' returned non-zero exit code %d"
+#~ msgstr "'tar' devolvió un código de salida distinto de cero %d"
 
 #~ msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
 #~ msgstr "type == \"both\" solo se puede usar en Windows o en una compilación CRAN para macOS"

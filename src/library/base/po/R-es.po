@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2024-03-20 03:05+0000\n"
 "Last-Translator: \"Luis D. Verde Arregoitia\" <luisd@ciencias.unam.mx>\n"
 "Language-Team: none\n"
@@ -63,6 +63,10 @@ msgstr "'%s' no es una abreviatura válida de un RNG"
 
 msgid "'%s' must be a character string"
 msgstr "'%s' debe ser una cadena de caracteres"
+
+#, fuzzy
+msgid "'%s' is not valid for '%s'"
+msgstr "'%s' no es una elección válida"
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s' no es una elección válida"
@@ -392,7 +396,7 @@ msgid "'%s' must be of length 1"
 msgstr "'%s' debe tener longitud 1"
 
 msgid "without 'by', at least one of 'to' and 'from' must be specified"
-msgstr ""
+msgstr "sin 'by', al menos 'to' o 'from' deben especificarse"
 
 #, fuzzy
 msgid "without 'by', when one of 'to', 'from' is missing, 'length.out' / 'along.with' must be specified"
@@ -425,6 +429,9 @@ msgstr "'lag' y 'differences' deben ser enteros >= 1"
 
 msgid "unable to deduce timezone name from"
 msgstr "imposible de deducir nombre de timezone de"
+
+msgid "timedatectl"
+msgstr ""
 
 msgid "wrong class"
 msgstr "clase incorrecta"
@@ -483,7 +490,7 @@ msgstr "exactamente dos  'to', 'by' y 'length.out' / 'along.width' deben ser esp
 
 #, fuzzy
 msgid "'%s' must be a \"%s\" object"
-msgstr "'to' debe ser un objeto \"Date\""
+msgstr "'from' debe ser un objeto \"Date\""
 
 msgid "component subscript must be a character string"
 msgstr "el subíndice del componente debe ser una cadena de caracteres"
@@ -697,6 +704,10 @@ msgstr "'input.d.mark' no tiene caracteres"
 
 msgid "'subset' must be logical"
 msgstr "'subset' debe ser lógico"
+
+#, fuzzy
+msgid "No functions specified"
+msgstr "factores no especificados"
 
 msgid "value for %s not found"
 msgstr "no se encontró valor para %s"
@@ -934,7 +945,7 @@ msgstr "nada especificado para ser guardado por save()"
 
 #, fuzzy
 msgid "'%s' must be a non-empty character string"
-msgstr "'name' debe ser un string de un solo caracter"
+msgstr "'%s' debe ser una cadena de caracteres"
 
 msgid "'compress' must be logical or character"
 msgstr "'compress' debe ser lógico o carácter"
@@ -976,7 +987,7 @@ msgid "'arg' must be NULL or a character vector"
 msgstr "'arg' debe ser NULL o un vector de tipo carácter"
 
 msgid "'several.ok' must be logical or a string starting with \"all\""
-msgstr ""
+msgstr "'several.ok' debe ser un valor lógico o una cadena que empiece con \"all\""
 
 msgid "'arg' must be of length >= 1"
 msgstr "'arg' debe ser de longitud >= 1"
@@ -1070,9 +1081,8 @@ msgstr ""
 msgid "namespace %s %s is already loaded, but %s %s is required"
 msgstr "El espacio de nombres %s %s ya está cargado, pero se requiere %s %s"
 
-#, fuzzy
 msgid "namespace '%s' is already loaded so argument '%s' will be ignored."
-msgstr "el argumento '%s' será ignorado"
+msgstr "el namespace '%s' ya está cargado, por lo que el argumento '%s' será ignorado."
 
 msgid "- loading"
 msgstr "- cargando"

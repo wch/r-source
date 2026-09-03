@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -32,6 +32,13 @@ msgstr "'X' musi mieć nazwane wymiary"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "nie wszystkie elementy 'MARGIN' są nazwami wymiarów"
+
+#, fuzzy
+msgid "incompatible arguments"
+msgstr "niepoprawny argument 'jobs'"
+
+msgid "'Sigma' is not positive definite"
+msgstr ""
 
 msgid "no cluster 'cl' supplied and none is registered"
 msgstr "nie dostarczono argumentu klastra 'cl' oraz żaden nie jest zarejestrowany"
@@ -111,7 +118,6 @@ msgstr "rozgałęzione klastry nie są obsługiwane w systemie Windows"
 msgid "'mc.cores' > 1 is not supported on Windows"
 msgstr "argument 'mc.cores' > 1 nie jest wspierany w systemach Windows"
 
-
 msgid "Cluster setup failed. %d worker of %d failed to connect."
 msgid_plural "Cluster setup failed. %d of %d workers failed to connect."
 msgstr[0] "Ustawienie klastra nie powiodło się. %d pracownik z %d nie mógł się połączyć."
@@ -123,7 +129,6 @@ msgid_plural "socket cluster with %d nodes on hosts %s"
 msgstr[0] "gniazdo klastra z %d węzłem na hoście %s"
 msgstr[1] "gniazdo klastra z %d węzłami na hoście %s"
 msgstr[2] "gniazdo klastra z %d węzłami na hoście %s"
-
 
 msgid "%d parallel function call did not deliver a result"
 msgid_plural "%d parallel function calls did not deliver results"
@@ -142,7 +147,6 @@ msgid_plural "scheduled cores %s encountered errors in user code, all values of 
 msgstr[0] "zaplanowane jądro '%s' napotkało błąd w kodzie użytkownika, wpłynie to na wszystkie wartości zadania"
 msgstr[1] "zaplanowane jądra '%s' napotkały błędy w kodzie użytkownika, wpłynie to na wszystkie wartości zadań"
 msgstr[2] "zaplanowane jądra '%s' napotkały błędy w kodzie użytkownika, wpłynie to na wszystkie wartości zadań"
-
 
 msgid "%d parallel job did not deliver a result"
 msgid_plural "%d parallel jobs did not deliver results"

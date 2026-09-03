@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -91,10 +91,12 @@ msgstr "輸出檔案 '%s' 不見了"
 msgid "invalid value for %s : %s"
 msgstr "%s 的值不對: %s"
 
-msgid "value of 'results' option should be lowercase"
+#, fuzzy
+msgid "value of option 'results' should be lowercase"
 msgstr "'results' 這個選項的值必須小寫"
 
-msgid "value of 'strip.white' option should be lowercase"
+#, fuzzy
+msgid "value of option 'strip.white' should be lowercase"
 msgstr "'strip.white' 這個選項的值必須小寫"
 
 msgid "using default value %s"
@@ -550,6 +552,56 @@ msgstr "程式套件 '%s' 裡要麼沒有 DESCRIPTION 這個檔案，要麼發�
 msgid "Invalid \"Built\":"
 msgstr "無效的 \"Built\"："
 
+msgid "Built: value is not a string"
+msgstr ""
+
+msgid "unable to create temporary directory %s"
+msgstr "無法建立臨時目錄 %s"
+
+#, fuzzy
+msgid "file %s is not a binary package"
+msgstr "檔案 %s 不是 MacOS X 的二進位套件"
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
+
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "程式套件 %s 開啟成功，MD5 和檢查也透過"
+
+#, fuzzy
+msgid "package %s signature verified (%s %s)"
+msgstr "沒有 %s 這個程式套件 (給 %s 用)"
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
+msgstr ""
+"錯誤：不能鎖定目錄 %s 進行修改\n"
+"嘗試刪除 %s"
+
+msgid "ERROR: failed to create lock directory %s"
+msgstr "錯誤：無法建立鎖定目錄 %s"
+
+msgid "restored %s"
+msgstr "回覆了 %s"
+
+msgid "unable to move temporary installation %s to %s"
+msgstr "無法將臨時安裝 %s 搬到 %s"
+
+msgid "cannot remove prior installation of package %s"
+msgstr "無法將拆除原來安裝的程式套件 %s"
+
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"下載的二進位程式套件在\n"
+"\t%s 裡"
+
 msgid "cannot update HTML package index"
 msgstr "無法更新 HTML 程式套件索引"
 
@@ -766,9 +818,6 @@ msgstr "無法建立 %s"
 
 msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr "從 'pkgs' 推斷 'repos = NULL'"
-
-msgid "unable to create temporary directory %s"
-msgstr "無法建立臨時目錄 %s"
 
 msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
 msgstr ""
@@ -1231,56 +1280,6 @@ msgstr "格式無效"
 msgid "download had nonzero exit status"
 msgstr "下載退離狀態不是零"
 
-msgid "Built: value is not a string"
-msgstr ""
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr "'tar' 退離碼為 %d"
-
-#, fuzzy
-msgid "file %s is not a binary package"
-msgstr "檔案 %s 不是 MacOS X 的二進位套件"
-
-msgid "binary package %s is not compatible with this build of R"
-msgstr ""
-
-#, fuzzy
-msgid "package %s successfully unpacked and %s sums checked"
-msgstr "程式套件 %s 開啟成功，MD5 和檢查也透過"
-
-#, fuzzy
-msgid "package %s signature verified (%s %s)"
-msgstr "沒有 %s 這個程式套件 (給 %s 用)"
-
-msgid "Valid signature is required, but package %s could not be successfully verified."
-msgstr ""
-
-msgid ""
-"ERROR: failed to lock directory %s for modifying\n"
-"Try removing %s"
-msgstr ""
-"錯誤：不能鎖定目錄 %s 進行修改\n"
-"嘗試刪除 %s"
-
-msgid "ERROR: failed to create lock directory %s"
-msgstr "錯誤：無法建立鎖定目錄 %s"
-
-msgid "restored %s"
-msgstr "回覆了 %s"
-
-msgid "unable to move temporary installation %s to %s"
-msgstr "無法將臨時安裝 %s 搬到 %s"
-
-msgid "cannot remove prior installation of package %s"
-msgstr "無法將拆除原來安裝的程式套件 %s"
-
-msgid ""
-"The downloaded binary packages are in\n"
-"\t%s"
-msgstr ""
-"下載的二進位程式套件在\n"
-"\t%s 裡"
-
 #, fuzzy
 msgid "'memory.size()' is no longer supported"
 msgstr "'memory.size()' 只在 Windows 上有用"
@@ -1459,6 +1458,9 @@ msgstr[0] "最後一個記錄不完全，%d 列忽略不用"
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "羅馬數字不對：%s"
+
+#~ msgid "'tar' returned non-zero exit code %d"
+#~ msgstr "'tar' 退離碼為 %d"
 
 #~ msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
 #~ msgstr "type == \"both\" 只適用在 Windows 上或在為 Mac OS X 的 CRAN 組建上"

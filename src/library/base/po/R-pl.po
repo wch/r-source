@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -66,6 +66,10 @@ msgstr "'%s' nie jest poprawnym skrótem dla 'RNG'"
 #, fuzzy
 msgid "'%s' must be a character string"
 msgstr "argument 'object' musi być konwertowalny do pojedynczego łańcucha tekstowego"
+
+#, fuzzy
+msgid "'%s' is not valid for '%s'"
+msgstr "'%s' nie jest poprawnym wyborem"
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s' nie jest poprawnym wyborem"
@@ -427,6 +431,9 @@ msgstr "argumenty 'lag' oraz 'differences' muszą być liczbami całkowitymi >= 
 msgid "unable to deduce timezone name from"
 msgstr "nie jest możliwe wykrycie nazwy strefy czasowej z"
 
+msgid "timedatectl"
+msgstr ""
+
 msgid "wrong class"
 msgstr "błędna klasa"
 
@@ -693,6 +700,10 @@ msgstr "argument 'input.d.mark' nie zawiera znaków"
 msgid "'subset' must be logical"
 msgstr "'subset' musi być zmienną logiczną"
 
+#, fuzzy
+msgid "No functions specified"
+msgstr "Nie określono czynników"
+
 msgid "value for %s not found"
 msgstr "wartość dla %s nie została znaleziona"
 
@@ -927,7 +938,7 @@ msgstr "nic nie zostało określone do zapisu"
 
 #, fuzzy
 msgid "'%s' must be a non-empty character string"
-msgstr "argument 'file' musi być niepustym łańcuchem tekstowym"
+msgstr "argument '%s' musi być niepustym tekstem"
 
 msgid "'compress' must be logical or character"
 msgstr "argument 'compress' musi być typem logicznym lub tekstem"
@@ -1635,11 +1646,11 @@ msgid "'width' must be positive"
 msgstr "argument 'width' musi być dodatni"
 
 msgid "No traceback available"
-msgstr "Śledzenie nie jest dostepne"
+msgstr "Śledzenie nie jest dostępne"
 
 #, fuzzy
 msgid "'recursive' must be a length-1 vector"
-msgstr "argument 'origin' musi mieć długość 1"
+msgstr "argument '%s' musi mieć długość 1"
 
 msgid "'recursive' is NA"
 msgstr ""

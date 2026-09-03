@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -91,10 +91,12 @@ msgstr "plik wyjściowy '%s' zniknął"
 msgid "invalid value for %s : %s"
 msgstr "niepoprawna wartość dla %s: %s"
 
-msgid "value of 'results' option should be lowercase"
+#, fuzzy
+msgid "value of option 'results' should be lowercase"
 msgstr "wartość opcji 'results' powinna być pisana małymi literami"
 
-msgid "value of 'strip.white' option should be lowercase"
+#, fuzzy
+msgid "value of option 'strip.white' should be lowercase"
 msgstr "wartość opcji 'strip.white' powinna być pisana małymi literami"
 
 msgid "using default value %s"
@@ -191,11 +193,11 @@ msgid "It is recommended to use %s instead of %s."
 msgstr "Zalecane jest użycie %s zamiast %s."
 
 msgid "Use either %s or %s but not both."
-msgstr "Użyj albo %s albo %s ale nie obu"
+msgstr "Użyj albo %s albo %s ale nie obu."
 
 #, fuzzy
 msgid "Arguments of person() should be character or NULL"
-msgstr "argument 'priority' musi być tekstem lub wartością NULL"
+msgstr "argument 'priority' musi być znakiem lub wartością NULL"
 
 msgid "subscript out of bounds"
 msgstr "indeks poza granicami"
@@ -551,6 +553,56 @@ msgstr "brakuje pliku DESCRIPTION pakietu '%s' lub jest on uszkodzony"
 msgid "Invalid \"Built\":"
 msgstr "Niepoprawne \"Built\":"
 
+msgid "Built: value is not a string"
+msgstr ""
+
+msgid "unable to create temporary directory %s"
+msgstr "nie można utworzyć katalogu tymczasowego %s"
+
+#, fuzzy
+msgid "file %s is not a binary package"
+msgstr "plik %s nie jest pakietem binarnym macOS"
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
+
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "pakiet %s został pomyślnie rozpakowany oraz sumy MD5 zostały sprawdzone"
+
+#, fuzzy
+msgid "package %s signature verified (%s %s)"
+msgstr "pakiet %s nie jest dostępny (%s)"
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
+msgstr ""
+"BŁĄD: nie udało się zablokować katalogu %s do modyfikacji\n"
+"Spróbuj usunąć %s"
+
+msgid "ERROR: failed to create lock directory %s"
+msgstr "BŁĄD: nie udało się utworzyć blokady katalogu %s"
+
+msgid "restored %s"
+msgstr "przywrócono %s"
+
+msgid "unable to move temporary installation %s to %s"
+msgstr "nie można usunąć tymczasowej instalacji %s w %s"
+
+msgid "cannot remove prior installation of package %s"
+msgstr "nie można usunąć poprzedniej instalacji pakietu %s"
+
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"Pobrane pakiety binarne są w\n"
+"\t%s"
+
 msgid "cannot update HTML package index"
 msgstr "nie można zaktualizować indeksu HTML pakietu"
 
@@ -764,9 +816,6 @@ msgstr "nie udało się utworzyć %s"
 
 msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr "wnioskowanie 'repos = NULL' z 'pkgs'"
-
-msgid "unable to create temporary directory %s"
-msgstr "nie można utworzyć katalogu tymczasowego %s"
 
 msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
 msgstr ""
@@ -1075,8 +1124,9 @@ msgstr "nie udało się utworzyć katalogu %s"
 msgid "invalid octal digit"
 msgstr "niepoprawna cyfra ósemkowa"
 
+#, fuzzy
 msgid "removing leading '/' from '%s'"
-msgstr ""
+msgstr "usuwanie wiodących '/'"
 
 msgid "removing drive '%s'"
 msgstr "usuwanie napędu '%s'"
@@ -1084,9 +1134,8 @@ msgstr "usuwanie napędu '%s'"
 msgid "path starts with '~'"
 msgstr "ścieżka rozpoczyna się znakiem '~'"
 
-#, fuzzy
 msgid "path contains '..'"
-msgstr "ścieżka do %s zawiera spacje,"
+msgstr "ścieżka zawiera '..'"
 
 msgid "cannot extract through symlink"
 msgstr ""
@@ -1217,56 +1266,6 @@ msgstr "niepoprawna metoda:"
 
 msgid "download had nonzero exit status"
 msgstr "pobieranie miało niezerowy status wyjściowy"
-
-msgid "Built: value is not a string"
-msgstr ""
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr "funkcja 'tar' zwróciła niezerowy kod %d wyjścia"
-
-#, fuzzy
-msgid "file %s is not a binary package"
-msgstr "plik %s nie jest pakietem binarnym macOS"
-
-msgid "binary package %s is not compatible with this build of R"
-msgstr ""
-
-#, fuzzy
-msgid "package %s successfully unpacked and %s sums checked"
-msgstr "pakiet %s został pomyślnie rozpakowany oraz sumy MD5 zostały sprawdzone"
-
-#, fuzzy
-msgid "package %s signature verified (%s %s)"
-msgstr "pakiet %s nie jest dostępny (%s)"
-
-msgid "Valid signature is required, but package %s could not be successfully verified."
-msgstr ""
-
-msgid ""
-"ERROR: failed to lock directory %s for modifying\n"
-"Try removing %s"
-msgstr ""
-"BŁĄD: nie udało się zablokować katalogu %s do modyfikacji\n"
-"Spróbuj usunąć %s"
-
-msgid "ERROR: failed to create lock directory %s"
-msgstr "BŁĄD: nie udało się utworzyć blokady katalogu %s"
-
-msgid "restored %s"
-msgstr "przywrócono %s"
-
-msgid "unable to move temporary installation %s to %s"
-msgstr "nie można usunąć tymczasowej instalacji %s w %s"
-
-msgid "cannot remove prior installation of package %s"
-msgstr "nie można usunąć poprzedniej instalacji pakietu %s"
-
-msgid ""
-"The downloaded binary packages are in\n"
-"\t%s"
-msgstr ""
-"Pobrane pakiety binarne są w\n"
-"\t%s"
 
 #, fuzzy
 msgid "'memory.size()' is no longer supported"
@@ -1510,6 +1509,9 @@ msgid_plural "invalid roman numerals: %s"
 msgstr[0] "niepoprawna rzymska numeracja: %s"
 msgstr[1] "niepoprawne rzymskie numeracje: %s"
 msgstr[2] "niepoprawne rzymskie numeracje: %s"
+
+#~ msgid "'tar' returned non-zero exit code %d"
+#~ msgstr "funkcja 'tar' zwróciła niezerowy kod %d wyjścia"
 
 #~ msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
 #~ msgstr "'type == \"both\"' może być użyte jedynie w systemie Windows lub kompilacji CRAN dla systemów macOS"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:47-0700\n"
+"POT-Creation-Date: 2026-07-08 08:22-0700\n"
 "PO-Revision-Date: 2018-04-09 12:10-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -90,31 +90,31 @@ msgstr "경우의 수를 결정할 수 있는 입력이 없습니다"
 msgid "not all arguments have the same length"
 msgstr "모든 인자들이 같은 길이를 가지고 있지 않습니다"
 
-#: cov.c:563
+#: cov.c:546
 msgid "missing observations in cov/cor"
 msgstr "cov/cor에 결측치들이 있습니다"
 
-#: cov.c:644
+#: cov.c:627
 msgid "'x' is NULL"
 msgstr "'x'는 NULL입니다"
 
-#: cov.c:676 cov.c:682
+#: cov.c:659 cov.c:665
 msgid "incompatible dimensions"
 msgstr "호환되지 않는 차원들입니다"
 
-#: cov.c:701 cov.c:742 cov.c:775
+#: cov.c:684 cov.c:725 cov.c:758
 msgid "no complete element pairs"
 msgstr ""
 
-#: cov.c:714
+#: cov.c:697
 msgid "invalid 'use' (computational method)"
 msgstr "유효하지 않은 'use'입니다 (computational method)"
 
-#: cov.c:717
+#: cov.c:700
 msgid "'x' is empty"
 msgstr "'x'가 비어있습니다"
 
-#: cov.c:811
+#: cov.c:794
 msgid "the standard deviation is zero"
 msgstr "표준편차가 0입니다"
 

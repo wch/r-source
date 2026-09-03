@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:17\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2024-03-22 18:05+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -17,19 +17,13 @@ msgid "invalid 'filename'"
 msgstr "'filename' inválido"
 
 msgid "svg: Cairo-based devices are not available for this platform"
-msgstr ""
-"svg: dispositivos baseados em Cairo não estão disponíveis para esta "
-"plataforma"
+msgstr "svg: dispositivos baseados em Cairo não estão disponíveis para esta plataforma"
 
 msgid "cairo_pdf: Cairo-based devices are not available for this platform"
-msgstr ""
-"cairo_pdf: Dispositivos baseados em Cairo não estão disponíveis para esta "
-"plataforma"
+msgstr "cairo_pdf: Dispositivos baseados em Cairo não estão disponíveis para esta plataforma"
 
 msgid "cairo_ps: Cairo-based devices are not available for this platform"
-msgstr ""
-"cairo_ps: Dispositivos baseados em Cairo não estão disponíveis para esta "
-"plataforma"
+msgstr "cairo_ps: Dispositivos baseados em Cairo não estão disponíveis para esta plataforma"
 
 msgid "'coef' must not be negative"
 msgstr "'coef' não pode ser negativo"
@@ -92,12 +86,10 @@ msgid "display gamma = %s"
 msgstr "apresentação visual gama = %s"
 
 msgid "'from' must be a \"colorConverter\" object or a string"
-msgstr ""
-"'from' deve ser um objeto \"colorConverter\" ou um string de caracteres"
+msgstr "'from' deve ser um objeto \"colorConverter\" ou um string de caracteres"
 
 msgid "'to' must be a \"colorConverter\" object or a string"
-msgstr ""
-"'to' deve ser um objeto \"colorConverter\" ou um string de caracteres"
+msgstr "'to' deve ser um objeto \"colorConverter\" ou um string de caracteres"
 
 msgid "'from.ref.white' disagrees with definition of %s"
 msgstr "'from.ref.white' não está de acordo com a definição de %s"
@@ -172,8 +164,7 @@ msgid "Invalid span weight"
 msgstr "Tipo/peso de fonte inválido"
 
 msgid "length of arguments must match (and be greater than 0)"
-msgstr ""
-"os comprimentos dos argumentos devem corresponder (e ser maior que 0)"
+msgstr "os comprimentos dos argumentos devem corresponder (e ser maior que 0)"
 
 msgid "Invalid glyph width(s)"
 msgstr "Largura(s) de glifo inválida(s)"
@@ -242,8 +233,7 @@ msgid "Unknown font"
 msgstr "fonte desconhecida"
 
 msgid "There must be anchors named \"left\" and \"bottom\""
-msgstr ""
-"Deve haver âncoras denominadas \"left\" (esquerda) e \"bottom\" (inferior)"
+msgstr "Deve haver âncoras denominadas \"left\" (esquerda) e \"bottom\" (inferior)"
 
 msgid "Invalid glyph info"
 msgstr "Informações de glyph/glifo inválidas"
@@ -351,7 +341,8 @@ msgstr "codificação da fone não corresponde '%s'/'%s'"
 msgid "'%s' must be a non-empty character string"
 msgstr "'%s' deve ser uma string não vazia"
 
-msgid "GhostScript was not found"
+#, fuzzy
+msgid "Ghostscript was not found"
 msgstr "GhostScript não foi encontrado"
 
 msgid "invalid output format"
@@ -511,13 +502,10 @@ msgid "invalid arguments in 'quartzFonts' (must be font names)"
 msgstr "argumentos inválidos em quartzFonts (devem ser nomes de fontes)"
 
 msgid "invalid arguments in 'quartzFonts' (need named args)"
-msgstr ""
-"argumentos inválidos em quartzFonts (precisa de argumentos nomeados)"
+msgstr "argumentos inválidos em quartzFonts (precisa de argumentos nomeados)"
 
 msgid "cairo-based types are not supported on this build - using \"Xlib\""
-msgstr ""
-"Os tipos baseados no Cairo não são suportados nesta compilação - usando "
-"\"Xlib\""
+msgstr "Os tipos baseados no Cairo não são suportados nesta compilação - usando \"Xlib\""
 
 #, fuzzy
 msgid "unknown family for X11(type = \"XLib\")"
@@ -543,8 +531,7 @@ msgstr "valor inválido para 'rescale'"
 
 #, fuzzy
 msgid "Calls like '%s' are unsafe and should be replaced by '%s'"
-msgstr ""
-"Chamadas como '%s' não são seguras e devem ser substituídas por '%s'"
+msgstr "Chamadas como '%s' não são seguras e devem ser substituídas por '%s'"
 
 msgid "can only bring windows devices to the front"
 msgstr "somente possível trazer dispositivos windows para frente"

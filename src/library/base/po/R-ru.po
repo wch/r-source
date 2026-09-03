@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2024-03-25 16:30+0300\n"
 "Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
@@ -72,6 +72,10 @@ msgstr "'%s' не является правильным сокращением RNG"
 #, fuzzy
 msgid "'%s' must be a character string"
 msgstr "'name' должно быть строкой-скаляром"
+
+#, fuzzy
+msgid "'%s' is not valid for '%s'"
+msgstr "'%s' не является правильным выбором"
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s' не является правильным выбором"
@@ -436,6 +440,9 @@ msgstr "'lag' и 'differences' должны быть целыми >= 1"
 msgid "unable to deduce timezone name from"
 msgstr "не могу вычислить название часового пояса из"
 
+msgid "timedatectl"
+msgstr ""
+
 msgid "wrong class"
 msgstr "неправильный класс"
 
@@ -703,6 +710,10 @@ msgstr "'input.d.mark' не содержит символов"
 
 msgid "'subset' must be logical"
 msgstr "'subset' должен быть логическим"
+
+#, fuzzy
+msgid "No functions specified"
+msgstr "Не определены факторы"
 
 msgid "value for %s not found"
 msgstr "значение '%s' не найдено"
@@ -1276,7 +1287,7 @@ msgid "bad method"
 msgstr "неправильный метод"
 
 msgid "object '%s' not found whilst loading namespace '%s'"
-msgstr "в процессе загрузки пространства имен '%s' объект '%s' не найден"
+msgstr "в процессе загрузки пространства имен '%2$s' объект '%1$s' не найден"
 
 msgid "While loading namespace \"%s\": \"%s\" differ in ncol(.), env=%d, newNS=%d."
 msgstr "Загружая пространство имен \"%s\": \"%s\" отличается ncol(.), env=%d, newNS=%d."

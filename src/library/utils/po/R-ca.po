@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2024-03-20 03:05+0000\n"
 "Last-Translator: Joan Maspons <joanmaspons@gmail.com>\n"
 "Language-Team: none\n"
@@ -107,11 +107,11 @@ msgid "invalid value for %s : %s"
 msgstr "valor no vàlid per a %s : %s"
 
 #, fuzzy
-msgid "value of 'results' option should be lowercase"
+msgid "value of option 'results' should be lowercase"
 msgstr "el valor de l'opció «resultats» hauria de ser minúscules"
 
 #, fuzzy
-msgid "value of 'strip.white' option should be lowercase"
+msgid "value of option 'strip.white' should be lowercase"
 msgstr "el valor de l'opció «strip.white» hauria de ser en minúscules"
 
 msgid "using default value %s"
@@ -692,6 +692,63 @@ msgstr "falta el fitxer de descripció del paquet «%s» o està trencat"
 msgid "Invalid \"Built\":"
 msgstr "«Built» no vàlid:"
 
+msgid "Built: value is not a string"
+msgstr ""
+
+#, fuzzy
+msgid "unable to create temporary directory %s"
+msgstr "no s'ha pogut crear el directori temporal %s"
+
+#, fuzzy
+msgid "file %s is not a binary package"
+msgstr "el fitxer %s no és un paquet binari macOS"
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
+
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "el paquet %s s'ha desempaquetat correctament i s'han marcat les sumes MD5"
+
+#, fuzzy
+msgid "package %s signature verified (%s %s)"
+msgstr "el paquet %s no està disponible %s"
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
+#, fuzzy
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
+msgstr ""
+"ERROR: no s'ha pogut blocar el directori %s per modificar-lo\n"
+"Proveu d'eliminar %s"
+
+#, fuzzy
+msgid "ERROR: failed to create lock directory %s"
+msgstr "ERROR: no s'ha pogut crear el directori de bloqueig %s"
+
+#, fuzzy
+msgid "restored %s"
+msgstr "s'ha restaurat %s"
+
+#, fuzzy
+msgid "unable to move temporary installation %s to %s"
+msgstr "no s'ha pogut moure la instal·lació temporal %s a %s"
+
+#, fuzzy
+msgid "cannot remove prior installation of package %s"
+msgstr "no es pot eliminar la instal·lació prèvia del paquet %s"
+
+#, fuzzy
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"Els paquets binaris baixats són a\n"
+"\t%s"
+
 #, fuzzy
 msgid "cannot update HTML package index"
 msgstr "no s'ha pogut actualitzar l'índex del paquet HTML"
@@ -969,10 +1026,6 @@ msgstr "no s'ha pogut crear %s"
 #, fuzzy
 msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr "s'està inferint «repos = NULL» des de «pkgs»"
-
-#, fuzzy
-msgid "unable to create temporary directory %s"
-msgstr "no s'ha pogut crear el directori temporal %s"
 
 msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
 msgstr ""
@@ -1555,63 +1608,6 @@ msgstr "mètode no vàlid:"
 msgid "download had nonzero exit status"
 msgstr "la baixada té un estat de sortida diferent de zero"
 
-msgid "Built: value is not a string"
-msgstr ""
-
-#, fuzzy
-msgid "'tar' returned non-zero exit code %d"
-msgstr "'tar' ha retornat un codi de sortida no nul %d"
-
-#, fuzzy
-msgid "file %s is not a binary package"
-msgstr "el fitxer %s no és un paquet binari macOS"
-
-msgid "binary package %s is not compatible with this build of R"
-msgstr ""
-
-#, fuzzy
-msgid "package %s successfully unpacked and %s sums checked"
-msgstr "el paquet %s s'ha desempaquetat correctament i s'han marcat les sumes MD5"
-
-#, fuzzy
-msgid "package %s signature verified (%s %s)"
-msgstr "el paquet %s no està disponible %s"
-
-msgid "Valid signature is required, but package %s could not be successfully verified."
-msgstr ""
-
-#, fuzzy
-msgid ""
-"ERROR: failed to lock directory %s for modifying\n"
-"Try removing %s"
-msgstr ""
-"ERROR: no s'ha pogut blocar el directori %s per modificar-lo\n"
-"Proveu d'eliminar %s"
-
-#, fuzzy
-msgid "ERROR: failed to create lock directory %s"
-msgstr "ERROR: no s'ha pogut crear el directori de bloqueig %s"
-
-#, fuzzy
-msgid "restored %s"
-msgstr "s'ha restaurat %s"
-
-#, fuzzy
-msgid "unable to move temporary installation %s to %s"
-msgstr "no s'ha pogut moure la instal·lació temporal %s a %s"
-
-#, fuzzy
-msgid "cannot remove prior installation of package %s"
-msgstr "no es pot eliminar la instal·lació prèvia del paquet %s"
-
-#, fuzzy
-msgid ""
-"The downloaded binary packages are in\n"
-"\t%s"
-msgstr ""
-"Els paquets binaris baixats són a\n"
-"\t%s"
-
 #, fuzzy
 msgid "'memory.size()' is no longer supported"
 msgstr "'memory.size()' ja no és compatible"
@@ -1858,6 +1854,10 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "el nombre roman no és vàlid: %s"
 msgstr[1] "nombres romans no vàlids: %s"
+
+#, fuzzy
+#~ msgid "'tar' returned non-zero exit code %d"
+#~ msgstr "'tar' ha retornat un codi de sortida no nul %d"
 
 #, fuzzy
 #~ msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"

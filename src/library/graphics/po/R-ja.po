@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -182,6 +182,9 @@ msgstr "'x' は数値ベクトル又は行列でなければなりません"
 
 msgid "'x' is neither a vector nor a matrix: using as.numeric(x)"
 msgstr "'x' はベクトルでも行列でもありません: as.numeric(x) を使用してください"
+
+msgid "'col' has length %d but should have length %d (= length(levels) - 1, with length(levels) = %d); colors will be recycled or ignored"
+msgstr ""
 
 msgid "'x' must be an array"
 msgstr "'x' は配列でなければなりません"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2024-03-25 14:51+0300\n"
 "Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
@@ -942,6 +942,9 @@ msgstr "все группы должны содержать данные"
 msgid "not enough observations"
 msgstr "недостаточно наблюдений"
 
+msgid "computing Newton updated failed in %s"
+msgstr ""
+
 #, fuzzy
 msgid "incorrect dimensions"
 msgstr "неправильные измерения у 'xi'"
@@ -959,7 +962,7 @@ msgstr ""
 msgid "error computing the Hessian in %s"
 msgstr ""
 
-msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgid "error computing the Hessian determinant in %s"
 msgstr ""
 
 msgid "unsuccessful optimisation in %s"
@@ -1368,6 +1371,9 @@ msgstr "несовместимые размерности"
 
 msgid "missing or negative weights not allowed"
 msgstr "пропущенные или отрицательные веса не разрешены"
+
+msgid "weights smaller than tolerance wtol*sum(w) = %g treated as zero"
+msgstr ""
 
 msgid "invalid 'lm' object:  no 'terms' component"
 msgstr "неправильный 'lm' объект:  нет компонента 'terms'"
@@ -1779,6 +1785,16 @@ msgstr "аргумент 'subset' будет пропущен"
 
 msgid "argument 'na.action' will be ignored"
 msgstr "аргумент 'na.action' будет пропущен"
+
+msgid "different names for %s and %s: names ignored"
+msgstr ""
+
+#, fuzzy
+msgid "mismatched names for %s and %s"
+msgstr "не соответствующие 'x' и 'y'"
+
+msgid "duplicated names in %s"
+msgstr ""
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "верхние и нижние границы игнорируются, пока не algorithm = \"port\""
@@ -2515,6 +2531,13 @@ msgid_plural "unknown names %s in the 'split' list"
 msgstr[0] "неизвестное имя %s в 'split'-списке"
 msgstr[1] "неизвестные имена %s в 'split'-списке"
 msgstr[2] "неизвестные имена %s в 'split'-списке"
+
+#, fuzzy
+msgid "essentially perfect fit for %s: summary may be unreliable"
+msgid_plural "essentially perfect fit for response(s) %s: summary may be unreliable"
+msgstr[0] "слишком хорошая подгонка: summary может быть бессмысленным"
+msgstr[1] "слишком хорошая подгонка: summary может быть бессмысленным"
+msgstr[2] "слишком хорошая подгонка: summary может быть бессмысленным"
 
 msgid "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\""

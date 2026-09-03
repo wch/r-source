@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: none\n"
@@ -88,10 +88,12 @@ msgstr "the output file '%s' has disappeared"
 msgid "invalid value for %s : %s"
 msgstr "invalid value for %s : %s"
 
-msgid "value of 'results' option should be lowercase"
+#, fuzzy
+msgid "value of option 'results' should be lowercase"
 msgstr "value of 'results' option should be lowercase"
 
-msgid "value of 'strip.white' option should be lowercase"
+#, fuzzy
+msgid "value of option 'strip.white' should be lowercase"
 msgstr "value of 'strip.white' option should be lowercase"
 
 msgid "using default value %s"
@@ -548,6 +550,56 @@ msgstr "DESCRIPTION file of package '%s' is missing or broken"
 msgid "Invalid \"Built\":"
 msgstr "Invalid \"Built\":"
 
+msgid "Built: value is not a string"
+msgstr ""
+
+msgid "unable to create temporary directory %s"
+msgstr "unable to create temporary directory %s"
+
+#, fuzzy
+msgid "file %s is not a binary package"
+msgstr "file %s is not a macOS binary package"
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
+
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "package %s successfully unpacked and MD5 sums checked"
+
+#, fuzzy
+msgid "package %s signature verified (%s %s)"
+msgstr "package %s is not available %s"
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
+msgstr ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
+
+msgid "ERROR: failed to create lock directory %s"
+msgstr "ERROR: failed to create lock directory %s"
+
+msgid "restored %s"
+msgstr "restored %s"
+
+msgid "unable to move temporary installation %s to %s"
+msgstr "unable to move temporary installation %s to %s"
+
+msgid "cannot remove prior installation of package %s"
+msgstr "cannot remove prior installation of package %s"
+
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"The downloaded binary packages are in\n"
+"\t%s"
+
 msgid "cannot update HTML package index"
 msgstr "cannot update HTML package index"
 
@@ -761,9 +813,6 @@ msgstr "unable to create %s"
 
 msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr "inferring 'repos = NULL' from 'pkgs'"
-
-msgid "unable to create temporary directory %s"
-msgstr "unable to create temporary directory %s"
 
 msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
 msgstr ""
@@ -1215,56 +1264,6 @@ msgstr "invalid method:"
 msgid "download had nonzero exit status"
 msgstr "download had nonzero exit status"
 
-msgid "Built: value is not a string"
-msgstr ""
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr "'tar' returned non-zero exit code %d"
-
-#, fuzzy
-msgid "file %s is not a binary package"
-msgstr "file %s is not a macOS binary package"
-
-msgid "binary package %s is not compatible with this build of R"
-msgstr ""
-
-#, fuzzy
-msgid "package %s successfully unpacked and %s sums checked"
-msgstr "package %s successfully unpacked and MD5 sums checked"
-
-#, fuzzy
-msgid "package %s signature verified (%s %s)"
-msgstr "package %s is not available %s"
-
-msgid "Valid signature is required, but package %s could not be successfully verified."
-msgstr ""
-
-msgid ""
-"ERROR: failed to lock directory %s for modifying\n"
-"Try removing %s"
-msgstr ""
-"ERROR: failed to lock directory %s for modifying\n"
-"Try removing %s"
-
-msgid "ERROR: failed to create lock directory %s"
-msgstr "ERROR: failed to create lock directory %s"
-
-msgid "restored %s"
-msgstr "restored %s"
-
-msgid "unable to move temporary installation %s to %s"
-msgstr "unable to move temporary installation %s to %s"
-
-msgid "cannot remove prior installation of package %s"
-msgstr "cannot remove prior installation of package %s"
-
-msgid ""
-"The downloaded binary packages are in\n"
-"\t%s"
-msgstr ""
-"The downloaded binary packages are in\n"
-"\t%s"
-
 msgid "'memory.size()' is no longer supported"
 msgstr "'memory.size()' is no longer supported"
 
@@ -1475,6 +1474,9 @@ msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "invalid roman numeral: %s"
 msgstr[1] "invalid roman numerals: %s"
+
+#~ msgid "'tar' returned non-zero exit code %d"
+#~ msgstr "'tar' returned non-zero exit code %d"
 
 #~ msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
 #~ msgstr "type == \"both\" can only be used on Windows or a CRAN build for macOS"

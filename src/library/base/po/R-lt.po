@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2021-01-27 10:37+0100\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -69,6 +69,10 @@ msgstr "'%s' nėra tinkama RNG santrumpa"
 #, fuzzy
 msgid "'%s' must be a character string"
 msgstr "argumentas 'object' turi būti išnagrinėtas iki atskiros simbolių eilutės"
+
+#, fuzzy
+msgid "'%s' is not valid for '%s'"
+msgstr "'%s' nėra tinkamas pasirinkimas"
 
 msgid "'%s' is not a valid choice"
 msgstr "'%s' nėra tinkamas pasirinkimas"
@@ -440,6 +444,9 @@ msgstr "'lag' ir 'differences' turi būti sveikieji skaičiai >= 1"
 msgid "unable to deduce timezone name from"
 msgstr "negalima nustatyti laiko juostos pavadinimo iš"
 
+msgid "timedatectl"
+msgstr ""
+
 msgid "wrong class"
 msgstr "neteisinga klasė"
 
@@ -708,6 +715,10 @@ msgstr "'input.d.mark' neturi simbolių"
 
 msgid "'subset' must be logical"
 msgstr "'subset' turi būti loginė reikšmė"
+
+#, fuzzy
+msgid "No functions specified"
+msgstr "Nėra nurodytų faktorių"
 
 msgid "value for %s not found"
 msgstr "%s reikšmė nerasta"

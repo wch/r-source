@@ -66,15 +66,15 @@ msgstr ""
 
 #: graphics.c:2267
 msgid "no graphics device is active"
-msgstr ""
+msgstr "der er ingen aktiv grafikenhed"
 
 #: graphics.c:2462
 msgid "plot.new has not been called yet"
-msgstr ""
+msgstr "plot.new er endnu ikke blevet kaldt"
 
 #: graphics.c:2464
 msgid "invalid graphics state"
-msgstr ""
+msgstr "ugyldig grafiktilstand"
 
 #: graphics.c:2618
 msgid "graphics device closed during call to locator or identify"
@@ -311,7 +311,7 @@ msgstr ""
 
 #: plot.c:1659
 msgid "invalid first argument"
-msgstr ""
+msgstr "ugyldigt første argument"
 
 #: plot.c:1666
 msgid "invalid second argument"
@@ -533,7 +533,7 @@ msgstr ""
 #: plot3d.c:1179 plot3d.c:1183
 #, c-format
 msgid "invalid '%s' specification"
-msgstr ""
+msgstr "ugyldig '%s'-specifikation"
 
 #: plot3d.c:1526
 #, c-format

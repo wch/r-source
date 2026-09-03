@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-09 14:51\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -61,11 +61,11 @@ msgstr "katalog '%s' nie zawiera obiektów Rd"
 msgid "Functions or methods with usage in Rd file '%s' but not in code:"
 msgstr "Funkcje lub metody z użyciem w pliku Rd '%s' ale nie w kodzie:"
 
-msgid "Data with usage in Rd file '%s' but not in code:"
-msgstr "Dane z użyciem w pliku Rd '%s', ale nie w kodzie:"
-
 msgid "Variables with usage in Rd file '%s' but not in code:"
 msgstr "Zmienne z użyciem w pliku Rd '%s', ale nie w kodzie:"
+
+msgid "Data with usage in Rd file '%s' but not in code:"
+msgstr "Dane z użyciem w pliku Rd '%s', ale nie w kodzie:"
 
 msgid "Argument names in code not in docs:"
 msgstr "Nazwy argumentów w kodzie, ale nie w dokumentacji:"
@@ -477,13 +477,12 @@ msgstr "Nieprawidłowe aliasy pakietu w pliku Rd '%s':"
 msgid "Argument items with no description in Rd file '%s':"
 msgstr "Pozycje argumentów bez opisu w pliku Rd '%s':"
 
-#, fuzzy
 msgid "Auto-generated content requiring editing in Rd file '%s':"
-msgstr "Automatycznie wygenerowana treść wymagająca wykonania edycji w obiekcie Rd '%s':"
+msgstr "Automatycznie wygenerowana treść wymagająca edycji w pliku Rd '%s':"
 
 #, fuzzy
 msgid "Rd files without %s:"
-msgstr "Pliki Rd z powtórzonym aliasem '%s':"
+msgstr "Pliki Rd bez pola \\alias:"
 
 msgid "no Rd sections specified"
 msgstr "nie określono sekcji Rd"
@@ -760,9 +759,6 @@ msgstr "BŁĄD: wersja tego programu to R %s, wymagana jest R %s %s"
 msgid "loading failed"
 msgstr "ładowanie nie powiodło się"
 
-msgid "'cc' is not on the path"
-msgstr "'cc' nie znajduje się na ścieżce"
-
 msgid "'objdump' is not on the path"
 msgstr "'objdump' nie znajduje się na ścieżce"
 
@@ -834,7 +830,7 @@ msgstr "'reverse$repos' powinien być podzbiorem getOption(\"repos\")"
 
 #, fuzzy
 msgid "downloading reverse dependencies %s"
-msgstr "pobieranie wstecznych zależności ..."
+msgstr "pobieranie odwrotnych zależności ..."
 
 #, fuzzy
 msgid "download of reverse dependency %s failed"
@@ -1042,6 +1038,21 @@ msgstr ""
 "Zobacz\n"
 "  %s\n"
 "aby poznać szczegóły."
+
+#, fuzzy
+msgid "must specify 'address'"
+msgstr "musisz określić argument 'dir' lub 'files'"
+
+msgid "'subject' is missing"
+msgstr ""
+
+msgid "Sending email to %s"
+msgstr ""
+
+msgid ""
+"Sending email failed!\n"
+"The unsent msg can be found in file %s."
+msgstr ""
 
 msgid "namespace must not be already loaded"
 msgstr "przestrzeń nazw nie może być już załadowana"
@@ -1390,9 +1401,6 @@ msgstr "plik '%s' nie jest poprawnym formatem DCF"
 msgid "contains a blank line"
 msgstr "zawiera pustą linię"
 
-msgid "Unknown encoding with non-ASCII data: converting to ASCII"
-msgstr "Nieznane kodowanie z danymi nie-ASCII: konwertowanie do ASCII"
-
 msgid "cannot source package code:"
 msgstr "nie można wykonać kodu pakietu:"
 
@@ -1602,6 +1610,12 @@ msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Odpowiedni wpis BibTeX:"
 msgstr[1] "Odpowiednie wpisy BibTeX:"
 msgstr[2] "Odpowiednie wpisy BibTeX:"
+
+#~ msgid "'cc' is not on the path"
+#~ msgstr "'cc' nie znajduje się na ścieżce"
+
+#~ msgid "Unknown encoding with non-ASCII data: converting to ASCII"
+#~ msgstr "Nieznane kodowanie z danymi nie-ASCII: konwertowanie do ASCII"
 
 #~ msgid "Error: cannot rename directory to %s"
 #~ msgstr "Błąd: nie można zmienić katalogu na %s"

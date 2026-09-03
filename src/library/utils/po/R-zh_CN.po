@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -93,10 +93,12 @@ msgstr "输出文件'%s'不见了"
 msgid "invalid value for %s : %s"
 msgstr "%s的值无效: %s"
 
-msgid "value of 'results' option should be lowercase"
+#, fuzzy
+msgid "value of option 'results' should be lowercase"
 msgstr "'results'这个选项的值必需小写"
 
-msgid "value of 'strip.white' option should be lowercase"
+#, fuzzy
+msgid "value of option 'strip.white' should be lowercase"
 msgstr "'strip.white'这个选项的值必需小写"
 
 msgid "using default value %s"
@@ -552,6 +554,56 @@ msgstr "程序包'%s'里要么缺失DESCRIPTION这个文件，要么出了错"
 msgid "Invalid \"Built\":"
 msgstr ""
 
+msgid "Built: value is not a string"
+msgstr ""
+
+msgid "unable to create temporary directory %s"
+msgstr "无法建立临时目录%s"
+
+#, fuzzy
+msgid "file %s is not a binary package"
+msgstr "文件%s不是OS X的二进制软件包"
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
+
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "%s程序包解压成功且MD5校验通过"
+
+#, fuzzy
+msgid "package %s signature verified (%s %s)"
+msgstr "没有%s这个程序包(给%s用)"
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
+msgstr ""
+"错误：不能锁定目录%s进行修改\n"
+"尝试删除%s"
+
+msgid "ERROR: failed to create lock directory %s"
+msgstr "错误：无法建立锁定目录%s"
+
+msgid "restored %s"
+msgstr "回复了%s"
+
+msgid "unable to move temporary installation %s to %s"
+msgstr "无法将临时安装%s搬到%s"
+
+msgid "cannot remove prior installation of package %s"
+msgstr "无法删除软件包 %s 的先前安装"
+
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"下载的二进制程序包在\n"
+"\t%s里"
+
 msgid "cannot update HTML package index"
 msgstr "无法更新HTML程序包索引"
 
@@ -777,9 +829,6 @@ msgstr "无法建立%s"
 #, fuzzy
 msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr "从文件名称推断'repos = NULL'"
-
-msgid "unable to create temporary directory %s"
-msgstr "无法建立临时目录%s"
 
 msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
 msgstr ""
@@ -1249,56 +1298,6 @@ msgstr "格式无效"
 msgid "download had nonzero exit status"
 msgstr "下载退出状态不是零"
 
-msgid "Built: value is not a string"
-msgstr ""
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr "'tar'退出码为%d"
-
-#, fuzzy
-msgid "file %s is not a binary package"
-msgstr "文件%s不是OS X的二进制软件包"
-
-msgid "binary package %s is not compatible with this build of R"
-msgstr ""
-
-#, fuzzy
-msgid "package %s successfully unpacked and %s sums checked"
-msgstr "%s程序包解压成功且MD5校验通过"
-
-#, fuzzy
-msgid "package %s signature verified (%s %s)"
-msgstr "没有%s这个程序包(给%s用)"
-
-msgid "Valid signature is required, but package %s could not be successfully verified."
-msgstr ""
-
-msgid ""
-"ERROR: failed to lock directory %s for modifying\n"
-"Try removing %s"
-msgstr ""
-"错误：不能锁定目录%s进行修改\n"
-"尝试删除%s"
-
-msgid "ERROR: failed to create lock directory %s"
-msgstr "错误：无法建立锁定目录%s"
-
-msgid "restored %s"
-msgstr "回复了%s"
-
-msgid "unable to move temporary installation %s to %s"
-msgstr "无法将临时安装%s搬到%s"
-
-msgid "cannot remove prior installation of package %s"
-msgstr "无法删除软件包 %s 的先前安装"
-
-msgid ""
-"The downloaded binary packages are in\n"
-"\t%s"
-msgstr ""
-"下载的二进制程序包在\n"
-"\t%s里"
-
 #, fuzzy
 msgid "'memory.size()' is no longer supported"
 msgstr "'memory.size()'只在Windows上有用"
@@ -1481,6 +1480,9 @@ msgstr[0] "最后一个记录不完全，%d行忽略不用"
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] "罗马数字无效：%s"
+
+#~ msgid "'tar' returned non-zero exit code %d"
+#~ msgstr "'tar'退出码为%d"
 
 #, fuzzy
 #~ msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"

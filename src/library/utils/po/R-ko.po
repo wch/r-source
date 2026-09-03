@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: \n"
@@ -93,10 +93,12 @@ msgstr "출력결과를 포함한 파일 '%s'가 사라졌습니다."
 msgid "invalid value for %s : %s"
 msgstr "%1$s에 대한 값이 올바르지 않습니다: %2$s"
 
-msgid "value of 'results' option should be lowercase"
+#, fuzzy
+msgid "value of option 'results' should be lowercase"
 msgstr "'results' 옵션에 대한 값은 반드시 소문자이어야 합니다."
 
-msgid "value of 'strip.white' option should be lowercase"
+#, fuzzy
+msgid "value of option 'strip.white' should be lowercase"
 msgstr "'strip.white' 옵션의 값은 반드시 소문자이어야 합니다."
 
 msgid "using default value %s"
@@ -554,6 +556,54 @@ msgstr "패키지 '%s'의 DESCRIPTION 파일이 없거나 손상되었습니다"
 msgid "Invalid \"Built\":"
 msgstr ""
 
+msgid "Built: value is not a string"
+msgstr ""
+
+msgid "unable to create temporary directory %s"
+msgstr "임시 디렉토리 %s를 생성할 수 없습니다."
+
+#, fuzzy
+msgid "file %s is not a binary package"
+msgstr "파일 %s는 macOS 바이너리 패키지입니다."
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
+
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "패키지 %s를 성공적으로 압축해제하였고 MD5 sums 이 확인되었습니다"
+
+#, fuzzy
+msgid "package %s signature verified (%s %s)"
+msgstr "패키지 %s(들)이 사용가능하지 않습니다 (그 이유는 %s 입니다)"
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
+msgstr ""
+
+msgid "ERROR: failed to create lock directory %s"
+msgstr ""
+
+msgid "restored %s"
+msgstr "%s를 복구하였습니다"
+
+msgid "unable to move temporary installation %s to %s"
+msgstr "임시 설치 %s를 %s로 이동할 수 없습니다"
+
+msgid "cannot remove prior installation of package %s"
+msgstr "패키지 %s의 이전설치를 삭제할 수 없습니다"
+
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"다운로드된 바이너리 패키지들은 다음의 위치에 있습니다\n"
+"\t%s"
+
 msgid "cannot update HTML package index"
 msgstr "HTML 패키지 인덱스를 업데이트 할 수 없습니다"
 
@@ -765,9 +815,6 @@ msgstr "%s를 생성할 수 없습니다."
 
 msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr "'pkgs'로부터 'repos = NULL'임을 알 수 있습니다."
-
-msgid "unable to create temporary directory %s"
-msgstr "임시 디렉토리 %s를 생성할 수 없습니다."
 
 msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
 msgstr ""
@@ -1229,54 +1276,6 @@ msgstr "잘못된 형식입니다"
 msgid "download had nonzero exit status"
 msgstr "다운로드의 종료상태(exit status)가 0이 아닙니다."
 
-msgid "Built: value is not a string"
-msgstr ""
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr "'tar'는 0 이 아닌 종료코드 %d를 반환했습니다"
-
-#, fuzzy
-msgid "file %s is not a binary package"
-msgstr "파일 %s는 macOS 바이너리 패키지입니다."
-
-msgid "binary package %s is not compatible with this build of R"
-msgstr ""
-
-#, fuzzy
-msgid "package %s successfully unpacked and %s sums checked"
-msgstr "패키지 %s를 성공적으로 압축해제하였고 MD5 sums 이 확인되었습니다"
-
-#, fuzzy
-msgid "package %s signature verified (%s %s)"
-msgstr "패키지 %s(들)이 사용가능하지 않습니다 (그 이유는 %s 입니다)"
-
-msgid "Valid signature is required, but package %s could not be successfully verified."
-msgstr ""
-
-msgid ""
-"ERROR: failed to lock directory %s for modifying\n"
-"Try removing %s"
-msgstr ""
-
-msgid "ERROR: failed to create lock directory %s"
-msgstr ""
-
-msgid "restored %s"
-msgstr "%s를 복구하였습니다"
-
-msgid "unable to move temporary installation %s to %s"
-msgstr "임시 설치 %s를 %s로 이동할 수 없습니다"
-
-msgid "cannot remove prior installation of package %s"
-msgstr "패키지 %s의 이전설치를 삭제할 수 없습니다"
-
-msgid ""
-"The downloaded binary packages are in\n"
-"\t%s"
-msgstr ""
-"다운로드된 바이너리 패키지들은 다음의 위치에 있습니다\n"
-"\t%s"
-
 #, fuzzy
 msgid "'memory.size()' is no longer supported"
 msgstr "'memory.size()'는 윈도우즈 전용입니다"
@@ -1455,6 +1454,9 @@ msgstr[0] "마지막 레코드가 완성되지 않아 %d 번째 라인은 삭제
 msgid "invalid roman numeral: %s"
 msgid_plural "invalid roman numerals: %s"
 msgstr[0] ""
+
+#~ msgid "'tar' returned non-zero exit code %d"
+#~ msgstr "'tar'는 0 이 아닌 종료코드 %d를 반환했습니다"
 
 #~ msgid "no R objects specified or available"
 #~ msgstr "지정되거나 사용할 수 있는 R 객체들이 없습니다"

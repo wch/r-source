@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2022-08-31 15:04+0000\n"
 "Last-Translator: Marcel Ramos <marcel.ramos@sph.cuny.edu>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -36,17 +36,21 @@ msgstr "'X' doit avoir des dimnames nommés"
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "les éléments de 'MARGIN' ne sont pas tous des noms de dimensions"
 
+#, fuzzy
+msgid "incompatible arguments"
+msgstr "argument 'jobs' incorrect"
+
+msgid "'Sigma' is not positive definite"
+msgstr ""
+
 msgid "no cluster 'cl' supplied and none is registered"
 msgstr "pas de grappe 'cl' fournie et aucune n'est enregistrée"
 
 msgid "not a valid cluster"
 msgstr "groupe de processus invalide"
 
-
 msgid "replacing registration for cluster type '%s'"
-msgstr ""
-"remplacement de l'enregistrement pour le type de cluster "
-"'%s'"
+msgstr "remplacement de l'enregistrement pour le type de cluster '%s'"
 
 msgid "unknown cluster type: '%s'"
 msgstr "type de cluster inconnu : '%s'"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-04-25 10:47-0700\n"
+"POT-Creation-Date: 2026-09-02 17:50-0700\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: \n"
@@ -150,7 +150,7 @@ msgstr "afm 파일 '%s'는 열 수 없습니다"
 msgid "unknown AFM entity encountered"
 msgstr ""
 
-#: devPS.c:774 devPS.c:777 devPS.c:4770 devPS.c:9362 devPicTeX.c:477
+#: devPS.c:774 devPS.c:777 devPS.c:4770 devPS.c:9363 devPicTeX.c:477
 #: devPicTeX.c:479
 #, c-format
 msgid "invalid string in '%s'"
@@ -263,11 +263,11 @@ msgstr "장치 인코딩을 기록하는데 실패했습니다"
 msgid "object '.ps.prolog' is not a character vector"
 msgstr "객체 '.ps.prolog'는 문자형 벡터가 아닙니다"
 
-#: devPS.c:2790 devPS.c:7483 devWindows.c:810
+#: devPS.c:2790 devPS.c:7484 devWindows.c:810
 msgid "invalid line end"
 msgstr "유효하지 않은 라인의 끝입니다"
 
-#: devPS.c:2809 devPS.c:7503 devWindows.c:823
+#: devPS.c:2809 devPS.c:7504 devWindows.c:823
 msgid "invalid line join"
 msgstr "유효하지 않은 라인의 결합입니다"
 
@@ -275,8 +275,8 @@ msgstr "유효하지 않은 라인의 결합입니다"
 msgid "invalid line mitre"
 msgstr ""
 
-#: devPS.c:3022 devPS.c:3959 devPS.c:4408 devPS.c:4435 devPS.c:9166
-#: devPS.c:9237
+#: devPS.c:3022 devPS.c:3959 devPS.c:4408 devPS.c:4435 devPS.c:9167
+#: devPS.c:9238
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr "font 1에 의해서 대체된 유효하지 않은 폰트 %d를 사용하려고 시도합니다"
@@ -301,7 +301,7 @@ msgstr "%s()에 인코딩 패스가 너무 깁니다"
 msgid "failed to load encoding file in %s()"
 msgstr "%s()에 인코딩 파일을 로드하는데 실패했습니다"
 
-#: devPS.c:3343 devPS.c:3406 devPS.c:7019 devPS.c:7075 devPS.c:8965
+#: devPS.c:3343 devPS.c:3406 devPS.c:7019 devPS.c:7075 devPS.c:8966
 msgid "invalid font type"
 msgstr "유효하지 않은 폰트타입입니다"
 
@@ -325,21 +325,21 @@ msgstr "'command'가 너무 깁니다"
 msgid "'postscript(print.it=TRUE)' used with an empty 'print' command"
 msgstr "비어있는 'print' 명령어와 함께 사용된 'postscript(print.it=TRUE)'입니다"
 
-#: devPS.c:3510
+#: devPS.c:3511
 #, c-format
 msgid "invalid page type '%s' (postscript)"
 msgstr "유효하지 않은 페이지 타입 '%s' (postscript)"
 
-#: devPS.c:3639 devWindows.c:2363
+#: devPS.c:3640 devWindows.c:2363
 msgid "semi-transparency is not supported on this device: reported only once per page"
 msgstr "이 장치에서는 반투명 기능이 지원되지 않습니다: 페이당 오로지 한번만 보고됩니다"
 
 #: devPS.c:3750 devPS.c:3761
-#, c-format
-msgid "cannot open 'postscript' pipe to '%s'"
+#, fuzzy, c-format
+msgid "cannot open 'postscript' pipe to '%s' (reason: %s)"
 msgstr "'%s'에 파이프하는 'postscript'를 열 수 없습니다"
 
-#: devPS.c:3772 devPS.c:8226 qdPDF.c:102
+#: devPS.c:3772 devPS.c:8227 qdPDF.c:102
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "파일 '%s'를 열 수 없습니다"
@@ -381,7 +381,7 @@ msgstr ""
 msgid "failed open converter to encoding '%s'"
 msgstr "인코딩 '%s'로 전환해주는 장치를 여는데 실패했습니다"
 
-#: devPS.c:4756 devPS.c:9337
+#: devPS.c:4756 devPS.c:9338
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr "인코딩 '%s'로 텍스트컨버전에서 실패했습니다"
@@ -440,7 +440,7 @@ msgstr "'maxRaster'를 증가시키는데 실패했습니다"
 msgid "unable to allocate raster image"
 msgstr "래스터 이미지를 할당할 수 없습니다"
 
-#: devPS.c:6710 devPS.c:6754 devPS.c:8287
+#: devPS.c:6710 devPS.c:6754 devPS.c:8288
 msgid "write failed"
 msgstr "쓰기에 실패했습니다"
 
@@ -481,45 +481,45 @@ msgstr "매스크를 할당하는데 실패했습니다"
 msgid "failed to allocate definitions"
 msgstr "폰트 리스트를 할당하는데 실패했습니다"
 
-#: devPS.c:7201
+#: devPS.c:7202
 #, c-format
 msgid "invalid paper type '%s' (pdf)"
 msgstr "유효하지 않은 페이퍼 종류 '%s' (pdf)입니다"
 
-#: devPS.c:7225
+#: devPS.c:7226
 msgid "invalid foreground/background color (pdf)"
 msgstr "유효하지 않은 전방/배경색 (pdf)입니다"
 
-#: devPS.c:7332
+#: devPS.c:7333
 msgid "increasing the PDF version to 1.4"
 msgstr "PDF 버전을 1.4로 올립니다"
 
-#: devPS.c:7376 devPS.c:7424
+#: devPS.c:7377 devPS.c:7425
 msgid "unknown 'colormodel', using 'srgb'"
 msgstr "알 수 없는 'colormodel'이므로 'srgb'를 사용합니다"
 
-#: devPS.c:7648
+#: devPS.c:7649
 msgid "failed to load sRGB colorspace file"
 msgstr "sRGB 색공간 파일을 로드하는데 실패했습니다"
 
-#: devPS.c:7987
+#: devPS.c:7988
 msgid "corrupt encodings in PDF device"
 msgstr ""
 
-#: devPS.c:8068
+#: devPS.c:8069
 msgid "increasing the PDF version to 1.3"
 msgstr "PDF 버전을 1.3으로 올립니다"
 
 #: devPS.c:8210
-#, c-format
-msgid "cannot open 'pdf' pipe to '%s'"
+#, fuzzy, c-format
+msgid "cannot open 'pdf' pipe to '%s' (reason: %s)"
 msgstr "'%s'에 파이프 하는 'pdf'를 열 수 없습니다"
 
-#: devPS.c:8216
+#: devPS.c:8217
 msgid "file = \"|cmd\" implies 'onefile = TRUE'"
 msgstr "file = \"|cmd\"은 'onefile = TRUE'을 의미합니다"
 
-#: devPS.c:8360
+#: devPS.c:8361
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -528,46 +528,46 @@ msgstr ""
 "'pdf' 파링 인자 '%s'를 열 수 없습니다\n"
 "  PDF 장치를 닫아주세요"
 
-#: devPS.c:8381
+#: devPS.c:8382
 #, c-format
 msgid "Cannot open temporary file '%s' for compression (reason: %s); compression has been turned off for this device"
 msgstr ""
 
-#: devPS.c:8990 devPS.c:9494 devPS.c:9541
+#: devPS.c:8991 devPS.c:9495 devPS.c:9542
 msgid "failed to find or load PDF font"
 msgstr "PDF 폰트를 찾거나 로드하는데 실패했습니다"
 
-#: devPS.c:9173 devPS.c:9232
+#: devPS.c:9174 devPS.c:9233
 msgid "Text not added to path containing other drawing"
 msgstr ""
 
-#: devPS.c:9282 devPS.c:9449
+#: devPS.c:9283 devPS.c:9450
 msgid "failed to find or load PDF CID font"
 msgstr "PDF CID 폰트를 찾거나 로드하는데 실패했습니다"
 
-#: devPS.c:9948 devPicTeX.c:763
+#: devPS.c:9949 devPicTeX.c:763
 #, fuzzy, c-format
 msgid "invalid 'file' parameter in %s"
 msgstr "%s에 유효하지 않은 'family' 파라미터가 있습니다"
 
-#: devPS.c:9957 devPS.c:9961 devPS.c:10059 devPS.c:10063
+#: devPS.c:9958 devPS.c:9962 devPS.c:10060 devPS.c:10064
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "%s에 유효하지 않은 'family' 파라미터가 있습니다"
 
-#: devPS.c:9979 devPS.c:10075
+#: devPS.c:9980 devPS.c:10076
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "%s에 유효하지 않은 'fonts' 파라미터가 있습니다"
 
-#: devPS.c:9985 devPS.c:10085 devPS.c:10088 devPS.c:10091 devPS.c:10094
+#: devPS.c:9986 devPS.c:10086 devPS.c:10089 devPS.c:10092 devPS.c:10095
 #: devWindows.c:3776 devWindows.c:3780 devWindows.c:3788 devWindows.c:3799
 #: devWindows.c:3805 devWindows.c:3812 devWindows.c:3819 devWindows.c:3823
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "유효하지 않은 '%s'의 값입니다"
 
-#: devPS.c:9998 devPS.c:10109 devPicTeX.c:776 devPicTeX.c:781 devWindows.c:3864
+#: devPS.c:9999 devPS.c:10110 devPicTeX.c:776 devPicTeX.c:781 devWindows.c:3864
 #, c-format
 msgid "unable to start %s() device"
 msgstr "%s() 장치를 시작할 수 없습니다"
@@ -667,45 +667,45 @@ msgstr "폰트 페밀리명이 너무 깁니다"
 msgid "no font could be found for family \"%s\""
 msgstr "페밀리 \"%s\"를 위한 폰트를 찾을 수 없습니다"
 
-#: devQuartz.c:2742 cairo/cairoFns.c:528
+#: devQuartz.c:2809 cairo/cairoFns.c:528
 msgid "Attempt to reuse non-existent clipping path"
 msgstr ""
 
-#: devQuartz.c:2763 cairo/cairoFns.c:541
+#: devQuartz.c:2830 cairo/cairoFns.c:541
 msgid "Attempt to release non-existent clipping path"
 msgstr ""
 
-#: devQuartz.c:2814 cairo/cairoFns.c:688
+#: devQuartz.c:2881 cairo/cairoFns.c:688
 msgid "Attempt to release non-existent mask"
 msgstr ""
 
-#: devQuartz.c:3172
+#: devQuartz.c:3239
 #, fuzzy, c-format
 msgid "Invalid font path: \"%s\""
 msgstr "%s에 유효하지 않은 'fonts' 파라미터가 있습니다"
 
-#: devQuartz.c:3216
+#: devQuartz.c:3283
 #, fuzzy
 msgid "Failed to load font"
 msgstr "폰트 리스트를 할당하는데 실패했습니다"
 
-#: devQuartz.c:3309 devQuartz.c:3314
+#: devQuartz.c:3376 devQuartz.c:3381
 msgid "invalid 'file' argument"
 msgstr "유효하지 않은 'file' 인자입니다"
 
-#: devQuartz.c:3341
+#: devQuartz.c:3408
 msgid "invalid quartz() device size"
 msgstr "유효하지 않은 quartz()장치 크기입니다"
 
-#: devQuartz.c:3369
+#: devQuartz.c:3436
 msgid "unable to create device description"
 msgstr "device description을 생성할 수 없습니다"
 
-#: devQuartz.c:3419
+#: devQuartz.c:3486
 msgid "unable to create quartz() device target, given type may not be supported"
 msgstr "quartz() 장치대상을 생성할 수 없었습니다.  아마도 타입이 지원되지 않는 것 같습니다"
 
-#: devQuartz.c:3549
+#: devQuartz.c:3616
 msgid "Quartz device is not available on this platform"
 msgstr "이 플랫폼에서는 Quartz장치를 사용할 수 없습니다"
 

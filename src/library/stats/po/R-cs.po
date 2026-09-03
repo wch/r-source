@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2026-04-14 15:45+0000\n"
 "Last-Translator: Jakub Illík <kubaillik@gmail.com>\n"
 "Language-Team: none\n"
@@ -926,6 +926,9 @@ msgstr ""
 msgid "not enough observations"
 msgstr ""
 
+msgid "computing Newton updated failed in %s"
+msgstr ""
+
 msgid "incorrect dimensions"
 msgstr ""
 
@@ -941,7 +944,7 @@ msgstr ""
 msgid "error computing the Hessian in %s"
 msgstr ""
 
-msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgid "error computing the Hessian determinant in %s"
 msgstr ""
 
 msgid "unsuccessful optimisation in %s"
@@ -1337,6 +1340,9 @@ msgid "incompatible dimensions"
 msgstr ""
 
 msgid "missing or negative weights not allowed"
+msgstr ""
+
+msgid "weights smaller than tolerance wtol*sum(w) = %g treated as zero"
 msgstr ""
 
 msgid "invalid 'lm' object:  no 'terms' component"
@@ -1743,6 +1749,15 @@ msgid "argument 'subset' will be ignored"
 msgstr ""
 
 msgid "argument 'na.action' will be ignored"
+msgstr ""
+
+msgid "different names for %s and %s: names ignored"
+msgstr ""
+
+msgid "mismatched names for %s and %s"
+msgstr ""
+
+msgid "duplicated names in %s"
 msgstr ""
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
@@ -2464,6 +2479,12 @@ msgstr[2] ""
 
 msgid "unknown name %s in the 'split' list"
 msgid_plural "unknown names %s in the 'split' list"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+msgid "essentially perfect fit for %s: summary may be unreliable"
+msgid_plural "essentially perfect fit for response(s) %s: summary may be unreliable"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.0.4\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:17\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2021-02-10 17:40+0100\n"
 "Last-Translator: Philippe Grosjean <phgrosjean@sciviews.org>\n"
 "Language-Team: French <R-core@r-project.org>\n"
@@ -162,18 +162,14 @@ msgstr "pas de nom de fichier utilisable disponible pour postscript()"
 msgid "dev.new(): using postscript(file=\"%s\")"
 msgstr "dev.new() : utilisation de postscript(file=\"%s\")"
 
-
 msgid "Invalid capabilities - alert the device maintainer"
-msgstr ""
-"Capacités non valides - alerter le responsable de l’appareil"
+msgstr "Capacités non valides - alerter le responsable de l’appareil"
 
 msgid "Invalid span weight"
 msgstr "Poids de travée non valide"
 
 msgid "length of arguments must match (and be greater than 0)"
-msgstr ""
-"la longueur des arguments doit correspondre (et être "
-"supérieure à 0)"
+msgstr "la longueur des arguments doit correspondre (et être supérieure à 0)"
 
 msgid "Invalid glyph width(s)"
 msgstr "Largeur(s) de glyphe(s) invalide(s)"
@@ -224,8 +220,7 @@ msgid "Font family longer than 200 will be truncated"
 msgstr "Les familles de polices de plus de 200 seront tronquées"
 
 msgid "PostScript font name longer than 200 will be truncated"
-msgstr ""
-"Les noms de police PostScript de plus de 200 seront tronqués"
+msgstr "Les noms de police PostScript de plus de 200 seront tronqués"
 
 msgid "Font information is inconsistent"
 msgstr "Les informations de police sont incohérentes"
@@ -243,8 +238,7 @@ msgid "Unknown font"
 msgstr "Police inconnue"
 
 msgid "There must be anchors named \"left\" and \"bottom\""
-msgstr ""
-"Il doit y avoir des ancres nommées  \"gauche\"et \" bas\""
+msgstr "Il doit y avoir des ancres nommées  \"gauche\"et \" bas\""
 
 msgid "Invalid glyph info"
 msgstr "Informations sur les glyphes non valides"
@@ -348,7 +342,8 @@ msgstr "incohérence d'encodage pour la police '%s/%s'"
 msgid "'%s' must be a non-empty character string"
 msgstr "'%s' doit être une chaîne de caractères non vide"
 
-msgid "GhostScript was not found"
+#, fuzzy
+msgid "Ghostscript was not found"
 msgstr "GhostScript est introuvable"
 
 msgid "invalid output format"
@@ -484,11 +479,8 @@ msgstr "type = \"cairo\" n’est pas disponible. Essai de \"Xlib\""
 msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
 msgstr "type = \"cairo-png\" n’est pas disponible. Essai de \"Xlib\""
 
-
 msgid "compression is not supported for type = \"quartz\""
-msgstr ""
-"La compression n’est pas prise en charge pour Type = "
-"« Quartz »"
+msgstr "La compression n’est pas prise en charge pour Type = « Quartz »"
 
 msgid "invalid 'title'"
 msgstr "'title' incorrect"
@@ -568,10 +560,8 @@ msgstr[1] "diffèrent entre le nouveau et le précédent"
 
 msgid "%d %s value <= 0 omitted from logarithmic plot"
 msgid_plural "%d %s values <= 0 omitted from logarithmic plot"
-msgstr[0] ""
-"%d valeur %s <= 0 est ignorée pour le graphe logarithmique"
-msgstr[1] ""
-"%d valeurs %s <= 0 sont ignorées pour le graphe logarithmique"
+msgstr[0] "%d valeur %s <= 0 est ignorée pour le graphe logarithmique"
+msgstr[1] "%d valeurs %s <= 0 sont ignorées pour le graphe logarithmique"
 
 #~ msgid "%d y value <= 0 omitted from logarithmic plot"
 #~ msgid_plural "%d y values <= 0 omitted from logarithmic plot"

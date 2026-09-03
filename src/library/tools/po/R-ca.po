@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-09 14:51\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: none\n"
@@ -60,12 +60,12 @@ msgid "Functions or methods with usage in Rd file '%s' but not in code:"
 msgstr "Funcions o mètodes amb ús a l'objecte de documentació «%s» però no al codi:"
 
 #, fuzzy
-msgid "Data with usage in Rd file '%s' but not in code:"
-msgstr "Dades amb ús a l'objecte de documentació «%s» però no al codi:"
-
-#, fuzzy
 msgid "Variables with usage in Rd file '%s' but not in code:"
 msgstr "Variables amb ús a l'objecte de documentació «%s» però no al codi:"
+
+#, fuzzy
+msgid "Data with usage in Rd file '%s' but not in code:"
+msgstr "Dades amb ús a l'objecte de documentació «%s» però no al codi:"
 
 msgid "Argument names in code not in docs:"
 msgstr "Noms dels arguments en el codi que no estan en la documentació:"
@@ -888,9 +888,6 @@ msgstr "ERROR: aquest R és la versió %s, és necessari R %s %s"
 msgid "loading failed"
 msgstr "ha fallat la càrrega"
 
-msgid "'cc' is not on the path"
-msgstr ""
-
 msgid "'objdump' is not on the path"
 msgstr ""
 
@@ -1246,6 +1243,21 @@ msgstr ""
 "Veure\n"
 "  %s\n"
 "per detalls."
+
+#, fuzzy
+msgid "must specify 'address'"
+msgstr "heu d'especificar «dir» o «files»"
+
+msgid "'subject' is missing"
+msgstr ""
+
+msgid "Sending email to %s"
+msgstr ""
+
+msgid ""
+"Sending email failed!\n"
+"The unsent msg can be found in file %s."
+msgstr ""
 
 #, fuzzy
 msgid "namespace must not be already loaded"
@@ -1680,10 +1692,6 @@ msgid "contains a blank line"
 msgstr "conté una línia en blanc"
 
 #, fuzzy
-msgid "Unknown encoding with non-ASCII data: converting to ASCII"
-msgstr "Codificació desconeguda amb dades no ASCII: s'està convertint a ASCII"
-
-#, fuzzy
 msgid "cannot source package code:"
 msgstr "no es pot font el codi del paquet:"
 
@@ -1893,6 +1901,10 @@ msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Entrada BibTeX corresponent:"
 msgstr[1] "Entrades corresponents de BibTeX:"
+
+#, fuzzy
+#~ msgid "Unknown encoding with non-ASCII data: converting to ASCII"
+#~ msgstr "Codificació desconeguda amb dades no ASCII: s'està convertint a ASCII"
 
 #, fuzzy
 #~ msgid "Error: cannot rename directory to %s"

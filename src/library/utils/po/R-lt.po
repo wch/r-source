@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: utils 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -87,10 +87,12 @@ msgstr "išvesties failas '%s' dingo"
 msgid "invalid value for %s : %s"
 msgstr "neleistina %s reikšmė: %s"
 
-msgid "value of 'results' option should be lowercase"
+#, fuzzy
+msgid "value of option 'results' should be lowercase"
 msgstr "'results' parinkties reikšmė turėtų būti mažosiomis raidėmis"
 
-msgid "value of 'strip.white' option should be lowercase"
+#, fuzzy
+msgid "value of option 'strip.white' should be lowercase"
 msgstr "'strip.white' parinkties vertė turėtų būti mažosiomis raidėmis"
 
 msgid "using default value %s"
@@ -552,6 +554,56 @@ msgstr "Trūksta paketo '%s' DESCRIPTION failo arba jis neveikia"
 msgid "Invalid \"Built\":"
 msgstr "Neleistinas \"Built\":"
 
+msgid "Built: value is not a string"
+msgstr ""
+
+msgid "unable to create temporary directory %s"
+msgstr "nepavyko sukurti laikino katalogo %s"
+
+#, fuzzy
+msgid "file %s is not a binary package"
+msgstr "failas %s nėra macOS dvejetainis paketas"
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
+
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "paketas %s sėkmingai išpakuotas ir MD5 sumos patikrintos"
+
+#, fuzzy
+msgid "package %s signature verified (%s %s)"
+msgstr "paketas %s negalimas (%s)"
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
+msgstr ""
+"KLAIDA: nepavyko užrakinti katalogo %s modifikavimui\n"
+"Pabandykite pašalinti %s"
+
+msgid "ERROR: failed to create lock directory %s"
+msgstr "KLAIDA: nepavyko sukurti užrakinto katalogo %s"
+
+msgid "restored %s"
+msgstr "atkurta %s"
+
+msgid "unable to move temporary installation %s to %s"
+msgstr "neįmanoma perkelti laikino diegimo %s į %s"
+
+msgid "cannot remove prior installation of package %s"
+msgstr "negali pašalinti paketo %s išankstinio diegimo"
+
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"Atsisiųsti dvejetainiai paketai yra\n"
+"\t%s"
+
 msgid "cannot update HTML package index"
 msgstr "negali atnaujinti HTML paketo rodyklės"
 
@@ -766,9 +818,6 @@ msgstr "nepavyko sukurti %s"
 
 msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr "numanomas 'repos = NULL' iš 'pkgs'"
-
-msgid "unable to create temporary directory %s"
-msgstr "nepavyko sukurti laikino katalogo %s"
 
 msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
 msgstr ""
@@ -1228,56 +1277,6 @@ msgstr "neleistinas formatas"
 msgid "download had nonzero exit status"
 msgstr "atsisiuntimas turėjo nenulinio išėjimo būseną"
 
-msgid "Built: value is not a string"
-msgstr ""
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr "'tar' grąžino ne nulinį išėjimo kodą %d"
-
-#, fuzzy
-msgid "file %s is not a binary package"
-msgstr "failas %s nėra macOS dvejetainis paketas"
-
-msgid "binary package %s is not compatible with this build of R"
-msgstr ""
-
-#, fuzzy
-msgid "package %s successfully unpacked and %s sums checked"
-msgstr "paketas %s sėkmingai išpakuotas ir MD5 sumos patikrintos"
-
-#, fuzzy
-msgid "package %s signature verified (%s %s)"
-msgstr "paketas %s negalimas (%s)"
-
-msgid "Valid signature is required, but package %s could not be successfully verified."
-msgstr ""
-
-msgid ""
-"ERROR: failed to lock directory %s for modifying\n"
-"Try removing %s"
-msgstr ""
-"KLAIDA: nepavyko užrakinti katalogo %s modifikavimui\n"
-"Pabandykite pašalinti %s"
-
-msgid "ERROR: failed to create lock directory %s"
-msgstr "KLAIDA: nepavyko sukurti užrakinto katalogo %s"
-
-msgid "restored %s"
-msgstr "atkurta %s"
-
-msgid "unable to move temporary installation %s to %s"
-msgstr "neįmanoma perkelti laikino diegimo %s į %s"
-
-msgid "cannot remove prior installation of package %s"
-msgstr "negali pašalinti paketo %s išankstinio diegimo"
-
-msgid ""
-"The downloaded binary packages are in\n"
-"\t%s"
-msgstr ""
-"Atsisiųsti dvejetainiai paketai yra\n"
-"\t%s"
-
 #, fuzzy
 msgid "'memory.size()' is no longer supported"
 msgstr "'memory.size()' yra skirtas Windows"
@@ -1523,6 +1522,9 @@ msgid_plural "invalid roman numerals: %s"
 msgstr[0] "neteisingas romėniškas skaitmuo: %s"
 msgstr[1] "neteisingi romėniški skaitmenys: %s"
 msgstr[2] "neteisingų romėniškų skaitmenų: %s"
+
+#~ msgid "'tar' returned non-zero exit code %d"
+#~ msgstr "'tar' grąžino ne nulinį išėjimo kodą %d"
 
 #~ msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
 #~ msgstr "type == \"both\" gali būti naudojami tik Windows arba CRAN komponavimo versijos macOS"

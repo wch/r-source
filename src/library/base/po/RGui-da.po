@@ -26,7 +26,7 @@ msgstr ""
 #: src/gnuwin32/editor.c:368 src/gnuwin32/editor.c:584
 #: src/gnuwin32/preferences.c:313
 msgid "Not enough memory"
-msgstr "Ikke nok hukommelse"
+msgstr "Ikke tilstrækkelig hukommelse"
 
 #: src/gnuwin32/console.c:1286 src/gnuwin32/console.c:1290
 msgid "Insufficient memory: text not copied to the clipboard"
@@ -602,9 +602,8 @@ msgid "Update packages..."
 msgstr "Opdater pakker..."
 
 #: src/gnuwin32/rui.c:997
-#, fuzzy
 msgid "Install package(s) from local files..."
-msgstr "Installer pakker fra lokale zip-filer..."
+msgstr "Installer pakke(r) fra lokale filer..."
 
 #: src/gnuwin32/rui.c:1021
 msgid "FAQ on R"
@@ -798,7 +797,7 @@ msgstr "menu + punkt er begrænset til 1.000 byte"
 
 #: src/gnuwin32/rui.c:1484 src/gnuwin32/rui.c:1567
 msgid "menu does not exist"
-msgstr "menu findes ikke"
+msgstr "menu eksisterer ikke"
 
 #: src/gnuwin32/rui.c:1502 src/gnuwin32/rui.c:1525 src/gnuwin32/rui.c:1530
 msgid "failed to allocate char storage"
@@ -869,14 +868,12 @@ msgid "Arrange Icons"
 msgstr "Arrangere ikoner"
 
 #: src/extra/graphapp/metafile.c:55
-#, fuzzy
 msgid "Unable to save metafile to the clipboard"
-msgstr "Kan ikke åbne udklipsholderen"
+msgstr "Ikke i stand til at gemme metafil til udklipsholderen"
 
 #: src/extra/graphapp/metafile.c:117
-#, fuzzy
 msgid "Unable to create metafile"
-msgstr "Kunne ikke oprette redigeringsvindue"
+msgstr "Kan ikke oprette metafil"
 
 #: src/extra/graphapp/metafile.c:122
 #, fuzzy
@@ -884,19 +881,16 @@ msgid "Insufficient memory to create metafile"
 msgstr "Utilstrækkelig hukommelse. Luk venligst konsollen"
 
 #: src/extra/graphapp/printer.c:111
-#, fuzzy
 msgid "Unable to choose printer"
-msgstr "Kan ikke oprette fremviservindue"
+msgstr "Ikke i stand til at vælge printer"
 
 #: src/extra/graphapp/printer.c:139
-#, fuzzy
 msgid "Insufficient memory for new printer"
-msgstr "Utilstrækkelig hukommelse til at vise fil i intern tekstfremviser"
+msgstr "Utilstrækkelig hukommelse til ny printer"
 
 #: src/extra/graphapp/printer.c:175
-#, fuzzy
 msgid "Unable to start the print job"
-msgstr "Kan ikke oprette fremviservindue"
+msgstr "Kunne ikke starte udskrivningen"
 
 #: src/library/utils/src/windows/dataentry.c:251
 #: src/library/utils/src/windows/dataentry.c:1898

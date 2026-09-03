@@ -1,0 +1,610 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 4.2.0\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2025-03-31 11:51\n"
+"PO-Revision-Date: 2026-06-20 20:12+0000\n"
+"Last-Translator: Abdulrahman Alswaji <alswajiab@gmail.com>\n"
+"Language-Team: none\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 5.11.4\n"
+
+msgid "invalid 'at' location in 'axis'"
+msgstr "موقع 'at' غير صالح في 'axis'"
+
+msgid "invalid to specify axis labels when 'at' is NULL"
+msgstr "لا يصح تحديد تسميات المحور عندما تكون 'at' تساوي NULL"
+
+msgid "'labels' and 'at' locations must have same length"
+msgstr "يجب أن يكون لـ 'labels' ومواقع 'at' الطول نفسه"
+
+msgid "logical 'label' supplied of length 0"
+msgstr "تم تمرير 'label' منطقي بطول 0"
+
+msgid "Invalid coordinates"
+msgstr "إحداثيات غير صالحة"
+
+msgid "Invalid grob coordinates"
+msgstr "إحداثيات grob غير صالحة"
+
+msgid "Invalid gTree coordinates"
+msgstr "إحداثيات gTree غير صالحة"
+
+msgid "Closed must be length 1 and must not be a missing value"
+msgstr "يجب أن يكون Closed بطول 1 وألا يكون قيمة مفقودة"
+
+msgid "end points must not be identical"
+msgstr "يجب ألا تكون نقاط النهاية متطابقة"
+
+msgid "'x1', 'y1', 'x2', and 'y2' must be units"
+msgstr "يجب أن تكون 'x1' و'y1' و'x2' و'y2' وحدات"
+
+msgid "'shape' must be between -1 and 1"
+msgstr "يجب أن تكون 'shape' بين -1 و1"
+
+msgid "'squareShape' must be between -1 and 1"
+msgstr "يجب أن تكون 'squareShape' بين -1 و1"
+
+msgid "'arrow' must be an arrow object or NULL"
+msgstr "يجب أن تكون 'arrow' كائن سهم أو NULL"
+
+msgid "how did we get here?"
+msgstr "كيف وصلنا إلى هنا؟"
+
+msgid "must start new page if showing leaves separately"
+msgstr "يجب بدء صفحة جديدة عند عرض الأوراق بشكل منفصل"
+
+msgid "invalid 'edit' information"
+msgstr "معلومات 'edit' غير صالحة"
+
+msgid "'gEditList' can only contain 'gEdit' objects"
+msgstr "يمكن أن تحتوي 'gEditList' على كائنات 'gEdit' فقط"
+
+msgid "invalid 'frame'"
+msgstr "'frame' غير صالح"
+
+msgid "invalid 'grob'"
+msgstr "'grob' غير صالح"
+
+msgid "invalid 'row' and/or 'col' (no such cell in frame layout)"
+msgstr "'row' و/أو 'col' غير صالحين (لا توجد خلية كهذه في تخطيط الإطار)"
+
+msgid "'col' can only be a range of existing columns"
+msgstr "يمكن أن تكون 'col' نطاقًا من الأعمدة الموجودة فقط"
+
+msgid "invalid 'col' specification"
+msgstr "مواصفة 'col' غير صالحة"
+
+msgid "'row' can only be a range of existing rows"
+msgstr "يمكن أن تكون 'row' نطاقًا من الصفوف الموجودة فقط"
+
+msgid "invalid 'row' specification"
+msgstr "مواصفة 'row' غير صالحة"
+
+msgid "cannot specify more than one of 'side=[\"left\", \"right\"]', 'col', 'col.before', or 'col.after'"
+msgstr ""
+"لا يمكن تحديد أكثر من واحد من 'side=[\"left\", \"right\"]' أو 'col' أو "
+"'col.before' أو 'col.after'"
+
+msgid "must specify exactly one of 'side=[\"top\", \"bottom\"]', 'row', 'row.before', or 'row.after'"
+msgstr ""
+"يجب تحديد واحد فقط بالضبط من 'side=[\"top\", \"bottom\"]' أو 'row' أو "
+"'row.before' أو 'row.after'"
+
+msgid "invalid 'n'"
+msgstr "'n' غير صالح"
+
+msgid "invalid 'f'"
+msgstr "'f' غير صالح"
+
+msgid "'gpar' element '%s' must not be length 0"
+msgstr "يجب ألا يكون عنصر 'gpar'‏ '%s' بطول 0"
+
+msgid "mixture of missing and non-missing values for %s"
+msgstr "مزيج من القيم المفقودة وغير المفقودة لـ %s"
+
+msgid "'gamma' 'gpar' element is defunct"
+msgstr "عنصر 'gpar'‏ 'gamma' لم يعد مستخدمًا"
+
+msgid "'fill' gpar list components must all be patterns"
+msgstr "يجب أن تكون جميع مكونات قائمة gpar الخاصة بـ 'fill' أنماطًا"
+
+msgid "invalid 'linemitre' value"
+msgstr "قيمة 'linemitre' غير صالحة"
+
+msgid "invalid 'alpha' value"
+msgstr "قيمة 'alpha' غير صالحة"
+
+msgid "must specify only one of 'font' and 'fontface'"
+msgstr "يجب تحديد واحد فقط من 'font' و'fontface'"
+
+msgid "invalid fontface"
+msgstr "fontface غير صالح"
+
+msgid "argument must be a 'gpar' object"
+msgstr "يجب أن يكون الوسيط كائن 'gpar'"
+
+msgid "must specify only valid 'gpar' names"
+msgstr "يجب تحديد أسماء 'gpar' صالحة فقط"
+
+msgid "invalid display list element"
+msgstr "عنصر قائمة العرض غير صالح"
+
+msgid "one or more grobs overwritten (grab WILL not be faithful; try 'wrap.grobs = TRUE')"
+msgstr ""
+"تمت الكتابة فوق grob واحد أو أكثر (لن يكون الالتقاط مطابقًا؛ جرّب 'wrap.grobs "
+"= TRUE')"
+
+msgid "viewport overwritten (grab MAY not be faithful)"
+msgstr "تمت الكتابة فوق إطار العرض (قد لا يكون الالتقاط مطابقًا)"
+
+msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
+msgstr ""
+"دفع grob إطارات عرض ولم يخرج منها/يرجع للأعلى منها (قد لا يكون الالتقاط "
+"مطابقًا)"
+
+msgid "only valid to push viewports"
+msgstr "لا يصح الدفع إلا لإطارات العرض"
+
+msgid "must specify at least one viewport"
+msgstr "يجب تحديد إطار عرض واحد على الأقل"
+
+msgid "Down viewport failed to record on display list"
+msgstr "فشل تسجيل النزول إلى إطار العرض في قائمة العرض"
+
+msgid "Down viewport incorrectly recorded on display list"
+msgstr "سُجّل النزول إلى إطار العرض بشكل غير صحيح في قائمة العرض"
+
+msgid "must pop at least one viewport"
+msgstr "يجب إخراج إطار عرض واحد على الأقل"
+
+msgid "must navigate up at least one viewport"
+msgstr "يجب الانتقال للأعلى عبر إطار عرض واحد على الأقل"
+
+msgid "Invalid number of generations"
+msgstr "عدد الأجيال غير صالح"
+
+msgid "Invalid 'clearGroups' argument"
+msgstr "الوسيط 'clearGroups' غير صالح"
+
+msgid "invalid object inserted on the display list"
+msgstr "تم إدراج كائن غير صالح في قائمة العرض"
+
+msgid "invalid modification of the display list"
+msgstr "تعديل غير صالح لقائمة العرض"
+
+msgid "'expr' must return a grob or gList"
+msgstr "يجب أن تُرجع 'expr' كائن grob أو gList"
+
+msgid "invalid 'grob' argument"
+msgstr "الوسيط 'grob' غير صالح"
+
+msgid "invalid 'vp' slot"
+msgstr "الخانة 'vp' غير صالحة"
+
+msgid "invalid 'gp' slot"
+msgstr "الخانة 'gp' غير صالحة"
+
+msgid "invalid 'grob' class"
+msgstr "صنف 'grob' غير صالح"
+
+msgid "a 'grob' path must contain at least one 'grob' name"
+msgstr "يجب أن يحتوي مسار 'grob' على اسم 'grob' واحد على الأقل"
+
+msgid "unable to coerce to \"gList\""
+msgstr "تعذّر التحويل القسري إلى \"gList\""
+
+msgid "only 'grobs' allowed in \"gList\""
+msgstr "لا يُسمح إلا بـ 'grobs' داخل \"gList\""
+
+msgid "invalid element to add to \"gList\""
+msgstr "عنصر غير صالح لإضافته إلى \"gList\""
+
+msgid "can only set 'children' for a \"gTree\""
+msgstr "لا يمكن تعيين 'children' إلا لـ \"gTree\""
+
+msgid "'children' must be a \"gList\""
+msgstr "يجب أن تكون 'children' من نوع \"gList\""
+
+msgid "it is only valid to get 'children' from a \"gTree\""
+msgstr "لا يصح الحصول على 'children' إلا من \"gTree\""
+
+msgid "invalid \"gTree\" class"
+msgstr "صنف \"gTree\" غير صالح"
+
+msgid "'allDevices' not yet implemented"
+msgstr "لم يُنفّذ 'allDevices' بعد"
+
+msgid "invalid 'gPath'"
+msgstr "'gPath' غير صالح"
+
+msgid "invalid 'grep' value"
+msgstr "قيمة 'grep' غير صالحة"
+
+msgid "it is only valid to get a child from a \"gTree\""
+msgstr "لا يصح الحصول على ابن إلا من \"gTree\""
+
+msgid "'gPath' does not specify a valid child"
+msgstr "لا يحدد 'gPath' ابنًا صالحًا"
+
+msgid "it is only valid to set a child of a \"gTree\""
+msgstr "لا يصح تعيين ابن إلا لـ \"gTree\""
+
+msgid "it is only valid to set a 'grob' as child of a \"gTree\""
+msgstr "لا يصح تعيين 'grob' إلا كابن لـ \"gTree\""
+
+msgid "New 'grob' name (%s) does not match 'gPath' (%s)"
+msgstr "اسم 'grob' الجديد (%s) لا يطابق 'gPath' (%s)"
+
+msgid "it is only valid to add a 'grob' to a \"gTree\""
+msgstr "لا يصح إضافة 'grob' إلا إلى \"gTree\""
+
+msgid "it is only valid to add a child to a \"gTree\""
+msgstr "لا يصح إضافة ابن إلا إلى \"gTree\""
+
+msgid "'gPath' (%s) not found"
+msgstr "لم يُعثر على 'gPath' (%s)"
+
+msgid "it is only valid to remove a child from a \"gTree\""
+msgstr "لا يصح إزالة ابن إلا من \"gTree\""
+
+msgid "it is only valid to edit a child of a \"gTree\""
+msgstr "لا يصح تعديل ابن إلا في \"gTree\""
+
+msgid "it is invalid to directly edit the 'children' or 'childrenOrder' slot"
+msgstr "لا يصح تعديل خانة 'children' أو 'childrenOrder' مباشرة"
+
+msgid "invalid 'result'"
+msgstr "'result' غير صالح"
+
+msgid "the new 'grob' must have the same name as the old 'grob'"
+msgstr "يجب أن يكون لـ 'grob' الجديد الاسم نفسه لـ 'grob' القديم"
+
+msgid "slot '%s' not found"
+msgstr "لم يُعثر على الخانة '%s'"
+
+msgid "gPath (%s) not found"
+msgstr "لم يُعثر على gPath (%s)"
+
+msgid "grob '%s' not found"
+msgstr "لم يُعثر على grob‏ '%s'"
+
+msgid "Invalid force target"
+msgstr "هدف الفرض غير صالح"
+
+msgid "Invalid revert target"
+msgstr "هدف الاسترجاع غير صالح"
+
+msgid "can only reorder 'children' for a \"gTree\""
+msgstr "لا يمكن إعادة ترتيب 'children' إلا لـ \"gTree\""
+
+msgid "Invalid 'order'"
+msgstr "'order' غير صالح"
+
+msgid "Group definition failed"
+msgstr "فشل تعريف المجموعة"
+
+msgid "Invalid source"
+msgstr "المصدر غير صالح"
+
+msgid "Invalid destination"
+msgstr "الوجهة غير صالحة"
+
+msgid "Unknown group:"
+msgstr "مجموعة غير معروفة:"
+
+msgid "Invalid transform (nothing drawn)"
+msgstr "تحويل غير صالح (لم يُرسم شيء)"
+
+msgid "Invalid transform"
+msgstr "تحويل غير صالح"
+
+msgid "'l' must be a layout"
+msgstr "يجب أن تكون 'l' تخطيطًا"
+
+msgid "'pch' and 'labels' not the same length"
+msgstr "ليس لـ 'pch' و'labels' الطول نفسه"
+
+msgid "'hgap' must be single unit"
+msgstr "يجب أن تكون 'hgap' وحدة واحدة"
+
+msgid "'vgap' must be single unit"
+msgstr "يجب أن تكون 'vgap' وحدة واحدة"
+
+msgid "'nrow' must be >= 1"
+msgstr "يجب أن تكون 'nrow' أكبر من أو تساوي 1"
+
+msgid "'ncol' must be >= 1"
+msgstr "يجب أن تكون 'ncol' أكبر من أو تساوي 1"
+
+msgid "nrow * ncol < #{legend labels}"
+msgstr "nrow * ncol < #{legend labels}"
+
+msgid "invalid justification"
+msgstr "محاذاة غير صالحة"
+
+msgid "invalid horizontal justification"
+msgstr "محاذاة أفقية غير صالحة"
+
+msgid "invalid vertical justification"
+msgstr "محاذاة رأسية غير صالحة"
+
+msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
+msgstr "يجب أن تكون 'respect' منطقية أو مصفوفة بأبعاد 'nrow' في 'ncol'"
+
+msgid "invalid 'print' argument"
+msgstr "الوسيط 'print' غير صالح"
+
+msgid "invalid object in 'listing'"
+msgstr "كائن غير صالح في 'listing'"
+
+msgid "invalid listing"
+msgstr "listing غير صالح"
+
+msgid "invalid 'listing'"
+msgstr "'listing' غير صالح"
+
+msgid "Only a grob can be converted to a mask"
+msgstr "لا يمكن تحويل إلا grob إلى قناع"
+
+msgid "invalid 'origin'"
+msgstr "'origin' غير صالح"
+
+msgid "Only a grob can be converted to a path"
+msgstr "لا يمكن تحويل إلا grob إلى مسار"
+
+msgid "colours and stops must be at least length 1"
+msgstr "يجب أن يكون طول الألوان ونقاط التوقف 1 على الأقل"
+
+msgid "x1, y1, x2, and y2 must all be length 1"
+msgstr "يجب أن يكون طول كل من x1 وy1 وx2 وy2 مساويًا لـ 1"
+
+msgid "cx1, cy1, cx2, cy2, r1, and r2 must all be length 1"
+msgstr "يجب أن يكون طول كل من cx1 وcy1 وcx2 وcy2 وr1 وr2 مساويًا لـ 1"
+
+msgid "x, y, width, and height must all be length 1"
+msgstr "يجب أن يكون طول كل من x وy وwidth وheight مساويًا لـ 1"
+
+msgid "Pattern must be based on grob"
+msgstr "يجب أن يكون النمط مستندًا إلى grob"
+
+msgid "Missing pattern fill has been set to transparent"
+msgstr "تم تعيين تعبئة النمط المفقودة إلى شفافة"
+
+msgid ""
+"grob drawing produces more shapes than grob coords\n"
+"(recycling coords)"
+msgstr ""
+"ينتج رسم grob أشكالًا أكثر من إحداثيات grob\n"
+"(تُعاد دورة الإحداثيات)"
+
+msgid "Pattern fill applied to object with no inside"
+msgstr "طُبّقت تعبئة النمط على كائن بلا داخل"
+
+msgid "'length' must be a 'unit' object"
+msgstr "يجب أن تكون 'length' كائن 'unit'"
+
+msgid "invalid 'ends' or 'type' argument"
+msgstr "الوسيط 'ends' أو 'type' غير صالح"
+
+msgid "'x' and 'y' must be units"
+msgstr "يجب أن تكون 'x' و'y' وحدات"
+
+msgid "'x' and 'y' must have length 1"
+msgstr "يجب أن يكون طول 'x' و'y' مساويًا لـ 1"
+
+msgid "invalid 'arrow' argument"
+msgstr "الوسيط 'arrow' غير صالح"
+
+msgid "it is invalid to specify both 'id' and 'id.lengths'"
+msgstr "لا يصح تحديد كل من 'id' و'id.lengths'"
+
+msgid "'x' and 'y' must be same length"
+msgstr "يجب أن يكون لـ 'x' و'y' الطول نفسه"
+
+msgid "'x' and 'y' and 'id' must all be same length"
+msgstr "يجب أن يكون لـ 'x' و'y' و'id' الطول نفسه"
+
+msgid "'x' and 'y' and 'id.lengths' must specify same overall length"
+msgstr "يجب أن تحدد 'x' و'y' و'id.lengths' الطول الإجمالي نفسه"
+
+msgid "'x0', 'y0', 'x1', and 'y1' must be units"
+msgstr "يجب أن تكون 'x0' و'y0' و'x1' و'y1' وحدات"
+
+msgid "'x' and 'y' must be units or NULL"
+msgstr "يجب أن تكون 'x' و'y' وحدات أو NULL"
+
+msgid "corrupt 'arrows' object"
+msgstr "كائن 'arrows' تالف"
+
+msgid "'x' and 'y' and 'pathId.lengths' must specify same overall length"
+msgstr "يجب أن تحدد 'x' و'y' و'pathId.lengths' الطول الإجمالي نفسه"
+
+msgid "x and y must be units"
+msgstr "يجب أن تكون x وy وحدات"
+
+msgid "must have exactly 4 control points"
+msgstr "يجب أن يحتوي على 4 نقاط تحكم بالضبط"
+
+msgid "must have exactly 4 control points per Bezier curve"
+msgstr "يجب أن يحتوي على 4 نقاط تحكم بالضبط لكل منحنى Bezier"
+
+msgid "'x', 'y', and 'r' must be units"
+msgstr "يجب أن تكون 'x' و'y' و'r' وحدات"
+
+msgid "'x', 'y', 'width', and 'height' must be units"
+msgstr "يجب أن تكون 'x' و'y' و'width' و'height' وحدات"
+
+msgid "invalid 'rot' value"
+msgstr "قيمة 'rot' غير صالحة"
+
+msgid "zero-length 'pch'"
+msgstr "'pch' بطول صفري"
+
+msgid "'x', 'y' and 'size' must be units"
+msgstr "يجب أن تكون 'x' و'y' و'size' وحدات"
+
+msgid "'x' and 'y' must be 'unit' objects and have the same length"
+msgstr "يجب أن تكون 'x' و'y' كائنات 'unit' وأن يكون لهما الطول نفسه"
+
+msgid "'x', 'y', 'width', and 'height' must all be units of length 1"
+msgstr "يجب أن تكون كل من 'x' و'y' و'width' و'height' وحدات بطول 1"
+
+msgid "'x' and 'y' must all be units of length 1"
+msgstr "يجب أن تكون كل من 'x' و'y' وحدات بطول 1"
+
+msgid "'r' must be a 'unit' object"
+msgstr "يجب أن تكون 'r' كائن 'unit'"
+
+msgid "'x', 'y', 'width', and 'height' must have length 1"
+msgstr "يجب أن يكون طول كل من 'x' و'y' و'width' و'height' مساويًا لـ 1"
+
+msgid "Invalid glyph info"
+msgstr "معلومات الرمز الرسومي غير صالحة"
+
+msgid "'x' and 'y' must have length > 0"
+msgstr "يجب أن يكون طول 'x' و'y' أكبر من 0"
+
+msgid "'hjust' and 'vjust' must be glyphJust() values"
+msgstr "يجب أن تكون 'hjust' و'vjust' قيم glyphJust()"
+
+msgid "'hjust' and 'vjust' must have length 1"
+msgstr "يجب أن يكون طول 'hjust' و'vjust' مساويًا لـ 1"
+
+msgid "Unknown width; using first width"
+msgstr "العرض غير معروف؛ سيتم استخدام العرض الأول"
+
+msgid "Unknown anchor; using left justification"
+msgstr "المرساة غير معروفة؛ سيتم استخدام المحاذاة اليسرى"
+
+msgid "Unknown height; using first height"
+msgstr "الارتفاع غير معروف؛ سيتم استخدام الارتفاع الأول"
+
+msgid "Unknown anchor; using bottom justification"
+msgstr "المرساة غير معروفة؛ سيتم استخدام المحاذاة السفلية"
+
+msgid "'x' and 'units' must have length > 0"
+msgstr "يجب أن يكون طول 'x' و'units' أكبر من 0"
+
+msgid "invalid 'axis' or 'type'"
+msgstr "'axis' أو 'type' غير صالح"
+
+msgid "'x' and 'y' must be units and 'device' must be logical"
+msgstr "يجب أن تكون 'x' و'y' وحدات وأن تكون 'device' منطقية"
+
+msgid "'w' and 'h' must be units and 'device' must be logical"
+msgstr "يجب أن تكون 'w' و'h' وحدات وأن تكون 'device' منطقية"
+
+msgid "Not a unit object"
+msgstr "ليس كائن unit"
+
+msgid "'Summary' function '%s' not meaningful for units"
+msgstr "دالة 'Summary'‏ '%s' غير ذات معنى للوحدات"
+
+msgid "operator '%s' not meaningful for units"
+msgstr "المعامل '%s' غير ذي معنى للوحدات"
+
+msgid "'*' or '/' cannot be used as a unary operator"
+msgstr "لا يمكن استخدام '*' أو '/' كمعامل أحادي"
+
+msgid "only one operand may be a unit"
+msgstr "يمكن أن يكون معامل واحد فقط وحدة"
+
+msgid "non-unit operand must be numeric"
+msgstr "يجب أن يكون المعامل غير الوحدة رقميًا"
+
+msgid "can't divide with a unit"
+msgstr "لا يمكن القسمة باستخدام وحدة"
+
+msgid "both operands must be units"
+msgstr "يجب أن يكون كلا المعاملين وحدات"
+
+msgid "index out of bounds (\"unit\" subsetting)"
+msgstr "الفهرس خارج الحدود (أخذ مجموعة جزئية من \"unit\")"
+
+msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
+msgstr "لا يمكن إنشاء متجه unit بطول صفري (أخذ مجموعة جزئية من \"unit\")"
+
+msgid "index must be of length 1"
+msgstr "يجب أن يكون الفهرس بطول 1"
+
+msgid "replacement must be of length 1"
+msgstr "يجب أن يكون البديل بطول 1"
+
+msgid "invalid 'theta'"
+msgstr "'theta' غير صالح"
+
+msgid "'range' must be numeric"
+msgstr "يجب أن تكون 'range' رقمية"
+
+msgid "invalid 'gp' value"
+msgstr "قيمة 'gp' غير صالحة"
+
+msgid "invalid 'clip' value"
+msgstr "قيمة 'clip' غير صالحة"
+
+msgid "invalid 'mask' value"
+msgstr "قيمة 'mask' غير صالحة"
+
+msgid "invalid 'xscale' in viewport"
+msgstr "'xscale' غير صالح في إطار العرض"
+
+msgid "invalid 'yscale' in viewport"
+msgstr "'yscale' غير صالح في إطار العرض"
+
+msgid "invalid 'angle' in viewport"
+msgstr "'angle' غير صالح في إطار العرض"
+
+msgid "invalid 'layout' in viewport"
+msgstr "'layout' غير صالح في إطار العرض"
+
+msgid "invalid 'layout.pos.row' in viewport"
+msgstr "'layout.pos.row' غير صالح في إطار العرض"
+
+msgid "invalid 'layout.pos.col' in viewport"
+msgstr "'layout.pos.col' غير صالح في إطار العرض"
+
+msgid "only viewports allowed in 'vpList'"
+msgstr "لا يُسمح إلا بإطارات العرض في 'vpList'"
+
+msgid "only viewports allowed in 'vpStack'"
+msgstr "لا يُسمح إلا بإطارات العرض في 'vpStack'"
+
+msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'"
+msgstr ""
+"يجب أن يكون 'parent' إطار عرض وأن تكون 'children' من نوع 'vpList' في 'vpTree'"
+
+msgid "a viewport path must contain at least one viewport name"
+msgstr "يجب أن يحتوي مسار إطار العرض على اسم إطار عرض واحد على الأقل"
+
+msgid "must specify at least one of 'xData' or 'xscale'"
+msgstr "يجب تحديد واحد على الأقل من 'xData' أو 'xscale'"
+
+msgid "must specify at least one of 'yData' or 'yscale'"
+msgstr "يجب تحديد واحد على الأقل من 'yData' أو 'yscale'"
+
+msgid "shutting down all devices when unloading 'grid' namespace"
+msgstr "سيتم إغلاق جميع الأجهزة عند إلغاء تحميل نطاق أسماء 'grid'"
+
+msgid "invalid grob name"
+msgid_plural "invalid grob names"
+msgstr[0] "أسماء grob غير صالحة"
+msgstr[1] "اسم grob غير صالح"
+msgstr[2] "اسما grob غير صالحين"
+msgstr[3] "أسماء grob غير صالحة"
+msgstr[4] "أسماء grob غير صالحة"
+msgstr[5] "اسم grob غير صالح"
+
+msgid "invalid viewport name"
+msgid_plural "invalid viewport names"
+msgstr[0] "أسماء إطارات العرض غير صالحة"
+msgstr[1] "اسم إطار العرض غير صالح"
+msgstr[2] "اسما إطار العرض غير صالحين"
+msgstr[3] "أسماء إطارات العرض غير صالحة"
+msgstr[4] "أسماء إطارات العرض غير صالحة"
+msgstr[5] "اسم إطار العرض غير صالح"

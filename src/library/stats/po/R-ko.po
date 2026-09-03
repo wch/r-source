@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2018-04-09 12:10-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -945,6 +945,9 @@ msgstr "모든 그룹들은 반드시 데이터를 가지고 있어야 합니다
 msgid "not enough observations"
 msgstr ""
 
+msgid "computing Newton updated failed in %s"
+msgstr ""
+
 #, fuzzy
 msgid "incorrect dimensions"
 msgstr "'xi'의 차원이 잘못되었습니다"
@@ -962,7 +965,7 @@ msgstr ""
 msgid "error computing the Hessian in %s"
 msgstr ""
 
-msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgid "error computing the Hessian determinant in %s"
 msgstr ""
 
 msgid "unsuccessful optimisation in %s"
@@ -1373,6 +1376,9 @@ msgstr ""
 
 msgid "missing or negative weights not allowed"
 msgstr "weights는 누락되거나 음수이어서는 안됩니다"
+
+msgid "weights smaller than tolerance wtol*sum(w) = %g treated as zero"
+msgstr ""
 
 msgid "invalid 'lm' object:  no 'terms' component"
 msgstr "유효하지 않은 'lm'객체입니다:  그 이유는 구성요소 'terms'이 없습니다"
@@ -1795,6 +1801,15 @@ msgstr "인자 'subset'은 사용되지 않을 것입니다"
 
 msgid "argument 'na.action' will be ignored"
 msgstr "인자 'na.action'은 사용되지 않을 것입니다"
+
+msgid "different names for %s and %s: names ignored"
+msgstr ""
+
+msgid "mismatched names for %s and %s"
+msgstr ""
+
+msgid "duplicated names in %s"
+msgstr ""
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "만약 algorithm에 \"port\"가 주어지지 않는다면 상한과 하한이 무시됩니다"
@@ -2524,6 +2539,10 @@ msgstr[0] ""
 msgid "unknown name %s in the 'split' list"
 msgid_plural "unknown names %s in the 'split' list"
 msgstr[0] "'split' 리스트에 알 수 없는 이름 %s가 있습니다"
+
+msgid "essentially perfect fit for %s: summary may be unreliable"
+msgid_plural "essentially perfect fit for response(s) %s: summary may be unreliable"
+msgstr[0] ""
 
 #, fuzzy
 msgid "extra argument %s is not of class \"%s\""

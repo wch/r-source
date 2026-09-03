@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:47-0700\n"
+"POT-Creation-Date: 2026-07-08 08:22-0700\n"
 "PO-Revision-Date: 2024-03-23 12:08+0000\n"
 "Last-Translator: Worood Alswaji <woroodalswaji@gmail.com>\n"
 "Language-Team: none\n"
@@ -80,7 +80,7 @@ msgstr ""
 #: complete_cases.c:29
 #, c-format
 msgid "invalid 'type' (%s) of argument"
-msgstr ""
+msgstr "'type' (%s) من وسيط غير صالح"
 
 #: complete_cases.c:116
 msgid "no input has determined the number of cases"
@@ -90,31 +90,31 @@ msgstr ""
 msgid "not all arguments have the same length"
 msgstr ""
 
-#: cov.c:563
+#: cov.c:546
 msgid "missing observations in cov/cor"
 msgstr ""
 
-#: cov.c:644
+#: cov.c:627
 msgid "'x' is NULL"
 msgstr ""
 
-#: cov.c:676 cov.c:682
+#: cov.c:659 cov.c:665
 msgid "incompatible dimensions"
-msgstr ""
+msgstr "incompatible الأبعاد"
 
-#: cov.c:701 cov.c:742 cov.c:775
+#: cov.c:684 cov.c:725 cov.c:758
 msgid "no complete element pairs"
 msgstr ""
 
-#: cov.c:714
+#: cov.c:697
 msgid "invalid 'use' (computational method)"
 msgstr ""
 
-#: cov.c:717
+#: cov.c:700
 msgid "'x' is empty"
-msgstr ""
+msgstr "'x' هو فارغ"
 
-#: cov.c:811
+#: cov.c:794
 msgid "the standard deviation is zero"
 msgstr ""
 
@@ -138,7 +138,7 @@ msgstr ""
 
 #: deriv.c:787
 msgid "only the first element is used as variable name"
-msgstr ""
+msgstr "فقط الأول element هو used as variable اسم"
 
 #: deriv.c:800
 #, c-format
@@ -171,7 +171,7 @@ msgstr ""
 
 #: distn.c:36
 msgid "NaNs produced"
-msgstr ""
+msgstr "تم إنتاج قيم NaN"
 
 #: distn.c:37
 msgid "Non-numeric argument to mathematical function"
@@ -919,20 +919,20 @@ msgstr ""
 
 #: random.c:49 random.c:133 random.c:213 random.c:303
 msgid "NAs produced"
-msgstr ""
+msgstr "تم إنتاج قيم NA"
 
 #: random.c:56 random.c:62 random.c:68 random.c:83 random.c:163 random.c:252
 #: random.c:390
 msgid "invalid arguments"
-msgstr ""
+msgstr "وسائط غير صالح"
 
 #: random.c:329
 msgid "NA in probability vector"
-msgstr ""
+msgstr "NA في probability متجه"
 
 #: random.c:331
 msgid "negative probability"
-msgstr ""
+msgstr "سالب probability"
 
 #: random.c:337
 msgid "no positive probabilities"

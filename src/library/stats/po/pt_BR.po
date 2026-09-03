@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:47-0700\n"
+"POT-Creation-Date: 2026-07-08 08:22-0700\n"
 "PO-Revision-Date: 2023-10-19 19:25+0000\n"
 "Last-Translator: Renata Hirota <re.hirota@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -92,31 +92,31 @@ msgstr "nenhuma entrada pôde determinar o número de casos"
 msgid "not all arguments have the same length"
 msgstr "nem todos os argumentos tem o mesmo comprimento"
 
-#: cov.c:563
+#: cov.c:546
 msgid "missing observations in cov/cor"
 msgstr "observações faltantas em cov/cor"
 
-#: cov.c:644
+#: cov.c:627
 msgid "'x' is NULL"
 msgstr "'x' é NULL"
 
-#: cov.c:676 cov.c:682
+#: cov.c:659 cov.c:665
 msgid "incompatible dimensions"
 msgstr "dimensões incompatíveis"
 
-#: cov.c:701 cov.c:742 cov.c:775
+#: cov.c:684 cov.c:725 cov.c:758
 msgid "no complete element pairs"
 msgstr "nenhum par de elementos completo"
 
-#: cov.c:714
+#: cov.c:697
 msgid "invalid 'use' (computational method)"
 msgstr "'use' inválido (método computacional)"
 
-#: cov.c:717
+#: cov.c:700
 msgid "'x' is empty"
 msgstr "'x' é vazio"
 
-#: cov.c:811
+#: cov.c:794
 msgid "the standard deviation is zero"
 msgstr "o desvio padrão é zero"
 
@@ -213,6 +213,8 @@ msgid ""
 "FEXACT[f3xact()] error: hash key %.0g > INT_MAX, kyy=%d, it[i (= nco = %d)]= %d.\n"
 "Rather set 'simulate.p.value=TRUE'\n"
 msgstr ""
+"FEXACT[f3xact()] erro: chave de hash %.0g > INT_MAX, kyy=%d, it[i (= nco = %d)]= %d.\n"
+"Em vez disso, defina 'simulate.p.value=TRUE'\n"
 
 #: fexact.c:1073
 #, c-format

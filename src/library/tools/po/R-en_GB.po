@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-09 14:51\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2024-01-20 16:20+0000\n"
 "Last-Translator: Heather Turner <ht@heatherturner.net>\n"
 "Language-Team: none\n"
@@ -58,11 +58,11 @@ msgstr "directory '%s' does not contain Rd objects"
 msgid "Functions or methods with usage in Rd file '%s' but not in code:"
 msgstr "Functions or methods with usage in Rd file '%s' but not in code:"
 
-msgid "Data with usage in Rd file '%s' but not in code:"
-msgstr "Data with usage in Rd file '%s' but not in code:"
-
 msgid "Variables with usage in Rd file '%s' but not in code:"
 msgstr "Variables with usage in Rd file '%s' but not in code:"
+
+msgid "Data with usage in Rd file '%s' but not in code:"
+msgstr "Data with usage in Rd file '%s' but not in code:"
 
 msgid "Argument names in code not in docs:"
 msgstr "Argument names in code not in docs:"
@@ -663,9 +663,6 @@ msgstr "file '%s' not found"
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
 msgstr "vignette filename '%s' does not match any of the '%s' filename patterns"
 
-msgid "+-+"
-msgstr "+-+"
-
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "In '%s' vignettes '%s' and '%s' have the same vignette name"
 
@@ -760,9 +757,6 @@ msgstr "ERROR: this R is version %s, required is R %s %s"
 
 msgid "loading failed"
 msgstr "loading failed"
-
-msgid "'cc' is not on the path"
-msgstr ""
 
 msgid "'objdump' is not on the path"
 msgstr ""
@@ -1043,6 +1037,21 @@ msgstr ""
 "See\n"
 "  %s\n"
 "for details."
+
+#, fuzzy
+msgid "must specify 'address'"
+msgstr "you must specify 'dir' or 'files'"
+
+msgid "'subject' is missing"
+msgstr ""
+
+msgid "Sending email to %s"
+msgstr ""
+
+msgid ""
+"Sending email failed!\n"
+"The unsent msg can be found in file %s."
+msgstr ""
 
 msgid "namespace must not be already loaded"
 msgstr "namespace must not be already loaded"
@@ -1395,9 +1404,6 @@ msgstr "file '%s' is not in valid DCF format"
 msgid "contains a blank line"
 msgstr "contains a blank line"
 
-msgid "Unknown encoding with non-ASCII data: converting to ASCII"
-msgstr "Unknown encoding with non-ASCII data: converting to ASCII"
-
 msgid "cannot source package code:"
 msgstr "cannot source package code:"
 
@@ -1577,3 +1583,9 @@ msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Corresponding BibTeX entry:"
 msgstr[1] "Corresponding BibTeX entries:"
+
+#~ msgid "+-+"
+#~ msgstr "+-+"
+
+#~ msgid "Unknown encoding with non-ASCII data: converting to ASCII"
+#~ msgstr "Unknown encoding with non-ASCII data: converting to ASCII"

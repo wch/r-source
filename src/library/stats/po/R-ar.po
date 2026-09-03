@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2024-03-26 04:46+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: none\n"
@@ -23,22 +23,22 @@ msgid "'acf' must be of length two or more"
 msgstr "يجب أن يكون طول 'acf' اثنين أو أكثر"
 
 msgid "object not interpretable as a factor"
-msgstr ""
+msgstr "لا يمكن تفسير الكائن على أنه عامل"
 
 msgid "cannot fit models without level ('alpha' must not be 0 or FALSE)"
-msgstr ""
+msgstr "لا يمكن ملاءمة النماذج دون مستوى ('alpha' يجب ألا يكون 0 أو FALSE)"
 
 msgid "'alpha', 'beta' and 'gamma' must be within the unit interval"
-msgstr ""
+msgstr "يجب أن تكون 'alpha' و'beta' و'gamma' ضمن فاصل الوحدة"
 
 msgid "data must be non-zero for multiplicative Holt-Winters"
-msgstr ""
+msgstr "يجب ألا تكون البيانات صفرية في Holt-Winters الضربي"
 
 msgid "need at least 2 periods to compute seasonal start values"
-msgstr ""
+msgstr "يلزم وجود فترتين على الأقل لحساب قيم البدء الموسمية"
 
 msgid "invalid length(x)"
-msgstr ""
+msgstr "length(x) غير صالح"
 
 msgid "optimization difficulties: %s"
 msgstr "صعوبات التحسين: %s"
@@ -49,9 +49,8 @@ msgstr "فشل التحسين"
 msgid "time series has no or less than 2 periods"
 msgstr "السلاسل الزمنية لا تحتوي على فترات أو أقل من 2 فترات"
 
-#, fuzzy
 msgid "the series is entirely NA"
-msgstr "المسلسل هو NA بالكامل"
+msgstr "series هو بالكامل NA"
 
 msgid "frequency must be a positive integer >= 2 for BSM"
 msgstr "يجب أن يكون التردد عددا صحيحا موجبا > = 2 ل BSM"
@@ -66,2625 +65,2673 @@ msgid "the first value of the time series must not be missing"
 msgstr "يجب ألا تكون القيمة الأولى للسلسلة الزمنية مفقودة"
 
 msgid "all parameters were fixed"
-msgstr ""
+msgstr "تم تثبيت جميع المعاملات"
 
 msgid "possible convergence problem: 'optim' gave code = %d and message %s"
-msgstr ""
+msgstr "مشكلة تقارب محتملة: أعطت 'optim' الرمز = %d والرسالة %s"
 
 msgid "no factors in the fitted model"
-msgstr ""
+msgstr "لا توجد عوامل في النموذج الملائم"
 
 msgid "'which' specified no factors"
-msgstr ""
+msgstr "لم يحدد 'which' أي عوامل"
 
 msgid "'which' specified some non-factors which will be dropped"
-msgstr ""
+msgstr "حدد 'which' بعض العناصر غير العاملية التي سيتم إسقاطها"
 
 msgid "'sampleT' and 'nser' must be integer"
-msgstr ""
+msgstr "يجب أن يكون 'sampleT' و'nser' عددين صحيحين"
 
 msgid "'lag.max' must be at least 0"
-msgstr ""
+msgstr "يجب أن يكون 'lag.max' على الأقل 0"
 
 msgid "'lag.max' must be at least 1"
-msgstr ""
+msgstr "يجب أن يكون 'lag.max' على الأقل 1"
 
 msgid "NAs in 'x'"
-msgstr ""
+msgstr "توجد قيم NA في 'x'"
 
 msgid "x$lag must have at least 1 column"
-msgstr ""
+msgstr "يجب أن يحتوي x$lag على عمود واحد على الأقل"
 
 msgid "can use ci.type=\"ma\" only if first lag is 0"
-msgstr ""
+msgstr "يمكن استخدام ci.type=\"ma\" فقط إذا كان التأخر الأول 0"
 
 msgid "Page [%d,%d]: i =%s; j =%s"
-msgstr ""
+msgstr "الصفحة [%d,%d]: i =%s؛ j =%s"
 
 msgid "univariate time series only"
-msgstr ""
+msgstr "سلاسل زمنية أحادية المتغير فقط"
 
 msgid "no terms in scope"
-msgstr ""
+msgstr "لا توجد حدود في النطاق"
 
 msgid "no terms in scope for adding to object"
-msgstr ""
+msgstr "لا توجد حدود في النطاق لإضافتها إلى الكائن"
 
 msgid "number of rows in use has changed: remove missing values?"
-msgstr ""
+msgstr "تغير عدد الصفوف المستخدمة: هل تريد إزالة القيم المفقودة؟"
 
 msgid "attempting model selection on an essentially perfect fit is nonsense"
-msgstr ""
+msgstr "محاولة اختيار النموذج مع ملاءمة شبه مثالية لا معنى لها"
 
 msgid "F test assumes quasi%s family"
-msgstr ""
+msgstr "يفترض اختبار F عائلة quasi%s"
 
 msgid "no 'add1' method implemented for \"mlm\" models"
-msgstr ""
+msgstr "لا توجد طريقة 'add1' منفّذة لنماذج \"mlm\""
 
 msgid "scope is not a subset of term labels"
-msgstr ""
+msgstr "النطاق ليس مجموعة جزئية من تسميات الحدود"
 
 msgid "no 'drop1' method for \"mlm\" models"
-msgstr ""
+msgstr "لا توجد طريقة 'drop1' لنماذج \"mlm\""
 
 msgid "F test assumes 'quasi%s' family"
-msgstr ""
+msgstr "يفترض اختبار F عائلة 'quasi%s'"
 
 msgid "AIC is not defined for this model, so 'step' cannot proceed"
-msgstr ""
+msgstr "AIC غير معرّف لهذا النموذج، لذلك لا يمكن لـ 'step' المتابعة"
 
 msgid "AIC is -infinity for this model, so 'step' cannot proceed"
-msgstr ""
+msgstr "AIC يساوي -infinity لهذا النموذج، لذلك لا يمكن لـ 'step' المتابعة"
 
 msgid "'A' must be an array or table"
-msgstr ""
+msgstr "يجب أن يكون 'A' مصفوفة متعددة الأبعاد أو جدولًا"
 
 msgid ""
 "length of FUN, %d,\n"
 " does not match the length of the margins, %d"
 msgstr ""
+"طول FUN، %d،\n"
+" لا يطابق طول الهوامش، %d"
 
 msgid "no rows to aggregate"
-msgstr ""
+msgstr "لا توجد صفوف لتجميعها"
 
 msgid "'by' must be a list"
-msgstr ""
+msgstr "يجب أن يكون 'by' قائمة"
 
 msgid "arguments must have same length"
-msgstr ""
+msgstr "يجب أن تكون الوسائط بالطول نفسه"
 
 msgid "argument 'x' is  missing -- it has been renamed from 'formula'"
-msgstr ""
+msgstr "الوسيط 'x' مفقود -- تمت إعادة تسميته من 'formula'"
 
 msgid "argument 'x' must be a formula"
-msgstr ""
+msgstr "يجب أن يكون الوسيط 'x' صيغة"
 
 msgid "formula 'x' must have both left and right hand sides"
-msgstr ""
+msgstr "يجب أن تحتوي الصيغة 'x' على طرفين أيسر وأيمن"
 
 msgid "cannot change frequency from %g to %g"
-msgstr ""
+msgstr "لا يمكن تغيير التردد من %g إلى %g"
 
 msgid "'x' must be coefficient matrix/data frame"
-msgstr ""
+msgstr "يجب أن يكون 'x' مصفوفة معاملات/إطار بيانات"
 
 msgid "option \"show.coef.Pvalues\" is invalid: assuming TRUE"
-msgstr ""
+msgstr "الخيار \"show.coef.Pvalues\" غير صالح: سيتم افتراض TRUE"
 
 msgid "'P.values' is TRUE, but 'has.Pvalue' is not"
-msgstr ""
+msgstr "'P.values' يساوي TRUE، لكن 'has.Pvalue' ليس كذلك"
 
 msgid "wrong k / cs.ind"
-msgstr ""
+msgstr "k / cs.ind غير صحيح"
 
 msgid "option \"show.signif.stars\" is invalid: assuming TRUE"
-msgstr ""
+msgstr "الخيار \"show.signif.stars\" غير صالح: سيتم افتراض TRUE"
 
 msgid "'anova' object must have colnames"
-msgstr ""
+msgstr "يجب أن يحتوي كائن 'anova' على colnames"
 
 msgid "'conf.level' must be a single number between 0 and 1"
-msgstr ""
+msgstr "يجب أن يكون 'conf.level' عددًا واحدًا بين 0 و1"
 
 msgid "not enough 'x' observations"
-msgstr ""
+msgstr "لا توجد ملاحظات 'x' كافية"
 
 msgid "not enough 'y' observations"
-msgstr ""
+msgstr "لا توجد ملاحظات 'y' كافية"
 
 msgid "samples differ in location: cannot compute confidence set, returning NA"
-msgstr ""
+msgstr "تختلف العينات في الموقع: لا يمكن حساب مجموعة الثقة، سيتم إرجاع NA"
 
 msgid "cannot compute confidence set, returning NA"
-msgstr ""
+msgstr "لا يمكن حساب مجموعة الثقة، سيتم إرجاع NA"
 
 msgid "cannot compute asymptotic confidence set or estimator"
-msgstr ""
+msgstr "لا يمكن حساب مجموعة الثقة أو المقدّر التقاربي"
 
 msgid "cannot compute estimate, returning NA"
-msgstr ""
+msgstr "لا يمكن حساب التقدير، سيتم إرجاع NA"
 
 msgid "cannot compute exact p-value with ties"
-msgstr ""
+msgstr "لا يمكن حساب قيمة p الدقيقة مع وجود قيم متعادلة"
 
 msgid "cannot compute exact confidence interval with ties"
-msgstr ""
+msgstr "لا يمكن حساب فاصل الثقة الدقيق مع وجود قيم متعادلة"
 
 msgid "'formula' missing or incorrect"
-msgstr ""
+msgstr "'formula' مفقودة أو غير صحيحة"
 
 msgid "grouping factor must have exactly 2 levels"
-msgstr ""
+msgstr "يجب أن يكون لعامل التجميع مستويان بالضبط"
 
 msgid "weights are not supported in a multistratum aov() fit"
-msgstr ""
+msgstr "الأوزان غير مدعومة في ملاءمة aov() متعددة الطبقات"
 
 msgid "Error() model is singular"
-msgstr ""
+msgstr "نموذج Error() مفرد"
 
 msgid "the 'split' argument must be a list"
-msgstr ""
+msgstr "يجب أن يكون الوسيط 'split' قائمة"
 
 msgid "'coef' must define a contrast, i.e., sum to 0"
-msgstr ""
+msgstr "يجب أن يعرّف 'coef' تباينًا، أي أن يكون مجموعه 0"
 
 msgid "'coef' must have same length as 'contrast.obj'"
-msgstr ""
+msgstr "يجب أن يكون 'coef' بالطول نفسه مثل 'contrast.obj'"
 
 msgid "each element of '%s' must be logical"
-msgstr ""
+msgstr "يجب أن يكون كل عنصر من '%s' منطقيًا"
 
 msgid "the contrast defined is empty (has no TRUE elements)"
-msgstr ""
+msgstr "التباين المعرّف فارغ (لا يحتوي على عناصر TRUE)"
 
 msgid "columns of 'contrast.obj' must define a contrast (sum to zero)"
-msgstr ""
+msgstr "يجب أن تعرّف أعمدة 'contrast.obj' تباينًا (مجموعها صفر)"
 
 msgid "no degrees of freedom for residuals"
-msgstr ""
+msgstr "لا توجد درجات حرية للبواقي"
 
 msgid "'object' does not include an error 'qr' component"
-msgstr ""
+msgstr "لا يتضمن 'object' مكوّن خطأ 'qr'"
 
 msgid "Refitting model to allow projection"
-msgstr ""
+msgstr "إعادة ملاءمة النموذج للسماح بالإسقاط"
 
 msgid "columns of 'contrast.obj' must define a contrast(sum to zero)"
-msgstr ""
+msgstr "يجب أن تعرّف أعمدة 'contrast.obj' تباينًا (مجموعها صفر)"
 
 msgid "'ties' is not \"ordered\", a function, or list(<string>, <function>)"
-msgstr ""
+msgstr "'ties' ليس \"ordered\" ولا دالة ولا list(<string>, <function>)"
 
 msgid "collapsing to unique 'x' values"
-msgstr ""
+msgstr "سيتم الاختزال إلى قيم 'x' الفريدة"
 
 msgid "invalid interpolation method"
-msgstr ""
+msgstr "طريقة الاستيفاء غير صالحة"
 
 msgid "need at least two non-NA values to interpolate"
-msgstr ""
+msgstr "يلزم وجود قيمتين غير NA على الأقل للاستيفاء"
 
 msgid "zero non-NA points"
-msgstr ""
+msgstr "لا توجد نقاط غير NA"
 
 msgid "'approx' requires n >= 1"
-msgstr ""
+msgstr "تتطلب 'approx' أن يكون n >= 1"
 
 msgid "NAs in 'x' must be the same row-wise"
-msgstr ""
+msgstr "يجب أن تكون قيم NA في 'x' متطابقة على مستوى الصفوف"
 
 msgid "'order.max' must be >= 1"
-msgstr ""
+msgstr "يجب أن يكون 'order.max' >= 1"
 
 msgid "'order.max' must be < 'n.obs'"
-msgstr ""
+msgstr "يجب أن يكون 'order.max' < 'n.obs'"
 
 msgid "zero-variance series"
-msgstr ""
+msgstr "سلسلة ذات تباين صفري"
 
 msgid "'n.ahead' must be at least 1"
-msgstr ""
+msgstr "يجب أن يكون 'n.ahead' على الأقل 1"
 
 msgid "number of series in 'object' and 'newdata' do not match"
-msgstr ""
+msgstr "عدد السلاسل في 'object' و'newdata' غير متطابق"
 
 msgid "'se.fit' not yet implemented for multivariate models"
-msgstr ""
+msgstr "لم يتم تنفيذ 'se.fit' بعد للنماذج متعددة المتغيرات"
 
 msgid "MLE only implemented for univariate series"
-msgstr ""
+msgstr "تم تنفيذ MLE فقط للسلاسل أحادية المتغير"
 
 msgid "'order.max' must be >= 0"
-msgstr ""
+msgstr "يجب أن يكون 'order.max' >= 0"
 
 msgid "'order.max' must be < 'n.used'"
-msgstr ""
+msgstr "يجب أن يكون 'order.max' < 'n.used'"
 
 msgid "'order' must be a non-negative numeric vector of length 3"
-msgstr ""
+msgstr "يجب أن يكون 'order' متجهًا رقميًا غير سالب بطول 3"
 
 msgid "'seasonal' must be a list with component 'order'"
-msgstr ""
+msgstr "يجب أن يكون 'seasonal' قائمة تحتوي على المكوّن 'order'"
 
 msgid "'seasonal$order' must be a non-negative numeric vector of length 3"
-msgstr ""
+msgstr "يجب أن يكون 'seasonal$order' متجهًا رقميًا غير سالب بطول 3"
 
 msgid "if not a list, 'seasonal' must be a non-negative numeric vector of length 3"
-msgstr ""
+msgstr "إذا لم يكن 'seasonal' قائمة، فيجب أن يكون متجهًا رقميًا غير سالب بطول 3"
 
 msgid "'seasonal' is neither a list with component 'order' nor a numeric vector of length 3"
-msgstr ""
+msgstr "'seasonal' ليس قائمة تحتوي على المكوّن 'order' ولا متجهًا رقميًا بطول 3"
 
 msgid "lengths of 'x' and 'xreg' do not match"
-msgstr ""
+msgstr "طولا 'x' و'xreg' غير متطابقين"
 
 msgid "wrong length for 'fixed'"
-msgstr ""
+msgstr "طول 'fixed' غير صحيح"
 
 msgid "some AR parameters were fixed: setting transform.pars = FALSE"
-msgstr ""
+msgstr "تم تثبيت بعض معاملات AR: سيتم تعيين transform.pars = FALSE"
 
 msgid "too few non-missing observations"
-msgstr ""
+msgstr "عدد الملاحظات غير المفقودة قليل جدًا"
 
 msgid "'init' is of the wrong length"
-msgstr ""
+msgstr "'init' بطول غير صحيح"
 
 msgid "non-stationary AR part"
-msgstr ""
+msgstr "جزء AR غير مستقر"
 
 msgid "non-stationary seasonal AR part"
-msgstr ""
+msgstr "جزء AR الموسمي غير مستقر"
 
 msgid "possible convergence problem: optim gave code = %d"
-msgstr ""
+msgstr "مشكلة تقارب محتملة: أعطت optim الرمز = %d"
 
 msgid "non-stationary AR part from CSS"
-msgstr ""
+msgstr "جزء AR غير مستقر من CSS"
 
 msgid "non-stationary seasonal AR part from CSS"
-msgstr ""
+msgstr "جزء AR الموسمي غير مستقر من CSS"
 
 msgid "'xreg' and 'newxreg' have different numbers of columns"
-msgstr ""
+msgstr "لدى 'xreg' و'newxreg' عدد مختلف من الأعمدة"
 
 msgid "MA part of model is not invertible"
-msgstr ""
+msgstr "جزء MA من النموذج غير قابل للعكس"
 
 msgid "seasonal MA part of model is not invertible"
-msgstr ""
+msgstr "جزء MA الموسمي من النموذج غير قابل للعكس"
 
 msgid "NAs in '%s'"
-msgstr ""
+msgstr "توجد قيم NA في '%s'"
 
 msgid "invalid 'SSinit'"
-msgstr ""
+msgstr "'SSinit' غير صالح"
 
 msgid "converting non-invertible initial MA values"
-msgstr ""
+msgstr "تحويل قيم MA الابتدائية غير القابلة للعكس"
 
 msgid "some ARMA parameters were fixed: setting transform.pars = FALSE"
-msgstr ""
+msgstr "تم تثبيت بعض معاملات ARMA: سيتم تعيين transform.pars = FALSE"
 
 msgid "'xreg' is collinear"
-msgstr ""
+msgstr "'xreg' مترافق خطيًا"
 
 msgid "NAs present: setting 'delta' to -1"
-msgstr ""
+msgstr "توجد قيم NA: سيتم تعيين 'delta' إلى -1"
 
 msgid "transformed ARMA parameters were fixed"
-msgstr ""
+msgstr "تم تثبيت معاملات ARMA المحوّلة"
 
 msgid "need at least 2 data points"
-msgstr ""
+msgstr "يلزم على الأقل 2 نقاط بيانات"
 
 msgid "invalid 'x'"
-msgstr ""
+msgstr "'x' غير صالح"
 
 msgid "invalid 'nb'"
-msgstr ""
+msgstr "'nb' غير صالح"
 
 msgid "no solution in the specified range of bandwidths"
-msgstr ""
+msgstr "لا يوجد حل في النطاق المحدد لـ bandwidths"
 
 msgid "increasing bw.SJ() search interval (%d) to [%.4g,%.4g]"
-msgstr ""
+msgstr "زيادة bw.SJ() فاصل البحث (%d) إلى [%.4g,%.4g]"
 
 msgid "minimum occurred at one end of the range"
-msgstr ""
+msgstr "حدث الحد الأدنى عند أحد طرفي النطاق"
 
 msgid "'x' must be a list with at least 2 elements"
-msgstr ""
+msgstr "يجب أن يكون 'x' قائمة مع ما لا يقل عن 2 العناصر"
 
 msgid "'x' and 'g' must have the same length"
-msgstr ""
+msgstr "'x' و 'g' يجب أن يحتوي الطول نفسه"
 
 msgid "all observations are in the same group"
-msgstr ""
+msgstr "جميع الملاحظات هي في المجموعة نفسها"
 
 msgid "there must be at least 2 observations in each group"
-msgstr ""
+msgstr "there يجب أن يكون على الأقل 2 الملاحظات في each مجموعة"
 
 msgid "'formula' should be of the form response ~ group"
-msgstr ""
+msgstr "'formula' ينبغي أن يكون لـ form استجابة ~ مجموعة"
 
 msgid "'x' must be nonnegative and integer"
-msgstr ""
+msgstr "يجب أن يكون 'x' غير سالبة و عدد صحيح"
 
 msgid "'n' must be a positive integer >= 'x'"
-msgstr ""
+msgstr "يجب أن يكون 'n' عددًا صحيحًا موجبًا >= 'x'"
 
 msgid "incorrect length of 'x'"
-msgstr ""
+msgstr "طول غير صحيح لـ 'x'"
 
 msgid "'p' must be a single number between 0 and 1"
-msgstr ""
+msgstr "يجب أن يكون 'p' عددًا واحدًا بين 0 و 1"
 
 msgid "length of choices must be 2"
-msgstr ""
+msgstr "length لـ الخيارات يجب أن يكون 2"
 
 msgid "object '%s' has no scores"
-msgstr ""
+msgstr "كائن '%s' لا يحتوي على الدرجات"
 
 msgid "'scale' is outside [0, 1]"
-msgstr ""
+msgstr "'scale' هو خارج [0, 1]"
 
 msgid "biplots are not defined for complex PCA"
-msgstr ""
+msgstr "الرسوم الثنائية ليست defined لـ PCA المركب"
 
 msgid "unequal number of rows in 'cancor'"
-msgstr ""
+msgstr "عدد غير متساوٍ من الصفوف في 'cancor'"
 
 msgid "dimension 0 in 'x' or 'y'"
-msgstr ""
+msgstr "البُعد 0 في 'x' أو 'y'"
 
 msgid "'x' has rank 0"
-msgstr ""
+msgstr "'x' رتبته 0"
 
 msgid "'y' has rank 0"
-msgstr ""
+msgstr "'y' رتبته 0"
 
 msgid "'x' and 'y' must have the same length"
-msgstr ""
+msgstr "'x' و 'y' يجب أن يحتوي الطول نفسه"
 
 msgid "'x' and 'y' must have at least 2 levels"
-msgstr ""
+msgstr "يجب أن يحتوي 'x' و 'y' على على الأقل 2 مستويات"
 
 msgid "all entries of 'x' must be nonnegative and finite"
-msgstr ""
+msgstr "جميع المدخلات لـ 'x' يجب أن يكون غير سالبة و منتهية"
 
 msgid "at least one entry of 'x' must be positive"
-msgstr ""
+msgstr "على الأقل one مدخل لـ 'x' يجب أن يكون موجب"
 
 msgid "cannot compute simulated p-value with zero marginals"
-msgstr ""
+msgstr "لا يمكن حساب محاكاة قيمة p مع مجاميع هامشية صفرية"
 
 msgid "'x' must at least have 2 elements"
-msgstr ""
+msgstr "'x' must على الأقل have 2 العناصر"
 
 msgid "'x' and 'p' must have the same number of elements"
-msgstr ""
+msgstr "'x' و 'p' يجب أن يحتوي العدد نفسه لـ العناصر"
 
 msgid "probabilities must be non-negative."
-msgstr ""
+msgstr "الاحتمالات يجب أن يكون غير سالب."
 
 msgid "probabilities must sum to 1."
-msgstr ""
+msgstr "الاحتمالات يجب أن يكون مجموعها 1."
 
 msgid "Chi-squared approximation may be incorrect"
-msgstr ""
+msgstr "Chi-squared تقريب قد يكون غير صحيح"
 
 msgid "NA values not allowed in 'd'"
-msgstr ""
+msgstr "NA القيم غير مسموح في 'd'"
 
 msgid "eig=TRUE is disregarded when list.=FALSE"
-msgstr ""
+msgstr "eig=TRUE هو تم تجاهله when قائمة.=FALSE"
 
 msgid "x.ret=TRUE is disregarded when list.=FALSE"
-msgstr ""
+msgstr "x.ret=TRUE هو تم تجاهله when قائمة.=FALSE"
 
 msgid "distances must be result of 'dist' or a square matrix"
-msgstr ""
+msgstr "المسافات يجب أن يكون النتيجة لـ 'dist' أو مربعة مصفوفة"
 
 msgid "invalid value of %s"
-msgstr "قيمة غير صالحة %sس"
+msgstr "قيمة %s غير صالحة"
 
 msgid "'k' must be in {1, 2, ..  n - 1}"
-msgstr ""
+msgstr "يجب أن يكون 'k' في {1, 2, .. n - 1}"
 
 msgid "only %d of the first %d eigenvalues are > 0"
-msgstr ""
+msgstr "فقط %d لـ first %d القيم الذاتية هي > 0"
 
 msgid "Waiting for profiling to be done..."
-msgstr ""
+msgstr "بانتظار اكتمال التنميط..."
 
 msgid "Reprofiling for"
-msgstr ""
+msgstr "إعادة التنميط من أجل"
 
 msgid "statistic. Waiting..."
-msgstr ""
+msgstr "الإحصائية. بانتظار..."
 
 msgid "initial value is not in the interior of the feasible region"
-msgstr ""
+msgstr "القيمة الابتدائية ليس في داخل لـ المنطقة الممكنة"
 
 msgid "Barrier algorithm ran out of iterations and did not converge"
-msgstr ""
+msgstr "خوارزمية الحاجز استنفدت التكرارات و لم يتقارب"
 
 msgid "Objective function increased at outer iteration %d"
-msgstr ""
+msgstr "دالة الهدف زادت at التكرار الخارجي %d"
 
 msgid "Objective function decreased at outer iteration %d"
-msgstr ""
+msgstr "دالة الهدف انخفضت at التكرار الخارجي %d"
 
 msgid "contrasts not defined for %d degrees of freedom"
-msgstr ""
+msgstr "التباينات غير معرّف لـ %d درجات الحرية"
 
 msgid "orthogonal polynomials cannot be represented accurately enough for %d degrees of freedom"
-msgstr ""
+msgstr "كثيرات الحدود المتعامدة لا يمكن أن يكون تمثيلها بدقة كافية لـ %d درجات الحرية"
 
 msgid "'scores' argument is of the wrong length"
-msgstr ""
+msgstr "'scores' وسيط هو لـ طول غير صحيح"
 
 msgid "'scores' must all be different numbers"
-msgstr ""
+msgstr "'scores' must جميع يكون أعداد مختلفة"
 
 msgid "'degree' must be at least 1"
-msgstr ""
+msgstr "يجب أن يكون 'degree' على الأقل 1"
 
 msgid "missing values are not allowed in 'poly'"
-msgstr ""
+msgstr "مفقود القيم ليست مسموح في 'poly'"
 
 msgid "'degree' must be less than number of unique points"
-msgstr ""
+msgstr "يجب أن يكون 'degree' أقل من عدد unique points"
 
 msgid "must supply one or more vectors"
-msgstr ""
+msgstr "يجب تقديم واحدًا أو أكثر من vectors"
 
 msgid "arguments must have the same length"
-msgstr ""
+msgstr "وسائط يجب أن يحتوي الطول نفسه"
 
 msgid "wrong number of columns in new data:"
-msgstr ""
+msgstr "عدد غير صحيح لـ الأعمدة في البيانات الجديدة:"
 
 msgid "contrasts apply only to factors"
-msgstr ""
+msgstr "التباينات تنطبق فقط إلى factors"
 
 msgid "contrasts can be applied only to factors with 2 or more levels"
-msgstr ""
+msgstr "التباينات يمكن أن يكون طُبقت فقط إلى factors مع 2 أو more مستويات"
 
 msgid "wrong number of contrast matrix rows"
-msgstr ""
+msgstr "عدد غير صحيح لـ مصفوفة التباين الصفوف"
 
 msgid "singular contrast matrix"
-msgstr ""
+msgstr "مفرد مصفوفة التباين"
 
 msgid "numeric contrasts or contrast name expected"
-msgstr ""
+msgstr "رقمي التباينات أو تباين name متوقع"
 
 msgid "%s needs package 'Matrix' correctly installed"
 msgstr "%s يحتاج إلى تثبيت الحزمة \"Matrix\" بشكل صحيح"
 
 msgid "not enough degrees of freedom to define contrasts"
-msgstr ""
+msgstr "لا توجد درجات الحرية إلى define التباينات كافية"
 
 msgid "baseline group number out of range"
-msgstr ""
+msgstr "رقم المجموعة المرجعية خارج النطاق"
 
 msgid "invalid 'use' argument"
-msgstr ""
+msgstr "'use' غير صالح"
 
 msgid "supply both 'x' and 'y' or a matrix-like 'x'"
-msgstr ""
+msgstr "تقديم كلا 'x' و 'y' أو شبيه بالمصفوفة 'x'"
 
 msgid "'y' must be numeric"
-msgstr ""
+msgstr "يجب أن يكون 'y' رقميًا"
 
 msgid "'x' is empty"
-msgstr ""
+msgstr "'x' هو فارغ"
 
 msgid "both 'x' and 'y' must be non-empty"
-msgstr ""
+msgstr "كلا 'x' و 'y' يجب أن يكون غير فارغ"
 
 msgid "cannot handle 'pairwise.complete.obs'"
-msgstr ""
+msgstr "لا يمكن التعامل مع 'pairwise.complete.obs'"
 
 msgid "'V' is not a square numeric matrix"
-msgstr ""
+msgstr "'V' ليس مربعة مصفوفة رقمية"
 
 msgid "diag(V) had non-positive or NA entries; the non-finite result may be dubious"
-msgstr ""
+msgstr "diag(V) had غير موجب أو NA المدخلات; غير منتهية النتيجة may يكون مشكوك فيها"
 
 msgid "'x' must be a numeric vector"
-msgstr ""
+msgstr "يجب أن يكون 'x' متجهًا رقميًا"
 
 msgid "'y' must be a numeric vector"
-msgstr ""
+msgstr "يجب أن يكون 'y' متجهًا رقميًا"
 
 msgid "not enough finite observations"
-msgstr ""
+msgstr "لا توجد ملاحظات منتهية كافية"
 
 msgid "invalid formula"
-msgstr ""
+msgstr "formula غير صالح"
 
 msgid "'x' must be a matrix or a data frame"
-msgstr ""
+msgstr "يجب أن يكون 'x' مصفوفة أو إطار بيانات"
 
 msgid "'x' must contain finite values only"
-msgstr ""
+msgstr "'x' يجب أن يحتوي منتهية القيم فقط"
 
 msgid "length of 'wt' must equal the number of rows in 'x'"
-msgstr ""
+msgstr "length لـ 'wt' must equal عدد الصفوف في 'x'"
 
 msgid "weights must be non-negative and not all zero"
-msgstr ""
+msgstr "الأوزان يجب أن يكون غير سالب و ليس جميع صفر"
 
 msgid "length of 'center' must equal the number of columns in 'x'"
-msgstr ""
+msgstr "length لـ 'center' must equal عدد الأعمدة في 'x'"
 
 msgid "invalid 'tree' ('merge' component)"
-msgstr ""
+msgstr "غير صالح 'tree' ('merge' component)"
 
 msgid "either 'k' or 'h' must be specified"
-msgstr ""
+msgstr "إما 'k' أو 'h' يجب أن يكون محدد"
 
 msgid "the 'height' component of 'tree' is not sorted (increasingly)"
-msgstr ""
+msgstr "'height' component لـ 'tree' ليس sorted (increasingly)"
 
 msgid "elements of 'k' must be between 1 and %d"
-msgstr ""
+msgstr "يجب أن يكون العناصر لـ 'k' بين 1 و%d"
 
 msgid "dendrogram entries must be 1,2,..,%d (in any order), to be coercible to \"hclust\""
-msgstr ""
+msgstr "مخطط شجري المدخلات يجب أن يكون 1,2,..,%d (في any order), إلى يكون coercible إلى \"hclust\""
 
 msgid "dendrogram node with non-positive #{branches}"
-msgstr ""
+msgstr "مخطط شجري node مع غير موجب #{branches}"
 
 msgid "midcache() of non-binary dendrograms only partly implemented"
-msgstr ""
+msgstr "midcache() لـ non-binary dendrograms فقط partly منفّذ"
 
 msgid "non-leaf subtree of length 0"
-msgstr ""
+msgstr "non-leaf subtree لـ length 0"
 
 msgid "'order.dendrogram' requires a dendrogram"
-msgstr ""
+msgstr "'order.dendrogram' requires مخطط شجري"
 
 msgid "'reorder.dendrogram' requires a dendrogram"
-msgstr ""
+msgstr "'reorder.dendrogram' requires مخطط شجري"
 
 msgid "invalid (length 0) node in dendrogram"
-msgstr ""
+msgstr "(length 0) node in dendrogram غير صالح"
 
 msgid "dendrogram non-leaf node with non-positive #{branches}"
-msgstr ""
+msgstr "مخطط شجري non-leaf node مع غير موجب #{branches}"
 
 msgid "'height' must be at least %g, the maximal height of its components"
-msgstr ""
+msgstr "يجب أن يكون 'height' على الأقل %g, maximal height لـ its components"
 
 msgid "'X' is not a dendrogram"
-msgstr ""
+msgstr "'X' ليس  مخطط شجري"
 
 msgid "'x' must be a numeric matrix"
-msgstr ""
+msgstr "يجب أن يكون 'x' مصفوفة رقمية"
 
 msgid "'x' must have at least 2 rows and 2 columns"
-msgstr ""
+msgstr "يجب أن يحتوي 'x' على على الأقل 2 الصفوف و 2 الأعمدة"
 
 msgid "'margins' must be a numeric vector of length 2"
-msgstr ""
+msgstr "يجب أن يكون 'margins'  متجه رقمي بطول 2"
 
 msgid "row dendrogram ordering gave index of wrong length"
-msgstr ""
+msgstr "صف مخطط شجري ordering gave index لـ طول غير صحيح"
 
 msgid "Colv = \"Rowv\" but nrow(x) != ncol(x)"
-msgstr ""
+msgstr "Colv = \"Rowv\" لكن nrow(x) != ncol(x)"
 
 msgid "column dendrogram ordering gave index of wrong length"
-msgstr ""
+msgstr "عمود مخطط شجري ordering gave index لـ طول غير صحيح"
 
 msgid "'ColSideColors' must be a character vector of length ncol(x)"
-msgstr ""
+msgstr "يجب أن يكون 'ColSideColors'  متجه نصي لـ length ncol(x)"
 
 msgid "'RowSideColors' must be a character vector of length nrow(x)"
-msgstr ""
+msgstr "يجب أن يكون 'RowSideColors'  متجه نصي لـ length nrow(x)"
 
 msgid "argument 'x' must be numeric"
-msgstr ""
+msgstr "يجب أن يكون الوسيط 'x' رقميًا"
 
 msgid "'x' and 'weights' have unequal length"
-msgstr ""
+msgstr "'x' و 'weights' have unequal length"
 
 msgid "'x' contains missing values"
-msgstr ""
+msgstr "'x' contains مفقود القيم"
 
 msgid "'weights' must all be finite"
-msgstr ""
+msgstr "'weights' must جميع يكون منتهية"
 
 msgid "'weights' must not be negative"
-msgstr ""
+msgstr "'weights' يجب ألا يكون سالب"
 
 msgid "sum(weights) != 1  -- will not get true density"
-msgstr ""
+msgstr "sum(weights) != 1 -- will ليس get true density"
 
 msgid "need at least 2 points to select a bandwidth automatically"
-msgstr ""
+msgstr "يلزم على الأقل 2 points إلى select عرض النطاق automatically"
 
 msgid "Selecting bandwidth *not* using 'weights'"
-msgstr ""
+msgstr "Selecting عرض النطاق *ليس* استخدام 'weights'"
 
 msgid "unknown bandwidth rule"
-msgstr ""
+msgstr "قاعدة bandwidth غير معروفة"
 
 msgid "non-finite 'bw'"
-msgstr ""
+msgstr "غير منتهية 'bw'"
 
 msgid "'bw' is not positive."
-msgstr ""
+msgstr "'bw' ليس موجب."
 
 msgid "non-finite 'from'"
-msgstr ""
+msgstr "غير منتهية 'from'"
 
 msgid "non-finite 'to'"
-msgstr ""
+msgstr "غير منتهية 'to'"
 
 msgid "invalid formula in deriv"
-msgstr ""
+msgstr "formula in deriv غير صالح"
 
 msgid "'x' is not a vector"
-msgstr ""
+msgstr "'x' ليس متجهًا"
 
 msgid "bad value for 'lag' or 'differences'"
-msgstr ""
+msgstr "bad قيمة لـ 'lag' أو 'differences'"
 
 msgid "'xi' does not have the right length"
-msgstr ""
+msgstr "'xi' does ليس have right length"
 
 msgid "incorrect dimensions for 'xi'"
-msgstr ""
+msgstr "أبعاد غير صحيحة لـ 'xi'"
 
 msgid "'x' is not a vector or matrix"
-msgstr ""
+msgstr "'x' ليس متجهًا أو مصفوفة"
 
 msgid "x[1] != r[1]; using x[1] for diagonal"
-msgstr ""
+msgstr "x[1] != r[1]; استخدام x[1] لـ القطر"
 
 msgid "invalid distance method"
-msgstr ""
+msgstr "distance method غير صالح"
 
 msgid "ambiguous distance method"
-msgstr ""
+msgstr "ملتبس مسافة طريقة"
 
 msgid "non-square matrix"
-msgstr ""
+msgstr "non-مربعة مصفوفة"
 
 msgid "specify 'rate' or 'scale' but not both"
-msgstr ""
+msgstr "specify 'rate' أو 'scale' لكن ليس كلا"
 
 msgid "x[] and prob[] must be equal length vectors."
-msgstr ""
+msgstr "x[] و prob[] يجب أن يكون equal length vectors."
 
 msgid "probabilities must be finite, non-negative and not all 0"
-msgstr ""
+msgstr "الاحتمالات يجب أن يكون منتهية, غير سالب و ليس جميع 0"
 
 msgid "'x' must be non-negative"
-msgstr ""
+msgstr "يجب أن يكون 'x' غير سالب"
 
 msgid "size != sum(x), i.e. one is wrong"
-msgstr ""
+msgstr "الحجم != sum(x), i.e. one هو غير صحيح"
 
 msgid "'prob' and 'mu' both specified"
-msgstr ""
+msgstr "'prob' و 'mu' كلا محدد"
 
 msgid "some terms will have NAs due to the limits of the method"
-msgstr ""
+msgstr "بعض terms will have NAs due إلى limits لـ طريقة"
 
 msgid "multivariate case with missing coefficients is not yet implemented"
-msgstr ""
+msgstr "لم يتم تنفيذ multivariate case مع مفقود المعاملات هو بعد"
 
 msgid "'x' must have 1 or more non-missing values"
-msgstr ""
+msgstr "يجب أن يحتوي 'x' على 1 أو more non-مفقود القيم"
 
 msgid "wrong embedding dimension"
-msgstr ""
+msgstr "غير صحيح embedding البُعد"
 
 msgid "'covmat' is not a valid covariance list"
-msgstr ""
+msgstr "'covmat' ليس صالحًا التغاير قائمة"
 
 msgid "neither 'x' nor 'covmat' supplied"
-msgstr ""
+msgstr "neither 'x' nor 'covmat' مقدم"
 
 msgid "response not allowed in formula"
-msgstr ""
+msgstr "استجابة غير مسموح في صيغة"
 
 msgid "factor analysis applies only to numerical variables"
-msgstr ""
+msgstr "تحليل العوامل applies فقط إلى numerical المتغيرات"
 
 msgid "'covmat' is of unknown type"
-msgstr ""
+msgstr "'covmat' هو لـ غير معروف type"
 
 msgid "requested scores without an 'x' matrix"
-msgstr ""
+msgstr "requested الدرجات دون 'x' مصفوفة"
 
 msgid "factor analysis requires at least three variables"
-msgstr ""
+msgstr "تحليل العوامل requires على الأقل three المتغيرات"
 
 msgid "no starting values supplied"
-msgstr ""
+msgstr "لا يوجد قيم البدء مقدم"
 
-#, fuzzy
 msgid "invalid argument '%s'"
-msgstr "قيمة غير صالحة %sس"
+msgstr "غير صالح وسيط '%s'"
 
 msgid "%s link not recognised"
-msgstr ""
+msgstr "%s link غير معروف"
 
 msgid "link \"%s\" not available for %s family; available links are %s"
-msgstr ""
+msgstr "link \"%s\" غير متاح لـ %s family; متاح links هي %s"
 
 msgid "negative values not allowed for the 'Poisson' family"
-msgstr ""
+msgstr "سالب القيم غير مسموح لـ 'Poisson' family"
 
 msgid "ignoring prior weights"
-msgstr ""
+msgstr "ignoring prior الأوزان"
 
 msgid "negative values not allowed for the 'quasiPoisson' family"
-msgstr ""
+msgstr "سالب القيم غير مسموح لـ 'quasiPoisson' family"
 
 msgid "cannot find valid starting values: please specify some"
-msgstr ""
+msgstr "لا يمكن العثور على صالح قيم البدء: يرجى specify بعض"
 
 msgid "y values must be 0 <= y <= 1"
-msgstr ""
+msgstr "y القيم يجب أن يكون 0 <= y <= 1"
 
 msgid "non-integer #successes in a %s glm!"
-msgstr ""
+msgstr "non-عدد صحيح #النجاحات في %s glm!"
 
 msgid "non-integer counts in a %s glm!"
-msgstr ""
+msgstr "non-عدد صحيح العدّادات في %s glm!"
 
 msgid ""
 "for the '%s' family, y must be a vector of 0 and 1's\n"
 "or a 2 column matrix where col 1 is no. successes and col 2 is no. failures"
 msgstr ""
+"لـ '%s' family, y يجب أن يكون متجهًا لـ 0 و 1's\n"
+"أو 2 عمود مصفوفة where col 1 هو no. النجاحات و col 2 هو no. الإخفاقات"
 
 msgid "cannot simulate from non-integer prior.weights"
-msgstr ""
+msgstr "لا يمكن المحاكاة من من non-عدد صحيح prior.الأوزان"
 
 msgid "non-positive values not allowed for the 'Gamma' family"
-msgstr ""
+msgstr "غير موجب القيم غير مسموح لـ 'Gamma' family"
 
 msgid "using weights as shape parameters"
-msgstr ""
+msgstr "استخدام الأوزان مثل shape معاملات"
 
 msgid "positive values only are allowed for the 'inverse.gaussian' family"
-msgstr ""
+msgstr "موجب القيم فقط هي مسموح لـ 'inverse.gaussian' family"
 
 msgid "need CRAN package 'SuppDists' for simulation from the 'inverse.gaussian' family"
-msgstr ""
+msgstr "يلزم CRAN package 'SuppDists' لـ المحاكاة من 'inverse.gaussian' family"
 
 msgid "using weights as inverse variances"
-msgstr ""
+msgstr "استخدام الأوزان مثل inverse variances"
 
 msgid "'variance' \"%s\" is invalid: possible values are \"mu(1-mu)\", \"mu\", \"mu^2\", \"mu^3\" and \"constant\""
-msgstr ""
+msgstr "'variance' \"%s\" هو غير صالح: possible القيم هي \"mu(1-mu)\", \"mu\", \"mu^2\", \"mu^3\" و \"constant\""
 
 msgid "length mismatch in convolution"
-msgstr ""
+msgstr "length mismatch في convolution"
 
 msgid "missing values in 'filter'"
-msgstr ""
+msgstr "مفقود القيم في 'filter'"
 
 msgid "'filter' is longer than time series"
-msgstr ""
+msgstr "'filter' هو longer من السلسلة الزمنية"
 
 msgid "argument 'sides' must be 1 or 2"
-msgstr ""
+msgstr "يجب أن يكون الوسيط 'sides' 1 أو 2"
 
 msgid "'circular' must be logical and not NA"
-msgstr ""
+msgstr "يجب أن يكون 'circular' منطقي و ليس NA"
 
 msgid "length of 'init' must equal length of 'filter'"
-msgstr ""
+msgstr "length لـ 'init' must equal length لـ 'filter'"
 
 msgid "'x' must have at least 2 rows and columns"
-msgstr ""
+msgstr "يجب أن يحتوي 'x' على على الأقل 2 الصفوف و الأعمدة"
 
 msgid "'x' has entries too large to be integer"
-msgstr ""
+msgstr "'x' يحتوي على مدخلات too large إلى يكون عدد صحيح"
 
 msgid "'x' has been rounded to integer: %s"
-msgstr ""
+msgstr "'x' تم تقريبها إلى عدد صحيح: %s"
 
 msgid "if 'x' is not a matrix, 'y' must be given"
-msgstr ""
+msgstr "if 'x' ليس مصفوفة, 'y' يجب أن يكون given"
 
 msgid "'mult' must be integer >= 2, typically = 30"
-msgstr ""
+msgstr "يجب أن يكون 'mult' عدد صحيح >= 2, typically = 30"
 
 msgid "alternative must be \"two.sided\", \"less\" or \"greater\""
-msgstr ""
+msgstr "alternative يجب أن يكون \"two.sided\", \"less\" أو \"greater\""
 
 msgid "'or' must be a single number between 0 and Inf"
-msgstr ""
+msgstr "يجب أن يكون 'or' عددًا واحدًا بين 0 و Inf"
 
 msgid "need 2 or more non-zero row marginals"
-msgstr ""
+msgstr "يلزم 2 أو more non-صفر صف المجاميع الهامشية"
 
 msgid "need 2 or more non-zero column marginals"
-msgstr ""
+msgstr "يلزم 2 أو more non-صفر عمود المجاميع الهامشية"
 
 msgid "names(hybridPars) should be NULL or be identical to the default's"
-msgstr ""
+msgstr "names(hybridPars) ينبغي أن يكون NULL أو يكون identical إلى default's"
 
 msgid "'hybrid' is ignored for a 2 x 2 table"
-msgstr ""
+msgstr "'hybrid' هو تم تجاهله لـ 2 x 2 جدول"
 
 msgid "'pval.only' and 'conf.int' may not both be true"
-msgstr ""
+msgstr "'pval.only' و 'conf.int' لا يجوز كلا يكون true"
 
 msgid "all groups must contain data"
-msgstr ""
+msgstr "جميع المجموعات يجب أن يحتوي البيانات"
 
 msgid "not enough observations"
+msgstr "لا توجد الملاحظات كافية"
+
+msgid "computing Newton updated failed in %s"
 msgstr ""
 
 msgid "incorrect dimensions"
-msgstr ""
+msgstr "أبعاد غير صحيحة"
 
 msgid "at least two response categories required"
-msgstr ""
+msgstr "على الأقل two استجابة فئات مطلوب"
 
 msgid "at least two groups required"
-msgstr ""
+msgstr "على الأقل two المجموعات مطلوب"
 
 msgid "%s currently only allows independent right-censoring"
-msgstr ""
+msgstr "%s حاليًا فقط يسمح بـ الحجب الأيمن المستقل"
 
 msgid "error computing the Hessian in %s"
-msgstr ""
-
-msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
-msgstr ""
-
-msgid "unsuccessful optimisation in %s"
-msgstr ""
-
-msgid "incompatible length of argument 'mu' in %s"
-msgstr ""
-
-msgid "cannot compute exact permutation distribution in %s"
-msgstr ""
-
-msgid "cannot compute one-sided p-values in %s"
-msgstr ""
-
-msgid "permutation confidence intervals only available for 2-sample comparisons in %s"
-msgstr ""
-
-msgid "failed to compute confidence interval in %s"
-msgstr ""
-
-msgid "incorrect specification for '%s'"
-msgstr ""
-
-msgid "cannot have both a 'Surv()' response and an 'event' argument in %s"
-msgstr ""
-
-msgid "incorrect argument 'groups' in %s: at least two groups needed"
-msgstr ""
-
-msgid "%s is not defined for unordered responses"
-msgstr ""
-
-msgid "incorrect number of columns for 'prob' in %s"
-msgstr ""
-
-msgid "exactly one of 'n', 'delta', 'power', and 'sig.level' must be NULL"
-msgstr ""
-
-msgid "effect size can only be computed for two-sample problems in %s"
-msgstr ""
-
-msgid "%s only allows two-sided alternatives in the presence of more than two groups"
-msgstr ""
-
-msgid "NAs are not allowed in 'groups' or 'blocks'"
-msgstr ""
-
-msgid "'y', 'groups' and 'blocks' must have the same length"
-msgstr ""
-
-msgid "not an unreplicated complete block design"
-msgstr ""
-
-msgid "'formula' missing"
-msgstr ""
-
-msgid "nothing to tabulate"
-msgstr ""
-
-msgid "'formula' must have both left and right hand sides"
-msgstr ""
-
-msgid "interactions are not allowed"
-msgstr ""
-
-msgid "'formula' has '.' in both left and right hand sides"
-msgstr ""
-
-msgid "incorrect variable names in rhs of formula"
-msgstr ""
-
-msgid "incorrect variable names in lhs of formula"
-msgstr ""
-
-msgid "cannot use dots in formula with given data"
-msgstr ""
-
-msgid "'x' must be an \"ftable\" object"
-msgstr ""
-
-msgid "wrong method"
-msgstr ""
-
-msgid "'file' must be a character string or connection"
-msgstr ""
-
-msgid "'row.var.names' missing"
-msgstr ""
-
-msgid "'col.vars' missing or incorrect"
-msgstr ""
-
-msgid "Parameter:"
-msgstr ""
-
-msgid "down"
-msgstr ""
-
-msgid "up"
-msgstr ""
-
-msgid "profiling has found a better solution, so original fit had not converged"
-msgstr ""
-
-msgid "'family' not recognized"
-msgstr ""
-
-msgid "invalid 'method' argument"
-msgstr ""
-
-msgid "'weights' must be a numeric vector"
-msgstr ""
-
-msgid "negative weights not allowed"
-msgstr ""
-
-msgid "number of offsets is %d should equal %d (number of observations)"
-msgstr ""
-
-msgid "fitting to calculate the null deviance did not converge -- increase 'maxit'?"
-msgstr ""
-
-msgid "value of 'epsilon' must be > 0"
-msgstr ""
-
-msgid "maximum number of iterations must be > 0"
-msgstr ""
-
-msgid "'family' argument seems not to be a valid family object"
-msgstr ""
-
-msgid "invalid linear predictor values in empty model"
-msgstr ""
-
-msgid "invalid fitted means in empty model"
-msgstr ""
-
-msgid "length of 'start' should equal %d and correspond to initial coefs for %s"
-msgstr ""
-
-msgid "NAs in V(mu)"
-msgstr ""
-
-msgid "0s in V(mu)"
-msgstr ""
-
-msgid "NAs in d(mu)/d(eta)"
-msgstr ""
-
-msgid "no observations informative at iteration %d"
-msgstr ""
-
-msgid "non-finite coefficients at iteration %d"
-msgstr ""
-
-msgid "singular fit encountered"
-msgstr ""
-
-msgid "no valid set of coefficients has been found: please supply starting values"
-msgstr ""
-
-msgid "step size truncated due to divergence"
-msgstr ""
-
-msgid "inner loop 1; cannot correct step size"
-msgstr ""
-
-msgid "step size truncated: out of bounds"
-msgstr ""
-
-msgid "inner loop 2; cannot correct step size"
-msgstr ""
-
-msgid "glm.fit: algorithm did not converge"
-msgstr ""
-
-msgid "glm.fit: algorithm stopped at boundary value"
-msgstr ""
-
-msgid "glm.fit: fitted probabilities numerically 0 or 1 occurred"
-msgstr ""
-
-msgid "glm.fit: fitted rates numerically 0 occurred"
-msgstr ""
-
-msgid "the following arguments to 'anova.glm' are invalid and dropped:"
-msgstr ""
-
-msgid ","
-msgstr ""
-
-msgid "using F test with a '%s' family is inappropriate"
-msgstr ""
-
-msgid "using F test with a fixed dispersion is inappropriate"
-msgstr ""
-
-msgid "models with response %s removed because response differs from model 1"
-msgstr ""
-
-msgid "models were not all fitted to the same size of dataset"
-msgstr ""
-
-msgid "observations with zero weight not used for calculating dispersion"
-msgstr ""
-
-msgid "The \"ward\" method has been renamed to \"ward.D\"; note new \"ward.D2\""
-msgstr ""
-
-msgid "invalid clustering method"
-msgstr ""
-
-msgid "ambiguous clustering method"
-msgstr ""
-
-msgid "invalid dissimilarities"
-msgstr ""
-
-msgid "size cannot be NA nor exceed 65536"
-msgstr ""
-
-msgid "must have n >= 2 objects to cluster"
-msgstr ""
-
-msgid "invalid length of members"
-msgstr ""
-
-msgid "argument 'x' cannot be coerced to class %s"
-msgstr ""
-
-msgid "Consider providing an as.hclust.%s() method"
-msgstr ""
-
-msgid "need dendrograms where all leaves have labels"
-msgstr ""
-
-msgid "'k' and 'h' must be a scalar"
-msgstr ""
-
-msgid "specify exactly one of 'k' and 'h'"
-msgstr ""
-
-msgid "k must be between 2 and %d"
-msgstr ""
-
-msgid "specify exactly one of 'which' and 'x'"
-msgstr ""
-
-msgid "all elements of 'which' must be between 1 and %d"
-msgstr ""
-
-msgid "invalid parameter values"
-msgstr ""
-
-msgid "a limit is NA or NaN"
-msgstr ""
-
-msgid "missing values not allowed"
-msgstr ""
-
-msgid "'r' is less than 1"
-msgstr ""
-
-msgid "'m' is less than 1"
-msgstr ""
-
-msgid "'r' is less than 0"
-msgstr ""
-
-msgid "'m' must be numeric with non-negative integers"
-msgstr ""
-
-msgid "unknown named kernel"
-msgstr ""
-
-msgid "'coef' must be a vector"
-msgstr ""
-
-msgid "'coef' does not have the correct length"
-msgstr ""
-
-msgid "coefficients do not add to 1"
-msgstr ""
-
-msgid "'k' is not a kernel"
-msgstr ""
-
-msgid "'x' is shorter than kernel 'k'"
-msgstr ""
-
-msgid "'kernapply' is not available for object 'x'"
-msgstr ""
-
-msgid "'x' is not a kernel"
-msgstr ""
-
-msgid "empty cluster: try a better set of initial centers"
-msgstr ""
-
-msgid "number of cluster centres must lie between 1 and nrow(x)"
-msgstr ""
-
-msgid "Quick-TRANSfer stage steps exceeded maximum (= %d)"
-msgstr ""
-
-msgid "invalid nrow(x)"
-msgstr ""
-
-msgid "invalid ncol(x)"
-msgstr ""
-
-msgid "'centers' must be a number or a matrix"
-msgstr ""
-
-msgid "more cluster centers than distinct data points."
-msgstr ""
-
-msgid "initial centers are not distinct"
-msgstr ""
-
-msgid "more cluster centers than data points"
-msgstr ""
-
-msgid "'iter.max' must be positive"
-msgstr ""
-
-msgid "must have same number of columns in 'x' and 'centers'"
-msgstr ""
-
-msgid "'x' is a list, so ignoring argument 'g'"
-msgstr ""
-
-msgid "some elements of 'x' are not numeric and will be coerced to numeric"
-msgstr ""
-
-msgid "not enough 'x' data"
-msgstr ""
-
-msgid "Parameter(s)"
-msgstr ""
-
-msgid "ignored"
-msgstr ""
-
-msgid "not enough 'y' data"
-msgstr ""
-
-msgid "p-value will be approximate in the presence of ties"
-msgstr ""
-
-msgid "'y' must be numeric or a function or a string naming a valid function"
-msgstr ""
-
-msgid "ties should not be present for the one-sample Kolmogorov-Smirnov test"
-msgstr ""
+msgstr "خطأ في حساب هسيان في %s"
 
 #, fuzzy
+msgid "error computing the Hessian determinant in %s"
+msgstr "خطأ في حساب هسيان في %s"
+
+msgid "unsuccessful optimisation in %s"
+msgstr "غير ناجح التحسين في %s"
+
+msgid "incompatible length of argument 'mu' in %s"
+msgstr "طول غير متوافق لـ وسيط 'mu' في %s"
+
+msgid "cannot compute exact permutation distribution in %s"
+msgstr "لا يمكن حساب دقيق التبديل توزيع في %s"
+
+msgid "cannot compute one-sided p-values in %s"
+msgstr "لا يمكن حساب أحادية الطرف قيم p في %s"
+
+msgid "permutation confidence intervals only available for 2-sample comparisons in %s"
+msgstr "التبديل confidence intervals فقط متاح لـ 2-sample comparisons في %s"
+
+msgid "failed to compute confidence interval in %s"
+msgstr "فشل حساب فاصل الثقة في %s"
+
+msgid "incorrect specification for '%s'"
+msgstr "مواصفة غير صحيحة لـ '%s'"
+
+msgid "cannot have both a 'Surv()' response and an 'event' argument in %s"
+msgstr "لا يمكن وجود كلا 'Surv()' استجابة و 'event' وسيط في %s"
+
+msgid "incorrect argument 'groups' in %s: at least two groups needed"
+msgstr "غير صحيحة وسيط 'groups' في %s: على الأقل two المجموعات needed"
+
+msgid "%s is not defined for unordered responses"
+msgstr "%s ليس defined لـ استجابات غير مرتبة"
+
+msgid "incorrect number of columns for 'prob' in %s"
+msgstr "غير صحيحة عدد الأعمدة لـ 'prob' في %s"
+
+msgid "exactly one of 'n', 'delta', 'power', and 'sig.level' must be NULL"
+msgstr "واحد فقط من 'n', 'delta', 'power', و 'sig.level' يجب أن يكون NULL"
+
+msgid "effect size can only be computed for two-sample problems in %s"
+msgstr "حجم الأثر can فقط يكون محسوب لـ two-sample problems في %s"
+
+msgid "%s only allows two-sided alternatives in the presence of more than two groups"
+msgstr "%s فقط يسمح بـ ثنائية الطرف alternatives في وجود أكثر من two المجموعات"
+
+msgid "NAs are not allowed in 'groups' or 'blocks'"
+msgstr "NAs ليست مسموح في 'groups' أو 'blocks'"
+
+msgid "'y', 'groups' and 'blocks' must have the same length"
+msgstr "'y', 'groups' و 'blocks' يجب أن يحتوي الطول نفسه"
+
+msgid "not an unreplicated complete block design"
+msgstr "ليس كامل غير مكرر تصميم الكتل"
+
+msgid "'formula' missing"
+msgstr "'formula' مفقود"
+
+msgid "nothing to tabulate"
+msgstr "لا يوجد ما يمكن جدولة"
+
+msgid "'formula' must have both left and right hand sides"
+msgstr "'formula' يجب أن يحتوي كلا الطرفين الأيسر والأيمن"
+
+msgid "interactions are not allowed"
+msgstr "التفاعلات هي غير مسموح"
+
+msgid "'formula' has '.' in both left and right hand sides"
+msgstr "'formula' has '.' في كلا الطرفين الأيسر والأيمن"
+
+msgid "incorrect variable names in rhs of formula"
+msgstr "غير صحيحة أسماء المتغيرات في الطرف الأيمن لـ صيغة"
+
+msgid "incorrect variable names in lhs of formula"
+msgstr "غير صحيحة أسماء المتغيرات في الطرف الأيسر لـ صيغة"
+
+msgid "cannot use dots in formula with given data"
+msgstr "لا يمكن استخدام النقاط في صيغة مع البيانات المعطاة"
+
+msgid "'x' must be an \"ftable\" object"
+msgstr "يجب أن يكون 'x'  \"ftable\" كائن"
+
+msgid "wrong method"
+msgstr "غير صحيح طريقة"
+
+msgid "'file' must be a character string or connection"
+msgstr "يجب أن يكون 'file' سلسلة نصية أو اتصال"
+
+msgid "'row.var.names' missing"
+msgstr "'row.var.names' مفقود"
+
+msgid "'col.vars' missing or incorrect"
+msgstr "'col.vars' مفقود أو غير صحيح"
+
+msgid "Parameter:"
+msgstr "المعامل:"
+
+msgid "down"
+msgstr "أسفل"
+
+msgid "up"
+msgstr "أعلى"
+
+msgid "profiling has found a better solution, so original fit had not converged"
+msgstr "التنميط وجد حلًا أفضل, so الملاءمة الأصلية had ليس تقارب"
+
+msgid "'family' not recognized"
+msgstr "'family' غير معروف"
+
+msgid "invalid 'method' argument"
+msgstr "'method' غير صالح"
+
+msgid "'weights' must be a numeric vector"
+msgstr "يجب أن يكون 'weights' متجهًا رقميًا"
+
+msgid "negative weights not allowed"
+msgstr "سالب الأوزان غير مسموح"
+
+msgid "number of offsets is %d should equal %d (number of observations)"
+msgstr "عدد الإزاحات هو %d ينبغي أن يساوي %d (عدد الملاحظات)"
+
+msgid "fitting to calculate the null deviance did not converge -- increase 'maxit'?"
+msgstr "الملاءمة إلى calculate الانحراف الصفري لم يتقارب -- زيادة 'maxit'?"
+
+msgid "value of 'epsilon' must be > 0"
+msgstr "يجب أن يكون قيمة 'epsilon' > 0"
+
+msgid "maximum number of iterations must be > 0"
+msgstr "يجب أن يكون الحد الأقصى عدد تكرارات > 0"
+
+msgid "'family' argument seems not to be a valid family object"
+msgstr "'family' وسيط seems ليس إلى يكون صالحًا family كائن"
+
+msgid "invalid linear predictor values in empty model"
+msgstr "linear predictor values in empty model غير صالح"
+
+msgid "invalid fitted means in empty model"
+msgstr "fitted means in empty model غير صالح"
+
+msgid "length of 'start' should equal %d and correspond to initial coefs for %s"
+msgstr "length لـ 'start' ينبغي أن يساوي %d و correspond إلى initial المعاملات لـ %s"
+
+msgid "NAs in V(mu)"
+msgstr "NAs في V(mu)"
+
+msgid "0s in V(mu)"
+msgstr "0s في V(mu)"
+
+msgid "NAs in d(mu)/d(eta)"
+msgstr "NAs في d(mu)/d(eta)"
+
+msgid "no observations informative at iteration %d"
+msgstr "لا يوجد الملاحظات مفيدة at تكرار %d"
+
+msgid "non-finite coefficients at iteration %d"
+msgstr "غير منتهية المعاملات at تكرار %d"
+
+msgid "singular fit encountered"
+msgstr "مفرد ملاءمة تمت مواجهتها"
+
+msgid "no valid set of coefficients has been found: please supply starting values"
+msgstr "لا يوجد صالح مجموعة من المعاملات تم العثور عليها: يرجى تقديم قيم البدء"
+
+msgid "step size truncated due to divergence"
+msgstr "حجم الخطوة اقتُطع بسبب التباعد"
+
+msgid "inner loop 1; cannot correct step size"
+msgstr "الحلقة الداخلية 1; cannot تصحيح حجم الخطوة"
+
+msgid "step size truncated: out of bounds"
+msgstr "حجم الخطوة اقتُطع: خارج الحدود"
+
+msgid "inner loop 2; cannot correct step size"
+msgstr "الحلقة الداخلية 2; cannot تصحيح حجم الخطوة"
+
+msgid "glm.fit: algorithm did not converge"
+msgstr "glm.ملاءمة: الخوارزمية لم يتقارب"
+
+msgid "glm.fit: algorithm stopped at boundary value"
+msgstr "glm.ملاءمة: الخوارزمية توقفت عند قيمة حدية"
+
+msgid "glm.fit: fitted probabilities numerically 0 or 1 occurred"
+msgstr "glm.ملاءمة: الاحتمالات الملائمة عدديًا 0 أو 1 حدثت"
+
+msgid "glm.fit: fitted rates numerically 0 occurred"
+msgstr "glm.ملاءمة: المعدلات الملائمة عدديًا 0 حدثت"
+
+msgid "the following arguments to 'anova.glm' are invalid and dropped:"
+msgstr "التالية وسائط إلى 'anova.glm' هي غير صالح و سيتم إسقاطه:"
+
+msgid ","
+msgstr "،"
+
+msgid "using F test with a '%s' family is inappropriate"
+msgstr "استخدام F test مع '%s' family هو غير مناسب"
+
+msgid "using F test with a fixed dispersion is inappropriate"
+msgstr "استخدام F test مع fixed التشتت هو غير مناسب"
+
+msgid "models with response %s removed because response differs from model 1"
+msgstr "نماذج مع استجابة %s تمت إزالتها لأن استجابة تختلف عن نموذج 1"
+
+msgid "models were not all fitted to the same size of dataset"
+msgstr "نماذج were ليس جميع ملائمة لـ الحجم نفسه من مجموعة البيانات"
+
+msgid "observations with zero weight not used for calculating dispersion"
+msgstr "الملاحظات مع صفر وزن ليس مستخدمة لحساب التشتت"
+
+msgid "The \"ward\" method has been renamed to \"ward.D\"; note new \"ward.D2\""
+msgstr "\"ward\" طريقة تمت إعادة تسميته إلى \"ward.D\"; لاحظ الجديد \"ward.D2\""
+
+msgid "invalid clustering method"
+msgstr "clustering method غير صالح"
+
+msgid "ambiguous clustering method"
+msgstr "ملتبس العنقدة طريقة"
+
+msgid "invalid dissimilarities"
+msgstr "dissimilarities غير صالح"
+
+msgid "size cannot be NA nor exceed 65536"
+msgstr "الحجم لا يمكن أن يكون NA nor يتجاوز 65536"
+
+msgid "must have n >= 2 objects to cluster"
+msgstr "يجب أن يحتوي n >= 2 كائنات إلى عنقود"
+
+msgid "invalid length of members"
+msgstr "length of members غير صالح"
+
+msgid "argument 'x' cannot be coerced to class %s"
+msgstr "وسيط 'x' لا يمكن أن يكون تحويله قسريًا إلى صنف %s"
+
+msgid "Consider providing an as.hclust.%s() method"
+msgstr "Consider providing مثل.hclust.%s() طريقة"
+
+msgid "need dendrograms where all leaves have labels"
+msgstr "يلزم dendrograms where جميع leaves have labels"
+
+msgid "'k' and 'h' must be a scalar"
+msgstr "'k' و 'h' يجب أن يكون scalar"
+
+msgid "specify exactly one of 'k' and 'h'"
+msgstr "specify واحد فقط من 'k' و 'h'"
+
+msgid "k must be between 2 and %d"
+msgstr "يجب أن يكون k بين 2 و%d"
+
+msgid "specify exactly one of 'which' and 'x'"
+msgstr "specify واحد فقط من 'which' و 'x'"
+
+msgid "all elements of 'which' must be between 1 and %d"
+msgstr "يجب أن يكون جميع العناصر لـ 'which' بين 1 و%d"
+
+msgid "invalid parameter values"
+msgstr "parameter values غير صالح"
+
+msgid "a limit is NA or NaN"
+msgstr "limit هو NA أو NaN"
+
+msgid "missing values not allowed"
+msgstr "مفقود القيم غير مسموح"
+
+msgid "'r' is less than 1"
+msgstr "'r' هو أقل من 1"
+
+msgid "'m' is less than 1"
+msgstr "'m' هو أقل من 1"
+
+msgid "'r' is less than 0"
+msgstr "'r' هو أقل من 0"
+
+msgid "'m' must be numeric with non-negative integers"
+msgstr "يجب أن يكون 'm' رقمي مع غير سالب integers"
+
+msgid "unknown named kernel"
+msgstr "نواة named غير معروفة"
+
+msgid "'coef' must be a vector"
+msgstr "يجب أن يكون 'coef' متجهًا"
+
+msgid "'coef' does not have the correct length"
+msgstr "'coef' does ليس have تصحيح length"
+
+msgid "coefficients do not add to 1"
+msgstr "المعاملات do ليس add إلى 1"
+
+msgid "'k' is not a kernel"
+msgstr "'k' ليس  نواة"
+
+msgid "'x' is shorter than kernel 'k'"
+msgstr "'x' هو shorter من نواة 'k'"
+
+msgid "'kernapply' is not available for object 'x'"
+msgstr "'kernapply' ليس متاح لـ كائن 'x'"
+
+msgid "'x' is not a kernel"
+msgstr "'x' ليس  نواة"
+
+msgid "empty cluster: try a better set of initial centers"
+msgstr "فارغ عنقود: try better مجموعة من initial centers"
+
+msgid "number of cluster centres must lie between 1 and nrow(x)"
+msgstr "عدد مراكز العناقيد must lie بين 1 و nrow(x)"
+
+msgid "Quick-TRANSfer stage steps exceeded maximum (= %d)"
+msgstr "Quick-TRANSfer stage steps exceeded الحد الأقصى (= %d)"
+
+msgid "invalid nrow(x)"
+msgstr "nrow(x) غير صالح"
+
+msgid "invalid ncol(x)"
+msgstr "ncol(x) غير صالح"
+
+msgid "'centers' must be a number or a matrix"
+msgstr "يجب أن يكون 'centers'  عدد أو مصفوفة"
+
+msgid "more cluster centers than distinct data points."
+msgstr "more مراكز العناقيد من distinct نقاط بيانات."
+
+msgid "initial centers are not distinct"
+msgstr "initial centers ليست distinct"
+
+msgid "more cluster centers than data points"
+msgstr "more مراكز العناقيد من نقاط بيانات"
+
+msgid "'iter.max' must be positive"
+msgstr "يجب أن يكون 'iter.max' موجبًا"
+
+msgid "must have same number of columns in 'x' and 'centers'"
+msgstr "يجب أن يحتوي العدد نفسه لـ الأعمدة في 'x' و 'centers'"
+
+msgid "'x' is a list, so ignoring argument 'g'"
+msgstr "'x' هو قائمة, so ignoring وسيط 'g'"
+
+msgid "some elements of 'x' are not numeric and will be coerced to numeric"
+msgstr "بعض العناصر لـ 'x' ليست رقمي و will يكون تحويله قسريًا إلى رقمي"
+
+msgid "not enough 'x' data"
+msgstr "لا توجد 'x' البيانات كافية"
+
+msgid "Parameter(s)"
+msgstr "المعاملات"
+
+msgid "ignored"
+msgstr "تم تجاهله"
+
+msgid "not enough 'y' data"
+msgstr "لا توجد 'y' البيانات كافية"
+
+msgid "p-value will be approximate in the presence of ties"
+msgstr "قيمة p will يكون تقريبي في وجود القيم المتعادلة"
+
+msgid "'y' must be numeric or a function or a string naming a valid function"
+msgstr "يجب أن يكون 'y' رقمي أو دالة أو سلسلة naming صالحًا دالة"
+
+msgid "ties should not be present for the one-sample Kolmogorov-Smirnov test"
+msgstr "القيم المتعادلة should ليس يكون present لـ one-sample Kolmogorov-Smirnov test"
+
 msgid "invalid arguments"
-msgstr "قيمة غير صالحة %sس"
+msgstr "وسائط غير صالح"
 
 msgid "argument 'sizes' must be a vector of length 2"
-msgstr ""
+msgstr "يجب أن يكون الوسيط 'sizes' متجهًا بطول 2"
 
 msgid "argument 'q' must be numeric"
-msgstr ""
+msgstr "يجب أن يكون الوسيط 'q' رقميًا"
 
 msgid "computation of exact probability failed, returning Monte Carlo approximation"
-msgstr ""
+msgstr "computation لـ الاحتمال الدقيق failed, سيتم إرجاع تقريب مونت كارلو"
 
 msgid "argument 'p' must be numeric"
-msgstr ""
+msgstr "يجب أن يكون الوسيط 'p' رقميًا"
 
 msgid ""
 "numeric y must be supplied.\n"
 "For density estimation use density()"
 msgstr ""
+"رقمي y يجب أن يكون مقدم.\n"
+"لـ density estimation use density()"
 
 msgid "'k' is not an integer"
-msgstr ""
+msgstr "'k' ليس عددًا صحيحًا"
 
 msgid "method = '%s' is not supported. Using 'qr'"
-msgstr ""
+msgstr "طريقة = '%s' ليس supported. استخدام 'qr'"
 
 msgid "number of offsets is %d, should equal %d (number of observations)"
-msgstr ""
+msgstr "عدد الإزاحات هو %d, ينبغي أن يساوي %d (عدد الملاحظات)"
 
 msgid "'x' must be a matrix"
-msgstr ""
+msgstr "يجب أن يكون 'x' مصفوفة"
 
 msgid "0 (non-NA) cases"
-msgstr ""
+msgstr "0 (non-NA) cases"
 
 msgid "incompatible dimensions"
-msgstr ""
+msgstr "incompatible الأبعاد"
 
 msgid "missing or negative weights not allowed"
+msgstr "مفقود أو سالب الأوزان غير مسموح"
+
+msgid "weights smaller than tolerance wtol*sum(w) = %g treated as zero"
 msgstr ""
 
 msgid "invalid 'lm' object:  no 'terms' component"
-msgstr ""
+msgstr "غير صالح 'lm' كائن: no 'terms' component"
 
 msgid "calling summary.lm(<fake-lm-object>) ..."
-msgstr ""
+msgstr "calling summary.lm(<fake-lm-object>) ..."
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
-msgstr ""
+msgstr "باقٍ درجات الحرية في كائن suggest this ليس  \"lm\" ملاءمة"
 
 msgid "essentially perfect fit: summary may be unreliable"
-msgstr ""
+msgstr "essentially ملاءمة مثالية: summary may يكون unreliable"
 
 msgid ""
 "lm object does not have a proper 'qr' component.\n"
 " Rank zero or should not have used lm(.., qr=FALSE)."
 msgstr ""
+"lm كائن does ليس have proper 'qr' component.\n"
+" الرتبة صفر أو should ليس have used lm(.., qr=FALSE)."
 
 msgid "simulate() is not yet implemented for multivariate lm()"
-msgstr ""
+msgstr "simulate() ليس yet منفّذ لـ multivariate lm()"
 
 msgid "family '%s' not implemented"
-msgstr ""
+msgstr "family '%s' ليس منفّذ"
 
 msgid "calling anova.lm(<fake-lm-object>) ..."
-msgstr ""
+msgstr "calling anova.lm(<fake-lm-object>) ..."
 
 msgid "ANOVA F-tests on an essentially perfect fit are unreliable"
-msgstr ""
+msgstr "ANOVA F-tests on essentially ملاءمة مثالية هي unreliable"
 
 msgid "calling predict.lm(<fake-lm-object>) ..."
-msgstr ""
+msgstr "calling predict.lm(<fake-lm-object>) ..."
 
 msgid "prediction from rank-deficient fit"
-msgstr ""
+msgstr "التنبؤ من الرتبة-deficient ملاءمة"
 
 msgid "%s; consider predict(., rankdeficient=\"NA\")"
-msgstr ""
+msgstr "%s; consider predict(., rankdeficient=\"NA\")"
 
 msgid "lower-rank qr: determining non-estimable cases"
-msgstr ""
+msgstr "الحد الأدنى-الرتبة qr: determining non-estimable cases"
 
 msgid "%s; attr(*, \"non-estim\") has doubtful cases"
-msgstr ""
+msgstr "%s; attr(*, \"non-estim\") has doubtful cases"
 
 msgid "%s: NAs produced for non-estimable cases"
-msgstr ""
+msgstr "%s: NAs produced لـ non-estimable cases"
 
 msgid "predictions on current data refer to _future_ responses"
-msgstr ""
+msgstr "التنبؤات on current البيانات refer إلى _future_ استجابات"
 
 msgid "assuming prediction variance inversely proportional to weights used for fitting"
-msgstr ""
+msgstr "سيتم افتراض التنبؤ التباين inversely proportional إلى الأوزان used لـ الملاءمة"
 
 msgid "Assuming constant prediction variance even though model fit is weighted"
-msgstr ""
+msgstr "سيتم افتراض constant التنبؤ التباين even though نموذج ملاءمة هو weighted"
 
 msgid "'weights' as formula should be one-sided"
-msgstr ""
+msgstr "'weights' مثل صيغة ينبغي أن يكون أحادية الطرف"
 
 msgid "'object' has no 'effects' component"
-msgstr ""
+msgstr "'object' لا يحتوي على 'effects' component"
 
 msgid "the 'se.fit' argument is not yet implemented for \"mlm\" objects"
-msgstr ""
+msgstr "'se.fit' وسيط ليس yet منفّذ لـ \"mlm\" كائنات"
 
 msgid "invalid model QR matrix"
-msgstr ""
+msgstr "model QR matrix غير صالح"
 
 msgid "non-NA residual length does not match cases used in fitting"
-msgstr ""
+msgstr "non-NA باقٍ length غير متطابق cases used في الملاءمة"
 
 msgid "too few cases i with h_ii > 0), n < k"
-msgstr ""
+msgstr "عدد cases i مع h_ii > 0), n < k قليل جدًا"
 
 msgid "predictors must all be numeric"
-msgstr ""
+msgstr "المتنبئات must جميع يكون رقمي"
 
 msgid "'degree' must be 0, 1 or 2"
-msgstr ""
+msgstr "يجب أن يكون 'degree' 0, 1 أو 2"
 
 msgid "both 'span' and 'enp.target' specified: 'span' will be used"
-msgstr ""
+msgstr "كلا 'span' و 'enp.target' محدد: 'span' will يكون used"
 
 msgid "invalid 'control' argument"
-msgstr ""
+msgstr "'control' غير صالح"
 
 msgid "invalid NCOL(X)"
-msgstr ""
+msgstr "NCOL(X) غير صالح"
 
 msgid "only 1-4 predictors are allowed"
-msgstr ""
+msgstr "فقط 1-4 المتنبئات هي مسموح"
 
 msgid "invalid NROW(X)"
-msgstr ""
+msgstr "NROW(X) غير صالح"
 
 msgid "invalid 'y'"
-msgstr ""
+msgstr "'y' غير صالح"
 
 msgid "specified the square of a factor predictor to be dropped when degree = 1"
-msgstr ""
+msgstr "محدد مربعة لـ عاملًا متنبئ إلى يكون سيتم إسقاطه when degree = 1"
 
 msgid "specified the square of a predictor to be dropped with only one numeric predictor"
-msgstr ""
+msgstr "محدد مربعة لـ متنبئ إلى يكون سيتم إسقاطه مع فقط one رقمي متنبئ"
 
 msgid "specified parametric for all predictors"
-msgstr ""
+msgstr "محدد parametric لـ جميع المتنبئات"
 
 msgid "iterTrace = %d is not obeyed since iterations = %d"
-msgstr ""
+msgstr "iterTrace = %d ليس obeyed since تكرارات = %d"
 
 msgid "first argument must be a \"loess\" object"
-msgstr ""
+msgstr "first وسيط يجب أن يكون \"loess\" كائن"
 
 msgid "no models to compare"
-msgstr ""
+msgstr "لا يوجد نماذج إلى compare"
 
 msgid "extra arguments discarded"
 msgstr "تم تجاهل الحجج الإضافية"
 
 msgid "'logLik.lm' does not support multiple responses"
-msgstr ""
+msgstr "'logLik.lm' does ليس support multiple استجابات"
 
 msgid "no \"nobs\" attribute is available"
-msgstr ""
+msgstr "لا يوجد \"nobs\" attribute هو متاح"
 
 msgid "no 'nobs' method is available"
-msgstr ""
+msgstr "لا يوجد 'nobs' طريقة هو متاح"
 
 msgid "'margin' must contain names or numbers corresponding to 'table'"
-msgstr ""
+msgstr "'margin' يجب أن يحتوي أسماء أو أعداد corresponding إلى 'table'"
 
 msgid "'start' and 'table' must be same length"
-msgstr ""
+msgstr "'start' و 'table' يجب أن يكون الطول نفسه"
 
 msgid "number of weights = %d should equal %d (number of responses)"
-msgstr ""
+msgstr "عدد الأوزان = %d ينبغي أن يساوي %d (عدد استجابات)"
 
 msgid "'X' matrix was collinear"
-msgstr ""
+msgstr "'X' مصفوفة was مترافق خطيًا"
 
 msgid "missing observations deleted"
-msgstr ""
+msgstr "مفقود الملاحظات deleted"
 
 msgid "observations with 0 weight not used in calculating standard deviation"
-msgstr ""
+msgstr "الملاحظات مع 0 وزن غير مستخدمة في calculating standard deviation"
 
 msgid "observations with 0 weights not used"
-msgstr ""
+msgstr "الملاحظات مع 0 الأوزان غير مستخدمة"
 
 msgid "'low' and 'high' cannot be both TRUE"
-msgstr ""
+msgstr "'low' و 'high' لا يمكن أن يكون كلا TRUE"
 
 msgid "need multiple responses"
-msgstr ""
+msgstr "يلزم multiple استجابات"
 
 msgid "object must be of class %s or %s"
-msgstr ""
+msgstr "كائن يجب أن يكون لـ صنف %s أو %s"
 
 msgid "residuals have rank %d < %d"
-msgstr ""
+msgstr "البواقي have الرتبة %d < %d"
 
 msgid "NAs are not allowed"
-msgstr ""
+msgstr "NAs هي غير مسموح"
 
 msgid "each dimension in table must be >= 2"
-msgstr ""
+msgstr "يجب أن يكون each البُعد في جدول >= 2"
 
 msgid "'x' must be a 3-dimensional array"
-msgstr ""
+msgstr "يجب أن يكون 'x'  3-dimensional مصفوفة متعددة الأبعاد"
 
 msgid "if 'x' is not an array, 'y' must be given"
-msgstr ""
+msgstr "if 'x' ليس  مصفوفة متعددة الأبعاد, 'y' يجب أن يكون given"
 
 msgid "if 'x' is not an array, 'z' must be given"
-msgstr ""
+msgstr "if 'x' ليس  مصفوفة متعددة الأبعاد, 'z' يجب أن يكون given"
 
 msgid "'x', 'y', and 'z' must have the same length"
-msgstr ""
+msgstr "'x', 'y', و 'z' يجب أن يحتوي الطول نفسه"
 
 msgid "sample size in each stratum must be > 1"
-msgstr ""
+msgstr "يجب أن يكون sample الحجم في each stratum > 1"
 
 msgid "'x' must be square with at least two rows and columns"
-msgstr ""
+msgstr "يجب أن يكون 'x' مربعة مع ما لا يقل عن two الصفوف و الأعمدة"
 
 msgid "'x' and 'y' must have the same number of levels (minimum 2)"
-msgstr ""
+msgstr "'x' و 'y' يجب أن يحتوي العدد نفسه لـ مستويات (minimum 2)"
 
 msgid "need numeric data"
-msgstr ""
+msgstr "يلزم رقمي البيانات"
 
 msgid "'mlm' objects with weights are not supported"
-msgstr ""
+msgstr "'mlm' كائنات مع الأوزان هي غير مدعوم"
 
 msgid "X does not define a subspace of M"
-msgstr ""
+msgstr "X does ليس define subspace لـ M"
 
 msgid "residuals have rank %s < %s"
-msgstr ""
+msgstr "البواقي have الرتبة %s < %s"
 
 msgid "'model.tables' is not implemented for multiple responses"
-msgstr ""
+msgstr "'model.tables' ليس منفّذ لـ multiple استجابات"
 
 msgid "type '%s' is not implemented yet"
-msgstr ""
+msgstr "type '%s' ليس منفّذ yet"
 
 msgid "this fit does not inherit from \"lm\""
-msgstr ""
+msgstr "this ملاءمة does ليس inherit من \"lm\""
 
 msgid "'cterms' argument must match terms in model object"
-msgstr ""
+msgstr "'cterms' وسيط يجب أن يتطابق terms في نموذج كائن"
 
 msgid "Design is unbalanced - use se.contrast() for se's"
-msgstr ""
+msgstr "Design هو unbalanced - use se.contrast() لـ se's"
 
 msgid "design is unbalanced so cannot proceed"
-msgstr ""
+msgstr "design هو unbalanced so cannot proceed"
 
 msgid ""
 "Standard error information not returned as design is unbalanced. \n"
 "Standard errors can be obtained through 'se.contrast'."
 msgstr ""
+"Standard error information ليس returned مثل design هو unbalanced. \n"
+"Standard errors يمكن أن يكون obtained through 'se.contrast'."
 
 msgid "SEs for type '%s' are not yet implemented"
-msgstr ""
+msgstr "لم يتم تنفيذ SEs لـ type '%s' هي بعد"
 
 msgid "na.action must be a function"
-msgstr ""
+msgstr "na.action يجب أن يكون دالة"
 
 msgid "non-factors ignored: %s"
-msgstr ""
+msgstr "non-factors تم تجاهله: %s"
 
 msgid "eff.aovlist: non-orthogonal contrasts would give an incorrect answer"
-msgstr ""
+msgstr "eff.aovlist: non-orthogonal التباينات would give غير صحيحة answer"
 
 msgid "cannot create a formula from a zero-column data frame"
-msgstr ""
+msgstr "لا يمكن إنشاء صيغة من صفر-عمود إطار بيانات"
 
 msgid "invalid formula: %s"
-msgstr ""
+msgstr "غير صالح صيغة: %s"
 
 msgid "invalid formula %s: not a call"
-msgstr ""
+msgstr "غير صالح صيغة %s: ليس استدعاءً"
 
 msgid "invalid formula %s: assignment is deprecated"
-msgstr ""
+msgstr "غير صالح صيغة %s: assignment هو deprecated"
 
 msgid "invalid formula %s: extraneous call to `%s` is deprecated"
-msgstr ""
+msgstr "غير صالح صيغة %s: extraneous call إلى `%s` هو deprecated"
 
 msgid "invalid formula %s"
-msgstr ""
+msgstr "غير صالح صيغة %s"
 
 msgid "no terms component nor attribute"
-msgstr ""
+msgstr "لا يوجد terms component nor attribute"
 
 msgid "'termlabels' must be a character vector"
-msgstr ""
+msgstr "يجب أن يكون 'termlabels' متجهًا نصيًا"
 
 msgid "'%s' must be a character string"
 msgstr "يجب أن تكون \"%s\" سلسلة أحرف"
 
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
-msgstr ""
+msgstr "Unparseable 'response' \"%s\"; use هو deprecated. Use as.name(.) أو `..`!"
 
 msgid "'termobj' must be a object of class %s"
-msgstr ""
+msgstr "يجب أن يكون 'termobj'  كائن لـ صنف %s"
 
 msgid "setting '%s' in terms.formula() is deprecated"
-msgstr ""
+msgstr "setting '%s' في terms.formula() هو deprecated"
 
 msgid "variable '%s' was fitted with type \"%s\" but type \"%s\" was supplied"
-msgstr ""
+msgstr "متغير '%s' was ملائمة مع type \"%s\" لكن type \"%s\" was مقدم"
 
 msgid "variables %s were specified with different types from the fit"
-msgstr ""
+msgstr "المتغيرات %s were محدد مع different types من ملاءمة"
 
 msgid "'data' must be a data.frame, not a matrix or an array"
-msgstr ""
+msgstr "يجب أن يكون 'data'  البيانات.frame, ليس مصفوفة أو مصفوفة متعددة الأبعاد"
 
 msgid "'data' must be a data.frame, environment, or list"
-msgstr ""
+msgstr "يجب أن يكون 'data'  البيانات.frame, environment, أو قائمة"
 
 msgid "variable '%s' is not a factor"
-msgstr ""
+msgstr "متغير '%s' ليس عاملًا"
 
 msgid "contrasts dropped from factor %s"
-msgstr ""
+msgstr "التباينات سيتم إسقاطه من factor %s"
 
 msgid "contrasts dropped from factor %s due to missing levels"
-msgstr ""
+msgstr "التباينات سيتم إسقاطه من factor %s due إلى مفقود مستويات"
 
 msgid "'offset' must be numeric"
-msgstr ""
+msgstr "يجب أن يكون 'offset' رقميًا"
 
 msgid "model frame and formula mismatch in model.matrix()"
-msgstr ""
+msgstr "نموذج frame و صيغة mismatch في model.matrix()"
 
 msgid "non-list contrasts argument ignored"
-msgstr ""
+msgstr "non-قائمة التباينات وسيط تم تجاهله"
 
 msgid "'contrasts.arg' argument must be named"
-msgstr ""
+msgstr "'contrasts.arg' وسيط يجب أن يكون named"
 
 msgid "variable '%s' is absent, its contrast will be ignored"
-msgstr ""
+msgstr "متغير '%s' هو absent, its تباين سيتم تجاهله"
 
 msgid "using type = \"numeric\" with a factor response will be ignored"
-msgstr ""
+msgstr "استخدام type = \"numeric\" مع عاملًا استجابة سيتم تجاهله"
 
 msgid "invalid response type"
-msgstr ""
+msgstr "response type غير صالح"
 
 msgid "invalid 'data' argument"
-msgstr ""
+msgstr "'data' غير صالح"
 
 msgid "all times contain an NA"
-msgstr ""
+msgstr "جميع times contain NA"
 
 msgid "missing values in object"
-msgstr ""
+msgstr "مفقود القيم في كائن"
 
 msgid "'print.level' must be in {0,1,2}"
-msgstr ""
+msgstr "يجب أن يكون 'print.level' في {0,1,2}"
 
 msgid "'interval' must be a vector of length 2"
-msgstr ""
+msgstr "يجب أن يكون 'interval' متجهًا بطول 2"
 
 msgid "lower < upper  is not fulfilled"
-msgstr ""
+msgstr "الحد الأدنى < الحد الأعلى  ليس fulfilled"
 
 msgid "f.lower = f(lower) is NA"
-msgstr ""
+msgstr "f.الحد الأدنى = f(lower) هو NA"
 
 msgid "f.upper = f(upper) is NA"
-msgstr ""
+msgstr "f.الحد الأعلى = f(upper) هو NA"
 
 msgid "invalid 'extendInt'; please report"
-msgstr ""
+msgstr "غير صالح 'extendInt'; يرجى report"
 
 msgid "no sign change found in %d iterations"
-msgstr ""
+msgstr "لا يوجد sign change found في %d تكرارات"
 
 msgid "did not succeed extending the interval endpoints for f(lower) * f(upper) <= 0"
-msgstr ""
+msgstr "did ليس succeed extending الفاصل نقاط النهاية لـ f(lower) * f(upper) <= 0"
 
 msgid "f() values at end points not of opposite sign"
-msgstr ""
+msgstr "f() القيم at نقاط النهاية ليس لـ opposite sign"
 
 msgid "convergence problem in zero finding:"
-msgstr ""
+msgstr "التقارب problem في صفر finding:"
 
 msgid "'control' argument must be a named list"
-msgstr ""
+msgstr "'control' وسيط يجب أن يكون مسمّاة قائمة"
 
 msgid "logical 'hessian' argument not allowed.  See documentation."
-msgstr ""
+msgstr "منطقي 'hessian' وسيط غير مسموح. See documentation."
 
 msgid "'params' has wrong length"
-msgstr ""
+msgstr "'params' has طول غير صحيح"
 
 msgid "'varying' must be in seq_along(pars)"
-msgstr ""
+msgstr "يجب أن يكون 'varying' في seq_along(pars)"
 
 msgid "'varying' has wrong length"
-msgstr ""
+msgstr "'varying' has طول غير صحيح"
 
 msgid "'varying' must be logical, integer or character"
-msgstr ""
+msgstr "يجب أن يكون 'varying' منطقي, عدد صحيح أو نصي"
 
 msgid "invalid argument to 'getProfile'"
-msgstr ""
+msgstr "غير صالح وسيط إلى 'getProfile'"
 
 msgid "cannot recognize parameter name"
-msgstr ""
+msgstr "لا يمكن التعرف على معامل name"
 
 msgid "levels truncated to positive values only"
 msgstr "المستويات المقطوعة إلى قيم موجبة فقط"
 
 msgid "invalid  'attr(rhs, \"gradient\")'"
-msgstr ""
+msgstr "غير صالح 'attr(rhs, \"gradient\")'"
 
 msgid "setVarying : 'vary' length must match length of parameters"
-msgstr ""
+msgstr "setVarying : 'vary' length يجب أن يتطابق length لـ معاملات"
 
 msgid "singular gradient matrix at initial parameter estimates"
-msgstr ""
+msgstr "مفرد gradient مصفوفة at initial معامل estimates"
 
 msgid "'data' must be a list or an environment"
-msgstr ""
+msgstr "يجب أن يكون 'data' قائمة أو environment"
 
 msgid "no starting values specified"
-msgstr ""
+msgstr "لا يوجد قيم البدء محدد"
 
 msgid "parameters without starting value in 'data': %s"
-msgstr ""
+msgstr "معاملات دون starting قيمة في 'data': %s"
 
 msgid "no parameters to fit"
-msgstr ""
+msgstr "لا يوجد معاملات إلى ملاءمة"
 
 msgid "argument 'subset' will be ignored"
-msgstr ""
+msgstr "وسيط 'subset' سيتم تجاهله"
 
 msgid "argument 'na.action' will be ignored"
+msgstr "وسيط 'na.action' سيتم تجاهله"
+
+msgid "different names for %s and %s: names ignored"
+msgstr ""
+
+#, fuzzy
+msgid "mismatched names for %s and %s"
+msgstr "mismatched 'x' و 'y'"
+
+msgid "duplicated names in %s"
 msgstr ""
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
-msgstr ""
+msgstr "الحد الأعلى و الحد الأدنى الحدود تم تجاهله unless الخوارزمية = \"port\""
 
 msgid "cannot calculate REML log-likelihood for \"nls\" objects"
-msgstr ""
+msgstr "لا يمكن حساب REML لوغاريتم الاحتمال لـ \"nls\" كائنات"
 
 msgid "anova is only defined for sequences of \"nls\" objects"
-msgstr ""
+msgstr "anova هو فقط defined لـ sequences لـ \"nls\" كائنات"
 
 msgid "'anova' is only defined for sequences of \"nls\" objects"
-msgstr ""
+msgstr "'anova' هو فقط defined لـ sequences لـ \"nls\" كائنات"
 
 msgid "formula '%s' must be of the form '~expr'"
-msgstr ""
+msgstr "صيغة '%s' يجب أن يكون لـ form '~expr'"
 
 msgid "'%s' cannot be of mode '%s'"
-msgstr ""
+msgstr "'%s' لا يمكن أن يكون لـ mode '%s'"
 
 msgid "a two-sided formula is required"
-msgstr ""
+msgstr "ثنائية الطرف صيغة هو مطلوب"
 
 msgid "not enough groups"
-msgstr ""
+msgstr "لا توجد المجموعات كافية"
 
 msgid "bounds can only be used with method L-BFGS-B (or Brent)"
-msgstr ""
+msgstr "الحدود can فقط يكون used مع طريقة L-BFGS-B (أو Brent)"
 
 msgid "unknown names in control:"
-msgstr ""
+msgstr "غير معروف أسماء في control:"
 
 msgid "read the documentation for 'trace' more carefully"
-msgstr ""
+msgstr "read documentation لـ 'trace' more carefully"
 
 msgid "'trace != 0' needs 'REPORT >= 1'"
-msgstr ""
+msgstr "'trace != 0' needs 'REPORT >= 1'"
 
 msgid "method L-BFGS-B uses 'factr' (and 'pgtol') instead of 'reltol' and 'abstol'"
-msgstr ""
+msgstr "طريقة L-BFGS-B uses 'factr' (و 'pgtol') instead لـ 'reltol' و 'abstol'"
 
 msgid ""
 "one-dimensional optimization by Nelder-Mead is unreliable:\n"
 "use \"Brent\" or optimize() directly"
 msgstr ""
+"one-dimensional التحسين by Nelder-Mead هو unreliable:\n"
+"use \"Brent\" أو optimize() directly"
 
 msgid "method = \"Brent\" is only available for one-dimensional optimization"
-msgstr ""
+msgstr "طريقة = \"Brent\" هو فقط متاح لـ one-dimensional التحسين"
 
 msgid "'lower' and 'upper' must be finite values"
-msgstr ""
+msgstr "'lower' و 'upper' يجب أن يكون منتهية القيم"
 
 msgid "pooling of SD is incompatible with paired tests"
-msgstr ""
+msgstr "pooling لـ SD هو incompatible مع paired tests"
 
 msgid "'x' must have 2 columns"
-msgstr ""
+msgstr "يجب أن يحتوي 'x' على 2 الأعمدة"
 
 msgid "'x' and 'n' must have the same length"
-msgstr ""
+msgstr "'x' و 'n' يجب أن يحتوي الطول نفسه"
 
 msgid "too few groups"
-msgstr ""
+msgstr "عدد المجموعات قليل جدًا"
 
 msgid ""
 "not plotting observations with leverage one:\n"
 "  %s"
 msgstr ""
+"ليس plotting الملاحظات مع leverage one:\n"
+" %s"
 
 msgid "use only with \"lm\" objects"
-msgstr ""
+msgstr "use فقط مع \"lm\" كائنات"
 
 msgid "'which' must be in 1:6"
-msgstr ""
+msgstr "يجب أن يكون 'which' في 1:6"
 
 msgid "'id.n' must be in {1,..,%d}"
-msgstr ""
+msgstr "يجب أن يكون 'id.n' في {1,..,%d}"
 
 msgid "y is empty or has only NAs"
-msgstr ""
+msgstr "y هو فارغ أو has فقط NAs"
 
 msgid ""
 "hat values (leverages) are all = %s\n"
 " and there are no factor predictors; no plot no. 5"
 msgstr ""
+"hat القيم (leverages) هي جميع = %s\n"
+" و there هي no متنبئات عاملية; no plot no. 5"
 
 msgid "'x' and 'T' have incompatible length"
-msgstr ""
+msgstr "'x' و 'T' have incompatible length"
 
 msgid "'x' must be finite, nonnegative, and integer"
-msgstr ""
+msgstr "يجب أن يكون 'x' منتهية, غير سالبة, و عدد صحيح"
 
 msgid "'T' must be nonnegative"
-msgstr ""
+msgstr "يجب أن يكون 'T' غير سالبة"
 
 msgid "not enough data"
-msgstr ""
+msgstr "لا توجد البيانات كافية"
 
 msgid "the case k > 2 is unimplemented"
-msgstr ""
+msgstr "case k > 2 هو unimplemented"
 
 msgid "'r' must be a single positive number"
-msgstr ""
+msgstr "يجب أن يكون 'r' عددًا موجبًا واحدًا"
 
 msgid "exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"
-msgstr ""
+msgstr "واحد فقط من 'n', 'delta', 'sd', 'power', و 'sig.level' يجب أن يكون NULL"
 
 msgid "exactly one of 'n', 'p1', 'p2', 'power', and 'sig.level' must be NULL"
-msgstr ""
+msgstr "واحد فقط من 'n', 'p1', 'p2', 'power', و 'sig.level' يجب أن يكون NULL"
 
 msgid "No p1 in [0, p2] can be found to achieve the desired power"
-msgstr ""
+msgstr "No p1 في [0, p2] يمكن أن يكون found إلى achieve desired power"
 
 msgid "No p2 in [p1, 1] can be found to achieve the desired power"
-msgstr ""
+msgstr "No p2 في [p1, 1] يمكن أن يكون found إلى achieve desired power"
 
 msgid "No significance level [0, 1] can be found to achieve the desired power"
-msgstr ""
+msgstr "No significance مستوى [0, 1] يمكن أن يكون found إلى achieve desired power"
 
 msgid "'%s' must be numeric in [0, 1]"
-msgstr ""
+msgstr "يجب أن يكون '%s' رقمي في [0, 1]"
 
 msgid "exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig.level' must be NULL"
-msgstr ""
+msgstr "واحد فقط من 'groups', 'n', 'between.var', 'within.var', 'power', و 'sig.level' يجب أن يكون NULL"
 
 msgid "number of groups must be at least 2"
-msgstr ""
+msgstr "عدد المجموعات يجب أن يكون على الأقل 2"
 
 msgid "number of observations in each group must be at least 2"
-msgstr ""
+msgstr "عدد الملاحظات في each مجموعة يجب أن يكون على الأقل 2"
 
 msgid "'nterms' is missing with no default"
-msgstr ""
+msgstr "'nterms' هو مفقود مع no default"
 
 msgid "'ppr' applies only to numerical variables"
-msgstr ""
+msgstr "'ppr' applies فقط إلى numerical المتغيرات"
 
 msgid "mismatched 'x' and 'y'"
-msgstr ""
+msgstr "mismatched 'x' و 'y'"
 
 msgid "mismatched 'x' and 'weights'"
-msgstr ""
+msgstr "mismatched 'x' و 'weights'"
 
 msgid "wrong number of columns in 'x'"
-msgstr ""
+msgstr "عدد غير صحيح لـ الأعمدة في 'x'"
 
 msgid "cannot rescale a constant/zero column to unit variance"
-msgstr ""
+msgstr "لا يمكن إعادة قياس constant/صفر عمود إلى unit التباين"
 
 msgid "PCA applies only to numerical variables"
-msgstr ""
+msgstr "PCA applies فقط إلى numerical المتغيرات"
 
 msgid "no scores are available: refit with 'retx=TRUE'"
-msgstr ""
+msgstr "لا يوجد الدرجات هي متاح: refit مع 'retx=TRUE'"
 
 msgid "'newdata' must be a matrix or data frame"
-msgstr ""
+msgstr "يجب أن يكون 'newdata' مصفوفة أو إطار بيانات"
 
 msgid "'newdata' does not have named columns matching one or more of the original columns"
-msgstr ""
+msgstr "'newdata' does ليس have named الأعمدة matching واحدًا أو أكثر من لـ original الأعمدة"
 
 msgid "'newdata' does not have the correct number of columns"
-msgstr ""
+msgstr "'newdata' does ليس have تصحيح عدد الأعمدة"
 
 msgid "both 'x' and 'covmat' were supplied: 'x' will be ignored"
-msgstr ""
+msgstr "كلا 'x' و 'covmat' were مقدم: 'x' سيتم تجاهله"
 
 msgid "'princomp' can only be used with more units than variables"
-msgstr ""
+msgstr "'princomp' can فقط يكون used مع more units من المتغيرات"
 
 msgid "cannot use 'cor = TRUE' with a constant variable"
-msgstr ""
+msgstr "لا يمكن استخدام 'cor = TRUE' مع constant متغير"
 
 msgid "covariance matrix is not non-negative definite"
-msgstr ""
+msgstr "التغاير مصفوفة ليس غير سالب definite"
 
 msgid "argument does not include a 'qr' component"
-msgstr ""
+msgstr "وسيط does ليس include 'qr' component"
 
 msgid "argument does not include an 'effects' component"
-msgstr ""
+msgstr "وسيط does ليس include 'effects' component"
 
 msgid "'proj' is not implemented for multiple responses"
-msgstr ""
+msgstr "'proj' ليس منفّذ لـ multiple استجابات"
 
 msgid "table 'x' should have 2 entries"
-msgstr ""
+msgstr "جدول 'x' should have 2 المدخلات"
 
 msgid "elements of 'n' must be positive"
-msgstr ""
+msgstr "العناصر لـ 'n' يجب أن يكون موجب"
 
 msgid "elements of 'x' must be nonnegative"
-msgstr ""
+msgstr "العناصر لـ 'x' يجب أن يكون غير سالبة"
 
 msgid "elements of 'x' must not be greater than those of 'n'"
-msgstr ""
+msgstr "العناصر لـ 'x' يجب ألا يكون أكبر من those لـ 'n'"
 
 msgid "'p' must have the same length as 'x' and 'n'"
-msgstr ""
+msgstr "'p' يجب أن يحتوي الطول نفسه مثل 'x' و 'n'"
 
 msgid "elements of 'p' must be in (0,1)"
-msgstr ""
+msgstr "العناصر لـ 'p' يجب أن يكون في (0,1)"
 
 msgid "'conf.level' is not a probability"
-msgstr ""
+msgstr "'conf.level' ليس احتمالًا"
 
 msgid "'type' must be an integer in 1..9"
-msgstr ""
+msgstr "يجب أن يكون 'type' عددًا صحيحًا في 1..9"
 
 msgid "'type' must be 1 or 3 for ordered factors"
-msgstr ""
+msgstr "يجب أن يكون 'type' 1 أو 3 لـ مرتبة factors"
 
 msgid "(unordered) factors are not allowed"
-msgstr ""
+msgstr "(غير مرتبة) factors هي غير مسموح"
 
 msgid "missing values and NaN's not allowed if 'na.rm' is FALSE"
-msgstr ""
+msgstr "مفقود القيم و NaN's not allowed if 'na.rm' هو FALSE"
 
 msgid "'probs' outside [0,1]"
-msgstr ""
+msgstr "'probs' خارج [0,1]"
 
 msgid "arguments 'r' and 'c' must have the same sums"
-msgstr ""
+msgstr "وسائط 'r' و 'c' يجب أن يحتوي same sums"
 
 msgid "'relevel' only for (unordered) factors"
-msgstr ""
+msgstr "'relevel' فقط لـ (غير مرتبة) factors"
 
 msgid "'relevel' only for unordered factors"
-msgstr ""
+msgstr "'relevel' فقط لـ غير مرتبة factors"
 
 msgid "'ref' must be of length one"
-msgstr ""
+msgstr "يجب أن يكون 'ref' لـ length one"
 
 msgid "'ref' must be an existing level"
-msgstr ""
+msgstr "يجب أن يكون 'ref'  existing مستوى"
 
 msgid "ref = %d must be in 1L:%d"
-msgstr ""
+msgstr "ref = %d يجب أن يكون في 1L:%d"
 
 msgid "failed to guess time-varying variables from their names"
-msgstr ""
+msgstr "failed إلى guess time-varying المتغيرات من their أسماء"
 
 msgid "'varying' arguments must be the same length"
-msgstr ""
+msgstr "'varying' وسائط يجب أن يكون الطول نفسه"
 
 msgid "'lengths(varying)' must all match 'length(times)'"
-msgstr ""
+msgstr "'lengths(varying)' must جميع match 'length(times)'"
 
 msgid "'idvar' must uniquely identify records"
-msgstr ""
+msgstr "'idvar' must uniquely identify records"
 
 msgid "there are records with missing times, which will be dropped."
-msgstr ""
+msgstr "there هي records مع مفقود times, which سيتم إسقاطه."
 
 msgid "some constant variables (%s) are really varying"
-msgstr ""
+msgstr "بعض constant المتغيرات (%s) هي really varying"
 
 msgid "no 'reshapeWide' attribute, must specify 'varying'"
-msgstr ""
+msgstr "لا يوجد 'reshapeWide' attribute, must specify 'varying'"
 
 msgid "'varying' must be nonempty list or vector"
-msgstr ""
+msgstr "يجب أن يكون 'varying' nonempty قائمة أو vector"
 
 msgid "length of 'v.names' does not evenly divide length of 'varying'"
-msgstr ""
+msgstr "length لـ 'v.names' does ليس evenly divide length لـ 'varying'"
 
 msgid "length of 'varying' must be the product of length of 'v.names' and length of 'times'"
-msgstr ""
+msgstr "length لـ 'varying' يجب أن يكون product لـ length لـ 'v.names' و length لـ 'times'"
 
 msgid "'k' must be positive"
-msgstr ""
+msgstr "يجب أن يكون 'k' موجبًا"
 
 msgid "'k' must be odd!  Changing 'k' to %d"
-msgstr ""
+msgstr "يجب أن يكون 'k' odd! Changing 'k' إلى %d"
 
 msgid "'k' is bigger than 'n'!  Changing 'k' to %d"
-msgstr ""
+msgstr "'k' هو bigger من 'n'! Changing 'k' إلى %d"
 
 msgid "bandwidth 'k' must be >= 1 and odd!"
-msgstr ""
+msgstr "يجب أن يكون عرض النطاق 'k' >= 1 and odd!"
 
 msgid "argument 'object' has an impossible length"
-msgstr ""
+msgstr "وسيط 'object' has impossible length"
 
 msgid "right-hand side of formula is not a call"
-msgstr ""
+msgstr "الطرف الأيمن لـ صيغة ليس استدعاءً"
 
 msgid "no 'getInitial' method found for \"%s\" objects"
-msgstr ""
+msgstr "لا يوجد 'getInitial' طريقة found لـ \"%s\" كائنات"
 
 msgid "sample size must be between 3 and 5000"
-msgstr ""
+msgstr "يجب أن يكون sample الحجم بين 3 و5000"
 
 msgid "all 'x' values are identical"
-msgstr ""
+msgstr "جميع 'x' القيم هي identical"
 
 msgid "attempt to smooth non-numeric values"
-msgstr ""
+msgstr "attempt إلى smooth non-رقمي القيم"
 
 msgid "attempt to smooth NA values"
-msgstr ""
+msgstr "attempt إلى smooth NA القيم"
 
 msgid "invalid 'endrule' argument"
-msgstr ""
+msgstr "'endrule' غير صالح"
 
 msgid "invalid 'control.spar'"
-msgstr ""
+msgstr "'control.spar' غير صالح"
 
 msgid "missing or infinite values in inputs are not allowed"
-msgstr ""
+msgstr "مفقود أو لانهائية القيم في inputs هي غير مسموح"
 
 msgid "invalid number of points"
-msgstr ""
+msgstr "number of points غير صالح"
 
 msgid "lengths of 'x' and 'w' must match"
-msgstr ""
+msgstr "lengths لـ 'x' و 'w' يجب أن يتطابق"
 
 msgid "all weights should be non-negative"
-msgstr ""
+msgstr "جميع الأوزان ينبغي أن يكون غير سالب"
 
 msgid "some weights should be positive"
-msgstr ""
+msgstr "بعض الأوزان ينبغي أن يكون موجب"
 
 msgid "'tol' must be strictly positive and finite"
-msgstr ""
+msgstr "يجب أن يكون 'tol' strictly موجب و منتهية"
 
 msgid "invalid 'keep.stuff'"
-msgstr ""
+msgstr "'keep.stuff' غير صالح"
 
 msgid "need at least four unique 'x' values"
-msgstr ""
+msgstr "يلزم على الأقل four unique 'x' القيم"
 
 msgid "'cv' must not be NA when 'df' is specified"
-msgstr ""
+msgstr "'cv' يجب ألا يكون NA when 'df' هو محدد"
 
 msgid "cross-validation with non-unique 'x' values seems doubtful"
-msgstr ""
+msgstr "cross-validation مع non-unique 'x' القيم seems doubtful"
 
 msgid "Numeric 'all.knots' must be strictly increasing"
-msgstr ""
+msgstr "رقمي 'all.knots' يجب أن يكون strictly زيادة"
 
 msgid "'all.knots' is vector of knots; 'nknots' specification is disregarded"
-msgstr ""
+msgstr "'all.knots' هو vector لـ knots; 'nknots' specification هو تم تجاهله"
 
 msgid "numeric 'all.knots' must cover [0,1] (= the transformed data-range)"
-msgstr ""
+msgstr "رقمي 'all.knots' must cover [0,1] (= transformed البيانات-النطاق)"
 
 msgid "'all.knots' is TRUE; 'nknots' specification is disregarded"
-msgstr ""
+msgstr "'all.knots' هو TRUE; 'nknots' specification هو تم تجاهله"
 
 msgid "'nknots' must be numeric (in {1,..,n})"
-msgstr ""
+msgstr "يجب أن يكون 'nknots' رقمي (في {1,..,n})"
 
 msgid "'nknots' must be at least 1"
-msgstr ""
+msgstr "يجب أن يكون 'nknots' على الأقل 1"
 
 msgid "cannot use more inner knots than unique 'x' values"
-msgstr ""
+msgstr "لا يمكن استخدام more inner knots من unique 'x' القيم"
 
 msgid "must not specify both 'spar' and 'lambda'"
-msgstr ""
+msgstr "must ليس specify كلا 'spar' و 'lambda'"
 
 msgid "'spar' must be of length 1"
-msgstr ""
+msgstr "يجب أن يكون 'spar' لـ length 1"
 
 msgid "df.offset must be numeric and >= 0"
-msgstr ""
+msgstr "df.offset يجب أن يكون رقمي و >= 0"
 
 msgid "penalty must be numeric and > 0"
-msgstr ""
+msgstr "penalty يجب أن يكون رقمي و > 0"
 
 msgid "not using invalid df; must have 1 < df <= n := #{unique x} ="
-msgstr ""
+msgstr "يجب أن يحتوي ليس استخدام غير صالح df; على 1 < df <= n := #{unique x} ="
 
 msgid "NA lev[]; probably smoothing parameter 'spar' way too large!"
-msgstr ""
+msgstr "NA lev[]; probably معامل التمهيد 'spar' way too large!"
 
 msgid "setting df = 1  __use with care!__"
-msgstr ""
+msgstr "setting df = 1 __use مع care!__"
 
 msgid "need result of smooth.spline(keep.data = TRUE)"
-msgstr ""
+msgstr "يلزم النتيجة لـ smooth.spline(keep.data = TRUE)"
 
 msgid "type = \"partial\" is not yet implemented"
-msgstr ""
+msgstr "لم يتم تنفيذ type = \"partial\" هو بعد"
 
 msgid "not a valid \"smooth.spline\" object"
-msgstr ""
+msgstr "ليس صالحًا \"smooth.spline\" كائن"
 
 msgid "'span' must be between 0 and 1."
-msgstr ""
+msgstr "يجب أن يكون 'span' بين 0 و 1."
 
 msgid "'y' must be numeric vector"
-msgstr ""
+msgstr "يجب أن يكون 'y' متجه رقمي"
 
 msgid "number of observations in 'x' and 'y' must match."
-msgstr ""
+msgstr "عدد الملاحظات في 'x' و 'y' يجب أن يتطابق."
 
 msgid "number of weights must match number of observations."
-msgstr ""
+msgstr "عدد الأوزان يجب أن يتطابق عدد الملاحظات."
 
 msgid "'x' must be between 0 and 1 for periodic smooth"
-msgstr ""
+msgstr "يجب أن يكون 'x' بين 0 و 1 لـ periodic smooth"
 
 msgid "no finite observations"
-msgstr ""
+msgstr "لا يوجد ملاحظات منتهية"
 
 msgid "'p' must be between 0 and 0.5"
-msgstr ""
+msgstr "يجب أن يكون 'p' بين 0 و 0.5"
 
 msgid "length of 'p' must be 1 or equal the number of columns of 'x'"
-msgstr ""
+msgstr "length لـ 'p' يجب أن يكون 1 أو equal عدد الأعمدة لـ 'x'"
 
 msgid "'x' must be a time series or an ar() fit"
-msgstr ""
+msgstr "يجب أن يكون 'x'  السلسلة الزمنية أو ar() ملاءمة"
 
 msgid "must specify 'spans' or a valid kernel"
-msgstr ""
+msgstr "must specify 'spans' أو صالحًا نواة"
 
 msgid "coverage probability out of range [0,1)"
-msgstr ""
+msgstr "coverage احتمال خارج النطاق [0,1)"
 
 msgid "spline: first and last y values differ - using y[1] for both"
-msgstr ""
+msgstr "spline: first و last y القيم differ - استخدام y[1] لـ كلا"
 
 msgid "'y' must be increasing or decreasing"
-msgstr ""
+msgstr "يجب أن يكون 'y' زيادة أو decreasing"
 
 msgid "'spline' requires n >= 1"
-msgstr ""
+msgstr "'spline' requires n >= 1"
 
 msgid "spline: first and last y values differ - using y[1L] for both"
-msgstr ""
+msgstr "spline: first و last y القيم differ - استخدام y[1L] لـ كلا"
 
 msgid "'deriv' must be between 0 and 3"
-msgstr ""
+msgstr "يجب أن يكون 'deriv' بين 0 و 3"
 
 msgid "'x' must be *strictly* increasing (non - NA)"
-msgstr ""
+msgstr "يجب أن يكون 'x' *strictly* زيادة (non - NA)"
 
 msgid "stepfun: 'x' must be ordered increasingly"
-msgstr ""
+msgstr "stepfun: 'x' يجب أن يكون مرتبة increasingly"
 
 msgid "'x' must have length >= 1"
-msgstr ""
+msgstr "'x' يجب أن يحتوي length >= 1"
 
 msgid "'y' must be one longer than 'x'"
-msgstr ""
+msgstr "يجب أن يكون 'y' one longer من 'x'"
 
 msgid "no 'as.stepfun' method available for 'x'"
-msgstr ""
+msgstr "لا يوجد 'as.stepfun' طريقة متاح لـ 'x'"
 
 msgid "not a valid step function"
-msgstr ""
+msgstr "ليس صالحًا step دالة"
 
 msgid "'plot.stepfun' called with wrong type of argument 'x'"
-msgstr ""
+msgstr "'plot.stepfun' called مع غير صحيح type لـ وسيط 'x'"
 
 msgid "%s must be 0 or 1"
-msgstr ""
+msgstr "%s يجب أن يكون 0 أو 1"
 
 msgid "only univariate series are allowed"
-msgstr ""
+msgstr "فقط univariate series هي مسموح"
 
 msgid "series is not periodic or has less than two periods"
-msgstr ""
+msgstr "series ليس periodic أو has أقل من two فترات"
 
 msgid "unknown string value for s.window"
-msgstr ""
+msgstr "غير معروف string قيمة لـ s.window"
 
 msgid "'cutpoints' must be unique in 0 < cuts < 1, but are ="
-msgstr ""
+msgstr "يجب أن يكون 'cutpoints' unique في 0 < cuts < 1, لكن هي ="
 
 msgid "'cutpoints' must be unique, but are ="
-msgstr ""
+msgstr "يجب أن يكون 'cutpoints' unique, لكن هي ="
 
 msgid "'x' must be between -1 and 1"
-msgstr ""
+msgstr "يجب أن يكون 'x' بين -1 و 1"
 
 msgid "'x' must be between %s and %s"
-msgstr ""
+msgstr "يجب أن يكون 'x' بين %s و %s"
 
 msgid "number of 'cutpoints' must be one less than number of symbols"
-msgstr ""
+msgstr "عدد 'cutpoints' يجب أن يكون one أقل من عدد symbols"
 
 msgid "number of 'cutpoints' must be one more than number of symbols"
-msgstr ""
+msgstr "عدد 'cutpoints' يجب أن يكون one أكثر من عدد symbols"
 
 msgid "must have 2 'symbols' for logical 'x' argument"
-msgstr ""
+msgstr "يجب أن يحتوي 2 'symbols' لـ منطقي 'x' وسيط"
 
 msgid "invalid 'abbr.colnames'"
-msgstr ""
+msgstr "'abbr.colnames' غير صالح"
 
 msgid "'mu' must be a single number"
-msgstr ""
+msgstr "يجب أن يكون 'mu' عددًا واحدًا"
 
 msgid "'y' is missing for paired test"
-msgstr ""
+msgstr "'y' هو مفقود لـ paired test"
 
 msgid "data are essentially constant"
-msgstr ""
+msgstr "البيانات هي essentially constant"
 
 msgid "cannot use 'paired' in formula method"
-msgstr ""
+msgstr "لا يمكن استخدام 'paired' في صيغة طريقة"
 
 msgid "'main' must be TRUE, FALSE, NULL or character (vector)."
-msgstr ""
+msgstr "يجب أن يكون 'main' TRUE, FALSE, NULL أو نصي (vector)."
 
 msgid "x is not a vector or univariate time series"
-msgstr ""
+msgstr "x ليس متجهًا أو سلسلة زمنية أحادية المتغير"
 
 msgid "singularities in regression"
-msgstr ""
+msgstr "singularities في regression"
 
 msgid "'ts' object must have one or more observations"
-msgstr ""
+msgstr "'ts' كائن يجب أن يحتوي واحدًا أو أكثر من الملاحظات"
 
 msgid "'start' cannot be after 'end'"
-msgstr ""
+msgstr "'start' لا يمكن أن يكون after 'end'"
 
 msgid "'end' must be a whole number of cycles after 'start'"
-msgstr ""
+msgstr "يجب أن يكون 'end'  whole عدد cycles after 'start'"
 
 msgid "no time series supplied"
-msgstr ""
+msgstr "لا يوجد السلسلة الزمنية مقدم"
 
 msgid "not all series have the same frequency"
-msgstr ""
+msgstr "ليس جميع series have same التردد"
 
 msgid "not all series have the same phase"
-msgstr ""
+msgstr "ليس جميع series have same phase"
 
 msgid "non-intersecting series"
-msgstr ""
+msgstr "non-intersecting series"
 
 msgid "non-time series not of the correct length"
-msgstr ""
+msgstr "non-السلسلة الزمنية ليس لـ تصحيح length"
 
 msgid "time series contains internal NAs"
-msgstr ""
+msgstr "السلسلة الزمنية contains internal NAs"
 
 msgid "series is corrupt, with no 'tsp' attribute"
-msgstr ""
+msgstr "series هو corrupt, مع no 'tsp' attribute"
 
 msgid "series is corrupt: length %d with 'tsp' implying %d"
-msgstr ""
+msgstr "series هو corrupt: length %d مع 'tsp' implying %d"
 
 msgid "cannot plot more than 10 series as \"multiple\""
-msgstr ""
+msgstr "لا يمكن رسم أكثر من 10 series مثل \"multiple\""
 
 msgid "scatter plots only for univariate time series"
-msgstr ""
+msgstr "scatter plots فقط لـ سلسلة زمنية أحادية المتغير"
 
 msgid "'xy.labels' must be logical or character"
-msgstr ""
+msgstr "يجب أن يكون 'xy.labels' منطقي أو نصي"
 
 msgid "'frequency' and 'deltat' are both not NULL and are inconsistent"
-msgstr ""
+msgstr "'frequency' و 'deltat' هي كلا ليس NULL و هي inconsistent"
 
 msgid "'frequency' not changed"
-msgstr ""
+msgstr "'frequency' ليس changed"
 
 msgid "bad value for 'start'"
-msgstr ""
+msgstr "bad قيمة لـ 'start'"
 
 msgid "'start' value not changed"
-msgstr ""
+msgstr "'start' قيمة ليس changed"
 
 msgid "bad value for 'end'"
-msgstr ""
+msgstr "bad قيمة لـ 'end'"
 
 msgid "'end' value not changed"
-msgstr ""
+msgstr "'end' قيمة ليس changed"
 
 msgid "'start' > 'end'"
-msgstr ""
+msgstr "'start' > 'end'"
 
 msgid "extending time series when replacing values"
-msgstr ""
+msgstr "extending السلسلة الزمنية when replacing القيم"
 
 msgid "times to be replaced do not match"
-msgstr ""
+msgstr "times إلى يكون replaced غير متطابقة"
 
 msgid "no replacement values supplied"
-msgstr ""
+msgstr "لا يوجد replacement القيم مقدم"
 
 msgid "too many replacement values supplied"
-msgstr ""
+msgstr "too many replacement القيم مقدم"
 
 msgid "number of values supplied is not a sub-multiple of the number of values to be replaced"
-msgstr ""
+msgstr "عدد القيم مقدم ليس  sub-multiple لـ عدد القيم إلى يكون replaced"
 
 msgid "only replacement of elements is allowed"
-msgstr ""
+msgstr "فقط replacement لـ العناصر هو مسموح"
 
 msgid "'model' must be list"
-msgstr ""
+msgstr "يجب أن يكون 'model' قائمة"
 
 msgid "'n' must be strictly positive"
-msgstr ""
+msgstr "يجب أن يكون 'n' strictly موجب"
 
 msgid "'ar' part of model is not stationary"
-msgstr ""
+msgstr "'ar' part لـ نموذج ليس مستقر"
 
 msgid "burn-in 'n.start' must be as long as 'ar + ma'"
-msgstr ""
+msgstr "burn-في 'n.start' يجب أن يكون مثل long مثل 'ar + ma'"
 
 msgid "'model$order' must be of length 3"
-msgstr ""
+msgstr "يجب أن يكون 'model$order' بطول 3"
 
 msgid "inconsistent specification of 'ar' order"
-msgstr ""
+msgstr "inconsistent specification لـ 'ar' order"
 
 msgid "inconsistent specification of 'ma' order"
-msgstr ""
+msgstr "inconsistent specification لـ 'ma' order"
 
 msgid "number of differences must be a positive integer"
-msgstr ""
+msgstr "عدد differences يجب أن يكون عددًا صحيحًا موجبًا"
 
 msgid "need an object with call component"
-msgstr ""
+msgstr "يلزم  كائن مع call component"
 
 msgid "'ratio' must be a single positive number"
-msgstr ""
+msgstr "يجب أن يكون 'ratio' عددًا موجبًا واحدًا"
 
 msgid "'x' and 'w' must have the same length"
-msgstr ""
+msgstr "'x' و 'w' يجب أن يحتوي الطول نفسه"
 
 msgid "not enough (non-missing) 'x' observations"
-msgstr ""
+msgstr "لا توجد (non-مفقود) 'x' الملاحظات كافية"
 
 msgid "'correct' must be an integer between 0 and 3"
-msgstr ""
+msgstr "يجب أن يكون 'correct' عددًا صحيحًا بين 0 و 3"
 
 msgid "cannot compute confidence interval when all observations are zero or tied"
-msgstr ""
+msgstr "لا يمكن حساب فاصل الثقة when جميع الملاحظات هي صفر أو tied"
 
 msgid "requested conf.level not achievable"
-msgstr ""
+msgstr "requested conf.مستوى ليس achievable"
 
 msgid "cannot compute confidence interval when all observations are tied"
-msgstr ""
+msgstr "لا يمكن حساب فاصل الثقة when جميع الملاحظات هي tied"
 
 msgid "'z' is not a rank vector"
-msgstr ""
+msgstr "'z' ليس  الرتبة vector"
 
 msgid "must supply 'formula' or 'data'"
-msgstr ""
+msgstr "يجب تقديم 'formula' أو 'data'"
 
 msgid "%s applies only to two-way tables"
-msgstr ""
+msgstr "%s applies فقط إلى two-way tables"
 
 msgid "too few distinct input values to fit an asymptotic regression model"
-msgstr ""
+msgstr "عدد distinct input القيم إلى ملاءمة تقاربي regression نموذج قليل جدًا"
 
 msgid "cannot fit an asymptotic regression model to these data"
-msgstr ""
+msgstr "لا يمكن ملاءمة تقاربي regression نموذج إلى these البيانات"
 
 msgid "too few observations to fit an asymptotic regression model"
-msgstr ""
+msgstr "عدد الملاحظات إلى ملاءمة تقاربي regression نموذج قليل جدًا"
 
 msgid "too few distinct input values to fit the 'asympOff' model"
-msgstr ""
+msgstr "عدد distinct input القيم إلى ملاءمة 'asympOff' نموذج قليل جدًا"
 
 msgid "too few distinct input values to fit the 'asympOrig' model"
-msgstr ""
+msgstr "عدد distinct input القيم إلى ملاءمة 'asympOrig' نموذج قليل جدًا"
 
 msgid "too few distinct input values to fit a biexponential"
-msgstr ""
+msgstr "عدد distinct input القيم إلى ملاءمة biexponential قليل جدًا"
 
 msgid "must have length of response = length of second argument to 'SSfol'"
-msgstr ""
+msgstr "يجب أن يحتوي length لـ استجابة = length لـ second وسيط إلى 'SSfol'"
 
 msgid "must have at least 4 observations to fit an 'SSfol' model"
-msgstr ""
+msgstr "يجب أن يحتوي على الأقل 4 الملاحظات إلى ملاءمة 'SSfol' نموذج"
 
 msgid "too few distinct input values to fit a four-parameter logistic"
-msgstr ""
+msgstr "عدد distinct input القيم إلى ملاءمة four-معامل logistic قليل جدًا"
 
 msgid "too few distinct input values to fit a logistic model"
-msgstr ""
+msgstr "عدد distinct input القيم إلى ملاءمة logistic نموذج قليل جدًا"
 
 msgid "too few distinct input values to fit a Michaelis-Menten model"
-msgstr ""
+msgstr "عدد distinct input القيم إلى ملاءمة Michaelis-Menten نموذج قليل جدًا"
 
 msgid "too few distinct input values to fit the Gompertz model"
-msgstr ""
+msgstr "عدد distinct input القيم إلى ملاءمة Gompertz نموذج قليل جدًا"
 
 msgid "too few distinct input values to fit the Weibull growth model"
-msgstr ""
+msgstr "عدد distinct input القيم إلى ملاءمة Weibull growth نموذج قليل جدًا"
 
 msgid "all 'x' values must be non-negative to fit the Weibull growth model"
-msgstr ""
+msgstr "جميع 'x' القيم يجب أن يكون غير سالب إلى ملاءمة Weibull growth نموذج"
 
 msgid "using the %d/%d row from a combined fit"
 msgid_plural "using the %d/%d rows from a combined fit"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "لا يتم استخدام أي صف %d/%d من ملاءمة مشتركة"
+msgstr[1] "يتم استخدام الصف %d/%d من ملاءمة مشتركة"
+msgstr[2] "يتم استخدام الصفّين %d/%d من ملاءمة مشتركة"
+msgstr[3] "يتم استخدام %d/%d صفوف من ملاءمة مشتركة"
+msgstr[4] "يتم استخدام %d/%d صفًا من ملاءمة مشتركة"
+msgstr[5] "يتم استخدام %d/%d صف من ملاءمة مشتركة"
 
 msgid "lower scope has term %s not included in model"
 msgid_plural "lower scope has terms %s not included in model"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "النطاق الأدنى لا يحتوي على أي حد غير مدرج في النموذج %s"
+msgstr[1] "النطاق الأدنى يحتوي على الحد %s غير المدرج في النموذج"
+msgstr[2] "النطاق الأدنى يحتوي على الحدين %s غير المدرجين في النموذج"
+msgstr[3] "النطاق الأدنى يحتوي على الحدود %s غير المدرجة في النموذج"
+msgstr[4] "النطاق الأدنى يحتوي على الحدود %s غير المدرجة في النموذج"
+msgstr[5] "النطاق الأدنى يحتوي على الحد %s غير المدرج في النموذج"
 
 msgid "upper scope has term %s not included in model"
 msgid_plural "upper scope has terms %s not included in model"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "النطاق الأعلى لا يحتوي على أي حد غير مدرج في النموذج %s"
+msgstr[1] "النطاق الأعلى يحتوي على الحد %s غير المدرج في النموذج"
+msgstr[2] "النطاق الأعلى يحتوي على الحدين %s غير المدرجين في النموذج"
+msgstr[3] "النطاق الأعلى يحتوي على الحدود %s غير المدرجة في النموذج"
+msgstr[4] "النطاق الأعلى يحتوي على الحدود %s غير المدرجة في النموذج"
+msgstr[5] "النطاق الأعلى يحتوي على الحد %s غير المدرج في النموذج"
 
 msgid "there are %d Error terms: only 1 is allowed"
 msgid_plural "there are %d Error terms: only 1 is allowed"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "توجد %d حدود Error: المسموح به حد واحد فقط"
+msgstr[1] "يوجد %d حد Error: المسموح به حد واحد فقط"
+msgstr[2] "يوجد حدّا Error (%d): المسموح به حد واحد فقط"
+msgstr[3] "توجد %d حدود Error: المسموح به حد واحد فقط"
+msgstr[4] "يوجد %d حد Error: المسموح به حد واحد فقط"
+msgstr[5] "يوجد %d حد Error: المسموح به حد واحد فقط"
 
 msgid "unknown name %s in the 'split' list"
 msgid_plural "unknown names %s in the 'split' list"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لا توجد أسماء غير معروفة في قائمة 'split': %s"
+msgstr[1] "اسم غير معروف %s في قائمة 'split'"
+msgstr[2] "اسمان غير معروفين %s في قائمة 'split'"
+msgstr[3] "أسماء غير معروفة %s في قائمة 'split'"
+msgstr[4] "أسماء غير معروفة %s في قائمة 'split'"
+msgstr[5] "اسم غير معروف %s في قائمة 'split'"
+
+#, fuzzy
+msgid "essentially perfect fit for %s: summary may be unreliable"
+msgid_plural "essentially perfect fit for response(s) %s: summary may be unreliable"
+msgstr[0] "essentially ملاءمة مثالية: summary may يكون unreliable"
+msgstr[1] "essentially ملاءمة مثالية: summary may يكون unreliable"
+msgstr[2] "essentially ملاءمة مثالية: summary may يكون unreliable"
+msgstr[3] "essentially ملاءمة مثالية: summary may يكون unreliable"
+msgstr[4] "essentially ملاءمة مثالية: summary may يكون unreliable"
+msgstr[5] "essentially ملاءمة مثالية: summary may يكون unreliable"
 
 msgid "extra argument %s is not of class \"%s\""
 msgid_plural "extra arguments %s are not of class \"%s\""
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لا توجد وسائط إضافية ليست من الصنف \"%s\": %s"
+msgstr[1] "الوسيط الإضافي %s ليس من الصنف \"%s\""
+msgstr[2] "الوسيطان الإضافيان %s ليسا من الصنف \"%s\""
+msgstr[3] "الوسائط الإضافية %s ليست من الصنف \"%s\""
+msgstr[4] "الوسائط الإضافية %s ليست من الصنف \"%s\""
+msgstr[5] "الوسيط الإضافي %s ليس من الصنف \"%s\""
 
 msgid "%d factor is too many for %d variables"
 msgid_plural "%d factors are too many for %d variables"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "%d عامل كثير جدًا لـ %d متغيرات"
+msgstr[1] "%d عامل كثير جدًا لـ %d متغيرات"
+msgstr[2] "%d عاملان كثيران جدًا لـ %d متغيرات"
+msgstr[3] "%d عوامل كثيرة جدًا لـ %d متغيرات"
+msgstr[4] "%d عاملًا كثير جدًا لـ %d متغيرات"
+msgstr[5] "%d عامل كثير جدًا لـ %d متغيرات"
 
 msgid "'start' must have %d row"
 msgid_plural "'start' must have %d rows"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "يجب أن يحتوي 'start' على %d صف"
+msgstr[1] "يجب أن يحتوي 'start' على %d صف"
+msgstr[2] "يجب أن يحتوي 'start' على صفين (%d)"
+msgstr[3] "يجب أن يحتوي 'start' على %d صفوف"
+msgstr[4] "يجب أن يحتوي 'start' على %d صفًا"
+msgstr[5] "يجب أن يحتوي 'start' على %d صف"
 
 msgid "unable to optimize from this starting value"
 msgid_plural "unable to optimize from these starting values"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لا يمكن التحسين من قيم البدء هذه"
+msgstr[1] "لا يمكن التحسين من قيمة البدء هذه"
+msgstr[2] "لا يمكن التحسين من قيمتي البدء هاتين"
+msgstr[3] "لا يمكن التحسين من قيم البدء هذه"
+msgstr[4] "لا يمكن التحسين من قيم البدء هذه"
+msgstr[5] "لا يمكن التحسين من قيمة البدء هذه"
 
 msgid "'init' must have %d column"
 msgid_plural "'init' must have 1 or %d columns"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "يجب أن يحتوي 'init' على %d عمود"
+msgstr[1] "يجب أن يحتوي 'init' على %d عمود"
+msgstr[2] "يجب أن يحتوي 'init' على عمود واحد أو %d عمودين"
+msgstr[3] "يجب أن يحتوي 'init' على عمود واحد أو %d أعمدة"
+msgstr[4] "يجب أن يحتوي 'init' على عمود واحد أو %d عمودًا"
+msgstr[5] "يجب أن يحتوي 'init' على عمود واحد أو %d عمود"
 
 msgid "X matrix has rank %d, but only %d observation"
 msgid_plural "X matrix has rank %d, but only %d observations"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "مصفوفة X رتبتها %d، لكن لا توجد سوى %d ملاحظة"
+msgstr[1] "مصفوفة X رتبتها %d، لكن توجد ملاحظة واحدة فقط (%d)"
+msgstr[2] "مصفوفة X رتبتها %d، لكن توجد ملاحظتان فقط (%d)"
+msgstr[3] "مصفوفة X رتبتها %d، لكن توجد %d ملاحظات فقط"
+msgstr[4] "مصفوفة X رتبتها %d، لكن توجد %d ملاحظة فقط"
+msgstr[5] "مصفوفة X رتبتها %d، لكن توجد %d ملاحظة فقط"
 
 msgid "did not converge in %d iteration"
 msgid_plural "did not converge in %d iterations"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لم يتقارب في أي تكرار (%d)"
+msgstr[1] "لم يتقارب في تكرار واحد (%d)"
+msgstr[2] "لم يتقارب في تكرارين (%d)"
+msgstr[3] "لم يتقارب في %d تكرارات"
+msgstr[4] "لم يتقارب في %d تكرارًا"
+msgstr[5] "لم يتقارب في %d تكرار"
 
 msgid "%d missing value deleted"
 msgid_plural "%d missing values deleted"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "تم حذف %d قيمة مفقودة"
+msgstr[1] "تم حذف قيمة مفقودة واحدة (%d)"
+msgstr[2] "تم حذف قيمتين مفقودتين (%d)"
+msgstr[3] "تم حذف %d قيم مفقودة"
+msgstr[4] "تم حذف %d قيمة مفقودة"
+msgstr[5] "تم حذف %d قيمة مفقودة"
 
 msgid "'X' matrix has %d case (row)"
 msgid_plural "'X' matrix has %d cases (rows)"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "مصفوفة 'X' لديها %d حالة (صف)"
+msgstr[1] "مصفوفة 'X' لديها حالة واحدة (%d صف)"
+msgstr[2] "مصفوفة 'X' لديها حالتان (%d صف)"
+msgstr[3] "مصفوفة 'X' لديها %d حالات (صفوف)"
+msgstr[4] "مصفوفة 'X' لديها %d حالة (صفوف)"
+msgstr[5] "مصفوفة 'X' لديها %d حالة (صف)"
 
 msgid "'Y' has %d case (row)"
 msgid_plural "'Y' has %d cases (rows)"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لدى 'Y' %d حالة (صف)"
+msgstr[1] "لدى 'Y' حالة واحدة (%d صف)"
+msgstr[2] "لدى 'Y' حالتان (%d صف)"
+msgstr[3] "لدى 'Y' %d حالات (صفوف)"
+msgstr[4] "لدى 'Y' %d حالة (صفوف)"
+msgstr[5] "لدى 'Y' %d حالة (صف)"
 
 msgid "only %d case"
 msgid_plural "only %d cases"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "%d حالة فقط"
+msgstr[1] "حالة واحدة فقط (%d)"
+msgstr[2] "حالتان فقط (%d)"
+msgstr[3] "%d حالات فقط"
+msgstr[4] "%d حالة فقط"
+msgstr[5] "%d حالة فقط"
 
 msgid "but %d variable"
 msgid_plural "but %d variables"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لكن %d متغير"
+msgstr[1] "لكن متغير واحد فقط (%d)"
+msgstr[2] "لكن متغيرين فقط (%d)"
+msgstr[3] "لكن %d متغيرات"
+msgstr[4] "لكن %d متغيرًا"
+msgstr[5] "لكن %d متغير"
 
 msgid "medpolish() did not converge in %d iteration"
 msgid_plural "medpolish() did not converge in %d iterations"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لم يتقارب medpolish() في أي تكرار (%d)"
+msgstr[1] "لم يتقارب medpolish() في تكرار واحد (%d)"
+msgstr[2] "لم يتقارب medpolish() في تكرارين (%d)"
+msgstr[3] "لم يتقارب medpolish() في %d تكرارات"
+msgstr[4] "لم يتقارب medpolish() في %d تكرارًا"
+msgstr[5] "لم يتقارب medpolish() في %d تكرار"
 
 msgid "'newdata' had %d row"
 msgid_plural "'newdata' had %d rows"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "كان لدى 'newdata' %d صف"
+msgstr[1] "كان لدى 'newdata' صف واحد (%d)"
+msgstr[2] "كان لدى 'newdata' صفان (%d)"
+msgstr[3] "كان لدى 'newdata' %d صفوف"
+msgstr[4] "كان لدى 'newdata' %d صفًا"
+msgstr[5] "كان لدى 'newdata' %d صف"
 
 msgid "but variable found had %d row"
 msgid_plural "but variables found have %d rows"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لكن المتغيرات التي عُثر عليها لديها %d صف"
+msgstr[1] "لكن المتغير الذي عُثر عليه لديه صف واحد (%d)"
+msgstr[2] "لكن المتغيرين اللذين عُثر عليهما لديهما صفان (%d)"
+msgstr[3] "لكن المتغيرات التي عُثر عليها لديها %d صفوف"
+msgstr[4] "لكن المتغيرات التي عُثر عليها لديها %d صفًا"
+msgstr[5] "لكن المتغير الذي عُثر عليه لديه %d صف"
 
 msgid "factor %s has new level %s"
 msgid_plural "factor %s has new levels %s"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لدى العامل %s مستويات جديدة %s"
+msgstr[1] "لدى العامل %s مستوى جديد %s"
+msgstr[2] "لدى العامل %s مستويان جديدان %s"
+msgstr[3] "لدى العامل %s مستويات جديدة %s"
+msgstr[4] "لدى العامل %s مستويات جديدة %s"
+msgstr[5] "لدى العامل %s مستوى جديد %s"
 
 msgid "%d observation deleted due to missingness"
 msgid_plural "%d observations deleted due to missingness"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "تم حذف %d ملاحظة بسبب الفقد"
+msgstr[1] "تم حذف ملاحظة واحدة بسبب الفقد (%d)"
+msgstr[2] "تم حذف ملاحظتين بسبب الفقد (%d)"
+msgstr[3] "تم حذف %d ملاحظات بسبب الفقد"
+msgstr[4] "تم حذف %d ملاحظة بسبب الفقد"
+msgstr[5] "تم حذف %d ملاحظة بسبب الفقد"
 
 msgid "_NOT_ converged in %d iteration"
 msgid_plural "_NOT_ converged in %d iterations"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "_NOT_ تقارب في أي تكرار (%d)"
+msgstr[1] "_NOT_ تقارب في تكرار واحد (%d)"
+msgstr[2] "_NOT_ تقارب في تكرارين (%d)"
+msgstr[3] "_NOT_ تقارب في %d تكرارات"
+msgstr[4] "_NOT_ تقارب في %d تكرارًا"
+msgstr[5] "_NOT_ تقارب في %d تكرار"
 
 msgid "unrecognized control element named %s ignored"
 msgid_plural "unrecognized control elements named %s ignored"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "تم تجاهل عناصر تحكم غير معروفة باسم %s"
+msgstr[1] "تم تجاهل عنصر التحكم غير المعروف باسم %s"
+msgstr[2] "تم تجاهل عنصري التحكم غير المعروفين باسم %s"
+msgstr[3] "تم تجاهل عناصر التحكم غير المعروفة باسم %s"
+msgstr[4] "تم تجاهل عناصر التحكم غير المعروفة باسم %s"
+msgstr[5] "تم تجاهل عنصر التحكم غير المعروف باسم %s"
 
 msgid "fitting parameter %s without any variables"
 msgid_plural "fitting parameters %s without any variables"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "ملاءمة المعامل %s دون أي متغيرات"
+msgstr[1] "ملاءمة المعامل %s دون أي متغيرات"
+msgstr[2] "ملاءمة المعاملين %s دون أي متغيرات"
+msgstr[3] "ملاءمة المعاملات %s دون أي متغيرات"
+msgstr[4] "ملاءمة المعاملات %s دون أي متغيرات"
+msgstr[5] "ملاءمة المعامل %s دون أي متغيرات"
 
 msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "المعامل %s لا يظهر في صيغة النموذج"
+msgstr[1] "المعامل %s لا يظهر في صيغة النموذج"
+msgstr[2] "المعاملان %s لا يظهران في صيغة النموذج"
+msgstr[3] "المعاملات %s لا تظهر في صيغة النموذج"
+msgstr[4] "المعاملات %s لا تظهر في صيغة النموذج"
+msgstr[5] "المعامل %s لا يظهر في صيغة النموذج"
 
 msgid "%d observation with NA, NaN or Inf deleted"
 msgid_plural "%d observations with NAs, NaNs and/or Infs deleted"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "تم حذف %d ملاحظة تحتوي على NA أو NaN أو Inf"
+msgstr[1] "تم حذف ملاحظة واحدة تحتوي على NA أو NaN أو Inf (%d)"
+msgstr[2] "تم حذف ملاحظتين تحتويان على NA أو NaN أو Inf (%d)"
+msgstr[3] "تم حذف %d ملاحظات تحتوي على NAs وNaNs و/أو Infs"
+msgstr[4] "تم حذف %d ملاحظة تحتوي على NAs وNaNs و/أو Infs"
+msgstr[5] "تم حذف %d ملاحظة تحتوي على NA أو NaN أو Inf"
 
 msgid "'start.innov' is too short: need %d point"
 msgid_plural "'start.innov' is too short: need %d points"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "'start.innov' قصير جدًا: يلزم %d نقطة"
+msgstr[1] "'start.innov' قصير جدًا: تلزم نقطة واحدة (%d)"
+msgstr[2] "'start.innov' قصير جدًا: تلزم نقطتان (%d)"
+msgstr[3] "'start.innov' قصير جدًا: تلزم %d نقاط"
+msgstr[4] "'start.innov' قصير جدًا: تلزم %d نقطة"
+msgstr[5] "'start.innov' قصير جدًا: تلزم %d نقطة"
+
+#~ msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+#~ msgstr "Jeffreys العقوبة تم تطبيقها في %s لأن initial التحسين فشل مع:"

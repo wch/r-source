@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.0.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2012-01-09 20:51+0200\n"
 "Last-Translator: Joe <joedalton2@yahoo.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -93,10 +93,12 @@ msgstr ""
 msgid "invalid value for %s : %s"
 msgstr "ugyldig værdi for %s: %s"
 
-msgid "value of 'results' option should be lowercase"
+#, fuzzy
+msgid "value of option 'results' should be lowercase"
 msgstr "værdien af tilvalget »results« skal være med små bogstaver"
 
-msgid "value of 'strip.white' option should be lowercase"
+#, fuzzy
+msgid "value of option 'strip.white' should be lowercase"
 msgstr "værdien af indstillingen »strip.white« skal være med små bogstaver"
 
 msgid "using default value %s"
@@ -115,10 +117,10 @@ msgid "Yes"
 msgstr ""
 
 msgid "No"
-msgstr ""
+msgstr "Nej"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Afbryd"
 
 msgid "Unrecognized response"
 msgstr ""
@@ -442,7 +444,7 @@ msgid "Help for topic %s is not in any loaded package but can be found in the fo
 msgstr ""
 
 msgid "Package"
-msgstr ""
+msgstr "pakke"
 
 msgid "Library"
 msgstr ""
@@ -545,6 +547,51 @@ msgid "DESCRIPTION file of package '%s' is missing or broken"
 msgstr ""
 
 msgid "Invalid \"Built\":"
+msgstr ""
+
+msgid "Built: value is not a string"
+msgstr ""
+
+msgid "unable to create temporary directory %s"
+msgstr ""
+
+#, fuzzy
+msgid "file %s is not a binary package"
+msgstr "Filter »%s« er ikke tilgængelig."
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
+
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr ""
+
+#, fuzzy
+msgid "package %s signature verified (%s %s)"
+msgstr "Filter »%s« er ikke tilgængelig."
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
+msgstr ""
+
+msgid "ERROR: failed to create lock directory %s"
+msgstr ""
+
+msgid "restored %s"
+msgstr ""
+
+msgid "unable to move temporary installation %s to %s"
+msgstr ""
+
+msgid "cannot remove prior installation of package %s"
+msgstr ""
+
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
 msgstr ""
 
 msgid "cannot update HTML package index"
@@ -758,9 +805,6 @@ msgid "unable to create %s"
 msgstr ""
 
 msgid "inferring 'repos = NULL' from 'pkgs'"
-msgstr ""
-
-msgid "unable to create temporary directory %s"
 msgstr ""
 
 msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
@@ -1048,7 +1092,7 @@ msgid "No %s command found"
 msgstr ""
 
 msgid "gzip"
-msgstr ""
+msgstr "gzip"
 
 msgid "bzip2"
 msgstr ""
@@ -1208,51 +1252,6 @@ msgid "invalid method:"
 msgstr "Ugyldigt argument for »filter«."
 
 msgid "download had nonzero exit status"
-msgstr ""
-
-msgid "Built: value is not a string"
-msgstr ""
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr ""
-
-#, fuzzy
-msgid "file %s is not a binary package"
-msgstr "Filter »%s« er ikke tilgængelig."
-
-msgid "binary package %s is not compatible with this build of R"
-msgstr ""
-
-msgid "package %s successfully unpacked and %s sums checked"
-msgstr ""
-
-#, fuzzy
-msgid "package %s signature verified (%s %s)"
-msgstr "Filter »%s« er ikke tilgængelig."
-
-msgid "Valid signature is required, but package %s could not be successfully verified."
-msgstr ""
-
-msgid ""
-"ERROR: failed to lock directory %s for modifying\n"
-"Try removing %s"
-msgstr ""
-
-msgid "ERROR: failed to create lock directory %s"
-msgstr ""
-
-msgid "restored %s"
-msgstr ""
-
-msgid "unable to move temporary installation %s to %s"
-msgstr ""
-
-msgid "cannot remove prior installation of package %s"
-msgstr ""
-
-msgid ""
-"The downloaded binary packages are in\n"
-"\t%s"
 msgstr ""
 
 msgid "'memory.size()' is no longer supported"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2024-03-22 18:10+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: none\n"
@@ -1059,6 +1059,9 @@ msgstr "tots els grups han de contenir dades"
 msgid "not enough observations"
 msgstr "no hi ha prou observacions"
 
+msgid "computing Newton updated failed in %s"
+msgstr ""
+
 #, fuzzy
 msgid "incorrect dimensions"
 msgstr "dimensions incorrectes per a «xi»"
@@ -1076,7 +1079,7 @@ msgstr ""
 msgid "error computing the Hessian in %s"
 msgstr ""
 
-msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgid "error computing the Hessian determinant in %s"
 msgstr ""
 
 msgid "unsuccessful optimisation in %s"
@@ -1590,6 +1593,9 @@ msgstr "dimensions incompatibles"
 #, fuzzy
 msgid "missing or negative weights not allowed"
 msgstr "no es permeten pesos que falten o negatius"
+
+msgid "weights smaller than tolerance wtol*sum(w) = %g treated as zero"
+msgstr ""
 
 #, fuzzy
 msgid "invalid 'lm' object:  no 'terms' component"
@@ -2128,6 +2134,16 @@ msgstr "s'ignorarà l'argument «subset»"
 #, fuzzy
 msgid "argument 'na.action' will be ignored"
 msgstr "s'ignorarà l'argument «na.action»"
+
+msgid "different names for %s and %s: names ignored"
+msgstr ""
+
+#, fuzzy
+msgid "mismatched names for %s and %s"
+msgstr "«x» i «y» no concordants"
+
+msgid "duplicated names in %s"
+msgstr ""
 
 #, fuzzy
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
@@ -3078,6 +3094,12 @@ msgid "unknown name %s in the 'split' list"
 msgid_plural "unknown names %s in the 'split' list"
 msgstr[0] "nom desconegut %s a la llista 'desglossada'"
 msgstr[1] "noms desconeguts %s a la llista de «desglossats»"
+
+#, fuzzy
+msgid "essentially perfect fit for %s: summary may be unreliable"
+msgid_plural "essentially perfect fit for response(s) %s: summary may be unreliable"
+msgstr[0] "Ajust essencialment perfecte: el resum pot ser poc fiable"
+msgstr[1] "Ajust essencialment perfecte: el resum pot ser poc fiable"
 
 #, fuzzy
 msgid "extra argument %s is not of class \"%s\""

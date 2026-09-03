@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-09 14:51\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2023-11-25 03:05+0000\n"
 "Last-Translator: Mara Geraldina Destefanis <maragdestefanis@gmail.com>\n"
 "Language-Team: none\n"
@@ -58,11 +58,11 @@ msgstr "el directorio '%s' no contiene objetos Rd"
 msgid "Functions or methods with usage in Rd file '%s' but not in code:"
 msgstr "Funciones o métodos con uso en el archivo Rd '%s' pero no en el código:"
 
-msgid "Data with usage in Rd file '%s' but not in code:"
-msgstr "Datos con uso en el archivo Rd '%s' pero no en el código:"
-
 msgid "Variables with usage in Rd file '%s' but not in code:"
 msgstr "Variables con uso en el archivo Rd '%s' pero no en el código:"
+
+msgid "Data with usage in Rd file '%s' but not in code:"
+msgstr "Datos con uso en el archivo Rd '%s' pero no en el código:"
 
 msgid "Argument names in code not in docs:"
 msgstr "Nombres de argumentos en el código, no en los documentos:"
@@ -211,7 +211,7 @@ msgid "Invalid VignetteBuilder field."
 msgstr "Campo VignetteBuilder no válido."
 
 msgid "This field must contain one or more packages (and no version requirement)."
-msgstr ""
+msgstr "Este campo debe contener uno o más paquetes (y ningún requisito de versión)."
 
 msgid "Invalid Priority field."
 msgstr "Campo Priority no válido."
@@ -223,10 +223,10 @@ msgid "Malformed Title field: should not end in a period."
 msgstr "Campo Título mal formado: no debe terminar en un punto."
 
 msgid "Malformed Description field: should contain one or more complete sentences."
-msgstr ""
+msgstr "Campo de descripción mal formado: debe contener una o más oraciones completas."
 
 msgid "See section 'The DESCRIPTION file' in the 'Writing R Extensions' manual."
-msgstr ""
+msgstr "Consulte la sección 'The DESCRIPTION file' en el manual 'Writing R Extensions'."
 
 msgid "Malformed Authors@R field:"
 msgstr "Campo Authors@R con formato incorrecto:"
@@ -322,7 +322,7 @@ msgid "Non-topic package-anchored link(s) in Rd file '%s':"
 msgstr "Enlace(s) anclado(s) a paquetes no relacionados con el tema en el archivo Rd '%s':"
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
-msgstr ""
+msgstr "Consulte la sección 'Cross-references' en el manual 'Writing R Extensions'."
 
 msgid "Call sequence:"
 msgstr "Secuencia de llamada:"
@@ -361,7 +361,7 @@ msgid "See section %s in '%s'."
 msgstr "Ver sección %s en '%s'."
 
 msgid "Package detach functions should have one argument with name starting with %s."
-msgstr ""
+msgstr "Las funciones de detach de paquetes deben tener un argumento con un nombre que comience con %s."
 
 msgid "Package detach functions should not call %s."
 msgstr "Las funciones de detach de paquetes no deben llamar a %s."
@@ -394,10 +394,10 @@ msgid "'loadNamespace' or 'requireNamespace' call not declared from: %s"
 msgstr "llamada 'loadNamespace' o 'requireNamespace' no declarada desde: %s"
 
 msgid "'library' or 'require' calls to packages already attached by Depends:"
-msgstr ""
+msgstr "llamadas 'library' o 'require' a paquetes ya adjuntos por Depends:"
 
 msgid "'library' or 'require' call to %s which was already attached by Depends."
-msgstr ""
+msgstr "llamada a 'library' o 'require' a %s que ya estaba adjuntado por Depends."
 
 msgid "'library' or 'require' calls in package code:"
 msgstr "llamados a 'library' o 'require' en el código del paquete:"
@@ -477,8 +477,9 @@ msgstr "Elementos de argumento sin descripción en el archivo Rd '%s':"
 msgid "Auto-generated content requiring editing in Rd file '%s':"
 msgstr "Contenido generado automáticamente que requiere edición en el archivo Rd '%s':"
 
+#, fuzzy
 msgid "Rd files without %s:"
-msgstr ""
+msgstr "Archivos Rd sin \\alias:"
 
 msgid "no Rd sections specified"
 msgstr "no se especifican secciones Rd"
@@ -504,7 +505,7 @@ msgid "Rd files must have a non-empty %s."
 msgstr "Los archivos Rd deben tener un %s que no esté vacío."
 
 msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
-msgstr ""
+msgstr "Consulte el capítulo 'Writing R documentation' en el manual 'Writing R Extensions'."
 
 msgid "missing/empty \\title field in '%s'"
 msgstr "campo \\title faltante/vacío en '%s'"
@@ -528,7 +529,7 @@ msgid "'macros' must be TRUE or must specify existing macros"
 msgstr "'macros' debe ser TRUE o debe especificar macros existentes"
 
 msgid "Macro file %s should only contain Rd macro definitions and comments"
-msgstr ""
+msgstr "El archivo de macro %s solo debe contener definiciones y comentarios de macro Rd"
 
 msgid "Rd macro package '%s' is not installed."
 msgstr "El paquete de macros '%s' no está instalado."
@@ -650,7 +651,7 @@ msgid "file '%s' not found"
 msgstr "archivo '%s' no encontrado"
 
 msgid "vignette filename '%s' does not match any of the '%s' filename patterns"
-msgstr ""
+msgstr "el nombre de archivo de la viñeta '%s' no coincide con ninguno de los patrones de nombre de archivo '%s'"
 
 msgid "In '%s' vignettes '%s' and '%s' have the same vignette name"
 msgstr "En las viñetas '%s', '%s' y '%s' tienen el mismo nombre de viñeta"
@@ -692,7 +693,7 @@ msgid "cannot open directory '%s'"
 msgstr "no se puede abrir el directorio '%s'"
 
 msgid "WARNING: omitting pointless dependence on 'R' without a version requirement"
-msgstr ""
+msgstr "AVISO: se omite la dependencia inútil de 'R' sin un requisito de versión"
 
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
 msgstr "no se puede desactivar la clasificación específica de la configuración regional mediante LC_COLLATE"
@@ -746,9 +747,6 @@ msgstr "ERROR: estaes la versión %s de R, se requiere R %s %s"
 
 msgid "loading failed"
 msgstr "la carga falló"
-
-msgid "'cc' is not on the path"
-msgstr "'cc' no está en la ruta"
 
 msgid "'objdump' is not on the path"
 msgstr "'objdump' no está en la ruta"
@@ -819,16 +817,19 @@ msgstr "no hay paquetes para revisar"
 msgid "'reverse$repos' should be a subset of getOption(\"repos\")"
 msgstr "'reverse$repos' debería ser un subconjunto de getOption(\"repos\")"
 
+#, fuzzy
 msgid "downloading reverse dependencies %s"
-msgstr ""
+msgstr "descargando dependencias inversas..."
 
+#, fuzzy
 msgid "download of reverse dependency %s failed"
-msgstr ""
+msgstr "descargando dependencias inversas..."
 
+#, fuzzy
 msgid ""
 "download of %d reverse dependencies failed:\n"
 "  %s"
-msgstr ""
+msgstr "descargando dependencias inversas..."
 
 msgid "checking %s ..."
 msgstr "comprobando %s..."
@@ -903,7 +904,7 @@ msgid "No NEWS found for package %s"
 msgstr "No se encontraron NEWS para el paquete %s"
 
 msgid "Only help files, %s, %s and files under %s and %s in a package can be viewed"
-msgstr ""
+msgstr "Solo se pueden ver los archivos de ayuda, %s, %s y los archivos bajo %s y %s en un paquete"
 
 msgid "unsupported URL %s"
 msgstr "URL no admitida %s"
@@ -976,7 +977,7 @@ msgid "patch utility is needed for installation-time patching"
 msgstr "la utilidad patch es necesaria para aplicar parches durante la instalación"
 
 msgid "R include directory is empty -- perhaps need to install R-devel.rpm or similar"
-msgstr ""
+msgstr "El directorio 'include' de R está vacío; quizás sea necesario instalar R-devel.rpm o similar"
 
 msgid "package %s %s was found, but %s %s is required by %s"
 msgstr "Se encontró el paquete %s %s, pero %s %s es requerido por %s"
@@ -1015,12 +1016,30 @@ msgid "building a fake installation is disallowed"
 msgstr "no se permite construir una instalación fake"
 
 msgid "Input must be character"
-msgstr ""
+msgstr "Input debe ser un caracter"
 
 msgid ""
 "See\n"
 "  %s\n"
 "for details."
+msgstr ""
+"Ver\n"
+" %s\n"
+"para más detalles."
+
+#, fuzzy
+msgid "must specify 'address'"
+msgstr "debes especificar 'dir' o 'files'"
+
+msgid "'subject' is missing"
+msgstr ""
+
+msgid "Sending email to %s"
+msgstr ""
+
+msgid ""
+"Sending email failed!\n"
+"The unsent msg can be found in file %s."
 msgstr ""
 
 msgid "namespace must not be already loaded"
@@ -1109,10 +1128,10 @@ msgid ""
 msgstr ""
 
 msgid "There is no binary type for this build of R."
-msgstr ""
+msgstr "No existe un tipo de binario para este build de R."
 
 msgid "invalid 'type'"
-msgstr ""
+msgstr "'type' inválido"
 
 msgid "Processing packages:"
 msgstr "Paquetes de procesamiento:"
@@ -1238,7 +1257,7 @@ msgid "DIFFERED"
 msgstr "DIFERIDO"
 
 msgid "running tests of random deviate generation (should no longer ever fail)"
-msgstr ""
+msgstr "ejecutar pruebas de generación de desviación aleatoria (ya no debería fallar)"
 
 msgid "unknown header specification"
 msgstr "especificación de encabezado desconocida"
@@ -1265,7 +1284,7 @@ msgid "Specified fields no present in existing PACKAGES file:"
 msgstr "Los campos especificados no están presentes en el archivo PACKAGES existente:"
 
 msgid "Unable to update existing PACKAGES file. Calling write_PACKAGES directly."
-msgstr ""
+msgstr "No se puede actualizar el archivo PACKAGES existente. Llamando a write_PACKAGES directamente."
 
 msgid "Updating existing repository [strict mode:"
 msgstr "Actualizando el repositorio existente [modo estricto:"
@@ -1355,9 +1374,6 @@ msgstr "el archivo '%s' no tiene un formato DCF válido"
 msgid "contains a blank line"
 msgstr "contiene una línea en blanco"
 
-msgid "Unknown encoding with non-ASCII data: converting to ASCII"
-msgstr "Codificación desconocida con datos no ASCII: se convierte a ASCII"
-
 msgid "cannot source package code:"
 msgstr "no se puede hacer source() sobre el código del paquete:"
 
@@ -1415,8 +1431,8 @@ msgstr[1] "Advertencias en el archivo %s:"
 
 msgid "Found possibly global 'T' or 'F' in the following function:"
 msgid_plural "Found possibly global 'T' or 'F' in the following functions:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Se encontró posible 'T' o 'F' global en la siguiente función:"
+msgstr[1] "Se encontraron posibles 'T' o 'F' globales en las siguientes funciones:"
 
 msgid "Found possibly global 'T' or 'F' in the examples of the following Rd file:"
 msgid_plural "Found possibly global 'T' or 'F' in the examples of the following Rd files:"
@@ -1425,8 +1441,8 @@ msgstr[1] ""
 
 msgid "Possibly missing '()' after 'return' in the following function:"
 msgid_plural "Possibly missing '()' after 'return' in the following functions:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Posiblemente falte '()' después de 'return' en la siguiente función:"
+msgstr[1] "Posiblemente falte '()' después de 'return' en las siguientes funciones:"
 
 msgid "Found a .Internal call in the following function:"
 msgid_plural "Found .Internal calls in the following functions:"
@@ -1435,18 +1451,18 @@ msgstr[1] "Se encontraron llamadas a .Internal en las siguientes funciones:"
 
 msgid "Found a .Internal call in methods for the following S4 generic:"
 msgid_plural "Found .Internal calls in methods for the following S4 generics:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Se encontró una llamada a .Internal en métodos para el siguiente genérico de S4:"
+msgstr[1] "Se encontraron llamadas a .Internal en métodos para el siguiente genérico de S4:"
 
 msgid "Found a .Internal call in methods for the following reference class:"
 msgid_plural "Found .Internal calls in methods for the following reference classes:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Se encontró una llamada a .Internal en métodos para la siguiente clase de referencia (refClass):"
+msgstr[1] "Se encontraron llamadas a .Internal en métodos para las siguientes clases de referencia (refClass):"
 
 msgid "Found an obsolete/platform-specific call in the following function:"
 msgid_plural "Found an obsolete/platform-specific call in the following functions:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Se encontró una llamada obsoleta o específica de la plataforma en la siguiente función:"
+msgstr[1] "Se encontró una llamada obsoleta o específica de la plataforma en las siguientes funciones:"
 
 msgid "Found an obsolete/platform-specific call in methods for the following S4 generic:"
 msgid_plural "Found an obsolete/platform-specific call in methods for the following S4 generics:"
@@ -1531,6 +1547,12 @@ msgid "Corresponding BibTeX entry:"
 msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Entrada BibTeX correspondiente:"
 msgstr[1] "Entradas BibTeX correspondientes:"
+
+#~ msgid "'cc' is not on the path"
+#~ msgstr "'cc' no está en la ruta"
+
+#~ msgid "Unknown encoding with non-ASCII data: converting to ASCII"
+#~ msgstr "Codificación desconocida con datos no ASCII: se convierte a ASCII"
 
 #~ msgid "Error: cannot rename directory to %s"
 #~ msgstr "Error: no se puede cambiar el nombre del directorio a %s"

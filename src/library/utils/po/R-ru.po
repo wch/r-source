@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2024-03-25 15:00+0300\n"
 "Last-Translator: Ivan Krylov <ikrylov@disroot.org>\n"
 "Language-Team: Russian\n"
@@ -96,10 +96,12 @@ msgstr "файл вывода '%s' пропал :("
 msgid "invalid value for %s : %s"
 msgstr "неправильное значение %s: %s"
 
-msgid "value of 'results' option should be lowercase"
+#, fuzzy
+msgid "value of option 'results' should be lowercase"
 msgstr "значение опции 'results' должно быть в нижнем регистре"
 
-msgid "value of 'strip.white' option should be lowercase"
+#, fuzzy
+msgid "value of option 'strip.white' should be lowercase"
 msgstr "значение опции 'strip.white' должно быть в нижнем регистре"
 
 msgid "using default value %s"
@@ -556,6 +558,56 @@ msgstr "файл DESCRIPTION пакета '%s' пропущен или поврежден"
 msgid "Invalid \"Built\":"
 msgstr "Неправильный \"Built\":"
 
+msgid "Built: value is not a string"
+msgstr ""
+
+msgid "unable to create temporary directory %s"
+msgstr "не могу создать временную директорию %s"
+
+#, fuzzy
+msgid "file %s is not a binary package"
+msgstr "файл %s -- не бинарный пакет macOS"
+
+msgid "binary package %s is not compatible with this build of R"
+msgstr ""
+
+#, fuzzy
+msgid "package %s successfully unpacked and %s sums checked"
+msgstr "пакет %s успешно распакован, MD5-суммы проверены"
+
+#, fuzzy
+msgid "package %s signature verified (%s %s)"
+msgstr "пакет '%s' недоступен (%s)"
+
+msgid "Valid signature is required, but package %s could not be successfully verified."
+msgstr ""
+
+msgid ""
+"ERROR: failed to lock directory %s for modifying\n"
+"Try removing %s"
+msgstr ""
+"ОШИБКА: невозможно заблокировать каталог %s для модификации\n"
+"Попробуйте удалить %s"
+
+msgid "ERROR: failed to create lock directory %s"
+msgstr "ОШИБКА: не могу создать каталог для блокировки %s"
+
+msgid "restored %s"
+msgstr "восстановлен %s"
+
+msgid "unable to move temporary installation %s to %s"
+msgstr "не могу перенести временную установку из %s в %s"
+
+msgid "cannot remove prior installation of package %s"
+msgstr "не могу удалить прежнюю установку пакета %s"
+
+msgid ""
+"The downloaded binary packages are in\n"
+"\t%s"
+msgstr ""
+"Скачанные бинарные пакеты находятся в\n"
+"\t%s"
+
 msgid "cannot update HTML package index"
 msgstr "не могу обновить HTML-индекс пакетов"
 
@@ -769,9 +821,6 @@ msgstr "не удалось создать %s"
 
 msgid "inferring 'repos = NULL' from 'pkgs'"
 msgstr "выставляю 'repos = NULL' на основе 'pkgs'"
-
-msgid "unable to create temporary directory %s"
-msgstr "не могу создать временную директорию %s"
 
 msgid "type == \"both\" can only be used in R builds that have well-defined binary type (e.g., CRAN binary releases)"
 msgstr ""
@@ -1223,56 +1272,6 @@ msgstr "неправильный метод:"
 msgid "download had nonzero exit status"
 msgstr "у скачивания ненулевой статус выхода"
 
-msgid "Built: value is not a string"
-msgstr ""
-
-msgid "'tar' returned non-zero exit code %d"
-msgstr "'tar' вернул ненулевой код выхода %d"
-
-#, fuzzy
-msgid "file %s is not a binary package"
-msgstr "файл %s -- не бинарный пакет macOS"
-
-msgid "binary package %s is not compatible with this build of R"
-msgstr ""
-
-#, fuzzy
-msgid "package %s successfully unpacked and %s sums checked"
-msgstr "пакет %s успешно распакован, MD5-суммы проверены"
-
-#, fuzzy
-msgid "package %s signature verified (%s %s)"
-msgstr "пакет '%s' недоступен (%s)"
-
-msgid "Valid signature is required, but package %s could not be successfully verified."
-msgstr ""
-
-msgid ""
-"ERROR: failed to lock directory %s for modifying\n"
-"Try removing %s"
-msgstr ""
-"ОШИБКА: невозможно заблокировать каталог %s для модификации\n"
-"Попробуйте удалить %s"
-
-msgid "ERROR: failed to create lock directory %s"
-msgstr "ОШИБКА: не могу создать каталог для блокировки %s"
-
-msgid "restored %s"
-msgstr "восстановлен %s"
-
-msgid "unable to move temporary installation %s to %s"
-msgstr "не могу перенести временную установку из %s в %s"
-
-msgid "cannot remove prior installation of package %s"
-msgstr "не могу удалить прежнюю установку пакета %s"
-
-msgid ""
-"The downloaded binary packages are in\n"
-"\t%s"
-msgstr ""
-"Скачанные бинарные пакеты находятся в\n"
-"\t%s"
-
 msgid "'memory.size()' is no longer supported"
 msgstr "'memory.size()' больше не поддерживается"
 
@@ -1520,6 +1519,9 @@ msgid_plural "invalid roman numerals: %s"
 msgstr[0] "неправильное римское число: %s"
 msgstr[1] "неправильные римские числа: %s"
 msgstr[2] "неправильные римские числа: %s"
+
+#~ msgid "'tar' returned non-zero exit code %d"
+#~ msgstr "'tar' вернул ненулевой код выхода %d"
 
 #~ msgid "type == \"both\" can only be used on Windows or a CRAN build for macOS"
 #~ msgstr "type == \"both\" можно использовать только на Windows или CRAN-сборке для macOS"

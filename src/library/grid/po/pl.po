@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-08-01 04:41-0700\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -15,7 +15,11 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Generator: Poedit 2.0.4\n"
 
-#: gpar.c:632
+#: gpar.c:355
+msgid "graphical parameter 'fontfamily' has a maximum length of 200 bytes"
+msgstr ""
+
+#: gpar.c:644
 msgid "updateGContext must only be called after initGContext"
 msgstr "updateGContext() musi być wywołany tylko po initGContext()"
 
@@ -42,8 +46,7 @@ msgstr "Okno widoku '%s' nie zostało znalezione"
 
 #: grid.c:909 grid.c:914 grid.c:1035 grid.c:1040
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
-msgstr ""
-"nie można wyświetlić okienka ekranu na wierzchu (wyjścia 'grid' oraz 'graphics' pomieszały się?)"
+msgstr "nie można wyświetlić okienka ekranu na wierzchu (wyjścia 'grid' oraz 'graphics' pomieszały się?)"
 
 #: grid.c:1241
 msgid "attempt to plot on null device"
@@ -76,7 +79,6 @@ msgstr "nieskończony 'x' lub 'y' w ścieżce grafiki"
 #: grid.c:3487
 msgid "Empty raster"
 msgstr "Pusty raster"
-
 
 #: grid.c:4038 grid.c:4094
 msgid "Coordinates for text pch not yet supported"
@@ -116,7 +118,6 @@ msgstr "osobliwa macierz transformacyjna"
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "nie można zachować stanu siatki. Zbyt duża liczba otwartych urządzeń?"
 
-
 #: unit.c:65
 msgid "Cannot create unit scalar from 0-length unit vector"
 msgstr "Nie można utworzyć jednostkowego skalara z jednostkowego wektora o długości 0"
@@ -137,7 +138,6 @@ msgstr "Niewspierana jednostka konwersji"
 msgid "Invalid unit"
 msgstr "Niepoprawna jednostka"
 
-
 #: unit.c:1580
 msgid "'units' must be character"
 msgstr "argument 'units' musi być tekstem"
@@ -148,8 +148,7 @@ msgstr "argument 'units' musi mieć długość > 0"
 
 #: unit.c:1594
 msgid "data must be either NULL, have length 1, or match the length of the final unit vector"
-msgstr ""
-"dane muszą mieć wartość NULL, mieć długość 1 lub odpowiadać długości końcowego wektora jednostkowego"
+msgstr "dane muszą mieć wartość NULL, mieć długość 1 lub odpowiadać długości końcowego wektora jednostkowego"
 
 #: unit.c:1606
 msgid "no string supplied for 'strwidth/height' unit"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tools 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-09 14:51\n"
+"POT-Creation-Date: 2026-09-02 17:58\n"
 "PO-Revision-Date: 2021-11-08 10:33+0100\n"
 "Last-Translator: r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com\n"
 "Language-Team: Lithuanian\n"
@@ -60,12 +60,12 @@ msgid "Functions or methods with usage in Rd file '%s' but not in code:"
 msgstr "Funkcijos arba metodai su naudojimu dokumentacijos objekte '%s', bet ne kode:"
 
 #, fuzzy
-msgid "Data with usage in Rd file '%s' but not in code:"
-msgstr "Duomenys, kurie naudojami dokumentacijos objekte '%s', bet ne kode:"
-
-#, fuzzy
 msgid "Variables with usage in Rd file '%s' but not in code:"
 msgstr "Kintamieji, kurie naudojami dokumentacijos objekte '%s', bet ne kode:"
+
+#, fuzzy
+msgid "Data with usage in Rd file '%s' but not in code:"
+msgstr "Duomenys, kurie naudojami dokumentacijos objekte '%s', bet ne kode:"
 
 msgid "Argument names in code not in docs:"
 msgstr "Argumentų pavadinimai kode, o ne docs:"
@@ -776,9 +776,6 @@ msgstr "KLAIDA: ši R versija yra %s, reikalaujama R %s %s"
 msgid "loading failed"
 msgstr "įkėlimas nepavyko"
 
-msgid "'cc' is not on the path"
-msgstr ""
-
 msgid "'objdump' is not on the path"
 msgstr ""
 
@@ -1059,6 +1056,21 @@ msgstr ""
 "Žiūrėti\n"
 "  %s\n"
 "dėl detalesnės informacijos."
+
+#, fuzzy
+msgid "must specify 'address'"
+msgstr "turite nurodyti 'dir' arba 'files'"
+
+msgid "'subject' is missing"
+msgstr ""
+
+msgid "Sending email to %s"
+msgstr ""
+
+msgid ""
+"Sending email failed!\n"
+"The unsent msg can be found in file %s."
+msgstr ""
 
 msgid "namespace must not be already loaded"
 msgstr "vardų erdvė neturi būti jau įkelta"
@@ -1413,9 +1425,6 @@ msgstr "failas '%s' nėra galiojančiu DCF formatu"
 msgid "contains a blank line"
 msgstr "yra tuščia eilutė"
 
-msgid "Unknown encoding with non-ASCII data: converting to ASCII"
-msgstr "Nežinomas kodavimas su ne ASCII duomenimis: konvertavimas į ASCII"
-
 msgid "cannot source package code:"
 msgstr "negalima gauti paketo kodo:"
 
@@ -1628,6 +1637,9 @@ msgid_plural "Corresponding BibTeX entries:"
 msgstr[0] "Atitinkamas BibTeX įrašas:"
 msgstr[1] "Atitinkami BibTeX įrašai:"
 msgstr[2] "Atitinkamų BibTeX įrašų:"
+
+#~ msgid "Unknown encoding with non-ASCII data: converting to ASCII"
+#~ msgstr "Nežinomas kodavimas su ne ASCII duomenimis: konvertavimas į ASCII"
 
 #~ msgid "Error: cannot rename directory to %s"
 #~ msgstr "Klaida: negalima pervardyti katalogo į %s"

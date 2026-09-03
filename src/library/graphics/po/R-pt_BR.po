@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 12:43\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -180,6 +180,9 @@ msgstr "'x' deve ser um vetor numérico ou matriz"
 msgid "'x' is neither a vector nor a matrix: using as.numeric(x)"
 msgstr "'x' não é nem um vetor nem uma matriz: usando as.numeric(x)"
 
+msgid "'col' has length %d but should have length %d (= length(levels) - 1, with length(levels) = %d); colors will be recycled or ignored"
+msgstr ""
+
 msgid "'x' must be an array"
 msgstr "'x' deve ser um array"
 
@@ -236,7 +239,6 @@ msgstr "'probability' é um sinônimo para '!freq', porém, eles diferem."
 
 msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
 msgstr "alguns valores de 'x' não computados; talvez 'breaks' não abranja todo o intervalo de 'x'"
-
 
 #, fuzzy
 msgid "the AREAS in the plot are wrong -- rather use 'freq = FALSE'"

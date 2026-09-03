@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-06-08 13:06\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2018-09-16 23:38+0800\n"
 "Last-Translator: Wei-Lun Chao <bluebat@member.fsf.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -946,6 +946,9 @@ msgstr "所有的組都必須包含資料"
 msgid "not enough observations"
 msgstr "觀察量不夠"
 
+msgid "computing Newton updated failed in %s"
+msgstr ""
+
 #, fuzzy
 msgid "incorrect dimensions"
 msgstr "'xi' 的尺寸無效"
@@ -963,7 +966,7 @@ msgstr ""
 msgid "error computing the Hessian in %s"
 msgstr ""
 
-msgid "Jeffreys penalisation was applied in %s because initial optimisation failed with:"
+msgid "error computing the Hessian determinant in %s"
 msgstr ""
 
 msgid "unsuccessful optimisation in %s"
@@ -1375,6 +1378,9 @@ msgstr "維度不符合"
 
 msgid "missing or negative weights not allowed"
 msgstr "權數不允許是遺漏值或負值"
+
+msgid "weights smaller than tolerance wtol*sum(w) = %g treated as zero"
+msgstr ""
 
 msgid "invalid 'lm' object:  no 'terms' component"
 msgstr "'lm' 物件不對: 不包含 'term' 元件"
@@ -1799,6 +1805,16 @@ msgstr "引數 'subset' 忽略不用"
 
 msgid "argument 'na.action' will be ignored"
 msgstr "引數 'na.action' 忽略不用"
+
+msgid "different names for %s and %s: names ignored"
+msgstr ""
+
+#, fuzzy
+msgid "mismatched names for %s and %s"
+msgstr "'x' 和 'y' 不符合"
+
+msgid "duplicated names in %s"
+msgstr ""
 
 msgid "upper and lower bounds ignored unless algorithm = \"port\""
 msgstr "除非 algorithm = \"port\"，否則上限或下限將忽略不用"
@@ -2535,6 +2551,11 @@ msgstr[0] "有 %d 個錯誤項，但最多只允許有一個"
 msgid "unknown name %s in the 'split' list"
 msgid_plural "unknown names %s in the 'split' list"
 msgstr[0] "'split' 串列裡的名稱 %s 無效"
+
+#, fuzzy
+msgid "essentially perfect fit for %s: summary may be unreliable"
+msgid_plural "essentially perfect fit for response(s) %s: summary may be unreliable"
+msgstr[0] "完全擬合進行：summary 可能不會可靠"
 
 #, fuzzy
 msgid "extra argument %s is not of class \"%s\""

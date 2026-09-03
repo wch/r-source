@@ -67,7 +67,7 @@ msgstr ""
 
 #: graphics.c:2267
 msgid "no graphics device is active"
-msgstr ""
+msgstr "لا يوجد graphics device is active"
 
 #: graphics.c:2462
 msgid "plot.new has not been called yet"
@@ -75,7 +75,7 @@ msgstr ""
 
 #: graphics.c:2464
 msgid "invalid graphics state"
-msgstr ""
+msgstr "graphics state غير صالح"
 
 #: graphics.c:2618
 msgid "graphics device closed during call to locator or identify"
@@ -193,7 +193,7 @@ msgstr ""
 
 #: plot.c:217
 msgid "invalid font specification"
-msgstr ""
+msgstr "font specification غير صالح"
 
 #: plot.c:276 plot.c:290 plot.c:474 plot.c:479 plot.c:2195 plot.c:2202
 #: plot.c:3225 plot.c:3227 plot.c:3229 plot.c:3388 plot3d.c:1163 plot3d.c:1167
@@ -257,7 +257,7 @@ msgstr ""
 #: plot.c:1984 plot.c:2079 plot.c:2155 plot.c:2433 plot.c:2607 plot.c:2823
 #: plot.c:3370 plot.c:3505 plot.c:3581 plot.c:3747 plot.c:4027 plot3d.c:1875
 msgid "too few arguments"
-msgstr ""
+msgstr "too few وسائط"
 
 #: plot.c:790
 #, c-format
@@ -312,7 +312,7 @@ msgstr ""
 
 #: plot.c:1659
 msgid "invalid first argument"
-msgstr ""
+msgstr "الوسيط الأول غير صالح"
 
 #: plot.c:1666
 msgid "invalid second argument"
@@ -539,7 +539,7 @@ msgstr "مواصفات \"%s\" غير صالحة"
 #: plot3d.c:1526
 #, c-format
 msgid "contour(): circular/long seglist -- set %s > %d?"
-msgstr ""
+msgstr "contour(): circular/long seglist -- set %s > %d?"
 
 #: plot3d.c:1938
 msgid "no 'levels'"
@@ -568,13 +568,13 @@ msgstr ""
 
 #: plot3d.c:1969
 msgid "all z values are equal"
-msgstr ""
+msgstr "all z قيم هي equal"
 
 #: plot3d.c:1971
 msgid "all z values are NA"
-msgstr ""
+msgstr "all z قيم هي NA"
 
 #: stem.c:161
 #, c-format
 msgid "long vector '%s' is not supported"
-msgstr ""
+msgstr "متجه طويل '%s' is غير مدعوم"

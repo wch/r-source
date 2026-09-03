@@ -49,7 +49,9 @@ msgstr "l'argument no és del tipus correcte"
 
 #: tcltk.c:744
 msgid "no DISPLAY variable so Tk is not available"
-msgstr "no hi ha cap variable DISPLAY de manera que Tk no està "
+msgstr ""
+"no hi ha cap variable DISPLAY de manera que Tk no està "
+"disponible"
 
 #: tcltk_unix.c:113
 msgid "Tcl is not loaded"

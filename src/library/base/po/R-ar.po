@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2024-02-28 00:52+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: none\n"
@@ -20,22 +20,22 @@ msgid "Use '%s' instead."
 msgstr "استخدم '%s' بدلا من ذلك."
 
 msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
-msgstr "انظر help(\"Defunct\") وhelp(\"%s-defunct\") ."
+msgstr "راجع help(\"Defunct\") و help(\"%s-defunct\")."
 
 msgid "See help(\"Defunct\")"
 msgstr "انظر help(\"Defunct\")"
 
 msgid "'%s' is deprecated."
-msgstr "تم إهمال '%s'."
+msgstr "أصبح '%s' مهملًا."
 
 msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
 msgstr "انظر help(\"Deprecated\") وhelp(\"%s-deprecated\") ."
 
 msgid "See help(\"Deprecated\")"
-msgstr "انظرhelp(\"Deprecated\")"
+msgstr "راجع help(\"Deprecated\")"
 
 msgid "argument to 'La.svd' must be numeric or complex"
-msgstr "الوسيط إلى \"La.svd\" يجب أن يكون رقمي أو معقد"
+msgstr "يجب أن يكون الوسيط الممرر إلى 'La.svd' عددياً أو مركباً"
 
 msgid "infinite or missing values in 'x'"
 msgstr "القيم لانهائية أو مفقودة في 'x'"
@@ -55,9 +55,8 @@ msgstr "الوسيطة الثاني يجب أن يكون قائمة"
 msgid "'iconvlist' is not available on this system"
 msgstr "\"iconvlist\" غير متوفر على هذا النظام"
 
-#, fuzzy
 msgid "'kind' must be a character string (RNG to be used)."
-msgstr "يجب أن يكون \"kind\" سلسلة أحرف بطول 1 (RNG ليتم استخدامها)."
+msgstr "يجب أن يكون 'kind' سلسلة نصية (RNG المراد استخدامه)."
 
 msgid "'%s' is not a valid abbreviation of an RNG"
 msgstr "\"‎%s\" ليس اختصارا صالحا ل RNG"
@@ -66,434 +65,440 @@ msgid "'%s' must be a character string"
 msgstr "يجب أن تكون \"%s\" سلسلة أحرف"
 
 #, fuzzy
-msgid "'%s' is not a valid choice"
-msgstr "'%s'  ليس خيارا صحيحا"
+msgid "'%s' is not valid for '%s'"
+msgstr "'%s' ليس خياراً صالحاً"
 
-#, fuzzy
+msgid "'%s' is not a valid choice"
+msgstr "'%s' ليس خياراً صالحاً"
+
 msgid "malformed version string"
-msgstr "سلسلة حروف خاطئة التشكيل"
+msgstr "سلسلة إصدار مشوهة"
 
 msgid "target is %s, current is %s"
-msgstr ""
+msgstr "الهدف هو %s، والحالي هو %s"
 
 msgid "'tolerance' should be numeric"
-msgstr ""
+msgstr "ينبغي أن يكون 'tolerance' رقميًا"
 
 msgid "'scale' should be numeric or NULL"
-msgstr ""
+msgstr "ينبغي أن يكون 'scale' رقميًا أو NULL"
 
 msgid "'%s' must be logical"
-msgstr ""
+msgstr "يجب أن يكون '%s' منطقياً"
 
 msgid "dim(X) must have a positive length"
-msgstr ""
+msgstr "يجب أن يكون لـ dim(X) طول موجب"
 
 msgid "'X' must have named dimnames"
-msgstr ""
+msgstr "يجب أن تكون لـ 'X' أسماء أبعاد مسماة"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
-msgstr ""
+msgstr "ليست كل عناصر 'MARGIN' أسماءً للأبعاد"
 
 msgid "'MARGIN' does not match dim(X)"
-msgstr ""
+msgstr "لا يطابق 'MARGIN' قيمة dim(X)"
 
 msgid "'dim' cannot be of length 0"
-msgstr ""
+msgstr "لا يمكن أن يكون 'dim' من طول 0"
 
 msgid "'dim' specifies too large an array"
-msgstr ""
+msgstr "'dim' يحدد مصفوفة متعددة الأبعاد كبيرة جدًا"
 
 msgid "'x' must have named dimnames"
-msgstr ""
+msgstr "يجب أن تكون لـ 'x' أسماء أبعاد مسماة"
 
 msgid "incorrect value for 'MARGIN'"
-msgstr ""
+msgstr "قيمة 'MARGIN' غير صحيحة"
 
 msgid "dim(x) must have a positive length"
-msgstr ""
+msgstr "يجب أن يكون لـ dim(x) طول موجب"
 
 msgid "'pos=1' is not possible and has been warned about for years"
-msgstr ""
+msgstr "'pos=1' غير ممكن، وقد تم التحذير منه لسنوات"
 
 msgid "file '%s' not found"
-msgstr ""
+msgstr "لم يتم العثور على الملف '%s'"
 
 msgid "invalid 'name' argument"
-msgstr ""
+msgstr "الوسيط 'name' غير صالح"
 
 msgid "package %s is required by %s, which may no longer work correctly"
-msgstr ""
+msgstr "الحزمة %s مطلوبة بواسطة %s، والذي قد لا يعمل بشكل صحيح بعد الآن"
 
 msgid "package %s is required by %s so will not be detached"
-msgstr ""
+msgstr "الحزمة %s مطلوبة بواسطة %s لذلك لن يتم فصلها"
 
 msgid ""
 "%s failed in %s() for '%s', details:\n"
 "  call: %s\n"
 "  error: %s"
 msgstr ""
+"فشل %s في %s() لـ '%s'، التفاصيل:\n"
+"  الاستدعاء: %s\n"
+"  الخطأ: %s"
 
 msgid "%s namespace cannot be unloaded:"
-msgstr ""
+msgstr "لا يمكن إلغاء تحميل نطاق الأسماء %s:"
 
 msgid "%s converted to character string"
-msgstr ""
+msgstr "تم تحويل %s إلى سلسلة نصية"
 
 msgid "replaced regular expression pattern '[' by  '\\\\['"
-msgstr ""
+msgstr "تم استبدال نمط التعبير النمطي '[' بـ '\\\\['"
 
 msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
-msgstr ""
+msgstr "تم استبدال '[<-' بـ '\\\\[<-' في نمط التعبير النمطي"
 
 msgid "'value' must be a list"
-msgstr ""
+msgstr "يجب أن يكون 'value' قائمة"
 
 msgid "an object with that name already exists"
-msgstr ""
+msgstr "يوجد بالفعل كائن بهذا الاسم"
 
 msgid "autoloader did not find '%s' in '%s'"
-msgstr ""
+msgstr "لم يعثر المحمّل التلقائي على '%s' في '%s'"
 
 msgid "can only splice inside a call"
-msgstr ""
+msgstr "لا يمكن إجراء splice إلا داخل استدعاء"
 
 msgid "can only splice vectors"
-msgstr ""
+msgstr "لا يمكن إجراء splice إلا للمتجهات"
 
 msgid "the LINPACK argument has been defunct since R 3.1.0"
-msgstr ""
+msgstr "أصبح وسيط LINPACK غير متاح منذ R 3.1.0"
 
 msgid "complex matrices not permitted at present"
-msgstr ""
+msgstr "المصفوفات المركبة غير مسموح بها حاليًا"
 
 msgid "'x' must be an array of at least two dimensions"
-msgstr ""
+msgstr "يجب أن يكون 'x' مصفوفة متعددة الأبعاد ببعدين على الأقل"
 
 msgid "invalid 'dims'"
-msgstr ""
+msgstr "'dims' غير صالح"
 
 msgid "condition handlers must be specified with a condition class"
-msgstr ""
+msgstr "يجب تحديد معالجات الشروط باستخدام صنف شرط"
 
 msgid "no 'restart' '%s' found"
-msgstr ""
+msgstr "لم يتم العثور على 'restart' '%s'"
 
 msgid "not an interactive session"
-msgstr ""
+msgstr "ليست جلسة تفاعلية"
 
 msgid "not a valid restart specification"
-msgstr ""
+msgstr "ليست مواصفة restart صالحة"
 
 msgid "condition handlers must be functions"
-msgstr ""
+msgstr "يجب أن تكون معالجات الشروط دوالًا"
 
 msgid "pushing duplicate `%s` handler on top of the stack"
-msgstr ""
+msgstr "دفع معالج `%s` مكرر إلى أعلى المكدس"
 
 msgid "argument 'where' of length 0"
-msgstr ""
+msgstr "الوسيط 'where' بطول 0"
 
 msgid "can only write character objects"
-msgstr ""
+msgstr "لا يمكن إلا كتابة الكائنات النصية"
 
 msgid "'headers' must have names and must not be NA"
-msgstr ""
+msgstr "يجب أن تكون لـ 'headers' أسماء وألا تكون NA"
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
-msgstr ""
+msgstr "يجب أن يكون 'origin' أحد 'start' أو 'current' أو 'end'"
 
 msgid "can only truncate an open connection"
-msgstr ""
+msgstr "لا يمكن إلا اقتطاع اتصال مفتوح"
 
 msgid "invalid 'endian' argument"
-msgstr ""
+msgstr "الوسيط 'endian' غير صالح"
 
 msgid "can only write vector objects"
-msgstr ""
+msgstr "لا يمكن إلا كتابة كائنات المتجهات"
 
 msgid "'timeout' must be NULL or a non-negative number"
-msgstr ""
+msgstr "يجب أن يكون 'timeout' إما NULL أو عددًا غير سالب"
 
 msgid "'from' must be raw or character"
-msgstr ""
+msgstr "يجب أن يكون 'from' من نوع raw أو character"
 
 msgid "'x' must be numeric"
 msgstr "يجب أن يكون \"x\" رقميا"
 
 msgid "invalid number of intervals"
-msgstr ""
+msgstr "عدد الفواصل غير صالح"
 
 msgid "'breaks' are not unique"
-msgstr ""
+msgstr "'breaks' ليست فريدة"
 
 msgid "number of intervals and length of 'labels' differ"
-msgstr ""
+msgstr "يختلف عدد الفواصل عن طول 'labels'"
 
 msgid "invalid 'row.names' length"
-msgstr ""
+msgstr "طول 'row.names' غير صالح"
 
 msgid "invalid 'make.names'"
-msgstr ""
+msgstr "'make.names' غير صالح"
 
 msgid "duplicate 'row.names' are not allowed"
-msgstr ""
+msgstr "لا يُسمح بتكرار 'row.names'"
 
 msgid "missing values in 'row.names' are not allowed"
-msgstr ""
+msgstr "لا يُسمح بالقيم المفقودة في 'row.names'"
 
 msgid "invalid 'dimnames' given for data frame"
-msgstr ""
+msgstr "تم تقديم 'dimnames' غير صالحة لإطار البيانات"
 
 msgid "cannot coerce class %s to a data.frame"
-msgstr ""
+msgstr "لا يمكن تحويل الصنف %s قسريًا إلى data.frame"
 
 msgid "row names contain missing values"
-msgstr ""
+msgstr "تحتوي أسماء الصفوف على قيم مفقودة"
 
-#, fuzzy
 msgid "'row.names' is not a character or integer vector of length %d"
-msgstr "يجب أن يكون \"normal.kind\" سلسلة أحرف بطول 1"
+msgstr "يجب أن يكون 'row.names' متجهًا نصيًا أو صحيحًا بطول %d"
 
 msgid "mismatch of row names in arguments of 'data.frame', item %d"
-msgstr ""
+msgstr "عدم تطابق أسماء الصفوف في وسائط 'data.frame'، العنصر %d"
 
 msgid "some row.names duplicated: %s --> row.names NOT used"
-msgstr ""
+msgstr "بعض row.names مكررة: %s --> لم تُستخدم row.names"
 
 msgid "duplicate row.names: %s"
-msgstr ""
+msgstr "row.names مكررة: %s"
 
 msgid "arguments imply differing number of rows: %s"
-msgstr ""
+msgstr "تشير الوسائط إلى عدد مختلف من الصفوف: %s"
 
 msgid "'row.names' should specify one of the variables"
-msgstr ""
+msgstr "ينبغي أن يحدد 'row.names' أحد المتغيرات"
 
 msgid "row names supplied are of the wrong length"
-msgstr ""
+msgstr "أسماء الصفوف المقدمة ذات طول غير صحيح"
 
 msgid "row names were found from a short variable and have been discarded"
-msgstr ""
+msgstr "تم العثور على أسماء الصفوف من متغير قصير وتم تجاهلها"
 
 msgid "named arguments other than 'drop' are discouraged"
-msgstr ""
+msgstr "لا يُنصح باستخدام وسائط مسماة غير 'drop'"
 
 msgid "'drop' argument will be ignored"
-msgstr ""
+msgstr "سيتم تجاهل الوسيط 'drop'"
 
 msgid "undefined columns selected"
-msgstr ""
+msgstr "تم اختيار أعمدة غير معرّفة"
 
 msgid "named arguments other than 'exact' are discouraged"
-msgstr ""
+msgstr "لا يُنصح باستخدام وسائط مسماة غير 'exact'"
 
 msgid "named arguments are discouraged"
-msgstr ""
+msgstr "لا يُنصح باستخدام الوسائط المسماة"
 
 msgid "number of items to replace is not a multiple of replacement length"
-msgstr ""
+msgstr "number من items إلى replace ليس multiple من replacement طول"
 
 msgid "'value' is the wrong length"
-msgstr ""
+msgstr "'value' بطول غير صحيح"
 
 msgid "unsupported matrix index in replacement"
-msgstr ""
+msgstr "فهرس مصفوفة غير مدعوم في الاستبدال"
 
 msgid "need 0, 1, or 2 subscripts"
-msgstr ""
+msgstr "يلزم 0 أو 1 أو 2 من الفهارس السفلية"
 
 msgid "missing values are not allowed in subscripted assignments of data frames"
-msgstr ""
+msgstr "لا يُسمح بالقيم المفقودة في الإسنادات المفهرسة لإطارات البيانات"
 
 msgid "non-existent rows not allowed"
-msgstr ""
+msgstr "لا يُسمح بصفوف غير موجودة"
 
 msgid "column name \"\" cannot match any column"
-msgstr ""
+msgstr "لا يمكن لاسم العمود \"\" أن يطابق أي عمود"
 
 msgid "new columns would leave holes after existing columns"
-msgstr ""
+msgstr "ستترك الأعمدة الجديدة فجوات بعد الأعمدة الموجودة"
 
 msgid "duplicate subscripts for columns"
-msgstr ""
+msgstr "فهارس سفلية مكررة للأعمدة"
 
 msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
-msgstr ""
+msgstr "الاستدعاءات الصالحة فقط هي x[[j]] <- value أو x[[i,j]] <- value"
 
 msgid "replacing element in non-existent column: %s"
-msgstr ""
+msgstr "استبدال عنصر في عمود غير موجود: %s"
 
 msgid "only a single element should be replaced"
-msgstr ""
+msgstr "ينبغي استبدال عنصر واحد فقط"
 
 msgid "names do not match previous names"
-msgstr ""
+msgstr "الأسماء لا تطابق الأسماء السابقة"
 
 msgid "numbers of columns of arguments do not match"
-msgstr ""
+msgstr "أعداد أعمدة الوسائط غير متطابقة"
 
 msgid "invalid list argument: all variables should have the same length"
-msgstr ""
+msgstr "وسيط القائمة غير صالح: ينبغي أن تكون جميع المتغيرات بالطول نفسه"
 
 msgid "number of columns of result, %d, is not a multiple of vector length %d of arg %d"
-msgstr ""
+msgstr "عدد أعمدة النتيجة، %d، ليس مضاعفًا لطول المتجه %d للوسيط %d"
 
 msgid "<0 rows> (or 0-length row.names)"
-msgstr ""
+msgstr "<0 صفوف> (أو row.names بطول 0)"
 
 msgid "invalid 'max' / getOption(\"max.print\"):"
-msgstr ""
+msgstr "'max' / getOption(\"max.print\") غير صالح:"
 
 msgid "non-numeric-alike variable(s) in data frame:"
-msgstr ""
+msgstr "متغيرات غير شبيهة بالرقمية في إطار البيانات:"
 
 msgid ","
-msgstr ""
+msgstr "،"
 
 msgid "%s only defined for equally-sized data frames"
-msgstr ""
+msgstr "%s معرّف فقط لإطارات البيانات ذات الحجم نفسه"
 
 msgid "list of length %d not meaningful"
-msgstr ""
+msgstr "القائمة ذات الطول %d غير ذات معنى"
 
 msgid "only defined on a data frame with all numeric-alike variables"
-msgstr ""
+msgstr "مُعرّف فقط على إطار بيانات تكون جميع متغيراته شبيهة بالرقمية"
 
 msgid "cannot xtfrm data frames"
-msgstr ""
+msgstr "لا يمكن تطبيق xtfrm على إطارات البيانات"
 
 msgid "all variables should have the same length"
-msgstr ""
+msgstr "ينبغي أن تكون جميع المتغيرات بالطول نفسه"
 
 msgid "character string is not in a standard unambiguous format"
-msgstr ""
+msgstr "السلسلة النصية ليست بتنسيق قياسي غير ملتبس"
 
 msgid "do not know how to convert '%s' to class %s"
-msgstr ""
+msgstr "لا تُعرف طريقة تحويل '%s' إلى الصنف %s"
 
 msgid "binary + is not defined for \"Date\" objects"
-msgstr ""
+msgstr "العامل الثنائي + غير معرّف لكائنات \"Date\""
 
 msgid "can only subtract from \"Date\" objects"
-msgstr ""
+msgstr "لا يمكن إلا الطرح من كائنات \"Date\""
 
 msgid "unary - is not defined for \"Date\" objects"
-msgstr ""
+msgstr "العامل الأحادي - غير معرّف لكائنات \"Date\""
 
 msgid "can only subtract numbers from \"Date\" objects"
-msgstr ""
+msgstr "لا يمكن إلا طرح الأعداد من كائنات \"Date\""
 
 msgid "unary %s not defined for \"Date\" objects"
-msgstr ""
+msgstr "العامل الأحادي %s غير معرّف لكائنات \"Date\""
 
 msgid "%s not defined for \"Date\" objects"
-msgstr ""
+msgstr "%s غير معرّف لكائنات \"Date\""
 
-#, fuzzy
 msgid "'%s' must be of length 1"
-msgstr "يجب أن يكون \"normal.kind\" سلسلة أحرف بطول 1"
+msgstr "يجب أن يكون '%s' من طول 1"
 
 msgid "without 'by', at least one of 'to' and 'from' must be specified"
-msgstr ""
+msgstr "بدون 'by'، يجب تحديد واحد على الأقل من 'to' و'from'"
 
 msgid "without 'by', when one of 'to', 'from' is missing, 'length.out' / 'along.with' must be specified"
-msgstr ""
+msgstr "بدون 'by'، عندما يكون أحد 'to' أو 'from' مفقودًا، يجب تحديد 'length.out' / 'along.with'"
 
 msgid "given 'by', exactly two of 'to', 'from' and 'length.out' / 'along.with' must be specified"
-msgstr ""
+msgstr "عند تقديم 'by'، يجب تحديد اثنين فقط من 'to' و'from' و'length.out' / 'along.with'"
 
 msgid "invalid 'by' string"
-msgstr ""
+msgstr "سلسلة 'by' غير صالحة"
 
 msgid "invalid string for 'by'"
-msgstr ""
+msgstr "السلسلة الخاصة بـ 'by' غير صالحة"
 
 msgid "invalid mode for 'by'"
-msgstr ""
+msgstr "النمط الخاص بـ 'by' غير صالح"
 
 msgid "'by' is NA"
-msgstr ""
+msgstr "'by' هو NA"
 
 msgid "'x' must be a date-time object"
-msgstr ""
+msgstr "يجب أن يكون 'x' كائن تاريخ-وقت"
 
 msgid "invalid specification of 'breaks'"
-msgstr ""
+msgstr "مواصفة 'breaks' غير صالحة"
 
 msgid "'lag' and 'differences' must be integers >= 1"
-msgstr ""
+msgstr "يجب أن يكون 'lag' و'differences' عددين صحيحين >= 1"
 
 msgid "unable to deduce timezone name from"
+msgstr "تعذر استنتاج اسم المنطقة الزمنية من"
+
+msgid "timedatectl"
 msgstr ""
 
 msgid "wrong class"
-msgstr ""
+msgstr "صنف غير صحيح"
 
 msgid "binary '+' is not defined for \"POSIXt\" objects"
-msgstr ""
+msgstr "العامل الثنائي '+' غير معرّف لكائنات \"POSIXt\""
 
 msgid "can only subtract from \"POSIXt\" objects"
-msgstr ""
+msgstr "لا يمكن إلا الطرح من كائنات \"POSIXt\""
 
 msgid "unary '-' is not defined for \"POSIXt\" objects"
-msgstr ""
+msgstr "العامل الأحادي '-' غير معرّف لكائنات \"POSIXt\""
 
 msgid "can only subtract numbers from \"POSIXt\" objects"
-msgstr ""
+msgstr "لا يمكن إلا طرح الأعداد من كائنات \"POSIXt\""
 
 msgid "unary '%s' not defined for \"POSIXt\" objects"
-msgstr ""
+msgstr "العامل الأحادي '%s' غير معرّف لكائنات \"POSIXt\""
 
 msgid "'%s' not defined for \"POSIXt\" objects"
-msgstr ""
+msgstr "'%s' غير معرّف لكائنات \"POSIXt\""
 
 msgid "'tzone' attributes are inconsistent"
-msgstr ""
+msgstr "سمات 'tzone' غير متسقة"
 
 msgid "as.character(td, ..) no longer obeys a 'format' argument; use format(td, ..) ?"
-msgstr ""
+msgstr "لم يعد as.character(td, ..) يلتزم بوسيط 'format'؛ هل تستخدم format(td, ..)؟"
 
 msgid "'digits' must be numeric, integer valued"
-msgstr ""
+msgstr "يجب أن يكون 'digits' رقميًا ذا قيمة صحيحة"
 
 msgid "'tim' is not character or numeric"
-msgstr ""
+msgstr "'tim' ليس نصيًا ولا رقميًا"
 
 msgid "need explicit units for numeric conversion"
-msgstr ""
+msgstr "يلزم تحديد وحدات صريحة للتحويل الرقمي"
 
 msgid "invalid units specified"
-msgstr ""
+msgstr "تم تحديد وحدات غير صالحة"
 
 msgid "unary '%s' not defined for \"difftime\" objects"
-msgstr ""
+msgstr "العامل الأحادي '%s' غير معرّف لكائنات \"difftime\""
 
 msgid "'%s' not defined for \"difftime\" objects"
-msgstr ""
+msgstr "'%s' غير معرّف لكائنات \"difftime\""
 
 msgid "both arguments of * cannot be \"difftime\" objects"
-msgstr ""
+msgstr "لا يمكن أن يكون كلا وسيطي * من كائنات \"difftime\""
 
 msgid "second argument of / cannot be a \"difftime\" object"
-msgstr ""
+msgstr "لا يمكن أن يكون الوسيط الثاني لـ / كائن \"difftime\""
 
 msgid "exactly three of 'to', 'from', 'by' and 'length.out' / 'along.with' must be specified"
-msgstr ""
+msgstr "يجب تحديد ثلاثة بالضبط من 'to' و'from' و'by' و'length.out' / 'along.with'"
 
 msgid "'%s' must be a \"%s\" object"
-msgstr ""
+msgstr "يجب أن يكون '%s' كائن \"%s\""
 
 msgid "component subscript must be a character string"
-msgstr ""
+msgstr "يجب أن يكون فهرس المكوّن السفلي سلسلة نصية"
 
 msgid "no Olson database found"
-msgstr ""
+msgstr "لم يتم العثور على قاعدة بيانات Olson"
 
 msgid "No element named \"%s\" found in x, did you mean x[, \"%1$s\"] instead?"
-msgstr ""
+msgstr "لم يتم العثور على عنصر باسم \"%s\" في x، هل تقصد x[, \"%1$s\"] بدلًا من ذلك؟"
 
 msgid "'file' must be a character string or connection"
-msgstr ""
+msgstr "يجب أن يكون 'file' سلسلة نصية أو اتصال"
 
 msgid ""
 "Invalid DCF format.\n"
@@ -510,1475 +515,1502 @@ msgid ""
 msgstr ""
 
 msgid "failed to load the methods package for debugging by signature"
-msgstr ""
+msgstr "فشل تحميل حزمة methods للتصحيح حسب التوقيع"
 
 msgid "failed to load methods package for undebugging by signature"
-msgstr ""
+msgstr "فشل تحميل حزمة methods لإلغاء التصحيح حسب التوقيع"
 
 msgid "failed to load methods package for handling signature"
-msgstr ""
+msgstr "فشل تحميل حزمة methods لمعالجة التوقيع"
 
 msgid "'x' must be a square matrix"
-msgstr ""
+msgstr "يجب أن يكون 'x' مصفوفة مربعة"
 
 msgid "'determinant' not currently defined for complex matrices"
-msgstr ""
+msgstr "'determinant' غير معرّف حاليًا للمصفوفات المركبة"
 
 msgid "'nrow' or 'ncol' cannot be specified when 'x' is a matrix"
-msgstr ""
+msgstr "لا يمكن تحديد 'nrow' أو 'ncol' عندما يكون 'x' مصفوفة"
 
 msgid "'x' is an array, but not one-dimensional."
-msgstr ""
+msgstr "'x' مصفوفة متعددة الأبعاد، لكنها ليست أحادية البعد."
 
 msgid "only matrix diagonals can be replaced"
-msgstr ""
+msgstr "لا يمكن استبدال إلا أقطار المصفوفة"
 
 msgid "replacement diagonal has wrong length"
-msgstr ""
+msgstr "قطر الاستبدال بطول غير صحيح"
 
 msgid "MARGIN = %s is invalid for dim = %s"
-msgstr ""
+msgstr "MARGIN = %s غير صالح لـ dim = %s"
 
 msgid "must pass a package name, %s or %s object"
-msgstr ""
+msgstr "يجب تمرير اسم حزمة أو كائن %s أو %s"
 
 msgid "No DLL currently loaded with name or path %s"
-msgstr ""
+msgstr "لا توجد DLL محمّلة حاليًا بالاسم أو المسار %s"
 
 msgid "multiple DLLs match '%s'. Using '%s'"
-msgstr ""
+msgstr "تطابق عدة DLLs مع '%s'. سيتم استخدام '%s'"
 
 msgid "must specify DLL via a %s object. See getLoadedDLLs()"
-msgstr ""
+msgstr "يجب تحديد DLL عبر كائن %s. راجع getLoadedDLLs()"
 
 msgid "function is not in a namespace, so cannot locate associated DLL"
-msgstr ""
+msgstr "الدالة ليست في نطاق أسماء، لذلك لا يمكن تحديد موقع DLL المرتبطة بها"
 
 msgid "looking for DLL for native routine call, but no DLLs in namespace of call"
-msgstr ""
+msgstr "يتم البحث عن DLL لاستدعاء روتين أصلي، لكن لا توجد DLLs في نطاق أسماء الاستدعاء"
 
 msgid "non-square matrix in 'eigen'"
-msgstr ""
+msgstr "مصفوفة غير مربعة في 'eigen'"
 
 msgid "0 x 0 matrix"
-msgstr ""
+msgstr "مصفوفة 0 × 0"
 
 msgid "invalid nrow(x)"
-msgstr ""
+msgstr "nrow(x) غير صالح"
 
 msgid "invalid 'labels'; length %d should be 1 or %d"
-msgstr ""
+msgstr "'labels' غير صالحة؛ ينبغي أن يكون الطول %d مساويًا لـ 1 أو %d"
 
 msgid "number of levels differs"
-msgstr ""
+msgstr "عدد المستويات مختلف"
 
 msgid "%s not meaningful for factors"
-msgstr ""
+msgstr "%s غير ذي معنى للعوامل"
 
 msgid "level sets of factors are different"
-msgstr ""
+msgstr "مجموعات مستويات العوامل مختلفة"
 
 msgid "invalid factor level, NA generated"
-msgstr ""
+msgstr "مستوى عامل غير صالح، تم إنشاء NA"
 
 msgid "'%s' is not meaningful for ordered factors"
-msgstr ""
+msgstr "'%s' غير ذي معنى للعوامل المرتبة"
 
 msgid "'%s' not defined for ordered factors"
-msgstr ""
+msgstr "'%s' غير معرّف للعوامل المرتبة"
 
 msgid "'%s' is only meaningful for ordered factors if all arguments have the same level sets"
-msgstr ""
+msgstr "'%s' يكون ذا معنى للعوامل المرتبة فقط إذا كانت جميع الوسائط لها مجموعات المستويات نفسها"
 
 msgid "directories are ignored"
-msgstr ""
+msgstr "يتم تجاهل الأدلة"
 
 msgid "no files to copy to"
-msgstr ""
+msgstr "لا توجد ملفات للنسخ إليها"
 
 msgid "attempt to copy a directory to itself"
-msgstr ""
+msgstr "محاولة نسخ دليل إلى نفسه"
 
 msgid "more 'from' files than 'to' files"
-msgstr ""
+msgstr "ملفات 'from' أكثر من ملفات 'to'"
 
 msgid "'recursive' will be ignored as 'to' is not a single existing directory"
-msgstr ""
+msgstr "سيتم تجاهل 'recursive' لأن 'to' ليس دليلًا واحدًا موجودًا"
 
 msgid "cannot overwrite a non-directory with a directory"
-msgstr ""
+msgstr "لا يمكن الكتابة فوق غير دليل باستخدام دليل"
 
 msgid "directories are omitted unless 'recursive = TRUE'"
-msgstr ""
+msgstr "يتم حذف الأدلة ما لم يكن 'recursive = TRUE'"
 
 msgid "file can not be copied both 'from' and 'to'"
-msgstr ""
+msgstr "لا يمكن نسخ الملف بوصفه 'from' و'to' في الوقت نفسه"
 
 msgid "no files to link from"
-msgstr ""
+msgstr "لا توجد ملفات للربط منها"
 
 msgid "no files/directory to link to"
-msgstr ""
+msgstr "لا توجد ملفات/دليل للربط إليه"
 
 msgid "no files to link to"
-msgstr ""
+msgstr "لا توجد ملفات للربط إليها"
 
 msgid "no file found"
-msgstr ""
+msgstr "لم يتم العثور على ملف"
 
 msgid "invalid 'path' argument"
-msgstr ""
+msgstr "الوسيط 'path' غير صالح"
 
 msgid "invalid 'time' argument"
-msgstr ""
+msgstr "الوسيط 'time' غير صالح"
 
 msgid "'vec' must be sorted non-decreasingly and not contain NAs"
-msgstr ""
+msgstr "يجب أن يكون 'vec' مرتبًا ترتيبًا غير تنازلي وألا يحتوي على NAs"
 
 msgid "'fun' is not a function"
-msgstr ""
+msgstr "'fun' ليست دالة"
 
 msgid "using the first element of 'value' of type \"expression\""
-msgstr ""
+msgstr "استخدام العنصر الأول من 'value' من النوع \"expression\""
 
 msgid "Found no format() method for class \"%s\""
-msgstr ""
+msgstr "لم يتم العثور على طريقة format() للصنف \"%s\""
 
 msgid "class of 'x' was discarded"
-msgstr ""
+msgstr "تم تجاهل صنف 'x'"
 
 msgid "'flag' should contain only characters from [0+- #'I]"
-msgstr ""
+msgstr "ينبغي أن يحتوي 'flag' فقط على أحرف من [0+- #'I]"
 
 msgid "'mode' must be \"double\" (\"real\"), \"integer\" or \"character\""
-msgstr ""
+msgstr "يجب أن يكون 'mode' أحد \"double\" (\"real\") أو \"integer\" أو \"character\""
 
 msgid "coercing argument to \"character\" for format=\"s\""
-msgstr ""
+msgstr "تحويل الوسيط قسريًا إلى \"character\" من أجل format=\"s\""
 
 msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
-msgstr ""
+msgstr "يجب أن يكون 'format' أحد {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
 
 msgid "'digits' reduced to %d"
-msgstr ""
+msgstr "تم تقليل 'digits' إلى %d"
 
 msgid "corrupt data frame: columns will be truncated or padded with NAs"
-msgstr ""
+msgstr "إطار بيانات تالف: سيتم اقتطاع الأعمدة أو حشوها بقيم NAs"
 
 msgid "'zero.print' has length > 1"
-msgstr ""
+msgstr "طول 'zero.print' أكبر من 1"
 
 msgid "'zero.print' must be character, logical or NULL"
-msgstr ""
+msgstr "يجب أن يكون 'zero.print' نصيًا أو منطقيًا أو NULL"
 
 msgid "'zero.print' is truncated to fit into formatted zeros; consider 'replace=TRUE'"
-msgstr ""
+msgstr "تم اقتطاع 'zero.print' ليلائم الأصفار المنسقة؛ ضع في الاعتبار 'replace=TRUE'"
 
 msgid "'big.mark' and 'decimal.mark' are both '%s', which could be confusing"
-msgstr ""
+msgstr "كل من 'big.mark' و'decimal.mark' يساوي '%s'، وهذا قد يكون مربكًا"
 
 msgid "'input.d.mark' has no characters"
-msgstr ""
+msgstr "'input.d.mark' لا يحتوي على أحرف"
 
 msgid "'subset' must be logical"
-msgstr ""
+msgstr "يجب أن يكون 'subset' منطقيًا"
+
+#, fuzzy
+msgid "No functions specified"
+msgstr "لم يتم تحديد أي عوامل"
 
 msgid "value for %s not found"
-msgstr ""
+msgstr "لم يتم العثور على قيمة لـ %s"
 
 msgid "all arguments must be named"
-msgstr ""
+msgstr "يجب أن يكون all وسائط named"
 
 msgid "argument '%s' will be ignored"
-msgstr ""
+msgstr "تم تجاهل وسيط '%s' will be"
 
 msgid "match distance components must be non-negative"
-msgstr ""
+msgstr "مكوّنات مسافة المطابقة يجب أن يكون غير سالب"
 
 msgid "unknown match distance components ignored"
-msgstr ""
+msgstr "تم تجاهل مكوّنات مسافة المطابقة غير المعروفة"
 
 msgid "unknown cost components ignored"
-msgstr ""
+msgstr "تم تجاهل مكوّنات التكلفة غير المعروفة"
 
 msgid "cost components must be non-negative"
-msgstr ""
+msgstr "مكوّنات التكلفة يجب أن يكون غير سالب"
 
 msgid "%s and %s must have the same length"
-msgstr ""
+msgstr "يجب أن تكون %s و %s بالطول نفسه"
 
 msgid "need non-overlapping matches for %s"
-msgstr ""
+msgstr "need non-overlapping مطابقات لـ %s"
 
 msgid "missing replacement values are not allowed"
-msgstr ""
+msgstr "missing قيم الاستبدال غير مسموح بها"
 
 msgid "must have replacement values for matches"
-msgstr ""
+msgstr "يجب أن يحتوي على قيم الاستبدال لـ مطابقات"
 
 msgid "value does not provide any replacement values"
-msgstr ""
+msgstr "لا توفر القيمة أي قيم استبدال"
 
 msgid "must have replacements for non-matches"
-msgstr ""
+msgstr "يجب أن يحتوي على replacements لـ غير المطابقات"
 
 msgid "must have replacements for matches"
-msgstr ""
+msgstr "يجب أن يحتوي على replacements لـ مطابقات"
 
 msgid "No factors specified"
-msgstr ""
+msgstr "لم يتم تحديد أي عوامل"
 
 msgid "invalid '%s': type \"%s\""
-msgstr ""
+msgstr "غير صالح '%s': type \"%s\""
 
 msgid "'uplo' must be \"U\" or \"L\""
-msgstr ""
+msgstr "يجب أن يكون 'uplo' \"U\" أو \"L\""
 
 msgid "invalid nrow(z)"
-msgstr ""
+msgstr "nrow(z) غير صالح"
 
 msgid "triangular matrix should be square"
-msgstr ""
+msgstr "triangular مصفوفة ينبغي أن يكون square"
 
 msgid "using 1-norm approximation for approximate 2-norm"
-msgstr ""
+msgstr "استخدام تقريب 1-norm لتقريب 2-norm"
 
 msgid "norm=\"%s\" not available here; using norm=\"1\""
-msgstr ""
+msgstr "norm=\"%s\" غير متاح هنا؛ سيتم استخدام norm=\"1\""
 
 msgid "unknown conflict policy: %s"
-msgstr ""
+msgstr "سياسة التعارض غير معروفة: %s"
 
 msgid "only one of 'include.only' and 'exclude' can be used"
-msgstr ""
+msgstr "يمكن استخدام واحد فقط من 'include.only' و'exclude'"
 
 msgid "package %s has not been installed properly"
-msgstr ""
+msgstr "لم يتم تثبيت الحزمة %s بشكل صحيح"
 
 msgid "package %s was built before R 3.0.0: please re-install it"
-msgstr ""
+msgstr "تم بناء الحزمة %s قبل R 3.0.0: يرجى إعادة تثبيتها"
 
 msgid "This is R %s, package %s needs %s %s"
-msgstr ""
+msgstr "هذا هو R %s، والحزمة %s تحتاج إلى %s %s"
 
 msgid "package %s was built under R version %s"
-msgstr ""
+msgstr "تم بناء الحزمة %s تحت إصدار R %s"
 
 msgid "package %s was built for %s"
-msgstr ""
+msgstr "تم بناء الحزمة %s من أجل %s"
 
 msgid "package %s is not installed for 'arch = %s'"
-msgstr ""
+msgstr "الحزمة %s غير مثبتة من أجل 'arch = %s'"
 
 msgid ""
 "Conflicts attaching package %s:\n"
 "%s"
 msgstr ""
+"تعارضات عند إرفاق الحزمة %s:\n"
+"%s"
 
 msgid "Attaching package: %s"
-msgstr ""
+msgstr "إرفاق الحزمة: %s"
 
 msgid "'verbose' and 'quietly' are both true; being verbose then .."
-msgstr ""
+msgstr "كل من 'verbose' و'quietly' يساوي TRUE؛ سيتم استخدام الوضع المفصّل إذًا .."
 
 msgid "invalid package name"
-msgstr ""
+msgstr "اسم الحزمة غير صالح"
 
 msgid "there is no package called %s"
-msgstr ""
+msgstr "لا توجد حزمة باسم %s"
 
 msgid "no library trees found in 'lib.loc'"
-msgstr ""
+msgstr "لم يتم العثور على أشجار مكتبات في 'lib.loc'"
 
 msgid "%s is not a valid installed package"
-msgstr ""
+msgstr "%s ليست حزمة مثبتة صالحة"
 
 msgid "%s not found on search path, using pos = 2"
-msgstr ""
+msgstr "لم يتم العثور على %s في مسار البحث، سيتم استخدام pos = 2"
 
 msgid ""
 "Package %s version %s cannot be unloaded:\n"
 " %s"
 msgstr ""
+"لا يمكن إلغاء تحميل الحزمة %s بالإصدار %s:\n"
+" %s"
 
 msgid ""
 "package or namespace load failed for %s%s:\n"
 " %s"
 msgstr ""
+"فشل تحميل الحزمة أو نطاق الأسماء لـ %s%s:\n"
+" %s"
 
 msgid "package %s already present in search()"
-msgstr ""
+msgstr "الحزمة %s موجودة بالفعل في search()"
 
 msgid "'DESCRIPTION' has an 'Encoding' field and re-encoding is not possible"
-msgstr ""
+msgstr "يحتوي 'DESCRIPTION' على حقل 'Encoding' ولا يمكن إعادة الترميز"
 
 msgid "%sPackages in library %s:"
-msgstr ""
+msgstr "%sالحزم في المكتبة %s:"
 
 msgid "no packages found"
-msgstr ""
+msgstr "لم يتم العثور على حزم"
 
 msgid "R packages available"
-msgstr ""
+msgstr "حزم R المتاحة"
 
 msgid "DLL %s not found: maybe not installed for this architecture?"
-msgstr ""
+msgstr "لم يتم العثور على DLL %s: ربما لم يتم تثبيتها لهذه المعمارية؟"
 
 msgid "shared object %s not found"
-msgstr ""
+msgstr "لم يتم العثور على الكائن المشترك %s"
 
 msgid "DLL %s already loaded"
-msgstr ""
+msgstr "DLL %s محمّلة بالفعل"
 
 msgid "shared object '%s' already loaded"
-msgstr ""
+msgstr "الكائن المشترك '%s' محمّل بالفعل"
 
 msgid "now dyn.load(\"%s\") ..."
-msgstr ""
+msgstr "الآن dyn.load(\"%s\") ..."
 
 msgid "no DLL was specified"
-msgstr ""
+msgstr "لم يتم تحديد DLL"
 
 msgid "no shared object was specified"
-msgstr ""
+msgstr "لم يتم تحديد كائن مشترك"
 
 msgid "DLL %s was not loaded"
-msgstr ""
+msgstr "لم يتم تحميل DLL %s"
 
 msgid "shared object %s was not loaded"
-msgstr ""
+msgstr "لم يتم تحميل الكائن المشترك %s"
 
 msgid "DLL %s not found"
-msgstr ""
+msgstr "لم يتم العثور على DLL %s"
 
 msgid "shared object '%s' not found"
-msgstr ""
+msgstr "لم يتم العثور على الكائن المشترك '%s'"
 
 msgid "now dyn.unload(\"%s\") ..."
-msgstr ""
+msgstr "الآن dyn.unload(\"%s\") ..."
 
 msgid "Loading required package: %s"
-msgstr ""
+msgstr "تحميل الحزمة المطلوبة: %s"
 
 msgid "none of the packages are loaded"
-msgstr ""
+msgstr "لا توجد أي من الحزم محمّلة"
 
 msgid ""
 "package %s found more than once, using the first from\n"
 "  %s"
 msgstr ""
+"تم العثور على الحزمة %s أكثر من مرة، سيتم استخدام الأولى من\n"
+"  %s"
 
 msgid "Further information is available in the following vignettes in directory %s:"
-msgstr ""
+msgstr "تتوفر معلومات إضافية في vignettes التالية في الدليل %s:"
 
 msgid "Description:"
-msgstr ""
+msgstr "الوصف:"
 
 msgid "Index:"
-msgstr ""
+msgstr "الفهرس:"
 
 msgid "Information on package %s"
-msgstr ""
+msgstr "معلومات عن الحزمة %s"
 
 msgid "Documentation for package %s"
-msgstr ""
+msgstr "توثيق الحزمة %s"
 
 msgid "package %s required by %s could not be found"
-msgstr ""
+msgstr "تعذر العثور على الحزمة %s المطلوبة بواسطة %s"
 
 msgid "version %s of %s masked by %s in %s"
-msgstr ""
+msgstr "الإصدار %s من %s محجوب بواسطة %s في %s"
 
 msgid "package %s could not be loaded"
-msgstr ""
+msgstr "تعذر تحميل الحزمة %s"
 
 msgid "empty (zero-byte) input file"
-msgstr ""
+msgstr "ملف إدخال فارغ (صفر بايت)"
 
 msgid "input has been corrupted, with LF replaced by CR"
-msgstr ""
+msgstr "تلف الإدخال، مع استبدال LF بـ CR"
 
 msgid "bad 'file' argument"
-msgstr ""
+msgstr "الوسيط 'file' سيئ"
 
 msgid "'file' must be specified"
-msgstr ""
+msgstr "يجب تحديد 'file'"
 
 msgid "nothing specified to be save()d"
-msgstr ""
+msgstr "لم يتم تحديد شيء ليتم حفظه بواسطة save()"
 
-#, fuzzy
 msgid "'%s' must be a non-empty character string"
-msgstr "'sample.kind' يجب أن تكون سلسلة حروف من طول 1"
+msgstr "يجب أن يكون '%s' سلسلة نصية غير فارغة"
 
 msgid "'compress' must be logical or character"
-msgstr ""
+msgstr "يجب أن يكون 'compress' منطقيًا أو نصيًا"
 
 msgid "'compress = \"%s\"' is invalid"
-msgstr ""
+msgstr "'compress = \"%s\"' غير صالح"
 
 msgid "bad file argument"
-msgstr ""
+msgstr "وسيط الملف سيئ"
 
 msgid "can only save to a binary connection"
-msgstr ""
+msgstr "لا يمكن الحفظ إلا إلى اتصال ثنائي"
 
 msgid "image could not be renamed and is left in %s"
-msgstr ""
+msgstr "تعذرت إعادة تسمية الصورة وبقيت في %s"
 
 msgid "[Previously saved workspace restored]"
-msgstr ""
+msgstr "[تمت استعادة مساحة العمل المحفوظة سابقًا]"
 
 msgid "Attempting to load the environment %s"
-msgstr ""
+msgstr "محاولة تحميل البيئة %s"
 
 msgid "Specified environment not found: using '.GlobalEnv' instead"
-msgstr ""
+msgstr "لم يتم العثور على البيئة المحددة: سيتم استخدام '.GlobalEnv' بدلًا من ذلك"
 
 msgid "invalid 'category' argument"
-msgstr ""
+msgstr "الوسيط 'category' غير صالح"
 
 msgid "must specify names of formal arguments for 'vectorize'"
-msgstr ""
+msgstr "يجب تحديد أسماء الوسائط الصورية لـ 'vectorize'"
 
 msgid "FUN"
-msgstr ""
+msgstr "FUN"
 
 msgid "may not have argument(s) named"
-msgstr ""
+msgstr "لا يجوز أن تحتوي على وسائط باسم"
 
 msgid "'arg' must be NULL or a character vector"
-msgstr ""
+msgstr "يجب أن يكون 'arg' إما NULL أو متجهًا نصيًا"
 
 msgid "'several.ok' must be logical or a string starting with \"all\""
-msgstr ""
+msgstr "يجب أن يكون 'several.ok' منطقيًا أو سلسلة تبدأ بـ \"all\""
 
 msgid "'arg' must be of length >= 1"
-msgstr ""
+msgstr "يجب أن يكون 'arg' بطول >= 1"
 
 msgid "no match"
-msgstr ""
+msgstr "لا توجد مطابقة"
 
 msgid "'input' must have length 1"
-msgstr ""
+msgstr "يجب أن يكون 'input' بطول 1"
 
 msgid "'input' and 'target' must be character vectors"
-msgstr ""
+msgstr "يجب أن يكون 'input' و'target' متجهين نصيين"
 
 msgid "cannot mtfrm"
-msgstr ""
+msgstr "لا يمكن تنفيذ mtfrm"
 
 msgid "'%s' is not a function, character or symbol"
-msgstr ""
+msgstr "'%s' ليس دالة ولا نصًا ولا رمزًا"
 
 msgid "found non-function '%s'"
-msgstr ""
+msgstr "تم العثور على كائن غير دالة '%s'"
 
 msgid "attempt to set 'rownames' on an object with no dimensions"
-msgstr ""
+msgstr "محاولة تعيين 'rownames' على كائن بلا أبعاد"
 
 msgid "attempt to set 'colnames' on an object with less than two dimensions"
-msgstr ""
+msgstr "محاولة تعيين 'colnames' على كائن بأقل من بُعدين"
 
 msgid "argument is not numeric or logical: returning NA"
-msgstr ""
+msgstr "الوسيط ليس رقميًا ولا منطقيًا: سيتم إرجاع NA"
 
 msgid "'trim' must be numeric of length one"
-msgstr ""
+msgstr "يجب أن يكون 'trim' رقميًا بطول واحد"
 
 msgid "trimmed means are not defined for complex data"
-msgstr ""
+msgstr "المتوسطات المقتطعة غير معرّفة للبيانات المركبة"
 
 msgid "'by' must match numbers of columns"
-msgstr ""
+msgstr "يجب أن يطابق 'by' أعداد الأعمدة"
 
 msgid "'by' must match number of columns"
-msgstr ""
+msgstr "يجب أن يطابق 'by' عدد الأعمدة"
 
 msgid "'by' must specify one or more columns as numbers, names or logical"
-msgstr ""
+msgstr "يجب أن يحدد 'by' عمودًا واحدًا أو أكثر كأرقام أو أسماء أو قيم منطقية"
 
 msgid "long vectors are not supported"
-msgstr ""
+msgstr "المتجهات الطويلة غير مدعومة"
 
 msgid "'by.x' and 'by.y' specify different numbers of columns"
-msgstr ""
+msgstr "يحدد 'by.x' و'by.y' أعدادًا مختلفة من الأعمدة"
 
 msgid "'incomparables' is supported only for merging on a single column"
-msgstr ""
+msgstr "'incomparables' مدعوم فقط عند الدمج على عمود واحد"
 
 msgid "additional arguments ignored in message()"
-msgstr ""
+msgstr "تم تجاهل الوسائط الإضافية في message()"
 
 msgid "tracing functions requires the 'methods' package, but unable to load the 'methods' namespace"
-msgstr ""
+msgstr "يتطلب تتبّع الدوال حزمة 'methods'، لكن تعذر تحميل نطاق الأسماء 'methods'"
 
 msgid "invalid to change the storage mode of a factor"
-msgstr ""
+msgstr "إلى change the storage نمط من a عامل غير صالح"
 
 msgid ""
 "namespace %s is not available and has been replaced\n"
 "by .GlobalEnv when processing object %s"
-msgstr ""
+msgstr "نطاق الأسماء %s غير متاح وتم استبداله بـ .GlobalEnv عند معالجة الكائن %s"
 
 msgid "namespace is already attached"
-msgstr ""
+msgstr "نطاق الأسماء مرفق بالفعل"
 
 msgid ""
 "not found in namespace %s: \n"
 "\n"
 "%s"
 msgstr ""
+"لم يتم العثور عليه في نطاق الأسماء %s: \n"
+"\n"
+"%s"
 
 msgid "%s not found"
-msgstr ""
+msgstr "لم يتم العثور على %s"
 
 msgid "'versionCheck' must be NULL or a list with components 'op' and 'version'"
-msgstr ""
+msgstr "يجب أن يكون 'versionCheck' إما NULL أو قائمة تحتوي على المكوّنين 'op' و'version'"
 
 msgid "namespace %s %s is already loaded, but %s %s is required"
-msgstr ""
+msgstr "نطاق الأسماء %s %s محمّل بالفعل، لكن %s %s مطلوب"
 
 msgid "namespace '%s' is already loaded so argument '%s' will be ignored."
-msgstr ""
+msgstr "نطاق الأسماء '%s' محمّل بالفعل لذلك سيتم تجاهل الوسيط '%s'."
 
 msgid "- loading"
-msgstr ""
+msgstr "- تحميل"
 
 msgid "namespace %s is already sealed in 'loadNamespace'"
-msgstr ""
+msgstr "نطاق الأسماء %s مغلق بالفعل في 'loadNamespace'"
 
 msgid "failed to assign RegisteredNativeSymbol for %s to %s since %s is already defined in the %s namespace"
-msgstr ""
+msgstr "فشل إسناد RegisteredNativeSymbol لـ %s إلى %s لأن %s معرّف بالفعل في نطاق الأسماء %s"
 
 msgid "failed to assign NativeSymbolInfo for %s to %s since %s is already defined in the %s namespace"
-msgstr ""
+msgstr "فشل إسناد NativeSymbolInfo لـ %s إلى %s لأن %s معرّف بالفعل في نطاق الأسماء %s"
 
 msgid "failed to assign NativeSymbolInfo for %s since %s is already defined in the %s namespace"
-msgstr ""
+msgstr "فشل إسناد NativeSymbolInfo لـ %s لأن %s معرّف بالفعل في نطاق الأسماء %s"
 
 msgid "package %s does not have a namespace"
-msgstr ""
+msgstr "الحزمة %s لا تحتوي على نطاق أسماء"
 
 msgid "package %s was installed before R 4.0.0: please re-install it"
-msgstr ""
+msgstr "تم تثبيت الحزمة %s قبل R 4.0.0: يرجى إعادة تثبيتها"
 
 msgid "namespace %s %s is being loaded, but %s %s is required"
-msgstr ""
+msgstr "يجري تحميل نطاق الأسماء %s %s، لكن %s %s مطلوب"
 
 msgid "package %s has no 'package.rds' in Meta/"
-msgstr ""
+msgstr "الحزمة %s لا تحتوي على 'package.rds' في Meta/"
 
 msgid "package %s has a license that you need to accept in an interactive session"
-msgstr ""
+msgstr "الحزمة %s لها ترخيص يجب قبوله في جلسة تفاعلية"
 
 msgid "package %s has a license that you need to accept after viewing"
-msgstr ""
+msgstr "الحزمة %s لها ترخيص يجب قبوله بعد عرضه"
 
 msgid "package %s has a license that you need to accept:"
-msgstr ""
+msgstr "الحزمة %s لها ترخيص يجب قبوله:"
 
 msgid "according to the DESCRIPTION file it is"
-msgstr ""
+msgstr "وفقًا لملف DESCRIPTION فهو"
 
 msgid "%s"
-msgstr ""
+msgstr "رسالة: %s"
 
 msgid "license for package %s not accepted"
-msgstr ""
+msgstr "لم يتم قبول ترخيص الحزمة %s"
 
 msgid "package %s was installed by an R version with different internals; it needs to be reinstalled for use with this R version"
 msgstr ""
 
 msgid "-- processing imports for"
-msgstr ""
+msgstr "-- معالجة الاستيرادات لـ"
 
 msgid "-- done processing imports for"
-msgstr ""
+msgstr "-- انتهت معالجة الاستيرادات لـ"
 
 msgid "-- loading code for"
-msgstr ""
+msgstr "-- تحميل الكود لـ"
 
 msgid "unable to load R code in package %s"
-msgstr ""
+msgstr "تعذر تحميل كود R في الحزمة %s"
 
 msgid "-- loading sysdata for"
-msgstr ""
+msgstr "-- تحميل sysdata لـ"
 
 msgid "-- loading lazydata for"
-msgstr ""
+msgstr "-- تحميل lazydata لـ"
 
 msgid "-- registerS3methods for"
-msgstr ""
+msgstr "-- registerS3methods لـ"
 
 msgid "-- done registerS3methods for"
-msgstr ""
+msgstr "-- انتهى registerS3methods لـ"
 
 msgid "-- running .onLoad for"
-msgstr ""
+msgstr "-- تشغيل .onLoad لـ"
 
 msgid "-- done running .onLoad for"
-msgstr ""
+msgstr "-- انتهى تشغيل .onLoad لـ"
 
 msgid "S4 exports specified in 'NAMESPACE' but not defined in package %s"
-msgstr ""
+msgstr "تم تحديد تصديرات S4 في 'NAMESPACE' لكنها غير معرّفة في الحزمة %s"
 
 msgid "-- processing S4 stuff for"
-msgstr ""
+msgstr "-- معالجة عناصر S4 لـ"
 
 msgid "--- caching metadata"
-msgstr ""
+msgstr "--- تخزين البيانات الوصفية مؤقتًا"
 
 msgid "--- done caching metadata"
-msgstr ""
+msgstr "--- انتهى تخزين البيانات الوصفية مؤقتًا"
 
 msgid "--- processing classes"
-msgstr ""
+msgstr "--- معالجة الأصناف"
 
 msgid "'exportClassPattern' specified in 'NAMESPACE' but no matching classes in package %s"
-msgstr ""
+msgstr "تم تحديد 'exportClassPattern' في 'NAMESPACE' لكن لا توجد أصناف مطابقة في الحزمة %s"
 
 msgid "in package %s classes %s were specified for export but not defined"
-msgstr ""
+msgstr "في الحزمة %s تم تحديد الأصناف %s للتصدير لكنها غير معرّفة"
 
 msgid "no function found corresponding to methods exports from %s for: %s"
-msgstr ""
+msgstr "لم يتم العثور على دالة تقابل تصديرات الطرق من %s لـ: %s"
 
 msgid "in %s methods for export not found: %s"
-msgstr ""
+msgstr "في %s لم يتم العثور على طرق للتصدير: %s"
 
 msgid "---- export method"
-msgstr ""
+msgstr "---- تصدير الطريقة"
 
 msgid "multiple methods tables found for %s"
-msgstr ""
+msgstr "تم العثور على عدة جداول طرق لـ %s"
 
 msgid "failed to find metadata object for %s"
-msgstr ""
+msgstr "فشل العثور على كائن بيانات وصفية لـ %s"
 
 msgid "in package %s methods %s were specified for export but not defined"
-msgstr ""
+msgstr "في الحزمة %s تم تحديد الطرق %s للتصدير لكنها غير معرّفة"
 
 msgid "-- done processing S4 stuff for"
-msgstr ""
+msgstr "-- انتهت معالجة عناصر S4 لـ"
 
 msgid "--- processing exports for"
-msgstr ""
+msgstr "--- معالجة التصديرات لـ"
 
 msgid "--- sealing exports for"
-msgstr ""
+msgstr "--- إغلاق التصديرات لـ"
 
 msgid "- done loading"
-msgstr ""
+msgstr "- انتهى التحميل"
 
 msgid "Loading required namespace: %s"
-msgstr ""
+msgstr "تحميل نطاق الأسماء المطلوب: %s"
 
 msgid "not loading a namespace"
-msgstr ""
+msgstr "لا يتم تحميل نطاق أسماء"
 
 msgid "namespace %s is imported by %s so cannot be unloaded"
-msgstr ""
+msgstr "نطاق الأسماء %s مستورد بواسطة %s لذلك لا يمكن إلغاء تحميله"
 
 msgid "not a namespace"
-msgstr ""
+msgstr "ليس نطاق أسماء"
 
 msgid "operation not allowed on base namespace"
-msgstr ""
+msgstr "العملية غير مسموح بها على نطاق أسماء base"
 
 msgid "duplicate import names %s"
-msgstr ""
+msgstr "أسماء استيراد مكررة %s"
 
 msgid "replacing local value with import %s when loading %s"
-msgstr ""
+msgstr "استبدال القيمة المحلية بالاستيراد %s عند تحميل %s"
 
 msgid "cannot import into a sealed namespace"
-msgstr ""
+msgstr "لا يمكن الاستيراد إلى نطاق أسماء مغلق"
 
 msgid "replacing previous import by %s when loading %s"
-msgstr ""
+msgstr "استبدال الاستيراد السابق بـ %s عند تحميل %s"
 
 msgid "invalid import target"
-msgstr ""
+msgstr "هدف الاستيراد غير صالح"
 
 msgid "found methods to import for function %s but not the generic itself"
-msgstr ""
+msgstr "تم العثور على طرق لاستيرادها للدالة %s ولكن لم يتم العثور على الدالة العامة نفسها"
 
 msgid "replacing previous import %s by %s when loading %s"
-msgstr ""
+msgstr "استبدال الاستيراد السابق %s بـ %s عند تحميل %s"
 
 msgid "No generic function %s found corresponding to requested imported methods from package %s when loading %s (malformed exports?)"
 msgstr ""
 
 msgid "cannot add to exports of a sealed namespace"
-msgstr ""
+msgstr "لا يمكن الإضافة إلى تصديرات نطاق أسماء مغلق"
 
 msgid "undefined exports: %s"
-msgstr ""
+msgstr "تصديرات غير معرّفة: %s"
 
 msgid "unable to re-encode some lines in NAMESPACE file"
-msgstr ""
+msgstr "تعذرت إعادة ترميز بعض الأسطر في ملف NAMESPACE"
 
 msgid "package %s has no 'NAMESPACE' file"
-msgstr ""
+msgstr "الحزمة %s لا تحتوي على ملف 'NAMESPACE'"
 
 msgid "empty name in directive '%s' in 'NAMESPACE' file"
-msgstr ""
+msgstr "اسم فارغ في التوجيه '%s' في ملف 'NAMESPACE'"
 
 msgid "duplicate symbol names %s in useDynLib(\"%s\")"
-msgstr ""
+msgstr "أسماء رموز مكررة %s في useDynLib(\"%s\")"
 
 msgid "bad 'S3method' directive: %s"
-msgstr ""
+msgstr "توجيه 'S3method' سيئ: %s"
 
 msgid "unknown namespace directive: %s"
-msgstr ""
+msgstr "توجيه نطاق أسماء غير معروف: %s"
 
 msgid "S3 method %s was declared but not found"
-msgstr ""
+msgstr "تم التصريح عن طريقة S3 %s ولكن لم يتم العثور عليها"
 
 msgid "bad method"
-msgstr ""
+msgstr "طريقة سيئة"
 
 msgid "object '%s' not found whilst loading namespace '%s'"
-msgstr ""
+msgstr "لم يتم العثور على الكائن '%s' أثناء تحميل نطاق الأسماء '%s'"
 
 msgid "While loading namespace \"%s\": \"%s\" differ in ncol(.), env=%d, newNS=%d."
-msgstr ""
+msgstr "أثناء تحميل نطاق الأسماء \"%s\": يختلف \"%s\" في ncol(.)، env=%d، newNS=%d."
 
 msgid "Maybe package installed with version of R newer than %s ?"
-msgstr ""
+msgstr "ربما تم تثبيت الحزمة بإصدار R أحدث من %s؟"
 
 msgid "'%s' is not implemented yet"
-msgstr ""
+msgstr "'%s' لم يُنفّذ بعد"
 
 msgid "argument '%s' is not used (yet)"
-msgstr ""
+msgstr "الوسيط '%s' غير مستخدم (بعد)"
 
 msgid "'x' cannot be coerced to class \"octmode\""
-msgstr ""
+msgstr "لا يمكن تحويل 'x' قسريًا إلى الصنف \"octmode\""
 
 msgid "'x' cannot be coerced to class \"hexmode\""
-msgstr ""
+msgstr "لا يمكن تحويل 'x' قسريًا إلى الصنف \"hexmode\""
 
 msgid "using ... with FUN = \"*\" is an error"
-msgstr ""
+msgstr "استخدام ... مع FUN = \"*\" يُعد خطأ"
 
 msgid "no arguments"
-msgstr ""
+msgstr "لا يوجد وسائط"
 
 msgid "an argument will be fractionally recycled"
-msgstr ""
+msgstr "وسيط سيكون fractionally recycled"
 
 msgid "invalid ncol(x)"
-msgstr ""
+msgstr "ncol(x) غير صالح"
 
 msgid "too large a matrix for LINPACK"
-msgstr ""
+msgstr "مصفوفة كبيرة جدًا بالنسبة إلى LINPACK"
 
 msgid "first argument must be a QR decomposition"
-msgstr ""
+msgstr "يجب أن يكون الوسيط الأول تحليل QR"
 
 msgid "invalid nrow(qr$qr)"
-msgstr ""
+msgstr "nrow(qr$qr) غير صالح"
 
 msgid "invalid ncol(qr$qr)"
-msgstr ""
+msgstr "ncol(qr$qr) غير صالح"
 
 msgid "invalid ncol(qr$rank)"
-msgstr ""
+msgstr "ncol(qr$rank) غير صالح"
 
 msgid "invalid ncol(y)"
-msgstr ""
+msgstr "ncol(y) غير صالح"
 
 msgid "'qr' and 'y' must have the same number of rows"
-msgstr ""
+msgstr "يجب أن يكون لدى 'qr' و'y' العدد نفسه من الصفوف"
 
 msgid "exact singularity in 'qr.coef'"
-msgstr ""
+msgstr "تفرد دقيق في 'qr.coef'"
 
 msgid "argument is not a QR decomposition"
-msgstr ""
+msgstr "الوسيط ليس تحليل QR"
 
 msgid "invalid NCOL(y)"
-msgstr ""
+msgstr "NCOL(y) غير صالح"
 
 msgid "not implemented for complex 'qr'"
-msgstr ""
+msgstr "غير منفّذ لـ 'qr' المركب"
 
 msgid "not supported for LAPACK QR"
-msgstr ""
+msgstr "غير مدعوم لـ LAPACK QR"
 
 msgid "'k' is too large"
-msgstr ""
+msgstr "'k' كبير جدًا"
 
 msgid "need larger value of 'ncol' as pivoting occurred"
-msgstr ""
+msgstr "تلزم قيمة أكبر لـ 'ncol' لأن المحورة حدثت"
 
 msgid "invalid NCOL(R)"
-msgstr ""
+msgstr "NCOL(R) غير صالح"
 
 msgid "'x' must be a vector of an atomic type"
-msgstr ""
+msgstr "يجب أن يكون 'x' متجهًا من نوع ذري"
 
 msgid "invalid 'rle' structure"
-msgstr ""
+msgstr "بنية 'rle' غير صالحة"
 
 msgid "... must contain names or character strings"
-msgstr ""
+msgstr "يجب أن تحتوي ... على أسماء أو سلاسل نصية"
 
 msgid "invalid 'x'"
-msgstr ""
+msgstr "'x' غير صالح"
 
 msgid "incorrect length for 'group'"
-msgstr ""
+msgstr "طول 'group' غير صحيح"
 
 msgid "missing values for 'group'"
-msgstr ""
+msgstr "قيم مفقودة لـ 'group'"
 
 msgid "not a data frame"
-msgstr ""
+msgstr "ليس إطار بيانات"
 
 msgid "length of 'center' must equal the number of columns of 'x'"
-msgstr ""
+msgstr "يجب أن يساوي طول 'center' عدد أعمدة 'x'"
 
 msgid "length of 'scale' must equal the number of columns of 'x'"
-msgstr ""
+msgstr "يجب أن يساوي طول 'scale' عدد أعمدة 'x'"
 
 msgid "either specify 'nmax' or 'n', but not both."
-msgstr ""
+msgstr "حدد إما 'nmax' أو 'n'، لكن ليس كليهما."
 
 msgid "'from' must be a finite number"
-msgstr ""
+msgstr "يجب أن يكون 'from' عددًا منتهيًا"
 
 msgid "first element used of 'length.out' argument"
-msgstr ""
+msgstr "تم استخدام العنصر الأول من الوسيط 'length.out'"
 
 msgid "'to' must be a finite number"
-msgstr ""
+msgstr "يجب أن يكون 'to' عددًا منتهيًا"
 
 msgid "invalid '(to - from)/by'"
-msgstr ""
+msgstr "'(إلى - من)/by' غير صالح"
 
 msgid "wrong sign in 'by' argument"
-msgstr ""
+msgstr "wrong sign في 'by' وسيط"
 
 msgid "'by' argument is much too small"
-msgstr ""
+msgstr "'by' وسيط is much صغير جدًا"
 
 msgid "'length.out' must be a non-negative number"
-msgstr ""
+msgstr "يجب أن يكون 'length.out' غير سالب number"
 
 msgid "too many arguments"
-msgstr ""
+msgstr "too many وسائط"
 
 msgid "invalid 'compress' argument:"
-msgstr ""
+msgstr "الوسيط 'compress' غير صالح:"
 
 msgid "'compress' is ignored unless 'file' is a file name"
-msgstr ""
+msgstr "يتم تجاهل 'compress' ما لم يكن 'file' اسم ملف"
 
 msgid "'connection' must be a connection"
-msgstr ""
+msgstr "يجب أن يكون 'connection' اتصالًا"
 
 msgid "'file' must be NULL or an already open connection"
-msgstr ""
+msgstr "يجب أن يكون 'file' إما NULL أو اتصالًا مفتوحًا بالفعل"
 
 msgid "cannot split the message connection"
-msgstr ""
+msgstr "لا يمكن تقسيم اتصال الرسالة"
 
 msgid "'file' must be NULL, a connection or a character string"
-msgstr ""
+msgstr "يجب أن يكون 'file' إما NULL أو اتصالًا أو سلسلة نصية"
 
 msgid "this is the \"qr\" method for the generic function solve()"
-msgstr ""
+msgstr "هذه هي طريقة \"qr\" للدالة العامة solve()"
 
 msgid "singular matrix 'a' in 'solve'"
-msgstr ""
+msgstr "المصفوفة 'a' مفردة في 'solve'"
 
 msgid "only square matrices can be inverted"
-msgstr ""
+msgstr "لا يمكن عكس إلا المصفوفات المربعة"
 
 msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
-msgstr ""
+msgstr "تم استدعاء solve.default مع كائن \"qr\": استخدم 'qr.solve'"
 
 msgid "singular matrix 'a' in solve"
-msgstr ""
+msgstr "المصفوفة 'a' مفردة في solve"
 
 msgid ""
 "'decreasing' must be a length-1 logical vector.\n"
 "Did you intend to set 'partial'?"
 msgstr ""
+"يجب أن يكون 'decreasing' متجهًا منطقيًا بطول 1.\n"
+"هل كنت تقصد تعيين 'partial'؟"
 
 msgid "'partial' sorting not supported by radix method"
-msgstr ""
+msgstr "الفرز الجزئي 'partial' غير مدعوم بطريقة radix"
 
 msgid "'index.return' only for non-factors"
-msgstr ""
+msgstr "'index.return' خاص فقط بغير العوامل"
 
 msgid "'x' must be atomic"
-msgstr ""
+msgstr "يجب أن يكون 'x' ذريًا"
 
 msgid "'index.return' only for 'na.last = NA'"
-msgstr ""
+msgstr "'index.return' خاص فقط بـ 'na.last = NA'"
 
 msgid "unsupported options for partial sorting"
-msgstr ""
+msgstr "خيارات غير مدعومة للفرز الجزئي"
 
 msgid "non-finite 'partial'"
-msgstr ""
+msgstr "'partial' غير منتهٍ"
 
 msgid "'decreasing' of length > 1 is only for method = \"radix\""
-msgstr ""
+msgstr "'decreasing' بطول > 1 خاص فقط بـ method = \"radix\""
 
 msgid "argument lengths differ"
-msgstr ""
+msgstr "وسيط lengths differ"
 
 msgid "method = \"quick\" is only for numeric 'x'"
-msgstr ""
+msgstr "method = \"quick\" خاص فقط بـ 'x' الرقمي"
 
 msgid ""
 "'x' must be atomic for 'sort.list', method \"shell\" and \"quick\"\n"
 "Have you called 'sort' on a list?"
 msgstr ""
+"يجب أن يكون 'x' ذريًا من أجل 'sort.list'، والطريقتين \"shell\" و\"quick\".\n"
+"هل استدعيت 'sort' على قائمة؟"
 
 msgid "cannot xtfrm 'x'"
-msgstr ""
+msgstr "لا يمكن تنفيذ xtfrm على 'x'"
 
 msgid "'local' must be TRUE, FALSE or an environment"
-msgstr ""
+msgstr "يجب أن يكون 'local' إما TRUE أو FALSE أو بيئة"
 
 msgid "'echo' must be logical"
-msgstr ""
+msgstr "يجب أن يكون 'echo' منطقيًا"
 
 msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
-msgstr ""
+msgstr "'verbose' يساوي TRUE بينما 'echo' ليس كذلك؛ ... سيتم تحويل 'echo <- TRUE' قسريًا"
 
 msgid "empty file/url name"
-msgstr ""
+msgstr "اسم ملف/رابط URL فارغ"
 
 msgid "unable to find a plausible encoding"
-msgstr ""
+msgstr "تعذر العثور على ترميز معقول"
 
 msgid "encoding = \"%s\" chosen"
-msgstr ""
+msgstr "تم اختيار encoding = \"%s\""
 
 msgid "'chdir = TRUE' makes no sense for a URL"
-msgstr ""
+msgstr "'chdir = TRUE' لا معنى له مع URL"
 
 msgid "cannot 'chdir' as current directory is unknown"
-msgstr ""
+msgstr "لا يمكن تنفيذ 'chdir' لأن الدليل الحالي غير معروف"
 
 msgid "'chdir = TRUE' makes no sense for a connection"
-msgstr ""
+msgstr "'chdir = TRUE' لا معنى له مع اتصال"
 
 msgid "specify either 'file' or 'exprs' but not both"
-msgstr ""
+msgstr "حدد إما 'file' أو 'exprs'، لكن ليس كليهما"
 
 msgid "'%s' is not an existing file"
-msgstr ""
+msgstr "'%s' ليس ملفًا موجودًا"
 
 msgid "'formula' must be a formula"
-msgstr ""
+msgstr "يجب أن تكون 'formula' صيغة"
 
 msgid "Unexpected LHS in 'formula' has been ignored."
-msgstr ""
+msgstr "تم تجاهل LHS غير المتوقع في 'formula'."
 
 msgid "Unexpected LHS in 'formula' has been combined with RHS."
-msgstr ""
+msgstr "تم دمج LHS غير المتوقع في 'formula' مع RHS."
 
 msgid "Timestamp of %s has changed"
-msgstr ""
+msgstr "تغيّر الطابع الزمني لـ %s"
 
 msgid "'x' and 'to' must refer to same file"
-msgstr ""
+msgstr "يجب أن يشير 'x' و'to' إلى الملف نفسه"
 
 msgid "additional arguments ignored in stop()"
-msgstr ""
+msgstr "تم تجاهل الوسائط الإضافية في stop()"
 
 msgid "Only one of 'exprs', 'exprObject' or expressions, not more"
-msgstr ""
+msgstr "واحد فقط من 'exprs' أو 'exprObject' أو expressions، وليس أكثر"
 
 msgid ""
 "%s and %s are not equal:\n"
 "  %s"
 msgstr ""
+"%s و%s غير متساويين:\n"
+"  %s"
 
 msgid "additional arguments ignored in warning()"
-msgstr ""
+msgstr "تم تجاهل الوسائط الإضافية في warning()"
 
 msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
-msgstr ""
+msgstr "ربما فشل Sys.setenv(LANGUAGE=\"%s\")"
 
 msgid "attempt to set an attribute on NULL"
-msgstr ""
+msgstr "محاولة إلى set سمة على NULL"
 
 msgid "incorrect value for 'x'"
-msgstr ""
+msgstr "قيمة 'x' غير صحيحة"
 
 msgid "'x' and 'y' must have the same length"
-msgstr ""
+msgstr "'x' و 'y' يجب أن يحتوي الطول نفسه"
 
 msgid "probably wrong encoding in names(.) of column"
-msgstr ""
+msgstr "ربما يوجد ترميز خاطئ في names(.) للعمود"
 
 msgid "STATS is longer than the extent of 'dim(x)[MARGIN]'"
-msgstr ""
+msgstr "STATS أطول من امتداد 'dim(x)[MARGIN]'"
 
 msgid "STATS does not recycle exactly across MARGIN"
-msgstr ""
+msgstr "لا يُعاد تدوير STATS بدقة عبر MARGIN"
 
 msgid "length(STATS) or dim(STATS) do not match dim(x)[MARGIN]"
-msgstr ""
+msgstr "لا يطابق length(STATS) أو dim(STATS) قيمة dim(x)[MARGIN]"
 
 msgid "'exclude' containing NA and 'useNA' != \"no\"' are a bit contradicting"
-msgstr ""
+msgstr "'exclude' الذي يحتوي على NA و'useNA' != \"no\"' متناقضان قليلًا"
 
 msgid "nothing to tabulate"
-msgstr ""
+msgstr "لا يوجد ما يمكن جدولة"
 
 msgid "all arguments must have the same length"
-msgstr ""
+msgstr "يجب أن تكون جميع الوسائط بالطول نفسه"
 
 msgid "attempt to make a table with >= 2^31 elements"
-msgstr ""
+msgstr "محاولة إنشاء جدول يحتوي على >= 2^31 عنصرًا"
 
 msgid "'object' must inherit from class %s"
-msgstr ""
+msgstr "يجب أن يرث 'object' من الصنف %s"
 
 msgid "'x' must inherit from class %s"
-msgstr ""
+msgstr "يجب أن يرث 'x' من الصنف %s"
 
 msgid "cannot coerce to a table"
-msgstr ""
+msgstr "لا يمكن التحويل قسريًا إلى جدول"
 
 msgid "'x' is not an array"
-msgstr ""
+msgstr "'x' ليست مصفوفة متعددة الأبعاد"
 
 msgid "'bin' must be numeric or a factor"
-msgstr ""
+msgstr "يجب أن يكون 'bin' رقميًا أو عاملًا"
 
 msgid "invalid value of %s"
-msgstr "قيمة غير صالحة %sس"
+msgstr "قيمة %s غير صالحة"
 
 msgid "'X' must be a data frame when 'INDEX' is a formula"
-msgstr ""
+msgstr "يجب أن يكون 'X' إطار بيانات عندما يكون 'INDEX' صيغة"
 
 msgid "'INDEX' is of length zero"
-msgstr ""
+msgstr "'INDEX' بطول صفر"
 
 msgid "arguments must have same length"
-msgstr ""
+msgstr "يجب أن تكون الوسائط بالطول نفسه"
 
 msgid "total number of levels >= 2^31"
-msgstr ""
+msgstr "إجمالي عدد المستويات >= 2^31"
 
 msgid "handler must be a function"
-msgstr ""
+msgstr "يجب أن يكون المعالج دالة"
 
 msgid "no such element '%s'"
-msgstr ""
+msgstr "لا يوجد عنصر كهذا '%s'"
 
 msgid "invalid 'which' argument"
-msgstr ""
+msgstr "الوسيط 'which' غير صالح"
 
 msgid "'which' must be character or numeric"
-msgstr ""
+msgstr "يجب أن يكون 'which' نصيًا أو رقميًا"
 
 msgid "Removing %s"
-msgstr ""
+msgstr "إزالة %s"
 
 msgid "Registering 'evaluate' as low-level callback"
-msgstr ""
+msgstr "تسجيل 'evaluate' كاستدعاء راجع منخفض المستوى"
 
 msgid "Timing stopped at:"
-msgstr ""
+msgstr "توقف التوقيت عند:"
 
 msgid "user"
-msgstr ""
+msgstr "مستخدم"
 
 msgid "system"
-msgstr ""
+msgstr "النظام"
 
 msgid "elapsed"
-msgstr ""
+msgstr "المنقضي"
 
 msgid "'width' must be positive"
-msgstr ""
+msgstr "يجب أن يكون 'width' موجبًا"
 
 msgid "No traceback available"
-msgstr ""
+msgstr "لا يوجد traceback متاح"
 
-#, fuzzy
 msgid "'recursive' must be a length-1 vector"
-msgstr "يجب أن يكون \"normal.kind\" سلسلة أحرف بطول 1"
+msgstr "يجب أن يكون 'recursive' متجهًا بطول 1"
 
 msgid "'recursive' is NA"
-msgstr ""
+msgstr "'recursive' هو NA"
 
 msgid "invalid non-character version specification 'x' (type: %s)"
-msgstr ""
+msgstr "مواصفة إصدار غير نصية غير صالحة لـ 'x' (النوع: %s)"
 
 msgid "invalid version specification %s"
-msgstr ""
+msgstr "مواصفة الإصدار %s غير صالحة"
 
 msgid "invalid 'value'"
-msgstr ""
+msgstr "'value' غير صالح"
 
 msgid "unary '%s' not defined for \"numeric_version\" objects"
-msgstr ""
+msgstr "العامل الأحادي '%s' غير معرّف لكائنات \"numeric_version\""
 
 msgid "'%s' not defined for \"numeric_version\" objects"
-msgstr ""
+msgstr "'%s' غير معرّف لكائنات \"numeric_version\""
 
 msgid "%s not defined for \"numeric_version\" objects"
-msgstr ""
+msgstr "%s غير معرّف لكائنات \"numeric_version\""
 
 msgid "<0 elements>"
-msgstr ""
+msgstr "<0 عناصر>"
 
 msgid "'tags' must be a character vector of the same length as 'x'"
-msgstr ""
+msgstr "يجب أن تكون 'tags' متجهًا نصيًا بالطول نفسه مثل 'x'"
 
 msgid "Summary of (a total of %d) warning messages:"
-msgstr ""
+msgstr "ملخص لإجمالي %d رسالة تحذير:"
 
 msgid "invalid 'digits'"
-msgstr ""
+msgstr "'digits' غير صالح"
 
 msgid "Direct call of '%s()' is deprecated.  Use '%s()' or '%s()' instead"
-msgstr ""
+msgstr "الاستدعاء المباشر لـ '%s()' مهمل. استخدم '%s()' أو '%s()' بدلًا من ذلك"
 
 msgid "arguments 'show.output.on.console', 'minimized' and 'invisible' are for Windows only"
-msgstr ""
+msgstr "الوسائط 'show.output.on.console' و'minimized' و'invisible' خاصة بـ Windows فقط"
 
 msgid "'intern' must be TRUE or FALSE"
-msgstr ""
+msgstr "يجب أن يكون 'intern' إما TRUE أو FALSE"
 
 msgid "'ignore.stdout' must be TRUE or FALSE"
-msgstr ""
+msgstr "يجب أن يكون 'ignore.stdout' إما TRUE أو FALSE"
 
 msgid "'ignore.stderr' must be TRUE or FALSE"
-msgstr ""
+msgstr "يجب أن يكون 'ignore.stderr' إما TRUE أو FALSE"
 
 msgid "'wait' must be TRUE or FALSE"
-msgstr ""
+msgstr "يجب أن يكون 'wait' إما TRUE أو FALSE"
 
 msgid "'receive.console.signals' must be TRUE or FALSE"
-msgstr ""
+msgstr "يجب أن يكون 'receive.console.signals' إما TRUE أو FALSE"
 
 msgid "'input' must be a character vector or 'NULL'"
-msgstr ""
+msgstr "يجب أن يكون 'input' متجهًا نصيًا أو 'NULL'"
 
 msgid "arguments 'minimized' and 'invisible' are for Windows only"
-msgstr ""
+msgstr "الوسيطان 'minimized' و'invisible' خاصان بـ Windows فقط"
 
 msgid "setting stdout = TRUE"
-msgstr ""
+msgstr "تعيين stdout = TRUE"
 
 msgid "'stdout' must be of length 1"
-msgstr ""
+msgstr "يجب أن يكون 'stdout' بطول 1"
 
 msgid "'stderr' must be of length 1"
-msgstr ""
+msgstr "يجب أن يكون 'stderr' بطول 1"
 
 msgid "'which' was not found on this platform"
-msgstr ""
+msgstr "لم يتم العثور على 'which' على هذه المنصة"
 
 msgid "fewer 'from' files than 'to' files"
-msgstr ""
+msgstr "ملفات 'from' أقل من ملفات 'to'"
 
 msgid "link '%s' already exists"
-msgstr ""
+msgstr "الرابط '%s' موجود بالفعل"
 
 msgid "failed to create directory for link '%s"
-msgstr ""
+msgstr "فشل إنشاء دليل للرابط '%s"
 
 msgid "'show.output.on.console' must be TRUE or FALSE"
-msgstr ""
+msgstr "يجب أن يكون 'show.output.on.console' إما TRUE أو FALSE"
 
 msgid "'minimized' must be TRUE or FALSE"
-msgstr ""
+msgstr "يجب أن يكون 'minimized' إما TRUE أو FALSE"
 
 msgid "'invisible' must be TRUE or FALSE"
-msgstr ""
+msgstr "يجب أن يكون 'invisible' إما TRUE أو FALSE"
 
 msgid "running command '%s' had status %d"
 msgstr "كان الأمر قيد التشغيل '%s' بالحالة %d"
 
 msgid "'%s' could not be run"
-msgstr ""
+msgstr "تعذر تشغيل '%s'"
 
 msgid "'%s' execution failed with error code %d"
-msgstr ""
+msgstr "فشل تنفيذ '%s' برمز الخطأ %d"
 
 msgid "-l option without value"
-msgstr ""
+msgstr "الخيار -l بدون قيمة"
 
 msgid "ERROR: no packages specified"
-msgstr ""
+msgstr "خطأ: لم تُحدد أي حزم"
 
 msgid "Removing from library"
-msgstr ""
+msgstr "الإزالة من المكتبة"
 
 msgid "ERROR: cannot cd to directory"
-msgstr ""
+msgstr "خطأ: لا يمكن تنفيذ cd إلى الدليل"
 
 msgid "ERROR: no permission to remove from directory"
-msgstr ""
+msgstr "خطأ: لا توجد صلاحية للإزالة من الدليل"
 
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "خيار deparse %s غير معروف"
+msgstr[1] "خيار deparse %s غير معروف"
+msgstr[2] "خيارا deparse %s غير معروفين"
+msgstr[3] "خيارات deparse %s غير معروفة"
+msgstr[4] "خيارات deparse %s غير معروفة"
+msgstr[5] "خيار deparse %s غير معروف"
 
 msgid "The following object is masked _by_ %s:"
 msgid_plural "The following objects are masked _by_ %s:"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "الكائنات التالية محجوبة _بواسطة_ %s:"
+msgstr[1] "الكائن التالي محجوب _بواسطة_ %s:"
+msgstr[2] "الكائنان التاليان محجوبان _بواسطة_ %s:"
+msgstr[3] "الكائنات التالية محجوبة _بواسطة_ %s:"
+msgstr[4] "الكائنات التالية محجوبة _بواسطة_ %s:"
+msgstr[5] "الكائن التالي محجوب _بواسطة_ %s:"
 
 msgid "The following object is masked from %s:"
 msgid_plural "The following objects are masked from %s:"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "الكائنات التالية محجوبة من %s:"
+msgstr[1] "الكائن التالي محجوب من %s:"
+msgstr[2] "الكائنان التاليان محجوبان من %s:"
+msgstr[3] "الكائنات التالية محجوبة من %s:"
+msgstr[4] "الكائنات التالية محجوبة من %s:"
+msgstr[5] "الكائن التالي محجوب من %s:"
 
 msgid "invalid 'row.names', length %d for a data frame with %d row"
 msgid_plural "invalid 'row.names', length %d for a data frame with %d rows"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "'row.names' غير صالحة، الطول %d لإطار بيانات يحتوي على %d صف"
+msgstr[1] "'row.names' غير صالحة، الطول %d لإطار بيانات يحتوي على صف واحد (%d)"
+msgstr[2] "'row.names' غير صالحة، الطول %d لإطار بيانات يحتوي على صفين (%d)"
+msgstr[3] "'row.names' غير صالحة، الطول %d لإطار بيانات يحتوي على %d صفوف"
+msgstr[4] "'row.names' غير صالحة، الطول %d لإطار بيانات يحتوي على %d صفًا"
+msgstr[5] "'row.names' غير صالحة، الطول %d لإطار بيانات يحتوي على %d صف"
 
 msgid "supplied %d row name for %d rows"
 msgid_plural "supplied %d row names for %d rows"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "تم تقديم %d اسم صف لـ %d صفوف"
+msgstr[1] "تم تقديم اسم صف واحد (%d) لـ %d صفوف"
+msgstr[2] "تم تقديم اسمي صف (%d) لـ %d صفوف"
+msgstr[3] "تم تقديم %d أسماء صفوف لـ %d صفوف"
+msgstr[4] "تم تقديم %d اسم صف لـ %d صفوف"
+msgstr[5] "تم تقديم %d اسم صف لـ %d صفوف"
 
 msgid "replacement has %d row, data has %d"
 msgid_plural "replacement has %d rows, data has %d"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "الاستبدال يحتوي على %d صف، والبيانات تحتوي على %d"
+msgstr[1] "الاستبدال يحتوي على صف واحد (%d)، والبيانات تحتوي على %d"
+msgstr[2] "الاستبدال يحتوي على صفين (%d)، والبيانات تحتوي على %d"
+msgstr[3] "الاستبدال يحتوي على %d صفوف، والبيانات تحتوي على %d"
+msgstr[4] "الاستبدال يحتوي على %d صفًا، والبيانات تحتوي على %d"
+msgstr[5] "الاستبدال يحتوي على %d صف، والبيانات تحتوي على %d"
 
 msgid "replacement has %d item, need %d"
 msgid_plural "replacement has %d items, need %d"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "الاستبدال يحتوي على %d عنصر، ويلزم %d"
+msgstr[1] "الاستبدال يحتوي على عنصر واحد (%d)، ويلزم %d"
+msgstr[2] "الاستبدال يحتوي على عنصرين (%d)، ويلزم %d"
+msgstr[3] "الاستبدال يحتوي على %d عناصر، ويلزم %d"
+msgstr[4] "الاستبدال يحتوي على %d عنصرًا، ويلزم %d"
+msgstr[5] "الاستبدال يحتوي على %d عنصر، ويلزم %d"
 
 msgid "replacement element %d is a matrix/data frame of %d row, need %d"
 msgid_plural "replacement element %d is a matrix/data frame of %d rows, need %d"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "عنصر الاستبدال %d هو مصفوفة/إطار بيانات من %d صف، ويلزم %d"
+msgstr[1] "عنصر الاستبدال %d هو مصفوفة/إطار بيانات من صف واحد (%d)، ويلزم %d"
+msgstr[2] "عنصر الاستبدال %d هو مصفوفة/إطار بيانات من صفين (%d)، ويلزم %d"
+msgstr[3] "عنصر الاستبدال %d هو مصفوفة/إطار بيانات من %d صفوف، ويلزم %d"
+msgstr[4] "عنصر الاستبدال %d هو مصفوفة/إطار بيانات من %d صفًا، ويلزم %d"
+msgstr[5] "عنصر الاستبدال %d هو مصفوفة/إطار بيانات من %d صف، ويلزم %d"
 
 msgid "replacement element %d has %d row, need %d"
 msgid_plural "replacement element %d has %d rows, need %d"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "عنصر الاستبدال %d يحتوي على %d صف، ويلزم %d"
+msgstr[1] "عنصر الاستبدال %d يحتوي على صف واحد (%d)، ويلزم %d"
+msgstr[2] "عنصر الاستبدال %d يحتوي على صفين (%d)، ويلزم %d"
+msgstr[3] "عنصر الاستبدال %d يحتوي على %d صفوف، ويلزم %d"
+msgstr[4] "عنصر الاستبدال %d يحتوي على %d صفًا، ويلزم %d"
+msgstr[5] "عنصر الاستبدال %d يحتوي على %d صف، ويلزم %d"
 
 msgid "replacement element %d has %d row to replace %d rows"
 msgid_plural "replacement element %d has %d rows to replace %d rows"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "عنصر الاستبدال %d يحتوي على %d صف لاستبدال %d صفوف"
+msgstr[1] "عنصر الاستبدال %d يحتوي على صف واحد (%d) لاستبدال %d صفوف"
+msgstr[2] "عنصر الاستبدال %d يحتوي على صفين (%d) لاستبدال %d صفوف"
+msgstr[3] "عنصر الاستبدال %d يحتوي على %d صفوف لاستبدال %d صفوف"
+msgstr[4] "عنصر الاستبدال %d يحتوي على %d صفًا لاستبدال %d صفوف"
+msgstr[5] "عنصر الاستبدال %d يحتوي على %d صف لاستبدال %d صفوف"
 
 msgid "%d row in value to replace %d rows"
 msgid_plural "%d rows in value to replace %d rows"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "%d صف في القيمة لاستبدال %d صفوف"
+msgstr[1] "صف واحد (%d) في القيمة لاستبدال %d صفوف"
+msgstr[2] "صفان (%d) في القيمة لاستبدال %d صفوف"
+msgstr[3] "%d صفوف في القيمة لاستبدال %d صفوف"
+msgstr[4] "%d صفًا في القيمة لاستبدال %d صفوف"
+msgstr[5] "%d صف في القيمة لاستبدال %d صفوف"
 
 msgid "replacement data has %d row to replace %d rows"
 msgid_plural "replacement data has %d rows to replace %d rows"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "بيانات الاستبدال تحتوي على %d صف لاستبدال %d صفوف"
+msgstr[1] "بيانات الاستبدال تحتوي على صف واحد (%d) لاستبدال %d صفوف"
+msgstr[2] "بيانات الاستبدال تحتوي على صفين (%d) لاستبدال %d صفوف"
+msgstr[3] "بيانات الاستبدال تحتوي على %d صفوف لاستبدال %d صفوف"
+msgstr[4] "بيانات الاستبدال تحتوي على %d صفًا لاستبدال %d صفوف"
+msgstr[5] "بيانات الاستبدال تحتوي على %d صف لاستبدال %d صفوف"
 
 msgid "provided %d variable to replace %d variables"
 msgid_plural "provided %d variables to replace %d variables"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "تم تقديم %d متغير لاستبدال %d متغيرات"
+msgstr[1] "تم تقديم متغير واحد (%d) لاستبدال %d متغيرات"
+msgstr[2] "تم تقديم متغيرين (%d) لاستبدال %d متغيرات"
+msgstr[3] "تم تقديم %d متغيرات لاستبدال %d متغيرات"
+msgstr[4] "تم تقديم %d متغيرًا لاستبدال %d متغيرات"
+msgstr[5] "تم تقديم %d متغير لاستبدال %d متغيرات"
 
 msgid "data frame with 0 columns and %d row"
 msgid_plural "data frame with 0 columns and %d rows"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "إطار بيانات يحتوي على 0 أعمدة و%d صف"
+msgstr[1] "إطار بيانات يحتوي على 0 أعمدة وصف واحد (%d)"
+msgstr[2] "إطار بيانات يحتوي على 0 أعمدة وصفين (%d)"
+msgstr[3] "إطار بيانات يحتوي على 0 أعمدة و%d صفوف"
+msgstr[4] "إطار بيانات يحتوي على 0 أعمدة و%d صفًا"
+msgstr[5] "إطار بيانات يحتوي على 0 أعمدة و%d صف"
 
 msgid "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "المكتبة %s لا تحتوي على حزم"
+msgstr[1] "المكتبة %s لا تحتوي على حزم"
+msgstr[2] "المكتبتان %s لا تحتويان على حزم"
+msgstr[3] "المكتبات %s لا تحتوي على حزم"
+msgstr[4] "المكتبات %s لا تحتوي على حزم"
+msgstr[5] "المكتبة %s لا تحتوي على حزم"
 
 msgid "package %s is not loaded"
 msgid_plural "packages %s are not loaded"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "الحزمة %s غير محمّلة"
+msgstr[1] "الحزمة %s غير محمّلة"
+msgstr[2] "الحزمتان %s غير محمّلتين"
+msgstr[3] "الحزم %s غير محمّلة"
+msgstr[4] "الحزم %s غير محمّلة"
+msgstr[5] "الحزمة %s غير محمّلة"
 
 msgid "there is no package called"
 msgid_plural "there are no packages called"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لا توجد حزمة باسم"
+msgstr[1] "لا توجد حزمة باسم"
+msgstr[2] "لا توجد حزمتان باسم"
+msgstr[3] "لا توجد حزم باسم"
+msgstr[4] "لا توجد حزم باسم"
+msgstr[5] "لا توجد حزمة باسم"
 
 msgid "object %s not found"
 msgid_plural "objects %s not found"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لم يتم العثور على الكائن %s"
+msgstr[1] "لم يتم العثور على الكائن %s"
+msgstr[2] "لم يتم العثور على الكائنين %s"
+msgstr[3] "لم يتم العثور على الكائنات %s"
+msgstr[4] "لم يتم العثور على الكائنات %s"
+msgstr[5] "لم يتم العثور على الكائن %s"
 
 msgid "'arg' should be %s"
 msgid_plural "'arg' should be one of %s"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "ينبغي أن يكون 'arg' %s"
+msgstr[1] "ينبغي أن يكون 'arg' %s"
+msgstr[2] "ينبغي أن يكون 'arg' أحد %s"
+msgstr[3] "ينبغي أن يكون 'arg' أحد %s"
+msgstr[4] "ينبغي أن يكون 'arg' أحد %s"
+msgstr[5] "ينبغي أن يكون 'arg' أحد %s"
 
 msgid "'by' must specify a uniquely valid column"
 msgid_plural "'by' must specify uniquely valid columns"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "يجب أن يحدد 'by' أعمدة صالحة وفريدة"
+msgstr[1] "يجب أن يحدد 'by' عمودًا صالحًا وفريدًا"
+msgstr[2] "يجب أن يحدد 'by' عمودين صالحين وفريدين"
+msgstr[3] "يجب أن يحدد 'by' أعمدة صالحة وفريدة"
+msgstr[4] "يجب أن يحدد 'by' أعمدة صالحة وفريدة"
+msgstr[5] "يجب أن يحدد 'by' عمودًا صالحًا وفريدًا"
 
 msgid "Function found when exporting methods from the namespace %s which is not S4 generic: %s"
 msgid_plural "Functions found when exporting methods from the namespace %s which are not S4 generic: %s"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "تم العثور على دالة عند تصدير الطرق من نطاق الأسماء %s وهي ليست دالة عامة S4: %s"
+msgstr[1] "تم العثور على دالة عند تصدير الطرق من نطاق الأسماء %s وهي ليست دالة عامة S4: %s"
+msgstr[2] "تم العثور على دالتين عند تصدير الطرق من نطاق الأسماء %s وهما ليستا دالتين عامتين S4: %s"
+msgstr[3] "تم العثور على دوال عند تصدير الطرق من نطاق الأسماء %s وهي ليست دوالًا عامة S4: %s"
+msgstr[4] "تم العثور على دوال عند تصدير الطرق من نطاق الأسماء %s وهي ليست دوالًا عامة S4: %s"
+msgstr[5] "تم العثور على دالة عند تصدير الطرق من نطاق الأسماء %s وهي ليست دالة عامة S4: %s"
 
 msgid "No methods found in package %s for request: %s when loading %s"
 msgid_plural "No methods found in package %s for requests: %s when loading %s"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لم يتم العثور على طرق في الحزمة %s للطلبات: %s عند تحميل %s"
+msgstr[1] "لم يتم العثور على طريقة في الحزمة %s للطلب: %s عند تحميل %s"
+msgstr[2] "لم يتم العثور على طريقتين في الحزمة %s للطلبين: %s عند تحميل %s"
+msgstr[3] "لم يتم العثور على طرق في الحزمة %s للطلبات: %s عند تحميل %s"
+msgstr[4] "لم يتم العثور على طرق في الحزمة %s للطلبات: %s عند تحميل %s"
+msgstr[5] "لم يتم العثور على طريقة في الحزمة %s للطلب: %s عند تحميل %s"
 
 msgid "requested method not found in environment/package %s: %s when loading %s"
 msgid_plural "requested methods not found in environment/package %s: %s when loading %s"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "لم يتم العثور على الطريقة المطلوبة في البيئة/الحزمة %s: %s عند تحميل %s"
+msgstr[1] "لم يتم العثور على الطريقة المطلوبة في البيئة/الحزمة %s: %s عند تحميل %s"
+msgstr[2] "لم يتم العثور على الطريقتين المطلوبتين في البيئة/الحزمة %s: %s عند تحميل %s"
+msgstr[3] "لم يتم العثور على الطرق المطلوبة في البيئة/الحزمة %s: %s عند تحميل %s"
+msgstr[4] "لم يتم العثور على الطرق المطلوبة في البيئة/الحزمة %s: %s عند تحميل %s"
+msgstr[5] "لم يتم العثور على الطريقة المطلوبة في البيئة/الحزمة %s: %s عند تحميل %s"
 
 msgid "class %s is not exported by 'namespace:%s'"
 msgid_plural "classes %s are not exported by 'namespace:%s'"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "الصنف %s غير مصدّر بواسطة 'namespace:%s'"
+msgstr[1] "الصنف %s غير مصدّر بواسطة 'namespace:%s'"
+msgstr[2] "الصنفان %s غير مصدّرين بواسطة 'namespace:%s'"
+msgstr[3] "الأصناف %s غير مصدّرة بواسطة 'namespace:%s'"
+msgstr[4] "الأصناف %s غير مصدّرة بواسطة 'namespace:%s'"
+msgstr[5] "الصنف %s غير مصدّر بواسطة 'namespace:%s'"
 
 msgid "object %s is not exported by 'namespace:%s'"
 msgid_plural "objects %s are not exported by 'namespace:%s'"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "الكائن %s غير مصدّر بواسطة 'namespace:%s'"
+msgstr[1] "الكائن %s غير مصدّر بواسطة 'namespace:%s'"
+msgstr[2] "الكائنان %s غير مصدّرين بواسطة 'namespace:%s'"
+msgstr[3] "الكائنات %s غير مصدّرة بواسطة 'namespace:%s'"
+msgstr[4] "الكائنات %s غير مصدّرة بواسطة 'namespace:%s'"
+msgstr[5] "الكائن %s غير مصدّر بواسطة 'namespace:%s'"
 
 msgid "previous export '%s' is being replaced"
 msgid_plural "previous exports '%s' are being replaced"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "يتم استبدال التصدير السابق '%s'"
+msgstr[1] "يتم استبدال التصدير السابق '%s'"
+msgstr[2] "يتم استبدال التصديرين السابقين '%s'"
+msgstr[3] "يتم استبدال التصديرات السابقة '%s'"
+msgstr[4] "يتم استبدال التصديرات السابقة '%s'"
+msgstr[5] "يتم استبدال التصدير السابق '%s'"
 
 msgid "S3 method %s was declared in NAMESPACE but not found"
 msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "تم التصريح عن طريقة S3 %s في NAMESPACE ولكن لم يتم العثور عليها"
+msgstr[1] "تم التصريح عن طريقة S3 %s في NAMESPACE ولكن لم يتم العثور عليها"
+msgstr[2] "تم التصريح عن طريقتي S3 %s في NAMESPACE ولكن لم يتم العثور عليهما"
+msgstr[3] "تم التصريح عن طرق S3 %s في NAMESPACE ولكن لم يتم العثور عليها"
+msgstr[4] "تم التصريح عن طرق S3 %s في NAMESPACE ولكن لم يتم العثور عليها"
+msgstr[5] "تم التصريح عن طريقة S3 %s في NAMESPACE ولكن لم يتم العثور عليها"
 
 msgid "%s is not TRUE"
 msgid_plural "%s are not all TRUE"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "%s ليس TRUE"
+msgstr[1] "%s ليس TRUE"
+msgstr[2] "%s ليسا TRUE"
+msgstr[3] "%s ليست كلها TRUE"
+msgstr[4] "%s ليست كلها TRUE"
+msgstr[5] "%s ليس TRUE"
 
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "رسائل تحذير:\n"
+msgstr[1] "رسالة تحذير:\n"
+msgstr[2] "رسالتي تحذير:\n"
+msgstr[3] "رسائل تحذير:\n"
+msgstr[4] "رسائل تحذير:\n"
+msgstr[5] "رسالة تحذير:\n"
 
 msgid ""
 "In %s :\n"

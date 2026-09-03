@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-10-25 14:49\n"
+"POT-Creation-Date: 2026-09-02 17:54\n"
 "PO-Revision-Date: 2024-03-19 03:05+0000\n"
 "Last-Translator: Robert Castelo <robert.castelo@upf.edu>\n"
 "Language-Team: none\n"
@@ -32,6 +32,13 @@ msgstr "'X' ha de tenir dimnames amb noms"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "no tots els elements de «MARGIN» són noms de dimensions"
+
+#, fuzzy
+msgid "incompatible arguments"
+msgstr "argument «jobs» no vàlid"
+
+msgid "'Sigma' is not positive definite"
+msgstr ""
 
 #, fuzzy
 msgid "no cluster 'cl' supplied and none is registered"
