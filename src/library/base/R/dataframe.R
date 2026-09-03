@@ -1598,8 +1598,8 @@ Math.data.frame <- function (x, ...)
     } else {
 	vnames <- names(x)
 	if (is.null(vnames)) vnames <- seq_along(x)
-	stop("non-numeric-alike variable(s) in data frame: ",
-	     paste(vnames[!mode.ok], collapse = ", "))
+	stop(gettext("non-numeric-alike variable(s) in data frame: "),
+	     paste(vnames[!mode.ok], collapse = ", "), domain = NA)
     }
 }
 

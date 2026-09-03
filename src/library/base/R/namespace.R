@@ -1,7 +1,7 @@
 #  File src/library/base/R/namespace.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -470,9 +470,7 @@ loadNamespace <- function (package, lib.loc = NULL,
                     if(encoding == "latin1") encoding <- "cp1252"
                     file.show(lfiles[1L], encoding = encoding)
                 } else {
-                    message(gettextf(paste("package %s has a license that you need to accept:",
-                                           "according to the DESCRIPTION file it is",
-                                           "%s", sep="\n"),
+                    message(gettextf("package %s has a license that you need to accept:\n  according to the DESCRIPTION file it is\n  %s",
                                      sQuote(pkg),
                                      pkgInfo$DESCRIPTION["License"]), domain = NA)
                 }

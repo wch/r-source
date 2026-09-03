@@ -117,8 +117,8 @@ Sys.timezone <- function(location = TRUE)
                 return(tz)
             }
         } else
-            message("unable to deduce timezone name from ",
-                    sQuote("timedatectl"))
+            message(gettext("unable to deduce timezone name from "),
+                    sQuote("timedatectl"), domain = NA)
     }
 
     ## Debian/Ubuntu Linux do things differently, so try that next.

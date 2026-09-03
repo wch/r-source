@@ -54,8 +54,10 @@ Vectorize <- function(FUN, vectorize.args = arg.names, SIMPLIFY = TRUE,
     collisions <- arg.names %in% c("FUN", "SIMPLIFY", "USE.NAMES",
                                    "vectorize.args")
     if (any(collisions))
-	stop(sQuote("FUN"), " may not have argument(s) named ",
-	     paste(sQuote(arg.names[collisions]), collapse = ", "))
+	stop(gettextf("%s may not have argument(s) %s",
+                      sQuote("FUN"),
+                      paste(sQuote(arg.names[collisions]), collapse = ", ")),
+             domain = NA)
     rm(arg.names, collisions)
     (function() {
     FUNV <- function() { ## will set the formals below
