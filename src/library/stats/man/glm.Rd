@@ -1,6 +1,6 @@
 % File src/library/stats/man/glm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{glm}
@@ -209,6 +209,10 @@ glm.fit(x, y, weights = rep.int(1, nobs),
   The generic accessor functions \code{\link{coefficients}},
   \code{effects}, \code{fitted.values} and \code{residuals} can be used to
   extract various useful features of the value returned by \code{glm}.
+
+  Such models can be updated via \code{\link{update}()}.
+  For that to work,  \code{glm()} now % R-devel: Sep 3, 2026; R >= 4.7.0
+  may fix up the resulting \code{call} component.
 
   \code{weights} extracts a vector of weights, one for each case in the
   fit (after subsetting and \code{na.action}).

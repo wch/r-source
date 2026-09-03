@@ -2,6 +2,7 @@
 
 options(warn = 2, width = 101) # all warnings must be asserted below
 all.equal.0 <- function(x,y, ...) all.equal(x,y, tolerance = 0, ...)
+all.equal15 <- function(x,y, ...) all.equal(x,y, tolerance = 1e-15, ...)
 
 data(mtcars)
 mtcar2 <- within(mtcars, {
@@ -217,7 +218,6 @@ dc.Cc3 <- dummy.coef(lm(y ~ x*`ch A`, data=mydatC2))
 dc.Cc3s<- dummy.coef(lm(y ~ .^2,      data=mydatC2)) # as Cc3 (?)
 dc.Cc4 <- dummy.coef(lm(y ~ x*(function(x){x})(`ch A`), data=mydatC2))
 
-all.equal15 <- function(x,y, ...) all.equal(x,y, tolerance = 1e-15, ...)
 stopifnot(exprs = {
     all.equal15(dc.Cc, dc.Cf) # *not* in R <= 4.3.2
     ## coef() <--> dummy.coef()  {was always true}
@@ -314,41 +314,39 @@ df <- mkD()
 if(FALSE) # for manual tinkering
     df <- mkD(100)
 
-fit    <- lm(y~x, weights = wts, data = df)
-fit15  <- lm(y~x, weights = wts, data = df, tol = 1e-15)
-(ae15 <- all.equal(fit, fit15, tolerance = 0))
+fit    <- lm(y~x, weights = wts,     data = df, wtol = 0)
+fiF100 <- lm(y~x, weights = 100*wts, data = df, wtol = 0) # "not stable" without positive wtol
+fit15  <- lm(y~x, weights = wts,     data = df, wtol = 0, tol = 1e-15)
+(ae15 <- all.equal.0(fit, fit15))
 ## [1] "Component “qr”: Component “tol”: Mean relative difference: 1"
 ## [2] "Component “call”: target, current do not match when deparsed"
 ## ------------- but everything else is numerically identical -----------
 tools::assertWarning(verbose=TRUE, { # setting very small weights to zero ..
     fitw30    <- lm(y~x, weights = wts,     data = df, wtol = 1e-30)
-    fit100w30 <- lm(y~x, weights = wts*100, data = df, wtol = 1e-30)
+    fiF100w30 <- lm(y~x, weights = wts*100, data = df, wtol = 1e-30)
     })
-(aew30 <- all.equal(fitw30, fit100w30, tolerance = 0)) # 8 components ..
+(aew30 <- all.equal.0(fitw30, fiF100w30)) # 8 components differ . . . "okay"
 stopifnot(exprs = {
     length(ae15) == 2
-    all.equal( coef (fit15),   coef (fitw30),    tolerance = 1e-14)# seen 1.135e-15 [Lnx x86_64]
-    all.equal( coef (fitw30),  coef (fit      ), tolerance = 1e-14)# seen 1.135e-15 [Lnx x86_64]
-    all.equal( coef (fitw30),  coef (fit100w30), tolerance = 2e-15)# seen 3.43 e-16 [Lnx x86_64]
-    all.equal(resid (fitw30), resid (fit100w30), tolerance = 2e-13)# .. 3.81e-14
-    all.equal(fitted(fitw30), fitted(fit100w30), tolerance = 1e-13)# .. 1.38e-14
+    all.equal( coef (fit  ),   coef (fit15),     tolerance = 6e-16)# (0 ; Lnx x86_64)
+    all.equal( coef (fit  ),   coef (fitw30),    tolerance = 1e-14)# seen 1.135e-15 [Lnx x86_64]
+    all.equal( coef (fitw30),  coef (fiF100w30), tolerance = 2e-15)# seen 3.43 e-16 [Lnx x86_64]
+    all.equal(resid (fitw30), resid (fiF100w30), tolerance = 2e-13)# .. 3.81e-14
+    all.equal(fitted(fitw30), fitted(fiF100w30), tolerance = 1e-13)# .. 1.38e-14
 })
-
-fitF100   <- lm(y~x, weights = 100*wts, data = df)
 
 if(FALSE)
-all.equal(fit, fitF100)# no!!
+    all.equal(fit, fiF100)# no!!
 stopifnot(exprs = {
-    all.equal(weights(fit), weights(fitF100)/100, tolerance = 1e-15)
-    all.equal(   coef(fit),    coef(fitF100),     tolerance = 8e-15)# seen 1.6795e-15 [Mac ARM]
-    all.equal(predict(fit), predict(fitF100),     tolerance = 1e-15)
+    all.equal(weights(fit), weights(fiF100)/100, tolerance = 1e-15)
+    all.equal(   coef(fit),    coef(fiF100),     tolerance = 8e-15)# seen 1.6795e-15 [Mac ARM]
+    all.equal(predict(fit), predict(fiF100),     tolerance = 1e-15)
 })
 ## However --- very surprisingly to me (MM):
-all.equal(resid(fit), resid(fitF100), tolerance = 1e-15)# Mean rel..diff.: 2.24..
+all.equal15(resid(fit), resid(fiF100))# Mean rel..diff.: 2.24..
 ## and it's only at the 2 very small weights locations:
-(iDiff <- which(0 < unname(zapsmall(abs(1 - resid(fitF100)/resid(fit)))))) # 2 3
+(iDiff <- which(0 < unname(zapsmall(abs(1 - resid(fiF100)/resid(fit)))))) # 2 3
 stopifnot(identical(iDiff, 2:3))
-
 
 ###--- update(<lm.fit>) in  *a*typical cases
 ## [Bug  1861]  update() can not find objects    --- 1 Aug 2002
@@ -376,25 +374,71 @@ wls2 <- function(x) {
   res2 <- residuals(x)^2 # a _local_ variable
   update(x, weights = 1/res2)
 }
-all.EQ.0 <- function(x,y) all.equal(x,y, tolerance = 0)
 stopifnot(exprs = { # the fitted models now have identical 'call':
     identical(umod0, umod1) # TRUE (always) even when rock.mod0 & rock*1 _differ_ in call
     identical(c1, c2) # TRUE!
-    all.EQ.0(rock.mod1, rock.mod2)
-    all.EQ.0(rock.modf, rock.mod2)
-    all.EQ.0(rock.modf, rock.modf2)
-    all.EQ.0( umod1, umod2)
-    all.EQ.0( umodf, umod2)
-    all.EQ.0( umodf, umodf2)
-    all.EQ.0(umod1$call, umod2$call) # non identical environment(.$formula)
+    all.equal.0(rock.mod1, rock.mod2)
+    all.equal.0(rock.modf, rock.mod2)
+    all.equal.0(rock.modf, rock.modf2)
+    all.equal.0( umod1, umod2)
+    all.equal.0( umodf, umod2)
+    all.equal.0( umodf, umodf2)
+    all.equal.0(umod1$call, umod2$call) # non identical environment(.$formula)
     ##
-    all.EQ.0( wls2(rock.mod1), wls2(rock.mod2) -> wu2) # Error in eval(..) : object 'res2' not found
-    all.EQ.0( wls2(rock.modf) -> wuf, wu2)
-    all.EQ.0( wuf, wls2(rock.modf2))
-    all.EQ.0( wuf, wls2(rock.modf0))
+    all.equal.0( wls2(rock.mod1), wls2(rock.mod2) -> wu2) # Error in eval(..) : object 'res2' not found
+    all.equal.0( wls2(rock.modf) -> wuf, wu2)
+    all.equal.0( wuf, wls2(rock.modf2))
+    all.equal.0( wuf, wls2(rock.modf0))
     ## but wls2(umod0) or  wls2(umod*)  all fail
 })
 
+##----- the same with glm(): ----------
+
+rock.glm0 <- glm(area ~ . , data = rock)
+rock.glm1 <- glm(area ~ peri + shape + perm, data = rock)
+rock.glm2 <- glm(rock)
+rock.glmf <- glm(form, data = rock)
+rock.glmf0<- glm(form0,data = rock)
+rock.glmf2<- glm(formula(rock.glm1), data = rock)
+## update() used to fail on the second
+(uglm0 <- update(rock.glm0, . ~ . -perm))
+ uglm1 <- update(rock.glm1, . ~ . -perm)
+ uglm2 <- update(rock.glm2, . ~ . -perm)# Error in eval(..) : object 'area' not found
+ uglmf <- update(rock.glmf, . ~ . -perm)
+ uglmf2<- update(rock.glmf2,. ~ . -perm)
+(c1 <- rock.glm1$call)
+ c2 <- rock.glm2$call
+stopifnot(exprs = { # the fitted models now have identical 'call':
+    identical(c1, c2) # TRUE!
+    all.equal.0(uglm1, uglm0)
+    all.equal15(summary(rock.glm1) -> srgl,
+                summary(rock.glm2))
+    all.equal(signif(coef(srgl)[,"t value"], 5), tolerance = 1e-5,
+              c(`(Intercept)` = -0.44252, peri = 11.156, shape = 1.0939, perm = 3.6542))
+    all.equal.0(rock.glm1, rock.glmf)
+    all.equal.0(rock.glmf, rock.glmf2)
+    all.equal.0( uglm1, uglm2)
+    all.equal.0( uglmf, uglm2)
+    all.equal.0( uglmf, uglmf2)
+    all.equal.0(uglm1$call, uglm2$call) # non identical environment(.$formula)
+    ##
+    all.equal.0( wls2(rock.glm1), wls2(rock.glm2) -> wu2)
+    all.equal.0( wls2(rock.glmf) -> wuf, wu2)
+    all.equal.0( wuf, wls2(rock.glmf0))
+    all.equal.0( wuf, wls2(rock.glmf2))
+})
+## AIC & logLik() --- PR#16008
+dropN <- function(llik) `attr<-`(llik, "nall", NULL)
+x <- 1:10; d10 <- data.frame(x=x, y = sin(x/3), weights = as.numeric(x > 1.5))
+gf10 <- glm(y ~ x, data = d10, weights = weights)
+fi10 <-  lm(y ~ x, data = d10, weights = weights)
+stopifnot({
+    nobs(gf10) == 9
+    all.equal.0(gf10$aic, AIC(gf10))
+    all.equal(logLik(gf10) -> lLg, dropN(logLik(fi10)), tolerance = 5e-15)# 1.1785e-15
+    all.equal15(lLg, #    __________________ was  -Inf
+                structure(-0.471028026733263, nobs = 9L, df = 3, class = "logLik"))
+})
 
 
 ### Local variables:

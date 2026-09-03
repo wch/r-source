@@ -1,7 +1,7 @@
 #  File src/library/stats/R/logLik.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 2001-2014 The R Core Team
+#  Copyright (C) 2001-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -63,8 +63,10 @@ logLik.glm <- function(object, ...)
     }
     else if(fam %in% c("gaussian", "Gamma", "inverse.gaussian")) p <- p + 1
     val <- p - object$aic / 2
-    ## Note: zero prior weights have NA working residuals.
-    attr(val, "nobs") <- sum(!is.na(object$residuals))
+    ## Note: cases with zero prior weight do not contribute (PR#16008),
+    ## and zero prior weights may give NA working residuals.
+    nona <- !is.na(object$residuals)
+    attr(val, "nobs") <- sum(if(is.null(pw <- object$prior.weights)) nona else nona & pw > 0)
     attr(val, "df") <- p
     class(val) <- "logLik"
     val

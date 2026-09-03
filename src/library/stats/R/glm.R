@@ -1,7 +1,7 @@
 #  File src/library/stats/R/glm.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2020 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -42,7 +42,8 @@ glm <- function(formula, family = gaussian, data, weights,
     }
 
     ## extract x, y, etc from the model formula and frame
-    if(missing(data)) data <- environment(formula)
+    ## NB: lm() *differs*, does not set `data`; we return data :
+    if(missD <- missing(data)) data <- environment(formula) # possibly NULL
     mf <- match.call(expand.dots = FALSE)
     m <- match(c("formula", "data", "subset", "weights", "na.action",
                  "etastart", "mustart", "offset"), names(mf), 0L)
@@ -113,10 +114,15 @@ glm <- function(formula, family = gaussian, data, weights,
                       mustart = fit$fitted.values,
                       weights = weights, offset = offset, family = family,
                       control = control, intercept = TRUE))
-        ## That fit might not have converged ....
+        ## That fit might not have converged . . .
         if(!fit2$converged)
             warning("fitting to calculate the null deviance did not converge -- increase 'maxit'?")
         fit$null.deviance <- fit2$deviance
+    }
+    if(length(f <- cal$formula) != 3L) { # PR#17463  and  PR#17476
+	if(missD) # glm(rock)
+	    cal$data <- f
+	cal$formula <- `attributes<-`(formula(mt), NULL) # no env
     }
     if(model) fit$model <- mf
     fit$na.action <- attr(mf, "na.action")
@@ -222,7 +228,7 @@ glm.fit <-
         boundary <- conv <- FALSE
 
         ##------------- THE Iteratively Reweighting L.S. iteration -----------
-        for (iter in 1L:control$maxit) {
+        for (iter in seq_len(control$maxit)) {
             good <- weights > 0
             varmu <- variance(mu)[good]
             if (anyNA(varmu))
@@ -233,7 +239,7 @@ glm.fit <-
             if (any(is.na(mu.eta.val[good])))
                 stop("NAs in d(mu)/d(eta)")
             ## drop observations for which w will be zero
-            good <- (weights > 0) & (mu.eta.val != 0)
+            good <- good & (mu.eta.val != 0)
 
             if (all(!good)) {
                 conv <- FALSE
@@ -372,9 +378,14 @@ glm.fit <-
     nulldf <- n.ok - as.integer(intercept)
     rank <- if(EMPTY) 0 else fit$rank
     resdf  <- n.ok - rank
-    ## calculate AIC
+    ## calculate AIC, omitting the cases with zero prior weight: they do
+    ## not contribute to the (log) likelihood, see PR#16008
     aic.model <-
-	aic(y, n, mu, weights, dev) + 2*rank
+	if(any(w0 <- weights == 0))
+	    aic(y[!w0], if(length(n) == nobs) n[!w0] else n,
+		mu[!w0], weights[!w0], dev) + 2*rank
+	else
+	    aic(y, n, mu, weights, dev) + 2*rank
 	##     ^^ is only initialize()d for "binomial" [yuck!]
     list(coefficients = coef, residuals = residuals, fitted.values = mu,
 	 effects = if(!EMPTY) fit$effects, R = if(!EMPTY) Rmat, rank = rank,
@@ -553,7 +564,7 @@ anova.glm <- function(object, ..., dispersion = NULL, test = NULL)
             test <- FALSE
         }
     }
-    
+
     if (!isFALSE(test)) {
         if(isTRUE(test == "F") && df.dispersion == Inf) {
             fname <- fam$family

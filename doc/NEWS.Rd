@@ -289,7 +289,9 @@
       \item \code{confint(<free1way>, parm)} returned confidence intervals for
       all parameters when \code{parm} requested a subset.
 
-      \item \code{summary(<free1way>)} renames p-values to \code{Pr(..)} and
+      \item \code{summary(<free1way>)} renames p-values to \code{Pr(..)}
+      and
+
       thus \code{printCoefmat} recognises them.
 
       \item \code{strptime(ch, "...\%OS<n>...")} now disregards contiguous
@@ -322,6 +324,11 @@
       no longer fail from processing \file{DESCRIPTION}-based Rd macros
       such as \verb{\packageTitle} when the current directory is not the
       source package's root directory.
+
+      \item \code{glm(.., wtol = <positive>)} treats very small weights as
+      zeros now, similarly to \code{lm()} via \code{glm.control()}; correct
+      AIC and logLik() for this case, fixing \PR{16008}, thanks to \I{Bill
+	Dunlap} and \I{Mauricio Vargas}.
     }
   }
 }

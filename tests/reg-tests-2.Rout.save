@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-08-19 r90430) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-09-02 r90470) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -5209,7 +5209,7 @@ x             0.1311     0.1397   0.938    0.379
 
     Null deviance: 9.2298  on 8  degrees of freedom
 Residual deviance: 8.1988  on 7  degrees of freedom
-AIC: Inf
+AIC: 30.702
 
 Number of Fisher Scoring iterations: 2
 
