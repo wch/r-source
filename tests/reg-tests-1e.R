@@ -3667,7 +3667,7 @@ for(nd in c(2:4, 33:37)) {
     stopifnot(identical(x, y), is.integer(d <- dim(x)), all.equal(d., d))
 }
 ## above creation of x & y failed for a couple of hours in R-devel
-## r90452 overflowed the computation of the product of dimeensions.
+## r90452 overflowed the computation of the product of dimensions.
 ## giving a negative answer on some platforms (x86_64, not macOS).
 
 
@@ -3688,8 +3688,8 @@ sys.load.image(tf, FALSE); rm(tf, save)
 
 ## aperm and
 m <- matrix(1:10, 2, 5, dimnames = list(X = paste0("x", 1:2), Y = paste0("y", 1:5)))
-a <- array(m, dim = c(2, 5, 1), dimnames = list(X = paste0("x", 1:2), Y = paste0("y", 1:5), Z = "z1"))
-
+a <- array(m, dim = c(2, 5, 1),
+           dimnames = list(X = paste0("x", 1:2), Y = paste0("y", 1:5), Z = "z1"))
 stopifnot(
     identical(aperm(m, c(2, 1)), t(m)),
     identical(aperm(m), t(m)),
@@ -3698,6 +3698,17 @@ stopifnot(
     identical(drop(aperm(a, c("Y", "X", "Z"))), aperm(m, c("Y", "X"))),
     identical(drop(aperm(a, c(1, 2, 3), resize = FALSE)), aperm(m, c(1, 2), resize = FALSE))
 )
+
+
+
+## ksmooth(.., x.points = <invalid>) -- PR#19153
+x <- 1:11; y <- (x - 5)^2
+L00 <- list(x = numeric(), y = numeric())
+stopifnot(identical(L00, ksmooth(x,y, x.points=NULL)),
+          identical(L00, ksmooth(x,y, x.points=rep(NA,999))))
+## did seg.fault, trying to access x.points[1] from C
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -382,6 +382,9 @@
       for Quartz built-in stroker breaking long paths). Thanks to
       \I{R Dev Day @ useR! 2026} contributors, notably
       \I{Tomek Gieorgijewski}, report in \PR{18680}.
+
+      \item \code{ksmooth(x,y, x.points=NULL)} now returns an empty (x,y)
+      pair instead of crashing \R, fixing \PR{19153}.
     }
   }
 }
