@@ -618,6 +618,15 @@ dnl AC_FC_LIBRARY_LDFLAGS() with LIBS temporarily set to empty.
 r_save_LIBS="${LIBS}"
 LIBS=
 AC_FC_LIBRARY_LDFLAGS
+
+dnl LLVM on macOS uses -lto_library <path> which breaks AC_FC_LIBRARY_LDFLAGS
+dnl because it thinks it is "to_library" linker flag - which it's not (PR19152)
+case "${host_os}" in
+  darwin*)
+    FCLIBS=`echo "$FCLIBS" | sed 's/-lto_library//g'`
+    ;;
+esac
+
 FLIBS=${FCLIBS}
 if test -z "${MAIN_LD}" ; then
   LIBS=
