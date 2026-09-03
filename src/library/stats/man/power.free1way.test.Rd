@@ -46,8 +46,12 @@ power.free1way.test(n = NULL,
   \item{delta}{true effects comparing each group to the
     control group.
 }
-  \item{offset}{a group-specific offset term, its length is recycled to
-    the number of groups if necessary.
+  \item{offset}{an offset term. If its length is less than the number of
+    groups, it is recycled to the number of groups and interpreted as a
+    group-specific offset. It its length is equal
+    to the number of simulated observations, it is interpreted as an
+    observation-specific offset allowing to generate data from more complex
+    linear transformation models.
 }
  \item{link}{a character defining a link function and thus the model and
     parameter interpretation. See \code{\link{free1way}}. 
