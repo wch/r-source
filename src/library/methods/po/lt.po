@@ -18,147 +18,117 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 2.4.1\n"
 
-#: class_support.c:29
 msgid "calling the C routine used as an initializer for 'externalptr' objects"
 msgstr "C programos iškvietimas naudojamas kaip inicializatorius 'externalptr' objektams"
 
-#: do_substitute_direct.c:41
 #, fuzzy
 msgid "invalid list for substitution"
 msgstr "neteisingas metodo posąrašis"
 
-#: methods_list_dispatch.c:126
 #, c-format
 msgid "unexpected type '%s' for condition message"
 msgstr "netikėtas sąlygos pranešimo tipas '%s'"
 
-#: methods_list_dispatch.c:129
 msgid "condition message must be length 1"
 msgstr "sąlygos pranešimas turi būti 1 ilgio"
 
-#: methods_list_dispatch.c:210
 msgid "could not find the skeleton calls for 'methods' (package detached?): expect very bad things to happen"
 msgstr "nerasti 'methods' (atskiro paketo?) struktūros kreipiniai: tikėtis blogiausių dalykų, kurie gali nutikti"
 
-#: methods_list_dispatch.c:278
 #, c-format
 msgid "no \"allMethods\" slot found in object of class \"%s\" used as methods list for function '%s'"
 msgstr "nenurodytas \"allMethods\" laukas objekte (klasės \"%s\" ), kuris naudojamas kaip metodų sąrašas funkcijai '%s'"
 
-#: methods_list_dispatch.c:406
 #, c-format
 msgid "S language method selection did not return normally when called from internal dispatch for function '%s'"
 msgstr "S kalbos metodo pasirinkimas negrįžta normaliai, kai iškviečiama iš vidinio perdavimo funkcijai '%s'"
 
-#: methods_list_dispatch.c:408
 msgid "Function name for method selection called internally"
 msgstr "Metodo pasirinkimo funkcijos pavadinimas iškviečiamas viduje"
 
-#: methods_list_dispatch.c:504
 #, fuzzy, c-format
 msgid "no generic function definition found for '%s'"
 msgstr "nėra funkcijos apibrėžties %s"
 
-#: methods_list_dispatch.c:505
 #, fuzzy, c-format
 msgid "no generic function definition found for '%s' in the supplied environment"
 msgstr "nėra funkcijos apibrėžties %s"
 
-#: methods_list_dispatch.c:540
 #, fuzzy, c-format
 msgid "invalid generic function object for method selection for function '%s': expected a function or a primitive, got an object of class \"%s\""
 msgstr "neteisinga metodo apibrėžtis: turėtų būti funkcija, gautas klasės %s objektas"
 
-#: methods_list_dispatch.c:555
 #, fuzzy, c-format
 msgid "no direct or inherited method for function '%s' for this call"
 msgstr "nepavyko rasti paveldėto metodo funkcijos %s prierašui %s"
 
-#: methods_list_dispatch.c:585 methods_list_dispatch.c:1165
 #, fuzzy
 msgid "invalid object (non-function) used as method"
 msgstr "neteisinga funkcijos argumento rodyklė"
 
-#: methods_list_dispatch.c:606
 #, c-format
 msgid "could not find symbol '%s' in frame of call"
 msgstr "simbolis '%s' nerastas kreipinyje"
 
-#: methods_list_dispatch.c:614
 #, fuzzy, c-format
 msgid "invalid symbol in checking for missing argument in method dispatch: expected a name, got an object of class \"%s\""
 msgstr "neteisingas objektas metodų lentelėje (%s), turėtų būti metodas, gautas klasės %s objektas"
 
-#: methods_list_dispatch.c:617
 msgid "use of NULL environment is defunct"
 msgstr "NULL aplinkos naudojimas yra nepilnas"
 
-#: methods_list_dispatch.c:621
 #, fuzzy, c-format
 msgid "invalid environment in checking for missing argument, '%s', in methods dispatch: got an object of class \"%s\""
 msgstr "neteisinga aplinka tikrinant trūkstamą argumentą '%s' metodo perdavime, gaunamas klasės \"%s\" objektas"
 
-#: methods_list_dispatch.c:644
 #, fuzzy, c-format
 msgid "error in evaluating the argument '%s' in selecting a method for function '%s': %s"
 msgstr "klaida vertinant 'primitive' sekantį metodą: %s"
 
-#: methods_list_dispatch.c:662
 #, c-format
 msgid "object of class \"%s\" used as methods list for function '%s' ( no 'argument' slot)"
 msgstr "klasės \"%s\" objektas naudojamas kaip metodų sąrašas funkcijai '%s' (nėra nurodytas 'argument' laukas)"
 
-#: methods_list_dispatch.c:673
 #, c-format
 msgid "(in selecting a method for function '%s') '...' and related variables cannot be used for methods dispatch"
 msgstr "(renkantis funkcijos '%s' metodą) '...' ir susiję kintamieji negali būti naudojami metodų perdavimui"
 
-#: methods_list_dispatch.c:676
 #, c-format
 msgid "(in selecting a method for function '%s') the 'environment' argument for dispatch must be an R environment; got an object of class \"%s\""
 msgstr "(renkantis funkcijos '%s' metodą) 'environment' perdavimo argumentas turi būti R aplinka; gaunamas klasės objektas \"%s\""
 
-#: methods_list_dispatch.c:707
 #, fuzzy, c-format
 msgid "no matching method for function '%s' (argument '%s', with class \"%s\")"
 msgstr "nėra metodo ar numatytojo parametro dėl as() pakeitimo %s su Class=\"%s\""
 
-#: methods_list_dispatch.c:714
 #, c-format
 msgid "recursive use of function '%s' in method selection, with no default method"
 msgstr "rekursinis funkcijos '%s' naudojimas metodo pasirinkime, nėra numatytojo metodo"
 
-#: methods_list_dispatch.c:739
 #, c-format
 msgid "error in evaluating a 'primitive' next method: %s"
 msgstr "klaida vertinant 'primitive' sekantį metodą: %s"
 
-#: methods_list_dispatch.c:895
 #, fuzzy, c-format
 msgid "'%s' must be a single string (got a character vector of length %d)"
 msgstr "vienos klasės vardas reikalingas %s laukui, gautas %d ilgio tekstinis vektorius"
 
-#: methods_list_dispatch.c:899
 #, c-format
 msgid "'%s' must be a non-empty string; got an empty string"
 msgstr "'%s' negali būti tuščia eilutė; gavo tuščią eilutę"
 
-#: methods_list_dispatch.c:903
 #, fuzzy, c-format
 msgid "'%s' must be a single string (got an object of class \"%s\")"
 msgstr "viena eilutė, gaunamas klasės %s objektas"
 
-#: methods_list_dispatch.c:988
 #, fuzzy
 msgid "class should be either a character-string name or a class definition"
 msgstr "'class1' turi būti klasės vardas arba klasės apibrėžimas"
 
-#: methods_list_dispatch.c:1074
 #, c-format
 msgid "failed to get the generic for the primitive \"%s\""
 msgstr "nepavyko gauti bendrinės funkcijos primityviai funkcijai \"%s\""
 
-#: methods_list_dispatch.c:1081
 #, fuzzy, c-format
 msgid "expected a generic function or a primitive for dispatch, got an object of class \"%s\""
 msgstr "argumentas %s turi būti bendrinė funkcija arba vieno simbolio eilutė, gaunamas klasės %s objektas"

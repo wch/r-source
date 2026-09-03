@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.11.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-04-25 10:48-0700\n"
 "PO-Revision-Date: 2023-09-01 11:37+0000\n"
 "Last-Translator: Caio Lente <lente@ime.usp.br>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -17,46 +17,34 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 4.16.4\n"
 
-#: tcltk.c:75
 msgid "parse error in R expression"
 msgstr "erro de análise na expressão R"
 
-#: tcltk.c:184 tcltk.c:262
 msgid "tcl error.\n"
 msgstr "erro tcl.\n"
 
-#: tcltk.c:213 tcltk.c:288 tcltk.c:305 tcltk.c:325 tcltk.c:345 tcltk.c:422
-#: tcltk.c:489 tcltk.c:545 tcltk.c:786
 msgid "invalid argument"
 msgstr "argumento inválido"
 
-
-#: tcltk.c:295
 msgid "no such variable"
 msgstr "variável não existente"
 
-#: tcltk.c:327 tcltk.c:347 tcltk.c:424 tcltk.c:491 tcltk.c:547
 msgid "invalid tclObj -- perhaps saved from another session?"
 msgstr "objeto tclObj inválido - talvez salvo em outra sessão?"
 
-#: tcltk.c:659
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr "lista de argumentos muito longa na função tcltk interna: 'callback_closure'"
 
-#: tcltk.c:692
 msgid "argument is not of correct type"
 msgstr "argumento não é do tipo correto"
 
-#: tcltk.c:744
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "sem variável DISPLAY então Tk não está disponível"
 
-#: tcltk_unix.c:113
 msgid "Tcl is not loaded"
 msgstr "Tcl não está carregado"
 
 # Handler ~ Gerenciador ?
-#: tcltk_unix.c:117
 msgid "Tcl is not last loaded handler"
 msgstr "Tcl não é o último gerenciador carregado"
 

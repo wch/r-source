@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-04-25 10:48-0700\n"
 "PO-Revision-Date: 2023-12-19 16:15+0000\n"
 "Last-Translator: Heather Turner <ht@heatherturner.net>\n"
 "Language-Team: none\n"
@@ -18,43 +18,32 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.16.4\n"
 
-#: tcltk.c:75
 msgid "parse error in R expression"
 msgstr "parse error in R expression"
 
-#: tcltk.c:184 tcltk.c:262
 msgid "tcl error.\n"
 msgstr "tcl error.\n"
 
-#: tcltk.c:213 tcltk.c:288 tcltk.c:305 tcltk.c:325 tcltk.c:345 tcltk.c:422
-#: tcltk.c:489 tcltk.c:545 tcltk.c:786
 msgid "invalid argument"
 msgstr "invalid argument"
 
-#: tcltk.c:295
 msgid "no such variable"
 msgstr "no such variable"
 
-#: tcltk.c:327 tcltk.c:347 tcltk.c:424 tcltk.c:491 tcltk.c:547
 msgid "invalid tclObj -- perhaps saved from another session?"
 msgstr "invalid tclObj -- perhaps saved from another session?"
 
-#: tcltk.c:659
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr "argument list is too long in tcltk internal function 'callback_closure'"
 
-#: tcltk.c:692
 msgid "argument is not of correct type"
 msgstr "argument is not of correct type"
 
-#: tcltk.c:744
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "no DISPLAY variable so Tk is not available"
 
-#: tcltk_unix.c:113
 msgid "Tcl is not loaded"
 msgstr "Tcl is not loaded"
 
-#: tcltk_unix.c:117
 msgid "Tcl is not last loaded handler"
 msgstr "Tcl is not last loaded handler"

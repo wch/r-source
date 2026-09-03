@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2023-10-14 06:55+0000\n"
 "Last-Translator: Joan Maspons <joanmaspons@gmail.com>\n"
 "Language-Team: none\n"
@@ -17,17 +17,14 @@ msgid "OOPS: something wrong with '.OldClassesPrototypes[[%d]]'"
 msgstr "Alguna cosa ha anat malament amb '.OldClassesPrototypes[[%d]]'"
 
 msgid "unnamed argument to initialize() for S3 class must have a class definition; %s does not"
-msgstr ""
-"l'argument sense nom per a initialize() per a la classe S3 ha de tenir una definició de "
-"classe; %s no ho fa"
+msgstr "l'argument sense nom per a initialize() per a la classe S3 ha de tenir una definició de classe; %s no ho fa"
 
 #, fuzzy
 msgid "unnamed argument must extend either the S3 class or the class of the data part; not true of class %s"
 msgstr "l'argument sense nom ha d'estendre la classe S3 o la classe de la part de dades; no és cert de la classe %s"
 
 msgid "class %s does not have an S3 data part, and so is of type \"S4\"; no S3 equivalent"
-msgstr ""
-"la classe %s no té una part de dades S3, i per tant és de tipus \"S4\"; no té equivalent S3"
+msgstr "la classe %s no té una part de dades S3, i per tant és de tipus \"S4\"; no té equivalent S3"
 
 msgid "class %s is VIRTUAL; not meaningful to create an S4 object from this class"
 msgstr "la classe %s és VIRTUAL; no té sentit crear un objecte S4 a partir d'aquesta classe"
@@ -1540,6 +1537,7 @@ msgstr "no es poden inserir (no s'han trobat en el codi font): %s"
 
 msgid "cannot insert methods for these functions (methods table not found in source): %s"
 msgstr "no s'han pogut inserir mètodes per a aquestes funcions (no s'ha trobat la taula de metadades en el codi font): %s"
+
 #, fuzzy
 msgid "Non-function objects are not currently inserted (not traceable): %s"
 msgstr "Actualment no s'insereixen objectes no funcionals (no es pot rastrejar): %s"

@@ -18,191 +18,149 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.1.1\n"
 
-#: Rmd5.c:57 Rsha256.c:70
 msgid "argument 'files' must be character"
 msgstr "l'argomento 'files' dev'essere di tipo character"
 
-#: Rmd5.c:73
 #, c-format
 msgid "md5 failed on file '%ls'"
 msgstr "md5 fallito sul file '%ls'"
 
-#: Rmd5.c:75
 #, c-format
 msgid "md5 failed on file '%s'"
 msgstr "md5 fallito sul file '%s'"
 
-#: Rsha256.c:86
 #, fuzzy, c-format
 msgid "sha256 failed on file '%ls'"
 msgstr "md5 fallito sul file '%ls'"
 
-#: Rsha256.c:88
 #, fuzzy, c-format
 msgid "sha256 failed on file '%s'"
 msgstr "md5 fallito sul file '%s'"
 
-#: getfmts.c:60
 #, c-format
 msgid "only %d arguments are allowed"
 msgstr "sono ammessi solo %d argomenti"
 
-#: getfmts.c:65
 msgid "'fmt' is not a character vector"
 msgstr "'fmt' non è un vettore di caratteri"
 
-#: getfmts.c:68
 msgid "'fmt' must be length 1"
 msgstr "'fmt' dev'essere di lunghezza 1"
 
-#: getfmts.c:74
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "La lunghezza di 'fmt' supera la lunghezza massima del formato %d"
 
-#: getfmts.c:95
 #, c-format
 msgid "unrecognised format specification '%s'"
 msgstr "specificazione formato '%s' non riconosciuto"
 
-#: getfmts.c:135
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "almeno un asterisco '*' è supportato in ogni specificazione di conversione"
 
-#: gramLatex.c:2874 gramRd.c:3990
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "non è possibile allocare un buffer stringhe long alla linea %d"
 
-#: gramLatex.c:3193 gramRd.c:4575 gramRd.c:4581
 #, c-format
 msgid "invalid '%s' value"
 msgstr "valore '%s' non valido"
 
-#: gramRd.c:2586 gramRd.c:2589
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr "markup errato (troppi spazi?) in %s:%d:%d"
 
-#: gramRd.c:3124
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr "Macro '%s' precedentemente definita."
 
-#: gramRd.c:3134
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr "Almeno 4 argomenti sono ammessi per le macro definite dall'utente."
 
-#: gramRd.c:3176
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr "Nessuna definizione macro per '%s'."
 
-#: gramRd.c:3239
 #, c-format
 msgid "Not enough arguments passed to user macro '%s'"
 msgstr "Gli argomenti passati alla macro utente '%s' non sono abbastanza"
 
-#: gramRd.c:3385 gramRd.c:3389
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr "newline dentro una stringa virgolettata in %s: %d"
 
-#: gramRd.c:3408
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr "non è possibile allocare il buffer per macro long in %d"
 
-#: gramRd.c:3438
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "macro annidate troppo profondamente: ricorsione infinita?"
 
-#: gramRd.c:3847
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "Non è possibile trovare la macro %s"
 
-#: gramRd.c:4051
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "Fine inattesa dell'input (nella %c stringa virgolettata aperta in %s:%d:%d)"
 
-#: gramRd.c:4557
 msgid "'parse_Rd' is not re-entrant"
 msgstr ""
 
-#: gramRd.c:4588
 msgid "cannot open the connection"
 msgstr "non è possibile aprire la connessione"
 
-#: gramRd.c:4595
 msgid "cannot read from this connection"
 msgstr "non è possibile leggere da questa connessione"
 
-#: gramRd.c:4607
 msgid "invalid Rd file"
 msgstr "file Rd non valido"
 
-#: gramRd.c:4627
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr "'deparseRd' supporta unicamente il deparsing di elementi carattere"
 
-#: gramRd.c:4630
 msgid "bad state"
 msgstr "stato errato"
 
-#: gramRd.c:4643
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "modalità testo errata %d in 'deparseRd'"
 
-#: http.c:31
 msgid "invalid bind address specification"
 msgstr "specificazione indirizzo bind non valida"
 
-#: http.c:36
 #, c-format
 msgid "Invalid port number %d: should be in 0:65535, typically above 1024"
 msgstr ""
 
-#: http.c:60
 msgid "allocation error in remove_dot_segments"
 msgstr ""
 
-#: http.c:150 pdscan.c:121
 msgid "non-character argument"
 msgstr "argomento non-character"
 
-#: install.c:95
 msgid "path too long"
 msgstr "percorso troppo lungo"
 
-#: install.c:120 install.c:139 install.c:141 install.c:143
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argomento '%s' non valido"
 
-#: install.c:177
 msgid "write error during file append"
 msgstr "errore di scrittura durante file append"
 
-#: pdscan.c:74
 msgid "too many items"
 msgstr "troppi elementi"
 
-#: signals.c:42
 msgid "pskill() is not supported on this platform"
 msgstr "pskill() non è supportata su questa piattaforma"
 
-#: signals.c:140
 msgid "psnice() is not supported on this platform"
 msgstr "psnice() non è supportata su questa piattaforma"
 
-#: text.c:69
 msgid "invalid argument type"
 msgstr "tipo argomento non valido"
 
-#: text.c:227 text.c:249
 msgid "out of memory"
 msgstr "memoria esausta"

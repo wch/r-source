@@ -18,182 +18,138 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 4.16.4\n"
 
-#: gpar.c:355
 msgid "graphical parameter 'fontfamily' has a maximum length of 200 bytes"
 msgstr ""
 
-#: gpar.c:644
 msgid "updateGContext must only be called after initGContext"
 msgstr ""
 
-#: grid.c:199
 msgid "Turning clipping on or off within a (clipping) path is no honoured"
 msgstr ""
 
-#: grid.c:241
 msgid "cannot clip to rotated viewport"
 msgstr "无法修剪至旋转了的視窗中"
 
-#: grid.c:456
 msgid "Clipping paths within a (clipping) path are not honoured"
 msgstr ""
 
-#: grid.c:475
 msgid "Masks within a (clipping) path are not honoured"
 msgstr ""
 
-#: grid.c:699 grid.c:877
 #, c-format
 msgid "Viewport '%s' was not found"
 msgstr ""
 
-#: grid.c:909 grid.c:914 grid.c:1035 grid.c:1040
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr "无法弹到最上层的視窗('grid'和'graphics'输出有混合？)"
 
-#: grid.c:1241
 msgid "attempt to plot on null device"
 msgstr "不能在无效装置上画图"
 
-#: grid.c:1710
 msgid "there is no layout defined"
 msgstr "需要设定布局"
 
-#: grid.c:1932
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "找不到多边形的边(零宽度或是零高度？)"
 
-#: grid.c:1941
 msgid "polygon edge not found"
 msgstr "找不到多边形的边"
 
-#: grid.c:2095
 msgid "require at least two points to draw arrow"
 msgstr "至少需要两点才能画一个箭头"
 
-#: grid.c:2466
 msgid "non-finite control point in Xspline"
 msgstr "Xspline里不能有无限值的控制点"
 
-#: grid.c:3436
 msgid "non-finite x or y in graphics path"
 msgstr "图形路径里x或y的值非限定"
 
-#: grid.c:3487
 msgid "Empty raster"
 msgstr "空栅格"
 
-#: grid.c:4038 grid.c:4094
 msgid "Coordinates for text pch not yet supported"
 msgstr ""
 
-#: grid.c:4099
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr "绘图字符'%d'在当前地区语言无效"
 
-#: grid.c:4920
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "未实现的 pch 值“%d”"
 
-#: grid.c:5079
 msgid "invalid plotting symbol"
 msgstr "绘图符号无效"
 
-#: grid.c:5198
 msgid "unable to clip to rotated rectangle"
 msgstr "无法修剪到旋转了的长方形上"
 
-#: layout.c:600
 msgid "invalid 'layout.pos.row'"
 msgstr "'layout.pos.row'的值无效"
 
-#: layout.c:604
 msgid "invalid 'layout.pos.col'"
 msgstr "'layout.pos.col'的值无效"
 
-#: matrix.c:50
 msgid "singular transformation matrix"
 msgstr "奇异转换矩阵"
 
-#: state.c:191
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "无法保留'grid'的状况。是不是因为你打开了太多的装置?"
 
-#: unit.c:65
 msgid "Cannot create unit scalar from 0-length unit vector"
 msgstr ""
 
-#: unit.c:799 unit.c:1308
 msgid "invalid unit or unit not yet implemented"
 msgstr "要么没有这种单位，要么这个单位目前没有被实现"
 
-#: unit.c:1261 unit.c:1365 unit.c:1396
 msgid "Viewport has zero dimension(s)"
 msgstr ""
 
-#: unit.c:1428 unit.c:1443 unit.c:1458 unit.c:1473
 msgid "Unsupported unit conversion"
 msgstr ""
 
-#: unit.c:1565
 msgid "Invalid unit"
 msgstr "单位无效"
 
-#: unit.c:1580
 msgid "'units' must be character"
 msgstr "'units'必需是字符"
 
-#: unit.c:1583
 msgid "'units' must be of length > 0"
 msgstr "'units'的长度必需大于零"
 
-#: unit.c:1594
 msgid "data must be either NULL, have length 1, or match the length of the final unit vector"
 msgstr ""
 
-#: unit.c:1606
 msgid "no string supplied for 'strwidth/height' unit"
 msgstr ""
 
-#: unit.c:1610
 msgid "no 'grob' supplied for 'grobwidth/height' unit"
 msgstr ""
 
-#: unit.c:1637
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr ""
 
-#: unit.c:1642
 msgid "non-NULL value supplied for plain unit"
 msgstr ""
 
-#: unit.c:1695 unit.c:1729 unit.c:1778
 msgid "old version of unit class is no longer allowed"
 msgstr ""
 
-#: unit.c:1701
 msgid "object is not coercible to a unit"
 msgstr ""
 
-#: unit.c:1727
 msgid "object is not a unit"
 msgstr ""
 
-#: unit.c:1859
 msgid "units can only be multiplied with numerics and integers"
 msgstr ""
 
-#: util.c:216
 msgid "Unable to calculate text width/height (using zero)"
 msgstr ""
 
-#: viewport.c:57
 msgid "Mask is not logical value ('none' or 'inherit')"
 msgstr ""
 
-#: viewport.c:331
 msgid "non-finite location and/or size for viewport"
 msgstr "視窗的位置或大小不能是无限的"
 

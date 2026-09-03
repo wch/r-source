@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2018-03-29 07:06\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -22,9 +22,7 @@ msgstr "評価環境が適切ではありません"
 
 #, fuzzy
 msgid "non-namespace found within namespace environments"
-msgstr ""
-"'ns' はネームスペースか、あるいは環境をインポートしたネームスペースでなけれ"
-"ばなりません"
+msgstr "'ns' はネームスペースか、あるいは環境をインポートしたネームスペースでなければなりません"
 
 msgid "namespace found within global environments"
 msgstr ""
@@ -133,9 +131,7 @@ msgid_plural "local assignments to syntactic functions: "
 msgstr[0] "シンタックス関数へのローカル付値です: "
 
 #~ msgid "'ns' must be a namespace or a namespace imports environment"
-#~ msgstr ""
-#~ " 'ns' はネームスペースか、あるいは環境をインポートしたネームスペースでなけ"
-#~ "ればなりません "
+#~ msgstr " 'ns' はネームスペースか、あるいは環境をインポートしたネームスペースでなければなりません "
 
 #, fuzzy
 #~ msgid "is not a registered math1 function"

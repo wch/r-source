@@ -17,182 +17,138 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 
-#: gpar.c:355
 msgid "graphical parameter 'fontfamily' has a maximum length of 200 bytes"
 msgstr ""
 
-#: gpar.c:644
 msgid "updateGContext must only be called after initGContext"
 msgstr "updateGContext kann nur nach initGContext aufgerufen werden"
 
-#: grid.c:199
 msgid "Turning clipping on or off within a (clipping) path is no honoured"
 msgstr "Clipping ein- oder auszuschalten innerhalb eines (Clipping)-Pfades wird nicht beachtet"
 
-#: grid.c:241
 msgid "cannot clip to rotated viewport"
 msgstr "kann rotierten Viewport nicht beschneiden"
 
-#: grid.c:456
 msgid "Clipping paths within a (clipping) path are not honoured"
 msgstr "Clipping-Pfade innerhalb eines (Clipping)-Pfades werden nicht beachtet"
 
-#: grid.c:475
 msgid "Masks within a (clipping) path are not honoured"
 msgstr "Masken innerhalb eines (Clipping)-Pfades werden nicht beachtet"
 
-#: grid.c:699 grid.c:877
 #, c-format
 msgid "Viewport '%s' was not found"
 msgstr "Viewport '%s' nicht gefunden"
 
-#: grid.c:909 grid.c:914 grid.c:1035 grid.c:1040
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr "kann den obersten viewport nicht vom Stack werfen ('grid' und 'graphics' Ausgaben gemischt?)"
 
-#: grid.c:1241
 msgid "attempt to plot on null device"
 msgstr "Versuch in das Null-Device zu zeichnen"
 
-#: grid.c:1710
 msgid "there is no layout defined"
 msgstr "kein Layout definiert"
 
-#: grid.c:1932
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "Polygonkante nicht gefunden (Breite oder Länge 0?)"
 
-#: grid.c:1941
 msgid "polygon edge not found"
 msgstr "Polygonkante nicht gefunden"
 
-#: grid.c:2095
 msgid "require at least two points to draw arrow"
 msgstr "mindestens zwei Punkte nötig, um einen Pfeil zu zeichnen"
 
-#: grid.c:2466
 msgid "non-finite control point in Xspline"
 msgstr "nicht-endlicher Kontrollpunkt in Xspline"
 
-#: grid.c:3436
 msgid "non-finite x or y in graphics path"
 msgstr "unendliches x oder y im Grafikpfad"
 
-#: grid.c:3487
 msgid "Empty raster"
 msgstr "Leeres Raster"
 
-#: grid.c:4038 grid.c:4094
 msgid "Coordinates for text pch not yet supported"
 msgstr "Koordinaten für textliche pch noch nicht unterstützt"
 
-#: grid.c:4099
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr "pch Wert '%d' ist in dieser Lokalisation ungültig"
 
-#: grid.c:4920
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "nicht implementierter Wert für pch '%d'"
 
-#: grid.c:5079
 msgid "invalid plotting symbol"
 msgstr "unzulässiges Plotsymbol"
 
-#: grid.c:5198
 msgid "unable to clip to rotated rectangle"
 msgstr "kann nicht auf das rotierte Rechteck zurechtschneiden"
 
-#: layout.c:600
 msgid "invalid 'layout.pos.row'"
 msgstr "unzulässige 'layout.pos.row'"
 
-#: layout.c:604
 msgid "invalid 'layout.pos.col'"
 msgstr "unzulässige 'layout.pos.col'"
 
-#: matrix.c:50
 msgid "singular transformation matrix"
 msgstr "singuläre Transformationsmatrix"
 
-#: state.c:191
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "kann den Status von 'grid' nicht speichern. Zu viele geöffnete Geräte?"
 
-#: unit.c:65
 msgid "Cannot create unit scalar from 0-length unit vector"
 msgstr "Kann aus einem unit Vektor der Länge 0 keine unit Skalar erzeugen"
 
-#: unit.c:799 unit.c:1308
 msgid "invalid unit or unit not yet implemented"
 msgstr "unzulässige Einheit oder Einheit noch nicht implementiert"
 
-#: unit.c:1261 unit.c:1365 unit.c:1396
 msgid "Viewport has zero dimension(s)"
 msgstr "Viewport hat keine Dimension(en)"
 
-#: unit.c:1428 unit.c:1443 unit.c:1458 unit.c:1473
 msgid "Unsupported unit conversion"
 msgstr "Nichtunterstützte Einheitenumwandlung"
 
-#: unit.c:1565
 msgid "Invalid unit"
 msgstr "Ungültige Einheit"
 
-#: unit.c:1580
 msgid "'units' must be character"
 msgstr "'units' müssen Zeichenketten sein"
 
-#: unit.c:1583
 msgid "'units' must be of length > 0"
 msgstr "'units' müssen positive Länge haben"
 
-#: unit.c:1594
 msgid "data must be either NULL, have length 1, or match the length of the final unit vector"
 msgstr "data muss entweder NULL sein, Länge 1 haben oder die Länge des finalen Einheiten-Vektors"
 
-#: unit.c:1606
 msgid "no string supplied for 'strwidth/height' unit"
 msgstr "keine Zeichenkette für die 'strwidth/height' Einheit angegeben"
 
-#: unit.c:1610
 msgid "no 'grob' supplied for 'grobwidth/height' unit"
 msgstr "kein 'grob' angegeben für die 'grobwidth/height' Einheit"
 
-#: unit.c:1637
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr "'gPath' muss Tiefe 1 in 'grobwidth/height' Einheiten haben"
 
-#: unit.c:1642
 msgid "non-NULL value supplied for plain unit"
 msgstr "nicht-NULL Wert angegeben für eine reine Einheit"
 
-#: unit.c:1695 unit.c:1729 unit.c:1778
 msgid "old version of unit class is no longer allowed"
 msgstr "alte Version der Einheitenklasse ist nicht länger erlaubt"
 
-#: unit.c:1701
 msgid "object is not coercible to a unit"
 msgstr "Objekt kann nicht in Einheit verwandelt werden"
 
-#: unit.c:1727
 msgid "object is not a unit"
 msgstr "Objekt ist keine Einheit"
 
-#: unit.c:1859
 msgid "units can only be multiplied with numerics and integers"
 msgstr "Einheiten können nur mit numerischen oder integer Werten multipliziert werden"
 
-#: util.c:216
 msgid "Unable to calculate text width/height (using zero)"
 msgstr "Kann Texthöhe/-breite nicht berechnen (nutze Null)"
 
-#: viewport.c:57
 msgid "Mask is not logical value ('none' or 'inherit')"
 msgstr "Maske ist kein logischer Wert ('none' oder 'inherit')"
 
-#: viewport.c:331
 msgid "non-finite location and/or size for viewport"
 msgstr "nicht-endlicher Ort oder/und Größe des Viewports"
 

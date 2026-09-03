@@ -19,507 +19,392 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 4.16.4\n"
 
-#: axis_scales.c:37 axis_scales.c:38 axis_scales.c:50
 #, c-format
 msgid "'%s' must be numeric of length %d"
 msgstr "'%s'는 반드시 수치형이어야 하며, 길이가 %d이어야 합니다"
 
-#: clippath.c:36
 msgid "Clipping path ignored (device is appending path)"
 msgstr ""
 
-#: colors.c:69
 #, c-format
 msgid "color intensity %s, not in [0,1]"
 msgstr "색의 강도는 [0,1] 내에 있어야 하는데 %s를 가집니다."
 
-#: colors.c:71
 #, c-format
 msgid "color intensity %g, not in [0,1]"
 msgstr "색의 강도는 [0,1] 내에 있어야 하는데 %g를 가집니다."
 
-#: colors.c:78
 #, c-format
 msgid "color intensity %s, not in 0:255"
 msgstr "색의 강도는 0:255 내에 있어야 하는데 %s를 가집니다."
 
-#: colors.c:80
 #, c-format
 msgid "color intensity %d, not in 0:255"
 msgstr "색의 강도는 0:255 내에 있어야 하는데 %d를 가집니다."
 
-#: colors.c:87
 #, c-format
 msgid "alpha level %s, not in [0,1]"
 msgstr "알파 수준은 [0,1] 내에 있어야 하는데 %s를 가집니다."
 
-#: colors.c:89
 #, c-format
 msgid "alpha level %g, not in [0,1]"
 msgstr "알파레벨이 [0,1] 내에 있어야 하는데 %g를 가집니다."
 
-#: colors.c:96
 #, c-format
 msgid "alpha level %s, not in 0:255"
 msgstr "알파레벨 0:255 내에 있어야 하는데 %s를 가집니다."
 
-#: colors.c:98
 #, c-format
 msgid "alpha level %d, not in 0:255"
 msgstr "알파레벨 0:255 내에 있어야 하는데 %d를 가집니다."
 
-#: colors.c:113
 msgid "inputs must be finite"
 msgstr ""
 
-#: colors.c:128
 msgid "bad hsv to rgb color conversion"
 msgstr "hsv에서 rgb로의 색상전환이 잘못되었습니다."
 
-#: colors.c:220 colors.c:234
 msgid "invalid hsv color"
 msgstr "유효하지 않은 hsv 색입니다."
 
-#: colors.c:346 colors.c:366
 msgid "invalid hcl color"
 msgstr "유효하지 않은 hcl 색입니다."
 
-#: colors.c:398
 msgid "invalid value of 'maxColorValue'"
 msgstr "'maxColorValue'의 값이 올바르지 않습니다"
 
-#: colors.c:426
 msgid "invalid 'names' vector"
 msgstr "유효하지 않은 'names' 벡터입니다"
 
-#: colors.c:491 colors.c:500
 msgid "invalid gray level, must be in [0,1]."
 msgstr "명암수준은 반드시 [0,1]내에 있어야 합니다"
 
-#: colors.c:556 cairo/cairoBM.c:625
 #, c-format
 msgid "invalid '%s' value"
 msgstr "유효하지 않은 '%s' 값입니다"
 
-#: colors.c:1343
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "'color' 또는 'lty'에 유효하지 않은 16진수가 있습니다"
 
-#: colors.c:1353 colors.c:1371
 msgid "invalid RGB specification"
 msgstr "유효하지 않은 RGB 지정입니다"
 
-#: colors.c:1408
 #, c-format
 msgid "invalid color name '%s'"
 msgstr "유효하지 않은 색상명 '%s'입니다"
 
-#: colors.c:1458 colors.c:1467
 #, c-format
 msgid "invalid color specification \"%s\""
 msgstr "유효하지 않은 색상지정 \"%s\"입니다"
 
-#: colors.c:1495
 msgid "supplied color is neither numeric nor character"
 msgstr "제공된 색상은 숫자도 아니고 문자도 아닙니다"
 
-#: colors.c:1499
 #, c-format
 msgid "numerical color values must be >= 0, found %d"
 msgstr "색상을 정하는 숫자값은 반드시 0보다 크거나 같아야 하며 %d를 찾았습니다"
 
-#: colors.c:1510
 msgid "invalid argument type"
 msgstr "유효하지 않은 인자 유형입니다"
 
-#: colors.c:1521
 msgid "unknown palette (need >= 2 colors)"
 msgstr "알수없는 파렛트입니다 (2개 이상의 색상이 필요합니다)"
 
-#: colors.c:1525 colors.c:1547
 #, c-format
 msgid "maximum number of colors is %d"
 msgstr "사용할 수 있는 색상의 최대개수는 %d입니다"
 
-#: devPS.c:591
 #, c-format
 msgid "afm file '%s' could not be opened"
 msgstr "afm 파일 '%s'는 열 수 없습니다"
 
-#: devPS.c:659
 msgid "unknown AFM entity encountered"
 msgstr ""
 
-#: devPS.c:774 devPS.c:777 devPS.c:4770 devPS.c:9363 devPicTeX.c:477
-#: devPicTeX.c:479
 #, c-format
 msgid "invalid string in '%s'"
 msgstr "'%s'내에 유효하지 않은 문자열이 있습니다"
 
-#: devPS.c:811
 #, fuzzy, c-format
 msgid "font width unknown for character 0x%02x in encoding %s"
 msgstr "문자 0x%x에 대한 폰트너비를 알 수 없습니다"
 
-#: devPS.c:871
 #, fuzzy, c-format
 msgid "font metrics unknown for Unicode character U+%04X"
 msgstr "유니코드 문자 U+%04x에 대한 폰트메트릭을 알 수 없습니다"
 
-#: devPS.c:882
 #, c-format
 msgid "unknown encoding '%s' in 'PostScriptMetricInfo'"
 msgstr "'PostScriptMetricInfo'에 알 수 없는 인코딩 '%s'입니다"
 
-#: devPS.c:899
 #, c-format
 msgid "Unicode character %lc (U+%04X) cannot be converted"
 msgstr ""
 
-#: devPS.c:918 devPS.c:972
 #, fuzzy, c-format
 msgid "font metrics unknown for character 0x%02x in encoding %s"
 msgstr "문자 0x%x에 대한 폰트메트릭을 알 수 없습니다"
 
-#: devPS.c:987
 #, fuzzy, c-format
 msgid "invalid character (%04X) sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
 msgstr "단일바이트 로케일에 있는 'PostScriptCIDMetricInfo'에 보내진 유효하지 않은 문자 (%04x)입니다"
 
-#: devPS.c:995
 msgid "invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
 msgstr "단일바이트 로케일에 있는 'PostScriptCIDMetricInfo'에 보내진 유효하지 않은 문자입니다"
 
-#: devPS.c:1107
 msgid "failed to allocate CID font info"
 msgstr "CID 폰트정보를 할당하는데 실패했습니다"
 
-#: devPS.c:1123
 msgid "failed to allocate Type 1 font info"
 msgstr "Type 1 폰트정보를 할당하는데 실패했습니다"
 
-#: devPS.c:1143
 msgid "failed to allocate encoding info"
 msgstr "인코딩 정보를 할당하는데 실패했습니다"
 
-#: devPS.c:1161
 msgid "failed to allocate CID font family"
 msgstr "CID 폰트페일리를 할당하는데 실패했습니다"
 
-#: devPS.c:1174
 msgid "failed to allocate Type 1 font family"
 msgstr "Type 1 폰트페밀리를 할당하는데 실패했습니다"
 
-#: devPS.c:1213 devPS.c:1224
 msgid "failed to allocate font list"
 msgstr "폰트 리스트를 할당하는데 실패했습니다"
 
-#: devPS.c:1275
 msgid "failed to allocated encoding list"
 msgstr "인코딩 리스트를 할당하는데 실패했습니다"
 
-#: devPS.c:1424
 msgid "truncated string which was too long for copy"
 msgstr "복사하기에 너무 긴 문자열을 잘라내었습니다"
 
-#: devPS.c:1464
 #, c-format
 msgid "failed to load encoding file '%s'"
 msgstr "인코딩 파일 '%s'을 로드하는데 실패했습니다"
 
-#: devPS.c:1563 devPS.c:1597
 msgid "invalid font name or more than one font name"
 msgstr "올바른 폰트명이 아니거나 하나 이상의 폰트명을 가집니다"
 
-#: devPS.c:1722 devPS.c:1757
 #, c-format
 msgid "font family '%s' not found in PostScript font database"
 msgstr "PostScript 폰트 데이터베이스에서 찾을 수 없는 폰트페밀리 '%s'입니다"
 
-#: devPS.c:1841 devPS.c:1923 devPS.c:1950
 #, c-format
 msgid "font encoding for family '%s' not found in font database"
 msgstr "페밀리 '%s'에 대한 폰트 인코딩을 폰트 데이터베이스에서 찾을 수 없습니다"
 
-#: devPS.c:1868 devPS.c:1895
 #, c-format
 msgid "font CMap for family '%s' not found in font database"
 msgstr "페밀리 '%s'에 대한 폰트 CMap을 폰트 데이터베이스에서 찾을 수 없습니다"
 
-#: devPS.c:2089 devPS.c:2169 devPS.c:2237
 #, c-format
 msgid "cannot load afm file '%s'"
 msgstr "afm 파일 '%s'를 로드할 수 없습니다"
 
-#: devPS.c:2525
 msgid "corrupt loaded encodings;  encoding not recorded"
 msgstr "로드된 인코딩이 손상되어 기록된 인코딩이 없습니다"
 
-#: devPS.c:2536
 msgid "failed to record device encoding"
 msgstr "장치 인코딩을 기록하는데 실패했습니다"
 
-#: devPS.c:2711
 msgid "object '.ps.prolog' is not a character vector"
 msgstr "객체 '.ps.prolog'는 문자형 벡터가 아닙니다"
 
-#: devPS.c:2790 devPS.c:7484 devWindows.c:810
 msgid "invalid line end"
 msgstr "유효하지 않은 라인의 끝입니다"
 
-#: devPS.c:2809 devPS.c:7504 devWindows.c:823
 msgid "invalid line join"
 msgstr "유효하지 않은 라인의 결합입니다"
 
-#: devPS.c:2817
 msgid "invalid line mitre"
 msgstr ""
 
-#: devPS.c:3022 devPS.c:3959 devPS.c:4408 devPS.c:4435 devPS.c:9167
-#: devPS.c:9238
 #, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr "font 1에 의해서 대체된 유효하지 않은 폰트 %d를 사용하려고 시도합니다"
 
-#: devPS.c:3260 devPS.c:6887
 #, c-format
 msgid "filename too long in %s()"
 msgstr "%s()에 있는 파일명이 너무 깁니다"
 
-#: devPS.c:3266 devPS.c:6893
 #, c-format
 msgid "memory allocation problem in %s()"
 msgstr "%s()에서 메모리 할당 문제가 발생했습니다"
 
-#: devPS.c:3284 devPS.c:6960
 #, c-format
 msgid "encoding path is too long in %s()"
 msgstr "%s()에 인코딩 패스가 너무 깁니다"
 
-#: devPS.c:3298
 #, c-format
 msgid "failed to load encoding file in %s()"
 msgstr "%s()에 인코딩 파일을 로드하는데 실패했습니다"
 
-#: devPS.c:3343 devPS.c:3406 devPS.c:7019 devPS.c:7075 devPS.c:8966
 msgid "invalid font type"
 msgstr "유효하지 않은 폰트타입입니다"
 
-#: devPS.c:3367
 msgid "failed to initialise default PostScript font"
 msgstr "기본 PostScript 폰트를 초기화하는데 실패했습니다"
 
-#: devPS.c:3433
 msgid "failed to initialise additional PostScript fonts"
 msgstr "추가적인 PostScript 폰트들을 초기화하는데 실패했습니다"
 
-#: devPS.c:3449
 msgid "invalid foreground/background color (postscript)"
 msgstr "유효하지 않은 전방/후방색입니다 (postscript)"
 
-#: devPS.c:3454
 msgid "'command' is too long"
 msgstr "'command'가 너무 깁니다"
 
-#: devPS.c:3459
 msgid "'postscript(print.it=TRUE)' used with an empty 'print' command"
 msgstr "비어있는 'print' 명령어와 함께 사용된 'postscript(print.it=TRUE)'입니다"
 
-#: devPS.c:3511
 #, c-format
 msgid "invalid page type '%s' (postscript)"
 msgstr "유효하지 않은 페이지 타입 '%s' (postscript)"
 
-#: devPS.c:3640 devWindows.c:2363
 msgid "semi-transparency is not supported on this device: reported only once per page"
 msgstr "이 장치에서는 반투명 기능이 지원되지 않습니다: 페이당 오로지 한번만 보고됩니다"
 
-#: devPS.c:3750 devPS.c:3761
 #, fuzzy, c-format
 msgid "cannot open 'postscript' pipe to '%s' (reason: %s)"
 msgstr "'%s'에 파이프하는 'postscript'를 열 수 없습니다"
 
-#: devPS.c:3772 devPS.c:8227 qdPDF.c:102
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "파일 '%s'를 열 수 없습니다"
 
-#: devPS.c:3900 devPS.c:3915
 #, c-format
 msgid ""
 "error from postscript() in running:\n"
 "    %s"
 msgstr ""
 
-#: devPS.c:3947
 #, c-format
 msgid "CID family '%s' not included in postscript() device"
 msgstr "postscript() 장치에 포함되어 있지 않은 CID 페밀리 '%s'입니다"
 
-#: devPS.c:3965 devPS.c:3976 devPS.c:4415 devPS.c:4445 devPS.c:4710
 #, c-format
 msgid "family '%s' not included in postscript() device"
 msgstr "postscript() 장치에 포함되어 있지 않은 페밀리 '%s'입니다"
 
-#: devPS.c:4521
 #, c-format
 msgid "unknown encoding '%s' in 'mbcsToSbcs'"
 msgstr "'mbcsToSbcs'에 알 수 없는 인코딩 '%s'가 있습니다"
 
-#: devPS.c:4647 devPS.c:4654
 #, fuzzy, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': for <%02x>"
 msgstr "'mbcsToSbcs'에 알 수 없는 인코딩 '%s'가 있습니다"
 
-#: devPS.c:4649 devPS.c:4656
 #, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"
 msgstr ""
 
-#: devPS.c:4738
 #, c-format
 msgid "failed open converter to encoding '%s'"
 msgstr "인코딩 '%s'로 전환해주는 장치를 여는데 실패했습니다"
 
-#: devPS.c:4756 devPS.c:9338
 #, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr "인코딩 '%s'로 텍스트컨버전에서 실패했습니다"
 
-#: devPS.c:5142
 #, fuzzy
 msgid "Failed to allocate PDF definition string"
 msgstr "폰트 리스트를 할당하는데 실패했습니다"
 
-#: devPS.c:5164
 msgid "failed to increase definition string (shut down PDF device)"
 msgstr ""
 
-#: devPS.c:5214
 #, fuzzy
 msgid "failed to increase 'maxDefns'"
 msgstr "'maxRaster'를 증가시키는데 실패했습니다"
 
-#: devPS.c:5846
 msgid "Drawing not appended to path (contains text)"
 msgstr ""
 
-#: devPS.c:6075
 msgid "Compositing operator has no corresponding blend mode; defaulting to Normal"
 msgstr ""
 
-#: devPS.c:6348
 msgid "Failed to write PDF clipping path"
 msgstr ""
 
-#: devPS.c:6373
 msgid "Failed to write PDF stroke"
 msgstr ""
 
-#: devPS.c:6394
 msgid "Failed to write PDF fill"
 msgstr ""
 
-#: devPS.c:6415
 msgid "Failed to write PDF fillStroke"
 msgstr ""
 
-#: devPS.c:6461
 msgid "Glyph ID larger than 0xFFFF; output will be incorrect"
 msgstr ""
 
-#: devPS.c:6484
 msgid "invalid 'alpha' value in PDF"
 msgstr "PDF에 유효하지 않은 'alpha'값입니다"
 
-#: devPS.c:6598 devPS.c:6601
 msgid "failed to increase 'maxRaster'"
 msgstr "'maxRaster'를 증가시키는데 실패했습니다"
 
-#: devPS.c:6613
 msgid "unable to allocate raster image"
 msgstr "래스터 이미지를 할당할 수 없습니다"
 
-#: devPS.c:6710 devPS.c:6754 devPS.c:8288
 msgid "write failed"
 msgstr "쓰기에 실패했습니다"
 
-#: devPS.c:6814
 msgid "corrupt loaded encodings;  font not added"
 msgstr "로드된 인코딩이 손상되어 추가되지 않은 폰트입니다"
 
-#: devPS.c:6824
 msgid "failed to record device encoding; font not added"
 msgstr ""
 
-#: devPS.c:6946
 msgid "increasing the PDF version to 1.2"
 msgstr "PDF 버전을 1.2로 올립니다"
 
-#: devPS.c:6976
 msgid "failed to load default encoding"
 msgstr "기본 인코딩을 로드하는데 실패했습니다"
 
-#: devPS.c:7043
 msgid "failed to initialise default PDF font"
 msgstr "기본 PDF 폰트를 초기화하는데 실패했습니다"
 
-#: devPS.c:7098
 msgid "failed to initialise additional PDF fonts"
 msgstr "추가적인 PDF 폰트를 초기화하는데 실패했습니다"
 
-#: devPS.c:7111
 msgid "failed to allocate rasters"
 msgstr "래스터를 할당하는데 실패했습니다"
 
-#: devPS.c:7118
 msgid "failed to allocate masks"
 msgstr "매스크를 할당하는데 실패했습니다"
 
-#: devPS.c:7128
 #, fuzzy
 msgid "failed to allocate definitions"
 msgstr "폰트 리스트를 할당하는데 실패했습니다"
 
-#: devPS.c:7202
 #, c-format
 msgid "invalid paper type '%s' (pdf)"
 msgstr "유효하지 않은 페이퍼 종류 '%s' (pdf)입니다"
 
-#: devPS.c:7226
 msgid "invalid foreground/background color (pdf)"
 msgstr "유효하지 않은 전방/배경색 (pdf)입니다"
 
-#: devPS.c:7333
 msgid "increasing the PDF version to 1.4"
 msgstr "PDF 버전을 1.4로 올립니다"
 
-#: devPS.c:7377 devPS.c:7425
 msgid "unknown 'colormodel', using 'srgb'"
 msgstr "알 수 없는 'colormodel'이므로 'srgb'를 사용합니다"
 
-#: devPS.c:7649
 msgid "failed to load sRGB colorspace file"
 msgstr "sRGB 색공간 파일을 로드하는데 실패했습니다"
 
-#: devPS.c:7988
 msgid "corrupt encodings in PDF device"
 msgstr ""
 
-#: devPS.c:8069
 msgid "increasing the PDF version to 1.3"
 msgstr "PDF 버전을 1.3으로 올립니다"
 
-#: devPS.c:8210
 #, fuzzy, c-format
 msgid "cannot open 'pdf' pipe to '%s' (reason: %s)"
 msgstr "'%s'에 파이프 하는 'pdf'를 열 수 없습니다"
 
-#: devPS.c:8217
 msgid "file = \"|cmd\" implies 'onefile = TRUE'"
 msgstr "file = \"|cmd\"은 'onefile = TRUE'을 의미합니다"
 
-#: devPS.c:8361
 #, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -528,438 +413,330 @@ msgstr ""
 "'pdf' 파링 인자 '%s'를 열 수 없습니다\n"
 "  PDF 장치를 닫아주세요"
 
-#: devPS.c:8382
 #, c-format
 msgid "Cannot open temporary file '%s' for compression (reason: %s); compression has been turned off for this device"
 msgstr ""
 
-#: devPS.c:8991 devPS.c:9495 devPS.c:9542
 msgid "failed to find or load PDF font"
 msgstr "PDF 폰트를 찾거나 로드하는데 실패했습니다"
 
-#: devPS.c:9174 devPS.c:9233
 msgid "Text not added to path containing other drawing"
 msgstr ""
 
-#: devPS.c:9283 devPS.c:9450
 msgid "failed to find or load PDF CID font"
 msgstr "PDF CID 폰트를 찾거나 로드하는데 실패했습니다"
 
-#: devPS.c:9949 devPicTeX.c:763
 #, fuzzy, c-format
 msgid "invalid 'file' parameter in %s"
 msgstr "%s에 유효하지 않은 'family' 파라미터가 있습니다"
 
-#: devPS.c:9958 devPS.c:9962 devPS.c:10060 devPS.c:10064
 #, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "%s에 유효하지 않은 'family' 파라미터가 있습니다"
 
-#: devPS.c:9980 devPS.c:10076
 #, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "%s에 유효하지 않은 'fonts' 파라미터가 있습니다"
 
-#: devPS.c:9986 devPS.c:10086 devPS.c:10089 devPS.c:10092 devPS.c:10095
-#: devWindows.c:3776 devWindows.c:3780 devWindows.c:3788 devWindows.c:3799
-#: devWindows.c:3805 devWindows.c:3812 devWindows.c:3819 devWindows.c:3823
 #, c-format
 msgid "invalid value of '%s'"
 msgstr "유효하지 않은 '%s'의 값입니다"
 
-#: devPS.c:9999 devPS.c:10110 devPicTeX.c:776 devPicTeX.c:781 devWindows.c:3864
 #, c-format
 msgid "unable to start %s() device"
 msgstr "%s() 장치를 시작할 수 없습니다"
 
-#: devQuartz.c:477
 msgid "Quartz gradients exhausted (failed to increase maxPatterns)"
 msgstr ""
 
-#: devQuartz.c:483
 msgid "Quartz patterns exhausted (failed to increase maxPatterns)"
 msgstr ""
 
-#: devQuartz.c:524 cairo/cairoFns.c:350
 msgid "Attempt to release non-existent pattern"
 msgstr ""
 
-#: devQuartz.c:561
 msgid "Quartz patterns exhausted"
 msgstr ""
 
-#: devQuartz.c:627 devQuartz.c:642 devQuartz.c:644 devQuartz.c:675
-#: devQuartz.c:677
 #, fuzzy
 msgid "Failed to create gradient"
 msgstr "'maxRaster'를 증가시키는데 실패했습니다"
 
-#: devQuartz.c:659 devQuartz.c:692
 msgid "Unsupported gradient fill extend type; using 'pad'"
 msgstr ""
 
-#: devQuartz.c:735 devQuartz.c:768
 #, fuzzy
 msgid "Failed to create pattern"
 msgstr "래스터를 할당하는데 실패했습니다"
 
-#: devQuartz.c:758
 msgid "Unsupported pattern extend mode;  using \"repeat\""
 msgstr ""
 
-#: devQuartz.c:822
 msgid "Quartz clipping paths exhausted (failed to increase maxClipPaths)"
 msgstr ""
 
-#: devQuartz.c:871
 msgid "Quartz clipping paths exhausted"
 msgstr ""
 
-#: devQuartz.c:879
 #, fuzzy
 msgid "Failed to create clipping path"
 msgstr "인코딩 리스트를 할당하는데 실패했습니다"
 
-#: devQuartz.c:974
 msgid "Quartz masks exhausted (failed to increase maxMasks)"
 msgstr ""
 
-#: devQuartz.c:1025
 msgid "Quartz masks exhausted"
 msgstr ""
 
-#: devQuartz.c:1041
 #, fuzzy
 msgid "Failed to create Quartz mask"
 msgstr "매스크를 할당하는데 실패했습니다"
 
-#: devQuartz.c:1143
 msgid "Quartz groups exhausted (failed to increase maxGroups)"
 msgstr ""
 
-#: devQuartz.c:1171 cairo/cairoFns.c:920
 msgid "Attempt to release non-existent group"
 msgstr ""
 
-#: devQuartz.c:1200
 msgid "Quartz groups exhausted"
 msgstr ""
 
-#: devQuartz.c:1220
 msgid "Add compositing operator not supported; falling back to over"
 msgstr ""
 
-#: devQuartz.c:1308 cairo/cairoFns.c:877
 msgid "Groups exhausted"
 msgstr ""
 
-#: devQuartz.c:1703
 #, c-format
 msgid "font \"%s\" could not be found for family \"%s\""
 msgstr "페밀리 \"%2$s\"에 대한 폰트 \"%1$s\"를 찾을 수 없습니다"
 
-#: devQuartz.c:1721
 msgid "font family name is too long"
 msgstr "폰트 페밀리명이 너무 깁니다"
 
-#: devQuartz.c:1760
 #, c-format
 msgid "no font could be found for family \"%s\""
 msgstr "페밀리 \"%s\"를 위한 폰트를 찾을 수 없습니다"
 
-#: devQuartz.c:2809 cairo/cairoFns.c:528
 msgid "Attempt to reuse non-existent clipping path"
 msgstr ""
 
-#: devQuartz.c:2830 cairo/cairoFns.c:541
 msgid "Attempt to release non-existent clipping path"
 msgstr ""
 
-#: devQuartz.c:2881 cairo/cairoFns.c:688
 msgid "Attempt to release non-existent mask"
 msgstr ""
 
-#: devQuartz.c:3239
 #, fuzzy, c-format
 msgid "Invalid font path: \"%s\""
 msgstr "%s에 유효하지 않은 'fonts' 파라미터가 있습니다"
 
-#: devQuartz.c:3283
 #, fuzzy
 msgid "Failed to load font"
 msgstr "폰트 리스트를 할당하는데 실패했습니다"
 
-#: devQuartz.c:3376 devQuartz.c:3381
 msgid "invalid 'file' argument"
 msgstr "유효하지 않은 'file' 인자입니다"
 
-#: devQuartz.c:3408
 msgid "invalid quartz() device size"
 msgstr "유효하지 않은 quartz()장치 크기입니다"
 
-#: devQuartz.c:3436
 msgid "unable to create device description"
 msgstr "device description을 생성할 수 없습니다"
 
-#: devQuartz.c:3486
 msgid "unable to create quartz() device target, given type may not be supported"
 msgstr "quartz() 장치대상을 생성할 수 없었습니다.  아마도 타입이 지원되지 않는 것 같습니다"
 
-#: devQuartz.c:3616
 msgid "Quartz device is not available on this platform"
 msgstr "이 플랫폼에서는 Quartz장치를 사용할 수 없습니다"
 
-#: devWindows.c:352 devWindows.c:402 devWindows.c:476
 msgid "Not enough memory to copy graphics window"
 msgstr "그래픽 윈도우를 복사하는데 충분한 메모리가 없습니다"
 
-#: devWindows.c:357 devWindows.c:407 devWindows.c:481
 msgid "No device available to copy graphics window"
 msgstr "그래픽 윈도우를 복사할 수 있는 장치가 없습니다"
 
-#: devWindows.c:411 devWindows.c:485
 #, c-format
 msgid "'%%' is not allowed in file name"
 msgstr "'%%'는 파일명에 사용될 수 없습니다"
 
-#: devWindows.c:623
 msgid "invalid font specification"
 msgstr "유효하지 않은 폰트지정입니다"
 
-#: devWindows.c:668
 msgid "font family not found in Windows font database"
 msgstr "윈도우즈 폰트데이터베이스에서 찾을 수 없는 폰트페밀리입니다"
 
-#: devWindows.c:1100
 msgid "plot history seems corrupted"
 msgstr "플랏 히스토리가 손상된 것 같습니다"
 
-#: devWindows.c:1107
 msgid "no plot history!"
 msgstr "플랏 히스토리가 없습니다!"
 
-#: devWindows.c:1825
 #, c-format
 msgid "filename too long in %s() call"
 msgstr "%s() 호출시 파일명이 너무 깁니다"
 
-#: devWindows.c:1830 devWindows.c:1865 devWindows.c:1895
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr "'width=%d, height=%d'는 픽셀에서 사용가능한 값들이 아닙니다"
 
-#: devWindows.c:1838 devWindows.c:1843 devWindows.c:1868 devWindows.c:1873
-#: devWindows.c:1898 devWindows.c:1903
 msgid "unable to allocate bitmap"
 msgstr "bitmap을 할당할 수 없습니다"
 
-#: devWindows.c:1849 devWindows.c:1879 devWindows.c:2200
 #, c-format
 msgid "unable to open file '%s' for writing"
 msgstr "쓰기 위해서 파일 '%s'를 열 수 없습니다"
 
-#: devWindows.c:1862
 msgid "filename too long in jpeg() call"
 msgstr "jpeg() 호출에 파일명이 너무 깁니다"
 
-#: devWindows.c:1892
 msgid "filename too long in tiff() call"
 msgstr "tiff() 호출에 파일명이 너무 깁니다"
 
-#: devWindows.c:1924
 msgid "filename too long in win.metafile() call"
 msgstr "win.metafile() 호출에 파일명이 너무 깁니다"
 
-#: devWindows.c:1935
 #, c-format
 msgid "unable to open metafile '%s' for writing"
 msgstr "쓰기 위해서 메타파일 '%s'를 열 수 없습니다"
 
-#: devWindows.c:1937
 msgid "unable to open clipboard to write metafile"
 msgstr "메타파일을 쓰기 위한 클립보드를 열 수 없습니다"
 
-#: devWindows.c:2148
 msgid "Insufficient memory for resize. Killing device"
 msgstr "크기재조정을 위한 메모리가 충분하지 않으므로 장치를 꺼주세요"
 
-#: devWindows.c:2156
 msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "크기재조정을 위한 메모리가 충분하지 않으므로 알파 블렌딩은 꺼주세요"
 
-#: devWindows.c:2185
 msgid "a clipboard metafile can store only one figure."
 msgstr "클립보드 메타파일은 오로지 한개의 figure만을 저장할 수 있습니다"
 
-#: devWindows.c:2191
 #, c-format
 msgid "metafile '%s' could not be created"
 msgstr "메타파일 '%s'은 생성되지 않을 것입니다"
 
-#: devWindows.c:3206 devWindows.c:3888
 msgid "R Graphics"
 msgstr "R 그래픽스"
 
-#: devWindows.c:3220
 msgid "attempt to use the locator after dev.hold()"
 msgstr "dev.hold() 이후에 로케이터를 사용하려고 시도합니다"
 
-#: devWindows.c:3251
 msgid "graphics device closed during call to locator or identify"
 msgstr ""
 
-#: devWindows.c:3523
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "옵션 'windowsTimeouts'은 반드시 정수이어야 합니다"
 
-#: devWindows.c:3545
 msgid "invalid device number in 'savePlot'"
 msgstr "'savePlot'에 유효하지 않은 장치번호가 있습니다"
 
-#: devWindows.c:3547
 msgid "invalid device in 'savePlot'"
 msgstr "'savePlot'에 유효하지 않은 장치가 있습니다"
 
-#: devWindows.c:3550
 msgid "invalid filename argument in 'savePlot'"
 msgstr "'savePlot'에 유효하지 않은 filename 인수가 있습니다"
 
-#: devWindows.c:3555
 msgid "invalid type argument in 'savePlot'"
 msgstr "'savePlot'에 유효하지 않은 type 인수가 있습니다"
 
-#: devWindows.c:3582
 msgid "unknown type in savePlot"
 msgstr "savePlot에 알 수 없는 유형입니다"
 
-#: devWindows.c:3627 devWindows.c:3669 devWindows.c:3694 devWindows.c:3721
-#: devWindows.c:3742
 msgid "processing of the plot ran out of memory"
 msgstr ""
 
-#: devWindows.c:3640
 msgid "Impossible to open "
 msgstr "열 수 없습니다 "
 
-#: devWindows.c:3771
 msgid "invalid 'width' or 'height'"
 msgstr "유효하지 않은 'width' 또는 'height'입니다"
 
-#: devices.c:51
 msgid "argument must have positive length"
 msgstr "인자는 반드시 양의 길이를 가져야 합니다"
 
-#: devices.c:60
 msgid "invalid argument"
 msgstr "유효하지 않은 인자입니다"
 
-#: devices.c:89 devices.c:97 devices.c:105
 msgid "NA argument is invalid"
 msgstr ""
 
-#: devices.c:119
 msgid "Killing locked device"
 msgstr ""
 
-#: group.c:38
 msgid "Group definition ignored (device is appending path)"
 msgstr ""
 
-#: group.c:57
 msgid "Group use ignored (device is appending path)"
 msgstr ""
 
-#: mask.c:37
 msgid "Mask ignored (device is appending path)"
 msgstr ""
 
-#: qdBitmap.c:75
 #, fuzzy
 msgid "QuartzBitmap_Output - filename is empty!"
 msgstr "QuartzBitmap_Output - 파일 '%s'를 열 수 없습니다"
 
-#: qdBitmap.c:88
 #, c-format
 msgid "QuartzBitmap_Output - unable to open file '%s'"
 msgstr "QuartzBitmap_Output - 파일 '%s'를 열 수 없습니다"
 
-#: qdBitmap.c:103
 msgid "not a supported scheme, no image data written"
 msgstr ""
 
-#: stubs.c:104 cairo/cairoBM.c:602 cairo/cairoBM.c:605 cairo/cairoBM.c:609
-#: cairo/cairoBM.c:613 cairo/cairoBM.c:617 cairo/cairoBM.c:621
-#: cairo/cairoBM.c:632 cairo/cairoBM.c:637 cairo/cairoBM.c:640
-#: cairo/cairoBM.c:644 cairo/cairoBM.c:649 cairo/cairoBM.c:652
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "유효하지 않은 '%s' 인자입니다."
 
-#: cairo/cairoBM.c:196 cairo/cairoBM.c:368
 msgid "unimplemented cairo-based device"
 msgstr ""
 
-#: cairo/cairoBM.c:268
 #, fuzzy, c-format
 msgid "could not open file '%s'"
 msgstr "파일 '%s'를 열 수 없습니다"
 
-#: cairo/cairoBM.c:668
 #, fuzzy, c-format
 msgid "unable to start device '%s'"
 msgstr "%s() 장치를 시작할 수 없습니다"
 
-#: cairo/cairoFns.c:148
 msgid "Cairo patterns exhausted (failed to increase maxPatterns)"
 msgstr ""
 
-#: cairo/cairoFns.c:195
 msgid "Cairo patterns exhausted"
 msgstr ""
 
-#: cairo/cairoFns.c:392
 msgid "Cairo clipping paths exhausted (failed to increase maxClipPaths)"
 msgstr ""
 
-#: cairo/cairoFns.c:439
 msgid "Cairo clipping paths exhausted"
 msgstr ""
 
-#: cairo/cairoFns.c:571
 msgid "Cairo masks exhausted (failed to increase maxMasks)"
 msgstr ""
 
-#: cairo/cairoFns.c:619
 msgid "Cairo masks exhausted"
 msgstr ""
 
-#: cairo/cairoFns.c:649
 msgid "Ignored luminance mask (not supported on this device)"
 msgstr ""
 
-#: cairo/cairoFns.c:719
 msgid "Cairo groups exhausted (failed to increase maxGroups)"
 msgstr ""
 
-#: cairo/cairoFns.c:773
 msgid "Cairo groups exhausted"
 msgstr ""
 
-#: cairo/cairoFns.c:2445 cairo/cairoFns.c:2468
 #, fuzzy
 msgid "Font variations too long"
 msgstr "폰트 페밀리명이 너무 깁니다"
 
-#: cairo/cairoFns.c:2488
 #, fuzzy
 msgid "Failed to apply font variations"
 msgstr "폰트 리스트를 할당하는데 실패했습니다"
 
-#: cairo/cairoFns.c:2491
 msgid "Variable fonts not supported (requires Cairo >= 1.16.0)"
 msgstr ""
 
-#: cairo/cairoFns.c:2536
 #, fuzzy
 msgid "Font file not found; matching font family and face"
 msgstr "윈도우즈 폰트데이터베이스에서 찾을 수 없는 폰트페밀리입니다"

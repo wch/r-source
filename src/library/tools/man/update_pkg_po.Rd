@@ -1,6 +1,6 @@
 % File src/library/tools/man/update_pkg_po.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2012-2023 R Core Team
+% Copyright 2012-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{update_pkg_po}
@@ -30,9 +30,9 @@ update_pkg_po(pkgdir, pkg = NULL, version = NULL,
   \item{verbose}{\code{\link{logical}} indicating if extra information
     about the updating process should be printed to the console.}
   \item{mergeOpts}{a string, by default empty, of space-separated options to
-    \command{msgmerge} in addition to \code{"--update"}.  Since \R 4.2.0,
-    \code{"--no-wrap"} is used when called from
-    \code{file.path(R.home("po"), "Makefile")}.}
+    \command{msgmerge} in addition to \option{--update}. For the base
+    packages, \code{"--no-wrap --no-location"} is used when called from
+    \file{\var{R_HOME}/po/Makefile}.}
   \item{copyright, bugs}{optional character strings for the
     \samp{Copyright} and \samp{Report-Msgid-Bugs-To} details in the
     template files.}

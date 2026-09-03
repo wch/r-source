@@ -18,184 +18,140 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 2.4.1\n"
 
-#: gpar.c:355
 msgid "graphical parameter 'fontfamily' has a maximum length of 200 bytes"
 msgstr ""
 
-#: gpar.c:644
 msgid "updateGContext must only be called after initGContext"
 msgstr "updateGContext turi būti iškviestas tik po initGContext"
 
-#: grid.c:199
 #, fuzzy
 msgid "Turning clipping on or off within a (clipping) path is no honoured"
 msgstr "Atskyrimo įjungimas arba išjungimas atskirties linijoje nėra leidžiamas"
 
-#: grid.c:241
 msgid "cannot clip to rotated viewport"
 msgstr "negalima apkirpti iki pasuktos peržiūros srities"
 
-#: grid.c:456
 #, fuzzy
 msgid "Clipping paths within a (clipping) path are not honoured"
 msgstr "Atskirties linijos atskirties linijoje nėra leidžiamos"
 
-#: grid.c:475
 #, fuzzy
 msgid "Masks within a (clipping) path are not honoured"
 msgstr "Šablonai atskirties linijoje nėra leidžiami"
 
-#: grid.c:699 grid.c:877
 #, c-format
 msgid "Viewport '%s' was not found"
 msgstr ""
 
-#: grid.c:909 grid.c:914 grid.c:1035 grid.c:1040
 msgid "cannot pop the top-level viewport ('grid' and 'graphics' output mixed?)"
 msgstr "negalima atverti aukščiausio lygio peržiūros srities (sumaišyta 'grid' ir 'graphics' išvestis?)"
 
-#: grid.c:1241
 msgid "attempt to plot on null device"
 msgstr "bandymas braižyti tuščiame įrenginyje"
 
-#: grid.c:1710
 msgid "there is no layout defined"
 msgstr "nėra numatyto maketo"
 
-#: grid.c:1932
 msgid "polygon edge not found (zero-width or zero-height?)"
 msgstr "daugiakampio kraštinė nerasta (plotis arba aukštis yra 0?)"
 
-#: grid.c:1941
 msgid "polygon edge not found"
 msgstr "daugiakampio kraštinė nerasta"
 
-#: grid.c:2095
 msgid "require at least two points to draw arrow"
 msgstr "piešiant rodyklę turi būti bent du taškai"
 
-#: grid.c:2466
 msgid "non-finite control point in Xspline"
 msgstr "nebaigtinis Xspline valdymo taškas"
 
-#: grid.c:3436
 msgid "non-finite x or y in graphics path"
 msgstr "grafiko adrese x arba y nėra baigtinis"
 
-#: grid.c:3487
 msgid "Empty raster"
 msgstr "Tuščias rastras"
 
-#: grid.c:4038 grid.c:4094
 msgid "Coordinates for text pch not yet supported"
 msgstr ""
 
-#: grid.c:4099
 #, c-format
 msgid "pch value '%d' is invalid in this locale"
 msgstr ""
 
-#: grid.c:4920
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr ""
 
-#: grid.c:5079
 msgid "invalid plotting symbol"
 msgstr "negalimas braižymo simbolis"
 
-#: grid.c:5198
 msgid "unable to clip to rotated rectangle"
 msgstr "negalima apkirpti iki pasukto stačiakampio"
 
-#: layout.c:600
 msgid "invalid 'layout.pos.row'"
 msgstr "neteisingas 'layout.pos.row'"
 
-#: layout.c:604
 msgid "invalid 'layout.pos.col'"
 msgstr "neteisingas 'layout.pos.col'"
 
-#: matrix.c:50
 msgid "singular transformation matrix"
 msgstr "ypatingoji transformacijos matrica"
 
-#: state.c:191
 msgid "unable to store 'grid' state.  Too many devices open?"
 msgstr "negalima saugoti 'grid' būsenos. Atverta per daug įrenginių?"
 
-#: unit.c:65
 msgid "Cannot create unit scalar from 0-length unit vector"
 msgstr "Negalima sukurti vieneto skaliaro iš nulio ilgio vieneto vektoriaus"
 
-#: unit.c:799 unit.c:1308
 msgid "invalid unit or unit not yet implemented"
 msgstr "negalimas vienetas arba vienetas dar neįdiegtas"
 
-#: unit.c:1261 unit.c:1365 unit.c:1396
 msgid "Viewport has zero dimension(s)"
 msgstr "Peržiūros sritis turi nulinę dimensiją"
 
-#: unit.c:1428 unit.c:1443 unit.c:1458 unit.c:1473
 msgid "Unsupported unit conversion"
 msgstr "Nepalaikomas vieneto konvertavimas"
 
-#: unit.c:1565
 msgid "Invalid unit"
 msgstr "Neteisingas vienetas"
 
-#: unit.c:1580
 msgid "'units' must be character"
 msgstr "'units' turi būti simbolis"
 
-#: unit.c:1583
 msgid "'units' must be of length > 0"
 msgstr "'units' ilgis turi būti >0"
 
-#: unit.c:1594
 msgid "data must be either NULL, have length 1, or match the length of the final unit vector"
 msgstr "duomenys turi būti NULL (ilgis 1) arba atitikti galutinio vieneto vektoriaus ilgį"
 
-#: unit.c:1606
 msgid "no string supplied for 'strwidth/height' unit"
 msgstr "nėra eilutės, kuri pateikiama 'strwidth/height' vienetui"
 
-#: unit.c:1610
 msgid "no 'grob' supplied for 'grobwidth/height' unit"
 msgstr "'grob' nepateikiamas 'grobwidth/height' vienetui"
 
-#: unit.c:1637
 msgid "'gPath' must have depth 1 in 'grobwidth/height' units"
 msgstr "'gPath' gylis turi būti 1 'grobwidth/height' vienetais"
 
-#: unit.c:1642
 msgid "non-NULL value supplied for plain unit"
 msgstr "ne NULL reikšmė pateikta paprastam vienetui"
 
-#: unit.c:1695 unit.c:1729 unit.c:1778
 msgid "old version of unit class is no longer allowed"
 msgstr "sena vieneto klasės versija nebeleidžiama"
 
-#: unit.c:1701
 msgid "object is not coercible to a unit"
 msgstr "objektas nėra verčiamas į vienetą"
 
-#: unit.c:1727
 msgid "object is not a unit"
 msgstr "objektas nėra vienetas"
 
-#: unit.c:1859
 msgid "units can only be multiplied with numerics and integers"
 msgstr "vienetus galima dauginti tik iš skaitinių ir sveikųjų skaičių"
 
-#: util.c:216
 msgid "Unable to calculate text width/height (using zero)"
 msgstr ""
 
-#: viewport.c:57
 msgid "Mask is not logical value ('none' or 'inherit')"
 msgstr "Šablonas nėra loginė reikšmė ('none' arba 'inherit')"
 
-#: viewport.c:331
 msgid "non-finite location and/or size for viewport"
 msgstr "nebaigtinė peržiūros srities vieta ir/arba dydis"

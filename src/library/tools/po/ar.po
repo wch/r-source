@@ -18,191 +18,149 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 "X-Generator: Weblate 4.16.4\n"
 
-#: Rmd5.c:57 Rsha256.c:70
 msgid "argument 'files' must be character"
 msgstr "يجب أن تكون \"ملفات\" الوسيطة حرفا"
 
-#: Rmd5.c:73
 #, c-format
 msgid "md5 failed on file '%ls'"
 msgstr "فشل md5 في الملف \"%ls\""
 
-#: Rmd5.c:75
 #, c-format
 msgid "md5 failed on file '%s'"
 msgstr "فشل md5 في الملف \"%s\""
 
-#: Rsha256.c:86
 #, c-format
 msgid "sha256 failed on file '%ls'"
 msgstr "فشل sha256 في الملف \"%ls\""
 
-#: Rsha256.c:88
 #, c-format
 msgid "sha256 failed on file '%s'"
 msgstr "فشل md5 في الملف \"%s\""
 
-#: getfmts.c:60
 #, c-format
 msgid "only %d arguments are allowed"
 msgstr "يسمح فقط بوسيطات %d"
 
-#: getfmts.c:65
 msgid "'fmt' is not a character vector"
 msgstr "\"FMT\" ليس متجه أحرف"
 
-#: getfmts.c:68
 msgid "'fmt' must be length 1"
 msgstr "يجب أن يكون طول \"FMT\" 1"
 
-#: getfmts.c:74
 #, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "يتجاوز طول \"FMT\" الحد الأقصى لطول التنسيق %d"
 
-#: getfmts.c:95
 #, c-format
 msgid "unrecognised format specification '%s'"
 msgstr "مواصفات التنسيق غير المعترف بها \"%s\""
 
-#: getfmts.c:135
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "يتم دعم علامة نجمة واحدة \"*\" على الأكثر في كل مواصفات تحويل"
 
-#: gramLatex.c:2874 gramRd.c:3990
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "يتعذر تخصيص المخزن المؤقت لسلسلة طويلة في السطر %d"
 
-#: gramLatex.c:3193 gramRd.c:4575 gramRd.c:4581
 #, c-format
 msgid "invalid '%s' value"
 msgstr "قيمة \"%s\" غير صالحة"
 
-#: gramRd.c:2586 gramRd.c:2589
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr "ترميز سيئ (مساحة إضافية؟) عند %s: %d: %d"
 
-#: gramRd.c:3124
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr "الماكرو \"%s\" المحدد مسبقا."
 
-#: gramRd.c:3134
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr "على الأكثر 4 وسيطات مسموح بها لوحدات الماكرو المعرفة من قبل المستخدم."
 
-#: gramRd.c:3176
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr "لا يوجد تعريف ماكرو ل \"%s\"."
 
-#: gramRd.c:3239
 #, c-format
 msgid "Not enough arguments passed to user macro '%s'"
 msgstr "لم يتم تمرير وسيطات كافية إلى ماكرو المستخدم \"%s\""
 
-#: gramRd.c:3385 gramRd.c:3389
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr "سطر جديد داخل السلسلة المقتبسة في %s:%d"
 
-#: gramRd.c:3408
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr "يتعذر تخصيص المخزن المؤقت للماكرو الطويل في الخط %d"
 
-#: gramRd.c:3438
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "وحدات الماكرو متداخلة بعمق شديد: العودية اللانهائية؟"
 
-#: gramRd.c:3847
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "تعذر العثور على الماكرو %s"
 
-#: gramRd.c:4051
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "نهاية غير متوقعة للإدخال (في %c السلسلة المقتبسة المفتوحة عند %s:%d:%d)"
 
-#: gramRd.c:4557
 msgid "'parse_Rd' is not re-entrant"
 msgstr ""
 
-#: gramRd.c:4588
 msgid "cannot open the connection"
 msgstr "لا يمكن فتح الاتصال"
 
-#: gramRd.c:4595
 msgid "cannot read from this connection"
 msgstr "لا يمكن القراءة من هذا الاتصال"
 
-#: gramRd.c:4607
 msgid "invalid Rd file"
 msgstr "ملف Rd غير صالح"
 
-#: gramRd.c:4627
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr "يدعم \"deparseRd\" فقط تقسيم عناصر الشخصية"
 
-#: gramRd.c:4630
 msgid "bad state"
 msgstr "حالة سيئة"
 
-#: gramRd.c:4643
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "وضع النص السيئ %d في \"deparseRd\""
 
-#: http.c:31
 msgid "invalid bind address specification"
 msgstr "مواصفات عنوان ربط غير صالحة"
 
-#: http.c:36
 #, c-format
 msgid "Invalid port number %d: should be in 0:65535, typically above 1024"
 msgstr "رقم المنفذ غير صالح %d: يجب أن يكون في 0:65535، وعادة ما يكون أعلى من 1024"
 
-#: http.c:60
 msgid "allocation error in remove_dot_segments"
 msgstr ""
 
-#: http.c:150 pdscan.c:121
 msgid "non-character argument"
 msgstr "حجة غير شخصية"
 
-#: install.c:95
 msgid "path too long"
 msgstr "مسار طويل جدا"
 
-#: install.c:120 install.c:139 install.c:141 install.c:143
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "الوسيطة '%s' غير صالحة"
 
-#: install.c:177
 msgid "write error during file append"
 msgstr "خطأ في الكتابة أثناء إلحاق الملف"
 
-#: pdscan.c:74
 msgid "too many items"
 msgstr "الكثير من العناصر"
 
-#: signals.c:42
 msgid "pskill() is not supported on this platform"
 msgstr "pskill() غير مدعوم على هذه المنصة"
 
-#: signals.c:140
 msgid "psnice() is not supported on this platform"
 msgstr "pskill() غير مدعوم على هذه المنصة"
 
-#: text.c:69
 msgid "invalid argument type"
 msgstr "نوع الوسيطة غير صالح"
 
-#: text.c:227 text.c:249
 msgid "out of memory"
 msgstr "نفاد الذاكرة"

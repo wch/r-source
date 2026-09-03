@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-04-01 10:34-0700\n"
+"POT-Creation-Date: 2026-04-25 10:48-0700\n"
 "PO-Revision-Date: 2026-04-14 15:40+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -14,16 +14,13 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 5.11.4\n"
 
-#: splines.c:154
 msgid "'ord' must be a positive integer"
 msgstr "'ord' は正の値でなければいけません"
 
-#: splines.c:222
 #, c-format
 msgid "derivs = %d >= ord = %d, but should be in {0,..,ord-1}"
 msgstr ""
 
-#: splines.c:225
 #, c-format
 msgid "derivs[%d] = %d >= ord = %d, but should be in {0,..,ord-1}"
 msgstr ""

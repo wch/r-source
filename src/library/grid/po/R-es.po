@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2023-08-31 20:16+0000\n"
 "Last-Translator: Geraldine Gomez Millan <geralidine.gomez@javeriana.edu.co>\n"
 "Language-Team: none\n"
@@ -145,10 +145,8 @@ msgstr "válido solamente para impulsar ventanas"
 msgid "must specify at least one viewport"
 msgstr "se debe especificar al menos una ventana"
 
-
 msgid "Down viewport failed to record on display list"
-msgstr ""
-"downViewport() falló al registrar viewport en la lista de visualización"
+msgstr "downViewport() falló al registrar viewport en la lista de visualización"
 
 msgid "Down viewport incorrectly recorded on display list"
 msgstr "La ventana inferior grabada incorrectamente en la lista de visualizaciones"
@@ -521,9 +519,7 @@ msgid "index out of bounds (\"unit\" subsetting)"
 msgstr "Índice fuera de límites (al extraer un subconjunto de \"unit\")"
 
 msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
-msgstr ""
-"No se puede crear un vector de longitud cero (al extraer un subconjunto de "
-"\"unit\")"
+msgstr "No se puede crear un vector de longitud cero (al extraer un subconjunto de \"unit\")"
 
 msgid "index must be of length 1"
 msgstr "el índice debe tener una longitud de 1"
@@ -574,9 +570,7 @@ msgid "'parent' must be a viewport and 'children' must be a 'vpList' in 'vpTree'
 msgstr ""
 
 msgid "a viewport path must contain at least one viewport name"
-msgstr ""
-"una ruta de ventana gráfica debe contener al menos un nombre de ventana "
-"gráfica"
+msgstr "una ruta de ventana gráfica debe contener al menos un nombre de ventana gráfica"
 
 msgid "must specify at least one of 'xData' or 'xscale'"
 msgstr "se debe especificar al menos 'xData' o 'xscale'"
@@ -585,9 +579,7 @@ msgid "must specify at least one of 'yData' or 'yscale'"
 msgstr "se debe especificar al menos 'yData' o 'yscale'"
 
 msgid "shutting down all devices when unloading 'grid' namespace"
-msgstr ""
-"cerrando todos los dispositivos gráficos al descargar el espacio de nombres "
-"'grid'"
+msgstr "cerrando todos los dispositivos gráficos al descargar el espacio de nombres 'grid'"
 
 msgid "invalid grob name"
 msgid_plural "invalid grob names"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2024-04-01 10:34-0700\n"
+"POT-Creation-Date: 2026-04-25 10:48-0700\n"
 "PO-Revision-Date: 2018-04-09 12:10-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -18,16 +18,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: splines.c:154
 msgid "'ord' must be a positive integer"
 msgstr "'ord'는 반드시 양의 정수이어야 합니다."
 
-#: splines.c:222
 #, c-format
 msgid "derivs = %d >= ord = %d, but should be in {0,..,ord-1}"
 msgstr "derivs = %d >= ord = %d 이지만, {0,..,ord-1} 내에 있어야 합니다."
 
-#: splines.c:225
 #, c-format
 msgid "derivs[%d] = %d >= ord = %d, but should be in {0,..,ord-1}"
 msgstr "derivs[%d] = %d >= ord = %d 이지만, {0,..,ord-1} 내에 있어야 합니다."

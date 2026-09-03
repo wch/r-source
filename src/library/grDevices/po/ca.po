@@ -18,369 +18,294 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.16.4\n"
 
-#: axis_scales.c:37 axis_scales.c:38 axis_scales.c:50
 #, c-format
 msgid "'%s' must be numeric of length %d"
 msgstr "'%s' ha de ser numèric amb llargada %d"
 
-#: clippath.c:36
 #, fuzzy
 msgid "Clipping path ignored (device is appending path)"
 msgstr "S'ha ignorat el camí de retall (el dispositiu afegeix el camí)"
 
-#: colors.c:69
 #, fuzzy, c-format
 msgid "color intensity %s, not in [0,1]"
 msgstr "intensitat del color %s, no a [0,1]"
 
-#: colors.c:71
 #, fuzzy, c-format
 msgid "color intensity %g, not in [0,1]"
 msgstr "intensitat del color %g, no a [0,1]"
 
-#: colors.c:78
 #, fuzzy, c-format
 msgid "color intensity %s, not in 0:255"
 msgstr "intensitat del color %s, no en 0:255"
 
-#: colors.c:80
 #, fuzzy, c-format
 msgid "color intensity %d, not in 0:255"
 msgstr "intensitat del color %d, no en 0:255"
 
-#: colors.c:87
 #, fuzzy, c-format
 msgid "alpha level %s, not in [0,1]"
 msgstr "nivell alfa %s, no a [0,1]"
 
-#: colors.c:89
 #, fuzzy, c-format
 msgid "alpha level %g, not in [0,1]"
 msgstr "nivell alfa %g, no a [0,1]"
 
-#: colors.c:96
 #, fuzzy, c-format
 msgid "alpha level %s, not in 0:255"
 msgstr "nivell alfa %s, no en 0:255"
 
-#: colors.c:98
 #, fuzzy, c-format
 msgid "alpha level %d, not in 0:255"
 msgstr "nivell alfa %d, no en 0:255"
 
-#: colors.c:113
 #, fuzzy
 msgid "inputs must be finite"
 msgstr "les entrades han de ser finites"
 
-#: colors.c:128
 #, fuzzy
 msgid "bad hsv to rgb color conversion"
 msgstr "conversió de color hsv a rgb incorrecta"
 
-#: colors.c:220 colors.c:234
 #, fuzzy
 msgid "invalid hsv color"
 msgstr "color hsv no vàlid"
 
-#: colors.c:346 colors.c:366
 #, fuzzy
 msgid "invalid hcl color"
 msgstr "color hcl no vàlid"
 
-#: colors.c:398
 #, fuzzy
 msgid "invalid value of 'maxColorValue'"
 msgstr "valor no vàlid de «maxColorValue»"
 
-#: colors.c:426
 #, fuzzy
 msgid "invalid 'names' vector"
 msgstr "vector «names» no vàlid"
 
-#: colors.c:491 colors.c:500
 #, fuzzy
 msgid "invalid gray level, must be in [0,1]."
 msgstr "el nivell de gris no és vàlid, ha d'estar a [0,1]."
 
-#: colors.c:556 cairo/cairoBM.c:625
 #, c-format
 msgid "invalid '%s' value"
 msgstr "el valor «%s» no és vàlid"
 
-#: colors.c:1343
 #, fuzzy
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "dígit hexadecimal no vàlid a «color» o «lty»"
 
-#: colors.c:1353 colors.c:1371
 #, fuzzy
 msgid "invalid RGB specification"
 msgstr "especificació RGB no vàlida"
 
-#: colors.c:1408
 #, fuzzy, c-format
 msgid "invalid color name '%s'"
 msgstr "el nom de color «%s» no és vàlid"
 
-#: colors.c:1458 colors.c:1467
 #, fuzzy, c-format
 msgid "invalid color specification \"%s\""
 msgstr "l'especificació de color «%s» no és vàlida"
 
-#: colors.c:1495
 #, fuzzy
 msgid "supplied color is neither numeric nor character"
 msgstr "el color proporcionat no és ni numèric ni caràcter"
 
-#: colors.c:1499
 #, fuzzy, c-format
 msgid "numerical color values must be >= 0, found %d"
 msgstr "els valors de color numèric han de ser == 0, trobats %d"
 
-#: colors.c:1510
 #, fuzzy
 msgid "invalid argument type"
 msgstr "tipus d'argument no vàlid"
 
-#: colors.c:1521
 #, fuzzy
 msgid "unknown palette (need >= 2 colors)"
 msgstr "paleta desconeguda (requereix == 2 colors)"
 
-#: colors.c:1525 colors.c:1547
 #, fuzzy, c-format
 msgid "maximum number of colors is %d"
 msgstr "el nombre màxim de colors és %d"
 
-#: devPS.c:591
 #, fuzzy, c-format
 msgid "afm file '%s' could not be opened"
 msgstr "no s'ha pogut obrir el fitxer afm «%s»"
 
-#: devPS.c:659
 #, fuzzy
 msgid "unknown AFM entity encountered"
 msgstr "s'ha trobat una entitat AFM desconeguda"
 
-#: devPS.c:774 devPS.c:777 devPS.c:4770 devPS.c:9363 devPicTeX.c:477
-#: devPicTeX.c:479
 #, fuzzy, c-format
 msgid "invalid string in '%s'"
 msgstr "cadena no vàlida a «%s»"
 
-#: devPS.c:811
 #, fuzzy, c-format
 msgid "font width unknown for character 0x%02x in encoding %s"
 msgstr "l'amplada del tipus de lletra és desconeguda per al caràcter 0x%x"
 
-#: devPS.c:871
 #, fuzzy, c-format
 msgid "font metrics unknown for Unicode character U+%04X"
 msgstr "mètriques de tipus de lletra desconegudes per al caràcter Unicode U+%04x"
 
-#: devPS.c:882
 #, fuzzy, c-format
 msgid "unknown encoding '%s' in 'PostScriptMetricInfo'"
 msgstr "codificació desconeguda «%s» a «PostScriptMetricInfo»"
 
-#: devPS.c:899
 #, c-format
 msgid "Unicode character %lc (U+%04X) cannot be converted"
 msgstr ""
 
-#: devPS.c:918 devPS.c:972
 #, fuzzy, c-format
 msgid "font metrics unknown for character 0x%02x in encoding %s"
 msgstr "mètriques de tipus de lletra desconegudes per al caràcter 0x%x"
 
-#: devPS.c:987
 #, fuzzy, c-format
 msgid "invalid character (%04X) sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
 msgstr "s'ha enviat un caràcter no vàlid (%04x) a «PostScriptCIDMetricInfo» en una configuració regional d'un sol byte"
 
-#: devPS.c:995
 #, fuzzy
 msgid "invalid character sent to 'PostScriptCIDMetricInfo' in a single-byte locale"
 msgstr "s'ha enviat un caràcter no vàlid a «PostScriptCIDMetricInfo» en una configuració regional d'un sol byte"
 
-#: devPS.c:1107
 #, fuzzy
 msgid "failed to allocate CID font info"
 msgstr "no s'ha pogut assignar la informació del tipus de lletra CID"
 
-#: devPS.c:1123
 #, fuzzy
 msgid "failed to allocate Type 1 font info"
 msgstr "no s'ha pogut assignar la informació del tipus de lletra del tipus 1"
 
-#: devPS.c:1143
 #, fuzzy
 msgid "failed to allocate encoding info"
 msgstr "no s'ha pogut assignar la informació de codificació"
 
-#: devPS.c:1161
 #, fuzzy
 msgid "failed to allocate CID font family"
 msgstr "no s'ha pogut assignar la família del tipus de lletra CID"
 
-#: devPS.c:1174
 #, fuzzy
 msgid "failed to allocate Type 1 font family"
 msgstr "no s'ha pogut assignar la família de tipus de lletra del tipus 1"
 
-#: devPS.c:1213 devPS.c:1224
 #, fuzzy
 msgid "failed to allocate font list"
 msgstr "no s'ha pogut assignar la llista de tipus de lletra"
 
-#: devPS.c:1275
 #, fuzzy
 msgid "failed to allocated encoding list"
 msgstr "no s'ha pogut assignar la llista de codificació"
 
-#: devPS.c:1424
 #, fuzzy
 msgid "truncated string which was too long for copy"
 msgstr "cadena truncada que era massa llarga per a copiar"
 
-#: devPS.c:1464
 #, fuzzy, c-format
 msgid "failed to load encoding file '%s'"
 msgstr "no s'ha pogut carregar el fitxer de codificació «%s»"
 
-#: devPS.c:1563 devPS.c:1597
 #, fuzzy
 msgid "invalid font name or more than one font name"
 msgstr "el nom del tipus de lletra no és vàlid o més d'un nom de tipus de lletra"
 
-#: devPS.c:1722 devPS.c:1757
 #, fuzzy, c-format
 msgid "font family '%s' not found in PostScript font database"
 msgstr "no s'ha trobat la família de tipus de lletra «%s» a la base de dades de tipus de lletra PostScript"
 
-#: devPS.c:1841 devPS.c:1923 devPS.c:1950
 #, fuzzy, c-format
 msgid "font encoding for family '%s' not found in font database"
 msgstr "no s'ha trobat la codificació del tipus de lletra per a la família «%s» a la base de dades de tipus de lletra"
 
-#: devPS.c:1868 devPS.c:1895
 #, fuzzy, c-format
 msgid "font CMap for family '%s' not found in font database"
 msgstr "no s'ha trobat el CMap del tipus de lletra per a la família «%s» a la base de dades de tipus de lletra"
 
-#: devPS.c:2089 devPS.c:2169 devPS.c:2237
 #, fuzzy, c-format
 msgid "cannot load afm file '%s'"
 msgstr "no es pot carregar el fitxer afm «%s»"
 
-#: devPS.c:2525
 #, fuzzy
 msgid "corrupt loaded encodings;  encoding not recorded"
 msgstr "codificacions carregades corruptes; codificació no enregistrada"
 
-#: devPS.c:2536
 #, fuzzy
 msgid "failed to record device encoding"
 msgstr "no s'ha pogut enregistrar la codificació del dispositiu"
 
-#: devPS.c:2711
 #, fuzzy
 msgid "object '.ps.prolog' is not a character vector"
 msgstr "l'objecte «.ps.prolog» no és un vector de caràcters"
 
-#: devPS.c:2790 devPS.c:7484 devWindows.c:810
 #, fuzzy
 msgid "invalid line end"
 msgstr "final de línia no vàlid"
 
-#: devPS.c:2809 devPS.c:7504 devWindows.c:823
 #, fuzzy
 msgid "invalid line join"
 msgstr "la unió de línia no és vàlida"
 
-#: devPS.c:2817
 #, fuzzy
 msgid "invalid line mitre"
 msgstr "el mitre de línia no és vàlid"
 
-#: devPS.c:3022 devPS.c:3959 devPS.c:4408 devPS.c:4435 devPS.c:9167
-#: devPS.c:9238
 #, fuzzy, c-format
 msgid "attempt to use invalid font %d replaced by font 1"
 msgstr "s'ha intentat utilitzar un tipus de lletra no vàlid %d substituït pel tipus de lletra 1"
 
-#: devPS.c:3260 devPS.c:6887
 #, fuzzy, c-format
 msgid "filename too long in %s()"
 msgstr "el nom del fitxer és massa llarg a %s()"
 
-#: devPS.c:3266 devPS.c:6893
 #, fuzzy, c-format
 msgid "memory allocation problem in %s()"
 msgstr "problema d'assignació de memòria a %s()"
 
-#: devPS.c:3284 devPS.c:6960
 #, fuzzy, c-format
 msgid "encoding path is too long in %s()"
 msgstr "el camí de codificació és massa llarg a %s()"
 
-#: devPS.c:3298
 #, fuzzy, c-format
 msgid "failed to load encoding file in %s()"
 msgstr "no s'ha pogut carregar el fitxer de codificació a %s()"
 
-#: devPS.c:3343 devPS.c:3406 devPS.c:7019 devPS.c:7075 devPS.c:8966
 #, fuzzy
 msgid "invalid font type"
 msgstr "tipus de lletra no vàlid"
 
-#: devPS.c:3367
 #, fuzzy
 msgid "failed to initialise default PostScript font"
 msgstr "no s'ha pogut inicialitzar el tipus de lletra PostScript predeterminat"
 
-#: devPS.c:3433
 #, fuzzy
 msgid "failed to initialise additional PostScript fonts"
 msgstr "no s'han pogut inicialitzar els tipus de lletra PostScript addicionals"
 
-#: devPS.c:3449
 #, fuzzy
 msgid "invalid foreground/background color (postscript)"
 msgstr "color de primer pla/fons no vàlid (postscript)"
 
-#: devPS.c:3454
 #, fuzzy
 msgid "'command' is too long"
 msgstr "'ordre' és massa llarga"
 
-#: devPS.c:3459
 #, fuzzy
 msgid "'postscript(print.it=TRUE)' used with an empty 'print' command"
 msgstr "'postscript(print.it=TRUE)' utilitzat amb una ordre buida 'print'"
 
-#: devPS.c:3511
 #, fuzzy, c-format
 msgid "invalid page type '%s' (postscript)"
 msgstr "el tipus de pàgina «%s» no és vàlid (postscript)"
 
-#: devPS.c:3640 devWindows.c:2363
 #, fuzzy
 msgid "semi-transparency is not supported on this device: reported only once per page"
 msgstr "la semitransparència no està suportada en aquest dispositiu: només s'informa una vegada per pàgina"
 
-#: devPS.c:3750 devPS.c:3761
 #, fuzzy, c-format
 msgid "cannot open 'postscript' pipe to '%s' (reason: %s)"
 msgstr "no es pot obrir la canonada «postscript» a «%s»"
 
-#: devPS.c:3772 devPS.c:8227 qdPDF.c:102
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "no es pot obrir el fitxer «%s»"
 
-#: devPS.c:3900 devPS.c:3915
 #, fuzzy, c-format
 msgid ""
 "error from postscript() in running:\n"
@@ -389,202 +314,162 @@ msgstr ""
 "error de postscript() en execució:\n"
 "    %s"
 
-#: devPS.c:3947
 #, fuzzy, c-format
 msgid "CID family '%s' not included in postscript() device"
 msgstr "La família CID «%s» no està inclosa en el dispositiu postscript()"
 
-#: devPS.c:3965 devPS.c:3976 devPS.c:4415 devPS.c:4445 devPS.c:4710
 #, fuzzy, c-format
 msgid "family '%s' not included in postscript() device"
 msgstr "la família «%s» no està inclosa en el dispositiu postscript()"
 
-#: devPS.c:4521
 #, fuzzy, c-format
 msgid "unknown encoding '%s' in 'mbcsToSbcs'"
 msgstr "codificació «%s» desconeguda a «mbcsToSbcs»"
 
-#: devPS.c:4647 devPS.c:4654
 #, fuzzy, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': for <%02x>"
 msgstr "ha fallat la conversió a «%s» a «mbcsToSbcs»: el punt ha estat substituït per <%02x>"
 
-#: devPS.c:4649 devPS.c:4656
 #, fuzzy, c-format
 msgid "conversion failure on '%s' in 'mbcsToSbcs': dot substituted for <%02x>"
 msgstr "ha fallat la conversió a «%s» a «mbcsToSbcs»: el punt ha estat substituït per <%02x>"
 
-#: devPS.c:4738
 #, fuzzy, c-format
 msgid "failed open converter to encoding '%s'"
 msgstr "no s'ha pogut obrir el convertidor a la codificació «%s»"
 
-#: devPS.c:4756 devPS.c:9338
 #, fuzzy, c-format
 msgid "failed in text conversion to encoding '%s'"
 msgstr "ha fallat la conversió de text a la codificació «%s»"
 
-#: devPS.c:5142
 #, fuzzy
 msgid "Failed to allocate PDF definition string"
 msgstr "No s'ha pogut assignar la cadena de definició del PDF"
 
-#: devPS.c:5164
 #, fuzzy
 msgid "failed to increase definition string (shut down PDF device)"
 msgstr "no s'ha pogut augmentar la cadena de definició (desactiva el dispositiu PDF)"
 
-#: devPS.c:5214
 #, fuzzy
 msgid "failed to increase 'maxDefns'"
 msgstr "no s'ha pogut augmentar «maxDefns»"
 
-#: devPS.c:5846
 #, fuzzy
 msgid "Drawing not appended to path (contains text)"
 msgstr "Dibuix no afegit al camí (conté text)"
 
-#: devPS.c:6075
 #, fuzzy
 msgid "Compositing operator has no corresponding blend mode; defaulting to Normal"
 msgstr "L'operador de composició no té el mode de barreja corresponent; el predeterminat és Normal"
 
-#: devPS.c:6348
 #, fuzzy
 msgid "Failed to write PDF clipping path"
 msgstr "No s'ha pogut escriure el camí de retallat del PDF"
 
-#: devPS.c:6373
 #, fuzzy
 msgid "Failed to write PDF stroke"
 msgstr "No s'ha pogut escriure el traç PDF"
 
-#: devPS.c:6394
 #, fuzzy
 msgid "Failed to write PDF fill"
 msgstr "No s'ha pogut escriure el PDF fill"
 
-#: devPS.c:6415
 #, fuzzy
 msgid "Failed to write PDF fillStroke"
 msgstr "No s'ha pogut escriure el PDF fillStroke"
 
-#: devPS.c:6461
 #, fuzzy
 msgid "Glyph ID larger than 0xFFFF; output will be incorrect"
 msgstr "L'ID del glif més gran que 0xFFFF; la sortida serà incorrecta"
 
-#: devPS.c:6484
 #, fuzzy
 msgid "invalid 'alpha' value in PDF"
 msgstr "valor «alpha» no vàlid en PDF"
 
-#: devPS.c:6598 devPS.c:6601
 #, fuzzy
 msgid "failed to increase 'maxRaster'"
 msgstr "no s'ha pogut augmentar «maxRaster»"
 
-#: devPS.c:6613
 #, fuzzy
 msgid "unable to allocate raster image"
 msgstr "no s'ha pogut assignar la imatge ràster"
 
-#: devPS.c:6710 devPS.c:6754 devPS.c:8288
 #, fuzzy
 msgid "write failed"
 msgstr "ha fallat l'escriptura"
 
-#: devPS.c:6814
 #, fuzzy
 msgid "corrupt loaded encodings;  font not added"
 msgstr "codificacions carregades corruptes; no s'ha afegit el tipus de lletra"
 
-#: devPS.c:6824
 #, fuzzy
 msgid "failed to record device encoding; font not added"
 msgstr "no s'ha pogut enregistrar la codificació del dispositiu; no s'ha afegit el tipus de lletra"
 
-#: devPS.c:6946
 #, fuzzy
 msgid "increasing the PDF version to 1.2"
 msgstr "augment de la versió PDF a 1.2"
 
-#: devPS.c:6976
 #, fuzzy
 msgid "failed to load default encoding"
 msgstr "no s'ha pogut carregar la codificació predeterminada"
 
-#: devPS.c:7043
 #, fuzzy
 msgid "failed to initialise default PDF font"
 msgstr "no s'ha pogut inicialitzar el tipus de lletra PDF predeterminat"
 
-#: devPS.c:7098
 #, fuzzy
 msgid "failed to initialise additional PDF fonts"
 msgstr "no s'han pogut inicialitzar els tipus de lletra PDF addicionals"
 
-#: devPS.c:7111
 #, fuzzy
 msgid "failed to allocate rasters"
 msgstr "no s'han pogut assignar les trames"
 
-#: devPS.c:7118
 #, fuzzy
 msgid "failed to allocate masks"
 msgstr "no s'han pogut assignar les màscares"
 
-#: devPS.c:7128
 #, fuzzy
 msgid "failed to allocate definitions"
 msgstr "no s'han pogut assignar les definicions"
 
-#: devPS.c:7202
 #, fuzzy, c-format
 msgid "invalid paper type '%s' (pdf)"
 msgstr "tipus de paper no vàlid «%s» (pdf)"
 
-#: devPS.c:7226
 #, fuzzy
 msgid "invalid foreground/background color (pdf)"
 msgstr "color de primer pla/fons no vàlid (pdf)"
 
-#: devPS.c:7333
 #, fuzzy
 msgid "increasing the PDF version to 1.4"
 msgstr "augment de la versió PDF a 1.4"
 
-#: devPS.c:7377 devPS.c:7425
 #, fuzzy
 msgid "unknown 'colormodel', using 'srgb'"
 msgstr "«colormodel» desconegut, s'usarà «srgb»"
 
-#: devPS.c:7649
 #, fuzzy
 msgid "failed to load sRGB colorspace file"
 msgstr "no s'ha pogut carregar el fitxer d'espai de color sRGB"
 
-#: devPS.c:7988
 #, fuzzy
 msgid "corrupt encodings in PDF device"
 msgstr "codificacions corruptes al dispositiu PDF"
 
-#: devPS.c:8069
 #, fuzzy
 msgid "increasing the PDF version to 1.3"
 msgstr "augment de la versió PDF a 1.3"
 
-#: devPS.c:8210
 #, fuzzy, c-format
 msgid "cannot open 'pdf' pipe to '%s' (reason: %s)"
 msgstr "no es pot obrir la canonada «pdf» a «%s»"
 
-#: devPS.c:8217
 #, fuzzy
 msgid "file = \"|cmd\" implies 'onefile = TRUE'"
 msgstr "file = \"|cmd\" implica 'onefile = TRUE'"
 
-#: devPS.c:8361
 #, fuzzy, c-format
 msgid ""
 "cannot open 'pdf' file argument '%s'\n"
@@ -593,505 +478,397 @@ msgstr ""
 "no es pot obrir l'argument «%s» del fitxer «pdf»\n"
 "  apagueu el dispositiu PDF"
 
-#: devPS.c:8382
 #, fuzzy, c-format
 msgid "Cannot open temporary file '%s' for compression (reason: %s); compression has been turned off for this device"
 msgstr "No es pot obrir el fitxer temporal «%s» per a la compressió (motiu: %s); la compressió s'ha desactivat per a aquest dispositiu"
 
-#: devPS.c:8991 devPS.c:9495 devPS.c:9542
 #, fuzzy
 msgid "failed to find or load PDF font"
 msgstr "no s'ha pogut trobar o carregar el tipus de lletra PDF"
 
-#: devPS.c:9174 devPS.c:9233
 #, fuzzy
 msgid "Text not added to path containing other drawing"
 msgstr "Text no afegit al camí que conté un altre dibuix"
 
-#: devPS.c:9283 devPS.c:9450
 #, fuzzy
 msgid "failed to find or load PDF CID font"
 msgstr "no s'ha pogut trobar o carregar el tipus de lletra CID del PDF"
 
-#: devPS.c:9949 devPicTeX.c:763
 #, fuzzy, c-format
 msgid "invalid 'file' parameter in %s"
 msgstr "argument 'family' no vàlid a %s"
 
-#: devPS.c:9958 devPS.c:9962 devPS.c:10060 devPS.c:10064
 #, fuzzy, c-format
 msgid "invalid 'family' parameter in %s"
 msgstr "argument 'family' no vàlid a %s"
 
-#: devPS.c:9980 devPS.c:10076
 #, fuzzy, c-format
 msgid "invalid 'fonts' parameter in %s"
 msgstr "argument 'fonts' no vàlid a %s"
 
-#: devPS.c:9986 devPS.c:10086 devPS.c:10089 devPS.c:10092 devPS.c:10095
-#: devWindows.c:3776 devWindows.c:3780 devWindows.c:3788 devWindows.c:3799
-#: devWindows.c:3805 devWindows.c:3812 devWindows.c:3819 devWindows.c:3823
 #, fuzzy, c-format
 msgid "invalid value of '%s'"
 msgstr "valor no vàlid de «%s»"
 
-#: devPS.c:9999 devPS.c:10110 devPicTeX.c:776 devPicTeX.c:781 devWindows.c:3864
 #, fuzzy, c-format
 msgid "unable to start %s() device"
 msgstr "no s'ha pogut iniciar el dispositiu %s()"
 
-#: devQuartz.c:477
 #, fuzzy
 msgid "Quartz gradients exhausted (failed to increase maxPatterns)"
 msgstr "Els degradats en quars s'han exhaurit (no s'ha pogut augmentar el màxim de patrons)"
 
-#: devQuartz.c:483
 #, fuzzy
 msgid "Quartz patterns exhausted (failed to increase maxPatterns)"
 msgstr "Patrons de quars esgotats (no s'ha pogut augmentar el màxim de patrons)"
 
-#: devQuartz.c:524 cairo/cairoFns.c:350
 #, fuzzy
 msgid "Attempt to release non-existent pattern"
 msgstr "S'ha intentat alliberar un patró inexistent"
 
-#: devQuartz.c:561
 #, fuzzy
 msgid "Quartz patterns exhausted"
 msgstr "Patrons de quars esgotats"
 
-#: devQuartz.c:627 devQuartz.c:642 devQuartz.c:644 devQuartz.c:675
-#: devQuartz.c:677
 #, fuzzy
 msgid "Failed to create gradient"
 msgstr "No s'ha pogut crear el degradat"
 
-#: devQuartz.c:659 devQuartz.c:692
 #, fuzzy
 msgid "Unsupported gradient fill extend type; using 'pad'"
 msgstr "Tipus d'extensió d'emplenat no admès del degradat; s'usarà «pad»"
 
-#: devQuartz.c:735 devQuartz.c:768
 #, fuzzy
 msgid "Failed to create pattern"
 msgstr "No s'ha pogut crear el patró"
 
-#: devQuartz.c:758
 #, fuzzy
 msgid "Unsupported pattern extend mode;  using \"repeat\""
 msgstr "Mode d'extensió de patró no admès; s'usarà «repeat»"
 
-#: devQuartz.c:822
 #, fuzzy
 msgid "Quartz clipping paths exhausted (failed to increase maxClipPaths)"
 msgstr "Camins de retall de quarts esgotats (no s'ha pogut augmentar el «maxClipPaths»)"
 
-#: devQuartz.c:871
 #, fuzzy
 msgid "Quartz clipping paths exhausted"
 msgstr "S'han esgotat els camins de retall de quarts"
 
-#: devQuartz.c:879
 #, fuzzy
 msgid "Failed to create clipping path"
 msgstr "No s'ha pogut crear el camí de retall"
 
-#: devQuartz.c:974
 #, fuzzy
 msgid "Quartz masks exhausted (failed to increase maxMasks)"
 msgstr "Màscares de quars exhaurides (no s'han pogut augmentar les màscares màximes)"
 
-#: devQuartz.c:1025
 #, fuzzy
 msgid "Quartz masks exhausted"
 msgstr "Màscares de quars exhaurides"
 
-#: devQuartz.c:1041
 #, fuzzy
 msgid "Failed to create Quartz mask"
 msgstr "No s'ha pogut crear la màscara de Quartz"
 
-#: devQuartz.c:1143
 #, fuzzy
 msgid "Quartz groups exhausted (failed to increase maxGroups)"
 msgstr "Grups de quarts esgotats (no s'ha pogut augmentar el «maxGroups»)"
 
-#: devQuartz.c:1171 cairo/cairoFns.c:920
 #, fuzzy
 msgid "Attempt to release non-existent group"
 msgstr "S'ha intentat alliberar un grup inexistent"
 
-#: devQuartz.c:1200
 #, fuzzy
 msgid "Quartz groups exhausted"
 msgstr "Grups de quarts esgotats"
 
-#: devQuartz.c:1220
 #, fuzzy
 msgid "Add compositing operator not supported; falling back to over"
 msgstr "Afegeix un operador de composició no compatible; s'està tornant enrere"
 
-#: devQuartz.c:1308 cairo/cairoFns.c:877
 #, fuzzy
 msgid "Groups exhausted"
 msgstr "Grups esgotats"
 
-#: devQuartz.c:1703
 #, fuzzy, c-format
 msgid "font \"%s\" could not be found for family \"%s\""
 msgstr "no s'ha pogut trobar el tipus de lletra «%s» per a la família «%s»"
 
-#: devQuartz.c:1721
 #, fuzzy
 msgid "font family name is too long"
 msgstr "el nom de la família del tipus de lletra és massa llarg"
 
-#: devQuartz.c:1760
 #, fuzzy, c-format
 msgid "no font could be found for family \"%s\""
 msgstr "no s'ha trobat cap tipus de lletra per a la família «%s»"
 
-#: devQuartz.c:2809 cairo/cairoFns.c:528
 #, fuzzy
 msgid "Attempt to reuse non-existent clipping path"
 msgstr "S'ha intentat reutilitzar un camí de retall inexistent"
 
-#: devQuartz.c:2830 cairo/cairoFns.c:541
 #, fuzzy
 msgid "Attempt to release non-existent clipping path"
 msgstr "S'ha intentat alliberar un camí de retall inexistent"
 
-#: devQuartz.c:2881 cairo/cairoFns.c:688
 #, fuzzy
 msgid "Attempt to release non-existent mask"
 msgstr "S'ha intentat alliberar una màscara inexistent"
 
-#: devQuartz.c:3239
 #, fuzzy, c-format
 msgid "Invalid font path: \"%s\""
 msgstr "argument 'fonts' no vàlid a %s"
 
-#: devQuartz.c:3283
 #, fuzzy
 msgid "Failed to load font"
 msgstr "No s'ha pogut carregar el tipus de lletra"
 
-#: devQuartz.c:3376 devQuartz.c:3381
 #, fuzzy
 msgid "invalid 'file' argument"
 msgstr "argument «file» no vàlid"
 
-#: devQuartz.c:3408
 #, fuzzy
 msgid "invalid quartz() device size"
 msgstr "la mida del dispositiu de quartz() no és vàlida"
 
-#: devQuartz.c:3436
 #, fuzzy
 msgid "unable to create device description"
 msgstr "no s'ha pogut crear la descripció del dispositiu"
 
-#: devQuartz.c:3486
 #, fuzzy
 msgid "unable to create quartz() device target, given type may not be supported"
 msgstr "no s'ha pogut crear la destinació del dispositiu quartz(), és possible que no s'admeti el tipus indicat"
 
-#: devQuartz.c:3616
 #, fuzzy
 msgid "Quartz device is not available on this platform"
 msgstr "El dispositiu Quartz no està disponible en aquesta plataforma"
 
-#: devWindows.c:352 devWindows.c:402 devWindows.c:476
 #, fuzzy
 msgid "Not enough memory to copy graphics window"
 msgstr "No hi ha prou memòria per a copiar la finestra gràfica"
 
-#: devWindows.c:357 devWindows.c:407 devWindows.c:481
 #, fuzzy
 msgid "No device available to copy graphics window"
 msgstr "No hi ha cap dispositiu disponible per a copiar la finestra gràfica"
 
-#: devWindows.c:411 devWindows.c:485
 #, fuzzy, c-format
 msgid "'%%' is not allowed in file name"
 msgstr "«%%» no està permès en el nom del fitxer"
 
-#: devWindows.c:623
 msgid "invalid font specification"
 msgstr "especificació de tipus de lletra no vàlida"
 
-#: devWindows.c:668
 #, fuzzy
 msgid "font family not found in Windows font database"
 msgstr "no s'ha trobat la família de tipus de lletra a la base de dades de tipus de lletra del Windows"
 
-#: devWindows.c:1100
 #, fuzzy
 msgid "plot history seems corrupted"
 msgstr "l'historial del gràfic sembla corrupte"
 
-#: devWindows.c:1107
 #, fuzzy
 msgid "no plot history!"
 msgstr "sense historial de trames!"
 
-#: devWindows.c:1825
 #, fuzzy, c-format
 msgid "filename too long in %s() call"
 msgstr "el nom del fitxer és massa llarg a la crida %s()"
 
-#: devWindows.c:1830 devWindows.c:1865 devWindows.c:1895
 #, c-format
 msgid "'width=%d, height=%d' are unlikely values in pixels"
 msgstr "«width=%d, height=%d» són valors poc probables en píxels"
 
-#: devWindows.c:1838 devWindows.c:1843 devWindows.c:1868 devWindows.c:1873
-#: devWindows.c:1898 devWindows.c:1903
 #, fuzzy
 msgid "unable to allocate bitmap"
 msgstr "no s'ha pogut assignar el mapa de bits"
 
-#: devWindows.c:1849 devWindows.c:1879 devWindows.c:2200
 #, fuzzy, c-format
 msgid "unable to open file '%s' for writing"
 msgstr "no es pot obrir el fitxer «%s» per a escriptura"
 
-#: devWindows.c:1862
 #, fuzzy
 msgid "filename too long in jpeg() call"
 msgstr "nom de fitxer massa llarg a la crida jpeg()"
 
-#: devWindows.c:1892
 #, fuzzy
 msgid "filename too long in tiff() call"
 msgstr "nom de fitxer massa llarg a la crida tiff()"
 
-#: devWindows.c:1924
 #, fuzzy
 msgid "filename too long in win.metafile() call"
 msgstr "nom de fitxer massa llarg a la crida win.metafile()"
 
-#: devWindows.c:1935
 #, fuzzy, c-format
 msgid "unable to open metafile '%s' for writing"
 msgstr "no es pot obrir el metafitxer «%s» per a escriptura"
 
-#: devWindows.c:1937
 #, fuzzy
 msgid "unable to open clipboard to write metafile"
 msgstr "no s'ha pogut obrir el porta-retalls per a escriure el metafitxer"
 
-#: devWindows.c:2148
 #, fuzzy
 msgid "Insufficient memory for resize. Killing device"
 msgstr "No hi ha prou memòria per a redimensionar. S'està matant el dispositiu"
 
-#: devWindows.c:2156
 #, fuzzy
 msgid "Insufficient memory for resize. Disabling alpha blending"
 msgstr "No hi ha prou memòria per a redimensionar. Desactiva la barreja alfa"
 
-#: devWindows.c:2185
 #, fuzzy
 msgid "a clipboard metafile can store only one figure."
 msgstr "un metafitxer del porta-retalls només pot emmagatzemar una figura."
 
-#: devWindows.c:2191
 #, fuzzy, c-format
 msgid "metafile '%s' could not be created"
 msgstr "no s'ha pogut crear el metafitxer «%s»"
 
-#: devWindows.c:3206 devWindows.c:3888
 #, fuzzy
 msgid "R Graphics"
 msgstr "Gràfics R"
 
-#: devWindows.c:3220
 #, fuzzy
 msgid "attempt to use the locator after dev.hold()"
 msgstr "s'ha intentat utilitzar el localitzador després de dev.hold()"
 
-#: devWindows.c:3251
 msgid "graphics device closed during call to locator or identify"
 msgstr "dispositiu gràfic tancat durant la crida al localitzador o a identificador"
 
-#: devWindows.c:3523
 #, fuzzy
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "l'opció «windowsTimeouts» hauria de ser entera"
 
-#: devWindows.c:3545
 #, fuzzy
 msgid "invalid device number in 'savePlot'"
 msgstr "número de dispositiu no vàlid a «savePlot»"
 
-#: devWindows.c:3547
 #, fuzzy
 msgid "invalid device in 'savePlot'"
 msgstr "dispositiu no vàlid a «savePlot»"
 
-#: devWindows.c:3550
 #, fuzzy
 msgid "invalid filename argument in 'savePlot'"
 msgstr "l'argument del nom de fitxer no és vàlid a «savePlot»"
 
-#: devWindows.c:3555
 #, fuzzy
 msgid "invalid type argument in 'savePlot'"
 msgstr "argument de tipus no vàlid a «savePlot»"
 
-#: devWindows.c:3582
 #, fuzzy
 msgid "unknown type in savePlot"
 msgstr "tipus desconegut a savePlot"
 
-#: devWindows.c:3627 devWindows.c:3669 devWindows.c:3694 devWindows.c:3721
-#: devWindows.c:3742
 #, fuzzy
 msgid "processing of the plot ran out of memory"
 msgstr "el processament del diagrama s'ha quedat sense memòria"
 
-#: devWindows.c:3640
 #, fuzzy
 msgid "Impossible to open "
 msgstr "Impossible obrir "
 
-#: devWindows.c:3771
 #, fuzzy
 msgid "invalid 'width' or 'height'"
 msgstr "'amplada' o 'alçada' no són vàlids"
 
-#: devices.c:51
 #, fuzzy
 msgid "argument must have positive length"
 msgstr "l'argument ha de tenir longitud positiva"
 
-#: devices.c:60
 msgid "invalid argument"
 msgstr "argument no vàlid"
 
-#: devices.c:89 devices.c:97 devices.c:105
 #, fuzzy
 msgid "NA argument is invalid"
 msgstr "L'argument NA no és vàlid"
 
-#: devices.c:119
 msgid "Killing locked device"
 msgstr ""
 
-#: group.c:38
 #, fuzzy
 msgid "Group definition ignored (device is appending path)"
 msgstr "S'ha ignorat la definició del grup (el dispositiu està afegint el camí)"
 
-#: group.c:57
 #, fuzzy
 msgid "Group use ignored (device is appending path)"
 msgstr "S'ignora l'ús del grup (el dispositiu està afegint el camí)"
 
-#: mask.c:37
 #, fuzzy
 msgid "Mask ignored (device is appending path)"
 msgstr "S'ha ignorat la màscara (el dispositiu està afegint el camí)"
 
-#: qdBitmap.c:75
 #, fuzzy
 msgid "QuartzBitmap_Output - filename is empty!"
 msgstr "QuartzBitmapOutput - no es pot obrir el fitxer '%s'"
 
-#: qdBitmap.c:88
 #, fuzzy, c-format
 msgid "QuartzBitmap_Output - unable to open file '%s'"
 msgstr "QuartzBitmapOutput - no es pot obrir el fitxer '%s'"
 
-#: qdBitmap.c:103
 #, fuzzy
 msgid "not a supported scheme, no image data written"
 msgstr "no és un esquema compatible, no s'ha escrit cap dada d'imatge"
 
-#: stubs.c:104 cairo/cairoBM.c:602 cairo/cairoBM.c:605 cairo/cairoBM.c:609
-#: cairo/cairoBM.c:613 cairo/cairoBM.c:617 cairo/cairoBM.c:621
-#: cairo/cairoBM.c:632 cairo/cairoBM.c:637 cairo/cairoBM.c:640
-#: cairo/cairoBM.c:644 cairo/cairoBM.c:649 cairo/cairoBM.c:652
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argument «%s» no vàlid"
 
-#: cairo/cairoBM.c:196 cairo/cairoBM.c:368
 #, fuzzy
 msgid "unimplemented cairo-based device"
 msgstr "dispositiu no implementat basat en cairo"
 
-#: cairo/cairoBM.c:268
 #, fuzzy, c-format
 msgid "could not open file '%s'"
 msgstr "no s'ha pogut obrir el fitxer «%s»"
 
-#: cairo/cairoBM.c:668
 #, fuzzy, c-format
 msgid "unable to start device '%s'"
 msgstr "no es pot iniciar el dispositiu «%s»"
 
-#: cairo/cairoFns.c:148
 #, fuzzy
 msgid "Cairo patterns exhausted (failed to increase maxPatterns)"
 msgstr "Els patrons del Caire s'han esgotat (no s'han pogut augmentar els patrons màxims)"
 
-#: cairo/cairoFns.c:195
 #, fuzzy
 msgid "Cairo patterns exhausted"
 msgstr "Patrons del Caire esgotats"
 
-#: cairo/cairoFns.c:392
 #, fuzzy
 msgid "Cairo clipping paths exhausted (failed to increase maxClipPaths)"
 msgstr "Els camins de retall del Cairo s'han exhaurit (no s'ha pogut augmentar el «maxClipPaths»)"
 
-#: cairo/cairoFns.c:439
 #, fuzzy
 msgid "Cairo clipping paths exhausted"
 msgstr "S'han esgotat els camins de retallat del Cairo"
 
-#: cairo/cairoFns.c:571
 #, fuzzy
 msgid "Cairo masks exhausted (failed to increase maxMasks)"
 msgstr "Màscares del Caire exhaurides (no s'han pogut augmentar les màscares màximes)"
 
-#: cairo/cairoFns.c:619
 #, fuzzy
 msgid "Cairo masks exhausted"
 msgstr "Màscares del Caire exhaurides"
 
-#: cairo/cairoFns.c:649
 #, fuzzy
 msgid "Ignored luminance mask (not supported on this device)"
 msgstr "Màscara de luminància ignorada (no admesa en aquest dispositiu)"
 
-#: cairo/cairoFns.c:719
 #, fuzzy
 msgid "Cairo groups exhausted (failed to increase maxGroups)"
 msgstr "Els grups del Caire s'han exhaurit (no s'ha pogut augmentar el nombre màxim de rutes)"
 
-#: cairo/cairoFns.c:773
 #, fuzzy
 msgid "Cairo groups exhausted"
 msgstr "Grups del Caire esgotats"
 
-#: cairo/cairoFns.c:2445 cairo/cairoFns.c:2468
 #, fuzzy
 msgid "Font variations too long"
 msgstr "el nom de la família del tipus de lletra és massa llarg"
 
-#: cairo/cairoFns.c:2488
 #, fuzzy
 msgid "Failed to apply font variations"
 msgstr "no s'han pogut assignar les definicions"
 
-#: cairo/cairoFns.c:2491
 msgid "Variable fonts not supported (requires Cairo >= 1.16.0)"
 msgstr ""
 
-#: cairo/cairoFns.c:2536
 #, fuzzy
 msgid "Font file not found; matching font family and face"
 msgstr "No s'ha trobat el fitxer de tipus de lletra; s'aparellen la família i la cara del tipus de lletra"

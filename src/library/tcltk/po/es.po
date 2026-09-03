@@ -18,43 +18,32 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.16.4\n"
 
-#: tcltk.c:75
 msgid "parse error in R expression"
 msgstr "error de parseado en la expresión de R"
 
-#: tcltk.c:184 tcltk.c:262
 msgid "tcl error.\n"
 msgstr "error tcl.\n"
 
-#: tcltk.c:213 tcltk.c:288 tcltk.c:305 tcltk.c:325 tcltk.c:345 tcltk.c:422
-#: tcltk.c:489 tcltk.c:545 tcltk.c:786
 msgid "invalid argument"
 msgstr "argumento no válido"
 
-#: tcltk.c:295
 msgid "no such variable"
 msgstr "no existe esta variable"
 
-#: tcltk.c:327 tcltk.c:347 tcltk.c:424 tcltk.c:491 tcltk.c:547
 msgid "invalid tclObj -- perhaps saved from another session?"
 msgstr "tclObj inválid -- quizá ha sido salvado en otra sesión?"
 
-#: tcltk.c:659
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr "lista de argumentos es demasiado larga para la función interna 'callback_closure' de tcltk"
 
-#: tcltk.c:692
 msgid "argument is not of correct type"
 msgstr "El argumento no es del tipo correcto"
 
-#: tcltk.c:744
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "no hay variable DISPLAY por lo que Tk no está disponible"
 
-#: tcltk_unix.c:113
 msgid "Tcl is not loaded"
 msgstr "Tcl no está cargado"
 
-#: tcltk_unix.c:117
 msgid "Tcl is not last loaded handler"
 msgstr "Tcl no es el último controlador cargado"

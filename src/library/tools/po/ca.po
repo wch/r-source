@@ -18,199 +18,157 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.16.4\n"
 
-#: Rmd5.c:57 Rsha256.c:70
 msgid "argument 'files' must be character"
 msgstr "l'argument «files» ha de ser un de tipus caràcter"
 
-#: Rmd5.c:73
 #, c-format
 msgid "md5 failed on file '%ls'"
 msgstr "md5 ha fallat al fitxer «%ls»"
 
-#: Rmd5.c:75
 #, c-format
 msgid "md5 failed on file '%s'"
 msgstr "md5 ha fallat al fitxer «%s»"
 
-#: Rsha256.c:86
 #, fuzzy, c-format
 msgid "sha256 failed on file '%ls'"
 msgstr "md5 ha fallat al fitxer «%ls»"
 
-#: Rsha256.c:88
 #, fuzzy, c-format
 msgid "sha256 failed on file '%s'"
 msgstr "md5 ha fallat al fitxer «%s»"
 
-#: getfmts.c:60
 #, fuzzy, c-format
 msgid "only %d arguments are allowed"
 msgstr "només es permeten %d arguments"
 
-#: getfmts.c:65
 #, fuzzy
 msgid "'fmt' is not a character vector"
 msgstr "«fmt» no és un vector de caràcters"
 
-#: getfmts.c:68
 msgid "'fmt' must be length 1"
 msgstr "«fmt» ha de ser de longitud 1"
 
-#: getfmts.c:74
 #, fuzzy, c-format
 msgid "'fmt' length exceeds maximal format length %d"
 msgstr "la longitud «fmt» excedeix la longitud màxima de format %d"
 
-#: getfmts.c:95
 #, fuzzy, c-format
 msgid "unrecognised format specification '%s'"
 msgstr "especificació de format no reconeguda «%s»"
 
-#: getfmts.c:135
 #, fuzzy
 msgid "at most one asterisk '*' is supported in each conversion specification"
 msgstr "com a màxim s'admet un asterisc '*' a cada especificació de conversió"
 
-#: gramLatex.c:2874 gramRd.c:3990
 #, c-format
 msgid "unable to allocate buffer for long string at line %d"
 msgstr "no s'ha pogut assignar memòria intermèdia per a la cadena llarga a la línia %d"
 
-#: gramLatex.c:3193 gramRd.c:4575 gramRd.c:4581
 #, c-format
 msgid "invalid '%s' value"
 msgstr "el valor «%s» no és vàlid"
 
-#: gramRd.c:2586 gramRd.c:2589
 #, c-format
 msgid "bad markup (extra space?) at %s:%d:%d"
 msgstr "marcatge erroni (espai extra?) a %s:%d:%d"
 
-#: gramRd.c:3124
 #, c-format
 msgid "Macro '%s' previously defined."
 msgstr "Macro «%s» definida anteriorment."
 
-#: gramRd.c:3134
 #, c-format
 msgid "At most 4 arguments are allowed for user defined macros."
 msgstr "Com a màxim es permeten 4 arguments per a macros definides per l'usuari."
 
-#: gramRd.c:3176
 #, c-format
 msgid "No macro definition for '%s'."
 msgstr "No hi ha cap definició de macro per a «%s»."
 
-#: gramRd.c:3239
 #, c-format
 msgid "Not enough arguments passed to user macro '%s'"
 msgstr "No s'han passat suficients arguments a la macro d'usuari «%s»"
 
-#: gramRd.c:3385 gramRd.c:3389
 #, c-format
 msgid "newline within quoted string at %s:%d"
 msgstr "línia nova dins de la cadena entre cometes a %s:%d"
 
-#: gramRd.c:3408
 #, c-format
 msgid "unable to allocate buffer for long macro at line %d"
 msgstr "no s'ha pogut assignar memòria intermèdia per a la macro llarga a la línia %d"
 
-#: gramRd.c:3438
 msgid "macros nested too deeply: infinite recursion?"
 msgstr "macros aniuades massa profundament: recursivitat infinita?"
 
-#: gramRd.c:3847
 #, c-format
 msgid "Unable to find macro %s"
 msgstr "No s'ha pogut trobar la macro %s"
 
-#: gramRd.c:4051
 #, c-format
 msgid "Unexpected end of input (in %c quoted string opened at %s:%d:%d)"
 msgstr "Final d'entrada inesperat (a la cadena entre cometes %c oberta a %s:%d:%d)"
 
-#: gramRd.c:4557
 msgid "'parse_Rd' is not re-entrant"
 msgstr ""
 
-#: gramRd.c:4588
 msgid "cannot open the connection"
 msgstr "no s'ha pogut obrir la connexió"
 
-#: gramRd.c:4595
 #, fuzzy
 msgid "cannot read from this connection"
 msgstr "no es pot llegir des d'aquesta connexió"
 
-#: gramRd.c:4607
 msgid "invalid Rd file"
 msgstr "el fitxer Rd no és vàlid"
 
-#: gramRd.c:4627
 msgid "'deparseRd' only supports deparsing character elements"
 msgstr "«deparseRd» només permet analitzar elements de tipus caràcter"
 
-#: gramRd.c:4630
 msgid "bad state"
 msgstr "«state» dolent"
 
-#: gramRd.c:4643
 #, c-format
 msgid "bad text mode %d in 'deparseRd'"
 msgstr "mode de text %d incorrecte a 'deparseRd'"
 
-#: http.c:31
 msgid "invalid bind address specification"
 msgstr "especificació d'adreça de vinculació no vàlida"
 
-#: http.c:36
 #, c-format
 msgid "Invalid port number %d: should be in 0:65535, typically above 1024"
 msgstr ""
 
-#: http.c:60
 msgid "allocation error in remove_dot_segments"
 msgstr ""
 
-#: http.c:150 pdscan.c:121
 #, fuzzy
 msgid "non-character argument"
 msgstr "argument de no caràcter"
 
-#: install.c:95
 msgid "path too long"
 msgstr "camí massa llarg"
 
-#: install.c:120 install.c:139 install.c:141 install.c:143
 #, c-format
 msgid "invalid '%s' argument"
 msgstr "argument «%s» no vàlid"
 
-#: install.c:177
 #, fuzzy
 msgid "write error during file append"
 msgstr "error d'escriptura durant l'annex de fitxer"
 
-#: pdscan.c:74
 #, fuzzy
 msgid "too many items"
 msgstr "massa elements"
 
-#: signals.c:42
 msgid "pskill() is not supported on this platform"
 msgstr "pskill() no és compatible amb aquesta plataforma"
 
-#: signals.c:140
 msgid "psnice() is not supported on this platform"
 msgstr "psnice() no és compatible amb aquesta plataforma"
 
-#: text.c:69
 #, fuzzy
 msgid "invalid argument type"
 msgstr "tipus d'argument no vàlid"
 
-#: text.c:227 text.c:249
 #, fuzzy
 msgid "out of memory"
 msgstr "fora de memòria"

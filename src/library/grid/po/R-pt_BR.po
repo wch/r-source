@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -233,8 +233,7 @@ msgid "it is only valid to set a child of a \"gTree\""
 msgstr "Só é válido definir uma 'child' de uma 'gTree'"
 
 msgid "it is only valid to set a 'grob' as child of a \"gTree\""
-msgstr ""
-"Só é válido definir um 'grob' como um elemento filho de uma \"gTree\""
+msgstr "Só é válido definir um 'grob' como um elemento filho de uma \"gTree\""
 
 msgid "New 'grob' name (%s) does not match 'gPath' (%s)"
 msgstr "Novo nome de 'grob' (%s) não corresponde a 'gPath' (%s)"
@@ -562,9 +561,7 @@ msgstr "Índice fora dos limites (subsetting unitário)"
 
 #, fuzzy
 msgid "Cannot create zero-length unit vector (\"unit\" subsetting)"
-msgstr ""
-"Não é possível criar vetor unitário de comprimento zero (subconjunto de "
-"\"unidade\")"
+msgstr "Não é possível criar vetor unitário de comprimento zero (subconjunto de \"unidade\")"
 
 #, fuzzy
 msgid "index must be of length 1"
@@ -635,8 +632,7 @@ msgid "must specify at least one of 'yData' or 'yscale'"
 msgstr "Deve especificar pelo menos um entre 'yData' ou 'yscale'"
 
 msgid "shutting down all devices when unloading 'grid' namespace"
-msgstr ""
-"Desligando todos os dispositivos enquanto descarrega o namespace do 'grid'"
+msgstr "Desligando todos os dispositivos enquanto descarrega o namespace do 'grid'"
 
 msgid "invalid grob name"
 msgid_plural "invalid grob names"

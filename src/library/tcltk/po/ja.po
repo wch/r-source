@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-03-07 10:25+0100\n"
+"POT-Creation-Date: 2026-04-25 10:48-0700\n"
 "PO-Revision-Date: 2026-04-14 15:40+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Japanese <translation-team-ja@lists.sourceforge.net>\n"
@@ -14,44 +14,33 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 5.11.4\n"
 
-#: tcltk.c:75
 msgid "parse error in R expression"
 msgstr "R expression 内に構文エラー"
 
-#: tcltk.c:184 tcltk.c:262
 msgid "tcl error.\n"
 msgstr "tcl エラー \n"
 
-#: tcltk.c:213 tcltk.c:288 tcltk.c:305 tcltk.c:325 tcltk.c:345 tcltk.c:422
-#: tcltk.c:489 tcltk.c:545 tcltk.c:786
 msgid "invalid argument"
 msgstr "不正な引数"
 
-#: tcltk.c:295
 msgid "no such variable"
 msgstr ""
 
-#: tcltk.c:327 tcltk.c:347 tcltk.c:424 tcltk.c:491 tcltk.c:547
 msgid "invalid tclObj -- perhaps saved from another session?"
 msgstr "不正な tclObj - おそらく、別のセッションから保存された？"
 
-#: tcltk.c:659
 msgid "argument list is too long in tcltk internal function 'callback_closure'"
 msgstr "引数リストは tcltk の内部関数 'callback_closure' において長過ぎます"
 
-#: tcltk.c:692
 msgid "argument is not of correct type"
 msgstr "引数は正しいタイプではありません"
 
-#: tcltk.c:744
 msgid "no DISPLAY variable so Tk is not available"
 msgstr "DISPLAY 環境変数が無いので Tk は利用出来ません"
 
-#: tcltk_unix.c:113
 msgid "Tcl is not loaded"
 msgstr "Tcl はロード出来ません"
 
-#: tcltk_unix.c:117
 msgid "Tcl is not last loaded handler"
 msgstr "Tcl はロードした最後のハンドラーではありません"
 

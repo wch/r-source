@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2025-03-31 11:51\n"
+"POT-Creation-Date: 2026-05-25 12:54\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -100,9 +100,7 @@ msgid "if the 'def' argument is supplied, it must be a function that calls stand
 msgstr "se o argumento 'def' for fornecido, ele deve ser uma função que chama standardGeneric(\"%s\") para executar os métodos"
 
 msgid "must supply a function skeleton for %s, explicitly or via an existing function"
-msgstr ""
-"deve fornecer um esqueleto de função para %s, explicitamente ou através de uma função "
-"existente"
+msgstr "deve fornecer um esqueleto de função para %s, explicitamente ou através de uma função existente"
 
 msgid ""
 "Creating a generic function for %s from %s in %s\n"
@@ -149,8 +147,8 @@ msgid "Creating a generic function for %s from package %s in %s"
 msgstr "criando uma nova função genérica para %s a partir do pacote %s em %s"
 
 msgid "the method for function %s and signature %s is sealed and cannot be re-defined"
-msgstr ""
-"o método para a função \"%s\" e assinatura %s está selado e não pode ser redefinido"
+msgstr "o método para a função \"%s\" e assinatura %s está selado e não pode ser redefinido"
+
 msgid "For function %s, signature %s: argument in method definition changed from (%s) to (%s)"
 msgstr "para a função %s, assinatura %s: argumento na definição do método mudou de (%s) para (%s)"
 
@@ -253,7 +251,6 @@ msgstr "não são ambas funções!"
 
 msgid "argument %s is not S4"
 msgstr "argumento %s não é S4"
-
 
 #, fuzzy
 msgid "formal arguments differ (in default values?)"
@@ -838,9 +835,7 @@ msgstr ""
 "(%s)"
 
 msgid "argument %s must be a list or a character vector; got an object of class %s"
-msgstr ""
-"argumento %s deve ser uma lista ou um vetor de caracteres, mas foi obtido um objeto de "
-"classe \"%s\""
+msgstr "argumento %s deve ser uma lista ou um vetor de caracteres, mas foi obtido um objeto de classe \"%s\""
 
 msgid "expected a non-empty character string for argument 'name'"
 msgstr "é esperada cadeia de caracteres não vazia para o argumento 'name'"
