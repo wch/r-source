@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.1.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-09-02 17:54\n"
+"POT-Creation-Date: 2026-09-03 23:24\n"
 "PO-Revision-Date: 2021-01-27 10:37+0100\n"
 "Last-Translator: <r.zakauskas@gmail.com;gabriele.dauksaite@gmail.com>\n"
 "Language-Team: Lithuanian\n"
@@ -360,9 +360,6 @@ msgstr "neteisingas 'max' / getOption(\"max.print\"):"
 msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "neskaitinis kintamasis (-ieji) duomenų sistemoje:"
 
-msgid ","
-msgstr ","
-
 msgid "%s only defined for equally-sized data frames"
 msgstr "%s tik apibrėžtas vienodo dydžio duomenų sistemoms"
 
@@ -443,9 +440,6 @@ msgstr "'lag' ir 'differences' turi būti sveikieji skaičiai >= 1"
 
 msgid "unable to deduce timezone name from"
 msgstr "negalima nustatyti laiko juostos pavadinimo iš"
-
-msgid "timedatectl"
-msgstr ""
 
 msgid "wrong class"
 msgstr "neteisinga klasė"
@@ -989,10 +983,8 @@ msgstr "netaisyklingas 'category' argumentas"
 msgid "must specify names of formal arguments for 'vectorize'"
 msgstr "reikia nurodyti formaliųjų argumentų vardus 'vectorize'"
 
-msgid "FUN"
-msgstr "FUN"
-
-msgid "may not have argument(s) named"
+#, fuzzy
+msgid "%s may not have argument(s) %s"
 msgstr "gali būti, kad nėra argumento (-ų), pavadintų"
 
 msgid "'arg' must be NULL or a character vector"
@@ -1130,14 +1122,12 @@ msgstr "pakete %s yra licencija, su kuria turite sutikti interaktyvioje sesijoje
 msgid "package %s has a license that you need to accept after viewing"
 msgstr "pakete %s yra licencija, su kuria turite sutikti po peržiūros"
 
-msgid "package %s has a license that you need to accept:"
-msgstr "pakete %s yra licencija, su kuria turite sutikti:"
-
-msgid "according to the DESCRIPTION file it is"
-msgstr "pagal failą DESCRIPTION tai yra"
-
-msgid "%s"
-msgstr "%s"
+#, fuzzy
+msgid ""
+"package %s has a license that you need to accept:\n"
+"  according to the DESCRIPTION file it is\n"
+"  %s"
+msgstr "pakete %s yra licencija, su kuria turite sutikti po peržiūros"
 
 msgid "license for package %s not accepted"
 msgstr "paketo %s licencija nepriimta"
@@ -1987,10 +1977,6 @@ msgstr[2] ""
 #~ msgid "there is more than one match in 'match.arg'"
 #~ msgstr "yra daugiau nei viena atitiktis 'match.arg'"
 
-#, fuzzy
-#~ msgid "'name' must be a single character string"
-#~ msgstr "argumentas 'object' turi būti išnagrinėtas iki atskiros simbolių eilutės"
-
 #~ msgid "'from' must be specified"
 #~ msgstr "'from' turi būti apibrėžtas"
 
@@ -2039,10 +2025,6 @@ msgstr[2] ""
 
 #~ msgid "'flag' must be a string, i.e., of length 1"
 #~ msgstr "'arg' ilgis turi būti eilutė, pvz., 1 ilgio"
-
-#, fuzzy
-#~ msgid ", will be ignored"
-#~ msgstr "'drop' argumentas bus ignoruojamas"
 
 #~ msgid "norm '%s' currently always uses exact = FALSE"
 #~ msgstr "norma '%s' šiuo metu visada naudoja exact = FALSE"
@@ -2142,14 +2124,6 @@ msgstr[2] ""
 
 #~ msgid "2. In %s :"
 #~ msgstr "2. %s :"
-
-#, fuzzy
-#~ msgid "extra arguments %s will be disregarded"
-#~ msgstr ""
-#~ "#-#-#-#-#  catalog.po  #-#-#-#-#\n"
-#~ "%s papildomi argumentai bus ignoruojami\n"
-#~ "#-#-#-#-#  catalog.po  #-#-#-#-#\n"
-#~ "%s papildomų argumentų bus ignoruojama"
 
 #~ msgid "3. In %s :"
 #~ msgstr "3. %s :"

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.1\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-09-02 17:54\n"
+"POT-Creation-Date: 2026-09-03 23:24\n"
 "PO-Revision-Date: 2012-09-28 22:18+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
@@ -380,9 +380,6 @@ msgstr ""
 msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "ikkje numerisk variabel i dataramme:"
 
-msgid ","
-msgstr ","
-
 #, fuzzy
 msgid "%s only defined for equally-sized data frames"
 msgstr "berre definert for datarammer av lik storleik"
@@ -470,9 +467,6 @@ msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "«lag» og «differences» må vera heiltal større eller lik 1"
 
 msgid "unable to deduce timezone name from"
-msgstr ""
-
-msgid "timedatectl"
 msgstr ""
 
 msgid "wrong class"
@@ -1041,10 +1035,7 @@ msgstr "ugyldig «category»-argument"
 msgid "must specify names of formal arguments for 'vectorize'"
 msgstr "må oppgje namn på formelle argument til «vectorize»"
 
-msgid "FUN"
-msgstr ""
-
-msgid "may not have argument(s) named"
+msgid "%s may not have argument(s) %s"
 msgstr ""
 
 msgid "'arg' must be NULL or a character vector"
@@ -1190,17 +1181,11 @@ msgid "package %s has a license that you need to accept after viewing"
 msgstr "Pakken %s har lisensvilkår som du må godta etter at du har lese"
 
 #, fuzzy
-msgid "package %s has a license that you need to accept:"
+msgid ""
+"package %s has a license that you need to accept:\n"
+"  according to the DESCRIPTION file it is\n"
+"  %s"
 msgstr "Pakken %s har lisensvilkår som du må godta etter at du har lese"
-
-#, fuzzy
-msgid "according to the DESCRIPTION file it is"
-msgstr ""
-"Pakken %s har lisensvilkår som du må godta:\n"
-"Ifølgje DESCRIPTION-fila er vilkåra"
-
-msgid "%s"
-msgstr ""
 
 #, fuzzy
 msgid "license for package %s not accepted"
@@ -2067,16 +2052,8 @@ msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
 #~ msgid "there is more than one match in 'match.arg'"
 #~ msgstr "det finst meir enn eitt treff i «match.arg»"
 
-#, fuzzy
-#~ msgid "'name' must be a single character string"
-#~ msgstr "argumentet «object» må deparsast til ein enkelt tekststreng"
-
 #~ msgid "'from' must be specified"
 #~ msgstr "«from» må oppgjevast"
-
-#, fuzzy
-#~ msgid "'from' must be a \"Date\" object"
-#~ msgstr "«from» må vera eit «Date»-objekt"
 
 #~ msgid "'from' must be of length 1"
 #~ msgstr "«from» må ha lengd 1"
@@ -2087,14 +2064,6 @@ msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
 #~ msgid "'by' must be of length 1"
 #~ msgstr "«by» må ha lengd 1"
 
-#, fuzzy
-#~ msgid "'from' must be a \"POSIXt\" object"
-#~ msgstr "«from» må vera eit «POSIXt»-objekt"
-
-#, fuzzy
-#~ msgid "'to' must be a \"POSIXt\" object"
-#~ msgstr "«to» må vera eit «POSIXt»-objekt"
-
 #~ msgid "'package' must be of length 1"
 #~ msgstr "«package» må ha lengd 1"
 
@@ -2104,24 +2073,8 @@ msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
 #~ msgid "argument 'length.out' must be of length 1"
 #~ msgstr "argumentet «length.out» må ha lengd 1"
 
-#, fuzzy
-#~ msgid "'which' must be of length 1"
-#~ msgstr "«to» må ha lengd 1"
-
 #~ msgid "'normal.kind' must be a character string of length 1"
 #~ msgstr "«normal.kind» må vera ein teiknstreng av lengd 1"
-
-#, fuzzy
-#~ msgid "'sample.kind' must be a character string of length 1"
-#~ msgstr "«normal.kind» må vera ein teiknstreng av lengd 1"
-
-#, fuzzy
-#~ msgid "'flag' must be a string, i.e., of length 1"
-#~ msgstr "«arg» må ha eitt element"
-
-#, fuzzy
-#~ msgid ", will be ignored"
-#~ msgstr "«drop»-argumentet vert ignorert"
 
 #~ msgid "norm '%s' currently always uses exact = FALSE"
 #~ msgstr "norma «%s» brukar alltid «exact = FALSE»"
@@ -2132,10 +2085,6 @@ msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
 #~ msgid "'origin' must be supplied"
 #~ msgstr "må oppgje «origin»"
 
-#, fuzzy
-#~ msgid "package %s does not have a namespace and should be re-installed"
-#~ msgstr "pakken «%s» har ikkje eit namnerom (NAMESPACE), og må installerast på nytt"
-
 #~ msgid "argument 'object' must deparse to a single character string"
 #~ msgstr "argumentet «object» må deparsast til ein enkelt tekststreng"
 
@@ -2144,10 +2093,6 @@ msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
 
 #~ msgid "bad handler specification"
 #~ msgstr "ugyldig handsamarspesifikasjon"
-
-#, fuzzy
-#~ msgid "Partial match of '%s' to '%s' in data frame"
-#~ msgstr "ikkje numerisk variabel i dataramme:"
 
 #~ msgid "'object' must be a list"
 #~ msgstr "«object» må vera ei liste"
@@ -2166,18 +2111,6 @@ msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "«vec» inneheld NA-verdiar"
-
-#, fuzzy
-#~ msgid "method = \"radix\" is only for integer 'x'"
-#~ msgstr "«method=\"radix\"» er berre for numerisk «x»"
-
-#, fuzzy
-#~ msgid "re-exports %s not exported by %s"
-#~ msgstr "objektet «%s» er ikkje eksportert av «namespace:%s»"
-
-#, fuzzy
-#~ msgid "cannot be unloaded."
-#~ msgstr "namnerom kan ikkje lastast ut:"
 
 #~ msgid "package %s %s was found, but %s %s is required by %s"
 #~ msgstr "fann pakken «%s %s», men «%s %s» trengst av «%s»"
@@ -2221,16 +2154,8 @@ msgstr[1] "ekstraargument(a) «%s» vert ikkje brukt(e)"
 #~ msgid "singular matrix in 'chol2inv'"
 #~ msgstr "singulær matrise i «chol2inv»"
 
-#, fuzzy
-#~ msgid "'%s' returned code %d in 'eigen'"
-#~ msgstr "«rs» returnerte koden %d i «eigen»"
-
 #~ msgid "'nv' must be 0 or ncol(x)"
 #~ msgstr "«nv» må vera 0 eller ncol(x)"
-
-#, fuzzy
-#~ msgid "error %d in LINPACK subroutine 'dsvdc'"
-#~ msgstr "feil %d i «dsvdc»"
 
 #~ msgid "found an S4 version of %s so it has not been imported correctly"
 #~ msgstr "fann ein S4-versjon «%s», så han er ikkje rett importert"

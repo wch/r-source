@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-09-02 17:54\n"
+"POT-Creation-Date: 2026-09-03 23:24\n"
 "PO-Revision-Date: 2015-03-25 14:20+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -379,9 +379,6 @@ msgstr ""
 msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "variabel der ikke er numerisk i dataramme:"
 
-msgid ","
-msgstr ","
-
 msgid "%s only defined for equally-sized data frames"
 msgstr "%s kun defineret for lige store datarammer"
 
@@ -461,9 +458,6 @@ msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag' og 'differences' skal være heltal >=1"
 
 msgid "unable to deduce timezone name from"
-msgstr ""
-
-msgid "timedatectl"
 msgstr ""
 
 msgid "wrong class"
@@ -1012,10 +1006,7 @@ msgstr "ugyldigt 'category'-argument"
 msgid "must specify names of formal arguments for 'vectorize'"
 msgstr "skal angive navne på formelle argumenter for 'vectorize'"
 
-msgid "FUN"
-msgstr ""
-
-msgid "may not have argument(s) named"
+msgid "%s may not have argument(s) %s"
 msgstr ""
 
 msgid "'arg' must be NULL or a character vector"
@@ -1154,17 +1145,11 @@ msgid "package %s has a license that you need to accept after viewing"
 msgstr "pakke %s har en licens, som du skal acceptere efter visning"
 
 #, fuzzy
-msgid "package %s has a license that you need to accept:"
+msgid ""
+"package %s has a license that you need to accept:\n"
+"  according to the DESCRIPTION file it is\n"
+"  %s"
 msgstr "pakke %s har en licens, som du skal acceptere efter visning"
-
-#, fuzzy
-msgid "according to the DESCRIPTION file it is"
-msgstr ""
-"pakke %s har en licens, som du skal acceptere:\n"
-"ifølge DESCRIPTION-filen er det"
-
-msgid "%s"
-msgstr ""
 
 msgid "license for package %s not accepted"
 msgstr "licens for pakke %s er ikke accepteret"
@@ -1995,10 +1980,6 @@ msgstr[1] "ekstra argumentet %s vil blive ignoreret"
 #~ msgid "there is more than one match in 'match.arg'"
 #~ msgstr "der er mere end en match i 'match.arg'"
 
-#, fuzzy
-#~ msgid "'name' must be a single character string"
-#~ msgstr "argument 'object' skal deparse til en enkel tegnstreng"
-
 #~ msgid "'from' must be specified"
 #~ msgstr "'from' skal angives"
 
@@ -2029,24 +2010,8 @@ msgstr[1] "ekstra argumentet %s vil blive ignoreret"
 #~ msgid "argument 'length.out' must be of length 1"
 #~ msgstr "argument 'length.out' skal have længden 1"
 
-#, fuzzy
-#~ msgid "'which' must be of length 1"
-#~ msgstr "'to' skal være af længde 1"
-
 #~ msgid "'normal.kind' must be a character string of length 1"
 #~ msgstr "'normal.kind' skal være en tegnstreng af længde 1"
-
-#, fuzzy
-#~ msgid "'sample.kind' must be a character string of length 1"
-#~ msgstr "'normal.kind' skal være en tegnstreng af længde 1"
-
-#, fuzzy
-#~ msgid "'flag' must be a string, i.e., of length 1"
-#~ msgstr "'arg' skal have længden 1"
-
-#, fuzzy
-#~ msgid ", will be ignored"
-#~ msgstr "'drop'-argument vil blive ignoreret"
 
 #~ msgid "norm '%s' currently always uses exact = FALSE"
 #~ msgstr "norm '%s' bruger i øjeblikket altid præcis = FALSE"

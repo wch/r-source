@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-09-02 17:54\n"
+"POT-Creation-Date: 2026-09-03 23:24\n"
 "PO-Revision-Date: 2024-03-20 03:05+0000\n"
 "Last-Translator: \"Luis D. Verde Arregoitia\" <luisd@ciencias.unam.mx>\n"
 "Language-Team: none\n"
@@ -350,9 +350,6 @@ msgstr "'max' / getOption(\"max.print\") no válido:"
 msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "variable(s) no numérica(s) en el data frame:"
 
-msgid ","
-msgstr ","
-
 msgid "%s only defined for equally-sized data frames"
 msgstr "%s definido solamente para data frames con tamaños iguales"
 
@@ -429,9 +426,6 @@ msgstr "'lag' y 'differences' deben ser enteros >= 1"
 
 msgid "unable to deduce timezone name from"
 msgstr "imposible de deducir nombre de timezone de"
-
-msgid "timedatectl"
-msgstr ""
 
 msgid "wrong class"
 msgstr "clase incorrecta"
@@ -977,10 +971,8 @@ msgstr "argumento 'category' no válido"
 msgid "must specify names of formal arguments for 'vectorize'"
 msgstr "se deben especificar los nombres de los argumentos formales para 'vectorize'"
 
-msgid "FUN"
-msgstr "FUN"
-
-msgid "may not have argument(s) named"
+#, fuzzy
+msgid "%s may not have argument(s) %s"
 msgstr "puede no tener argumento(s) de nombre"
 
 msgid "'arg' must be NULL or a character vector"
@@ -1117,14 +1109,12 @@ msgstr ""
 msgid "package %s has a license that you need to accept after viewing"
 msgstr "el paquete %s tiene una licencia que necesita aceptar después de revisar"
 
-msgid "package %s has a license that you need to accept:"
-msgstr "el paquete %s tiene una licencia que necesita aceptar:"
-
-msgid "according to the DESCRIPTION file it is"
-msgstr "según el archivo DESCRIPTION es"
-
-msgid "%s"
-msgstr "%s"
+#, fuzzy
+msgid ""
+"package %s has a license that you need to accept:\n"
+"  according to the DESCRIPTION file it is\n"
+"  %s"
+msgstr "el paquete %s tiene una licencia que necesita aceptar después de revisar"
 
 msgid "license for package %s not accepted"
 msgstr "licencia para el paquete %s no aceptada"
@@ -1928,10 +1918,6 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#, fuzzy
-#~ msgid "there is more than one match in 'match.arg'"
-#~ msgstr "hay más de una coincidencia en 'match.arg'"
-
 #~ msgid "'name' must be a single character string"
 #~ msgstr "'name' debe ser un string de un solo caracter"
 
@@ -1956,10 +1942,6 @@ msgstr[1] ""
 #~ msgid "'to' must be a \"POSIXt\" object"
 #~ msgstr "'to' debe ser un objeto \"POSIXt\""
 
-#, fuzzy
-#~ msgid "'package' must be of length 1"
-#~ msgstr "'package' debe ser de longitud 1"
-
 #~ msgid "'arg' must be of length 1"
 #~ msgstr "'arg' debe ser de longitud 1"
 
@@ -1968,18 +1950,6 @@ msgstr[1] ""
 
 #~ msgid "'sample.kind' must be a character string of length 1"
 #~ msgstr "'sample.kind' debe ser una cadena de caracteres de longitud 1"
-
-#, fuzzy
-#~ msgid "'flag' must be a string, i.e., of length 1"
-#~ msgstr "'flag' debe ser una cadena, es decir, de longitud 1"
-
-#, fuzzy
-#~ msgid ", will be ignored"
-#~ msgstr "el argumento '%s' será ignorado"
-
-#, fuzzy
-#~ msgid "package %s does not have a namespace and should be re-installed"
-#~ msgstr "el paquete %s no tiene un namespace y debe ser reinstalado"
 
 #~ msgid "'file' must be non-empty string"
 #~ msgstr "'file' debe ser una cadena no vacía"

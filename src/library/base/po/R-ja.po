@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.4.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-09-02 17:54\n"
+"POT-Creation-Date: 2026-09-03 23:24\n"
 "PO-Revision-Date: 2024-03-19 03:05+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -367,9 +367,6 @@ msgstr "無効な 'max' / getOption(\"max.print\"):"
 msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "以下のデータフレーム中に数値でない変数があります:"
 
-msgid ","
-msgstr ","
-
 msgid "%s only defined for equally-sized data frames"
 msgstr "%s は同じ大きさのデータフレームに対してだけ定義されています"
 
@@ -450,9 +447,6 @@ msgstr "'lag' そして 'differences' は 1 以上の整数でなければなり
 
 msgid "unable to deduce timezone name from"
 msgstr "タイムゾーン名を推測することができません"
-
-msgid "timedatectl"
-msgstr ""
 
 msgid "wrong class"
 msgstr "間違ったクラスです"
@@ -1005,10 +999,7 @@ msgstr "無効な 'category' 引数です"
 msgid "must specify names of formal arguments for 'vectorize'"
 msgstr "'vectorize.args' には仮引数名しか指定出来ません"
 
-msgid "FUN"
-msgstr ""
-
-msgid "may not have argument(s) named"
+msgid "%s may not have argument(s) %s"
 msgstr ""
 
 msgid "'arg' must be NULL or a character vector"
@@ -1146,15 +1137,12 @@ msgstr "パッケージ %s を使うには対話的セッションでライセ�
 msgid "package %s has a license that you need to accept after viewing"
 msgstr "パッケージ %s を使うにはライセンスを確認して受諾する必要があります"
 
-msgid "package %s has a license that you need to accept:"
-msgstr "パッケージ %s を使うにはライセンスを確認して受諾する必要があります:"
-
 #, fuzzy
-msgid "according to the DESCRIPTION file it is"
-msgstr "パッケージ %s を使うにはライセンスを受諾する必要があります。以下をご確認ください。:"
-
-msgid "%s"
-msgstr ""
+msgid ""
+"package %s has a license that you need to accept:\n"
+"  according to the DESCRIPTION file it is\n"
+"  %s"
+msgstr "パッケージ %s を使うにはライセンスを確認して受諾する必要があります"
 
 msgid "license for package %s not accepted"
 msgstr "パッケージ %s のライセンスは受諾されていません"
@@ -1955,10 +1943,6 @@ msgstr[0] ""
 #~ msgid "there is more than one match in 'match.arg'"
 #~ msgstr "'match.arg' に複数のマッチがあります"
 
-#, fuzzy
-#~ msgid "'name' must be a single character string"
-#~ msgstr "引数 'object' は空でない単一の文字列でなければなりません"
-
 #~ msgid "'from' must be specified"
 #~ msgstr "'from' を指定しなければなりません"
 
@@ -1989,24 +1973,8 @@ msgstr[0] ""
 #~ msgid "argument 'length.out' must be of length 1"
 #~ msgstr "引数 'length.out' は長さ 1 でなければなりません"
 
-#, fuzzy
-#~ msgid "'which' must be of length 1"
-#~ msgstr "'to' は長さ 1 でなければなりません"
-
 #~ msgid "'normal.kind' must be a character string of length 1"
 #~ msgstr "'normal.kind' は長さ 1 の文字列でなければなりません"
-
-#, fuzzy
-#~ msgid "'sample.kind' must be a character string of length 1"
-#~ msgstr "'normal.kind' は長さ 1 の文字列でなければなりません"
-
-#, fuzzy
-#~ msgid "'flag' must be a string, i.e., of length 1"
-#~ msgstr "'arg' は長さ 1 でなければなりません"
-
-#, fuzzy
-#~ msgid ", will be ignored"
-#~ msgstr "'drop' 引数は無視されます"
 
 #~ msgid "norm '%s' currently always uses exact = FALSE"
 #~ msgstr " norm '%s' は現在は常に exact = FALSE を使用します "
@@ -2059,10 +2027,6 @@ msgstr[0] ""
 #~ msgid "method = \"radix\" is only for integer 'x'"
 #~ msgstr " method = \"radix\" は整数の 'x' にしか利用できません "
 
-#, fuzzy
-#~ msgid "re-exports %s not exported by %s"
-#~ msgstr " オブジェクト %s は 'namespace:%s' によってエクスポートされていません "
-
 #~ msgid "cannot be unloaded."
 #~ msgstr " アンロード出来ません "
 
@@ -2074,20 +2038,6 @@ msgstr[0] ""
 
 #~ msgid "wrong argument"
 #~ msgstr " 間違った引数です "
-
-#, fuzzy
-#~ msgid ""
-#~ "The following object is masked %s %s:\n"
-#~ "\n"
-#~ "%s\n"
-#~ msgid_plural ""
-#~ "The following objects are masked %s %s:\n"
-#~ "\n"
-#~ "%s\n"
-#~ msgstr[0] ""
-#~ " 以下のオブジェクトは %s によってマスクされています: \n"
-#~ "\n"
-#~ " %s \n"
 
 #~ msgid "'nu' must be 0, nrow(x) or ncol(x)"
 #~ msgstr " 'nu' は 0、または nrow(x) または ncol(x) でなければなりません "
@@ -2122,16 +2072,8 @@ msgstr[0] ""
 #~ msgid "singular matrix in 'chol2inv'"
 #~ msgstr " 'chol2inv' 中に特異行列 "
 
-#, fuzzy
-#~ msgid "'%s' returned code %d in 'eigen'"
-#~ msgstr " 'eigen' で 'rs' がコード %d を返しました "
-
 #~ msgid "'nv' must be 0 or ncol(x)"
 #~ msgstr " 'nv' は 0 か ncol(x) でなければなりません "
-
-#, fuzzy
-#~ msgid "error %d in LINPACK subroutine 'dsvdc'"
-#~ msgstr " 'dsvdc' 中にエラー %d があります "
 
 #~ msgid "found an S4 version of %s so it has not been imported correctly"
 #~ msgstr " '%s' の S4 版が見付かりました。したがってそれは正しくインポートされていません "
@@ -2209,10 +2151,6 @@ msgstr[0] ""
 #~ msgid "'by' must specify valid column(s)"
 #~ msgstr " 'by' は有効な列を指定しなければなりません "
 
-#, fuzzy
-#~ msgid "%s not defined for numeric_version objects"
-#~ msgstr " numeric_version オブジェクトに対しては定義されていません "
-
 #~ msgid "unary"
 #~ msgstr " 単項演算 "
 
@@ -2285,42 +2223,11 @@ msgstr[0] ""
 #~ msgid "invalid argument values in 'backsolve'"
 #~ msgstr " 'backsolve' に無効な引数値が与えられました "
 
-#, fuzzy
-#~ msgid "invalid value of ncol(x)"
-#~ msgstr " 無効な値です "
-
 #~ msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 #~ msgstr " 'backsolve' に特異行列。対角線 [%d] の最初の要素がゼロです "
-
-#, fuzzy
-#~ msgid "invalid value of nrow(x)"
-#~ msgstr " 無効な値です "
 
 #~ msgid "Expected a single logical value for the S4 state flag"
 #~ msgstr " S4 状態フラグに対しては単一の論理値が期待されています "
 
 #~ msgid "Expected a single logical value for the S3 state flag"
 #~ msgstr " S3 状態フラグに対しては単一の論理値が期待されています "
-
-#, fuzzy
-#~ msgid "invalid value of length(x)"
-#~ msgstr " 無効な値です "
-
-#, fuzzy
-#~ msgid "invalid value of length(breaks)"
-#~ msgstr " 無効な値です "
-
-#, fuzzy
-#~ msgid "invalid length(x)"
-#~ msgstr " 無効な値です "
-
-#, fuzzy
-#~ msgid "invalid length(vec)"
-#~ msgstr " 無効な値です "
-
-#, fuzzy
-#~ msgid "invalid value of length(bin)"
-#~ msgstr " 無効な値です "
-
-#~ msgid "version"
-#~ msgstr " バージョン "

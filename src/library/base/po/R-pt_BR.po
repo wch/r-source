@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.3.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-09-02 17:54\n"
+"POT-Creation-Date: 2026-09-03 23:24\n"
 "PO-Revision-Date: 2024-03-19 12:53+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: http://www.feferraz.net/br/P/Projeto_Traducao_R_Portugues\n"
@@ -355,9 +355,6 @@ msgstr "'max' / getOption(\"max.print\") inválido:"
 msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "variável(is) não numérica(s) ou similar(es) no data frame:"
 
-msgid ","
-msgstr ","
-
 msgid "%s only defined for equally-sized data frames"
 msgstr "%s definido somente para data frames com tamanhos iguais"
 
@@ -434,9 +431,6 @@ msgstr "'lag' e differences' devem ser inteiros >= 1"
 
 msgid "unable to deduce timezone name from"
 msgstr "impossível deduzir fuso horário de"
-
-msgid "timedatectl"
-msgstr ""
 
 msgid "wrong class"
 msgstr "classe errada"
@@ -975,10 +969,8 @@ msgstr "argumento 'category' inválido"
 msgid "must specify names of formal arguments for 'vectorize'"
 msgstr "nomes de argumentos formais devem ser especificados em 'vectorize'"
 
-msgid "FUN"
-msgstr "FUN"
-
-msgid "may not have argument(s) named"
+#, fuzzy
+msgid "%s may not have argument(s) %s"
 msgstr "não pode haver argumento(s) nomeado(s)"
 
 msgid "'arg' must be NULL or a character vector"
@@ -1115,14 +1107,12 @@ msgstr "pacote %s tem uma licença que você precisa aceitar em uma sessão inte
 msgid "package %s has a license that you need to accept after viewing"
 msgstr "pacote %s tem uma licença que você precisa aceitar depois de visualizá-la"
 
-msgid "package %s has a license that you need to accept:"
-msgstr "pacote %s tem uma licença que você precisa aceitar:"
-
-msgid "according to the DESCRIPTION file it is"
-msgstr "de acordo com o arquivo DESCRIPTION ele é"
-
-msgid "%s"
-msgstr "%s"
+#, fuzzy
+msgid ""
+"package %s has a license that you need to accept:\n"
+"  according to the DESCRIPTION file it is\n"
+"  %s"
+msgstr "pacote %s tem uma licença que você precisa aceitar depois de visualizá-la"
 
 msgid "license for package %s not accepted"
 msgstr "licença do pacote %s não foi aceita"
@@ -1990,10 +1980,6 @@ msgstr[1] ""
 #~ msgid "'flag' must be a string, i.e., of length 1"
 #~ msgstr "'flag' deve ter ser uma string, i.e., de comprimento 1"
 
-#, fuzzy
-#~ msgid ", will be ignored"
-#~ msgstr "argumento '%s' será ignorado"
-
 #~ msgid "norm '%s' currently always uses exact = FALSE"
 #~ msgstr "norma '%s' atualmente sempre usa exact = FALSE"
 
@@ -2021,10 +2007,6 @@ msgstr[1] ""
 #~ msgid "bad handler specification"
 #~ msgstr "especificação de handler inválido"
 
-#, fuzzy
-#~ msgid "Partial match of '%s' to '%s' in data frame"
-#~ msgstr "variável não numérica no data frame:"
-
 #~ msgid "'object' must be a list"
 #~ msgstr "'object' deve ser uma lista"
 
@@ -2042,26 +2024,6 @@ msgstr[1] ""
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "'vec' contem NAs"
-
-#, fuzzy
-#~ msgid "method = \"radix\" is only for integer 'x'"
-#~ msgstr "method=\"radix\" somente para 'x' inteiro"
-
-#, fuzzy
-#~ msgid "re-exports %s not exported by %s"
-#~ msgstr "objeto %s não foi exportado por 'namespace:%s'"
-
-#, fuzzy
-#~ msgid "cannot be unloaded."
-#~ msgstr "espaço de nomes não pode ser descarregado"
-
-#, fuzzy
-#~ msgid "package %s %s was found, but %s %s is required by %s"
-#~ msgstr "pacote '%s' %s foi encontrado, mas %s %s é exigido por '%s'"
-
-#, fuzzy
-#~ msgid "package %s %s is loaded, but %s %s is required by %s"
-#~ msgstr "pacote '%s' %s está carregado, mas %s %s é exigido por '%s'"
 
 #~ msgid "wrong argument"
 #~ msgstr "argumento errado"
@@ -2096,16 +2058,8 @@ msgstr[1] ""
 #~ msgid "singular matrix in 'chol2inv'"
 #~ msgstr "matriz singular em 'chol2inv'"
 
-#, fuzzy
-#~ msgid "'%s' returned code %d in 'eigen'"
-#~ msgstr "'rs' retornou código %d em 'eigen'"
-
 #~ msgid "'nv' must be 0 or ncol(x)"
 #~ msgstr "'nv' deve ser 0 ou ncol(x)"
-
-#, fuzzy
-#~ msgid "error %d in LINPACK subroutine 'dsvdc'"
-#~ msgstr "erro %d em 'dsvdc'"
 
 #~ msgid "found an S4 version of %s so it has not been imported correctly"
 #~ msgstr "foi encontrada uma versão S4 de '%s' portanto ele não foi importado corretamente"
@@ -2118,10 +2072,6 @@ msgstr[1] ""
 
 #~ msgid "F used instead of FALSE"
 #~ msgstr "F usado ao invés de FALSE"
-
-#, fuzzy
-#~ msgid "cannot find namespace environment"
-#~ msgstr "não foi possível encontrar o ambiente de espaço de nomes"
 
 #~ msgid "items"
 #~ msgstr "itens"
@@ -2168,14 +2118,6 @@ msgstr[1] ""
 #~ msgid "License"
 #~ msgstr "Licença"
 
-#, fuzzy
-#~ msgid ""
-#~ "file %s has magic number '%s'\n"
-#~ "   Use of save versions prior to 2 is deprecated"
-#~ msgstr ""
-#~ "arquivo '%s' tem número mágico '%s'\n"
-#~ "   Uso de versões salvas antes da versão 2 é obsoleto"
-
 #~ msgid "(loaded the methods namespace)"
 #~ msgstr "(carregado o espaço de nomes de methods)"
 
@@ -2184,10 +2126,6 @@ msgstr[1] ""
 
 #~ msgid "'by' must specify valid column(s)"
 #~ msgstr "'by' deve especificar coluna(s) válida(s)"
-
-#, fuzzy
-#~ msgid "%s not defined for numeric_version objects"
-#~ msgstr "não definido para objetosnumeric_version"
 
 #~ msgid "unary"
 #~ msgstr "unário"
@@ -2261,39 +2199,11 @@ msgstr[1] ""
 #~ msgid "invalid argument values in 'backsolve'"
 #~ msgstr "argumentos de valores inválidos em 'backsolve'"
 
-#, fuzzy
-#~ msgid "invalid value of ncol(x)"
-#~ msgstr "valor inválido"
-
 #~ msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 #~ msgstr "matriz singular em 'backsolve'. Primeiro zero na diagonal [%d]"
-
-#, fuzzy
-#~ msgid "invalid value of nrow(x)"
-#~ msgstr "valor inválido"
 
 #~ msgid "Expected a single logical value for the S4 state flag"
 #~ msgstr "Esperado um único valor lógico para o flag de estado S4"
 
 #~ msgid "Expected a single logical value for the S3 state flag"
 #~ msgstr "Esperado um único valor lógico para o flag de estado S3"
-
-#, fuzzy
-#~ msgid "invalid value of length(x)"
-#~ msgstr "valor inválido"
-
-#, fuzzy
-#~ msgid "invalid value of length(breaks)"
-#~ msgstr "valor inválido"
-
-#, fuzzy
-#~ msgid "invalid length(x)"
-#~ msgstr "valor inválido"
-
-#, fuzzy
-#~ msgid "invalid length(vec)"
-#~ msgstr "valor inválido"
-
-#, fuzzy
-#~ msgid "invalid value of length(bin)"
-#~ msgstr "valor inválido"

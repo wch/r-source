@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-09-02 17:54\n"
+"POT-Creation-Date: 2026-09-03 23:24\n"
 "PO-Revision-Date: 2026-05-01 14:17+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -356,9 +356,6 @@ msgstr "ungültiges 'max' / getOption(\"max.print\"):"
 msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "nicht-numerische Variable(n) in Dataframe:"
 
-msgid ","
-msgstr ","
-
 msgid "%s only defined for equally-sized data frames"
 msgstr "%s ist nur für Dataframes gleicher Größe definiert"
 
@@ -436,9 +433,6 @@ msgstr "'lag' and 'differences' müssen ganze Zahlen >=1 sein"
 
 msgid "unable to deduce timezone name from"
 msgstr "kann Zeitzone nicht ableiten aus"
-
-msgid "timedatectl"
-msgstr ""
 
 msgid "wrong class"
 msgstr "falsche Klasse"
@@ -979,10 +973,8 @@ msgstr "ungültiges Argument für 'category'"
 msgid "must specify names of formal arguments for 'vectorize'"
 msgstr "für 'vectorize' müssen Namen für formale Argumente angegeben werden"
 
-msgid "FUN"
-msgstr "FUN"
-
-msgid "may not have argument(s) named"
+#, fuzzy
+msgid "%s may not have argument(s) %s"
 msgstr "Argument(e) dürfen nicht benannt sein"
 
 msgid "'arg' must be NULL or a character vector"
@@ -1119,14 +1111,12 @@ msgstr "Paket %s unterliegt einer Lizenz, die in einer interaktiven Sitzung akze
 msgid "package %s has a license that you need to accept after viewing"
 msgstr "Paket %s unterliegt einer Lizenz, die nach Ansicht akzeptiert werden muss"
 
-msgid "package %s has a license that you need to accept:"
-msgstr "Paket %s unterliegt einer Lizenz, welche akzeptiert werden muss:"
-
-msgid "according to the DESCRIPTION file it is"
-msgstr "Gemäß DESCRIPTION handelt es sich um"
-
-msgid "%s"
-msgstr "%s"
+#, fuzzy
+msgid ""
+"package %s has a license that you need to accept:\n"
+"  according to the DESCRIPTION file it is\n"
+"  %s"
+msgstr "Paket %s unterliegt einer Lizenz, die nach Ansicht akzeptiert werden muss"
 
 msgid "license for package %s not accepted"
 msgstr "Lizenz für Paket %s nicht akzeptiert"
@@ -2004,10 +1994,6 @@ msgstr[1] ""
 #~ msgid "'flag' must be a string, i.e., of length 1"
 #~ msgstr "'flag' muss Zeichenkette sein, insbesondere mit Länge 1"
 
-#, fuzzy
-#~ msgid ", will be ignored"
-#~ msgstr "Argument '%s' wird ignoriert"
-
 #~ msgid "norm '%s' currently always uses exact = FALSE"
 #~ msgstr "Norm '%s' nutzt aktuell immer exact = FALSE"
 
@@ -2136,16 +2122,8 @@ msgstr[1] ""
 #~ msgid "singular matrix in 'chol2inv'"
 #~ msgstr "singuläre Matrix in 'chol2inv'"
 
-#, fuzzy
-#~ msgid "'%s' returned code %d in 'eigen'"
-#~ msgstr "'rs' gab Kode %d zurück in 'eigen'"
-
 #~ msgid "'nv' must be 0 or ncol(x)"
 #~ msgstr "'nv' muss 0 oder ncol(x) sein"
-
-#, fuzzy
-#~ msgid "error %d in LINPACK subroutine 'dsvdc'"
-#~ msgstr "Fehler %d in 'dsvdc'"
 
 #~ msgid "found an S4 version of %s so it has not been imported correctly"
 #~ msgstr "S4 Version von '%s' gefunden, diese war also nicht korrekt importiert"
@@ -2223,10 +2201,6 @@ msgstr[1] ""
 #~ msgid "'by' must specify valid column(s)"
 #~ msgstr "'by' muss gültige Spalte(n) spezifizieren"
 
-#, fuzzy
-#~ msgid "%s not defined for numeric_version objects"
-#~ msgstr "für numeric_version Objekte nicht definiert"
-
 #~ msgid "unary"
 #~ msgstr "unär"
 
@@ -2299,42 +2273,11 @@ msgstr[1] ""
 #~ msgid "invalid argument values in 'backsolve'"
 #~ msgstr "ungültige Argumentwerte in 'backsolve'"
 
-#, fuzzy
-#~ msgid "invalid value of ncol(x)"
-#~ msgstr "ungültiger Wert"
-
 #~ msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 #~ msgstr "singuläre Matrix in 'backsolve'. Erste Null in Diagonale [%d]"
-
-#, fuzzy
-#~ msgid "invalid value of nrow(x)"
-#~ msgstr "ungültiger Wert"
 
 #~ msgid "Expected a single logical value for the S4 state flag"
 #~ msgstr "Erwarte einzelnen, logischen Wert für das S4 Status-Flag"
 
 #~ msgid "Expected a single logical value for the S3 state flag"
 #~ msgstr "Erwarte einzelnen logischen Wert für das S3 Status-Flag"
-
-#, fuzzy
-#~ msgid "invalid value of length(x)"
-#~ msgstr "ungültiger Wert"
-
-#, fuzzy
-#~ msgid "invalid value of length(breaks)"
-#~ msgstr "ungültiger Wert"
-
-#, fuzzy
-#~ msgid "invalid length(x)"
-#~ msgstr "ungültiger Wert"
-
-#, fuzzy
-#~ msgid "invalid length(vec)"
-#~ msgstr "ungültiger Wert"
-
-#, fuzzy
-#~ msgid "invalid value of length(bin)"
-#~ msgstr "ungültiger Wert"
-
-#~ msgid "version"
-#~ msgstr "Version"

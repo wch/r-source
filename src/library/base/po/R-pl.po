@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-09-02 17:54\n"
+"POT-Creation-Date: 2026-09-03 23:24\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -353,9 +353,6 @@ msgstr "niepoprawna wartość 'max' / getOption(\"max.print\"):"
 msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "zmienna nieliczbowa w ramce danych:"
 
-msgid ","
-msgstr ","
-
 msgid "%s only defined for equally-sized data frames"
 msgstr "%s jest zdefiniowane jedynie dla ramek danych o równych rozmiarach"
 
@@ -430,9 +427,6 @@ msgstr "argumenty 'lag' oraz 'differences' muszą być liczbami całkowitymi >= 
 
 msgid "unable to deduce timezone name from"
 msgstr "nie jest możliwe wykrycie nazwy strefy czasowej z"
-
-msgid "timedatectl"
-msgstr ""
 
 msgid "wrong class"
 msgstr "błędna klasa"
@@ -970,10 +964,8 @@ msgstr "niepoprawny argument 'category'"
 msgid "must specify names of formal arguments for 'vectorize'"
 msgstr "wymagane jest określenie nazwy formalnych argumentów dla 'vectorize'"
 
-msgid "FUN"
-msgstr "FUN"
-
-msgid "may not have argument(s) named"
+#, fuzzy
+msgid "%s may not have argument(s) %s"
 msgstr "nie może mieć argumentów o nazwach"
 
 msgid "'arg' must be NULL or a character vector"
@@ -1108,14 +1100,15 @@ msgstr "Pakiet %s posiada licencję, którą musisz zaakceptować w interaktywne
 msgid "package %s has a license that you need to accept after viewing"
 msgstr "pakiet %s posiada licencję, którą musisz zaakceptować po przeglądnięciu"
 
-msgid "package %s has a license that you need to accept:"
-msgstr "pakiet %s posiada licencję, którą musisz zaakceptować:"
-
-msgid "according to the DESCRIPTION file it is"
-msgstr "zgodnie z opisem w pliku 'DESCRIPTION' jest to"
-
-msgid "%s"
-msgstr "%s"
+#, fuzzy
+msgid ""
+"package %s has a license that you need to accept:\n"
+"  according to the DESCRIPTION file it is\n"
+"  %s"
+msgstr ""
+"pakiet %s posiada licencję, którą musisz zaakceptować:\n"
+"według pliku 'DESCRIPTION' jest to\n"
+"%s"
 
 msgid "license for package %s not accepted"
 msgstr "licencja dla pakietu %s nie została zaakceptowana"
@@ -1959,10 +1952,6 @@ msgstr[2] ""
 #~ msgid "there is more than one match in 'match.arg'"
 #~ msgstr "jest więcej niż jedno dopasowanie w funkcji 'match.arg()'"
 
-#, fuzzy
-#~ msgid "'name' must be a single character string"
-#~ msgstr "argument 'object' musi być konwertowalny do pojedynczego łańcucha tekstowego"
-
 #~ msgid "'from' must be specified"
 #~ msgstr "argument 'from' musi być określony"
 
@@ -2000,23 +1989,11 @@ msgstr[2] ""
 #~ "Wywoływanie 'structure(NULL, *)' jest przestarzałe z uwagi na to, że NULL nie może mieć atrybutów.\n"
 #~ "  Zastosuje zamiast tego polecenie 'structure(list(), *)'."
 
-#, fuzzy
-#~ msgid "'which' must be of length 1"
-#~ msgstr "argument 'by' musi mieć długość 1"
-
 #~ msgid "'normal.kind' must be a character string of length 1"
-#~ msgstr "'normal.kind' musi być łańcuchem tekstowym o długości 1"
-
-#, fuzzy
-#~ msgid "'sample.kind' must be a character string of length 1"
 #~ msgstr "'normal.kind' musi być łańcuchem tekstowym o długości 1"
 
 #~ msgid "'flag' must be a string, i.e., of length 1"
 #~ msgstr "argument 'flag' musi mieć długość 1"
-
-#, fuzzy
-#~ msgid ", will be ignored"
-#~ msgstr "argument 'drop' zostanie zignorowany"
 
 #~ msgid "norm '%s' currently always uses exact = FALSE"
 #~ msgstr "norma '%s' aktualnie zawsze używa dokładnej wartości = FALSE"
@@ -2065,15 +2042,6 @@ msgstr[2] ""
 
 #~ msgid "incorrect values of 'indent' and 'width'"
 #~ msgstr "niepoprawne wartości 'indent' oraz 'width'"
-
-#~ msgid ""
-#~ "package %s has a license that you need to accept:\n"
-#~ "according to the DESCRIPTION file it is\n"
-#~ "%s"
-#~ msgstr ""
-#~ "pakiet %s posiada licencję, którą musisz zaakceptować:\n"
-#~ "według pliku 'DESCRIPTION' jest to\n"
-#~ "%s"
 
 #~ msgid "'vec' contains NAs"
 #~ msgstr "argument 'vec' zawiera wartości NA"

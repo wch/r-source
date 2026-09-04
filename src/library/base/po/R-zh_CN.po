@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-09-02 17:54\n"
+"POT-Creation-Date: 2026-09-03 23:24\n"
 "PO-Revision-Date: 2023-12-20 13:03+0000\n"
 "Last-Translator: Shun Wang <shuonwang@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -355,9 +355,6 @@ msgstr "无效的 'max' / getOption(\"max.print\"):"
 msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "数据框中的类似非数值的变量："
 
-msgid ","
-msgstr "，"
-
 msgid "%s only defined for equally-sized data frames"
 msgstr "%s 仅针对大小相等的数据框定义"
 
@@ -434,9 +431,6 @@ msgstr "'lag'和'differences'的值必需为大于等于一的整数"
 
 msgid "unable to deduce timezone name from"
 msgstr "无法推断时区名称从"
-
-msgid "timedatectl"
-msgstr ""
 
 msgid "wrong class"
 msgstr "类别有误"
@@ -976,10 +970,7 @@ msgstr "'category'参数有错误"
 msgid "must specify names of formal arguments for 'vectorize'"
 msgstr "用'vectorize'时必需指定正式参数"
 
-msgid "FUN"
-msgstr ""
-
-msgid "may not have argument(s) named"
+msgid "%s may not have argument(s) %s"
 msgstr ""
 
 msgid "'arg' must be NULL or a character vector"
@@ -1116,17 +1107,11 @@ msgid "package %s has a license that you need to accept after viewing"
 msgstr "程序包%s的使用许可证要求你在看完后接受它"
 
 #, fuzzy
-msgid "package %s has a license that you need to accept:"
+msgid ""
+"package %s has a license that you need to accept:\n"
+"  according to the DESCRIPTION file it is\n"
+"  %s"
 msgstr "程序包%s的使用许可证要求你在看完后接受它"
-
-#, fuzzy
-msgid "according to the DESCRIPTION file it is"
-msgstr ""
-"程序包%s的使用许可证要求你接受它:\n"
-"按照DESCRIPTION文件它是"
-
-msgid "%s"
-msgstr ""
 
 msgid "license for package %s not accepted"
 msgstr "程序包%s的使用许可证没有被接受"
@@ -1928,6 +1913,19 @@ msgid_plural ""
 "In %s :\n"
 " extra arguments %s will be disregarded"
 msgstr[0] "额外参数%s忽略不用"
+
+#~ msgid ","
+#~ msgstr "，"
+
+#, fuzzy
+#~ msgid "package %s has a license that you need to accept:"
+#~ msgstr "程序包%s的使用许可证要求你在看完后接受它"
+
+#, fuzzy
+#~ msgid "according to the DESCRIPTION file it is"
+#~ msgstr ""
+#~ "程序包%s的使用许可证要求你接受它:\n"
+#~ "按照DESCRIPTION文件它是"
 
 #~ msgid "there is more than one match in 'match.arg'"
 #~ msgstr "'match.arg'里有重复的匹配"

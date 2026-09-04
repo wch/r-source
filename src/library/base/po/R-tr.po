@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.13.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-09-02 17:54\n"
+"POT-Creation-Date: 2026-09-03 23:24\n"
 "PO-Revision-Date: 2011-04-01 04:29+0200\n"
 "Last-Translator: Murat Alkan <muratalk@gmail.com>\n"
 "Language-Team: Turkish <muratalk@gmail.com>\n"
@@ -361,9 +361,6 @@ msgstr ""
 msgid "non-numeric-alike variable(s) in data frame:"
 msgstr ""
 
-msgid ","
-msgstr ""
-
 msgid "%s only defined for equally-sized data frames"
 msgstr ""
 
@@ -437,9 +434,6 @@ msgid "'lag' and 'differences' must be integers >= 1"
 msgstr ""
 
 msgid "unable to deduce timezone name from"
-msgstr ""
-
-msgid "timedatectl"
 msgstr ""
 
 msgid "wrong class"
@@ -968,10 +962,7 @@ msgstr ""
 msgid "must specify names of formal arguments for 'vectorize'"
 msgstr ""
 
-msgid "FUN"
-msgstr ""
-
-msgid "may not have argument(s) named"
+msgid "%s may not have argument(s) %s"
 msgstr ""
 
 msgid "'arg' must be NULL or a character vector"
@@ -1103,13 +1094,10 @@ msgstr ""
 msgid "package %s has a license that you need to accept after viewing"
 msgstr ""
 
-msgid "package %s has a license that you need to accept:"
-msgstr ""
-
-msgid "according to the DESCRIPTION file it is"
-msgstr ""
-
-msgid "%s"
+msgid ""
+"package %s has a license that you need to accept:\n"
+"  according to the DESCRIPTION file it is\n"
+"  %s"
 msgstr ""
 
 msgid "license for package %s not accepted"

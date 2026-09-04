@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-09-02 17:54\n"
+"POT-Creation-Date: 2026-09-03 23:24\n"
 "PO-Revision-Date: 2018-04-09 12:05-0600\n"
 "Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
 "Language-Team: \n"
@@ -367,9 +367,6 @@ msgstr ""
 msgid "non-numeric-alike variable(s) in data frame:"
 msgstr "데이터 프레임에 수치형이 아닌 변수가 있습니다."
 
-msgid ","
-msgstr ","
-
 msgid "%s only defined for equally-sized data frames"
 msgstr "동일한 사이즈의 데이터 프레임들의 경우에만 정의된 %s입니다."
 
@@ -448,9 +445,6 @@ msgid "'lag' and 'differences' must be integers >= 1"
 msgstr "'lag'과 'differences'는 반드시 1 이상의 정수여야 합니다"
 
 msgid "unable to deduce timezone name from"
-msgstr ""
-
-msgid "timedatectl"
 msgstr ""
 
 msgid "wrong class"
@@ -983,10 +977,8 @@ msgstr "유효하지 않은 'category' 인자입니다"
 msgid "must specify names of formal arguments for 'vectorize'"
 msgstr ""
 
-msgid "FUN"
-msgstr "FUN"
-
-msgid "may not have argument(s) named"
+#, fuzzy
+msgid "%s may not have argument(s) %s"
 msgstr "아마도 이름이 주어진 인자를 가지고 있지 않은 것 같습니다."
 
 msgid "'arg' must be NULL or a character vector"
@@ -1124,14 +1116,12 @@ msgstr "패키지 %s는 대화형 세션에서 당신이 수락해야할 라이�
 msgid "package %s has a license that you need to accept after viewing"
 msgstr "패키지 %s는 당신이 보고 확인을 해야할 라이센스를 가지고 있습니다"
 
-msgid "package %s has a license that you need to accept:"
-msgstr "패키지 %s는 당신이 수락해야만 하는 다음과 같은 종류의 라이센스를 가지고 있습니다:"
-
-msgid "according to the DESCRIPTION file it is"
-msgstr ""
-
-msgid "%s"
-msgstr "%s"
+#, fuzzy
+msgid ""
+"package %s has a license that you need to accept:\n"
+"  according to the DESCRIPTION file it is\n"
+"  %s"
+msgstr "패키지 %s는 당신이 보고 확인을 해야할 라이센스를 가지고 있습니다"
 
 msgid "license for package %s not accepted"
 msgstr "패키지 %s에 대해서 수락되지 않은 라이센스입니다"
@@ -1914,10 +1904,6 @@ msgstr[0] ""
 #~ msgid "there is more than one match in 'match.arg'"
 #~ msgstr "'match.arg'에 하나 이상의 매치가 있습니다"
 
-#, fuzzy
-#~ msgid "'name' must be a single character string"
-#~ msgstr "'object'인자는 반드시 하나의 문자열로 만들어져야 합니다."
-
 #~ msgid "'from' must be specified"
 #~ msgstr "'from'은 반드시 지정되어야 합니다"
 
@@ -1948,20 +1934,8 @@ msgstr[0] ""
 #~ msgid "argument 'length.out' must be of length 1"
 #~ msgstr "인자 'length.out'은 반드시 길이가 1이어야 합니다"
 
-#, fuzzy
-#~ msgid "'which' must be of length 1"
-#~ msgstr "'to'는 반드시 길이가 1 이어야 합니다"
-
 #~ msgid "'normal.kind' must be a character string of length 1"
 #~ msgstr "'normal.kind'는 반드시 길이가 1인 문자열이어야 합니다."
-
-#, fuzzy
-#~ msgid "'sample.kind' must be a character string of length 1"
-#~ msgstr "'normal.kind'는 반드시 길이가 1인 문자열이어야 합니다."
-
-#, fuzzy
-#~ msgid ", will be ignored"
-#~ msgstr "인자 'drop'은 무시되어질 것입니다"
 
 #~ msgid "norm '%s' currently always uses exact = FALSE"
 #~ msgstr "'%s'는 현재로서는 항상 exact = FALSE를 사용합니다."
