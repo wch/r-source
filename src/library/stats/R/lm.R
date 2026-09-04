@@ -173,7 +173,6 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
                 domain = NA)
     chkDots(...)
     x.asgn <- attr(x, "assign")# save
-    zero.weights <- any(w == 0)
     wtol.sw <- wtol * sum(w)
     w0 <- w <= wtol.sw # as 'w' is known non-negative
     zero.weights <- any(w0) # before: any(w == 0)
