@@ -134,6 +134,12 @@
 ## Unlike SHLIB_CXXLDFLAGS, SHLIB_FCLDFLAGS is never additional
 ## SHLIB_FCLDFLAGS=${SHLIB_LDFLAGS}
 
+## Libraries potentially needed whwn linking a DSO/DLL by the C compiler
+## when compiled Fortan code is included.
+## Auto-detected by configure, but can be overridden here.
+## NB: may be static (flang) or dynamic (gfortran)
+## FLIBS=
+
 ## Additional libraries needed to link a shared object with FC,
 ## e.g. on x86 Solaris
 ## FCLIBS_XTRA=
