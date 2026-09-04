@@ -291,7 +291,7 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 	/* the parser thinks it is EOF but it may not have seen all of the
 	   input, so postpone the decision to exit until there is really
 	   no more input (the parser may be seeing a sequence of spaces)
-	   PR#15941 */ 
+	   PR#15941 */
     case PARSE_INCOMPLETE:
 	R_IoBufferReadReset(&R_ConsoleIob);
 	state->prompt_type = 2;
@@ -311,8 +311,10 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
     state.buf[CONSOLE_BUFFER_SIZE] = '\0';
     /* stopgap measure if line > CONSOLE_BUFFER_SIZE chars */
     state.bufp = state.buf;
-    if(R_Verbose)
+#ifdef XTR_VERBOSE
+    if(R_Verbose) // if(R_Verbose >= 2)  if ever the 'verbose' option  would be  positive integer
 	REprintf(" >R_ReplConsole(): before \"for(;;)\" {main.c}\n");
+#endif
     for(;;) {
 	status = Rf_ReplIteration(rho, savestack, browselevel, &state);
 	if(status < 0) {
@@ -800,7 +802,7 @@ static void invalid_parameter_handler_abort(
         TYPEOF(R_GlobalContext->callfun) == CLOSXP)
         findFunctionForBody(R_ClosureExpr(R_GlobalContext->callfun));
     REprintf(" ----------- END OF FAILURE REPORT -------------- \n");
-    R_Suicide("invalid parameter passed to a C runtime function"); 
+    R_Suicide("invalid parameter passed to a C runtime function");
 }
 
 extern void _invoke_watson(const wchar_t*, const wchar_t*, const wchar_t*,
@@ -835,7 +837,7 @@ void setup_Rmainloop(void)
     }
 #endif
 
-#ifdef DEBUG_STACK_DETECTION 
+#ifdef DEBUG_STACK_DETECTION
     /* testing stack base and size detection */
     printf("stack limit %lu, start %lu dir %d \n",
 	(unsigned long) R_CStackLimit,
@@ -882,9 +884,9 @@ void setup_Rmainloop(void)
 #ifdef HAVE_LOCALE_H
 #ifdef Win32
     {
-	char allbuf[1000]; /* Windows' locales can be very long */ 
-	char *p, *lcall; 
-    
+	char allbuf[1000]; /* Windows' locales can be very long */
+	char *p, *lcall;
+
 	p = getenv("LC_ALL");
 	if(p) {
 	    strncpy(allbuf, p, sizeof(allbuf));
@@ -892,7 +894,7 @@ void setup_Rmainloop(void)
 	    lcall = allbuf;
 	} else
 	    lcall = NULL;
-	
+
 	/* We'd like to use warning, but need to defer.
 	   Also cannot translate. */
 
@@ -905,7 +907,7 @@ void setup_Rmainloop(void)
 	if(!setlocale(LC_CTYPE, p ? p : ""))
 	    snprintf(deferred_warnings[ndeferred_warnings++], 250,
 		     "Setting LC_CTYPE=%.200s failed\n", p);
-	
+
 	p = lcall ? lcall : getenv("LC_MONETARY");
 	if(!setlocale(LC_MONETARY, p ? p : ""))
 	    snprintf(deferred_warnings[ndeferred_warnings++], 250,
@@ -936,7 +938,7 @@ void setup_Rmainloop(void)
       If LANG or LC_ALL has been set to a non-existing locale, we assume
       that the user wants to ne informed. */
 
-    const char *s;	
+    const char *s;
     int quiet;
 
     quiet = !( ((s = getenv("LANG")) && *s) || ((s = getenv("LC_ALL")) && *s) );
@@ -1485,7 +1487,7 @@ attribute_hidden SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    /* skip over the hook closure on the stack */
 	    while ((!(cptr->callflag & CTXT_FUNCTION) || cptr->cloenv != rho)
 		   && cptr->callflag )
-	    cptr = cptr->nextcontext;		
+	    cptr = cptr->nextcontext;
 #endif
 	while ( ( !(cptr->callflag & CTXT_FUNCTION) || skipCalls--)
 		&& cptr->callflag )
@@ -1731,7 +1733,7 @@ Rf_removeTaskCallbackByName(const char *name)
     }
     if(el)
 	removeToplevelHandler(el);
-    else 
+    else
 	status = FALSE;
 
     return(status);
@@ -1893,6 +1895,7 @@ Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded,
 		Rf_ToplevelTaskHandlers = h;
 	    if(tmp->finalizer)
 		tmp->finalizer(tmp->data);
+	    free(tmp->name);
 	    free(tmp);
 	}
     }
@@ -1926,7 +1929,7 @@ R_taskCallbackRoutine(SEXP expr, SEXP value, Rboolean succeeded,
 	R_visibleSym = install("visible");
 	R_dataSym = install("data");
     }
-    
+
     SEXP f = (SEXP) userData;
     SEXP e, val, cur, rho;
     int errorOccurred;

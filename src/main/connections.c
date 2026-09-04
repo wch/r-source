@@ -4168,6 +4168,7 @@ static int con_close1(Rconnection con)
 	Rgzconn priv = con->private;
 	con_close1(priv->con);
 	R_ReleaseObject(priv->con->ex_ptr);
+	free(priv->con);
     }
     /* close inconv and outconv if open */
     if(con->inconv) Riconv_close(con->inconv);

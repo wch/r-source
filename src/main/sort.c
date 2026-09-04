@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2025   The R Core Team
+ *  Copyright (C) 1998-2026   The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 2004        The R Foundation
  *
@@ -1066,10 +1066,10 @@ orderVectorl(R_xlen_t *indx, R_xlen_t n, SEXP key, bool nalast,
 }
 #endif
 
-#ifdef UNUSED
+#ifdef NOT_YET_ORD_2
 #define ORD_2_BODY(FNAME, TYPE_1, TYPE_2, GREATER_2_SUB)		\
     void FNAME(int *indx, int n, TYPE_1 *x, TYPE_2 *y,			\
-	   bool nalast, bool decreasing)			\
+	       bool nalast, bool decreasing)				\
 {									\
     int t;								\
     for(t = 0; t < n; t++) indx[t] = t; /* indx[] <- 0:(n-1) */		\
@@ -1092,7 +1092,6 @@ ORD_2_BODY(R_order2double , double, double, double2greater)
 ORD_2_BODY(R_order2int    ,    int,    int,    int2greater)
 ORD_2_BODY(R_order2dbl_int, double,    int, dblint2greater)
 ORD_2_BODY(R_order2int_dbl,    int, double, intdbl2greater)
-
 
 GREATER_2_SUB_DEF(double2greater, double, double, rcmp, rcmp)
 GREATER_2_SUB_DEF(int2greater,       int,    int, icmp, icmp)
@@ -1193,6 +1192,7 @@ orderVector1(int *indx, int n, SEXP key, bool nalast, bool decreasing, SEXP rho)
 	    for (i = 0; i < n; i++) isna[i] = ISNAN(cx[i].r) || ISNAN(cx[i].i);
 	    break;
 	default:
+	    R_Free(isna);
 	    UNIMPLEMENTED_TYPE("orderVector1", key);
 	}
 	for (i = 0; i < n; i++) numna += isna[i];
