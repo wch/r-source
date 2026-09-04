@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 2.4.2\n"
@@ -22,7 +22,7 @@ msgid "named list expected"
 msgstr "liste nommée attendue"
 
 msgid "some named values are not arguments to the supplied log-likelihood"
-msgstr "quelques valeurs nomm�es ne sont pas des arguments correspondant au maximum de vraissemblance fourni"
+msgstr "quelques valeurs nommées ne sont pas des arguments correspondant au maximum de vraissemblance fourni"
 
 msgid "Mismatch in length of start values"
 msgstr "Incohérence dans la longueur des valeurs de départ"
@@ -34,16 +34,10 @@ msgid "start values do not satisfy constraints"
 msgstr "les valeurs de départ ne vérifient pas les contraintes"
 
 msgid "profiling has found a better solution, so original fit had not converged"
-msgstr "le profilage a trouv� une meilleure solution, l'ajustement original n'a donc pas converg�"
+msgstr "le profilage a trouvé une meilleure solution, l'ajustement original n'a donc pas convergé"
 
 msgid "levels truncated to positive values only"
 msgstr "les niveaux ont été tronqués aux valeurs positives uniquement"
 
 msgid "extra arguments discarded"
 msgstr "arguments supplémentaires supprimés"
-
-#~ msgid "'start' must be a named list"
-#~ msgstr "'start' doit �tre une liste nomm�e"
-
-#~ msgid "some named arguments in 'start' are not arguments to the supplied log-likelihood"
-#~ msgstr "quelques arguments nomm�s dans 'start' ne sont pas les arguments correspondants au maximum de vraissemblance fourni"

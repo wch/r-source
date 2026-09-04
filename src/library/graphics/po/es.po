@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: Spanish <pabloemilio.verde@uni-duesseldorf.de>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Weblate 4.13.1\n"
@@ -49,7 +49,7 @@ msgstr "regiÃ³n del grÃ¡fico muy grande"
 
 #, c-format
 msgid "nonfinite axis=%d limits [GScale(%g,%g,..); log=%s] -- corrected now"
-msgstr "límites de ejes=%d no finitos [GScale(%g,%g,..); log=%s] -- corregido ahora"
+msgstr "lÃ­mites de ejes=%d no finitos [GScale(%g,%g,..); log=%s] -- corregido ahora"
 
 #, c-format
 msgid "axis style \"%c\" unimplemented"
@@ -84,7 +84,7 @@ msgid "metric information not available for this device"
 msgstr "InformaciÃ³n de mÃ©trica no disponible para este dispositivo"
 
 msgid "graphical parameter 'family' has a maximum length of 200 bytes"
-msgstr "la familia de parámetros gráficos tiene un tamaño máximo de 200 bytes"
+msgstr "la familia de parÃ¡metros grÃ¡ficos tiene un tamaÃ±o mÃ¡ximo de 200 bytes"
 
 #, c-format
 msgid "invalid value specified for graphical parameter \"%s\""
@@ -441,64 +441,3 @@ msgstr "todos los valore de z son NA"
 #, c-format
 msgid "long vector '%s' is not supported"
 msgstr "el vector largo '%s' no es compatible"
-
-#, c-format
-#~ msgid "plot type '%s' will be truncated to first character"
-#~ msgstr "gráfico de tipo '%s' va a ser truncado al primer carácter"
-
-#, fuzzy
-#~ msgid "relative range of values (%4.0f * EPS) is small (axis %d)"
-#~ msgstr "amplitud relativa de valores =%4.0f * EPS, es pequeño (eixo %d)"
-
-#~ msgid "invalid NA contour values"
-#~ msgstr "valores de contorno NA no válidos"
-
-#~ msgid "unable to allocate memory (in GPolygon)"
-#~ msgstr "imposible asignar memoria (en GPolygon)"
-
-#~ msgid "invalid number of points in identify()"
-#~ msgstr "número de puntos no válidos en identify()"
-
-#~ msgid "Event GE_ScalePS requires a single numeric value"
-#~ msgstr "El evento GE_ScalePS requiere un único valor numérico"
-
-#~ msgid "zero length 'padj' specified"
-#~ msgstr "'padj' de longitud cero especificado"
-
-#, fuzzy
-#~ msgid "unable to allocate memory (in GPath)"
-#~ msgstr "imposible asignar memoria (en GPolygon)"
-
-#, fuzzy
-#~ msgid "invalid x or y (in GPath)"
-#~ msgstr "tipo Normal no válido en RNGkind"
-
-#~ msgid "zero length 'labels'"
-#~ msgstr "'labels' de tamaño cero"
-
-#~ msgid "zero length 'text' specified"
-#~ msgstr "'text' de longitud cero fue especificado"
-
-#~ msgid "zero length 'line' specified"
-#~ msgstr "'line' de longitud cero fue especificado"
-
-#~ msgid "zero length 'outer' specified"
-#~ msgstr "'outer' de longitud cero fue especificado"
-
-#~ msgid "zero length 'at' specified"
-#~ msgstr "'at' de longitud cero fue especificado"
-
-#~ msgid "zero length 'adj' specified"
-#~ msgstr "'adj' de longitud cero fue especificado"
-
-#~ msgid "zero length 'cex' specified"
-#~ msgstr "'cex' de longitud cero fue especificado"
-
-#~ msgid "zero length 'col' specified"
-#~ msgstr "'col' de longitud cero fue especificado"
-
-#~ msgid "zero length 'font' specified"
-#~ msgstr "'font' de longitud cero fue especificado"
-
-#~ msgid "unable to allocate memory (in xspline)"
-#~ msgstr "imposible asignar memoria (en xspline)"
