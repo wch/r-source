@@ -6045,7 +6045,8 @@ have had a fair amount of practice at porting @R{} to new platforms
 One thing you might want to add for a new platform is the mapping of
 C/C++/Fortran calls to entry point names used for @command{R CMD check}.
 See @uref{https://svn.r-project.org/R-dev-web/trunk/sotools.txt} for how
-to do so.
+to do so.  This is likely to be needed for a new compiler (especially for
+Fortran) and has been needed for compiler name changes and updates
 
 
 @node Function and variable index
