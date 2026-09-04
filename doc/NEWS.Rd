@@ -325,10 +325,9 @@
       such as \verb{\packageTitle} when the current directory is not the
       source package's root directory.
 
-      \item \code{glm(.., wtol = <positive>)} treats very small weights as
-      zeros now, similarly to \code{lm()} via \code{glm.control()}; correct
-      AIC and logLik() for this case, fixing \PR{16008}, thanks to \I{Bill
-	Dunlap} and \I{Mauricio Vargas}.
+      \item \code{glm()} with zero weights now provides correct AIC and
+      \code{logLik()}, fixing \PR{16008}, thanks to \I{Bill Dunlap} and
+      \I{Mauricio Vargas}.
     }
   }
 }
