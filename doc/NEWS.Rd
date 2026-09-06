@@ -286,13 +286,11 @@
       \item \code{drop1.glm()} misbehaved for models fitted with
       \code{y = FALSE} (\PR{19128}, \I{Amal Tawfik}).
 
-      \item \code{confint(<free1way>, parm)} returned confidence intervals for
-      all parameters when \code{parm} requested a subset.
+      \item \code{confint(<free1way>, parm)} returned confidence
+      intervals for all parameters when \code{parm} requested a subset.
 
       \item \code{summary(<free1way>)} renames p-values to \code{Pr(..)}
-      and
-
-      thus \code{printCoefmat} recognises them.
+      and thus \code{printCoefmat} recognises them.
 
       \item \code{strptime(ch, "...\%OS<n>...")} now disregards contiguous
       digits in "<n>", for symmetry with \code{strftime()}, fulfilling
@@ -328,6 +326,9 @@
       \item \code{glm()} with zero weights now provides correct AIC and
       \code{logLik()}, fixing \PR{16008}, thanks to \I{Bill Dunlap} and
       \I{Mauricio Vargas}.
+
+      \item \code{confint(<free1way>, what = "OVL")} now includes one
+      for shift effect confidence intervals including zero.
     }
   }
 }
