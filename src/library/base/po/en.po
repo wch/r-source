@@ -14,7 +14,7 @@ msgstr ""
 "Language-Team: R-core <R-core@R-project.org>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "non-finite value supplied by 'optim'"
