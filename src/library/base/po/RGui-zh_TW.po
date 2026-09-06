@@ -1,7 +1,7 @@
 # Traditional Chinese translations for RGui.
 # Copyright (C) 2005, 06 The R Foundation
 # This file is distributed under the same license as the R package.
-# ³¯´´ <FeiChen@FairIsaac.com>, 2005.
+# é™³æ– <FeiChen@FairIsaac.com>, 2005.
 # Wei-Lun Chao <bluebat@member.fsf.org>, 2005, 06, 11, 18.
 #
 msgid ""
@@ -14,7 +14,7 @@ msgstr ""
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CP950\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
@@ -26,20 +26,20 @@ msgstr ""
 #: src/gnuwin32/editor.c:368 src/gnuwin32/editor.c:584
 #: src/gnuwin32/preferences.c:313
 msgid "Not enough memory"
-msgstr "°O¾ĞÅé¤£¨¬"
+msgstr "è¨˜æ†¶é«”ä¸è¶³"
 
 #: src/gnuwin32/console.c:1286 src/gnuwin32/console.c:1290
 msgid "Insufficient memory: text not copied to the clipboard"
-msgstr "°O¾ĞÅé¤£¨¬: ¤å¦r¨Ã¥¼½Æ»s¨ì°Å¶KÃ¯"
+msgstr "è¨˜æ†¶é«”ä¸è¶³: æ–‡å­—ä¸¦æœªè¤‡è£½åˆ°å‰ªè²¼ç°¿"
 
 #: src/gnuwin32/console.c:1328 src/extra/graphapp/clipboard.c:53
 #: src/extra/graphapp/clipboard.c:79
 msgid "Unable to open the clipboard"
-msgstr "µLªk¶}±Ò°Å¶KÃ¯"
+msgstr "ç„¡æ³•é–‹å•Ÿå‰ªè²¼ç°¿"
 
 #: src/gnuwin32/console.c:2133
 msgid "Insufficient memory. Please close the console"
-msgstr "°O¾ĞÅé¤£¨¬¡C½ĞÃö³¬¥D±±»O"
+msgstr "è¨˜æ†¶é«”ä¸è¶³ã€‚è«‹é—œé–‰ä¸»æ§è‡º"
 
 #: src/gnuwin32/console.c:2189 src/gnuwin32/console.c:2243
 #: src/gnuwin32/preferences.c:347
@@ -48,116 +48,116 @@ msgid ""
 "Font %s-%d-%d  not found.\n"
 "Using system fixed font"
 msgstr ""
-"§ä¤£¨ì %s-%d-%d ¦r«¬¡C\n"
-"¨Ï¥Î¨t²Î©w¼e¦r«¬"
+"æ‰¾ä¸åˆ° %s-%d-%d å­—å‹ã€‚\n"
+"ä½¿ç”¨ç³»çµ±å®šå¯¬å­—å‹"
 
 #: src/gnuwin32/console.c:2348
 msgid "Save selection to"
-msgstr "Àx¦s©Ò¿ï³¡¤À¨ì"
+msgstr "å„²å­˜æ‰€é¸éƒ¨åˆ†åˆ°"
 
 #: src/gnuwin32/console.c:2350
 msgid "Save console contents to"
-msgstr "Àx¦s¥D±±»O¤º®e¨ì"
+msgstr "å„²å­˜ä¸»æ§è‡ºå…§å®¹åˆ°"
 
 #: src/gnuwin32/console.c:2457
 msgid "Scrolling.\n"
-msgstr "±²°Ê¡C\n"
+msgstr "æ²å‹•ã€‚\n"
 
 #: src/gnuwin32/console.c:2458
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
-msgstr "  Áä½L: PgUp¡BPgDown¡BCtrl+¤è¦VÁä¡BCtrl+Home¡BCtrl+End¡B\n"
+msgstr "  éµç›¤: PgUpã€PgDownã€Ctrl+æ–¹å‘éµã€Ctrl+Homeã€Ctrl+Endã€\n"
 
 #: src/gnuwin32/console.c:2459
 msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
 msgstr ""
-"  ·Æ¹«: ¨Ï¥Î±²°Ê¶b¡C\n"
+"  æ»‘é¼ : ä½¿ç”¨æ²å‹•è»¸ã€‚\n"
 "\n"
 
 #: src/gnuwin32/console.c:2460
 msgid "Editing.\n"
-msgstr "½s¿è¤¤¡C\n"
+msgstr "ç·¨è¼¯ä¸­ã€‚\n"
 
 #: src/gnuwin32/console.c:2461
 msgid "  Moving the cursor: \n"
-msgstr "  ²¾°Ê´å¼Ğ: \n"
+msgstr "  ç§»å‹•æ¸¸æ¨™: \n"
 
 #: src/gnuwin32/console.c:2462
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
-msgstr "     ¥ª½bÀY©Î Ctrl+B: ¥ª²¾¤@¦r¤¸¡F\n"
+msgstr "     å·¦ç®­é ­æˆ– Ctrl+B: å·¦ç§»ä¸€å­—å…ƒï¼›\n"
 
 #: src/gnuwin32/console.c:2463
 msgid "     Right arrow or Ctrl+F: move forward one character;\n"
-msgstr "     ¥k½bÀY©ÎCtrl+F: ¥k²¾¤@¦r¤¸¡F\n"
+msgstr "     å³ç®­é ­æˆ–Ctrl+F: å³ç§»ä¸€å­—å…ƒï¼›\n"
 
 #: src/gnuwin32/console.c:2464
 msgid "     Home or Ctrl+A: go to beginning of line;\n"
-msgstr "     Home ©Î Ctrl+A: ²¾¨ì¦C­º¡F\n"
+msgstr "     Home æˆ– Ctrl+A: ç§»åˆ°åˆ—é¦–ï¼›\n"
 
 #: src/gnuwin32/console.c:2465
 msgid "     End or Ctrl+E: go to end of line;\n"
-msgstr "     End ©Î Ctrl+E: ²¾¨ì¦C§À¡F\n"
+msgstr "     End æˆ– Ctrl+E: ç§»åˆ°åˆ—å°¾ï¼›\n"
 
 #: src/gnuwin32/console.c:2466
 msgid "  History: Up and Down Arrows, Ctrl+P, Ctrl+N\n"
-msgstr "  ©R¥O¾úµ{: ¤W¡B¤U½bÀY¡BCtrl+P¡BCtrl+N\n"
+msgstr "  å‘½ä»¤æ­·ç¨‹: ä¸Šã€ä¸‹ç®­é ­ã€Ctrl+Pã€Ctrl+N\n"
 
 #: src/gnuwin32/console.c:2467
 msgid "  Deleting:\n"
-msgstr "  §R°£¤¤:\n"
+msgstr "  åˆªé™¤ä¸­:\n"
 
 #: src/gnuwin32/console.c:2468
 msgid "     Del or Ctrl+D: delete current character or selection;\n"
-msgstr "     Del ©Î Ctrl+D:§R°£¥Ø«e©Ò¦b¦r¤¸©Î¿ï¨ú¡F\n"
+msgstr "     Del æˆ– Ctrl+D:åˆªé™¤ç›®å‰æ‰€åœ¨å­—å…ƒæˆ–é¸å–ï¼›\n"
 
 #: src/gnuwin32/console.c:2469
 msgid "     Backspace: delete preceding character;\n"
-msgstr "     Backspace: §R°£¥Ø«e¦ì¸m¤§«eªº¦r¤¸¡F\n"
+msgstr "     Backspace: åˆªé™¤ç›®å‰ä½ç½®ä¹‹å‰çš„å­—å…ƒï¼›\n"
 
 #: src/gnuwin32/console.c:2470
 msgid "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
-msgstr "     Ctrl+Del ©Î Ctrl+K: §R°£¥Ø«e¦ì¸m¨ì¦C§Àªº©Ò¦³¤å¦r¡C\n"
+msgstr "     Ctrl+Del æˆ– Ctrl+K: åˆªé™¤ç›®å‰ä½ç½®åˆ°åˆ—å°¾çš„æ‰€æœ‰æ–‡å­—ã€‚\n"
 
 #: src/gnuwin32/console.c:2471
 msgid "     Ctrl+U: delete all text from current line.\n"
-msgstr "     Ctrl+U: ±q¥Ø«e©Ò¦b¦C¶}©l§R°£©Ò¦³ªº¤å¦r¡C\n"
+msgstr "     Ctrl+U: å¾ç›®å‰æ‰€åœ¨åˆ—é–‹å§‹åˆªé™¤æ‰€æœ‰çš„æ–‡å­—ã€‚\n"
 
 #: src/gnuwin32/console.c:2472
 msgid "  Copy and paste.\n"
-msgstr "  ½Æ»s©M¶K¤W¡C\n"
+msgstr "  è¤‡è£½å’Œè²¼ä¸Šã€‚\n"
 
 #: src/gnuwin32/console.c:2473
 msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr "     ¥Î·Æ¹« («ùÄò«öµÛ¥ªÁä) ¨Ó¿ï¾Ü¤å¦r¡C\n"
+msgstr "     ç”¨æ»‘é¼  (æŒçºŒæŒ‰è‘—å·¦éµ) ä¾†é¸æ“‡æ–‡å­—ã€‚\n"
 
 #: src/gnuwin32/console.c:2474
 msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr "     ¥Î Shift+Del (©Î Ctrl+C) §â¿ï¾Ü¦nªº¤å¦r½Æ»s¨ì°Å¶KÃ¯¥H¤Î\n"
+msgstr "     ç”¨ Shift+Del (æˆ– Ctrl+C) æŠŠé¸æ“‡å¥½çš„æ–‡å­—è¤‡è£½åˆ°å‰ªè²¼ç°¿ä»¥åŠ\n"
 
 #: src/gnuwin32/console.c:2475
 msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
-msgstr "     ¥Î Shift+Ins (©Î Ctrl+V ©Î Ctrl+Y) ¨Ó¶K¤W°Å¶KÃ¯ªº¤º®e (¦pªG¦³ªº¸Ü)  \n"
+msgstr "     ç”¨ Shift+Ins (æˆ– Ctrl+V æˆ– Ctrl+Y) ä¾†è²¼ä¸Šå‰ªè²¼ç°¿çš„å…§å®¹ (å¦‚æœæœ‰çš„è©±)  \n"
 
 #: src/gnuwin32/console.c:2476
 msgid "     to the console, Ctrl+X first copy then paste\n"
-msgstr "     ¨ì¥D±±»O¡ACtrl+X ¥ı½Æ»s¦A¶K¤W\n"
+msgstr "     åˆ°ä¸»æ§è‡ºï¼ŒCtrl+X å…ˆè¤‡è£½å†è²¼ä¸Š\n"
 
 #: src/gnuwin32/console.c:2477
 msgid "  Misc:\n"
-msgstr "  ¨ä¥¦:\n"
+msgstr "  å…¶å®ƒ:\n"
 
 #: src/gnuwin32/console.c:2478
 msgid "     Ctrl+L: Clear the console.\n"
-msgstr "     Ctrl+L: ²M°£¥D±±»O¡C\n"
+msgstr "     Ctrl+L: æ¸…é™¤ä¸»æ§è‡ºã€‚\n"
 
 #: src/gnuwin32/console.c:2479
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr "     Ctrl+O ©Î INS¡G¤Á´«ÂĞ¼g¼Ò¦¡¡Gªì©l®ÉÃö³¬¡C\n"
+msgstr "     Ctrl+O æˆ– INSï¼šåˆ‡æ›è¦†å¯«æ¨¡å¼ï¼šåˆå§‹æ™‚é—œé–‰ã€‚\n"
 
 #: src/gnuwin32/console.c:2480
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
-msgstr "     Ctrl+T: ±N¥Ø«e©Ò¦b¦ì¸mªº¦r¤¸»P¨ä¥ª¤èªº¦r¤¸¥æ´«¡C\n"
+msgstr "     Ctrl+T: å°‡ç›®å‰æ‰€åœ¨ä½ç½®çš„å­—å…ƒèˆ‡å…¶å·¦æ–¹çš„å­—å…ƒäº¤æ›ã€‚\n"
 
 #: src/gnuwin32/console.c:2481
 msgid ""
@@ -165,14 +165,14 @@ msgid ""
 "Note: Console is updated only when some input is required.\n"
 msgstr ""
 "\n"
-"ª`·N: ¥u¦³¦b­n¨D¿é¤J®É¥D±±»O¤~·|³Q§ó·s¡C\n"
+"æ³¨æ„: åªæœ‰åœ¨è¦æ±‚è¼¸å…¥æ™‚ä¸»æ§è‡ºæ‰æœƒè¢«æ›´æ–°ã€‚\n"
 
 #: src/gnuwin32/console.c:2482
 msgid ""
 "  Use Ctrl+W to toggle this feature off/on.\n"
 "\n"
 msgstr ""
-"  ¨Ï¥Î Ctrl+W ¨Ó¶}Ãö¦¹¤@¥\¯à¡C\n"
+"  ä½¿ç”¨ Ctrl+W ä¾†é–‹é—œæ­¤ä¸€åŠŸèƒ½ã€‚\n"
 "\n"
 
 #: src/gnuwin32/console.c:2483
@@ -180,7 +180,7 @@ msgid ""
 "Use ESC to stop the interpreter.\n"
 "\n"
 msgstr ""
-"¨Ï¥Î ESC ¨Ó°±¤î¸ÑÄ¶¾¹¡C\n"
+"ä½¿ç”¨ ESC ä¾†åœæ­¢è§£è­¯å™¨ã€‚\n"
 "\n"
 
 #: src/gnuwin32/console.c:2484
@@ -188,267 +188,267 @@ msgid ""
 "TAB starts completion of the current word.\n"
 "\n"
 msgstr ""
-"TAB ±Ò°Ê¸É§¹¥Ø«eªº¦rµü¡C\n"
+"TAB å•Ÿå‹•è£œå®Œç›®å‰çš„å­—è©ã€‚\n"
 "\n"
 
 #: src/gnuwin32/console.c:2485
 msgid "Standard Windows hotkeys can be used to switch to the\n"
-msgstr "¥i¥H¥Î Windows ªº¼Ğ·Ç§Ö±¶Áä¨ÓÂà´«\n"
+msgstr "å¯ä»¥ç”¨ Windows çš„æ¨™æº–å¿«æ·éµä¾†è½‰æ›\n"
 
 #: src/gnuwin32/console.c:2486
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
-msgstr "Ã¸¹Ï¸Ë¸m (MDI ¥Î Ctrl+Tab ©Î Ctrl+F6¡ASDI ¥Î Alt+Tab)"
+msgstr "ç¹ªåœ–è£ç½® (MDI ç”¨ Ctrl+Tab æˆ– Ctrl+F6ï¼ŒSDI ç”¨ Alt+Tab)"
 
 #: src/gnuwin32/editor.c:95 src/gnuwin32/editor.c:97
 msgid "R Editor"
-msgstr "R ½s¿è¾¹"
+msgstr "R ç·¨è¼¯å™¨"
 
 #: src/gnuwin32/editor.c:176
 #, c-format
 msgid "unable to open file %s for reading"
-msgstr "µLªk¶}±ÒÀÉ®× %s ¥HÅª¨ú"
+msgstr "ç„¡æ³•é–‹å•Ÿæª”æ¡ˆ %s ä»¥è®€å–"
 
 #: src/gnuwin32/editor.c:217
 #, c-format
 msgid "Could not read from file '%s'"
-msgstr "µLªkÅª¨ú¦ÛÀÉ®× '%s'"
+msgstr "ç„¡æ³•è®€å–è‡ªæª”æ¡ˆ '%s'"
 
 #: src/gnuwin32/editor.c:250
 #, c-format
 msgid "Could not save file '%s'"
-msgstr "µLªkÀx¦sÀÉ®× '%s'"
+msgstr "ç„¡æ³•å„²å­˜æª”æ¡ˆ '%s'"
 
 #: src/gnuwin32/editor.c:270
 msgid "Save script as"
-msgstr "©R¥O½Z¥t¦s¬°"
+msgstr "å‘½ä»¤ç¨¿å¦å­˜ç‚º"
 
 #: src/gnuwin32/editor.c:480 src/gnuwin32/editor.c:812 src/gnuwin32/pager.c:445
 #: src/gnuwin32/rui.c:1164
 msgid "Open script"
-msgstr "¶}±Ò©R¥O½Z"
+msgstr "é–‹å•Ÿå‘½ä»¤ç¨¿"
 
 #: src/gnuwin32/editor.c:616 src/gnuwin32/pager.c:199 src/gnuwin32/pager.c:219
 msgid "No RGui console to paste to"
-msgstr "¨S¦³¥i¥H¶K¤Wªº RGui ¥D±±»O"
+msgstr "æ²’æœ‰å¯ä»¥è²¼ä¸Šçš„ RGui ä¸»æ§è‡º"
 
 #: src/gnuwin32/editor.c:718
 msgid "R EDITOR\n"
-msgstr "R ½s¿è¾¹\n"
+msgstr "R ç·¨è¼¯å™¨\n"
 
 #: src/gnuwin32/editor.c:720
 msgid "A standard text editor for editing and running R code.\n"
-msgstr "¤@­Ó¥Î©ó½s¿è©M°õ¦æ R µ{¦¡ªº¼Ğ·Ç¤å¦r½s¿è¾¹¡C\n"
+msgstr "ä¸€å€‹ç”¨æ–¼ç·¨è¼¯å’ŒåŸ·è¡Œ R ç¨‹å¼çš„æ¨™æº–æ–‡å­—ç·¨è¼¯å™¨ã€‚\n"
 
 #: src/gnuwin32/editor.c:722
 msgid "RUNNING COMMANDS\n"
-msgstr "°õ¦æ©R¥O\n"
+msgstr "åŸ·è¡Œå‘½ä»¤\n"
 
 #: src/gnuwin32/editor.c:723
 msgid "To run a line or section of R code, select the code and either\n"
-msgstr "­n°õ¦æ¤@¦C©Î¤@¬q R ªºµ{¦¡½X¡A¥ı¿ï¾Ü©Ò»İ­nªºµ{¦¡½X¡AµM«á¦A\n"
+msgstr "è¦åŸ·è¡Œä¸€åˆ—æˆ–ä¸€æ®µ R çš„ç¨‹å¼ç¢¼ï¼Œå…ˆé¸æ“‡æ‰€éœ€è¦çš„ç¨‹å¼ç¢¼ï¼Œç„¶å¾Œå†\n"
 
 #: src/gnuwin32/editor.c:724
 msgid "     Press Ctrl-R\n"
-msgstr "     «ö Ctrl-R\n"
+msgstr "     æŒ‰ Ctrl-R\n"
 
 #: src/gnuwin32/editor.c:725
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
-msgstr "     ±q¡u½s¿è¡v¿ï³æ¤¤¿ï¾Ü¡u°õ¦æµ{¦¡¦C©Î¿ï¾Ü¶µ¡v\n"
+msgstr "     å¾ã€Œç·¨è¼¯ã€é¸å–®ä¸­é¸æ“‡ã€ŒåŸ·è¡Œç¨‹å¼åˆ—æˆ–é¸æ“‡é …ã€\n"
 
 #: src/gnuwin32/editor.c:726
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
-msgstr "     «ö¤u¨ã¦C¤Wªº¡u°õ¦æµ{¦¡¦C©Î¿ï¾Ü¶µ¡v«ö¶s\n"
+msgstr "     æŒ‰å·¥å…·åˆ—ä¸Šçš„ã€ŒåŸ·è¡Œç¨‹å¼åˆ—æˆ–é¸æ“‡é …ã€æŒ‰éˆ•\n"
 
 #: src/gnuwin32/editor.c:727
 msgid "This will copy the selected commands to the console and evaluate them.\n"
-msgstr "³o·|§â¿ï¾Üªº©R¥O½Æ»s¨ì¥D±±»O¨Ó¤©¥H°õ¦æ¡C\n"
+msgstr "é€™æœƒæŠŠé¸æ“‡çš„å‘½ä»¤è¤‡è£½åˆ°ä¸»æ§è‡ºä¾†äºˆä»¥åŸ·è¡Œã€‚\n"
 
 #: src/gnuwin32/editor.c:728
 msgid "If there is no selection, this will just run the current line and advance\n"
-msgstr "¦pªG¨S¦³¿ï¾Üªº¸Ü¡A¥Ø«e©Ò¦b¦Cªº©R¥O·|³Q°õ¦æ\n"
+msgstr "å¦‚æœæ²’æœ‰é¸æ“‡çš„è©±ï¼Œç›®å‰æ‰€åœ¨åˆ—çš„å‘½ä»¤æœƒè¢«åŸ·è¡Œ\n"
 
 #: src/gnuwin32/editor.c:729
 msgid "the cursor by one line.\n"
-msgstr "´å¼Ğ©Ò¦b¦C¡C\n"
+msgstr "æ¸¸æ¨™æ‰€åœ¨åˆ—ã€‚\n"
 
 #: src/gnuwin32/editor.c:741 src/gnuwin32/editor.c:820
 #: src/gnuwin32/editor.c:878
 msgid "Run line or selection"
-msgstr "°õ¦æµ{¦¡¦C©Î¿ï¾Ü¶µ"
+msgstr "åŸ·è¡Œç¨‹å¼åˆ—æˆ–é¸æ“‡é …"
 
 #: src/gnuwin32/editor.c:743 src/gnuwin32/editor.c:863
 msgid "Undo"
-msgstr "´_­ì"
+msgstr "å¾©åŸ"
 
 #: src/gnuwin32/editor.c:745 src/gnuwin32/editor.c:866
 msgid "Cut"
-msgstr "°Å¤U"
+msgstr "å‰ªä¸‹"
 
 #: src/gnuwin32/editor.c:746 src/gnuwin32/editor.c:868 src/gnuwin32/pager.c:319
 #: src/gnuwin32/pager.c:492 src/gnuwin32/rui.c:936 src/gnuwin32/rui.c:1176
 #: src/gnuwin32/rui.c:1232
 msgid "Copy"
-msgstr "½Æ»s"
+msgstr "è¤‡è£½"
 
 #: src/gnuwin32/editor.c:747 src/gnuwin32/editor.c:870 src/gnuwin32/rui.c:937
 #: src/gnuwin32/rui.c:1180 src/gnuwin32/rui.c:1233
 msgid "Paste"
-msgstr "¶K¤W"
+msgstr "è²¼ä¸Š"
 
 #: src/gnuwin32/editor.c:748 src/gnuwin32/editor.c:872
 msgid "Delete"
-msgstr "§R°£"
+msgstr "åˆªé™¤"
 
 #: src/gnuwin32/editor.c:750 src/gnuwin32/editor.c:874 src/gnuwin32/pager.c:322
 #: src/gnuwin32/pager.c:498 src/gnuwin32/rui.c:943 src/gnuwin32/rui.c:1237
 msgid "Select all"
-msgstr "¥ş³¡¿ï¨ú"
+msgstr "å…¨éƒ¨é¸å–"
 
 #: src/gnuwin32/editor.c:816
 msgid "Save script"
-msgstr "Àx¦s©R¥O½Z"
+msgstr "å„²å­˜å‘½ä»¤ç¨¿"
 
 #: src/gnuwin32/editor.c:824 src/gnuwin32/pager.c:465
 #: src/library/grDevices/src/devWindows.c:1622
 msgid "Return focus to Console"
-msgstr "¦^´_µJÂI¨ì¥D±±»O"
+msgstr "å›å¾©ç„¦é»åˆ°ä¸»æ§è‡º"
 
 #: src/gnuwin32/editor.c:827
 msgid "Print script"
-msgstr "¦C¦L©R¥O½Z"
+msgstr "åˆ—å°å‘½ä»¤ç¨¿"
 
 #: src/gnuwin32/editor.c:829 src/gnuwin32/pager.c:460 src/gnuwin32/rui.c:1192
 #: src/library/grDevices/src/devWindows.c:1616
 msgid "Print"
-msgstr "¦C¦L"
+msgstr "åˆ—å°"
 
 #: src/gnuwin32/editor.c:847 src/gnuwin32/pager.c:481 src/gnuwin32/rui.c:1210
 #: src/library/utils/src/windows/dataentry.c:1837
 #: src/library/grDevices/src/devWindows.c:1654
 msgid "File"
-msgstr "ÀÉ®×"
+msgstr "æª”æ¡ˆ"
 
 #: src/gnuwin32/editor.c:848 src/gnuwin32/pager.c:482 src/gnuwin32/rui.c:1212
 msgid "New script"
-msgstr "«Ø¥ß·sªº©R¥O½Z"
+msgstr "å»ºç«‹æ–°çš„å‘½ä»¤ç¨¿"
 
 #: src/gnuwin32/editor.c:850 src/gnuwin32/pager.c:483 src/gnuwin32/rui.c:1213
 msgid "Open script..."
-msgstr "¶}±Ò©R¥O½Z¡K"
+msgstr "é–‹å•Ÿå‘½ä»¤ç¨¿â€¦"
 
 #: src/gnuwin32/editor.c:852
 msgid "Save"
-msgstr "Àx¦s"
+msgstr "å„²å­˜"
 
 #: src/gnuwin32/editor.c:854
 msgid "Save as..."
-msgstr "¥t¦s¬°¡K"
+msgstr "å¦å­˜ç‚ºâ€¦"
 
 #: src/gnuwin32/editor.c:857 src/gnuwin32/pager.c:484 src/gnuwin32/rui.c:1226
 #: src/library/grDevices/src/devWindows.c:1675
 #: src/library/grDevices/src/devWindows.c:1717
 msgid "Print..."
-msgstr "¦C¦L¡K"
+msgstr "åˆ—å°â€¦"
 
 #: src/gnuwin32/editor.c:860
 msgid "Close script"
-msgstr "Ãö³¬©R¥O½Z"
+msgstr "é—œé–‰å‘½ä»¤ç¨¿"
 
 #: src/gnuwin32/editor.c:862 src/gnuwin32/pager.c:491 src/gnuwin32/rui.c:1231
 #: src/library/utils/src/windows/dataentry.c:1843
 msgid "Edit"
-msgstr "½s¿è"
+msgstr "ç·¨è¼¯"
 
 #: src/gnuwin32/editor.c:876 src/gnuwin32/rui.c:1238
 msgid "Clear console"
-msgstr "²MªÅ¥D±±»O"
+msgstr "æ¸…ç©ºä¸»æ§è‡º"
 
 #: src/gnuwin32/editor.c:880
 msgid "Run all"
-msgstr "°õ¦æ¥ş³¡"
+msgstr "åŸ·è¡Œå…¨éƒ¨"
 
 #: src/gnuwin32/editor.c:883
 msgid "Find..."
-msgstr "´M§ä¡K"
+msgstr "å°‹æ‰¾â€¦"
 
 #: src/gnuwin32/editor.c:885
 msgid "Replace..."
-msgstr "´À´«¡K"
+msgstr "æ›¿æ›â€¦"
 
 #: src/gnuwin32/editor.c:888 src/gnuwin32/rui.c:1242
 msgid "GUI preferences..."
-msgstr "GUI °¾¦n³]©w¡K"
+msgstr "GUI åå¥½è¨­å®šâ€¦"
 
 #: src/gnuwin32/editor.c:900 src/gnuwin32/rui.c:1274
 #: src/library/utils/src/windows/dataentry.c:1744
 #: src/library/utils/src/windows/dataentry.c:1854
 msgid "Help"
-msgstr "»²§U"
+msgstr "è¼”åŠ©"
 
 #: src/gnuwin32/editor.c:901
 msgid "Editor"
-msgstr "½s¿è¾¹"
+msgstr "ç·¨è¼¯å™¨"
 
 #: src/gnuwin32/editor.c:962
 msgid "Maximum number of editors reached"
-msgstr "½s¿è¾¹¼Æ¶q¤Ó¦h"
+msgstr "ç·¨è¼¯å™¨æ•¸é‡å¤ªå¤š"
 
 #: src/gnuwin32/editor.c:967
 msgid "Unable to create editor window"
-msgstr "µLªk«Ø¥ß½s¿è¾¹µøµ¡"
+msgstr "ç„¡æ³•å»ºç«‹ç·¨è¼¯å™¨è¦–çª—"
 
 #: src/gnuwin32/editor.c:975
 msgid "Untitled"
-msgstr "¥¼©R¦W"
+msgstr "æœªå‘½å"
 
 #: src/gnuwin32/extra.c:1130
 msgid "Select file"
-msgstr "¿ï¾ÜÀÉ®×"
+msgstr "é¸æ“‡æª”æ¡ˆ"
 
 #: src/gnuwin32/pager.c:83 src/gnuwin32/pager.c:99
 msgid "Error opening file"
-msgstr "¶}±ÒÀÉ®×®Éµo¥Í¿ù»~"
+msgstr "é–‹å•Ÿæª”æ¡ˆæ™‚ç™¼ç”ŸéŒ¯èª¤"
 
 #: src/gnuwin32/pager.c:88 src/gnuwin32/pager.c:106 src/gnuwin32/pager.c:116
 msgid "Insufficient memory to display file in internal pager"
-msgstr "¥Î¤º³¡­¶­±¤Á´«µ{¦¡¨ÓÅã¥ÜÀÉ®×®É°O¾ĞÅé¤£¨¬"
+msgstr "ç”¨å…§éƒ¨é é¢åˆ‡æ›ç¨‹å¼ä¾†é¡¯ç¤ºæª”æ¡ˆæ™‚è¨˜æ†¶é«”ä¸è¶³"
 
 #: src/gnuwin32/pager.c:191 src/gnuwin32/pager.c:203 src/gnuwin32/pager.c:223
 #: src/gnuwin32/rui.c:306 src/gnuwin32/rui.c:333
 msgid "No selection"
-msgstr "¨S¦³¿ï¾Ü"
+msgstr "æ²’æœ‰é¸æ“‡"
 
 #: src/gnuwin32/pager.c:320 src/gnuwin32/pager.c:450 src/gnuwin32/pager.c:494
 msgid "Paste to console"
-msgstr "¶K¨ì¥D±±»O"
+msgstr "è²¼åˆ°ä¸»æ§è‡º"
 
 #: src/gnuwin32/pager.c:321 src/gnuwin32/pager.c:455 src/gnuwin32/pager.c:496
 msgid "Paste commands to console"
-msgstr "¶K¤W©R¥O¨ì¥D±±»O"
+msgstr "è²¼ä¸Šå‘½ä»¤åˆ°ä¸»æ§è‡º"
 
 #: src/gnuwin32/pager.c:324 src/gnuwin32/rui.c:946
 #: src/library/utils/src/windows/dataentry.c:1750
 #: src/library/grDevices/src/devWindows.c:1714
 msgid "Stay on top"
-msgstr "µøµ¡«O«ù¦b³Ì¤W¼h"
+msgstr "è¦–çª—ä¿æŒåœ¨æœ€ä¸Šå±¤"
 
 #: src/gnuwin32/pager.c:326 src/gnuwin32/pager.c:489
 #: src/library/utils/src/windows/dataentry.c:1752
 #: src/library/utils/src/windows/dataentry.c:1839
 msgid "Close"
-msgstr "Ãö³¬"
+msgstr "é—œé–‰"
 
 #: src/gnuwin32/pager.c:486 src/gnuwin32/rui.c:1227
 msgid "Save to File..."
-msgstr "Àx¦s¨ìÀÉ®×¡K"
+msgstr "å„²å­˜åˆ°æª”æ¡ˆâ€¦"
 
 #: src/gnuwin32/pager.c:501 src/gnuwin32/rui.c:1244
 msgid "View"
-msgstr "¬İ"
+msgstr "çœ‹"
 
 #: src/gnuwin32/pager.c:533
 msgid "Unable to create pager window"
-msgstr "µLªk«Ø¥ß­¶­±¤Á´«µ{¦¡µøµ¡"
+msgstr "ç„¡æ³•å»ºç«‹é é¢åˆ‡æ›ç¨‹å¼è¦–çª—"
 
 #: src/gnuwin32/preferences.c:308
 msgid ""
@@ -457,9 +457,9 @@ msgid ""
 "\n"
 "Save the preferences and restart Rgui to apply them.\n"
 msgstr ""
-"µLªkÅÜ§ó¥¿¦b°õ¦æ¤¤ªº²×ºİ¾÷ªx¥Î©Ê½è¡C\n"
+"ç„¡æ³•è®Šæ›´æ­£åœ¨åŸ·è¡Œä¸­çš„çµ‚ç«¯æ©Ÿæ³›ç”¨æ€§è³ªã€‚\n"
 "\n"
-"±N°¾¦n³]©wÀx¦s¤§«á­«·s±Ò°Ê Rgui ¥H®M¥Î¥¦­Ì¡C\n"
+"å°‡åå¥½è¨­å®šå„²å­˜ä¹‹å¾Œé‡æ–°å•Ÿå‹• Rgui ä»¥å¥—ç”¨å®ƒå€‘ã€‚\n"
 
 #: src/gnuwin32/preferences.c:315
 msgid ""
@@ -468,497 +468,497 @@ msgid ""
 "\n"
 "Save the preferences and restart Rgui to apply to menus.\n"
 msgstr ""
-"¿ï³æ©Ò¥Îªº»y¨¥µLªk©ó\n"
-"°õ¦æ¤¤ªº¥D±±»O¤WÅÜ§ó¡C\n"
+"é¸å–®æ‰€ç”¨çš„èªè¨€ç„¡æ³•æ–¼\n"
+"åŸ·è¡Œä¸­çš„ä¸»æ§è‡ºä¸Šè®Šæ›´ã€‚\n"
 "\n"
-"½ĞÀx¦s°¾¦n³]©w¨Ã­«·s±Ò°Ê Rgui ¥H®M¥Î¨ì¿ï³æ¡C\n"
+"è«‹å„²å­˜åå¥½è¨­å®šä¸¦é‡æ–°å•Ÿå‹• Rgui ä»¥å¥—ç”¨åˆ°é¸å–®ã€‚\n"
 
 #: src/gnuwin32/preferences.c:385
 msgid "Changes in pager size will not apply to any open pagers"
-msgstr "­¶­±¤Á´«µ{¦¡ªº¤j¤pÅÜ§ó±N¤£·|®M¥Î¦Ü¥ô¦ó¶}±Òªº­¶­±¤§¤W"
+msgstr "é é¢åˆ‡æ›ç¨‹å¼çš„å¤§å°è®Šæ›´å°‡ä¸æœƒå¥—ç”¨è‡³ä»»ä½•é–‹å•Ÿçš„é é¢ä¹‹ä¸Š"
 
 #: src/gnuwin32/preferences.c:391
 msgid ""
 "Do not change pager type if any pager is open\n"
 "Proceed?"
 msgstr ""
-"¦pªG¥ô¦ó­¶­±¤Á´«µ{¦¡¬O¶}±Òªº¡A´N¤£­nÅÜ§ó­¶­±ªº«¬ºA¡C\n"
-"­nÄ~Äò¶Ü¡H"
+"å¦‚æœä»»ä½•é é¢åˆ‡æ›ç¨‹å¼æ˜¯é–‹å•Ÿçš„ï¼Œå°±ä¸è¦è®Šæ›´é é¢çš„å‹æ…‹ã€‚\n"
+"è¦ç¹¼çºŒå—ï¼Ÿ"
 
 #: src/gnuwin32/preferences.c:425
 msgid "Select directory for file 'Rconsole'"
-msgstr "¬°ÀÉ®× 'Rconsole' ¿ï¾Ü¥Ø¿ı"
+msgstr "ç‚ºæª”æ¡ˆ 'Rconsole' é¸æ“‡ç›®éŒ„"
 
 #: src/gnuwin32/preferences.c:520
 msgid "Select 'Rconsole' file"
-msgstr "¿ï¾Ü 'Rconsole' ÀÉ®×"
+msgstr "é¸æ“‡ 'Rconsole' æª”æ¡ˆ"
 
 #: src/gnuwin32/preferences.c:708
 #, c-format
 msgid "Ignored '%s' at line %d of file %s"
-msgstr "©¿²¤©óÀÉ®× %3$s ²Ä %2$d ¦C©Òµo¥Íªº '%1$s'"
+msgstr "å¿½ç•¥æ–¼æª”æ¡ˆ %3$s ç¬¬ %2$d åˆ—æ‰€ç™¼ç”Ÿçš„ '%1$s'"
 
 #: src/gnuwin32/preferences.c:809
 msgid "Rgui Configuration Editor"
-msgstr "Rgui °t¸m½s¿è¾¹"
+msgstr "Rgui é…ç½®ç·¨è¼¯å™¨"
 
 #: src/gnuwin32/rui.c:215
 msgid "Select file to source"
-msgstr "¿ï¾Ü­n¿é¤Jªºµ{¦¡ÀÉ®×"
+msgstr "é¸æ“‡è¦è¼¸å…¥çš„ç¨‹å¼æª”æ¡ˆ"
 
 #: src/gnuwin32/rui.c:233
 msgid "Select image to load"
-msgstr "¿ï¾Ü­n¸ü¤Jªº¹Ï®×"
+msgstr "é¸æ“‡è¦è¼‰å…¥çš„åœ–æ¡ˆ"
 
 #: src/gnuwin32/rui.c:245
 msgid "Save image in"
-msgstr "Àx¦s¹Ï®×¨ì"
+msgstr "å„²å­˜åœ–æ¡ˆåˆ°"
 
 #: src/gnuwin32/rui.c:259
 msgid "Load history from"
-msgstr "¸ü¤J©R¥O¾úµ{¦Û"
+msgstr "è¼‰å…¥å‘½ä»¤æ­·ç¨‹è‡ª"
 
 #: src/gnuwin32/rui.c:268
 msgid "Save history in"
-msgstr "Àx¦s©R¥O¾úµ{¨ì"
+msgstr "å„²å­˜å‘½ä»¤æ­·ç¨‹åˆ°"
 
 #: src/gnuwin32/rui.c:315 src/gnuwin32/rui.c:324
 msgid "No text available"
-msgstr "¨S¦³¥i¥Î¤å¦r"
+msgstr "æ²’æœ‰å¯ç”¨æ–‡å­—"
 
 #: src/gnuwin32/rui.c:373
 msgid "Name of data frame or matrix"
-msgstr "¸ê®Æ®Ø©Î¯x°}¦W"
+msgstr "è³‡æ–™æ¡†æˆ–çŸ©é™£å"
 
 #: src/gnuwin32/rui.c:380
 #, c-format
 msgid "'%s' cannot be found"
-msgstr "§ä¤£¨ì '%s'"
+msgstr "æ‰¾ä¸åˆ° '%s'"
 
 #: src/gnuwin32/rui.c:524
 msgid "Are you sure?"
-msgstr "±zªÖ©w¶Ü?"
+msgstr "æ‚¨è‚¯å®šå—?"
 
 #: src/gnuwin32/rui.c:619
 msgid "Help on"
-msgstr "¨D§U©ó"
+msgstr "æ±‚åŠ©æ–¼"
 
 #: src/gnuwin32/rui.c:675
 msgid "Search help"
-msgstr "·j´M»²§U"
+msgstr "æœå°‹è¼”åŠ©"
 
 #: src/gnuwin32/rui.c:690
 msgid "Search for words in help list archives and documentation"
-msgstr "·j´M¤å¦r©ó¶l¥ó²M³æÀÉ®×©M¤å¥ó"
+msgstr "æœå°‹æ–‡å­—æ–¼éƒµä»¶æ¸…å–®æª”æ¡ˆå’Œæ–‡ä»¶"
 
 #: src/gnuwin32/rui.c:705
 msgid "Apropos"
-msgstr "Ãö©ó"
+msgstr "é—œæ–¼"
 
 #: src/gnuwin32/rui.c:932
 msgid "Can only drag-and-drop .R, .RData and .rda files"
-msgstr "·Æ¹«©ì©ñ¥u¾A¥Î©ó .R¡B.RData ©M .rda ¦r§ÀªºÀÉ®×"
+msgstr "æ»‘é¼ æ‹–æ”¾åªé©ç”¨æ–¼ .Rã€.RData å’Œ .rda å­—å°¾çš„æª”æ¡ˆ"
 
 #: src/gnuwin32/rui.c:938 src/gnuwin32/rui.c:1234
 msgid "Paste commands only"
-msgstr "¥u¯à¥Î¶K¤W©R¥O"
+msgstr "åªèƒ½ç”¨è²¼ä¸Šå‘½ä»¤"
 
 #: src/gnuwin32/rui.c:939 src/gnuwin32/rui.c:1184
 msgid "Copy and paste"
-msgstr "½Æ»s©M¶K¤W"
+msgstr "è¤‡è£½å’Œè²¼ä¸Š"
 
 #: src/gnuwin32/rui.c:941
 msgid "Clear window"
-msgstr "²M°£µøµ¡"
+msgstr "æ¸…é™¤è¦–çª—"
 
 #: src/gnuwin32/rui.c:945 src/gnuwin32/rui.c:1257
 msgid "Buffered output"
-msgstr "½w½Ä°Ï¿é¥X"
+msgstr "ç·©è¡å€è¼¸å‡º"
 
 #: src/gnuwin32/rui.c:985
 msgid "Packages"
-msgstr "µ{¦¡®M¥ó"
+msgstr "ç¨‹å¼å¥—ä»¶"
 
 #: src/gnuwin32/rui.c:986
 msgid "Load package..."
-msgstr "¸ü¤Jµ{¦¡®M¥ó¡K"
+msgstr "è¼‰å…¥ç¨‹å¼å¥—ä»¶â€¦"
 
 #: src/gnuwin32/rui.c:988
 msgid "Set CRAN mirror..."
-msgstr "³]©w CRAN Ãè¹³¡K"
+msgstr "è¨­å®š CRAN é¡åƒâ€¦"
 
 #: src/gnuwin32/rui.c:990
 msgid "Select repositories..."
-msgstr "¿ï¾Ü¦s©ñ³B¡K"
+msgstr "é¸æ“‡å­˜æ”¾è™•â€¦"
 
 #: src/gnuwin32/rui.c:992
 msgid "Install package(s)..."
-msgstr "¦w¸Ëµ{¦¡®M¥ó¡K"
+msgstr "å®‰è£ç¨‹å¼å¥—ä»¶â€¦"
 
 #: src/gnuwin32/rui.c:994
 msgid "Update packages..."
-msgstr "§ó·sµ{¦¡®M¥ó¡K"
+msgstr "æ›´æ–°ç¨‹å¼å¥—ä»¶â€¦"
 
 #: src/gnuwin32/rui.c:997
 msgid "Install package(s) from local files..."
-msgstr "¥Î¥»¾÷ªºÀÉ®×¨Ó¦w¸Ëµ{¦¡®M¥ó¡K"
+msgstr "ç”¨æœ¬æ©Ÿçš„æª”æ¡ˆä¾†å®‰è£ç¨‹å¼å¥—ä»¶â€¦"
 
 #: src/gnuwin32/rui.c:1021
 msgid "FAQ on R"
-msgstr "Ãö©ó R ªº FAQ"
+msgstr "é—œæ–¼ R çš„ FAQ"
 
 #: src/gnuwin32/rui.c:1023
 msgid "FAQ on R for &Windows"
-msgstr "Ãö©ó Windows ¤W R ªº FAQ(&W)"
+msgstr "é—œæ–¼ Windows ä¸Š R çš„ FAQ(&W)"
 
 #: src/gnuwin32/rui.c:1029 src/gnuwin32/rui.c:1032
 msgid "Manuals (in PDF)"
-msgstr "¤â¥U (PDFÀÉ®×)"
+msgstr "æ‰‹å†Š (PDFæª”æ¡ˆ)"
 
 #: src/gnuwin32/rui.c:1062
 msgid "R functions (text)..."
-msgstr "R ¨ç¦¡ (¤å¦rÀÉ®×)¡K"
+msgstr "R å‡½å¼ (æ–‡å­—æª”æ¡ˆ)â€¦"
 
 #: src/gnuwin32/rui.c:1064
 msgid "Html help"
-msgstr "Html »²§U"
+msgstr "Html è¼”åŠ©"
 
 #: src/gnuwin32/rui.c:1066
 msgid "Search help..."
-msgstr "·j´M»²§U¡K"
+msgstr "æœå°‹è¼”åŠ©â€¦"
 
 #: src/gnuwin32/rui.c:1071
 msgid "Apropos..."
-msgstr "Ãö©ó¡K"
+msgstr "é—œæ–¼â€¦"
 
 #: src/gnuwin32/rui.c:1073
 msgid "R Project home page"
-msgstr "R ­º­¶"
+msgstr "R é¦–é "
 
 #: src/gnuwin32/rui.c:1074
 msgid "CRAN home page"
-msgstr "CRAN ­º­¶"
+msgstr "CRAN é¦–é "
 
 #: src/gnuwin32/rui.c:1076
 msgid "About"
-msgstr "Ãö©ó"
+msgstr "é—œæ–¼"
 
 #: src/gnuwin32/rui.c:1085 src/extra/graphapp/gmenus.c:52
 msgid "Windows"
-msgstr "µøµ¡"
+msgstr "è¦–çª—"
 
 #: src/gnuwin32/rui.c:1086 src/extra/graphapp/gmenus.c:53
 msgid "Cascade"
-msgstr "¼hÅ|"
+msgstr "å±¤ç–Š"
 
 #: src/gnuwin32/rui.c:1087 src/extra/graphapp/gmenus.c:54
 msgid "Tile &Horizontally"
-msgstr "¤ô¥­¨Ã±Æ(&H)"
+msgstr "æ°´å¹³ä¸¦æ’(&H)"
 
 #: src/gnuwin32/rui.c:1088 src/extra/graphapp/gmenus.c:55
 msgid "Tile &Vertically"
-msgstr "««ª½¨Ã±Æ(&V)"
+msgstr "å‚ç›´ä¸¦æ’(&V)"
 
 #: src/gnuwin32/rui.c:1089
 msgid "Minimize group"
-msgstr "¸s²ÕÁY¨ì³Ì¤p"
+msgstr "ç¾¤çµ„ç¸®åˆ°æœ€å°"
 
 #: src/gnuwin32/rui.c:1090
 msgid "Restore group"
-msgstr "ÁÙ­ì¸s²Õ"
+msgstr "é‚„åŸç¾¤çµ„"
 
 #: src/gnuwin32/rui.c:1168
 msgid "Load workspace"
-msgstr "¸ü¤J¤u§@°Ï"
+msgstr "è¼‰å…¥å·¥ä½œå€"
 
 #: src/gnuwin32/rui.c:1172
 msgid "Save workspace"
-msgstr "Àx¦s¤u§@°Ï"
+msgstr "å„²å­˜å·¥ä½œå€"
 
 #: src/gnuwin32/rui.c:1188
 msgid "Stop current computation"
-msgstr "°±¤î¥Ø«eªº­pºâ"
+msgstr "åœæ­¢ç›®å‰çš„è¨ˆç®—"
 
 #: src/gnuwin32/rui.c:1211
 msgid "Source R code..."
-msgstr "¿é¤J R µ{¦¡½X¡K"
+msgstr "è¼¸å…¥ R ç¨‹å¼ç¢¼â€¦"
 
 #: src/gnuwin32/rui.c:1214
 msgid "Display file(s)..."
-msgstr "Åã¥ÜÀÉ®×¡K"
+msgstr "é¡¯ç¤ºæª”æ¡ˆâ€¦"
 
 #: src/gnuwin32/rui.c:1216
 msgid "Load Workspace..."
-msgstr "¸ü¤J¤u§@ªÅ¶¡¡K"
+msgstr "è¼‰å…¥å·¥ä½œç©ºé–“â€¦"
 
 #: src/gnuwin32/rui.c:1217
 msgid "Save Workspace..."
-msgstr "Àx¦s¤u§@ªÅ¶¡¡K"
+msgstr "å„²å­˜å·¥ä½œç©ºé–“â€¦"
 
 #: src/gnuwin32/rui.c:1219
 msgid "Load History..."
-msgstr "¸ü¤J©R¥O¾úµ{¡K"
+msgstr "è¼‰å…¥å‘½ä»¤æ­·ç¨‹â€¦"
 
 #: src/gnuwin32/rui.c:1221
 msgid "Save History..."
-msgstr "Àx¦s©R¥O¾úµ{¡K"
+msgstr "å„²å­˜å‘½ä»¤æ­·ç¨‹â€¦"
 
 #: src/gnuwin32/rui.c:1224
 msgid "Change dir..."
-msgstr "ÅÜ§ó²{¦æ¥Ø¿ı¡K"
+msgstr "è®Šæ›´ç¾è¡Œç›®éŒ„â€¦"
 
 #: src/gnuwin32/rui.c:1229
 msgid "Exit"
-msgstr "Â÷¶}"
+msgstr "é›¢é–‹"
 
 #: src/gnuwin32/rui.c:1236
 msgid "Copy and Paste"
-msgstr "½Æ»s©M¶K¤W"
+msgstr "è¤‡è£½å’Œè²¼ä¸Š"
 
 #: src/gnuwin32/rui.c:1240
 msgid "Data editor..."
-msgstr "¸ê®Æ½s¿è¾¹¡K"
+msgstr "è³‡æ–™ç·¨è¼¯å™¨â€¦"
 
 #: src/gnuwin32/rui.c:1245
 msgid "Toolbar"
-msgstr "¤u¨ã¦C"
+msgstr "å·¥å…·åˆ—"
 
 #: src/gnuwin32/rui.c:1246
 msgid "Statusbar"
-msgstr "ª¬ºA¦C"
+msgstr "ç‹€æ…‹åˆ—"
 
 #: src/gnuwin32/rui.c:1250
 msgid "Misc"
-msgstr "¨ä¥L"
+msgstr "å…¶ä»–"
 
 #: src/gnuwin32/rui.c:1251
 msgid "Stop current computation           \tESC"
-msgstr "°±¤î¥Ø«eªº­pºâ           \tESC"
+msgstr "åœæ­¢ç›®å‰çš„è¨ˆç®—           \tESC"
 
 #: src/gnuwin32/rui.c:1253
 msgid "Stop all computations"
-msgstr "°±¤î©Ò¦³­pºâ"
+msgstr "åœæ­¢æ‰€æœ‰è¨ˆç®—"
 
-# "°±¤î¥Ø«eªº­pºâ"
+# "åœæ­¢ç›®å‰çš„è¨ˆç®—"
 #: src/gnuwin32/rui.c:1255
 msgid "Break to debugger"
-msgstr "¼È°±¶i¤J°»¿ù¾¹"
+msgstr "æš«åœé€²å…¥åµéŒ¯å™¨"
 
 #: src/gnuwin32/rui.c:1258
 msgid "Word completion"
-msgstr "¦Û°Ê§¹¦¨¦rµü"
+msgstr "è‡ªå‹•å®Œæˆå­—è©"
 
 #: src/gnuwin32/rui.c:1260
 msgid "Filename completion"
-msgstr "ÀÉ¦W¸É§¹"
+msgstr "æª”åè£œå®Œ"
 
 #: src/gnuwin32/rui.c:1267
 msgid "List objects"
-msgstr "¦C¥X¥Øªºª«¥ó"
+msgstr "åˆ—å‡ºç›®çš„ç‰©ä»¶"
 
 #: src/gnuwin32/rui.c:1268
 msgid "Remove all objects"
-msgstr "§R°£©Ò¦³¥Øªºª«¥ó"
+msgstr "åˆªé™¤æ‰€æœ‰ç›®çš„ç‰©ä»¶"
 
 #: src/gnuwin32/rui.c:1269
 msgid "List search &path"
-msgstr "¦C¥X·j´M¸ô®|(&P)"
+msgstr "åˆ—å‡ºæœå°‹è·¯å¾‘(&P)"
 
 #: src/gnuwin32/rui.c:1275
 msgid "Console"
-msgstr "¥D±±»O"
+msgstr "ä¸»æ§è‡º"
 
 #: src/gnuwin32/rui.c:1336
 msgid "'mname' is limited to 1000 bytes"
-msgstr "'mname' ªºªø«×³Ì¦h¥u¯à¦³ 1000 ­Ó¦r¤¸"
+msgstr "'mname' çš„é•·åº¦æœ€å¤šåªèƒ½æœ‰ 1000 å€‹å­—å…ƒ"
 
 #: src/gnuwin32/rui.c:1381
 #, c-format
 msgid "menu %s does not exist"
-msgstr "%s ¿ï³æ¤£¦s¦b"
+msgstr "%s é¸å–®ä¸å­˜åœ¨"
 
 #: src/gnuwin32/rui.c:1434
 msgid "'menu' is limited to 500 bytes"
-msgstr "'menu' ªºªø«×³Ì¦h¥u¯à¦³ 500 ­Ó¦r¤¸"
+msgstr "'menu' çš„é•·åº¦æœ€å¤šåªèƒ½æœ‰ 500 å€‹å­—å…ƒ"
 
 #: src/gnuwin32/rui.c:1444
 msgid "base menu does not exist"
-msgstr "°ò¥»¿ï³æ¤£¦s¦b"
+msgstr "åŸºæœ¬é¸å–®ä¸å­˜åœ¨"
 
 #: src/gnuwin32/rui.c:1459
 msgid "failed to allocate menu"
-msgstr "µLªk°t¸m¿ï³æ"
+msgstr "ç„¡æ³•é…ç½®é¸å–®"
 
 #: src/gnuwin32/rui.c:1476 src/gnuwin32/rui.c:1600
 msgid "menu + item is limited to 1000 bytes"
-msgstr "µæ³æ¡Ï¶µ¥Øªºªø«×¥u¯à¦b 1000 ­Ó¦r¤¸¤º"
+msgstr "èœå–®ï¼‹é …ç›®çš„é•·åº¦åªèƒ½åœ¨ 1000 å€‹å­—å…ƒå…§"
 
 #: src/gnuwin32/rui.c:1484 src/gnuwin32/rui.c:1567
 msgid "menu does not exist"
-msgstr "¨S¦³¦¹¤@¿ï³æ"
+msgstr "æ²’æœ‰æ­¤ä¸€é¸å–®"
 
 #: src/gnuwin32/rui.c:1502 src/gnuwin32/rui.c:1525 src/gnuwin32/rui.c:1530
 msgid "failed to allocate char storage"
-msgstr "°t¸m¦r¤¸Àx¦s¾¹¥¢±Ñ"
+msgstr "é…ç½®å­—å…ƒå„²å­˜å™¨å¤±æ•—"
 
 #: src/gnuwin32/rui.c:1538
 msgid "failed to allocate menuitem"
-msgstr "°t¸m¿ï³æ¶µ¥¢±Ñ"
+msgstr "é…ç½®é¸å–®é …å¤±æ•—"
 
 #: src/gnuwin32/rui.c:1590
 msgid "menu not found"
-msgstr "§ä¤£¨ì¿ï³æ"
+msgstr "æ‰¾ä¸åˆ°é¸å–®"
 
 #: src/gnuwin32/rui.c:1608
 msgid "menu or item does not exist"
-msgstr "¿ï³æ©Î¬O¶µ¥Ø¤£¦s¦b"
+msgstr "é¸å–®æˆ–æ˜¯é …ç›®ä¸å­˜åœ¨"
 
 #: src/gnuwin32/system.c:604
 msgid "Save workspace image?"
-msgstr "Àx¦s¤u§@ªÅ¶¡¹Ï®×?"
+msgstr "å„²å­˜å·¥ä½œç©ºé–“åœ–æ¡ˆ?"
 
 #: src/extra/graphapp/clipboard.c:69 src/extra/graphapp/clipboard.c:73
 msgid "Insufficient memory: cell not copied to the clipboard"
-msgstr "°O¾ĞÅé¤£¨¬: ³æ¤¸®æ¨S¦³½Æ»s¨ì°Å¶KÃ¯"
+msgstr "è¨˜æ†¶é«”ä¸è¶³: å–®å…ƒæ ¼æ²’æœ‰è¤‡è£½åˆ°å‰ªè²¼ç°¿"
 
 #: src/extra/graphapp/dialogs.c:144 src/extra/graphapp/dialogs.c:161
 #: src/extra/graphapp/dialogs.c:178
 msgid "Question"
-msgstr "°İÃD"
+msgstr "å•é¡Œ"
 
 #: src/extra/graphapp/dialogs.c:249
 msgid " Change working directory to:"
-msgstr " ²{¦æ¥Ø¿ı§ï¦¨¡G"
+msgstr " ç¾è¡Œç›®éŒ„æ”¹æˆï¼š"
 
 #: src/extra/graphapp/dialogs.c:251
 #, c-format
 msgid "Unable to set '%s' as working directory"
-msgstr "µLªk±N '%s' ³]¦¨²{¦æ¥Ø¿ı"
+msgstr "ç„¡æ³•å°‡ '%s' è¨­æˆç¾è¡Œç›®éŒ„"
 
 #: src/extra/graphapp/dialogs.c:705 src/extra/graphapp/dialogs.c:723
 #: src/extra/graphapp/dialogs.c:729 src/extra/graphapp/dialogs.c:839
 #: src/extra/graphapp/dialogs.c:853 src/extra/graphapp/dialogs.c:859
 #: src/library/utils/src/windows/widgets.c:127
 msgid "Cancel"
-msgstr "¨ú®ø"
+msgstr "å–æ¶ˆ"
 
 #: src/extra/graphapp/dialogs.c:725 src/extra/graphapp/dialogs.c:855
 #: src/library/utils/src/windows/widgets.c:126
 msgid "OK"
-msgstr "½T©w"
+msgstr "ç¢ºå®š"
 
 #: src/extra/graphapp/dialogs.c:847
 msgid "User"
-msgstr "¨Ï¥ÎªÌ"
+msgstr "ä½¿ç”¨è€…"
 
 #: src/extra/graphapp/dialogs.c:848
 msgid "Password"
-msgstr "±K½X"
+msgstr "å¯†ç¢¼"
 
 #: src/extra/graphapp/dialogs.c:1034 src/extra/graphapp/dialogs.c:1040
 #, c-format
 msgid "\"%s\" not found"
-msgstr "§ä¤£¨ì \"%s\""
+msgstr "æ‰¾ä¸åˆ° \"%s\""
 
 #: src/extra/graphapp/gmenus.c:56
 msgid "Arrange Icons"
-msgstr "±Æ¦C¹Ï¥Ü"
+msgstr "æ’åˆ—åœ–ç¤º"
 
 #: src/extra/graphapp/metafile.c:55
 #, fuzzy
 msgid "Unable to save metafile to the clipboard"
-msgstr "µLªk¶}±Ò°Å¶KÃ¯"
+msgstr "ç„¡æ³•é–‹å•Ÿå‰ªè²¼ç°¿"
 
 #: src/extra/graphapp/metafile.c:117
 #, fuzzy
 msgid "Unable to create metafile"
-msgstr "µLªk«Ø¥ß½s¿è¾¹µøµ¡"
+msgstr "ç„¡æ³•å»ºç«‹ç·¨è¼¯å™¨è¦–çª—"
 
 #: src/extra/graphapp/metafile.c:122
 #, fuzzy
 msgid "Insufficient memory to create metafile"
-msgstr "°O¾ĞÅé¤£¨¬¡C½ĞÃö³¬¥D±±»O"
+msgstr "è¨˜æ†¶é«”ä¸è¶³ã€‚è«‹é—œé–‰ä¸»æ§è‡º"
 
 #: src/extra/graphapp/printer.c:111
 #, fuzzy
 msgid "Unable to choose printer"
-msgstr "µLªk«Ø¥ß­¶­±¤Á´«µ{¦¡µøµ¡"
+msgstr "ç„¡æ³•å»ºç«‹é é¢åˆ‡æ›ç¨‹å¼è¦–çª—"
 
 #: src/extra/graphapp/printer.c:139
 #, fuzzy
 msgid "Insufficient memory for new printer"
-msgstr "¥Î¤º³¡­¶­±¤Á´«µ{¦¡¨ÓÅã¥ÜÀÉ®×®É°O¾ĞÅé¤£¨¬"
+msgstr "ç”¨å…§éƒ¨é é¢åˆ‡æ›ç¨‹å¼ä¾†é¡¯ç¤ºæª”æ¡ˆæ™‚è¨˜æ†¶é«”ä¸è¶³"
 
 #: src/extra/graphapp/printer.c:175
 #, fuzzy
 msgid "Unable to start the print job"
-msgstr "µLªk«Ø¥ß­¶­±¤Á´«µ{¦¡µøµ¡"
+msgstr "ç„¡æ³•å»ºç«‹é é¢åˆ‡æ›ç¨‹å¼è¦–çª—"
 
 #: src/library/utils/src/windows/dataentry.c:251
 #: src/library/utils/src/windows/dataentry.c:1898
 #: src/library/utils/src/windows/dataentry.c:1901
 #: src/library/utils/src/windows/dataentry.c:1932
 msgid "invalid argument"
-msgstr "¤Ş¼Æ¤£¥¿½T"
+msgstr "å¼•æ•¸ä¸æ­£ç¢º"
 
 #: src/library/utils/src/windows/dataentry.c:298
 msgid "invalid type for value"
-msgstr "­ÈªºÃş«¬¤£¥¿½T"
+msgstr "å€¼çš„é¡å‹ä¸æ­£ç¢º"
 
 #: src/library/utils/src/windows/dataentry.c:309
 msgid "Data Editor"
-msgstr "¸ê®Æ½s¿è¾¹"
+msgstr "è³‡æ–™ç·¨è¼¯å™¨"
 
 #: src/library/utils/src/windows/dataentry.c:359
 #: src/library/utils/src/windows/dataentry.c:1891
 msgid "dataentry: internal memory problem"
-msgstr "dataentry: ¤º³¡°O¾ĞÅé°İÃD"
+msgstr "dataentry: å…§éƒ¨è¨˜æ†¶é«”å•é¡Œ"
 
 #: src/library/utils/src/windows/dataentry.c:663
 #: src/library/utils/src/windows/dataentry.c:1265
 msgid "dataentry: internal memory error"
-msgstr "dataentry: ¤º³¡°O¾ĞÅé¿ù»~"
+msgstr "dataentry: å…§éƒ¨è¨˜æ†¶é«”éŒ¯èª¤"
 
 #: src/library/utils/src/windows/dataentry.c:786
 #: src/library/utils/src/windows/dataentry.c:799
 msgid "internal type error in dataentry"
-msgstr "dataentry ¤º³¡Ãş«¬µo¥Í¿ù»~"
+msgstr "dataentry å…§éƒ¨é¡å‹ç™¼ç”ŸéŒ¯èª¤"
 
 #: src/library/utils/src/windows/dataentry.c:894
 msgid "dataentry: parse error on string"
-msgstr "dataentry¡G¦r¦ê­åªR¿ù»~"
+msgstr "dataentryï¼šå­—ä¸²å‰–æéŒ¯èª¤"
 
 #: src/library/utils/src/windows/dataentry.c:1039
 msgid "dataentry: expression too long"
-msgstr "dataentry: ¹Bºâ¦¡¤Óªø"
+msgstr "dataentry: é‹ç®—å¼å¤ªé•·"
 
 #: src/library/utils/src/windows/dataentry.c:1518
 msgid "column names cannot be blank"
-msgstr "Äæ¦W¤£¯à¬OªÅ¥Õªº"
+msgstr "æ¬„åä¸èƒ½æ˜¯ç©ºç™½çš„"
 
 #: src/library/utils/src/windows/dataentry.c:1564
 msgid "Variable editor"
-msgstr "ÅÜ¼Æ½s¿è¾¹"
+msgstr "è®Šæ•¸ç·¨è¼¯å™¨"
 
 #: src/library/utils/src/windows/dataentry.c:1569
 msgid "variable name"
-msgstr "ÅÜ¼Æ¦WºÙ"
+msgstr "è®Šæ•¸åç¨±"
 
 #: src/library/utils/src/windows/dataentry.c:1571
 msgid "type"
-msgstr "Ãş«¬"
+msgstr "é¡å‹"
 
 #: src/library/utils/src/windows/dataentry.c:1686
 msgid "Cell width(s)"
-msgstr "³æ¤¸®æ¼e"
+msgstr "å–®å…ƒæ ¼å¯¬"
 
 #: src/library/utils/src/windows/dataentry.c:1692
 msgid "Cell width"
-msgstr "³æ¤¸®æ¼e"
+msgstr "å–®å…ƒæ ¼å¯¬"
 
 #: src/library/utils/src/windows/dataentry.c:1695
 msgid "variable"
-msgstr "ÅÜ¼Æ"
+msgstr "è®Šæ•¸"
 
 #: src/library/utils/src/windows/dataentry.c:1738
 msgid ""
@@ -982,236 +982,236 @@ msgid ""
 "  Right-click menu for copy, paste, autosize currently selected column\n"
 "\n"
 msgstr ""
-"¾É¤Ş¡C\n"
-"  Áä½L: ´å¼ĞÁä¥Î¨Ó²¾°Ê¿ï¾Üªº¤º®e\n"
-"\tTab ¥k²¾, Shift+Tab ¥ª²¾\n"
-"\tPgDn ©Î Ctrl+F: ¾ã­Óµe­±¤U²¾\n"
-"\tPgUp ©Î Ctrl+B: ¾ã­Óµe­±¤W²¾\n"
-"\tHome: ²¾¨ì (1,1) ¦ì¸m\n"
-"\tEnd: Åã¥Ü³Ì«á¤@Äæªº³Ì«á¤@¦C¡C\n"
-"   ·Æ¹«: ¦b³æ¤¸®æ¸Ì«ö¥ªÁä¡A¨Ï¥Î±²¶b¡C\n"
+"å°å¼•ã€‚\n"
+"  éµç›¤: æ¸¸æ¨™éµç”¨ä¾†ç§»å‹•é¸æ“‡çš„å…§å®¹\n"
+"\tTab å³ç§», Shift+Tab å·¦ç§»\n"
+"\tPgDn æˆ– Ctrl+F: æ•´å€‹ç•«é¢ä¸‹ç§»\n"
+"\tPgUp æˆ– Ctrl+B: æ•´å€‹ç•«é¢ä¸Šç§»\n"
+"\tHome: ç§»åˆ° (1,1) ä½ç½®\n"
+"\tEnd: é¡¯ç¤ºæœ€å¾Œä¸€æ¬„çš„æœ€å¾Œä¸€åˆ—ã€‚\n"
+"   æ»‘é¼ : åœ¨å–®å…ƒæ ¼è£¡æŒ‰å·¦éµï¼Œä½¿ç”¨æ²è»¸ã€‚\n"
 "\n"
-"½s¿è¡C\n"
-"  ¼g¤J¥Ø«e¿ï¾Üªº³æ¤¸®æ¸Ì\n"
-"  ¦b³æ¤¸®æ¸Ì«ö¨â¤U¨Ó¹ïÄæ¦ì¶i¦æ½s¿è\n"
+"ç·¨è¼¯ã€‚\n"
+"  å¯«å…¥ç›®å‰é¸æ“‡çš„å–®å…ƒæ ¼è£¡\n"
+"  åœ¨å–®å…ƒæ ¼è£¡æŒ‰å…©ä¸‹ä¾†å°æ¬„ä½é€²è¡Œç·¨è¼¯\n"
 "\n"
-"¨ä¥¦¡C\n"
-"  Ctrl-L ­«·s¾ã²z¿Ã¹õ¡A¦Û°Ê½Õ¾ãÄæªº¤j¤p\n"
-"  Ctrl-C ½Æ»s¿ï¾Üªº³æ¤¸®æ\n"
-"  Ctrl-V ¶K¨ì¿ï¾Üªº³æ¤¸®æ\n"
-"  ¥kÁä¿ï³æ¥Î¨Ó½Æ»s¡B¶K¤W¡BÅı©Ò¿ï¾ÜªºÄæ¦Û¤v½Õ¾ã¤j¤p\n"
+"å…¶å®ƒã€‚\n"
+"  Ctrl-L é‡æ–°æ•´ç†è¢å¹•ï¼Œè‡ªå‹•èª¿æ•´æ¬„çš„å¤§å°\n"
+"  Ctrl-C è¤‡è£½é¸æ“‡çš„å–®å…ƒæ ¼\n"
+"  Ctrl-V è²¼åˆ°é¸æ“‡çš„å–®å…ƒæ ¼\n"
+"  å³éµé¸å–®ç”¨ä¾†è¤‡è£½ã€è²¼ä¸Šã€è®“æ‰€é¸æ“‡çš„æ¬„è‡ªå·±èª¿æ•´å¤§å°\n"
 "\n"
 
 #: src/library/utils/src/windows/dataentry.c:1746
 msgid "Copy selected cell"
-msgstr "½Æ»s©Ò¿ïªº³æ¤¸®æ"
+msgstr "è¤‡è£½æ‰€é¸çš„å–®å…ƒæ ¼"
 
 #: src/library/utils/src/windows/dataentry.c:1747
 msgid "Paste to selected cell"
-msgstr "¶K¨ì©Ò¿ï¾Üªº³æ¤¸®æ"
+msgstr "è²¼åˆ°æ‰€é¸æ“‡çš„å–®å…ƒæ ¼"
 
 #: src/library/utils/src/windows/dataentry.c:1748
 msgid "Autosize column"
-msgstr "¦Û°Ê½Õ¸`Äæªº¤j¤p"
+msgstr "è‡ªå‹•èª¿ç¯€æ¬„çš„å¤§å°"
 
 #: src/library/utils/src/windows/dataentry.c:1844
 msgid "Copy  \tCTRL+C"
-msgstr "½Æ»s  \tCTRL+C"
+msgstr "è¤‡è£½  \tCTRL+C"
 
 #: src/library/utils/src/windows/dataentry.c:1846
 msgid "Paste \tCTRL+V"
-msgstr "¶K¤W \tCTRL+V"
+msgstr "è²¼ä¸Š \tCTRL+V"
 
 #: src/library/utils/src/windows/dataentry.c:1848
 msgid "Delete\tDEL"
-msgstr "§R°£\tDEL"
+msgstr "åˆªé™¤\tDEL"
 
 #: src/library/utils/src/windows/dataentry.c:1851
 msgid "Cell widths ..."
-msgstr "³æ¤¸®æ¼e¡K"
+msgstr "å–®å…ƒæ ¼å¯¬â€¦"
 
 #: src/library/utils/src/windows/dataentry.c:1855
 msgid "Data editor"
-msgstr "¸ê®Æ½s¿è¾¹"
+msgstr "è³‡æ–™ç·¨è¼¯å™¨"
 
 #: src/library/grDevices/src/devWindows.c:958
 msgid "Portable network graphics file"
-msgstr "Portable network graphics ÀÉ®×"
+msgstr "Portable network graphics æª”æ¡ˆ"
 
 #: src/library/grDevices/src/devWindows.c:961
 msgid "Windows bitmap file"
-msgstr "Windows bitmap ÀÉ®×"
+msgstr "Windows bitmap æª”æ¡ˆ"
 
 #: src/library/grDevices/src/devWindows.c:964
 msgid "TIFF file"
-msgstr "TIFF ÀÉ®×"
+msgstr "TIFF æª”æ¡ˆ"
 
 #: src/library/grDevices/src/devWindows.c:967
 msgid "Jpeg file"
-msgstr "Jpeg ÀÉ®×"
+msgstr "Jpeg æª”æ¡ˆ"
 
 #: src/library/grDevices/src/devWindows.c:989
 msgid "Postscript file"
-msgstr "Postscript ÀÉ®×"
+msgstr "Postscript æª”æ¡ˆ"
 
 #: src/library/grDevices/src/devWindows.c:1001
 msgid "PDF file"
-msgstr "PDF ÀÉ®×"
+msgstr "PDF æª”æ¡ˆ"
 
 #: src/library/grDevices/src/devWindows.c:1013
 msgid "Enhanced metafiles"
-msgstr "¶i¶¥ metafiles"
+msgstr "é€²éš metafiles"
 
 #: src/library/grDevices/src/devWindows.c:1016
 #: src/library/grDevices/src/devWindows.c:3572
 msgid "file path selected is too long: only 512 bytes are allowed"
-msgstr "¿ï¾ÜªºÀÉ®×¸ô®|¤Óªø¡G³Ì¦h¥u¯à¦³ 512 ¦ì¤¸²Õ"
+msgstr "é¸æ“‡çš„æª”æ¡ˆè·¯å¾‘å¤ªé•·ï¼šæœ€å¤šåªèƒ½æœ‰ 512 ä½å…ƒçµ„"
 
 #: src/library/grDevices/src/devWindows.c:1227
 msgid "No plot to replace!"
-msgstr "¨S¦³¥i´À´«ªº¹Ïªí!"
+msgstr "æ²’æœ‰å¯æ›¿æ›çš„åœ–è¡¨!"
 
 #: src/library/grDevices/src/devWindows.c:1277
 msgid "Variable name"
-msgstr "ÅÜ¼Æ¦W"
+msgstr "è®Šæ•¸å"
 
 #: src/library/grDevices/src/devWindows.c:1286
 msgid "Variable doesn't contain any plots!"
-msgstr "ÅÜ¼Æ¤£¥]§t¥ô¦ó¹Ïªí!"
+msgstr "è®Šæ•¸ä¸åŒ…å«ä»»ä½•åœ–è¡¨!"
 
 #: src/library/grDevices/src/devWindows.c:1301
 msgid "Name of variable to save to"
-msgstr "­nÀx¦s¶i¥hªºÅÜ¼Æ¦W"
+msgstr "è¦å„²å­˜é€²å»çš„è®Šæ•¸å"
 
 #: src/library/grDevices/src/devWindows.c:1610
 msgid "Copy to the clipboard as a metafile"
-msgstr "°µ¬° metafile ½Æ»s¨ì°Å¶KÃ¯"
+msgstr "åšç‚º metafile è¤‡è£½åˆ°å‰ªè²¼ç°¿"
 
 #: src/library/grDevices/src/devWindows.c:1628
 #: src/library/grDevices/src/devWindows.c:1639
 msgid "Stop locator"
-msgstr "°±¤î©w¦ì¾¹"
+msgstr "åœæ­¢å®šä½å™¨"
 
 #: src/library/grDevices/src/devWindows.c:1638
 #: src/library/grDevices/src/devWindows.c:1642
 msgid "Stop"
-msgstr "°±¤î"
+msgstr "åœæ­¢"
 
 #: src/library/grDevices/src/devWindows.c:1644
 msgid "Continue"
-msgstr "Ä~Äò"
+msgstr "ç¹¼çºŒ"
 
 #: src/library/grDevices/src/devWindows.c:1648
 msgid "Next"
-msgstr "¤U¤@­Ó"
+msgstr "ä¸‹ä¸€å€‹"
 
 #: src/library/grDevices/src/devWindows.c:1649
 msgid "Next plot"
-msgstr "¤U¤@­Ó¹Ïªí"
+msgstr "ä¸‹ä¸€å€‹åœ–è¡¨"
 
 #: src/library/grDevices/src/devWindows.c:1655
 msgid "Save as"
-msgstr "¥t¦s¬°"
+msgstr "å¦å­˜ç‚º"
 
 #: src/library/grDevices/src/devWindows.c:1664
 #: src/library/grDevices/src/devWindows.c:1666
 #: src/library/grDevices/src/devWindows.c:1668
 #, c-format
 msgid "%s quality..."
-msgstr "%s «~½è¡K"
+msgstr "%s å“è³ªâ€¦"
 
 #: src/library/grDevices/src/devWindows.c:1670
 msgid "Copy to the clipboard"
-msgstr "½Æ»s¨ì°Å¶KÃ¯"
+msgstr "è¤‡è£½åˆ°å‰ªè²¼ç°¿"
 
 #: src/library/grDevices/src/devWindows.c:1671
 msgid "as a Bitmap\tCTRL+C"
-msgstr "°µ¬° Bitmap\tCTRL+C"
+msgstr "åšç‚º Bitmap\tCTRL+C"
 
 #: src/library/grDevices/src/devWindows.c:1672
 msgid "as a Metafile\tCTRL+W"
-msgstr "°µ¬° Metafile\tCTRL+W"
+msgstr "åšç‚º Metafile\tCTRL+W"
 
 #: src/library/grDevices/src/devWindows.c:1677
 msgid "close Device"
-msgstr "Ãö³¬¸Ë¸m"
+msgstr "é—œé–‰è£ç½®"
 
 #: src/library/grDevices/src/devWindows.c:1678
 msgid "History"
-msgstr "©R¥O¾úµ{"
+msgstr "å‘½ä»¤æ­·ç¨‹"
 
 #: src/library/grDevices/src/devWindows.c:1679
 msgid "Recording"
-msgstr "°O¿ı"
+msgstr "è¨˜éŒ„"
 
 #: src/library/grDevices/src/devWindows.c:1682
 msgid "Add\tINS"
-msgstr "¥[¤J\tINS"
+msgstr "åŠ å…¥\tINS"
 
 #: src/library/grDevices/src/devWindows.c:1683
 msgid "Replace"
-msgstr "´À´«"
+msgstr "æ›¿æ›"
 
 #: src/library/grDevices/src/devWindows.c:1685
 msgid "Previous\tPgUp"
-msgstr "¤W¤@­Ó\tPgUp"
+msgstr "ä¸Šä¸€å€‹\tPgUp"
 
 #: src/library/grDevices/src/devWindows.c:1686
 msgid "Next\tPgDown"
-msgstr "¤U¤@­Ó\tPgDown"
+msgstr "ä¸‹ä¸€å€‹\tPgDown"
 
 #: src/library/grDevices/src/devWindows.c:1688
 msgid "Save to variable..."
-msgstr "Àx¦s¨ìÅÜ¼Æ¡K"
+msgstr "å„²å­˜åˆ°è®Šæ•¸â€¦"
 
 #: src/library/grDevices/src/devWindows.c:1689
 msgid "Get from variable..."
-msgstr "Â^¨ú¦ÛÅÜ¼Æ¡K"
+msgstr "æ“·å–è‡ªè®Šæ•¸â€¦"
 
 #: src/library/grDevices/src/devWindows.c:1691
 msgid "Clear history"
-msgstr "²M°£©R¥O¾úµ{"
+msgstr "æ¸…é™¤å‘½ä»¤æ­·ç¨‹"
 
 #: src/library/grDevices/src/devWindows.c:1692
 msgid "Resize"
-msgstr "­«³]¤j¤p"
+msgstr "é‡è¨­å¤§å°"
 
 #: src/library/grDevices/src/devWindows.c:1693
 msgid "R mode"
-msgstr "R ¼Ò¦¡"
+msgstr "R æ¨¡å¼"
 
 #: src/library/grDevices/src/devWindows.c:1695
 msgid "Fit to window"
-msgstr "¾A¦Xµøµ¡¤j¤p"
+msgstr "é©åˆè¦–çª—å¤§å°"
 
 #: src/library/grDevices/src/devWindows.c:1697
 msgid "Fixed size"
-msgstr "©T©wªº¤j¤p"
+msgstr "å›ºå®šçš„å¤§å°"
 
 #: src/library/grDevices/src/devWindows.c:1704
 msgid "Copy as metafile"
-msgstr "½Æ»s¦¨ metafile"
+msgstr "è¤‡è£½æˆ metafile"
 
 #: src/library/grDevices/src/devWindows.c:1706
 msgid "Copy as bitmap"
-msgstr "½Æ»s¦¨ bitmap"
+msgstr "è¤‡è£½æˆ bitmap"
 
 #: src/library/grDevices/src/devWindows.c:1709
 msgid "Save as metafile..."
-msgstr "Àx¦s¦¨ metafile¡K"
+msgstr "å„²å­˜æˆ metafileâ€¦"
 
 #: src/library/grDevices/src/devWindows.c:1711
 msgid "Save as postscript..."
-msgstr "Àx¦s¦¨ postscript¡K"
+msgstr "å„²å­˜æˆ postscriptâ€¦"
 
 #: src/library/grDevices/src/devWindows.c:3232
 msgid "Locator is active"
-msgstr "©w¦ì¾¹¦b±Ò¥Îª¬ºA"
+msgstr "å®šä½å™¨åœ¨å•Ÿç”¨ç‹€æ…‹"
 
 #: src/library/grDevices/src/devWindows.c:3899
 msgid "Waiting to confirm page change..."
-msgstr "µ¥«İ­¶­±ÅÜ§óªº½T»{¡K"
+msgstr "ç­‰å¾…é é¢è®Šæ›´çš„ç¢ºèªâ€¦"
 
 #: src/library/grDevices/src/devWindows.c:3911
 msgid "Click or hit ENTER for next page"
-msgstr "«ö ENTER ¨Ó¬İ¤U¤@­¶"
+msgstr "æŒ‰ ENTER ä¾†çœ‹ä¸‹ä¸€é "
