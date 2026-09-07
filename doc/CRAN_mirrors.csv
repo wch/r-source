@@ -18,7 +18,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "China (Beijing 1) [https]",China,Beijing,https://mirrors.tuna.tsinghua.edu.cn/CRAN/,"TUNA Team, Tsinghua University","Justin Wong <justin.w.xd # gmail.com>",1,cn,"secure_mirror_from_master"
 "China (Beijing 2) [https]",China,Beijing,https://mirrors.bfsu.edu.cn/CRAN/,"Beijing Foreign Studies University","Aron Xu <aron # bfsu.edu.cn>",1,cn,"secure_mirror_from_master"
 "China (Beijing 3) [https]",China,Beijing,https://mirrors.pku.edu.cn/CRAN/,"Peking University","mirror # pku.edu.cn",1,cn,"secure_mirror_from_master"
-"China (Chongqing) [https]",China,Chongqing,https://mirrors.cqu.edu.cn/CRAN/,"Chongqing University","cqumirror # gmail.com",1,cn
+"China (Chongqing) [https]",China,Chongqing,https://mirrors.cqu.edu.cn/CRAN/,"Chongqing University","cqumirror # gmail.com",0,cn
 "China (Hefei) [https]",China,Hefei,https://mirrors.ustc.edu.cn/CRAN/,"University of Science and Technology of China","mirrors # Ustc.edu.cn",1,cn,"secure_mirror_from_master"
 "China (Hangzhou) [https]",China,Hangzhou,https://mirrors.zju.edu.cn/CRAN/,"Zhejiang University","mirrors # zju.edu.cn",1,cn
 "China (Hong Kong) [https]",China,"Hong Kong",https://mirror-hk.koddos.net/CRAN/,"KoDDoS in Hong Kong","mirror # koddos.net",1,cn,"secure_mirror_from_master"
@@ -56,7 +56,7 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "India (Bhubaneswar) [https]",India,Bhubaneswar,https://mirror.niser.ac.in/cran/,"National Institute of Science Education and Research (NISER)","Subhankar Mishra <smishra # niser.ac.in>",1,in,"secure_mirror_from_master"
 "India (New Delhi) [https]",India,"New Delhi",https://cran.isid.ac.in/,"Indian Statistical Institute, Delhi Centre","deepayan # isid.ac.in",1,in,"secure_mirror_from_master"
 "Indonesia (Banda Aceh) [https]",Indonesia,"Banda Aceh",https://cran.usk.ac.id/,"Universitas Syiah Kuala","adi # usk.ac.id",1,id,"secure_mirror_from_master"
-"Iran (Mashhad) [https]",Iran,Mashhad,https://cran.um.ac.ir/,"Ferdowsi University of Mashhad","Majid Sarmad <sarmad # um.ac.ir>",1,ir,"secure_mirror_from_master"
+"Iran (Mashhad) [https]",Iran,Mashhad,https://cran.um.ac.ir/,"Ferdowsi University of Mashhad","Majid Sarmad <sarmad # um.ac.ir>",0,ir,"secure_mirror_from_master"
 "Italy (Milano) [https]",Italy,Milano,https://cran.mirror.garr.it/CRAN/,"Garr Mirror, Milano","mirror-service # garr.it",1,it,"secure_mirror_from_master"
 "Italy (Padua) [https]",Italy,Padua,https://cran.stat.unipd.it/,"University of Padua","cran # stat.unipd.it",1,it,"secure_mirror_from_master"
 "Japan (Yonezawa) [https]",Japan,Yonezawa,https://ftp.yz.yamagata-u.ac.jp/pub/cran/,"Yamagata University","www-admin # ftp.yz.yamagata-u.ac.jp",1,jp,"secure_mirror_from_master"
@@ -77,11 +77,11 @@ Name,Country,City,URL,Host,Maintainer,OK,CountryCode,Comment
 "Sweden (Umeå) [https]",Sweden,Umeå,https://mirror.accum.se/mirror/CRAN/,"Academic Computer Club in Umeå, Sweden","<ftp-adm # accum.se>",1,se,"secure_mirror_from_master"
 "Switzerland (Zurich 1) [https]",Switzerland,Zürich,https://stat.ethz.ch/CRAN/,"ETH Zürich","Martin.Maechler # R-project.org",1,ch,"secure_mirror_from_master"
 "Switzerland (Zurich 2) [https]",Switzerland,Zürich,https://mirror.metanet.ch/cran/,"METNET AG","mirror # metanet.ch",1,ch
-"Taiwan (Taipei) [https]",Taiwan,Taipei,https://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","b90098 # csie.ntu.edu.tw",1,tw,"secure_mirror_from_master"
-"Turkey (Denizli) [https]",Turkey,Denizli,https://cran.pau.edu.tr/,"Pamukkale University, Denizli","Mehmet Elmas <mehmet # pau.edu.tr>",0,tr,"secure_mirror_from_master"
+"Taiwan (Taipei) [https]",Taiwan,Taipei,https://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","b90098 # csie.ntu.edu.tw",0,tw,"secure_mirror_from_master"
+"Turkey (Denizli) [https]",Turkey,Denizli,https://cran.pau.edu.tr/,"Pamukkale University, Denizli","Mehmet Elmas <mehmet # pau.edu.tr>",1,tr,"secure_mirror_from_master"
 "UK (Bristol) [https]",UK,Bristol,https://www.stats.bris.ac.uk/R/,"University of Bristol","it-zone-d # bristol.ac.uk",1,uk,"secure_mirror_from_master"
 "UK (London 1) [https]",UK,London,https://cran.ma.imperial.ac.uk/,"Imperial College London","andy.thomas # imperial.ac.uk",1,uk,"secure_mirror_from_master"
-"USA (IA) [https]",USA,Ames,https://mirror.las.iastate.edu/CRAN/,"Iowa State University, Ames, IA","cran-mirror # iastate.edu",1,us,"secure_mirror_from_master"
+"USA (IA) [https]",USA,Ames,https://mirror.las.iastate.edu/CRAN/,"Iowa State University, Ames, IA","cran-mirror # iastate.edu",0,us,"secure_mirror_from_master"
 "USA (IN)",USA,Bloomington,http://ftp.ussg.iu.edu/CRAN/,"Indiana University","rtadmin # indiana.edu",1,us
 "USA (MI) [https]",USA,"Ann Arbor",https://mirror.its.umich.edu/cran/,"University of Michigan, Ann Arbor, MI","its-linux-repository # umich.edu",1,us,"secure_mirror_from_master"
 "USA (MO) [https]",USA,"St. Louis",https://cran.wustl.edu/,"Washington University, St. Louis, MO","artsci-servadmins # email.wustl.edu",1,us,"secure_mirror_from_master"
