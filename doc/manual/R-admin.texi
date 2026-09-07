@@ -5994,7 +5994,7 @@ signalling behaviour; @I{Sun/Sparc}, @I{SGI/IRIX} and @cputype{ix86}
 Linux required no special action, FreeBSD requires a call to (the macro)
 @code{fpsetmask(0)} and @I{OSF1} required that computation be done with
 a @option{-ieee_with_inexact} flag etc. With Intel compilers on Intel
-machines, one has to explicitly disable flush-to-zero and
+machines, one had to explicitly disable flush-to-zero and
 @I{denormals-are-zero} modes.  Some ARM processors (including Apple
 Silicon) by default use @I{runfast} mode, which includes flush-to-zero
 and @I{default-nan} and hence has to be disabled.  With @I{default-nan}
@@ -6006,10 +6006,27 @@ top level directory.
 
 Beware of using high levels of optimization, at least initially.  On
 many compilers these reduce the degree of compliance to the
-@acronym{IEEE} model.  For example, using @option{-fast} on the Oracle
+@acronym{IEC} model.  For example, using @option{-fast} on the Oracle
 compilers has caused @R{}'s @code{NaN} to be set incorrectly, and
 @command{gcc}'s @option{-ffast-math} and @command{clang}'s
 @option{-Ofast} have given incorrect results.
+
+@strong{Long doubles}: @R{} (and many packages) makes use of the C
+@code{long double} type to accumulate intermediate results.  On some
+platforms this uses the @cputype{ix86}/@cputype{x86_64} `extended
+precision' model which is (almost always) implemented in hardware in the
+floatng-point unit.  Originally (in the 8087 FPU) all double-precision
+arirhtmetic was done in extended-precision and converted when stored, so
+using long doubles had negligble cost in computational time.  No other
+commonly-used platform uses extended-precision arithmetic: they either
+provide @code{long double} as the same as @code{double} or as a 128-bit
+type by (almost always) software emulation.  For ARM, compiler vendors
+are divided: GCC uses software emulation of the 128-bit IEEE 754-2008
+type, whereas LLVM (and hence Apple) use @code{double}.
+
+All use of C @code{long double} in @R{} can be suppressed by
+@command{--disable-long-double}: this can be desirable on platforms with
+software emulation of long doubles.
 
 @strong{Shared Objects}: There seems to be very little agreement
 across platforms on what needs to be done to build shared objects.
