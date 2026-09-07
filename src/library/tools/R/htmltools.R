@@ -57,8 +57,8 @@ function(f, tidy = "tidy") {
     ## See <https://github.com/htacg/tidy-html5/issues/1012>.
     ## So filter out ourselves for the time being ...
     if(NROW(result)) {
-        ind <- (result[, 3L] ==
-                "Warning: <ol> attribute \"type\" not allowed for HTML5")
+        ind <- grepl("^Warning: <ol> attribute \"type\" not allowed for X?HTML5$",
+                     result[, 3L])
         if(any(ind))
             result <- result[!ind, , drop = FALSE]
     }
