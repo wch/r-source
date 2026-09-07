@@ -6016,7 +6016,7 @@ compilers has caused @R{}'s @code{NaN} to be set incorrectly, and
 platforms this uses the @cputype{ix86}/@cputype{x86_64} `extended
 precision' model which is (almost always) implemented in hardware in the
 floatng-point unit.  Originally (in the 8087 FPU) all double-precision
-arirhtmetic was done in extended-precision and converted when stored, so
+arithmetic was done in extended-precision and converted when stored, so
 using long doubles had negligble cost in computational time.  No other
 commonly-used platform uses extended-precision arithmetic: they either
 provide @code{long double} as the same as @code{double} or as a 128-bit
