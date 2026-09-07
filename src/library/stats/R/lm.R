@@ -80,7 +80,8 @@ lm <- function (formula, data, subset, weights, na.action,
     if(length(f <- cl$formula) != 3L) { # PR#17463  and  PR#17476
 	if(missing(data)) # as in  lm(rock)
 	    cl$data <- f
-	cl$formula <- `attributes<-`(formula(mt), NULL) # no env
+	## missing(formula) may be true
+	cl$formula <- `attributes<-`(stats::formula(mt), NULL) # no env
     }
     z$call <- cl
     z$terms <- mt

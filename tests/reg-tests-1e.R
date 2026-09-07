@@ -3709,6 +3709,14 @@ stopifnot(identical(L00, ksmooth(x,y, x.points=NULL)),
 ## did seg.fault, trying to access x.points[1] from C
 
 
+## lm(data = .)
+(lmd <- lm(data = swiss))
+stopifnot(all.equal(coef(lmd), tolerance = 1e-4,
+                    c(`(Intercept)` = 66.92, Agriculture = -0.1721, Examination = -0.258,
+                      Education = -0.8709, Catholic = 0.1041, Infant.Mortality = 1.077)))
+## failed for 2 days
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

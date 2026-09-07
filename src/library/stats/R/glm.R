@@ -122,7 +122,8 @@ glm <- function(formula, family = gaussian, data, weights,
     if(length(f <- cal$formula) != 3L) { # PR#17463  and  PR#17476
 	if(missD) # glm(rock)
 	    cal$data <- f
-	cal$formula <- `attributes<-`(formula(mt), NULL) # no env
+	## missing(formula) may be true
+	cal$formula <- `attributes<-`(stats::formula(mt), NULL) # no env
     }
     if(model) fit$model <- mf
     fit$na.action <- attr(mf, "na.action")
