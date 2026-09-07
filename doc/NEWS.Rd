@@ -327,6 +327,9 @@
       \code{logLik()}, fixing \PR{16008}, thanks to \I{Bill Dunlap} and
       \I{Mauricio Vargas}.
 
+      \item \code{glm(rock)} and \code{glm(data = rock)} work like
+      \code{lm(..)} now.
+
       \item \code{confint(<free1way>, what = "OVL")} now includes one
       for shift effect confidence intervals including zero.
     }

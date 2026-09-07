@@ -3,6 +3,8 @@
 options(warn = 2, width = 101) # all warnings must be asserted below
 all.equal.0 <- function(x,y, ...) all.equal(x,y, tolerance = 0, ...)
 all.equal15 <- function(x,y, ...) all.equal(x,y, tolerance = 1e-15, ...)
+assertWarnV <- function(...) tools::assertWarning(..., verbose=TRUE)
+
 
 data(mtcars)
 mtcar2 <- within(mtcars, {
@@ -102,10 +104,10 @@ stopifnot(all.equal(cf8.9, coef(fm8.9), tolerance = 7e-9))
 ## predict :
 nd <- d8[,-1] + rep(outer(c(-2:2),10^(1:3)), 3) # 5 * 9 = 45 = 15 * 3 (nrow * ncol)
 row.names(nd) <- LETTERS[1:nrow(nd)]
-tools::assertWarning(verbose=TRUE, # "... rank-deficient .. consider predict(., rankdeficient="NA")
- ps <- predict(fm8. , newdata=nd, rankdeficient = "simple") )
-tools::assertWarning(verbose=TRUE, # "... rank-deficient ..  attr(*, "non-estim") has doubtful cases
- ps.<- predict(fm8. , newdata=nd) ) # default
+assertWarnV(# "... rank-deficient .. consider predict(., rankdeficient="NA")
+    ps <- predict(fm8. , newdata=nd, rankdeficient = "simple") )
+assertWarnV(# "... rank-deficient ..  attr(*, "non-estim") has doubtful cases
+    ps.<- predict(fm8. , newdata=nd) ) # default
 pN  <- predict(fm8. , newdata=nd, rankdeficient = "NA")
 pne <- predict(fm8. , newdata=nd, rankdeficient = "non-estim")
 p.9 <- predict(fm8.9, newdata=nd)
@@ -321,10 +323,10 @@ fit15  <- lm(y~x, weights = wts,     data = df, wtol = 0, tol = 1e-15)
 ## [1] "Component “qr”: Component “tol”: Mean relative difference: 1"
 ## [2] "Component “call”: target, current do not match when deparsed"
 ## ------------- but everything else is numerically identical -----------
-tools::assertWarning(verbose=TRUE, { # setting very small weights to zero ..
+assertWarnV({ # setting very small weights to zero ..
     fitw30    <- lm(y~x, weights = wts,     data = df, wtol = 1e-30)
     fiF100w30 <- lm(y~x, weights = wts*100, data = df, wtol = 1e-30)
-    })
+})
 (aew30 <- all.equal.0(fitw30, fiF100w30)) # 8 components differ . . . "okay"
 stopifnot(exprs = {
     length(ae15) == 2
@@ -427,6 +429,7 @@ stopifnot(exprs = { # the fitted models now have identical 'call':
     all.equal.0( wuf, wls2(rock.glmf0))
     all.equal.0( wuf, wls2(rock.glmf2))
 })
+
 ## AIC & logLik() --- PR#16008
 dropN <- function(llik) `attr<-`(llik, "nall", NULL)
 x <- 1:10; d10 <- data.frame(x=x, y = sin(x/3), weights = as.numeric(x > 1.5))
@@ -439,6 +442,23 @@ stopifnot({
     all.equal15(lLg, #    __________________ was  -Inf
                 structure(-0.471028026733263, nobs = 9L, df = 3, class = "logLik"))
 })
+
+
+## lm() and glm() with only __data__ (i.e., no formula) args:
+list(lm =  lm(rock),  lm.d =  lm(data=rock),
+    glm = glm(rock), glm.d = glm(data=rock)) -> mods
+(cfm <- t(vapply(mods, coef, numeric(4))))
+all.equal(cfm["lm",], cfm["glm.d",], tolerance = 0) # see TRUE on Lnx x86_64
+resmat <- sapply(mods, resid)
+resm2 <- t(unique(t(resmat))) # same models [lm() / glm()] should be "unique"
+summary(resRelD <- 1 - resm2[,1]/resm2[,2]) # relative difference
+stopifnot(exprs = {
+    cfm[c(1,3),] == cfm[c(2,4),] ##
+    all.equal15(cfm["lm",], cfm["glm.d",])
+    identical(colnames(resm2), c("lm", "glm"))
+    abs(resRelD) < 1e-12 # Lnx x86_c64 {default qr() tol} has max(.) = 7.26e-14
+})
+
 
 
 ### Local variables:

@@ -119,11 +119,11 @@ glm <- function(formula, family = gaussian, data, weights,
             warning("fitting to calculate the null deviance did not converge -- increase 'maxit'?")
         fit$null.deviance <- fit2$deviance
     }
+    if(missing(formula)) formula <- stats::formula(mt)
     if(length(f <- cal$formula) != 3L) { # PR#17463  and  PR#17476
 	if(missD) # glm(rock)
 	    cal$data <- f
-	## missing(formula) may be true
-	cal$formula <- `attributes<-`(stats::formula(mt), NULL) # no env
+	cal$formula <- `attributes<-`(formula(mt), NULL) # no env
     }
     if(model) fit$model <- mf
     fit$na.action <- attr(mf, "na.action")
