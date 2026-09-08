@@ -138,22 +138,26 @@
                         tol = sqrt(.Machine$double.eps), ...) 
 {
 
-    ### convert to three-way table
+    # convert to three-way table
+    
     xt <- x
     if (!is.table(x))
-        stop(gettextf("invalid argument '%s'", "x"), domain = NA) # 'y' in free1way ...
+         stop(gettextf("invalid argument '%s'", "x"), domain = NA) # 'y' in free1way ...
     dx <- dim(x)
     dn <- dimnames(x)
     if (length(dx) == 2L) {
         x <- as.table(array(c(x), dim = dx <- c(dx, 1L)))
         dimnames(x) <- dn <- c(dn, list(A = "A"))
     }
-
+    
+    # short-cuts for link functions
+    
     ### short-cuts for link functions
     F <- function(q, ...) .p(link, q = q, ...)
     Q <- function(p, ...) .q(link, p = p, ...)
-    f <- function(q) .d(link, x = q)
+    f <- function(q, ...) .d(link, x = q, ...)
     fp <- function(q) .dd(link, x = q)
+    
 
     if(!suppressPackageStartupMessages(requireNamespace("Matrix")))
         stop(gettextf("%s needs package 'Matrix' correctly installed",
@@ -275,17 +279,15 @@
                                           byrow = TRUE)
 
         Ftmb <- exp(logFtmb <- F(tmb, log = TRUE))
-        ### log-sum-exp trick
+        ### log-sum-exp trick and log(1 - exp()) via pexp
         if (rightcensored) {
             logprb <- log1p(- Ftmb[- nrow(Ftmb), , drop = FALSE])
         } else {
-
             logprb <- logFtmb[- 1L, , drop = FALSE] +
-                      log1p(- exp(pmin(0, logFtmb[- nrow(Ftmb), , drop = FALSE] - 
-                                          logFtmb[- 1L, , drop = FALSE])))
+                      pexp(pmax(0, logFtmb[- 1L, , drop = FALSE] - 
+                                   logFtmb[- nrow(Ftmb), , drop = FALSE]), 
+                           log.p = TRUE)
         } 
-        ### not needed for log-likelihood but for gradients and hessians
-        prb <- exp(logprb)
         
         return(- sum(x * logprb))
     }
@@ -305,25 +307,23 @@
                                           byrow = TRUE)
 
         Ftmb <- exp(logFtmb <- F(tmb, log = TRUE))
-        ### log-sum-exp trick
+        ### log-sum-exp trick and log(1 - exp()) via pexp
         if (rightcensored) {
             logprb <- log1p(- Ftmb[- nrow(Ftmb), , drop = FALSE])
         } else {
-
             logprb <- logFtmb[- 1L, , drop = FALSE] +
-                      log1p(- exp(pmin(0, logFtmb[- nrow(Ftmb), , drop = FALSE] - 
-                                          logFtmb[- 1L, , drop = FALSE])))
+                      pexp(pmax(0, logFtmb[- 1L, , drop = FALSE] - 
+                                   logFtmb[- nrow(Ftmb), , drop = FALSE]), 
+                           log.p = TRUE)
         } 
-        ### not needed for log-likelihood but for gradients and hessians
-        prb <- exp(logprb)
         
 
         # density prob ratio
         
-        ftmb <- f(tmb)
-        zu <- x * ftmb[- 1, , drop = FALSE] / prb
+        ftmb <- f(tmb, log = TRUE)
+        zu <- x * exp(ftmb[- 1, , drop = FALSE] - logprb)
         if (rightcensored) zu[] <- 0 ### derivative of a constant
-        zl <- x * ftmb[- nrow(ftmb), , drop = FALSE] / prb
+        zl <- x * exp(ftmb[- nrow(ftmb), , drop = FALSE] - logprb)
         
 
         ret <- numeric(length(parm))
@@ -351,25 +351,23 @@
                                           byrow = TRUE)
 
         Ftmb <- exp(logFtmb <- F(tmb, log = TRUE))
-        ### log-sum-exp trick
+        ### log-sum-exp trick and log(1 - exp()) via pexp
         if (rightcensored) {
             logprb <- log1p(- Ftmb[- nrow(Ftmb), , drop = FALSE])
         } else {
-
             logprb <- logFtmb[- 1L, , drop = FALSE] +
-                      log1p(- exp(pmin(0, logFtmb[- nrow(Ftmb), , drop = FALSE] - 
-                                          logFtmb[- 1L, , drop = FALSE])))
+                      pexp(pmax(0, logFtmb[- 1L, , drop = FALSE] - 
+                                   logFtmb[- nrow(Ftmb), , drop = FALSE]), 
+                           log.p = TRUE)
         } 
-        ### not needed for log-likelihood but for gradients and hessians
-        prb <- exp(logprb)
         
 
         # density prob ratio
         
-        ftmb <- f(tmb)
-        zu <- x * ftmb[- 1, , drop = FALSE] / prb
+        ftmb <- f(tmb, log = TRUE)
+        zu <- x * exp(ftmb[- 1, , drop = FALSE] - logprb)
         if (rightcensored) zu[] <- 0 ### derivative of a constant
-        zl <- x * ftmb[- nrow(ftmb), , drop = FALSE] / prb
+        zl <- x * exp(ftmb[- nrow(ftmb), , drop = FALSE] - logprb)
         
 
         ret <- .rowSums(zl - zu, m = nrow(zl), n = ncol(zl)) / 
@@ -393,25 +391,23 @@
                                           byrow = TRUE)
 
         Ftmb <- exp(logFtmb <- F(tmb, log = TRUE))
-        ### log-sum-exp trick
+        ### log-sum-exp trick and log(1 - exp()) via pexp
         if (rightcensored) {
             logprb <- log1p(- Ftmb[- nrow(Ftmb), , drop = FALSE])
         } else {
-
             logprb <- logFtmb[- 1L, , drop = FALSE] +
-                      log1p(- exp(pmin(0, logFtmb[- nrow(Ftmb), , drop = FALSE] - 
-                                          logFtmb[- 1L, , drop = FALSE])))
+                      pexp(pmax(0, logFtmb[- 1L, , drop = FALSE] - 
+                                   logFtmb[- nrow(Ftmb), , drop = FALSE]), 
+                           log.p = TRUE)
         } 
-        ### not needed for log-likelihood but for gradients and hessians
-        prb <- exp(logprb)
         
 
         # density prob ratio
         
-        ftmb <- f(tmb)
-        zu <- x * ftmb[- 1, , drop = FALSE] / prb
+        ftmb <- f(tmb, log = TRUE)
+        zu <- x * exp(ftmb[- 1, , drop = FALSE] - logprb)
         if (rightcensored) zu[] <- 0 ### derivative of a constant
-        zl <- x * ftmb[- nrow(ftmb), , drop = FALSE] / prb
+        zl <- x * exp(ftmb[- nrow(ftmb), , drop = FALSE] - logprb)
         
 
         ret <- .rowSums(zl * c(0, parm[-bidx]) - zu * c(parm[-bidx], 0), 
@@ -436,21 +432,23 @@
                                           byrow = TRUE)
 
         Ftmb <- exp(logFtmb <- F(tmb, log = TRUE))
-        ### log-sum-exp trick
+        ### log-sum-exp trick and log(1 - exp()) via pexp
         if (rightcensored) {
             logprb <- log1p(- Ftmb[- nrow(Ftmb), , drop = FALSE])
         } else {
-
             logprb <- logFtmb[- 1L, , drop = FALSE] +
-                      log1p(- exp(pmin(0, logFtmb[- nrow(Ftmb), , drop = FALSE] - 
-                                          logFtmb[- 1L, , drop = FALSE])))
+                      pexp(pmax(0, logFtmb[- 1L, , drop = FALSE] - 
+                                   logFtmb[- nrow(Ftmb), , drop = FALSE]), 
+                           log.p = TRUE)
         } 
-        ### not needed for log-likelihood but for gradients and hessians
-        prb <- exp(logprb)
         
 
         # Hessian prep
         
+        ## ratios are computed on the log-scale in .nsr()
+        ## however, fp(tmb) can be negative here so we refrain from
+        ## this exercise here
+        prb <- exp(logprb)
         ftmb <- f(tmb)
         fptmb <- fp(tmb)
 
@@ -736,7 +734,7 @@
             loga <- log(A[i, i]) + dm1
             logb <- (2 * log(abs(A[i-1, i])) + dm2)
             dm2 <- dm1
-            dm1 <- loga + log1p(-exp(logb - loga))
+            dm1 <- loga + pexp(loga - logb, log.p = TRUE)
         }
         ret <- ret + dm1
         ret
@@ -1640,11 +1638,34 @@ confint.free1way <- function(object, parm,
         }
     }
 
+    # PI OVL confint
+    
     what <- match.arg(what)
     CINT <- switch(what, "shift" = CINT,
+                         ### probabilistic index = AUC monotone increasing
                          "PI" = object$link$parm2PI(CINT),
                          "AUC" = object$link$parm2PI(CINT), ### same as PI 
-                         "OVL" = object$link$parm2OVL(CINT))[parm, , drop = FALSE]
+                         ### overlap coefficient increasing on (-inf, 0)
+                         ### and decreasing on (0, inf)
+                         "OVL" = {
+                             ofun <- object$link$parm2OVL
+                             rs <- rowSums(CINT < 0) 
+                             ### upper < 0
+                             if (any(i <- (rs == 2L)))
+                                 CINT[i,] <- ofun(CINT[i,])
+                             ### lower > 0
+                             if (any(i <- (rs == 0L)))
+                                 CINT[i,] <- ofun(-CINT[i,2:1])
+                             ### lower < 0 < upper 
+                             if (any(i <- (rs == 1L))) {
+                                 aCINT <- abs(CINT[i,,drop = FALSE])
+                                 CINT[i,1L] <- ofun(-apply(aCINT, 1L, max))
+                                 CINT[i,2L] <- 1
+                             }
+                             return(CINT)
+                         })[parm, , drop = FALSE]
+    
+
     if (!is.null(att.level))
         attr(CINT, "Attained level") <- att.level
     return(CINT)
