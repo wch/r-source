@@ -925,8 +925,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
 
                 if (is.null(bulkdown)) {
                     # serial download
-                    res <- try(download.file(url, destfile, method, mode = "wb",
-                                             ...))
+                    res <- try(download.file(url, destfile, method, mode = "wb", ...))
                     if(!inherits(res, "try-error") && res == 0L)
                         retval <- rbind(retval, c(p, destfile))
                     else

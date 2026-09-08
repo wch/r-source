@@ -61,6 +61,12 @@
       for Quartz built-in stroker breaking long paths). Thanks to
       \I{R Dev Day @ useR! 2026} contributors, notably
       \I{Tomek Gieorgijewski}, report in \PR{18680}.
+
+      \item \code{strptime()} now also returns \code{NA} for out of range
+      \code{"\%OS"} and a correct error message in some wrong multibyte
+      cases, fixing \PR{19117} comment #1 and \PR{19122} by \I{Michael
+	Chirico}; additionally, some overflow to \code{Inf} times no longer
+      result in \code{NA}.
     }
   }
 }
@@ -1537,8 +1543,7 @@
       the \code{"MethodsList"} class for S4 method handling were removed
       from package \pkg{methods}.
       Deprecated functions \code{balanceMethodsList}, \code{emptyMethodsList},
-      \code{inheritedSubMethodLists}, \code{insertMethod},
-      \code{insertMethodInEmptyList}, \code{makeMethodsList},
+      \code{insertMethod}, \code{makeMethodsList},
       \code{mergeMethods}, \code{MethodsList}, \code{MethodsListSelect}, and
       \code{SignatureMethod} were made defunct, as were the
       \code{"MethodsList"} branches of functions \code{assignMethodsMetaData},
