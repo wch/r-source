@@ -35,7 +35,7 @@
       variable names, fixing \PR{18468}.  Thanks to \I{Bill Dunlap} and
       \sQuote{\I{R Dev Day}} participants \I{Vincent Arel-Bundock},
       \I{Cynthia Huang}, \I{Tina Rozsos} and \I{Marina Marinelli}.
-      
+
       \item Now \code{PROTECT()} in \code{SubassignTypeFix}, fixing
       \PR{19110} thanks to \I{Kevin Ushey}.
 
@@ -67,6 +67,9 @@
       cases, fixing \PR{19117} comment #1 and \PR{19122} by \I{Michael
 	Chirico}; additionally, some overflow to \code{Inf} times no longer
       result in \code{NA}.
+
+      \item \code{ksmooth(x,y, x.points=NULL)} now returns an empty (x,y)
+      pair instead of crashing \R, fixing \PR{19153}.
     }
   }
 }

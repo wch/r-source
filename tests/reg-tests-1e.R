@@ -3427,6 +3427,8 @@ for(nd in c(2:4, 33:37)) { #
     stopifnot(identical(x, y), is.integer(d <- dim(x)), all.equal(d., d))
 }
 ## above creation of x & y failed for a couple of hours in R-devel
+## r90452 overflowed the computation of the product of dimensions.
+## giving a negative answer on some platforms (x86_64, not macOS).
 
 
 ## PR#19116 -- <matrix>[[i, j]]: stochastic error with negative i
@@ -3437,6 +3439,18 @@ RR <- replicate(1000, {
 })
 stopifnot(RR == "2", length(RR) == 1000L)
 ## RR was '2' "randomly" in R <= 4.6.1
+
+
+
+## keep at end
+
+
+## ksmooth(.., x.points = <invalid>) -- PR#19153
+x <- 1:11; y <- (x - 5)^2
+L00 <- list(x = numeric(), y = numeric())
+stopifnot(identical(L00, ksmooth(x,y, x.points=NULL)),
+          identical(L00, ksmooth(x,y, x.points=rep(NA,999))))
+## did seg.fault, trying to access x.points[1] from C
 
 
 
