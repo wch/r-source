@@ -91,6 +91,7 @@ conceptual_base_code <- c("c.default")
 undoc <-
 function(package, dir, lib.loc = NULL)
 {
+    nsInfo <- NULL
     ## Argument handling.
     ## <NOTE>
     ## Earlier versions used to give an error if there were no Rd
@@ -229,12 +230,12 @@ function(package, dir, lib.loc = NULL)
     if(.isMethodsDispatchOn()) {
         ## Undocumented S4 classes?
         S4_classes <- methods::getClasses(code_env)
-        ## <NOTE>
-        ## There is no point in worrying about exportClasses directives
-        ## in a NAMESPACE file when working on a package source dir, as
-        ## we only source the assignments, and hence do not get any
-        ## S4 classes or methods.
-        ## </NOTE>
+        if(!is.null(nsInfo)) {
+            OK <- nsInfo$exportClasses
+            for(p in nsInfo$exportClassPatterns)
+                OK <- c(OK, grepv(p, S4_classes))
+            S4_classes <- unique(OK)
+        }
         ## The bad ones:
         S4_classes <-
             S4_classes[vapply(S4_classes, utils:::topicName, " ",
@@ -242,16 +243,8 @@ function(package, dir, lib.loc = NULL)
                        %notin% all_doc_topics]
         undoc_things <-
             c(undoc_things, list("S4 classes" = unique(S4_classes)))
-    }
 
-    if(.isMethodsDispatchOn()) {
         ## Undocumented S4 methods?
-        ## <NOTE>
-        ## There is no point in worrying about exportMethods directives
-        ## in a NAMESPACE file when working on a package source dir, as
-        ## we only source the assignments, and hence do not get any
-        ## S4 classes or methods.
-        ## </NOTE>
         .make_S4_method_siglist <- function(g) {
             mlist <- .get_S4_methods_list(g, code_env)
             sigs <- .make_siglist(mlist) #  s/#/,/g
@@ -260,8 +253,10 @@ function(package, dir, lib.loc = NULL)
             else
                 character()
         }
-        S4_methods <- lapply(.get_S4_generics(code_env),
-                             .make_S4_method_siglist)
+        generics <- .get_S4_generics(code_env)
+        if(!is.null(nsInfo))
+            generics <- generics[names(generics) %in% nsInfo$exportMethods]
+        S4_methods <- lapply(generics, .make_S4_method_siglist)
         S4_methods <- as.character(unlist(S4_methods, use.names = FALSE))
 
         ## The bad ones:
