@@ -154,8 +154,12 @@ cloglog <- function()
                     return(-expm1(-exp(q)))
                 return(ret)
             },
-            dlinkinv = function(x) 
-                ifelse(is.finite(x), exp(x - exp(x)), 0.0),
+            dlinkinv = function(x, log = FALSE) {
+                ret <- x - exp(x)
+                if (log)
+                    return(ifelse(is.finite(x), ret, -Inf))
+                ifelse(is.finite(x), exp(ret), 0.0)
+            },
             ddlinkinv = function(x) {
                 ex <- exp(x)
                 ifelse(is.finite(x), (ex - ex^2) / exp(ex), 0.0)
@@ -193,14 +197,18 @@ loglog <- function()
                 if (log.p) {
                     if (lower.tail)
                         return(-exp(-q))
-                    return(log1p(-exp(-exp(-q))))
+                    return(pexp(exp(-q), log.p = TRUE))
                 }
                 if (lower.tail)
                     return(exp(-exp(-q)))
                 -expm1(-exp(-q))
             },
-            dlinkinv = function(x) 
-                ifelse(is.finite(x), exp(- x - exp(-x)), 0.0),
+            dlinkinv = function(x, log = FALSE) {
+                ret <- - x - exp(-x)
+                if (log)
+                    return(ifelse(is.finite(x), ret, -Inf))
+                ifelse(is.finite(x), exp(ret), 0.0)
+            },
             ddlinkinv = function(x) {
                ex <- exp(-x)
                ifelse(is.finite(x), exp(-ex - x) * (ex - 1.0), 0.0)
