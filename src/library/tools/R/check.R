@@ -6739,9 +6739,12 @@ add_dummies <- function(dir, Log)
         }
     } ## {check_install()}
 
-    ## This requires a GNU-like 'du' with 1k block sizes,
+    ## This requires a GNU-like 'du' with 1024-byte block sizes,
     ## so use -k (which POSIX requires).
     ## It also depends on the total being last.
+    ## NB: this can (transiently) overstate disk usage due to filesystem
+    ## preallocation, notably on XFS (where usage reported for */<pkg>.rdb
+    ## has been observed to shrink noticeably after some delay)
     check_install_sizes <- function()
     {
         pd <- file.path(libdir, pkgname)
