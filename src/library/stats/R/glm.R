@@ -27,11 +27,11 @@ glm <- function(formula, family = gaussian, data, weights,
 		subset, na.action, start = NULL,
 		etastart, mustart, offset,
 		control = list(...),
-                model = TRUE, method = "glm.fit",
-                x = FALSE, y = TRUE,
+		model = TRUE, method = "glm.fit",
+		x = FALSE, y = TRUE,
 		singular.ok = TRUE, contrasts = NULL, ...)
 {
-    cal <- match.call()
+    cl <- match.call()
     ## family
     if(is.character(family))
         family <- get(family, mode = "function", envir = parent.frame())
@@ -119,24 +119,36 @@ glm <- function(formula, family = gaussian, data, weights,
             warning("fitting to calculate the null deviance did not converge -- increase 'maxit'?")
         fit$null.deviance <- fit2$deviance
     }
-    if(missing(formula)) formula <- stats::formula(mt)
-    if(length(f <- cal$formula) != 3L) { # PR#17463  and  PR#17476
-	if(missD) # glm(rock)
-	    cal$data <- f
-	cal$formula <- `attributes<-`(formula(mt), NULL) # no env
+    if(missF <- missing(formula)) formula <- stats::formula(mt)
+    fl3 <- length(f <- cl$formula) == 3L
+    ## is like  terms(<formula>, keep.order=*):
+    frm.is.terms <- fl3 && f[[1]] == quote(terms) && is.call(f2 <- f[[2]]) &&
+	length(f2) == 3L && f2[[1]] == quote(`~`)
+    fixupForm <- !frm.is.terms && (!fl3 || (length(f) && f[[1]] != quote(`~`)))
+    if(fixupForm) { # PR#17463  and  PR#17476 -- fixup cl$formula:
+	ff <-
+	    if(inherits(ef <- eval(f, envir=parent.frame()), "formula")) # as in lm(frml)
+		ef
+	    else {
+		if(missD) # glm(rock)
+		    cl$data <- f
+		if(missF) formula else formula(mt)
+	    }
+	attributes(ff) <- NULL # no env, no class -- is needed (FIXME?)
+	cl$formula <- ff
     }
     if(model) fit$model <- mf
     fit$na.action <- attr(mf, "na.action")
     if(x) fit$x <- X
     if(!y) fit$y <- NULL
     structure(c(fit,
-		list(call = cal, formula = formula,
+		list(call = cl, formula = formula,
 		     terms = mt, data = data,
 		     offset = offset, control = control, method = method,
 		     contrasts = attr(X, "contrasts"),
 		     xlevels = .getXlevels(mt, mf))),
 	      class = c(fit$class, c("glm", "lm")))
-}
+} ## glm
 
 
 glm.control <- function(epsilon = 1e-8, maxit = 25, trace = FALSE)
@@ -336,7 +348,7 @@ glm.fit <-
                 warning("glm.fit: fitted rates numerically 0 occurred", call. = FALSE)
         }
         ## If X matrix was not full rank then columns were pivoted,
-        ## hence we need to re-label the names ...
+        ## hence we need to re-label the names . . .
         ## Original code changed as suggested by BDR---give NA rather
         ## than 0 for non-estimable parameters
         if (fit$rank < nvars) coef[fit$pivot][seq.int(fit$rank+1, nvars)] <- NA
@@ -367,7 +379,7 @@ glm.fit <-
     names(wt) <- ynames
     names(weights) <- ynames
     names(y) <- ynames
-    if(!EMPTY)
+    if(!EMPTY) # good is nobs-vector
         names(fit$effects) <-
             c(xxnames[seq_len(fit$rank)], rep.int("", sum(good) - fit$rank))
     ## calculate null deviance -- corrected in glm() if offset and intercept
@@ -396,7 +408,7 @@ glm.fit <-
 	 null.deviance = nulldev, iter = iter, weights = wt,
 	 prior.weights = weights, df.residual = resdf, df.null = nulldf,
 	 y = y, converged = conv, boundary = boundary)
-}
+} # end{ glm.fit }
 
 
 print.glm <- function(x, digits = max(3L, getOption("digits") - 3L), ...)

@@ -77,11 +77,23 @@ lm <- function (formula, data, subset, weights, na.action,
     z$offset <- offset
     z$contrasts <- attr(x, "contrasts")
     z$xlevels <- .getXlevels(mt, mf)
-    if(length(f <- cl$formula) != 3L) { # PR#17463  and  PR#17476
-	if(missing(data)) # as in  lm(rock)
-	    cl$data <- f
-	## missing(formula) may be true
-	cl$formula <- `attributes<-`(stats::formula(mt), NULL) # no env
+    fl3 <- length(f <- cl$formula) == 3L
+    ## is like  terms(<formula>, keep.order=*):
+    frm.is.terms <- fl3 && f[[1]] == quote(terms) && is.call(f2 <- f[[2]]) &&
+	length(f2) == 3L && f2[[1]] == quote(`~`)
+    fixupForm <- !frm.is.terms && (!fl3 || (length(f) && f[[1]] != quote(`~`)))
+    if(fixupForm) { # PR#17463  and  PR#17476 -- fixup cl$formula:
+	ff <-
+	    if(inherits(ef <- eval(f, envir=parent.frame()), "formula")) # as in lm(frml)
+		ef
+	    else {
+		if(missing(data)) # as in lm(rock)
+		    cl$data <- f
+		## missing(formula) may be true
+		stats::formula(mt)
+	    }
+	attributes(ff) <- NULL # no env, no class -- is needed (FIXME?)
+	cl$formula <- ff
     }
     z$call <- cl
     z$terms <- mt

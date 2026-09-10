@@ -4,7 +4,8 @@ options(warn = 2, width = 101) # all warnings must be asserted below
 all.equal.0 <- function(x,y, ...) all.equal(x,y, tolerance = 0, ...)
 all.equal15 <- function(x,y, ...) all.equal(x,y, tolerance = 1e-15, ...)
 assertWarnV <- function(...) tools::assertWarning(..., verbose=TRUE)
-
+## for comparisons, may drop call:
+noC  <- function(L) L[-match("call", names(L))]
 
 data(mtcars)
 mtcar2 <- within(mtcars, {
@@ -389,16 +390,27 @@ stopifnot(exprs = { # the fitted models now have identical 'call':
     ##
     all.equal.0( wls2(rock.mod1), wls2(rock.mod2) -> wu2) # Error in eval(..) : object 'res2' not found
     all.equal.0( wls2(rock.modf) -> wuf, wu2)
-    all.equal.0( wuf, wls2(rock.modf2))
-    all.equal.0( wuf, wls2(rock.modf0))
-    ## but wls2(umod0) or  wls2(umod*)  all fail
+    all.equal.0(    wuf,      wls2(rock.modf2))
+    all.equal.0(noC(wuf), noC(wls2(rock.modf0)))
+    ## but wls2(umod0) or  wls2(umod*)  all fail [[TODO ?]]
 })
+## A version without data i.e. global variables!
+counts <- c(18,17,15,20,10,20,25,13,12)
+treatment <- gl(3,3)
+form <- counts ~ treatment # formula as object
+flm <- lm(form)
+(u1 <- update(flm)) # calling update.default(flm) -- failed in R-devel 90471
+rm(form)
+(u2 <- update(flm))
+stopifnot(all.equal.0(u1, flm),
+          identical(u1, u2))
+
 
 ##----- the same with glm(): ----------
-
 rock.glm0 <- glm(area ~ . , data = rock)
 rock.glm1 <- glm(area ~ peri + shape + perm, data = rock)
 rock.glm2 <- glm(rock)
+form <- formula(rock.mod1)
 rock.glmf <- glm(form, data = rock)
 rock.glmf0<- glm(form0,data = rock)
 rock.glmf2<- glm(formula(rock.glm1), data = rock)
@@ -424,11 +436,20 @@ stopifnot(exprs = { # the fitted models now have identical 'call':
     all.equal.0( uglmf, uglmf2)
     all.equal.0(uglm1$call, uglm2$call) # non identical environment(.$formula)
     ##
-    all.equal.0( wls2(rock.glm1), wls2(rock.glm2) -> wu2)
-    all.equal.0( wls2(rock.glmf) -> wuf, wu2)
-    all.equal.0( wuf, wls2(rock.glmf0))
-    all.equal.0( wuf, wls2(rock.glmf2))
+    all.equal.0( wls2(rock.glm1 ), wu2 <- wls2(rock.glm2))
+    all.equal.0( wls2(rock.glmf ), wu2)
+    all.equal.0( wls2(rock.glmf2), wu2)
+    is.call({ wu0 <- wu2; wu0$formula <- form0 })
+    all.equal.0(noC(wu0), noC(wls2(rock.glmf0)))
 })
+form <- counts ~ treatment
+fglm <- glm(form, family = poisson())
+(u1 <- update(fglm))
+rm(form)
+(u2 <- update(fglm))
+stopifnot(all.equal.0(u1, fglm),
+          all.equal.0(u1, u2))
+
 
 ## AIC & logLik() --- PR#16008
 dropN <- function(llik) `attr<-`(llik, "nall", NULL)
@@ -459,7 +480,8 @@ stopifnot(exprs = {
     abs(resRelD) < 1e-12 # Lnx x86_c64 {default qr() tol} has max(.) = 7.26e-14
 })
 
-
+"NB:  Also consider demos(\"glm.vr\") ---->  ../demo/glm.vr.R
+"
 
 ### Local variables:
 ### mode: R
