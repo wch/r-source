@@ -888,7 +888,8 @@ set.T.C <- \(c1, c2) c(tim = Sys.setlocale("LC_TIME", c1),
                        ctp = Sys.setlocale("LC_CTYPE",c2))
 val <- set.T.C("zh_CN", "zh_CN.utf8")
 if(all(nzchar(val))) {
-    (chD <- strftime(as.Date('2000-11-01'), fmt <- '%Y %d %b')) #  "2000 01 11\xd4\xc2"
+    print(chD <- strftime(as.Date('2000-11-01'), fmt <- '%Y %d %b'))
+    if (chD == "2000 01 11\xd4\xc2") # not under musl: "2000 01 Nov"
     stopifnot(grepl('multibyte', print(tryCmsg(strptime(chD, fmt))), fixed=TRUE))
     ## was   "input string is too long"
 }
