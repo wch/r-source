@@ -7870,7 +7870,8 @@ circumference ~ A/(1 + exp((B - age)/C))
 > ### Title: Distribution-free Inference in a Stratified One-Way Layout
 > ### Aliases: free1way free1way.formula free1way.table free1way.numeric
 > ###   free1way.factor print.free1way coef.free1way vcov.free1way
-> ###   logLik.free1way summary.free1way confint.free1way
+> ###   logLik.free1way summary.free1way confint.free1way summary.MPLfree1way
+> ###   confint.MPLfree1way
 > ### Keywords: htest
 > 
 > ### ** Examples
