@@ -6315,12 +6315,15 @@ function(package, dir, lib.loc = NULL)
 
     if(length(ns)) {
         imp <- c(ns$imports, ns$importClasses, ns$importMethods)
-        if (length(imp)) {
+        if(length(imp)) {
             imp <- sapply(imp, function(x) x[[1L]])
             all_imports <- unique(c(imp, all_imports))
         }
     } else imp <- character()
     bad_imp <- setdiff(imports0, all_imports)
+    bad_base <- intersect(imp,
+                          intersect(.get_standard_package_names()$base,
+                                    union(suggests, enhances)))
 
     ## All the non-default packages need to be imported from.
     depends_not_import <- setdiff(depends, c(imp, default_package_names))
@@ -6459,6 +6462,7 @@ function(package, dir, lib.loc = NULL)
     res <- list(others = unique(bad_exprs),
                 bad_practice = unique(bad_prac),
                 imports = unique(bad_imports),
+                base = bad_base,
                 imps = unique(bad_imps),
                 in_depends = unique(bad_deps),
                 unused_imports = bad_imp,
@@ -6493,6 +6497,12 @@ function(x, ...)
           } else {
               gettextf("'::' or ':::' import not declared from: %s", sQuote(xx))
           }
+      },
+      if(length(xx <- x$base)) {
+          c(ngettext(length(xx),
+                     gettext("Base package in Suggests/Enhances imported in NAMESPACE:"),
+                     gettext("Base packages in Suggests/Enhances imported in NAMESPACE:")),
+            .pretty_format(sort(xx)))
       },
       if(length(xx <- x$others)) {
           if(length(xx) > 1L) {
