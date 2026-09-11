@@ -3,6 +3,17 @@
 pdf("reg-tests-1c.pdf", encoding = "ISOLatin1.enc")
 .pt <- proc.time()
 
+`%||%` <- function (L, R)  if(is.null(L)) R else L
+##' get value of `expr` and keep (all) warning(s) as attribute (if there is one)
+getVaW <- function(expr, obj=FALSE) {
+    W <- NULL
+    withCallingHandlers(val <- expr,
+                        warning = function(w) { # by default obj=FALSE, store all warning msgs:
+                            W <<- if(obj) w else c(W, conditionMessage(w))
+                            invokeRestart("muffleWarning") })
+    structure(val %||% quote(._NULL_()), warning = W) # NULL cannot have attr.
+}
+
 ## mapply with classed objects with length method
 ## was not documented to work in 2.x.y
 setClass("A", representation(aa = "integer"))
@@ -1341,12 +1352,15 @@ tims <- seq.POSIXt(as.POSIXct("2016-01-01"),
 		   as.POSIXct("2017-11-11"), by = as.difftime(pi, units="weeks"))
 form <- c("%m/%d/%y %H:%M:%S", "", "%Y-%m-%d %H:%M:%S")
 op <- options(warn = 2)# no warnings allowed
-head(rf1 <- format(tims, form)) # recycling was wrong
-head(rf2 <- format(tims, form[c(2,1,3)]))
+rf1 <- getVaW(format(tims, form)) # recycling was wrong. Now capture generated warning
+rf2 <- getVaW(format(tims, form[c(2,1,3)]))
 stopifnot(identical(rf1[1:3], c("01/01/16 00:00:00", "2016-01-22 23:47:15",
 				"2016-02-13 23:34:30")),
 	  identical(rf2[1:3], c("2016-01-01 00:00:00", "01/22/16 23:47:15",
 				rf1[3])),
+          is.character(msg <- gettext("object length is not a multiple of subscript length", domain="R")),
+          attr(rf1, "warning") == msg,
+          attr(rf2, "warning") == msg,
 	  nchar(rf1) == rep(c(17,19,19), length = length(rf1)),
 	  nchar(rf2) == rep(c(19,17,19), length = length(rf2)))
 options(op)
@@ -1469,6 +1483,8 @@ stopifnot(
 ## and length 1 or 2 instead of about 6 in R 3.2.4
 tz. <- "Etc/GMT-1" # had "GMT-1"; then 'tzcode source' "internal" warns 12 x  "unknown timezone 'GMT-1'"
 (p2 <- chkPretty(as.POSIXct("2002-02-02 02:02", tz = tz.), n = 5, min.n = 5))
+summary(warnings())
+dput(p2)
 stopifnot(length(p2) >= 5+1,
 	  identical(p2, structure(1012611717L + (0:5), class = c("POSIXct", "POSIXt"),
 				  tzone = tz., labels = time2d(57 + (0:5)), format = "%S"))

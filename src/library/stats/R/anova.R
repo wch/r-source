@@ -122,7 +122,8 @@ printCoefmat <-
     if(any(r.ind <- !((1L:nc) %in% c(cs.ind, tst.ind, if(has.Pvalue) nc))))
 	for(i in which(r.ind)) Cf[, i] <- format(xm[, i], digits = digits)
     ok[, tst.ind] <- FALSE
-    okP <- if(has.Pvalue) ok[, -nc] else ok
+    okP <- ok
+    if(has.Pvalue) okP[, nc] <- FALSE
     ## we need to find out where Cf is zero.  We can't use as.numeric
     ## directly as OutDec could have been set.
     ## x0 <- (xm[okP]==0) != (as.numeric(Cf[okP])==0)

@@ -3709,6 +3709,21 @@ stopifnot(all.equal(coef(lmd), tolerance = 1e-4,
 ## failed for 2 days
 
 
+## logical array subscript: warning contains offending dimension -- PR#19155
+a <- array(0, c(5L, 5L, 5L))
+i <- c(FALSE, TRUE, TRUE)
+erfmt <- gettext("length of dimension %d is not a multiple of logical subscript length", domain = "R")
+aWa <- getVaW(a[i, , i, drop = FALSE])
+aWset <- getVaW(a[i, ,] <- 1)
+stopifnot(exprs = {
+    identical(dim(aWa), c(3L, 5L, 3L))
+    aWa == 0
+    identical(attr(aWa,   "warning"), sprintf(erfmt, c(1, 3)))
+    identical(attr(aWset, "warning"), sprintf(erfmt, 1))
+})
+## fractional recycling of logical in  a[<logi>]  did not warn in R <= 4.6.*
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

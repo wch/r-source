@@ -277,12 +277,6 @@
       \item Changed \code{model.frame.glm()} to use same logic as
       \code{model.frame.lm()} (\PR{19036}, \I{Isaac Gravestock}).
 
-      \item \code{strptime()} now also returns \code{NA} for out of range
-      \code{"\%OS"} and a correct error message in some wrong multibyte
-      cases, fixing \PR{19117} comment #1 and \PR{19122} by \I{Michael
-	Chirico}; additionally, some overflow to \code{Inf} times no longer
-      result in \code{NA}.
-
       \item \code{drop1.glm()} misbehaved for models fitted with
       \code{y = FALSE} (\PR{19128}, \I{Amal Tawfik}).
 
@@ -332,6 +326,11 @@
 
       \item \code{confint(<free1way>, what = "OVL")} now includes one
       for shift effect confidence intervals including zero.
+
+      \item \code{x[logi]}, with \code{logi} a logical index, now warns if
+      \code{length(x)} is not a multiple of \code{length(logi)}, fixing
+      \PR{19155} thanks to several participants in two \I{R Dev Day}s and
+      the \I{R Sprint} in 2026.
     }
   }
 }
@@ -392,6 +391,12 @@
       for Quartz built-in stroker breaking long paths). Thanks to
       \I{R Dev Day @ useR! 2026} contributors, notably
       \I{Tomek Gieorgijewski}, report in \PR{18680}.
+
+      \item \code{strptime()} now also returns \code{NA} for out of range
+      \code{"\%OS"} and a correct error message in some wrong multibyte
+      cases, fixing \PR{19117} comment #1 and \PR{19122} by \I{Michael
+	Chirico}; additionally, some overflow to \code{Inf} times no longer
+      result in \code{NA}.
 
       \item \code{ksmooth(x,y, x.points=NULL)} now returns an empty (x,y)
       pair instead of crashing \R, fixing \PR{19153}.

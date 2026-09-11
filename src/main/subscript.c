@@ -584,7 +584,8 @@ static SEXP nullSubscript(R_xlen_t n)
 
 
 static SEXP
-logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
+logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call,
+		 int dimno)
 {
     bool canstretch = *stretch > 0;
     if (!canstretch && ns > nx) {
@@ -594,6 +595,17 @@ logicalSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch, SEXP call)
     if (ns == 0) return(allocVector(INTSXP, 0));
     R_xlen_t count, i, i1, i2,
 	nmax = (ns > nx) ? ns : nx;
+
+    if (nmax % ns != 0) { // fractional recycling of the logical subscript
+	if (dimno == 0)
+	    warningcall(call,
+			_("object length is not a multiple of subscript length"));
+	else
+	    warningcall(call,
+			_("length of dimension %d is not a multiple of logical subscript length"),
+			dimno);
+    }
+
     SEXP indx; // result
 
     const int *ps = LOGICAL_RO(s);    /* Calling LOCICAL_RO here may force a
@@ -721,7 +733,7 @@ static SEXP negativeSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, SEXP call)
 	    pindx[-ix - 1] = 0;
     }
     R_xlen_t stretch = 0;
-    s = logicalSubscript(indx, nx, nx, &stretch, call);
+    s = logicalSubscript(indx, nx, nx, &stretch, call, 0);
     UNPROTECT(1);
     return s;
 }
@@ -818,7 +830,7 @@ realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch,
 		    pindx[ix] = 0;
 		}
 	    }
-	    s = logicalSubscript(indx, nx, nx, &stretch, call);
+	    s = logicalSubscript(indx, nx, nx, &stretch, call, 0);
 	    UNPROTECT(1);
 	    return s;
 	} else {
@@ -997,7 +1009,7 @@ int_arraySubscript(int dim, SEXP s, SEXP dims, SEXP x, SEXP call)
     case NILSXP:
 	return allocVector(INTSXP, 0);
     case LGLSXP:
-	return logicalSubscript(s, ns, nd, &stretch, call);
+	return logicalSubscript(s, ns, nd, &stretch, call, dim + 1);
     case INTSXP:
 	return integerSubscript(s, ns, nd, &stretch, call, x, dim);
     case REALSXP:
@@ -1078,7 +1090,7 @@ makeSubscript(SEXP x, SEXP s, R_xlen_t *stretch, SEXP call)
 	ans = allocVector(INTSXP, 0);
 	break;
     case LGLSXP:
-	ans = logicalSubscript(s, ns, nx, stretch, call);
+	ans = logicalSubscript(s, ns, nx, stretch, call, 0);
 	break;
     case INTSXP:
 	ans = integerSubscript(s, ns, nx, stretch, call, x, -1);
