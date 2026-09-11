@@ -6515,8 +6515,8 @@ function(x, ...)
       },
       if(length(xx <- x$base)) {
           c(ngettext(length(xx),
-                     gettext("Base package in Suggests/Enhances imported in NAMESPACE:"),
-                     gettext("Base packages in Suggests/Enhances imported in NAMESPACE:")),
+                     "Base package in Suggests/Enhances imported in NAMESPACE:",
+                     "Base packages in Suggests/Enhances imported in NAMESPACE:"),
             .pretty_format(sort(xx)))
       },
       if(length(xx <- x$others)) {
