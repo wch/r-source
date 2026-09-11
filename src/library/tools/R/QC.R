@@ -6506,85 +6506,90 @@ function(x, ...)
         config_val_to_logical(Sys.getenv("_R_CHECK_PACKAGES_USED_IGNORE_UNUSED_IMPORTS_",
                                          "FALSE"))
                                         # ^^^^^ rather "TRUE" ??
+
+    fmt <- function(x) {
+        if(length(x)) paste(x, collapse = "\n") else character()
+    }
+
     c(character(),
       if(length(xx <- x$imports)) {
-          c(ngettext(length(xx),
-                     "'::' or ':::' import not declared from:",
-                     "'::' or ':::' imports not declared from:"),
-            .pretty_format(sort(xx)))
+          fmt(c(ngettext(length(xx),
+                         "'::' or ':::' import not declared from:",
+                         "'::' or ':::' imports not declared from:"),
+                .pretty_format(sort(xx))))
       },
       if(length(xx <- x$base)) {
-          c(ngettext(length(xx),
-                     "Base package in Suggests/Enhances imported in NAMESPACE:",
-                     "Base packages in Suggests/Enhances imported in NAMESPACE:"),
-            .pretty_format(sort(xx)))
+          fmt(c(ngettext(length(xx),
+                         "Base package in Suggests/Enhances imported in NAMESPACE:",
+                         "Base packages in Suggests/Enhances imported in NAMESPACE:"),
+                .pretty_format(sort(xx))))
       },
       if(length(xx <- x$others)) {
-          c(ngettext(length(xx),
-                     "'library' or 'require' call not declared from:",
-                     "'library' or 'require' calls not declared from:"),
-            .pretty_format(sort(xx)))
+          fmt(c(ngettext(length(xx),
+                         "'library' or 'require' call not declared from:",
+                         "'library' or 'require' calls not declared from:"),
+                .pretty_format(sort(xx))))
       },
       if(length(xx <- x$imps)) {
-          c(ngettext(length(xx),
-                     "'loadNamespace' or 'requireNamespace' call not declared from:",
-                     "'loadNamespace' or 'requireNamespace' calls not declared from:"),
-            .pretty_format(sort(xx)))
+          fmt(c(ngettext(length(xx),
+                         "'loadNamespace' or 'requireNamespace' call not declared from:",
+                         "'loadNamespace' or 'requireNamespace' calls not declared from:"),
+                .pretty_format(sort(xx))))
       },
       if(length(xx <- x$in_depends)) {
           msg <- "  Please remove these calls from your code."
-          c(ngettext(length(xx),
-                     "'library' or 'require' call to package already attached by Depends:",
-                     "'library' or 'require' calls to packages already attached by Depends:"),
-            .pretty_format(sort(xx)),
-            msg)
+          fmt(c(ngettext(length(xx),
+                         "'library' or 'require' call to package already attached by Depends:",
+                         "'library' or 'require' calls to packages already attached by Depends:"),
+                .pretty_format(sort(xx)),
+                msg))
       },
       if(length(xx <- x$bad_practice)) {
           msg <- "  Please use :: or requireNamespace() instead.\n  See section 'Suggested packages' in the 'Writing R Extensions' manual."
-          c(ngettext(length(xx),
-                     "'library' or 'require' call in package code:",
-                     "'library' or 'require' calls in package code:"),
-            .pretty_format(sort(xx)),
-            msg)
+          fmt(c(ngettext(length(xx),
+                         "'library' or 'require' call in package code:",
+                         "'library' or 'require' calls in package code:"),
+                .pretty_format(sort(xx)),
+                msg))
       },
 
       if(length(xx <- x$unused_imports) && !ignore_unused_imports) {
           msg <- "  All declared Imports should be used."
-          c(ngettext(length(xx),
-                     "Namespace in Imports field not imported from:",
-                     "Namespaces in Imports field not imported from:"),
-            .pretty_format(sort(xx)),
-            msg)
+          fmt(c(ngettext(length(xx),
+                         "Namespace in Imports field not imported from:",
+                         "Namespaces in Imports field not imported from:"),
+                .pretty_format(sort(xx)),
+                msg))
       },
       if(length(xx <- x$depends_not_import)) {
           msg <- c("  These packages need to be imported from (in the NAMESPACE file)",
                    "  for when this namespace is loaded but not attached.")
-          c(ngettext(length(xx),
-                       "Package in Depends field not imported from:",
-                       "Packages in Depends field not imported from:"),
-            .pretty_format(sort(xx)),
-            msg)
+          fmt(c(ngettext(length(xx),
+                         "Package in Depends field not imported from:",
+                         "Packages in Depends field not imported from:"),
+                .pretty_format(sort(xx)),
+                msg))
       },
       if(length(xx <- x$imp2un)) {
-          c(ngettext(length(xx),
-                     "Missing or unexported object:",
-                     "Missing or unexported objects:"),
-            .pretty_format(sort(xx)))
+          fmt(c(ngettext(length(xx),
+                         "Missing or unexported object:",
+                         "Missing or unexported objects:"),
+                .pretty_format(sort(xx))))
       },
       if(length(xx <- x$imp32)) { ## ' ' seems to get converted to dir quotes
           msg <- "See the note in ?`:::` about the use of this operator."
           msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
-          c(ngettext(length(xx),
-                     "':::' call which should be '::':",
-                     "':::' calls which should be '::':"),
-            .pretty_format(sort(xx)),
-            msg)
+          fmt(c(ngettext(length(xx),
+                         "':::' call which should be '::':",
+                         "':::' calls which should be '::':"),
+                .pretty_format(sort(xx)),
+                msg))
       },
       if(length(xx <- x$imp3ff)) {
-          c(ngettext(length(xx),
-                     "Missing object imported by a ':::' call:",
-                     "Missing objects imported by ':::' calls:"),
-            .pretty_format(sort(xx)))
+          fmt(c(ngettext(length(xx),
+                         "Missing object imported by a ':::' call:",
+                         "Missing objects imported by ':::' calls:"),
+                .pretty_format(sort(xx))))
      },
       if(length(xxx <- x$imp3f)) { ## ' ' seems to get converted to dir quotes
           msg <- "See the note in ?`:::` about the use of this operator."
@@ -6597,37 +6602,45 @@ function(x, ...)
                            "  Including base/recommended package(s):",
                            .pretty_format(intersect(base, z)))
           }
-          c(ngettext(length(xxx),
-                     "Unexported object imported by a ':::' call:",
-                     "Unexported objects imported by ':::' calls:"),
-            .pretty_format(sort(xxx)),
-            msg)
+          fmt(c(ngettext(length(xxx),
+                         "Unexported object imported by a ':::' call:",
+                         "Unexported objects imported by ':::' calls:"),
+                .pretty_format(sort(xxx)),
+                msg))
       },
       if(isTRUE(x$imp3self)) {
           msg <-
               c("There are ::: calls to the package's namespace in its code.",
                 "A package almost never needs to use ::: for its own objects:")
-          c(strwrap(paste(msg, collapse = " "), indent = 0L, exdent = 2L),
-            .pretty_format(sort(x$imp3selfcalls)))
+          fmt(c(strwrap(paste(msg, collapse = " ")),
+                .pretty_format(sort(x$imp3selfcalls))))
       },
       if(length(xx <- x$imp3unknown)) {
           msg <- "See the note in ?`:::` about the use of this operator."
           msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
-          c(ngettext(length(xx),
-                     "Unavailable namespace imported from by a ':::' call:",
-                     "Unavailable namespaces imported from by ':::' calls:"),
-            .pretty_format(sort(xx)),
-            msg)
+          fmt(c(ngettext(length(xx),
+                         "Unavailable namespace imported from by a ':::' call:",
+                         "Unavailable namespaces imported from by ':::' calls:"),
+                .pretty_format(sort(xx)),
+                msg))
       },
      if(length(xx <- x$data)) {
-         c(ngettext(length(xx),
-                    "'data(package=)' call not declared from:",
-                    "'data(package=)' calls not declared from:"),
-           .pretty_format(sort(xx)))
+         fmt(c(ngettext(length(xx),
+                        "'data(package=)' call not declared from:",
+                        "'data(package=)' calls not declared from:"),
+               .pretty_format(sort(xx))))
       },
       if(nzchar(x$methods_message)) {
-          x$methods_message
+          fmt(x$methods_message)
       })
+}
+
+print.check_packages_used <-
+function(x, ...)
+{
+    if(length(y <- format(x)))
+        writeLines(paste(y, collapse = "\n\n"))
+    invisible(x)
 }
 
 ### * .check_packages_used_in_examples
