@@ -433,8 +433,10 @@
 ## PKG_CONFIG=
 ## search path for pkg-config
 ## PKG_CONFIG_PATH=
+## export PKG_CONFIG_PATH
 ## path overriding pkg-config's default search path
 ## PKG_CONFIG_LIBDIR=
+## export PKG_CONFIG_LIBDIR
 
 ## OpenMP settings.
 ## The configure code is conservative about enabling OpenMP 
