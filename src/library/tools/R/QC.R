@@ -3587,8 +3587,7 @@ function(x, ...)
           c(.pretty_format2("Depends: includes the non-default packages:", y),
             strwrap(paste("Adding so many packages to the search path",
                           "is excessive",
-                          "and importing selectively is preferable."
-                          , collapse = ", ")),
+                          "and importing selectively is preferable.")),
             "")
       },
       if(ly <- length(x$many_imports)) {
@@ -3596,8 +3595,7 @@ function(x, ...)
             strwrap(paste("Importing from so many packages",
                           "makes the package vulnerable to any of them",
                           "becoming unavailable.  Move as many as possible to",
-                          "Suggests and use conditionally."
-                          , collapse = ", ")),
+                          "Suggests and use conditionally.")),
             "")
       },
       if(length(y <- x$bad_engine)) {
@@ -7524,8 +7522,7 @@ function(x, ...)
                         )
         out <- c(out, strwrap(msg), .pretty_format(x$devices),
                  strwrap(paste("dev.new() is the preferred way to open a new device,",
-                               "in the unlikely event one is needed.",
-                               collapse = " ")))
+                               "in the unlikely event one is needed.")))
     }
     out
 }
