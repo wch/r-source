@@ -196,7 +196,7 @@ envRefSetField <- function(object, field,
     else {
         if(nargs() > 1) {
             .Object <-
-                methods::initRefFields(.Object, classDef, selfEnv, list(...))
+                methods:::initRefFields(.Object, classDef, selfEnv, list(...))
         }
     }
     if(is.function(classDef@refMethods$finalize))
@@ -346,7 +346,7 @@ that class itself, but then you could just overwrite the object).
          callSuper = function(...) stop("direct calls to callSuper() are invalid:  should only be called from another method"),
          initFields = function(...) {
              if(missing(...)) .self else
-             initRefFields(.self, .refClassDef, as.environment(.self), list(...))
+             methods:::initRefFields(.self, .refClassDef, as.environment(.self), list(...))
          },
          copy = function(shallow = FALSE) {
              def <- .refClassDef

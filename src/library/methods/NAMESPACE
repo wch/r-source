@@ -12,8 +12,8 @@ exportPattern("^\\.__T__")
 
 export(.S4methods)
 ## export(.TraceWithMethods)
-export(.untracedFunction)
-export(.doTracePrint)
+## export(.untracedFunction)
+## export(.doTracePrint)
 export(.valueClassTest)
 ## export("@<-")
 export(Arith)
@@ -223,5 +223,5 @@ export(registerImplicitGenerics)
 ## reference classes
 export(setRefClass)
 export(getRefClass)
-export(initFieldArgs) # used in initialize methods--old version
-export(initRefFields) # used in initialize methods
+## export(initFieldArgs) # used in initialize methods--old version
+## export(initRefFields) # used in initialize methods
