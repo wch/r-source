@@ -6,12 +6,12 @@ tryCmsg<- function(expr) tryCatch(expr, error = conditionMessage) # typically ==
 assertErrV  <- function(...) tools::assertError  (..., verbose=TRUE)
 assertWarnV <- function(...) tools::assertWarning(..., verbose=TRUE)
 `%||%` <- function (L, R)  if(is.null(L)) R else L
-##' get value of `expr` and keep warning as attribute (if there is one)
+##' get value of `expr` and keep (all) warning(s) as attribute (if there is one)
 getVaW <- function(expr, obj=FALSE) {
     W <- NULL
     withCallingHandlers(val <- expr,
-                        warning = function(w) {
-                            W <<- if(obj) w else conditionMessage(w)
+                        warning = function(w) { # by default obj=FALSE, store all warning msgs:
+                            W <<- if(obj) w else c(W, conditionMessage(w))
                             invokeRestart("muffleWarning") })
     structure(val %||% quote(._NULL_()), warning = W) # NULL cannot have attr.
 }
@@ -107,7 +107,7 @@ d <- matrix(c(1,0,5,2,1,90
               ), nrow=6, byrow = TRUE)
 (r <- tryCid(fisher.test(d)))
 stopifnot(inherits(r, "error"))
-if(englishMsgs)
+if(englishMsgs) # currently not translated
     stopifnot(grepl("hash key .* > INT_MAX", conditionMessage(r)))
 ## gave a seg.fault in R <= 4.2.0
 
@@ -225,8 +225,10 @@ stopifnot(grepl("(>)", M, fixed=TRUE))
 setGeneric("size", function(x) standardGeneric("size"))
 tryCatch(stopifnot(!isGeneric("haha", fdef = size)),
          warning = conditionMessage) -> msg
-msg; if(englishMsgs)
-    stopifnot(grepl("name .size. instead of .haha.", msg))
+msg
+stopifnot(identical(msg, gettextf(domain = "R-methods",
+	  "fdef appears to be a generic function, but with generic name %s instead of %s",
+          sQuote("size"), sQuote("haha"))))
 ## msg was confusing
 
 
@@ -548,8 +550,8 @@ mT <- tryCid( sum(3,4,na.rm=5, 6, NA, 8, na.rm=TRUE) )
 mF <- tryCid( min(3,4,na.rm=5, 6, NA, 8, na.rm=FALSE) )
 stopifnot(inherits(mT, "error"),
           inherits(mF, "error"), all.equal(mT, mF))
-if(englishMsgs)
-    stopifnot(grepl("formal argument \"na.rm\" matched by multiple", conditionMessage(mT)))
+frmAMatchM <- gettext("formal argument \"%s\" matched by multiple actual arguments", domain="R")
+stopifnot(identical(sprintf(frmAMatchM, "na.rm"), conditionMessage(mT)))
 ## these gave numeric (or NA) results without any warning in R <= 4.3.z
 
 
@@ -1235,15 +1237,16 @@ for(nr in 0:2) {
 
 
 ## C level R_nonInt() less tolerant, used more often
-(gd <- getVaW(dbinom(1234560:1234570, 9876543.2, .5)))
-gp  <- getVaW(pbinom(1234560:1234570, 9876543.2, 1/8))
-(gdp <- getVaW(dpois(9876543 + (2:8)/10, 1e7)))
+(gd <- getVaW(dbinom(1234560:1234570, x.2 <- 9876543.2, .5)))
+gp  <- getVaW(pbinom(1234560:1234570, x.2,             1/8))
+x <- 9876543 + (2:8)/10; (gdp <- getVaW(dpois(x, 1e7)))
+NaNtxt   <- gettext("NaNs produced",      domain="R")# "R": R's C-code
+nonint.x <- gettext("non-integer x = %f", domain="R")
+nonint.n <- gettext("non-integer n = %f", domain="R")
 stopifnot(exprs = {
-    !englishMsgs ||
-        identical(gd, structure(rep(NaN, 11), warning = "NaNs produced"))
-    identical(gd, gp)
-    identical(gdp, structure(rep(0,7), # only *last* warning:
-                             warning = "non-integer x = 9876543.800000"))
+    identical(gd, structure(rep(NaN, 11), warning = NaNtxt))
+    identical(gp, structure(rep(NaN, 11), warning = c(rep(sprintf(nonint.n, x.2), 11), NaNtxt)))
+    identical(gdp, structure(rep(0,length(x)), warning = sprintf(nonint.x, x)))
 })
 ## did not warn; just treat 98... as an integer in R < 4.4.0
 
@@ -1253,12 +1256,11 @@ tt <- terms(y ~ a+b)
 t0 <- getVaW(terms(y ~ a+b, abb = 1))
 t1 <- getVaW(terms(y ~ a+b, neg.out = 0))
 t2 <- getVaW(terms(y ~ a+b, abb=NA, neg.out=NA))
+trmsDepr <- gettext("setting '%s' in terms.formula() is deprecated", domain="R-stats")
 stopifnot(exprs = {
-    !englishMsgs ||
-    identical(t0, structure(tt, warning = "setting 'abb' in terms.formula() is deprecated"))
-    !englishMsgs ||
-    identical(t1, structure(tt, warning = "setting 'neg.out' in terms.formula() is deprecated"))
-    identical(t2, t1)
+    identical(t0, structure(tt, warning = sprintf(trmsDepr, "abb")))
+    identical(t1, structure(tt, warning = sprintf(trmsDepr, "neg.out")))
+    identical(t2, structure(tt, warning = sprintf(trmsDepr, c("abb", "neg.out"))))
 })
 ## deprecation was only on help page  for R 4.3.*
 
@@ -1830,8 +1832,8 @@ str(of3 <- optimize(ff, c(-20, 120)));  summary(warnings()); uw3 <- unique(warni
 str(of4 <- optimize(ff, c(-10, 180)));  summary(warnings()); uw4 <- unique(warnings())
 ## +Inf and many NA/NaN
 c(uw2, uw3, uw4)
-stopifnot(all.equal(of3, ok),
-          identical(c(2:1,2L), lengths(list(uw2, uw3, uw4))))
+stopifnot(all.equal(of3, ok))
+identical(c(2:1,2L), print(lengths(list(uw2, uw3, uw4)))) # no longer
 if(englishMsgs)
     stopifnot(identical(c("-Inf replaced by maximally negative value",
                            "Inf replaced by maximum positive value",
@@ -2777,8 +2779,8 @@ local({
     stopifnot(identical(f(x), 1))
     stopifnot(inherits(tryCatch(f(, 1), error = identity), "missingArgError"))
     # This is another error path
-    stopifnot(grepl("the ... list contains fewer than",
-                    tryCatch(f(), error = conditionMessage)))
+    print(fmt <- gettext("the ... list contains fewer than %d element", domain="R"))
+    stopifnot(identical(tryCmsg(f()), sprintf(fmt, 1)))
 })
 
 ## simple test for R_GetDotType
@@ -2886,9 +2888,9 @@ local({
     dotsExist <- function(env = parent.frame(), inherits = TRUE)
         .Internal(dotsExist(env, inherits))
     fn <- function(...) local(dotsExist(inherits = FALSE))
-    stopifnot(isFALSE(fn()))
-    stopifnot(isFALSE(fn(1)))
-    stopifnot(isFALSE(fn(1, 2, 3)))
+    stopifnot(isFALSE(fn()),
+              isFALSE(fn(1)),
+              isFALSE(fn(1, 2, 3)))
 })
 
 ## C API: R_DotsLength() does not reach into parent environments (PR#18928)
@@ -2896,8 +2898,8 @@ local({
     dotsLength <- function(env = parent.frame(), inherits = TRUE)
         .Internal(dotsLength(env, inherits))
     fn <- function(...) local(dotsLength(inherits = FALSE))
-    stopifnot(grepl("incorrect context",
-                    tryCatch(fn(1, 2), error = conditionMessage)))
+    stopifnot(gettext("incorrect context: the current call has no '...' to look in", domain="R") ==
+              tryCatch(fn(1, 2), error = conditionMessage))
     ## Works when `...` is directly in the frame
     fn2 <- function(...) dotsLength(inherits = FALSE)
     stopifnot(
@@ -2916,8 +2918,8 @@ local({
     dotsNames <- function(env = parent.frame(), inherits = TRUE)
         .Internal(dotsNames(env, inherits))
     fn <- function(...) local(dotsNames(inherits = FALSE))
-    stopifnot(grepl("incorrect context",
-                    tryCatch(fn(a = 1), error = conditionMessage)))
+    msg <- tryCatch(fn(a = 1), error = conditionMessage) |> print()
+    stopifnot(msg == gettext("incorrect context: the current call has no '...' to look in", domain="R"))
     ## Works when `...` is directly in the frame
     fn2 <- function(...) dotsNames(inherits = FALSE)
     stopifnot(
@@ -2932,12 +2934,12 @@ local({
 })
 
 ## C API: R_DotsElt() does not reach into parent environments (PR#18928)
+(duse_inc_ctxt <- gettext("..%d used in an incorrect context, no ... to look in", domain="R"))
 local({
     dotsElt <- function(i, env = parent.frame(), inherits = TRUE)
         .Internal(dotsElt(i, env, inherits))
     fn <- function(...) local(dotsElt(1L, inherits = FALSE))
-    stopifnot(grepl("no ... to look in",
-                    tryCatch(fn(42), error = conditionMessage)))
+    stopifnot(identical(tryCmsg(fn(42)), sprintf(duse_inc_ctxt, 1)))
     ## Works when `...` is directly in the frame
     fn2 <- function(...) dotsElt(1L, inherits = FALSE)
     stopifnot(
@@ -2958,8 +2960,7 @@ local({
     getDotType <- function(i, env = parent.frame(), inherits = TRUE)
         .Internal(getDotType(i, env, inherits))
     fn <- function(...) local(getDotType(1L, inherits = FALSE))
-    stopifnot(grepl("no ... to look in",
-                    tryCatch(fn(1), error = conditionMessage)))
+    identical(tryCmsg(fn(1)), sprintf(duse_inc_ctxt, 1))
     ## (positive tests above in "simple test for R_GetDotType")
 })
 
@@ -2973,11 +2974,9 @@ local({
         .Internal(dotDelayedEnvironment(i, env, inherits))
     x <- 1
     fn <- function(...) local(dotDelayedExpr(1L, inherits = FALSE))
-    stopifnot(grepl("no ... to look in",
-                    tryCatch(fn(x), error = conditionMessage)))
+    stopifnot(identical(tryCmsg(fn(x)), sprintf(duse_inc_ctxt, 1)))
     fn2 <- function(...) local(dotDelayedEnv(1L, inherits = FALSE))
-    stopifnot(grepl("no ... to look in",
-                    tryCatch(fn2(x), error = conditionMessage)))
+    stopifnot(identical(tryCmsg(fn2(x)), sprintf(duse_inc_ctxt, 1)))
 })
 
 ## C API: R_DotForcedExpression() does not reach parents (PR#18928)
@@ -2990,8 +2989,7 @@ local({
         force(..1)
         local(dotForcedExpr(1L, inherits = FALSE))
     }
-    stopifnot(grepl("no ... to look in",
-                    tryCatch(fn(x), error = conditionMessage)))
+    stopifnot(identical(tryCmsg(fn(x)), sprintf(duse_inc_ctxt, 1)))
 })
 
 ## R API: ...length() retains inherited scoping (PR#18928)
@@ -3078,40 +3076,33 @@ local({
 })
 
 ## R API errors when no `...` in scope at all (PR#18928)
+(inc_ctxt_nod <- gettext(
+     "incorrect context: the current call has no '...' to look in", domain = "R"))
 local({
     f <- function() ...length()
-    stopifnot(grepl("incorrect context",
-                    tryCatch(f(), error = conditionMessage)))
+    stopifnot(identical(tryCmsg(f()), inc_ctxt_nod))
     g <- function() ...elt(1)
-    stopifnot(grepl("no ... to look in",
-                    tryCatch(g(), error = conditionMessage)))
+    stopifnot(identical(tryCmsg(g()), sprintf(duse_inc_ctxt, 1)))
     h <- function() ...names()
-    stopifnot(grepl("incorrect context",
-                    tryCatch(h(), error = conditionMessage)))
+    stopifnot(identical(tryCmsg(h()), inc_ctxt_nod))
     ## Also through local()
     f <- function() local(...length())
-    stopifnot(grepl("incorrect context",
-                    tryCatch(f(), error = conditionMessage)))
+    stopifnot(identical(tryCmsg(f()), inc_ctxt_nod))
     g <- function() local(...elt(1))
-    stopifnot(grepl("no ... to look in",
-                    tryCatch(g(), error = conditionMessage)))
+    stopifnot(identical(tryCmsg(g()), sprintf(duse_inc_ctxt, 1)))
     h <- function() local(...names())
-    stopifnot(grepl("incorrect context",
-                    tryCatch(h(), error = conditionMessage)))
+    stopifnot(identical(tryCmsg(h()), inc_ctxt_nod))
 })
 
 ## R API: `...` overwritten with non-DOTSXP skips frame (PR#18928)
 local({
     ## Overwritten in current frame: R_findDotsEnv skips it, errors
     f <- function(...) { "..." <- 1; ...elt(1) }
-    stopifnot(grepl("no ... to look in",
-                    tryCatch(f(1), error = conditionMessage)))
+    stopifnot(identical(tryCmsg( f(1) ), sprintf(duse_inc_ctxt, 1)))
     f <- function(...) { "..." <- 1:2; ...length() }
-    stopifnot(grepl("incorrect context",
-                    tryCatch(f(1), error = conditionMessage)))
+    stopifnot(identical(tryCmsg(f(1)), inc_ctxt_nod))
     f <- function(...) { "..." <- NULL; ...names() }
-    stopifnot(grepl("incorrect context",
-                    tryCatch(f(a = 1), error = conditionMessage)))
+    stopifnot(identical(tryCmsg( f(a = 1) ), inc_ctxt_nod))
     ## Overwritten in local(): R_findDotsEnv skips local, finds parent
     f <- function(...) local({ "..." <- 1; ...elt(1) })
     stopifnot(f(42) == 42)
@@ -3604,8 +3595,9 @@ chkFM <- function(mA, mL) {
         identical(coef(mA), coef(mL))
         !is.null(wA <- attr(smA, "warning"))
         !is.null(wL <- attr(smL, "warning"))
+        identical(wL[1], gettext("essentially perfect fit: summary may be unreliable",
+                                  domain="R-base"))
         !englishMsgs || grepl("essentially perfect fit", wA)
-        !englishMsgs || grepl("essentially perfect fit", wL)
     })
 }
 ## simple case:
@@ -3655,9 +3647,9 @@ stopifnot(identical(f(FALSE), 100),
 ## PR#19109 -- `dim<-` dimension vector product can overflow
 x <- integer()
 er <- tryCid(dim(x) <- rep(2^16, 4))
-stopifnot(inherits(er, "error"))
-if(englishMsgs)
-    stopifnot(grepl("too many", conditionMessage(er)))
+stopifnot(inherits(er, "error"),
+          identical(gettext("too many elements specified", domain="R"),
+                    conditionMessage(er)))
 ## gave no error but an x of length zero; x[] <- .. would seg.fault
 t30 <- 2^30
 for(nd in c(2:4, 33:37)) {
