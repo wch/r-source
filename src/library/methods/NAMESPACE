@@ -224,4 +224,4 @@ export(registerImplicitGenerics)
 export(setRefClass)
 export(getRefClass)
 ## export(initFieldArgs) # used in initialize methods--old version
-## export(initRefFields) # used in initialize methods
+export(initRefFields) # used in initialize methods

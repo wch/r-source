@@ -6393,8 +6393,7 @@ function(package, dir, lib.loc = NULL)
                                         ".missingMethod",
                                         ".selectDotsMethod",
                                         ".setDummyField",
-                                        ".InhSlotNames",
-                                        "initRefFields"))]
+                                        ".InhSlotNames"))]
         imp3 <- names(imp3f)
     }
     imp3 <- unique(imp3)
