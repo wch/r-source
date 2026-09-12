@@ -3481,159 +3481,138 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
 format.check_package_depends <-
 function(x, ...)
 {
+    fmt <- function(x) {
+        if(length(x)) paste(x, collapse = "\n") else character()
+    }
+    pf2 <- .pretty_format2
+
     c(character(),
-      if(length(x$skipped)) c(x$skipped, ""),
+      if(length(x$skipped))
+          fmt(x$skipped),
       if(length(x$all_depends)) {
-          c("There is circular dependency in the installation order:",
-            .pretty_format2("  One or more packages in", x$all_depends),
-            "  depend on this package (for the versions on the repositories).",
-            "")
+          ## FIXME: i18n
+          fmt(c("There is circular dependency in the installation order:",
+                pf2("One or more packages in", x$all_depends),
+                "depend on this package (for the versions on the repositories)."))
       },
       if(length(bad <- x$required_but_not_installed)) {
-          c(.pretty_format2(
-              ngettext(length(bad),
-                       "Package required but not available:",
-                       "Packages required but not available:"),
-              bad),
-            "")
+          fmt(pf2(ngettext(length(bad),
+                           "Package required but not available:",
+                           "Packages required but not available:"),
+                  bad))
       },
       if(length(bad <- x$suggested_but_not_installed)) {
-          c(.pretty_format2(
-              ngettext(length(bad),
-                       "Package suggested but not available:",
-                       "Packages suggested but not available:"),
-              bad),
-            "")
+          fmt(pf2(ngettext(length(bad),
+                           "Package suggested but not available:",
+                           "Packages suggested but not available:"),
+                  bad))
       },
       if(length(bad <- x$required_but_obsolete)) {
-          c(.pretty_format2(
-              ngettext(length(bad),
-                       "Package required and available but unsuitable version:",
-                       "Packages required and available but unsuitable versions:"),
-              bad),
-            "")
-      } else if(length(bad)) {
-          c(sprintf("Package required and available but unsuitable version: %s", sQuote(bad)),
-            "")
+          fmt(pf2(ngettext(length(bad),
+                           "Package required and available but unsuitable version:",
+                           "Packages required and available but unsuitable versions:"),
+                  bad))
       },
       if(length(bad <- x$suggests_but_not_installed)) {
-          c(.pretty_format2(
-              ngettext(length(bad),
-                       "Package suggested but not available for checking:",
-                       "Packages suggested but not available for checking:"),
-              bad),
-            "")
+          fmt(pf2(ngettext(length(bad),
+                           "Package suggested but not available for checking:",
+                           "Packages suggested but not available for checking:"),
+                  bad))
       },
       if(length(bad <- x$enhances_but_not_installed)) {
-          c(.pretty_format2(
-              ngettext(length(bad),
-                       "Package which this enhances but not available for checking:",
-                       "Packages which this enhances but not available for checking:"),
-              bad),
-            "")
+          fmt(pf2(ngettext(length(bad),
+                           "Package which this enhances but not available for checking:",
+                           "Packages which this enhances but not available for checking:"),
+                  bad))
       },
       if(length(bad <- x$required_for_checking_but_not_declared)) {
-          c(.pretty_format2(
-              ngettext(length(bad),
-                       "VignetteBuilder package not declared:",
-                       "VignetteBuilder packages not declared:"),
-              bad),
-            "")
+          fmt(pf2(ngettext(length(bad),
+                           "VignetteBuilder package not declared:",
+                           "VignetteBuilder packages not declared:"),
+                  bad))
       },
       if(length(bad <- x$required_for_checking_but_not_installed)) {
-          c(.pretty_format2(
-              ngettext(length(bad),
-                       "VignetteBuilder package required for checking but not installed:",
-                       "VignetteBuilder packages required for checking but not installed:"),
-              bad),
-            "")
+          fmt(pf2(ngettext(length(bad),
+                           "VignetteBuilder package required for checking but not installed:",
+                           "VignetteBuilder packages required for checking but not installed:"),
+                  bad))
       },
       if(length(bad <- x$missing_vignette_depends)) {
-          c(if(length(bad) > 1L) {
-                c("Vignette dependencies not required:", .pretty_format(bad))
-            } else {
-                sprintf("Vignette dependency not required: %s", sQuote(bad))
-            },
-            strwrap(gettextf("Vignette dependencies (%s entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries.",
-                             "\\VignetteDepends{}")),
-            "")
+          msg <- gettextf("Vignette dependencies (%s entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries.",
+                          "\\VignetteDepends{}")
+          fmt(c(pf2(ngettext(length(bad),
+                             "Vignette dependency not required:",
+                             "Vignette dependencies not required:"),
+                    bad),
+                strwrap(msg)))
       },
       if(length(bad <- x$no_vignettes)) {
-          c(if(length(bad) > 1L) {
-                c("Vignette dependencies required without any vignettes:", .pretty_format(bad))
-            } else {
-                sprintf("Vignette dependency required without any vignettes: %s", sQuote(bad))
-            },
-            "")
+          fmt(pf2(ngettext(length(bad),
+                           "Vignette dependency required without any vignettes:",
+                           "Vignette dependencies required without any vignettes:"),
+                  bad))
       },
       if(length(bad <- x$missing_rdmacros_depends)) {
-          c(.pretty_format2(
-              ngettext(length(bad),
-                       "RdMacros package not required:",
-                       "RdMacros packages not required:"),
-              bad),
-            strwrap("RdMacros packages must be contained in the DESCRIPTION Imports/Depends entries."),
-            "")
+          msg <- gettext("RdMacros packages must be contained in the DESCRIPTION Imports/Depends entries.")
+          fmt(c(pf2(ngettext(length(bad),
+                             "RdMacros package not required:",
+                             "RdMacros packages not required:"),
+                    bad),
+                strwrap(msg)))
       },
       if(length(bad <- x$missing_namespace_depends)) {
-          c(.pretty_format2(
-              ngettext(length(bad),
-                       "Namespace dependency missing from DESCRIPTION Imports/Depends entries:",
-                       "Namespace dependencies missing from DESCRIPTION Imports/Depends entries:"),
-              bad),
-            "")
+          fmt(pf2(ngettext(length(bad),
+                           "Namespace dependency missing from DESCRIPTION Imports/Depends entries:",
+                           "Namespace dependencies missing from DESCRIPTION Imports/Depends entries:"),
+                  bad))
       },
       if(length(y <- x$many_depends)) {
-          c(.pretty_format2("Depends: includes the non-default packages:", y),
-            strwrap(paste("Adding so many packages to the search path",
-                          "is excessive",
-                          "and importing selectively is preferable.")),
-            "")
+          msg <- gettext("Adding so many packages to the search path is excessive and importing selectively is preferable.")
+          fmt(c(pf2(gettext("Depends includes the non-default packages:"),
+                    y),
+                strwrap(msg)))
       },
       if(ly <- length(x$many_imports)) {
-          c(sprintf("Imports includes %d non-default packages.", ly),
-            strwrap(paste("Importing from so many packages",
-                          "makes the package vulnerable to any of them",
-                          "becoming unavailable.  Move as many as possible to",
-                          "Suggests and use conditionally.")),
-            "")
+          msg <- gettext("Importing from so many packages makes the package vulnerable to any of them becoming unavailable.  Move as many as possible to Suggests and use conditionally.")
+          fmt(c(gettextf("Imports includes %d non-default packages.", ly),
+                strwrap(msg)))
       },
       if(length(y <- x$bad_engine)) {
-          c(y, "")
+          fmt(y)
       },
       if(length(bad <- x$hdOnly)) {
-          c(.pretty_format2(
-              ngettext(length(bad),
-                       "Package in Depends/Imports which should probably only be in LinkingTo:",
-                       "Packages in Depends/Imports which should probably only be in LinkingTo:"),
-              bad),
-            "")
+          fmt(pf2(ngettext(length(bad),
+                           "Package in Depends/Imports which should probably only be in LinkingTo:",
+                           "Packages in Depends/Imports which should probably only be in LinkingTo:"),
+                  bad))
       },
       if(length(bad <- x[["orphaned"]])) {
-          c(.pretty_format2(
-              ngettext(length(bad),
-                       "Requires orphaned package:",
-                       "Requires orphaned packages:"),
-              bad),
-            "")
+          fmt(pf2(ngettext(length(bad),
+                           "Requires orphaned package:",
+                           "Requires orphaned packages:"),
+                  bad))
       },
       if(length(bad <- x[["orphaned1"]])) {
-          c(.pretty_format2(
-              ngettext(length(bad),
-                       "Requires (indirectly) orphaned package:",
-                       "Requires (indirectly) orphaned packages:"),
-              bad),
-            "")
+          fmt(pf2(ngettext(length(bad),
+                           "Requires (indirectly) orphaned package:",
+                           "Requires (indirectly) orphaned packages:"),
+                  bad))
       },
       if(length(bad <- x[["orphaned2"]])) {
-          c(.pretty_format2(
-              ngettext(length(bad),
-                       "Suggests orphaned package:",
-                       "Suggests orphaned packages:"),
-              bad),
-            "")
+          fmt(pf2(ngettext(length(bad),
+                           "Suggests orphaned package:",
+                           "Suggests orphaned packages:"),
+                  bad))
       }
       )
+}
+
+print.check_package_depends <-
+function(x, ...)
+{
+    if(length(y <- format(x)))
+        writeLines(paste(y, collapse = "\n\n"))
+    invisible(x)
 }
 
 ### * .check_package_description
@@ -6536,7 +6515,7 @@ function(x, ...)
                 .pretty_format(sort(xx))))
       },
       if(length(xx <- x$in_depends)) {
-          msg <- "  Please remove these calls from your code."
+          msg <- gettext("Please remove these calls from your code.")
           fmt(c(ngettext(length(xx),
                          "'library' or 'require' call to package already attached by Depends:",
                          "'library' or 'require' calls to packages already attached by Depends:"),
@@ -6544,7 +6523,9 @@ function(x, ...)
                 msg))
       },
       if(length(xx <- x$bad_practice)) {
-          msg <- "  Please use :: or requireNamespace() instead.\n  See section 'Suggested packages' in the 'Writing R Extensions' manual."
+          msg <-
+              c(gettext("Please use :: or requireNamespace() instead."),
+                gettext("See section 'Suggested packages' in the 'Writing R Extensions' manual."))
           fmt(c(ngettext(length(xx),
                          "'library' or 'require' call in package code:",
                          "'library' or 'require' calls in package code:"),
@@ -6553,7 +6534,7 @@ function(x, ...)
       },
 
       if(length(xx <- x$unused_imports) && !ignore_unused_imports) {
-          msg <- "  All declared Imports should be used."
+          msg <- gettext("All declared Imports should be used.")
           fmt(c(ngettext(length(xx),
                          "Namespace in Imports field not imported from:",
                          "Namespaces in Imports field not imported from:"),
@@ -6561,13 +6542,12 @@ function(x, ...)
                 msg))
       },
       if(length(xx <- x$depends_not_import)) {
-          msg <- c("  These packages need to be imported from (in the NAMESPACE file)",
-                   "  for when this namespace is loaded but not attached.")
+          msg <- gettext("These packages need to be imported from (in the NAMESPACE file) for when this namespace is loaded but not attached.")
           fmt(c(ngettext(length(xx),
                          "Package in Depends field not imported from:",
                          "Packages in Depends field not imported from:"),
                 .pretty_format(sort(xx)),
-                msg))
+                strwrap(msg)))
       },
       if(length(xx <- x$imp2un)) {
           fmt(c(ngettext(length(xx),
@@ -6576,8 +6556,7 @@ function(x, ...)
                 .pretty_format(sort(xx))))
       },
       if(length(xx <- x$imp32)) { ## ' ' seems to get converted to dir quotes
-          msg <- "See the note in ?`:::` about the use of this operator."
-          msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
+          msg <- gettext("See the note in ?`:::` about the use of this operator.")
           fmt(c(ngettext(length(xx),
                          "':::' call which should be '::':",
                          "':::' calls which should be '::':"),
@@ -6591,14 +6570,13 @@ function(x, ...)
                 .pretty_format(sort(xx))))
      },
       if(length(xxx <- x$imp3f)) { ## ' ' seems to get converted to dir quotes
-          msg <- "See the note in ?`:::` about the use of this operator."
-          msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
+          msg <- gettext("See the note in ?`:::` about the use of this operator.")
           if(incoming) {
               z <- sub(":::.*", "", xxx)
               base <- unlist(.get_standard_package_names()[c("base", "recommended")])
-              if (any(z %in% base))
+              if(any(z %in% base))
                   msg <- c(msg,
-                           "  Including base/recommended package(s):",
+                           gettext("Including base/recommended package(s):"),
                            .pretty_format(intersect(base, z)))
           }
           fmt(c(ngettext(length(xxx),
@@ -6608,15 +6586,12 @@ function(x, ...)
                 msg))
       },
       if(isTRUE(x$imp3self)) {
-          msg <-
-              c("There are ::: calls to the package's namespace in its code.",
-                "A package almost never needs to use ::: for its own objects:")
-          fmt(c(strwrap(paste(msg, collapse = " ")),
+          msg <- gettext("There are ::: calls to the package's namespace in its code.  A package almost never needs to use ::: for its own objects:")
+          fmt(c(strwrap(msg),
                 .pretty_format(sort(x$imp3selfcalls))))
       },
       if(length(xx <- x$imp3unknown)) {
-          msg <- "See the note in ?`:::` about the use of this operator."
-          msg <- strwrap(paste(msg, collapse = " "), indent = 2L, exdent = 2L)
+          msg <- gettext("See the note in ?`:::` about the use of this operator.")
           fmt(c(ngettext(length(xx),
                          "Unavailable namespace imported from by a ':::' call:",
                          "Unavailable namespaces imported from by ':::' calls:"),
