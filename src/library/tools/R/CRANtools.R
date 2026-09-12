@@ -875,15 +875,8 @@ function(flavor = ".",
 
 browse_CRAN_package_check_URLs <-
 function(p)
-{
-    n <- length(p)
-    i <- 1
-    while((substr(a <- readline("Next package? "), 1, 1) != "n") &&
-          (i <= n)) {
-              utils::browseURL(CRAN_package_check_URL(p[i]))
-              i <- i + 1
-    }
-}
+    browse_URLs(CRAN_package_check_URL(p),
+                "Next package? ")
 
 ## Given an email address, what are the collaborators we can find?
 ## What we can do is

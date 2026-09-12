@@ -1114,3 +1114,14 @@ function(x)
     else
         ""
 }
+
+browse_URLs <-
+function(urls, prompt = "Next URL? ")
+{
+    n <- length(urls)
+    i <- 1
+    while((substr(a <- readline(prompt), 1, 1) != "n") && (i <= n)) {
+        utils::browseURL(urls[i])
+        i <- i + 1
+    }
+}
