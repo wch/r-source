@@ -782,7 +782,7 @@ function(package, dir, lib.loc = NULL,
             ##   }
             ##   funlst <- funlst[!vapply(funlst, is_defunct, NA)]
             ## However, packages could add their wrappers to provide
-            ## more convenient messages ... 
+            ## more convenient messages ...
             ## Hence simply drop everything that has an alias in
             if(length(ind <- which(names(db) == db_name_defunct))) {
                 db_aliases_in_package_defunct_Rd <-
@@ -865,7 +865,7 @@ function(package, dir, lib.loc = NULL,
 }
 
 print.codoc <-
-function(x, ...)    
+function(x, ...)
 {
     if(length(y <- format(x, ...)))
         writeLines(paste(y, collapse = "\n\n"))
@@ -918,7 +918,7 @@ function(x, ...)
     ## 'internal'.
     ## However, if a package has a namespace, then all *exported*
     ## functions should have \usage entries (apart from defunct
-    ## functions and S4 generics and functions re-exported from 
+    ## functions and S4 generics and functions re-exported from
     ## other packages), see the above comments for
     ## functions_missing_from_usages).
     ## Show this info unless explicitly turned off.
@@ -940,7 +940,7 @@ function(x, ...)
 
     if(!length(x))
         return(y)
-    
+
     has_only_names <- is.character(x[[1L]][[1L]][["code"]])
 
     format_args <- function(s) {
@@ -1042,7 +1042,7 @@ function(x, ...)
     }
 
     fmt <- function(fname) {
-        xfname <- x[[fname]]                      
+        xfname <- x[[fname]]
         pcn(c(gettextf("Codoc mismatches from Rd file '%s':", fname),
               vapply(seq_along(xfname),
                      function(i) {
@@ -1059,7 +1059,7 @@ function(x, ...)
                      },
                      "")))
     }
-        
+
     c(y, vapply(names(x), fmt, ""))
 }
 
@@ -3482,7 +3482,7 @@ format.check_package_depends <-
 function(x, ...)
 {
     fmt <- function(x) {
-        if(length(x)) paste(x, collapse = "\n") else character()
+        if(length(x)) paste(c(x, ""), collapse = "\n") else character()
     }
     pf2 <- .pretty_format2
 
@@ -8080,7 +8080,7 @@ function(dir, localOnly = FALSE, pkgSize = NA)
         ## Should be a single URL: this is checked in check_meta()
         ## inside .check_packages().
         z <- parse_URI_reference(v)
-        w <- if(endsWith(tolower(z$authority), "github.com") && 
+        w <- if(endsWith(tolower(z$authority), "github.com") &&
                 !grepl("/issues(/new(/choose)?)?/?$", z$path))
                  paste0(.gh_repo_URL(v), "/issues")
              else if(endsWith(z$authority, "gitlab.com") &&
