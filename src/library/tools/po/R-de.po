@@ -1,5 +1,5 @@
 # Translation of src/library/tools/po/R-tools.pot to German.
-# Copyright (C) 2008-2025 The R Foundation
+# Copyright (C) 2008-2026 The R Foundation
 # This file is distributed under the same license as the R package.
 # Detlef Steuer <steuer@hsu-hh.de>, 2008-2025.
 msgid ""
@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: R-4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2026-09-02 17:58\n"
-"PO-Revision-Date: 2025-07-10 15:25+0200\n"
+"PO-Revision-Date: 2026-09-14 21:42+0200\n"
 "Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
 "Language-Team: R Core <r-core@r-project.org>\n"
 "Language: de\n"
@@ -267,13 +267,11 @@ msgstr "Das Authors@R Feld enthält Personen mit ungültigen ORCID IDs:"
 msgid "Authors@R field gives persons with duplicated ORCID identifiers:"
 msgstr "Das Authors@R Feld enthält Personen mit doppelten ORCID IDs:"
 
-#, fuzzy
 msgid "Authors@R field gives persons with invalid ROR identifiers:"
-msgstr "Das Authors@R Feld enthält Personen mit ungültigen ORCID IDs:"
+msgstr "Das Authors@R Feld enthält Personen mit ungültigen ROR IDs:"
 
-#, fuzzy
 msgid "Authors@R field gives persons with duplicated ROR identifiers:"
-msgstr "Das Authors@R Feld enthält Personen mit doppelten ORCID IDs:"
+msgstr "Das Authors@R Feld enthält Personen mit doppelten ROR IDs:"
 
 msgid "Encoding '%s' is not portable"
 msgstr "Kodierung '%s' ist nicht portabel"
@@ -323,7 +321,6 @@ msgstr "Variablen überschreiben Nutzer- bzw. Rechnereinstellungen:"
 msgid "invalid 'OS.type' \"%s\".  Should not happen"
 msgstr "unzulässiger 'OS.type' \"%s\". Sollte nicht passieren"
 
-#, fuzzy
 msgid "Missing link(s) in Rd file '%s':"
 msgstr "Fehlende(r) Link(s) in Rd Datei '%s':"
 
@@ -376,7 +373,7 @@ msgid "Package detach functions should have one argument with name starting with
 msgstr "Detach-Funktion für Pakete sollte ein Argument haben, dessen Name mit %s beginnt."
 
 msgid "Package detach functions should not call %s."
-msgstr "Detach-Funktion für Pakete sollten nicht %s aufrufen."
+msgstr "Detach-Funktionen für Pakete sollten nicht %s aufrufen."
 
 msgid "unable to create"
 msgstr "kann nicht erzeugen"
