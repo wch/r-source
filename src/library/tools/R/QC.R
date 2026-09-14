@@ -3482,7 +3482,7 @@ format.check_package_depends <-
 function(x, ...)
 {
     fmt <- function(x) {
-        if(length(x)) paste(c(x, ""), collapse = "\n") else character()
+        if(length(x)) paste(x, collapse = "\n") else character()
     }
     pf2 <- .pretty_format2
 
