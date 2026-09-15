@@ -2593,7 +2593,7 @@ msgstr "Warnung:"
 
 #, c-format
 msgid "Warning in %s :"
-msgstr "Warnung in %s"
+msgstr "Warnung in %s :"
 
 msgid "Calls:"
 msgstr "Ruft auf:"

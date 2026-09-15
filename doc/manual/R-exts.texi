@@ -5503,7 +5503,7 @@ interface.
 
 @c https://endoflife.date/java
 Java 8 is still in widespread use (and may remain so because of licence
-changes and support on older OSes..  On the other hand, newer platforms
+changes and support on older OSes).  On the other hand, newer platforms
 may only have support for fairly recent versions of Java: for @cputype{arm64}
 macOS the first officially supported version was 17.
 

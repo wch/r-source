@@ -3556,7 +3556,7 @@ java-latest-openjdk-devel
 @end example
 @noindent
 where the @code{-devel} @abbr{RPM}s are needed to complete the
-@abbr{JDK}. Note that @code{-latest-} may be a non-LTS version such as
+@abbr{JDK}. Note that @code{-latest-} may be a non-@abbr{LTS} version such as
 27 and so not recommended.
 
 Debian/Ubuntu use @samp{-jre} and @samp{-jdk}, e.g.
@@ -4907,7 +4907,7 @@ This has to be used in conjunction with a Fortran compiler: the
 which is needed for some versions of @command{gfortran}.
 
 The current out-of-the-box default for @command{clang++} is to use the
-C++ runtime @code{libstdc++} associatesd with the installed
+C++ runtime @code{libstdc++} associated with the installed
 @command{g++}.  Using the runtime from the
 @url{https://libcxx.llvm.org/, @code{libc++}} project (Fedora
 @acronym{RPM} @code{libcxx-devel}) @emph{via} @option{-stdlib=libc++}
@@ -6015,14 +6015,14 @@ compilers has caused @R{}'s @code{NaN} to be set incorrectly, and
 @code{long double} type to accumulate intermediate results.  On some
 platforms this uses the @cputype{ix86}/@cputype{x86_64} `extended
 precision' model which is (almost always) implemented in hardware in the
-floatng-point unit.  Originally (in the 8087 FPU) all double-precision
+floating-point unit.  Originally (in the 8087 @abbr{FPU}) all double-precision
 arithmetic was done in extended-precision and converted when stored, so
-using long doubles had negligble cost in computational time.  No other
+using long doubles had negligible cost in computational time.  No other
 commonly-used platform uses extended-precision arithmetic: they either
 provide @code{long double} as the same as @code{double} or as a 128-bit
 type by (almost always) software emulation.  For ARM, compiler vendors
 are divided: GCC uses software emulation of the 128-bit IEEE 754-2008
-type, whereas LLVM (and hence Apple) use @code{double}.
+type, whereas @I{LLVM} (and hence Apple) use @code{double}.
 
 All use of C @code{long double} in @R{} can be suppressed by
 @command{--disable-long-double}: this can be desirable on platforms with

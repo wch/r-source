@@ -301,12 +301,12 @@
       \item \code{lm(.., weights = *)} gets a new optional argument
       \code{wtol}, defaulting to 0 currently for back compatibility.
       Setting \code{wtol = 1e-30} fixes \PR{17475} thanks to the
-      \sQuote{\I{R Dev Day}} 2025 participants \I{Kelly Bodwin} et al.
+      \sQuote{\I{R Dev Day}} 2025 participants \I{Kelly Bodwin} \abbr{et al.}
 
       \item Atypical \code{lm()} calls now work better, e.g.,
       \code{fm <- lm(rock); update(fm, . ~ . - perm)} and similar cases,
       fixing \PR{17463} and \PR{17476} and part of \PR{1861}, thanks to
-      \I{Ben Tyner}, \I{Elin Waring}, \I{Kevin Tappe} and other bugzilla
+      \I{Ben Tyner}, \I{Elin Waring}, \I{Kevin Tappe} and other Bugzilla
       contributors.
 
       \item \code{pkg2HTML(dir="pkg")} and other \pkg{tools}

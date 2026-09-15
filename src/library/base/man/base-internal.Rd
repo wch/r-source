@@ -72,7 +72,7 @@
 
 \title{Internal Objects in Package \pkg{base}}
 \description{% 'most': see e.g., .detach
-  Internal objects in the base package most of which are only user-visible
+  Internal objects in the \pkg{base} package most of which are only user-visible
   because of the special nature of the base namespace.
 }
 \usage{

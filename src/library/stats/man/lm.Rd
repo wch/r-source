@@ -152,7 +152,7 @@ lm(formula, data, subset, weights, na.action,
   \code{formula}, via \code{\link{update}()}.
   Note that \code{lm()} now % R-devel: Sep 2, 2026; R >= 4.7.0
   may fix up the resulting \code{call} component such that \code{update()}
-  has more chance to work as intented, as e.g., in \PR{17463} and \PR{17476}.
+  has more chance to work as intended, as e.g., in \PR{17463} and \PR{17476}.
 
   An object of class \code{"lm"} is a list containing at least the
   following components:
