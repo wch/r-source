@@ -303,6 +303,11 @@
       Setting \code{wtol = 1e-30} fixes \PR{17475} thanks to the
       \sQuote{\I{R Dev Day}} 2025 participants \I{Kelly Bodwin} \abbr{et al.}
 
+      \item \code{glm(*, wtol = <positive>)} treats very small weights as
+      zeros via \code{glm.fit()} and \code{glm.control()}, also with new
+      optional \code{tol} argument, more similar to \code{lm()}, but not
+      equivalently, e.g., for computing \code{AIC()}.
+
       \item Atypical \code{lm()} calls now work better, e.g.,
       \code{fm <- lm(rock); update(fm, . ~ . - perm)} and similar cases,
       fixing \PR{17463} and \PR{17476} and part of \PR{1861}, thanks to

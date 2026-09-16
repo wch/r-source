@@ -1,6 +1,6 @@
 % File src/library/stats/man/glm.control.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2009 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{glm.control}
@@ -12,7 +12,8 @@
   used to construct a \code{control} argument to either function.
 }
 \usage{
-glm.control(epsilon = 1e-8, maxit = 25, trace = FALSE)
+glm.control(epsilon = 1e-8, maxit = 25, trace = FALSE,
+            tol = min(1e-7, epsilon/1000), wtol = 0)
 }
 \arguments{
   \item{epsilon}{positive convergence tolerance \eqn{\epsilon};
@@ -21,6 +22,11 @@ glm.control(epsilon = 1e-8, maxit = 25, trace = FALSE)
   \item{maxit}{integer giving the maximal number of IWLS iterations.}
   \item{trace}{logical indicating if output should be produced for each
     iteration.}
+  \item{tol}{numerical tolerance to be used in \code{\link{qr}()}
+    decomposition.}
+  \item{wtol}{numerical tolerance to determine which \code{weights} should
+    be considered \dQuote{zero}; defaults to 0 currently, for back
+    compatibility reasons; see also \code{wtol} in \code{\link{lm}()}.}
 }
 \details{
   The \code{control} argument of \code{\link{glm}} is by default passed
@@ -56,7 +62,8 @@ glm.D93X <- glm(counts ~ outcome + treatment, family = poisson(),
                 trace = TRUE, epsilon = 1e-14)
 options(oo)
 coef(glm.D93X) # the last two are closer to 0 than in ?glm's  glm.D93
+
+## TODO: an example where  'wtol > 0'  is better than wtol=0 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 }}
 \keyword{optimize}
 \keyword{models}
-

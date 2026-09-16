@@ -151,13 +151,18 @@ glm <- function(formula, family = gaussian, data, weights,
 } ## glm
 
 
-glm.control <- function(epsilon = 1e-8, maxit = 25, trace = FALSE)
+glm.control <- function(epsilon = 1e-8, maxit = 25, trace = FALSE,
+                        tol = min(1e-7, epsilon/1000), wtol = 0)
 {
-    if(!is.numeric(epsilon) || epsilon <= 0)
+    if(!is.numeric(epsilon) || is.na(epsilon) || epsilon <= 0)
 	stop("value of 'epsilon' must be > 0")
     if(!is.numeric(maxit) || maxit <= 0)
 	stop("maximum number of iterations must be > 0")
-    list(epsilon = epsilon, maxit = maxit, trace = trace)
+    if(!is.numeric(tol) || is.na(tol) || tol < 0)
+	stop("value of 'tol' must be >= 0")
+    if(!is.numeric(wtol) || is.na(wtol) || wtol < 0)
+	stop("value of 'wtol' must be >= 0")
+    list(epsilon = epsilon, maxit = maxit, trace = trace, tol = tol, wtol = wtol)
 }
 
 ## Modified by Thomas Lumley 26 Apr 97
@@ -169,7 +174,8 @@ glm.fit <-
     function (x, y, weights = rep.int(1, nobs), start = NULL,
 	      etastart = NULL, mustart = NULL, offset = rep.int(0, nobs),
 	      family = gaussian(), control = list(), intercept = TRUE,
-	      singular.ok = TRUE)
+	      tol  = control$tol  %||% min(1e-7, control$epsilon/1000),
+              wtol = control$wtol %||% 0, singular.ok = TRUE)
 {
     control <- do.call("glm.control", control)
     x <- as.matrix(x)
@@ -214,8 +220,8 @@ glm.fit <-
         dev <- sum(dev.resids(y, mu, weights))
         w <- sqrt((weights * mu.eta(eta)^2)/variance(mu))
         residuals <- (y - mu)/mu.eta(eta)
-        good <- rep_len(TRUE, length(residuals))
-        boundary <- conv <- TRUE
+        w0 <- FALSE
+        good <- boundary <- conv <- TRUE
         coef <- numeric()
         iter <- 0L
     } else {
@@ -239,20 +245,30 @@ glm.fit <-
         ## calculate initial deviance and coefficient
         devold <- sum(dev.resids(y, mu, weights))
         boundary <- conv <- FALSE
-
+        wtol.sw <- wtol * sum(weights)
+        w0 <- weights <= wtol.sw # as 'w' is known non-negative
+        nw0 <- !w0
+        zero.weights <- any(w0)
+        if (zero.weights) {
+            if (wtol > 0)
+                warning(gettextf(
+                    "weights smaller than tolerance wtol*sum(w) = %g treated as zero", wtol.sw),
+                    domain = NA)
+            ## TODO ? FIXME ? lm.wfit() in ./lm.R  does considerably more here:
+            ## --- removing zero weights observation from fit, keeping {y0, x0, safe.f, safe.r,...}
+        }
         ##------------- THE Iteratively Reweighting L.S. iteration -----------
         for (iter in seq_len(control$maxit)) {
-            good <- weights > 0
-            varmu <- variance(mu)[good]
+            varmu <- variance(mu)[nw0]
             if (anyNA(varmu))
                 stop("NAs in V(mu)")
             if (any(varmu == 0))
                 stop("0s in V(mu)")
             mu.eta.val <- mu.eta(eta)
-            if (any(is.na(mu.eta.val[good])))
+            if (any(is.na(mu.eta.val[nw0])))
                 stop("NAs in d(mu)/d(eta)")
             ## drop observations for which w will be zero
-            good <- good & (mu.eta.val != 0)
+            good <- nw0 & (mu.eta.val != 0)
 
             if (all(!good)) {
                 conv <- FALSE
@@ -263,8 +279,7 @@ glm.fit <-
             z <- (eta - offset)[good] + (y - mu)[good]/mu.eta.val[good]
             w <- sqrt((weights[good] * mu.eta.val[good]^2)/variance(mu)[good])
             ## call Fortran code via C wrapper
-            fit <- .Call(C_Cdqrls, x[good, , drop = FALSE] * w, z * w,
-                         min(1e-7, control$epsilon/1000), check=FALSE)
+            fit <- .Call(C_Cdqrls, x[good, , drop = FALSE] * w, z * w, tol, FALSE)
             if (any(!is.finite(fit$coefficients))) {
                 conv <- FALSE
                 warning(gettextf("non-finite coefficients at iteration %d", iter), domain = NA)
@@ -387,16 +402,16 @@ glm.fit <-
 	if (intercept) sum(weights * y)/sum(weights) else linkinv(offset)
     nulldev <- sum(dev.resids(y, wtdmu, weights))
     ## calculate df
-    n.ok <- nobs - sum(weights==0)
+    n.ok <- nobs - sum(w0)
     nulldf <- n.ok - as.integer(intercept)
     rank <- if(EMPTY) 0 else fit$rank
     resdf  <- n.ok - rank
     ## calculate AIC, omitting the cases with zero prior weight: they do
     ## not contribute to the (log) likelihood, see PR#16008
     aic.model <-
-	if(any(w0 <- weights == 0))
-	    aic(y[!w0], if(length(n) == nobs) n[!w0] else n,
-		mu[!w0], weights[!w0], dev) + 2*rank
+	if(any(w0))
+	    aic(y[nw0], if(length(n) == nobs) n[nw0] else n,
+		mu[nw0], weights[nw0], dev) + 2*rank
 	else
 	    aic(y, n, mu, weights, dev) + 2*rank
 	##     ^^ is only initialize()d for "binomial" [yuck!]

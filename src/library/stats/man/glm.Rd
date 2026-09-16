@@ -27,7 +27,9 @@ glm(formula, family = gaussian, data, weights, subset,
 glm.fit(x, y, weights = rep.int(1, nobs),
         start = NULL, etastart = NULL, mustart = NULL,
         offset = rep.int(0, nobs), family = gaussian(),
-        control = list(), intercept = TRUE, singular.ok = TRUE)
+        control = list(), intercept = TRUE,
+        tol  = control$tol  \%||\% min(1e-7, control$epsilon/1000), %
+        wtol = control$wtol \%||\% 0, singular.ok = TRUE) %
 
 \method{weights}{glm}(object, type = c("prior", "working"), \dots)
 }
@@ -114,13 +116,20 @@ glm.fit(x, y, weights = rep.int(1, nobs),
   \item{intercept}{logical. Should an intercept be included in the
     \emph{null} model?}
 
+  \item{tol}{tolerance for the \code{\link{qr}} decomposition.  Default
+    is 1e-7 (the previously hardwired value), as for \code{\link{lm}}.}
+  \item{wtol}{tolerance for treating small positive weights as zero.
+    Default is currently 0 for back compatibility, indicating that only
+    exact zeros are treated as zero.}
+
   \item{object}{an object inheriting from class \code{"glm"}.}
   \item{type}{character, partial matching allowed.  Type of weights to
     extract from the fitted model object.  Can be abbreviated.}
 
   \item{\dots}{
     For \code{glm}: arguments to be used to form the default
-    \code{control} argument if it is not supplied directly.
+    \code{control} argument if it is not supplied directly, hence see
+    \code{\link{glm.control}()}.
 
     For \code{weights}: further arguments passed to or from other methods.
   }
