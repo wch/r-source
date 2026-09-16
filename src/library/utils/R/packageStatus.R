@@ -1,7 +1,7 @@
 #  File src/library/utils/R/packageStatus.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,14 +19,6 @@
 packageStatus <- function(lib.loc = NULL, repositories = NULL, method,
                           type = getOption("pkgType"), ...)
 {
-    newestVersion <- function(x)
-    {
-        vers <- package_version(x)
-	max <- vers[1L]
-        for (i in seq_along(vers)) if (max < vers[i]) max <- vers[i]
-	which.max(vers == max)
-    }
-
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
     if(is.null(repositories))
@@ -49,13 +41,8 @@ packageStatus <- function(lib.loc = NULL, repositories = NULL, method,
     z <- available.packages(repositories, method, ...)
     ## only consider the newest version of each package
     ## in the first repository where it appears
-    ztab <- table(z[,"Package"])
-    for(pkg in names(ztab)[ztab>1]){
-        zrow <- which(z[,"Package"] == pkg)
-        znewest <- newestVersion(z[zrow,"Version"])
-        ## and now exclude everything but the newest
-        z <- z[-zrow[-znewest],]
-    }
+    ## (nowadays a default filter, so this is usually a no-op)
+    z <- tools:::.remove_stale_dups(z)
 
     z <- cbind(z, Status = c("not installed", "installed")[
                       1L + z[,"Package"] %in% y$Package])

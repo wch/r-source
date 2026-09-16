@@ -65,14 +65,14 @@ packageStatus(lib.loc = NULL, repositories = NULL, method,
 
   \item{inst}{a data frame with columns as the \emph{matrix} returned by
     \code{\link{installed.packages}} plus \code{"Status"}, a factor with
-    levels \code{c("ok", "upgrade", "unavailable")}.  Only the newest 
-    version of each package is reported, in the first repository in 
-    which it appears.
+    levels \code{c("ok", "upgrade", "unavailable")}.
   }
 
   \item{avail}{a data frame with columns as the \emph{matrix} returned by
     \code{\link{available.packages}} plus \code{"Status"}, a factor with
-    levels \code{c("installed", "not installed")}.
+    levels \code{c("installed", "not installed")}.  Only the newest 
+    version of each package is reported, in the first repository in 
+    which it appears.
   }
 
   For the \code{summary} method the result is also of class
@@ -81,7 +81,7 @@ packageStatus(lib.loc = NULL, repositories = NULL, method,
   \item{Libs}{a list with one element for each library}
   \item{Repos}{a list with one element for each repository}
 
-  with the elements being lists of character vectors of package name for
+  with the elements being lists of character vectors of package names for
   each status.
 }
 \seealso{
