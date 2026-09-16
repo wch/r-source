@@ -34,7 +34,7 @@
     oldobj <- Inf
     objthe <- objective(theta)
     if (!is.finite(objthe)) {
-        msg <- "Infeasible starting values"
+        msg <- "infeasible starting values"
         return(list(par = theta, objective = objthe, convergence = 1, 
                     message = msg)) 
     }
@@ -54,10 +54,11 @@
         delta <- tryCatch(Matrix::solve(hessthe, gradthe, 
                                         tol = control$tolsolve),
                           error = function(e) NULL)
-        if (is.null(delta))
-            stop(gettextf("computing Newton updated failed in %s",
-                          ".NewtonRaphson"),
-                 domain = NA)
+        if (is.null(delta)) {
+            msg <- "computing Newton update failed in .NewtonRaphson"
+            return(list(par = theta, objective = objthe, convergence = 1, 
+                        message = msg)) 
+        }
 
         if (control$trace)
             cat(iter, ': ', theta, "\n", sep = "")
@@ -84,7 +85,7 @@
                     cat("Step size reduced to", step_size, "\n")
 
                 if (step_size <= control$minstepsize) {
-                    msg <- paste("Step size ", step_size, 
+                    msg <- paste("step size ", step_size, 
                                  " has reduced below minstepsize")
                     return(list(par = theta, objective = objthe, convergence = 1, 
                                 message = msg)) 
@@ -112,7 +113,7 @@
          
     }
 
-    msg <- paste("Reached", control$iter.max, "iterations without convergence")
+    msg <- paste("reached", control$iter.max, "iterations without convergence")
     return(list(par = theta, objective = objthe, convergence = 1, message = msg)) 
 }
 
@@ -204,15 +205,27 @@
 
     for (b in seq_len(B)) {
         xb <- matrix(x[,,b, drop = TRUE], ncol = K)
-        ### remove undefined shift parameters 
-        xw <- (rowSums(abs(xb)) > 0L) | 
-            ### except for
-            (MPL_Jeffreys > 0L && ### penalised likelihoods 
-             C <= 5L &&           ### small number of categories
-             B >  1L &&           ### in the presence of blocks
-             is.null(xrc)         ### absence of right-censoring
-            )
-        if (sum(xw) > 1L) {
+        ### remove undefined shift parameters
+        ### determine rows w/o observation 
+        xw <- rowSums(abs(xb)) > 0L
+        ### for penalised estimation, we do NOT want
+        ### to remove blocks with constant outcomes
+        if (MPL_Jeffreys > 0L && ### penalised likelihoods 
+            B >  1L &&           ### in the presence of blocks
+            is.null(xrc)         ### absence of right-censoring
+           ) 
+        {
+            ### keep one additional row w/o observation
+            ### such that the block will not be removed
+            ### NB: make sure starting values for intercepts
+            ###     are still monotone increasing by assigning
+            ###     not zero but a small number (.1) below
+            if (sum(xw) == 1L && length(xw) > 1L)
+                xw[which(!xw)[1L]] <- TRUE
+        }
+        if (sum(xw) > 1L &&         ### at least two different outcome values
+            sum(abs(xb)) > 1L)      ### at least two observations per block
+        {
             ### do not remove last parameter if there are corresponding
             ### right-censored observations
             wm <- which(xw)[sum(xw)]
@@ -257,7 +270,7 @@
         bC <- nrow(xlist[[b]]) - 1L
         lwr <- c(lwr, -Inf, rep.int(0, times = bC - 1L))
         if (NS) {
-            ecdf0 <- cumsum(rowSums(xlist[[b]]))
+            ecdf0 <- cumsum(pmax(.1, rowSums(xlist[[b]])))
             ### ensure that 0 < ecdf0 < 1 such that quantiles exist
             ecdf0 <- pmax(1, ecdf0[-length(ecdf0)]) / (max(ecdf0) + 1)
             Qecdf <- Q(ecdf0)
@@ -839,7 +852,7 @@
     # optim
     
     if (!length(fix)) {
-        if ((MPL_Jeffreys > 0L) && dooptim == "nlminb") {
+        if ((MPL_Jeffreys > 0L)) {
             opargs <- list(start = start, 
                            ### note: negative log-likelihood!
                            objective = function(par) {
@@ -1329,8 +1342,8 @@ model.matrix.free1way <- function (object, ...)
         
         if (!is.null(x$exact)) {
             PVAL <- switch(alternative,
-                           "two.sided" = 2 * min(c(x$exact$ple(sc), 
-                                                   x$exact$pgr(sc))),
+                           "two.sided" = pmin(1, 2 * min(c(x$exact$ple(sc), 
+                                                           x$exact$pgr(sc)))),
                            "less" = x$exact$ple(sc),
                            "greater" = x$exact$pgr(sc))
         } else {
