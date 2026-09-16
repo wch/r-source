@@ -38,7 +38,8 @@ function(contriburl = contrib.url(repos, type), method,
 	fields <- requiredFields
     else {
 	stopifnot(is.character(fields))
-	fields <- unique(c(requiredFields, fields))
+        fields <- unique(c(requiredFields,
+                           fields[fields != "Repository"])) # appended below
     }
 
     if(missing(max_repo_cache_age))
