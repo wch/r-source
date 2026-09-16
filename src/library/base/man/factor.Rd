@@ -221,6 +221,7 @@ addNA(x, ifany = FALSE)
 }
 \seealso{
   \code{\link{[.factor}} for subsetting of factors.
+  \code{\link{droplevels}} for dropping unused levels.
 
   \code{\link{gl}} for construction of balanced factors and
   \code{\link{C}} for factors with specified contrasts.
@@ -231,10 +232,13 @@ addNA(x, ifany = FALSE)
 (ff <- factor(substring("statistics", 1:10, 1:10), levels = letters))
 as.integer(ff)      # the internal codes
 (f. <- factor(ff))  # drops the levels that do not occur
-ff[, drop = TRUE]   # the same, more transparently
+droplevels(ff)      # the same, more transparently
+ff[, drop = TRUE]   # the same
 
+## creating enumerated levels
 factor(letters[1:20], labels = "letter")
 
+## ordered levels
 class(ordered(4:1)) # "ordered", inheriting from "factor"
 z <- factor(LETTERS[3:1], ordered = TRUE)
 ## and "relational" methods work:
