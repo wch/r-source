@@ -74,8 +74,8 @@ if(require("cluster", quietly = TRUE)) {# is a recommended package
 }
 
 # contrasts.Rd
-utils::example(factor)
-fff <- ff[, drop = TRUE]  # reduce to 5 levels.
+utils::example(factor, echo = FALSE)
+fff
 contrasts(fff) <- contr.sum(5)[, 1:2]; contrasts(fff)
 
 ## using sparse contrasts: % useful, once model.matrix() works with these :

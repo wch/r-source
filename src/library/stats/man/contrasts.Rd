@@ -68,7 +68,7 @@ contrasts(x, how.many = NULL) <- value
 }
 \examples{
 utils::example(factor)
-fff <- ff[, drop = TRUE]  # reduce to 5 levels.
+fff
 contrasts(fff) # treatment contrasts by default
 contrasts(C(fff, sum))
 contrasts(fff, contrasts = FALSE) # the 5x5 identity matrix

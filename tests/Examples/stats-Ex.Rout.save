@@ -4837,20 +4837,26 @@ Levels: a b c d e f g h i j k l m n o p q r s t u v w x y z
 factor> as.integer(ff)      # the internal codes
  [1] 19 20  1 20  9 19 20  9  3 19
 
-factor> (f. <- factor(ff))  # drops the levels that do not occur
+factor> (fff <- factor(ff)) # drops the levels that do not occur
  [1] s t a t i s t i c s
 Levels: a c i s t
 
-factor> ff[, drop = TRUE]   # the same, more transparently
+factor> droplevels(ff)      # the same, more transparently
  [1] s t a t i s t i c s
 Levels: a c i s t
 
+factor> ff[, drop = TRUE]   # the same
+ [1] s t a t i s t i c s
+Levels: a c i s t
+
+factor> ## creating enumerated levels
 factor> factor(letters[1:20], labels = "letter")
  [1] letter1  letter2  letter3  letter4  letter5  letter6  letter7  letter8 
  [9] letter9  letter10 letter11 letter12 letter13 letter14 letter15 letter16
 [17] letter17 letter18 letter19 letter20
 20 Levels: letter1 letter2 letter3 letter4 letter5 letter6 letter7 ... letter20
 
+factor> ## ordered levels
 factor> class(ordered(4:1)) # "ordered", inheriting from "factor"
 [1] "ordered" "factor" 
 
@@ -4930,7 +4936,9 @@ factor> table(addNA(Month, ifany = TRUE))
 
  5  6  7  8  9 
 31 30 31 31 30 
-> fff <- ff[, drop = TRUE]  # reduce to 5 levels.
+> fff
+ [1] s t a t i s t i c s
+Levels: a c i s t
 > contrasts(fff) # treatment contrasts by default
   c i s t
 a 0 0 0 0

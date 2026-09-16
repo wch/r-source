@@ -231,7 +231,7 @@ addNA(x, ifany = FALSE)
 \examples{
 (ff <- factor(substring("statistics", 1:10, 1:10), levels = letters))
 as.integer(ff)      # the internal codes
-(f. <- factor(ff))  # drops the levels that do not occur
+(fff <- factor(ff)) # drops the levels that do not occur
 droplevels(ff)      # the same, more transparently
 ff[, drop = TRUE]   # the same
 
