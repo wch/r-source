@@ -1,6 +1,6 @@
 % File src/library/base/man/connections.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{connections}
@@ -98,6 +98,8 @@ isOpen(con, rw = "")
 isIncomplete(con)
 
 socketTimeout(socket, timeout = -1)
+
+\methods{summary}{connection}(object, \dots)
 }
 \arguments{
   \item{description}{character string.  A description of the connection:
@@ -136,7 +138,7 @@ socketTimeout(socket, timeout = -1)
   \item{port}{integer.  The TCP port number.}
   \item{server}{logical.  Should the socket be a client or a server?}
   \item{socket}{a server socket listening for connections.}
-  \item{con}{a connection.}
+  \item{con, object}{a connection.}
   \item{type}{character string.  Currently ignored.}
   \item{rw}{character string.  Empty or \code{"read"} or \code{"write"},
     partial matches allowed.}
@@ -220,7 +222,8 @@ socketTimeout(socket, timeout = -1)
 
   \code{flush} flushes the output stream of a connection open for
   write/append (where implemented, currently for file and clipboard
-  connections, \code{\link{stdout}} and \code{\link{stderr}}).
+  connections, \code{\link{stdout}}, \code{\link{stderr}} and
+  \code{\link{gzcon}}).
 
   If for a \code{file} or (on most platforms) a \code{fifo} connection
   the description is \code{""}, the file/\I{fifo} is immediately opened (in
@@ -230,7 +233,7 @@ socketTimeout(socket, timeout = -1)
 
   \code{socketConnection(server=TRUE)} creates a new temporary server socket
   listening on the given port.  As soon as a new socket connection is
-  accepted on that port, the server socket is automatically closed. 
+  accepted on that port, the server socket is automatically closed.
   \code{serverSocket} creates a listening server socket which can be used
   for accepting multiple socket connections by \code{socketAccept}.  To stop
   listening for new connections, a server socket needs to be closed
@@ -245,6 +248,12 @@ socketTimeout(socket, timeout = -1)
 
   \code{socketTimeout} sets connection timeout of a socket connection.  A
   negative \code{timeout} can be given to query the old value.
+
+  There is a \code{summary()} and built on it a \code{print()} method for
+  connections.  The former returns a named \code{\link{list}} of strings
+  if the connection is \dQuote{valid} and signals an error otherwise,
+  whereas \code{print()} also works for invalid (typically closed)
+  connections, see also the examples.
 }
 
 \section{URLs}{
@@ -321,7 +330,7 @@ socketTimeout(socket, timeout = -1)
   output text connection whether there is unflushed output. See example
   below.
 
-  \code{socketTimeout} returns the old timeout value of a socket connection. 
+  \code{socketTimeout} returns the old timeout value of a socket connection.
 }
 
 \section{Modes}{
@@ -737,6 +746,9 @@ unlink(Tpath)
 Tfile <- file()
 cat("abc\ndef\n", file = Tfile)
 readLines(Tfile)
+stopifnot(identical(print(summary(Tfile)),
+              list(description = "", class = "file", mode = "w+", text = "text",
+                   opened = "opened", `can read` = "yes", `can write` = "yes")))
 close(Tfile)
 
 \dontrun{## fifo example -- may hang even with OS support for fifos
@@ -761,7 +773,7 @@ oldwd <- setwd(tempdir())
 writeLines(c("450, 390, 467, 654,  30, 542, 334, 432, 421,",
 "357, 497, 493, 550, 549, 467, 575, 578, 342,",
 "446, 547, 534, 495, 979, 479"), "data2_")}
-\dontrun{\% cat data2_
+\dontrun{\% cat data2_   #\%%
 450, 390, 467, 654,  30, 542, 334, 432, 421,
 357, 497, 493, 550, 549, 467, 575, 578, 342,
 446, 547, 534, 495, 979, 479}
@@ -810,6 +822,7 @@ close(con2)
 cat(x, file = (con <- file("foo", "w", encoding = "UTF-8"))); close(con)
 # read a 'Windows Unicode' file
 A <- read.table(con <- file("students", encoding = "UCS-2LE")); close(con)
-}}
+}%dont %
+}
 \keyword{file}
 \keyword{connection}

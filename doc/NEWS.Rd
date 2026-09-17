@@ -107,6 +107,9 @@
       \item \code{tools::add_datalist()} now returns a logical
       (invisibly, instead of \code{NULL}), indicating if it did add
       a \file{data/datalist} file (addressing parts of \PR{18015}).
+
+      \item \code{gzcon} \code{rawConnection}s now can flush and are
+      writable thanks to \I{Ivan Krylov}'s analysis and patch in \PR{19172}.
     }
   }
 

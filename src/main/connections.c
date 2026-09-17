@@ -1339,7 +1339,7 @@ static Rboolean	fifo_open(Rconnection con)
 	if (strncmp(pipe_prefix, con->description, strlen(pipe_prefix)) != 0) {
 	    len += strlen(pipe_prefix);
 	    add_prefix = TRUE;
-	}	
+	}
 	hch_pipename = (char*) malloc(len+1);
 	if (!hch_pipename)
 	    error(_("allocation of fifo name failed"));
@@ -1549,7 +1549,7 @@ static void cend_con_destroy(void *data)
 {
     int ncon = *(int *)data;
     con_destroy(ncon);
-} 
+}
 
 static void checked_open(int ncon)
 {
@@ -2870,7 +2870,7 @@ static Rboolean clp_open(Rconnection con)
 	   OpenClipboard(NULL) &&
 	   (hglb = GetClipboardData(CF_UNICODETEXT)) &&
 	   (wpc = (wchar_t *)GlobalLock(hglb))) {
-	    
+
 	    int len = (int)wcslen(wpc) * sizeof(wchar_t);
 	    this->buff = (char *)malloc(len + 1);
 	    this->last = this->len = len;
@@ -3408,6 +3408,7 @@ static Rconnection newraw(const char *description, SEXP raw, const char *mode)
     new->canwrite = (mode[0] == 'w' || mode[0] == 'a');
     new->canread = mode[0] == 'r';
     if(strlen(mode) >= 2 && mode[1] == '+') new->canread = new->canwrite = TRUE;
+    new->encname[0] = '\0';
     new->open = &raw_open;
     new->close = &raw_close;
     new->destroy = &raw_destroy;
@@ -3479,8 +3480,16 @@ static Rconnection getConnectionCheck(SEXP rcon, const char *cls,
 	error(_("'%s' is not a %s"), var, cls);
     Rconnection con = getConnection(asInteger(rcon));
     /* check that the R class and internal class match */
-    if (strcmp(con->class, cls))
-	error(_("internal connection is not a %s"), cls);
+    if (strcmp(con->class, cls)) {
+	/* Allow rawConnectionValue() to unwrap the gzcon object */
+	if (con->isGzcon) {
+	    Rgzconn priv = con->private;
+	    con = priv->con;
+	    if (strcmp(con->class, cls))
+		error(_("internal gzcon connection is not a %s"), cls);
+	} else
+	    error(_("internal connection is not a %s"), cls);
+    }
     return con;
 }
 
@@ -5848,6 +5857,7 @@ do_getconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+// provide R level  summary(Rcon)
 attribute_hidden SEXP do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, names, tmp;
@@ -6332,47 +6342,74 @@ static void putLong(Rconnection con, uLong x)
     con->write(&buf, 4, 1, con);
 }
 
+static void gzconFlush(Rconnection con, bool reopen) {
+    Rgzconn priv = con->private;
+    Rconnection icon = priv->con;
+
+    uInt len;
+    bool done = false;
+    priv->s.avail_in = 0; /* should be zero already anyway */
+    for (;;) {
+	len = Z_BUFSIZE - priv->s.avail_out;
+
+	if (len != 0) {
+	    if (icon->write(priv->buffer, 1, len, icon) != len) {
+		priv->z_err = Z_ERRNO;
+		error(_("writing error whilst flushing 'gzcon' connection"));
+	    }
+	    priv->s.next_out = priv->buffer;
+	    priv->s.avail_out = Z_BUFSIZE;
+	}
+	if (done) break;
+	priv->z_err = deflate(&(priv->s), Z_FINISH);
+
+	/* deflate has finished flushing only when it hasn't used up
+	 * all the available space in the output buffer:
+	 */
+	done = (priv->s.avail_out != 0 || priv->z_err == Z_STREAM_END);
+
+	if (priv->z_err != Z_OK && priv->z_err != Z_STREAM_END) break;
+    }
+    deflateEnd(&(priv->s));
+    /* NB: these must be little-endian */
+    putLong(icon, priv->crc);
+    putLong(icon, (uLong) (priv->s.total_in & 0xffffffff));
+    if (reopen) { // see  * write a header * above
+	deflateInit2(&(priv->s), priv->cp, Z_DEFLATED, -MAX_WBITS,
+		     8, Z_DEFAULT_STRATEGY);
+	snprintf(priv->buffer, 11, "%c%c%c%c%c%c%c%c%c%c", gz_magic[0], gz_magic[1],
+	         Z_DEFLATED, 0 /*flags*/, 0,0,0,0 /*time*/, 0 /*xflags*/,
+	         OS_CODE);
+	priv->s.next_out = priv->buffer+10;
+	priv->s.avail_out = Z_BUFSIZE-10;
+	priv->crc = crc32(0L, Z_NULL, 0);
+    }
+}
+
 
 static void gzcon_close(Rconnection con)
 {
     Rgzconn priv = con->private;
     Rconnection icon = priv->con;
 
-    if(icon->canwrite) {
-	uInt len;
-	int done = 0;
-	priv->s.avail_in = 0; /* should be zero already anyway */
-	for (;;) {
-	    len = Z_BUFSIZE - priv->s.avail_out;
-
-	    if (len != 0) {
-		if (icon->write(priv->buffer, 1, len, icon) != len) {
-		    priv->z_err = Z_ERRNO;
-		    error(_("writing error whilst flushing 'gzcon' connection"));
-		}
-		priv->s.next_out = priv->buffer;
-		priv->s.avail_out = Z_BUFSIZE;
-	    }
-	    if (done) break;
-	    priv->z_err = deflate(&(priv->s), Z_FINISH);
-
-	    /* deflate has finished flushing only when it hasn't used up
-	     * all the available space in the output buffer:
-	     */
-	    done = (priv->s.avail_out != 0 || priv->z_err == Z_STREAM_END);
-
-	    if (priv->z_err != Z_OK && priv->z_err != Z_STREAM_END) break;
-	}
-	deflateEnd(&(priv->s));
-	/* NB: these must be little-endian */
-	putLong(icon, priv->crc);
-	putLong(icon, (uLong) (priv->s.total_in & 0xffffffff));
-    } else inflateEnd(&(priv->s));
+    if(icon->canwrite)
+	gzconFlush(con, false);
+    else
+	inflateEnd(&(priv->s));
 
     if(icon->isopen) icon->close(icon);
     con->isopen = FALSE;
 }
 
+static int gzcon_fflush(Rconnection con) {
+    if(con->canwrite) {
+	gzconFlush(con, true);
+	Rgzconn priv = con->private;
+	Rconnection icon = priv->con;
+	icon->fflush(icon);
+    }
+    return 0;
+}
 
 static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
@@ -6464,16 +6501,15 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 static size_t gzcon_write(const void *ptr, size_t size, size_t nitems,
 			  Rconnection con)
 {
-    Rgzconn priv = con->private;
-    Rconnection icon = priv->con;
-
     if ((double) size * (double) nitems > INT_MAX)
 	error(_("too large a block specified"));
+    Rgzconn priv = con->private;
     priv->s.next_in = (Bytef*) ptr;
     priv->s.avail_in = (uInt)(size*nitems);
 
     while (priv->s.avail_in != 0) {
 	if (priv->s.avail_out == 0) {
+	    Rconnection icon = priv->con;
 	    priv->s.next_out = priv->buffer;
 	    if (icon->write(priv->buffer, 1, Z_BUFSIZE, icon) != Z_BUFSIZE) {
 		priv->z_err = Z_ERRNO;
@@ -6560,6 +6596,7 @@ attribute_hidden SEXP do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     new->fgetc = &gzcon_fgetc;
     new->read = &gzcon_read;
     new->write = &gzcon_write;
+    new->fflush = &gzcon_fflush;
     new->private = (void *) malloc(sizeof(struct gzconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);

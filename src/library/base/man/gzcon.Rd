@@ -1,6 +1,6 @@
 % File src/library/base/man/gzcon.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2010 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{gzcon}
@@ -37,7 +37,9 @@ gzcon(con, level = 6, allowNonCompressed = TRUE, text = FALSE)
   Compressed output will contain embedded \abbr{NUL} bytes, and so \code{con}
   is not permitted to be a \code{\link{textConnection}} opened with
   \code{open = "w"}.  Use a writable \code{\link{rawConnection}} to
-  compress data into a variable.
+  compress data into a variable.  Flushing (\code{\link{flush}}) the
+  connection will write out the already-compressed data and prepare to write
+  a new compressed stream in case the connection is used again.
 
   The original connection becomes unusable: any object pointing to it will
   now refer to the modified connection.  For this reason, the new
@@ -71,14 +73,30 @@ readLines(zz <- gzcon(file(zzfil, "rb")))
 close(zz)
 unlink(zzfil)
 
-% Cygwin seems to require a different name
+% Cygwin seems to require a different name %
 zzfil2 <- tempfile(fileext = ".gz")
 zz <- gzcon(file(zzfil2, "wb"))
 cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
-close(zz)
+s1 <- summary(zz); close(zz)
 readLines(zz <- gzfile(zzfil2))
-close(zz)
+s. <- summary(zz); close(zz)
 unlink(zzfil2)
+stopifnot(identical(
+    s.,
+    list(description = zzfil2, class = "gzfile", mode = "rb",
+         text = "text", opened = "closed", `can read` = "yes", `can write` = "no")))
+
+## Since Sep 2026, PR#19172,  R can 
+zz <- gzcon(zz2 <- rawConnection(raw(), "wb"))
+writeLines("hello", zz); flush(zz)
+raw <- rawConnectionValue(zz2)
+str(sz <- summary(zz))
+stopifnot(identical(sz, summary(zz2)))
+close(zz) # also
+zz <- gzcon(rawConnection(raw, "rb"))
+readLines(zz) # "hello"
+str(sz <- summary(zz)); close(zz)
+zz2
 }
 \keyword{file}
 \keyword{connection}
