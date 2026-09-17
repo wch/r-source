@@ -87,10 +87,10 @@ socketAccept(socket, blocking = FALSE, open = "a+",
              options = getOption("socketOptions"))
 
 open(con, \dots)
-\method{open}{connection}(con, open = "r", blocking = TRUE, \dots)
+\S3method{open}{connection}(con, open = "r", blocking = TRUE, \dots)
 
 close(con, \dots)
-\method{close}{connection}(con, type = "rw", \dots)
+\S3method{close}{connection}(con, type = "rw", \dots)
 
 flush(con)
 
@@ -99,7 +99,7 @@ isIncomplete(con)
 
 socketTimeout(socket, timeout = -1)
 
-\methods{summary}{connection}(object, \dots)
+\S3method{summary}{connection}(object, \dots)
 }
 \arguments{
   \item{description}{character string.  A description of the connection:
