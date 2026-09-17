@@ -1,9 +1,7 @@
 % File src/library/stats/man/extractAIC.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2014 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
-
-%-- This page by Martin Maechler,  improvements welcome!
 \name{extractAIC}
 \title{Extract AIC from a Fitted Model}
 %
@@ -94,8 +92,9 @@ extractAIC(fit, scale, k = 2, \dots)
   \code{\link{AIC}}, \code{\link{deviance}}, \code{\link{add1}},
   \code{\link{step}}
 }
-\examples{\donttest{
+\examples{
 utils::example(glm)
-extractAIC(glm.D93)  #>>  5  15.129
-}}
+(eA <- extractAIC(glm.D93)) # 5  56.76132 -- which is the same as AIC() here:
+stopifnot(all.equal(eA[2], AIC(glm.D93), tolerance = 1e-15))
+}
 \keyword{models}
