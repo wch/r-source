@@ -334,6 +334,12 @@
       \item The \code{as.list()} method for class \code{"function"} now
       checks its argument and behaves better for a fake "function", fixing
       \PR{19173} thanks to \I{Mark Padgham}'s report and patch proposal.
+
+      \item \code{path.expand("~")} and similar now should work correctly
+      on Windows when the user name is not in ASCII and neither
+      \env{\%HOME\%} nor \env{\%USER\%} environment variables are set,
+      fixing \PR{18949} thanks to the report and patch from \I{Ivan Krylov}
+      and \I{Mauricio Vargas}'s \I{R Dev Day} work.
     }
   }
 }

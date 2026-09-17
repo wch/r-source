@@ -33,12 +33,12 @@ static char *ShellGetPersonalDirectory(void)
     /* CSIDL_PERSONAL */
     if (SHGetKnownFolderPath(&FOLDERID_Documents, KF_FLAG_CREATE, NULL,
                              &wpath) == S_OK) {
-	size_t needed = wcstombs(NULL, wpath, 0);
-	if (needed != (size_t)-1) {
+	int needed = WideCharToMultiByte(CP_ACP, 0, wpath, -1, NULL, 0, NULL, NULL);
+	if (needed != -1) {
 	    result = (char *)malloc(needed + 1);
 	    if (result)
 		/* NOTE: some characters may not be representable */
-		wcstombs(result, wpath, needed + 1);
+		WideCharToMultiByte(CP_ACP, 0, wpath, -1, result, needed+1, NULL, NULL);
 	}
     }
     CoTaskMemFree(wpath);
