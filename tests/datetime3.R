@@ -1025,7 +1025,7 @@ fff <- paste0("%H_%M_%OS", c("",0:6), ".mp3")
 cD <- format(Sys.Date())
 str(td <- unique(lapply(fff, \(fmt) strptime(chd, fmt))))
 stopifnot(length(td) == 1, identical(format(td[[1]]), paste(cD, "17:35:14")))
-## gave NAs  but for the first in R <= 4.6.z
+## gave NAs  but for the first in R <= 4.6.1
 
 
 ## strptime() no longer fails to parse %w  = '0'  in C locale -- PR#19124
