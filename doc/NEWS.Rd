@@ -62,6 +62,11 @@
       \I{R Dev Day @ useR! 2026} contributors, notably
       \I{Tomek Gieorgijewski}, report in \PR{18680}.
 
+      \item \code{strptime(ch, "...\%OS<n>...")} now disregards contiguous
+      digits in "<n>", for symmetry with \code{strftime()}, fulfilling
+      \I{Frederick Eaton}'s wish in \PR{17209}, thanks to a patch by
+      \I{Suharto Anggono}.
+
       \item \code{strptime()} now also returns \code{NA} for out of range
       \code{"\%OS"} and a correct error message in some wrong multibyte
       cases, fixing \PR{19117} comment #1 and \PR{19122} by \I{Michael
