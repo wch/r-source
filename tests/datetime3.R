@@ -912,6 +912,15 @@ stopifnot(length(td) == 1, identical(format(td[[1]]), paste(cD, "17:35:14")))
 ## strptime() gave  NA  but for the first in R <= 4.6.1
 
 
+## strptime() no longer fails to parse %w  = '0'  in C locale -- PR#19124
+## (relying on LC_* = C !)
+ch <- paste("2026", c("0", "01"), "0"); fmt <- "%Y %U %w";
+(lt <- strptime(ch, fmt))
+stopifnot(!is.na(lt), lt[1] == lt[2],
+          identical(ch[2], strftime(lt[2], fmt)))
+## lt[1] was NA in   R <= 4.6.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

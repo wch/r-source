@@ -73,6 +73,10 @@
 	Chirico}; additionally, some overflow to \code{Inf} times no longer
       result in \code{NA}.
 
+      \item \code{strptime("0", "\%w")} in a \code{"C"} locale now
+      works in valid cases, fixing \PR{19124} thanks to \I{Michael
+        Chirico}.
+
       \item \code{ksmooth(x,y, x.points=NULL)} now returns an empty (x,y)
       pair instead of crashing \R, fixing \PR{19153}.
     }
