@@ -1,7 +1,7 @@
 #  File src/library/base/R/as.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2021 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -34,7 +34,9 @@ as.list <- function(x,...) UseMethod("as.list")
 as.list.default <- function (x, ...)
     if (typeof(x) == "list") x else .Internal(as.vector(x, "list"))
 
-as.list.function <- function (x, ...) c(formals(x), list(body(x)))
+as.list.function <- function (x, ...)
+    if(is.function(x)) c(formals(x), list(body(x))) else NextMethod()
+
 
 as.list.data.frame <- function(x,...) {
     x <- unclass(x)

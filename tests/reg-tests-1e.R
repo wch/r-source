@@ -3678,7 +3678,8 @@ save("save", file=(tf <- tempfile("saveRdata")))
 sys.load.image(tf, FALSE); rm(tf, save)
 ## had called .Internal(RNGkind(..)) with wrong number of args
 
-## aperm and
+
+## aperm() speedup and t() compatibility, preserving dimnames -- PR#19133
 m <- matrix(1:10, 2, 5, dimnames = list(X = paste0("x", 1:2), Y = paste0("y", 1:5)))
 a <- array(m, dim = c(2, 5, 1),
            dimnames = list(X = paste0("x", 1:2), Y = paste0("y", 1:5), Z = "z1"))
@@ -3690,7 +3691,7 @@ stopifnot(
     identical(drop(aperm(a, c("Y", "X", "Z"))), aperm(m, c("Y", "X"))),
     identical(drop(aperm(a, c(1, 2, 3), resize = FALSE)), aperm(m, c(1, 2), resize = FALSE))
 )
-
+## had failed for a few days
 
 
 ## ksmooth(.., x.points = <invalid>) -- PR#19153
@@ -3722,6 +3723,19 @@ stopifnot(exprs = {
     identical(attr(aWset, "warning"), sprintf(erfmt, 1))
 })
 ## fractional recycling of logical in  a[<logi>]  did not warn in R <= 4.6.*
+
+
+## str(<pseudo-function>) --  PR#19173
+lab <- list(a=1, b=2)
+psf <- structure(lab, class = "function")
+stopifnot(exprs = {
+    is.list(psf)
+    all.equal(psf, as.list(psf))
+    identical(lab, as.list(structure(c(a=1, b=2), class = "function")))
+    is.null(writeLines(s1 <- capture.output( str(psf) )))
+    identical(s1[-4],        capture.output( str(lab) ))
+})
+## as.list.function() is safer now; str.default() gave error in  R <= 4.6.*
 
 
 

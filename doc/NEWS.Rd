@@ -336,6 +336,10 @@
       \code{length(x)} is not a multiple of \code{length(logi)}, fixing
       \PR{19155} thanks to several participants in two \I{R Dev Day}s and
       the \I{R Sprint} in 2026.
+
+      \item The \code{as.list()} method for class \code{"function"} now
+      checks its argument and behaves better for a fake "function", fixing
+      \PR{19173} thanks to \I{Mark Padgham}'s report and patch proposal.
     }
   }
 }
