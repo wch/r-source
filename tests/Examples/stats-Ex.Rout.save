@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-08-19 r90426) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-09-18 r90564) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -7195,6 +7195,15 @@ attr(,"class")
 > ### Keywords: models
 > 
 > ### ** Examples
+> 
+> ## following example(glm)
+> ## Don't show: 
+> example(glm, echo = FALSE)
+> ## End(Don't show)
+> (eA <- extractAIC(glm.D93)) # 5  56.76132 -- which is the same as AIC() here:
+[1]  5.00000 56.76132
+> stopifnot(all.equal(eA[2], AIC(glm.D93), tolerance = 1e-15))
+> 
 > 
 > 
 > cleanEx()

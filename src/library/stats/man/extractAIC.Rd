@@ -93,7 +93,8 @@ extractAIC(fit, scale, k = 2, \dots)
   \code{\link{step}}
 }
 \examples{
-utils::example(glm)
+## following example(glm)
+\dontshow{example(glm, echo = FALSE)}
 (eA <- extractAIC(glm.D93)) # 5  56.76132 -- which is the same as AIC() here:
 stopifnot(all.equal(eA[2], AIC(glm.D93), tolerance = 1e-15))
 }
