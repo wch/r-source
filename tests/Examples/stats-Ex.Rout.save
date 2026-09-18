@@ -8287,10 +8287,13 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > A1 <- -2*c(ll) + 2*attr(ll, "df")
 > A2 <- glm.D93$family$aic(counts, mu=fitted(glm.D93), wt=1) +
 +         2 * length(coef(glm.D93))
+> (A3 <- extractAIC(glm.D93))
+[1]  5.00000 56.76132
 > stopifnot(exprs = {
 +   all.equal(A0, A1)
 +   all.equal(A1, A2)
-+   all.equal(A1, glm.D93$aic)
++   all.equal(A2, A3[2])
++   all.equal(A3[2], glm.D93$aic)
 + })
 > 
 > 

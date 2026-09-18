@@ -304,11 +304,11 @@ glm.fit(x, y, weights = rep.int(1, nobs),
   the component \code{y} of the result is the proportion of successes.
 }
 \seealso{
-  \code{\link{anova.glm}}, \code{\link{summary.glm}}, etc. for
-  \code{glm} methods,
-  and the generic functions \code{\link{anova}}, \code{\link{summary}},
+  \code{\link{anova.glm}}, \code{\link{residuals.glm}},
+  \code{\link{summary.glm}}, etc. for \code{glm} methods,
+  and the generic functions \code{\link{AIC}}, \code{\link{extractAIC}},
   \code{\link{effects}}, \code{\link{fitted.values}},
-  and \code{\link{residuals}}.
+  and \code{\link{logLik}}.
 
   \code{\link{lm}} for non-generalized \emph{linear} models (which SAS
   calls GLMs, for \sQuote{general} linear models).
@@ -352,10 +352,12 @@ anova(glm.D93)
 A1 <- -2*c(ll) + 2*attr(ll, "df")
 A2 <- glm.D93$family$aic(counts, mu=fitted(glm.D93), wt=1) +
         2 * length(coef(glm.D93))
+(A3 <- extractAIC(glm.D93))
 stopifnot(exprs = {
   all.equal(A0, A1)
   all.equal(A1, A2)
-  all.equal(A1, glm.D93$aic)
+  all.equal(A2, A3[2])
+  all.equal(A3[2], glm.D93$aic)
 })
 
 
