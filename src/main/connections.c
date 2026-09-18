@@ -6377,7 +6377,7 @@ static void gzconFlush(Rconnection con, bool reopen) {
     if (reopen) { // see  * write a header * above
 	deflateInit2(&(priv->s), priv->cp, Z_DEFLATED, -MAX_WBITS,
 		     8, Z_DEFAULT_STRATEGY);
-	snprintf(priv->buffer, 11, "%c%c%c%c%c%c%c%c%c%c", gz_magic[0], gz_magic[1],
+	snprintf((char *)priv->buffer, 11, "%c%c%c%c%c%c%c%c%c%c", gz_magic[0], gz_magic[1],
 	         Z_DEFLATED, 0 /*flags*/, 0,0,0,0 /*time*/, 0 /*xflags*/,
 	         OS_CODE);
 	priv->s.next_out = priv->buffer+10;
