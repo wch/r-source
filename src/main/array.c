@@ -1803,14 +1803,13 @@ attribute_hidden SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SEXP dimsr = getAttrib(r, R_DimSymbol);
 	    SEXP nmdm = getAttrib(dimsa, R_NamesSymbol);
 	    if(nmdm != R_NilValue) { // dimsr needs correctly permuted names()
+		PROTECT(r);
 		PROTECT(nmdm);
-		SEXP nm_dr = PROTECT(allocVector(STRSXP, n));
-		for (i = 0; i < n; i++) {
-		    SET_STRING_ELT(nm_dr, i, STRING_ELT(nmdm, pp[i]));
-		}
+		SEXP nm_dr = PROTECT(allocVector(STRSXP, 2));
+		SET_STRING_ELT(nm_dr, 0, STRING_ELT(nmdm, 1));
+                SET_STRING_ELT(nm_dr, 1, STRING_ELT(nmdm, 0));
 		setAttrib(dimsr, R_NamesSymbol, nm_dr);
-		UNPROTECT(2);
-		setAttrib(r, R_DimSymbol, dimsr);
+		UNPROTECT(3);
 	    }
 	    UNPROTECT(1);
 	    return r;
