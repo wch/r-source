@@ -22,8 +22,6 @@ example(family, run.donttest = TRUE)
 example(fft, run.donttest = TRUE)
 example(glm, run.donttest = ("MASS" %in% base.and.rec))
 example(glm.control, run.donttest = TRUE)
-# from extractAIC
-extractAIC(glm.D93)
 example(influence.measures, run.donttest = TRUE)
 example(lm, run.donttest = TRUE)
 example(ls.diag, run.donttest = TRUE)
