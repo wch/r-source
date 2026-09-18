@@ -412,9 +412,11 @@
 	Chirico}; additionally, some overflow to \code{Inf} times no longer
       result in \code{NA}.
 
-      \item \code{strptime("0", "\%w")} in a \code{"C"} locale now
-      works in valid cases, fixing \PR{19124} thanks to \I{Michael
-        Chirico}.
+      \item \code{strptime("0", "\%w")} in a \code{"C"} locale now works in
+      valid cases, returning \code{NA} for invalid week numbers
+      (\code{"\%U"} or \code{"\%W"}), fixing \PR{19124} thanks to
+      \I{Michael Chirico}'s report and notably \I{Suharto Anggono}'s
+      analysis, also correctly fixing \PR{15195}.
 
       \item \code{ksmooth(x,y, x.points=NULL)} now returns an empty (x,y)
       pair instead of crashing \R, fixing \PR{19153}.

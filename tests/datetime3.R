@@ -1030,11 +1030,24 @@ stopifnot(length(td) == 1, identical(format(td[[1]]), paste(cD, "17:35:14")))
 
 ## strptime() no longer fails to parse %w  = '0'  in C locale -- PR#19124
 ## (relying on LC_* = C !)
-ch <- paste("2026", c("0", "01"), "0"); fmt <- "%Y %U %w";
-(lt <- strptime(ch, fmt))
-stopifnot(!is.na(lt), lt[1] == lt[2],
-          identical(ch[2], strftime(lt[2], fmt)))
-## lt[1] was NA in   R <= 4.6.1
+(ch <- outer(0:2, 0:2, \(U,w) paste("2026", U,w)))
+fmtUK <- "%Y %U %w"
+fmtUS <- "%Y %W %w"
+lt  <- strptime(ch, fmtUK)
+array(lt, dim(ch)) # in R <= 4.6.1 the first two rows were identical (not NA)
+iN <- c(1,4,7)
+stopifnot(is.na(lt[iN]), !is.na(lt <- lt[-iN]))
+noquote(chlt <- t(simplify2array(strsplit(as.character(lt),"-"))))
+stopifnot(chlt[,1] == "2026", chlt[,2] == "01",
+          identical(chlt[,3], sprintf("%02d", rbind(4:6, 11:13))))
+array(ltU <- strptime(ch, fmtUS), dim(ch)) # originally, row 1 = row 2
+iN <- c(4,7)
+stopifnot(is.na(ltU[iN]), !is.na(ltU <- ltU[-iN]))
+noquote(chltU <- t(simplify2array(strsplit(as.character(ltU),"-"))))
+stopifnot(chltU[,1] == "2026", chltU[,2] == "01",
+          identical(chltU[1:3, 3], sprintf("%02d", seq(4, by=7, to=18))),
+          identical(chltU[-(1:3),], chlt[-(1:2),]))
+## indeed, the first fixes were not ok in R <= 4.6.1
 
 
 

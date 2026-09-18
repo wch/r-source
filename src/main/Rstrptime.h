@@ -222,6 +222,7 @@ static int Rwcsncasecmp(const wchar_t *cs1, const wchar_t *s2)
   (*(new_fmt) != '\0'							      \
    && (rp = w_strptime_internal (rp, (new_fmt), tm, psecs, poffset)) != NULL)
 
+// FIXME: this has a *lot* "cut-n-paste" from strptime_internal() below
 static wchar_t *
 w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 		     double *psecs, int *poffset)
@@ -287,7 +288,6 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 		for (cnt = 0; cnt < 7; ++cnt)
 		    if (w_match_string (w_ab_weekday_name[cnt], rp)) break;
 	    }
-
 	    if (cnt == 7)
 		/* Does not match a weekday name.  */
 		return NULL;
@@ -520,7 +520,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 		    warning("values for %%z outside +/-1400 are an error");
 		    return NULL;
 		}
-		off = ((val * 3600) / 100);
+		off = (val * 3600) / 100;
 		if (neg) off = -off;
 		*poffset = off;
 	    }
@@ -686,10 +686,10 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
       if (!have_yday) {
 	  // Get yday from week and day-of-the-week.
 	  // This does not validate yday against any upper limit
+	  int del = save_wday - w_offset;
 	  tm->tm_yday = ((7 - (tm->tm_wday - w_offset)) % 7
-			 + (week_no - 1) *7
-			 + save_wday - w_offset);
-	  if(tm->tm_yday < 0) tm->tm_yday += 7;
+			 + (week_no - (int)(del >= 0)) * 7
+			 + del);
       }
 
       if (!have_mday || !have_mon)
@@ -718,6 +718,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 }
 
 
+// FIXME: this has a *lot* "cut-n-paste" from w_strptime_internal() above
 static char *
 strptime_internal (const char *rp, const char *fmt, stm *tm,
 		   double *psecs, int *poffset)
@@ -1174,10 +1175,10 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 	  tm->tm_mon = save_mon;
 
       if (!have_yday) {
+	  int del = save_wday - w_offset;
 	  tm->tm_yday = ((7 - (tm->tm_wday - w_offset)) % 7
-			 + (week_no - 1) *7
-			 + save_wday - w_offset);
-	  if(tm->tm_yday < 0) tm->tm_yday += 7;
+			 + (week_no - (int)(del >= 0)) * 7
+			 + del);
       }
 
       if (!have_mday || !have_mon)
