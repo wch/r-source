@@ -58,6 +58,9 @@ substring(text, first, last = NULL) <- value
   If an input element has declared \code{"bytes"} encoding (see
   \code{\link{Encoding}}), the subsetting is done in units of bytes not
   characters.
+  When \code{start} or \code{stop} results in a zero-length extraction, an empty string
+  \code{""} is returned. Recycling is done to match the length of the longest input
+  vector, ensuring consistent behavior for vectorized operations.
 }
 \value{
   For \code{substr}, a character vector of the same length and with the
@@ -111,5 +114,9 @@ substring(x, 2) <- c("..", "+++")
 substring(X, 2) <- c("..", "+++")
 X
 stopifnot(x == X, identical(aX, attributes(X)), nzchar(comment(X)))
+
+## Demonstrating zero-length extraction behavior
+substr(character(0), 1, 2)        # returns character(0)
+substring(c("abc", ""), 2)       # returns "bc" and ""
 }
 \keyword{character}
