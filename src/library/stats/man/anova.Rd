@@ -1,15 +1,19 @@
 % File src/library/stats/man/anova.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{anova}
-\alias{anova}
-%\alias{print.anova}
-\concept{regression}
 \title{ANOVA Tables}
+\alias{anova}
+\alias{print.anova}
+\concept{regression}
 \usage{
 anova(object, \dots)
+
+\S3method{print}{anova}(x,
+      digits = max(getOption("digits") - 2L, 3L),
+      signif.stars = getOption("show.signif.stars"), \dots)
 }
 \description{
   Compute analysis of variance (or deviance) tables for one or more
@@ -18,7 +22,10 @@ anova(object, \dots)
 \arguments{
   \item{object}{an object containing the results returned by a model
     fitting function (e.g., \code{lm} or \code{glm}).}
-  \item{\dots}{additional objects of the same type.}
+  \item{\dots}{For \code{anova()}, additional objects of the same type; for
+    the \code{print()} method, optional arguments passed to
+    \code{\link{printCoefmat}()}.}
+  \item{digits, signif.stars}{optional; passed to \code{\link{printCoefmat}()}.}
 }
 \value{
   This (generic) function returns an object of class \code{anova}.
@@ -40,7 +47,8 @@ anova(object, \dots)
 \references{
   \bibshow{R:Chambers+Hastie:1992}
 }
-\seealso{
+\seealso{The separate help pages for the \code{"lm"} and \code{"glm"} methods,
+  \code{\link{anova.lm}}, and \code{\link{anova.glm}} respectively.  Further,
   \code{\link{coefficients}}, \code{\link{effects}},
   \code{\link{fitted.values}}, \code{\link{residuals}},
   \code{\link{summary}}, \code{\link{drop1}}, \code{\link{add1}}.
