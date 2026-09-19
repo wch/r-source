@@ -3738,6 +3738,12 @@ stopifnot(exprs = {
 ## as.list.function() is safer now; str.default() gave error in  R <= 4.6.*
 
 
+## besselI()/besselK() with too large order -- now NaN with warning
+assertWarnV(bI <- besselI(1, 1e10))     # Warning ... too large for bessel_[ik]() algorithm
+assertWarnV(bK <- besselK(1, c(2^(60:70), Inf)))
+## segfaulted for order >= 2^31 in R <= 4.6.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -424,6 +424,10 @@
       Additionally, also by \I{Adam Berkeš}, \code{x <- rep(999,0);
 	ksmooth(x, x, x.points = 1)} no longer writes out of bounds, fixing
       \PR{19171}.
+
+      \item \code{besselI(1, 1e11)} and \code{besselK(..)} now signal a
+      warning and return \code{NaN} instead of typically segfaulting,
+      fixing \PR{19175} thanks to \I{Ben Bolker}.
     }
   }
 }

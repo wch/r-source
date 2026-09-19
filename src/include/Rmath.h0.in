@@ -609,6 +609,13 @@ double	bessel_i_ex(double, double, double, double *);
 double	bessel_j_ex(double, double, double *);
 double	bessel_k_ex(double, double, double, double *);
 double	bessel_y_ex(double, double, double *);
+// both for ../main/arithmetic.c _and_ ../nmath/bessel_{i,j,k,y}.c :
+// must be <= INT_MAX - 1 ~= 2.147e9 {allocation of vector of length ~= alpha, for now!}
+// math_2B() -- for J_nu() and Y_nu()
+#define M_bessel_j_max_alpha 1e9
+#define M_bessel_y_max_alpha 1e7
+// math_3B() -- for I_nu() and K_nu()  -- new in R 4.7.0
+#define M_bessel_ik_max_alpha 1e9
 
 
 	/* General Support Functions */

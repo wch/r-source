@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2014 Ross Ihaka and the R Core team.
+ *  Copyright (C) 1998-2026 Ross Ihaka and the R Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,6 +26,10 @@
 #include "nmath.h"
 #include "bessel.h"
 
+// set in Rmath.h: #define M_bessel_ik_max_alpha 1e9  -- new (for R 4.7.0)
+static const double max_alpha_i = M_bessel_ik_max_alpha;
+
+
 #ifndef MATHLIB_STANDALONE
 #include <R_ext/Memory.h>
 #endif
@@ -35,11 +39,9 @@
 static void I_bessel(double *x, double *alpha, int *nb,
 		     int *ize, double *bi, int *ncalc);
 
-/* .Internal(besselI(*)) : */
+// in API - Rmath.h -- but *not* called from R ---> rather  bessel_i_ex()  below
 double bessel_i(double x, double alpha, double expo)
 {
-    int nb, ncalc, ize;
-    double na, *bi;
 #ifndef MATHLIB_STANDALONE
     const void *vmax;
 #endif
@@ -52,8 +54,8 @@ double bessel_i(double x, double alpha, double expo)
 	ML_WARNING(ME_RANGE, "bessel_i");
 	return ML_NAN;
     }
-    ize = (int)expo;
-    na = floor(alpha);
+    int ize = (int)expo;
+    double na = floor(alpha), *bi;
     if (alpha < 0) {
 	/* Using Abramowitz & Stegun  9.6.2 & 9.6.6
 	 * this may not be quite optimal (CPU and accuracy wise) */
@@ -62,7 +64,13 @@ double bessel_i(double x, double alpha, double expo)
 		bessel_k(x, -alpha, expo) *
 		((ize == 1)? 2. : 2.*exp(-2.*x))/M_PI * sinpi(-alpha)));
     }
-    nb = 1 + (int)na;/* nb-1 <= alpha < nb */
+    else if (alpha > max_alpha_i) { // NB: same bound in math_3B() [ ../main/arithmetic.c ]
+	MATHLIB_WARNING2(_("besselI(x, nu): nu=%g > max_alpha_i (= %g): too large for bessel_i() algorithm"),
+			 alpha, max_alpha_i);
+	// FIXME? asymptotic formula (w/ potential accuracy loss) would be better than NaN
+	return ML_NAN;
+    }
+    int ncalc, nb = 1 + (int)na;/* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1);
 #ifdef MATHLIB_STANDALONE
     bi = (double *) calloc(nb, sizeof(double));
@@ -89,13 +97,10 @@ double bessel_i(double x, double alpha, double expo)
     return x;
 }
 
-/* modified version of bessel_i that accepts a work array instead of
-   allocating one. */
+/* modified version of bessel_i() accepting a work array instead of allocating one.
+   called from R via Math3B() in ../main/arithmetic.c */
 double bessel_i_ex(double x, double alpha, double expo, double *bi)
 {
-    int nb, ncalc, ize;
-    double na;
-
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
@@ -104,8 +109,8 @@ double bessel_i_ex(double x, double alpha, double expo, double *bi)
 	ML_WARNING(ME_RANGE, "bessel_i");
 	return ML_NAN;
     }
-    ize = (int)expo;
-    na = floor(alpha);
+    int ize = (int)expo;
+    double na = floor(alpha);
     if (alpha < 0) {
 	/* Using Abramowitz & Stegun  9.6.2 & 9.6.6
 	 * this may not be quite optimal (CPU and accuracy wise) */
@@ -114,7 +119,13 @@ double bessel_i_ex(double x, double alpha, double expo, double *bi)
 		bessel_k_ex(x, -alpha, expo, bi) *
 		((ize == 1)? 2. : 2.*exp(-2.*x))/M_PI * sinpi(-alpha)));
     }
-    nb = 1 + (int)na;/* nb-1 <= alpha < nb */
+    else if (alpha > max_alpha_i) { // NB: same bound in math_3B() [ ../main/arithmetic.c ]
+	MATHLIB_WARNING2(_("besselI(x, nu): nu=%g > max_alpha_i (= %g): too large for bessel_i() algorithm"),
+			 alpha, max_alpha_i);
+	// FIXME? asymptotic formula (w/ potential accuracy loss) would be better than NaN
+	return ML_NAN;
+    }
+    int ncalc, nb = 1 + (int)na;/* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1);
     I_bessel(&x, &alpha, &nb, &ize, bi, &ncalc);
     if(ncalc != nb) {/* error input */
@@ -255,7 +266,7 @@ static void I_bessel(double *x, double *alpha, int *nb,
 		bi[k]= 0.; /* The limit exp(-x) * I_nu(x) --> 0 : */
 	    return;
 	}
-	intx = (int) (*x);/* fine, since *x <= xlrg_BESS_IJ <<< LONG_MAX */
+	intx = (int) (*x);/* fine, as long as  *x <= xlrg_BESS_IJ << INT_MAX */
 	if (*x >= rtnsig_BESS) { /* "non-small" x ( >= 1e-4 ) */
 /* -------------------------------------------------------------------
    Initialize the forward sweep, the P-sequence of Olver
