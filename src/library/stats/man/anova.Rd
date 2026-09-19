@@ -25,6 +25,7 @@ anova(object, \dots)
   \item{\dots}{For \code{anova()}, additional objects of the same type; for
     the \code{print()} method, optional arguments passed to
     \code{\link{printCoefmat}()}.}
+  \item{x}{an \code{"anova"} object, typically resulting from \code{anova(..)}.}
   \item{digits, signif.stars}{optional; passed to \code{\link{printCoefmat}()}.}
 }
 \value{
