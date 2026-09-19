@@ -1,6 +1,6 @@
 % File src/library/base/man/Extract.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2026 R Core Team
 % Copyright 2002-2022 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -56,6 +56,9 @@ x$name <- value
     For \code{[}-indexing only: \code{i}, \code{j}, \code{\dots} can be
     logical vectors, indicating elements/slices to select.  Such vectors
     are recycled if necessary to match the corresponding extent.
+    When recycling \dQuote{fractionally}, i.e., the length of the indexed
+    vector or dimension is not a multiple of the index vector length, a
+    warning is signalled.
     \code{i}, \code{j}, \code{\dots} can also be negative integers,
     indicating elements/slices to leave out of the selection.
 
@@ -283,7 +286,7 @@ x$name <- value
   \code{\link{pmatch}}) to the names or dimnames of the object being
   subsetted (but never for \I{subassignment}).
   Unlike S \bibcitep{|R:Becker+Chambers+Wilks:1988|page 358},
-  \R never uses partial matching when extracting by 
+  \R never uses partial matching when extracting by
   \code{[}, and partial matching is not by default used by \code{[[}
   (see argument \code{exact}).
 
@@ -340,6 +343,7 @@ x <- x[-1]            # delete the 1st element of x
 m[1,]                 # the first row of matrix m
 m[1, , drop = FALSE]  # is a 1-row matrix
 m[,c(TRUE,FALSE,TRUE)]# logical indexing
+m[,c(TRUE,FALSE)     ]# "fractionally" recycling logical index - with a warning
 m[cbind(c(1,2,1),3:1)]# matrix numeric index
 ci <- cbind(c("a", "b", "a"), c("A", "C", "B"))
 m[ci]                 # matrix character index
