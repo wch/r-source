@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2016	The R Foundation
+ *  Copyright (C) 2003-2026  The R Core team
+ *  Copyright (C) 1998-2026  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,7 +40,7 @@ static void BDRksmooth(double *x, double *y, R_xlen_t n,
     /* bandwidth is in units of half inter-quartile range. */
     if(kern == 1) {bw *= 0.5; cutoff = bw;}
     if(kern == 2) {bw *= 0.3706506; cutoff = 4*bw;}
-    while(x[imin] < xp[0] - cutoff && imin < n) imin++;
+    while(imin < n && x[imin] < xp[0] - cutoff) imin++;
     for(R_xlen_t j = 0; j < np; j++) {
 	num = den = 0.0;
 	x0 = xp[j];
@@ -63,6 +64,9 @@ NORET void F77_SUB(bdrsplerr)(void)
     error(_("only 2500 rows are allowed for sm.method=\"spline\""));
 }
 
+// Both s...prt() are called only in one place in ./ppr.f :
+
+// called from splineAA()  from spline()
 void F77_SUB(splineprt)(double* df, double* gcvpen, int* ismethod,
 			      double* lambda, double *edf)
 {
@@ -71,7 +75,7 @@ void F77_SUB(splineprt)(double* df, double* gcvpen, int* ismethod,
     return;
 }
 
-// called only from smooth(..., trace=TRUE)  in ./ppr.f :
+// called from smooth(*, trace=TRUE)
 void F77_SUB(smoothprt)(double* span, int* iper, double* var, double* cvar)
 {
     Rprintf("smooth(span=%4g, iper=%+2d) -> (var, cvar) = (%g, %g)\n",

@@ -420,6 +420,10 @@
 
       \item \code{ksmooth(x,y, x.points=NULL)} now returns an empty (x,y)
       pair instead of crashing \R, fixing \PR{19153}.
+
+      Additionally, also by \I{Adam Berkeš}, \code{x <- rep(999,0);
+	ksmooth(x, x, x.points = 1)} no longer writes out of bounds, fixing
+      \PR{19171}.
     }
   }
 }
