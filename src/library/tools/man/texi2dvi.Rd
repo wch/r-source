@@ -32,7 +32,7 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
     used to compile a TeX file to \abbr{DVI} or PDF. The default (selected
     by \code{""} or \code{"texi2dvi"} or \code{NULL}) is to look
     for a program or script named \command{texi2dvi} on the path and
-    otherwise emulate the script with \code{system2} calls (which
+    otherwise emulate the script with \code{\link{system2}} calls (which
     can be selected by the value \code{"emulation"}).  See also
     \sQuote{Details}.} 
   \item{texinputs}{\code{NULL} or a character vector of paths to prepend to
@@ -114,6 +114,7 @@ texi2pdf(file, clean = FALSE, quiet = TRUE,
   In emulation mode, \code{clean = TRUE} only cleans up if the
   conversion was successful---this gives users a chance to examine log
   files in the event of error.
+  Emulation currently ignores BibTeX errors.
   
   All the approaches should respect the values of environment variables
   \env{LATEX}, \env{PDFLATEX}, \env{MAKEINDEX} and \env{BIBTEX} for the
