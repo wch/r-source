@@ -5503,7 +5503,7 @@ add_dummies <- function(dir, Log)
                         paste(c("From the bibliography engine:", # BibTeX or biber
                                 bibwarnings), collapse = "\n  ")
                 )
-                ltx_err <- any(grepl("LaTeX error", out, ignore.case = TRUE,
+                ltx_err <- any(grepl("(LaTeX|BibTeX) error", out, ignore.case = TRUE,
                                      useBytes = TRUE))
                 iskip <- grep("^Note: skipping .* dependencies:", out,
                               useBytes = TRUE)
