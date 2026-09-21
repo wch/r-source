@@ -28,9 +28,9 @@ chol.default <- function(x, pivot = FALSE, LINPACK = FALSE, tol = -1, ...)
     .Internal(La_chol(as.matrix(x), pivot, tol))
 }
 
-chol2inv <- function(x, size = NCOL(x), LINPACK = FALSE)
+chol2inv <- function(x, size = NCOL(x), LINPACK = FALSE, diag.only = FALSE)
 {
     if (!missing(LINPACK))
         stop("the LINPACK argument has been defunct since R 3.1.0")
-    .Internal(La_chol2inv(x, size))
+    .Internal(La_chol2inv(x, size, diag.only))
 }

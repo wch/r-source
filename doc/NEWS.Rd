@@ -110,6 +110,10 @@
 
       \item \code{gzcon} \code{rawConnection}s now can flush and are
       writable thanks to \I{Ivan Krylov}'s analysis and patch in \PR{19172}.
+
+      \item \code{chol2inv()} gains optional switch \code{diag.only} for
+      shortcutting \code{diag(chol2inv(.))}, wished for with a patch and
+      reproducible analysis in \PR{19177} by \I{Adam Marstrand}.
     }
   }
 

@@ -3744,6 +3744,19 @@ assertWarnV(bK <- besselK(1, c(2^(60:70), Inf)))
 ## segfaulted for order >= 2^31 in R <= 4.6.1
 
 
+## New  chol2inv(.., diag.only = TRUE) -- wish of PR#19177
+cma <- chol(sym <- tcrossprod(cbind(1, 1:4, 1:2, c(1,6:8))))
+8 * (chI <- chol2inv(cma)) # "integer"
+(dchma <- chol2inv(cma, diag.only = TRUE))
+          all.equal(D4 <- diag(4), sym %*% chI -> sych,  tolerance = 0) # 6.68 e-14
+	  all.equal(dch <- c(9, 7, 17, 15)/8, diag(chI), tolerance = 0) # 6.25 e-15
+	  all.equal(dch,                          dchma, tolerance = 0) #    "
+stopifnot(all.equal(D4,   sych,     tolerance = 1e-12),
+          all.equal(dch, diag(chI), tolerance = 1e-13),
+          all.equal(dch, dchma,     tolerance = 1e-13))
+## new in R 4.7.0
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

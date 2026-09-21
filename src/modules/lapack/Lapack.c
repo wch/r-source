@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001--2025  The R Core Team.
+ *  Copyright (C) 2001--2026  The R Core Team.
  *  Copyright (C) 2003--2010  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1141,9 +1141,12 @@ static SEXP La_chol(SEXP A, SEXP pivot, SEXP stol)
     return ans;
 }
 
-static SEXP La_chol2inv(SEXP A, SEXP size)
+static SEXP La_chol2inv(SEXP A, SEXP size, SEXP diag_only)
 {
     int sz = asInteger(size);
+    int only_diag = asLogical(diag_only);
+    if (only_diag == NA_LOGICAL)
+	error(_("invalid '%s' argument"), "diag.only");
     if (sz == NA_INTEGER || sz < 1) {
 	error(_("'size' argument must be a positive integer"));
 	return R_NilValue; /* -Wall */
@@ -1163,24 +1166,39 @@ static SEXP La_chol2inv(SEXP A, SEXP size)
 	if (sz > n) { UNPROTECT(nprot); error(_("'size' cannot exceed ncol(x) = %d"), n); }
 	if (sz > m) { UNPROTECT(nprot); error(_("'size' cannot exceed nrow(x) = %d"), m); }
 	ans = PROTECT(allocMatrix(REALSXP, sz, sz)); nprot++;
-	size_t M = m, SZ = sz;
+	size_t M = m, SZ = sz; // prevent integer overflow in j * M or SZ
 	for (int j = 0; j < sz; j++) {
 	    for (int i = 0; i <= j; i++)
 		REAL(ans)[i + j * SZ] = REAL(Amat)[i + j * M];
 	}
 	int info;
-	F77_CALL(dpotri)("U", &sz, REAL(ans), &sz, &info FCONE);
+	if (only_diag) {
+	    F77_CALL(dtrtri)("U", "N", &sz, REAL(ans), &sz, &info FCONE FCONE);
+	} else {
+	    F77_CALL(dpotri)("U",      &sz, REAL(ans), &sz, &info FCONE);
+	}
 	if (info != 0) {
 	    UNPROTECT(nprot);
 	    if (info > 0)
 		error(_("element (%d, %d) is zero, so the inverse cannot be computed"),
 		      info, info);
 	    error(_("argument %d of Lapack routine %s had invalid value"),
-		  -info, "dpotri");
+		  -info, only_diag ? "dtrtri" : "dpotri");
 	}
-	for (int j = 0; j < sz; j++)
-	    for (int i = j+1; i < sz; i++)
-		REAL(ans)[i + j * SZ] = REAL(ans)[j + i * SZ];
+	if (only_diag) {
+	    SEXP d = PROTECT(allocVector(REALSXP, sz)); nprot++;
+	    BLAS_INT inc = (BLAS_INT) sz;
+	    for (int i = 0; i < sz; i++) {
+		BLAS_INT len = (BLAS_INT) (sz - i);
+		const double *x = REAL(ans) + i + i * SZ;
+		REAL(d)[i] = F77_CALL(ddot)(&len, x, &inc, x, &inc);
+	    }
+	    ans = d;
+	} else {
+	    for (int j = 0; j < sz; j++)
+		for (int i = j+1; i < sz; i++)
+		    REAL(ans)[i + j * SZ] = REAL(ans)[j + i * SZ];
+	}
 	UNPROTECT(nprot);
 	return ans;
     }
@@ -1256,10 +1274,10 @@ static SEXP La_solve(SEXP A, SEXP Bin, SEXP tolin)
 	error(_("Lapack routine %s: system is exactly singular: U[%d,%d] = 0"),
 	      "dgesv", info, info);
     // LAPACK 3.11.0 fails here if A contains NaNs
-    int OK = 1;
+    bool OK = true;
     for (size_t i = 0; i < nl*nl; i++)
-	if (!isfinite(avals[i])) {OK = 0; break;}
-    if(OK == 1 && tol > 0) {
+	if (!isfinite(avals[i])) {OK = false; break;}
+    if(OK && tol > 0) {
 	char one[2] = "1";
 	double rcond;
 	double anorm = F77_CALL(dlange)(one, &n, &n, REAL(A), &n,
@@ -1278,12 +1296,11 @@ static SEXP La_solve(SEXP A, SEXP Bin, SEXP tolin)
 /* Real case of qr.default */
 static SEXP La_qr(SEXP Ain)
 {
-    int m, n;
-
     if (!isMatrix(Ain)) error(_("'%s' must be a numeric matrix"), "a");
     SEXP Adn = getAttrib(Ain, R_DimNamesSymbol);
     int *Adims = INTEGER(coerceVector(getAttrib(Ain, R_DimSymbol), INTSXP));
-    m = Adims[0]; n = Adims[1];
+    int m = Adims[0],
+	n = Adims[1];
     SEXP A;
     if (!isReal(Ain)) {
 	A = PROTECT(coerceVector(Ain, REALSXP));
@@ -1489,7 +1506,7 @@ static SEXP mod_do_lapack(SEXP call, SEXP op, SEXP args, SEXP env)
     case 101: ans = La_qr(CAR(args)); break;
 
     case 200: ans = La_chol(CAR(args), CADR(args), CADDR(args)); break;
-    case 201: ans = La_chol2inv(CAR(args), CADR(args)); break;
+    case 201: ans = La_chol2inv(CAR(args), CADR(args), CADDR(args)); break;
 
     case 300: ans = qr_coef_real(CAR(args), CADR(args)); break;
     case 301: ans = qr_qy_real(CAR(args), CADR(args), CADDR(args)); break;
@@ -1539,7 +1556,7 @@ static SEXP mod_do_lapack(SEXP call, SEXP op, SEXP args, SEXP env)
 # pragma clang diagnostic ignored "-Wpedantic"
 #elif defined __GNUC__
 # pragma GCC diagnostic push
-# pragma GCC diagnostic ignored "-Wpedantic"	
+# pragma GCC diagnostic ignored "-Wpedantic"
 #endif
 	if (dladdr((void *) F77_NAME(ilaver), &dl_info)) {
 	    char buf[PATH_MAX+1];

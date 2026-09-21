@@ -1,6 +1,6 @@
 % File src/library/base/man/chol2inv.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{chol2inv}
@@ -12,7 +12,7 @@
   from the (\eqn{R} part) of the QR decomposition of \eqn{X}.
 }
 \usage{
-chol2inv(x, size = NCOL(x), LINPACK = FALSE)
+chol2inv(x, size = NCOL(x), LINPACK = FALSE, diag.only = FALSE)
 }
 \arguments{
   \item{x}{a matrix.  The first \code{size} columns of the upper triangle
@@ -20,10 +20,11 @@ chol2inv(x, size = NCOL(x), LINPACK = FALSE)
   \item{size}{the number of columns of \code{x} containing the
     Cholesky decomposition.}
   \item{LINPACK}{logical.  Defunct and gives an error.}
-
+  \item{diag.only}{logical; return only the diagonal of the inverse.}
 }
 \value{
-  The inverse of the matrix whose Cholesky decomposition was given.
+  The inverse of the matrix whose Cholesky decomposition was given, or a
+  numeric vector containing its diagonal if \code{diag.only = TRUE}.
 
   Unsuccessful results from the underlying LAPACK code will result in an
   error giving a positive error code: these can only be interpreted by
@@ -42,8 +43,10 @@ chol2inv(x, size = NCOL(x), LINPACK = FALSE)
   \code{\link{chol}}, \code{\link{solve}}.
 }
 \examples{
-cma <- chol(ma  <- cbind(1, 1:3, c(1,3,7)))
-ma \%*\% chol2inv(cma)
+cma <- chol(ma <- cbind(1, 1:3, c(1,3,7)))
+ma \%*\% (chi <- chol2inv(cma)) # = diag(3)
+diag(chi) # you can get directly via
+chol2inv(cma, diag.only = TRUE)
 }
 \keyword{algebra}
 \keyword{array}
