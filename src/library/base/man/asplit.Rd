@@ -1,3 +1,8 @@
+% File src/library/base/man/asplit.Rd
+% Part of the R package, https://www.R-project.org
+% Copyright 2018-2024 R Core Team
+% Distributed under GPL 2 or later
+
 \name{asplit}
 \alias{asplit}
 \title{Split Array/Matrix By Its Margins}
@@ -6,7 +11,7 @@
 asplit(x, MARGIN, drop = FALSE)
 }
 \arguments{
-  \item{x}{an array, including a matrix.}
+  \item{x}{an \code{\link{array}}, including a \code{\link{matrix}}.}
   \item{MARGIN}{a vector giving the margins to split by.
     E.g., for a matrix \code{1} indicates rows, \code{2} indicates
     columns, \code{c(1, 2)} indicates rows and columns.

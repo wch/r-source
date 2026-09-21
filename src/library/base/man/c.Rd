@@ -66,6 +66,8 @@ c(\dots)
 \seealso{
   \code{\link{unlist}} and \code{\link{as.vector}} to produce
   attribute-free vectors.
+
+  \code{\link{append}} to add values to a vector.
 }
 \examples{
 c(1, 7:9)

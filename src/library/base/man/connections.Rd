@@ -248,6 +248,7 @@ socketTimeout(socket, timeout = -1)
 
   \code{socketTimeout} sets connection timeout of a socket connection.  A
   negative \code{timeout} can be given to query the old value.
+  See \code{\link{socketSelect}} to wait for sockets to become available.
 
   There is a \code{summary()} and built on it a \code{print()} method for
   connections.  The former returns a named \code{\link{list}} of strings

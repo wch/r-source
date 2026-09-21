@@ -84,6 +84,8 @@ unsplit(value, f, drop = FALSE)
   \code{\link{cut}} to categorize numeric values.
 
   \code{\link{strsplit}} to split strings.
+
+  \code{\link{asplit}} to split matrices and arrays by margins.
 }
 \references{
   \bibshow{R:Becker+Chambers+Wilks:1988}

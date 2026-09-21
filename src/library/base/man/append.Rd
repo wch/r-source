@@ -18,7 +18,8 @@ append(x, values, after = length(x))
   \item{after}{a subscript, after which the values are to be appended.}
 }
 \value{
-  A vector containing the values in \code{x} with the elements of
+  A \code{\link{c}}ombined vector,
+  containing the values in \code{x} with the elements of
   \code{values} appended after the specified element of \code{x}.
 }
 \references{

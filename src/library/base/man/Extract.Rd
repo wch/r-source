@@ -332,6 +332,9 @@ x$name <- value
   Section \manual{R-lang}{Indexing}.
 
   \code{\link{NULL}} for details of indexing null objects.
+
+  \code{\link{replace}} for a functional interface to \code{[<-},
+  returning the modified object instead of assigning it.
 }
 
 \examples{
@@ -339,6 +342,7 @@ x <- 1:12
 m <- matrix(1:6, nrow = 2, dimnames = list(c("a", "b"), LETTERS[1:3]))
 li <- list(pi = pi, e = exp(1))
 x[10]                 # the tenth element of x
+x[1] <- NA            # replace the first element of x
 x <- x[-1]            # delete the 1st element of x
 m[1,]                 # the first row of matrix m
 m[1, , drop = FALSE]  # is a 1-row matrix

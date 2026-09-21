@@ -18,7 +18,7 @@ determinant(x, logarithm = TRUE, \dots)
   optionally on the logarithm scale, and the sign of the determinant.
   }
 \arguments{
-  \item{x}{numeric matrix: logical matrices are coerced to numeric.}
+  \item{x}{a numeric \code{\link{matrix}}: logical matrices are coerced to numeric.}
   \item{logarithm}{logical; if \code{TRUE} (default) return the
     logarithm of the modulus of the determinant.}
   \item{\dots}{optional arguments, currently unused.}

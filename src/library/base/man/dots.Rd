@@ -53,6 +53,8 @@
 
   \manual{R-intro}{The ... argument},
   and \code{?\link[methods]{dotsMethods}} for its use in formal (S4) methods.
+
+  \code{\link{chkDots}} to warn about unused \code{\dots}.
 }
 \examples{
 tst <- function(n, ...) ...elt(n)
