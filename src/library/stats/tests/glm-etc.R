@@ -1,6 +1,6 @@
 #### lm, glm, aov, etc --- typically *strict* tests (no *.Rout.save)
 
-options(warn = 2, width = 101) # all warnings must be asserted below
+options(warn = 2, width = 101, warnPartialMatchArgs = TRUE) # all warnings must be asserted below
 all.equal.0 <- function(x,y, ...) all.equal(x,y, tolerance = 0, ...)
 all.equal15 <- function(x,y, ...) all.equal(x,y, tolerance = 1e-15, ...)
 assertWarnV <- function(...) tools::assertWarning(..., verbose=TRUE)
@@ -353,19 +353,25 @@ stopifnot(identical(iDiff, 2:3))
 
 ## *sub models drop the "almost 0 weight" observations entirely:  subset = -(1:3)
             fsub  <-  lm(y~x, weights = wts, data = df, subset = -(1:3))
+            fsub1 <-  lm(y~x, weights = wts, data = df, subset = -1)
 ## small weights with glm()    ---------- FIXME unfinished (??) in ../R/glm.R <<<< logLik(glm(*, wtol=*))
             gfit  <- glm(y~x, weights = wts, data = df)
 assertWarnV(gfw30 <- glm(y~x, weights = wts, data = df, wtol = 1e-30)) # currently warning on treating small wt as 0
             gfsub <- glm(y~x, weights = wts, data = df, subset = -(1:3))
+            gfsub1<- glm(y~x, weights = wts, data = df, subset = -1)
 
 assertWarnV(sgfit  <- summary(gfit)) # with a summary.glm() warning about zero weight
 assertWarnV(sgfw30 <- summary(gfw30))
+sfit <- summary(fit)
 stopifnot(exprs = {
+    all.equal.0(coef(fit),          coef(fsub1))
+    all.equal.0(coef(gfit),         coef(gfsub1))
     all.equal15(coef(fit),          coef(gfit))
-    all.equal15(coef(summary(fit)), coef(sgfit))
+    all.equal15(coef(sfit), coef(sgfit))
+    all.equal.0(coef(sfit), coef(summary(fsub1)))
     ## dropping the 3 small-weight obs does change 'df' -> std.err, etc:
     all.equal(coef(fsub),          coef(fit), tolerance = 1e-14) # seen 1.135e-15
-    all.equal(coef(summary(fsub)), coef(summary(fit)), tolerance = 0.10)# seen 0.053
+    all.equal(coef(summary(fsub)), coef(sfit), tolerance = 0.10)# seen 0.053
 })
 
 ###--- update(<lm.fit>) in  *a*typical cases
@@ -485,6 +491,7 @@ stopifnot({
 prop <- function(FN) { stopifnot(is.function(FN))
     rbind(
         fit = c(lm = FN(fit),    glm = FN(gfit))
+      , sub1= c(lm = FN(fsub1) , glm = FN(gfsub1))
       , w30 = c(lm = FN(fitw30), glm = FN(gfw30))
       , sub = c(lm = FN(fsub)  , glm = FN(gfsub))
     )
@@ -492,8 +499,13 @@ prop <- function(FN) { stopifnot(is.function(FN))
 ## For  logLik, AIC(.), sigma(.)  too:   glm <==> subsetting
 (llik  <- prop(logLik))
 (aics  <- prop(AIC))
+(xAICs  <- prop(\(.) extractAIC(.)[2])) # quite different for the lm()s [as docu.]
 (sigmas<- prop(sigma)) |> print() |> assertWarnV()
-(nObs  <- prop(nobs)) # here, lm & glm  both "keep" nobs=20 {for wtol > 0}
+(nObs  <- prop(nobs)) # here, lm & glm  both "keep" nobs=20 {for 'w30': wtol > 0}
+
+stopifnot(nObs["fit",] == 20L,
+          all.equal15(aics [,"glm"],
+                      xAICs[,"glm"]))
 
 
 ## lm() and glm() with only __data__ (i.e., no formula) args:
@@ -510,6 +522,23 @@ stopifnot(exprs = {
     identical(colnames(resm2), c("lm", "glm"))
     abs(resRelD) < 1e-12 # Lnx x86_c64 {default qr() tol} has max(.) = 7.26e-14
 })
+
+## R-devel (4.7.0) Sep.2026 introducing extra arguments  {tol, wtol}
+## ------->  Does a previously correct 'control' still work?  [Yes! see below]
+glmCn <- list(epsilon = 1e-08, maxit = 25, trace = FALSE, tol = 1e-8/1000, wtol = 0)
+glmCo <- list(epsilon = 1e-08, maxit = 25, trace = FALSE)
+stopifnot(identical(if(getRversion() >= "4.7") glmCn else glmCo,
+                    glm.control()))
+go <- glm(rock, control=glmCo)
+gn <- glm(rock)
+stopifnot(all.equal15(noC(go), noC(gn))) # still ok in R-devel
+## "harder:"
+gcL <- list(eps = 1e-15)
+(go1 <- glm(rock, control = gcL)) |> tools::assertWarning(verbose=TRUE) # about 'eps'
+          all.equal15(go1, gn) # not just call, also 'qr$tol' and 'control' differ
+stopifnot(all.equal15(summary(coef(go1)), summary(coef((gn))))) # still ok in R-devel
+
+
 
 ## NB:  Also consider demos(\"glm.vr\") -->>>>> ../demo/glm.vr.R  <<<<<<<<<
 
