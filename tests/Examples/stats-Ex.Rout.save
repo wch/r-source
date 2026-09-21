@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-09-19 r90569) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-09-20 r90574) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -7196,13 +7196,27 @@ attr(,"class")
 > 
 > ### ** Examples
 > 
-> ## following example(glm)
-> ## Don't show: 
-> example(glm, echo = FALSE)
-> ## End(Don't show)
+> ## Dobson (1990) Page 93: Randomized Controlled Trial :
+> D93 <- data.frame(counts   = c(18,17,15, 20,10,20, 25,13,12),
++                   outcome  = gl(3,1,9),
++                   treatment= gl(3,3))
+> glm.D93 <- glm(counts ~ outcome + treatment, data = D93, family = poisson())
 > (eA <- extractAIC(glm.D93)) # 5  56.76132 -- which is the same as AIC() here:
 [1]  5.00000 56.76132
 > stopifnot(all.equal(eA[2], AIC(glm.D93), tolerance = 1e-15))
+> ## OTOH, for lm():
+> lm1 <- lm(Fertility ~ . , data = swiss)
+> lm2 <- update(lm1, . ~ . -Examination)
+> Am <- rbind(
++     A1 = c(xtrAIC = extractAIC(lm1)[2], AIC = AIC(lm1)),
++     A2 = c(xtrAIC = extractAIC(lm2)[2], AIC = AIC(lm2)))
+> Am
+     xtrAIC      AIC
+A1 190.6913 326.0716
+A2 189.8606 325.2408
+> diff(Am)# A2 - A1 -- the same 
+       xtrAIC        AIC
+A2 -0.8307244 -0.8307244
 > 
 > 
 > 
