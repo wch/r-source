@@ -1,6 +1,6 @@
 % File src/library/base/man/split.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{split}
@@ -91,7 +91,10 @@ unsplit(value, f, drop = FALSE)
   \bibshow{R:Becker+Chambers+Wilks:1988}
 }
 \examples{
-require(stats); require(graphics)
+split(1:10, 1:2)
+
+\dontshow{require(stats); require(graphics)}
+### Split a vector by a factor for groupwise statistics
 n <- 10; nn <- 100
 g <- factor(round(n * runif(n * nn)))
 x <- rnorm(n * nn) + sqrt(as.numeric(g))
@@ -130,9 +133,12 @@ with(aq2, tapply(Oz.Z,  Month, sd, na.rm = TRUE))
 
 
 ### Split a matrix into a list by columns
+
 ma <- cbind(x = 1:10, y = (-4:5)^2)
 split(ma, col(ma))
+asplit(ma, 2)       # more efficient, keeping names
 
-split(1:10, 1:2)
+## partition the rows of a matrix
+split.data.frame(ma, rep(1:2, 5))
 }
 \keyword{category}
