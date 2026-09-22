@@ -3757,6 +3757,17 @@ stopifnot(all.equal(D4,   sych,     tolerance = 1e-12),
 ## new in R 4.7.0
 
 
+## anova.glm(), anova.glmlist(): 'test' argument documented as partially matched
+counts <- c(18,17,15,20,10,20,25,13,12); outcome <- gl(3,1,9); treatment <- gl(3,3)
+fitP <- glm(counts ~ outcome + treatment, family = poisson())
+fit0 <- update(fitP, . ~ outcome)
+                 (A1 <- anova(      fitP, test = "Rao"))
+                  A2 <- anova(fit0, fitP, test = "Rao")
+stopifnot(identical(A1, anova(fitP,       test = "Ra")),
+          identical(A2, anova(fit0, fitP, test = "Ra")))
+## "Ra" gave error  "undefined columns selected"  in  R <= 4.6.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

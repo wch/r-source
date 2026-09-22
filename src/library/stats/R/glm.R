@@ -469,10 +469,12 @@ anova.glm <- function(object, ..., dispersion = NULL, test = NULL)
 	return(anova.glmlist(c(list(object), dotargs),
 			     dispersion = dispersion, test = test))
 
+    if(is.character(test))
+        test <- match.arg(test, c("Rao", "LRT", "Chisq", "F", "Cp"))
+
     ## score tests require a bit of extra computing
     doscore <- !is.null(test) && isTRUE(test=="Rao")
     ## extract variables from model
-
     varlist <- attr(object$terms, "variables")
     ## must avoid partial matching here.
     x <-
@@ -483,7 +485,7 @@ anova.glm <- function(object, ..., dispersion = NULL, test = NULL)
     nvars <- max(0, varseq)
     resdev <- resdf <- NULL
 
-    if (doscore){
+    if (doscore) {
       score <- numeric(nvars)
       # fit a null model
       method <- object$method
@@ -612,7 +614,8 @@ anova.glm <- function(object, ..., dispersion = NULL, test = NULL)
 
 anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
 {
-
+    if(is.character(test))
+        test <- match.arg(test, c("Rao", "LRT", "Chisq", "F", "Cp"))
     doscore <- !is.null(test) && isTRUE(test=="Rao")
 
     ## find responses for all models and remove
@@ -643,7 +646,7 @@ anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
     resdf  <- as.numeric(lapply(object, function(x) x$df.residual))
     resdev <- as.numeric(lapply(object, function(x) x$deviance))
 
-    if (doscore){
+    if (doscore) {
       score <- numeric(nmodels)
       score[1] <- NA
       df <- -diff(resdf)

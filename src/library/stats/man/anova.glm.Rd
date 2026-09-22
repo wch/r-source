@@ -1,6 +1,6 @@
 % File src/library/stats/man/anova.glm.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2013 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{anova.glm}
@@ -20,10 +20,10 @@
   \item{dispersion}{the dispersion parameter for the fitting family.
     By default it is obtained from the object(s).}
   \item{test}{a character string, (partially) matching one of \code{"Chisq"},
-  \code{"LRT"}, \code{"Rao"},
+    \code{"LRT"}, \code{"Rao"},
     \code{"F"} or \code{"Cp"}. See \code{\link{stat.anova}}.
-    Or logical \code{FALSE}, which suppresses any test.
-}
+    Or the default \code{NULL}, see below, or \code{FALSE}, which
+    suppresses any test.}
 }
 \details{
   Specifying a single object gives a sequential analysis of deviance
@@ -45,7 +45,8 @@
   dispersion estimated by moments (e.g., \code{gaussian},
   \code{quasibinomial} and \code{quasipoisson} fits) the F test is
   most appropriate.  If \code{anova.glm} can determine which of these
-  cases applies then by default it will use one of the above tests.
+  cases applies then by default (\code{test = NULL}), it will use one of
+  the above tests.
   If the \code{dispersion} argument is supplied, the dispersion is
   considered known and the chi-squared test will be used.
   Argument \code{test=FALSE} suppresses the test statistics and P values.

@@ -344,6 +344,11 @@
       \env{\%HOME\%} nor \env{\%USER\%} environment variables are set,
       fixing \PR{18949} thanks to the report and patch from \I{Ivan Krylov}
       and \I{Mauricio Vargas}'s \I{R Dev Day} work.
+
+      \item The \code{anova(.., test = tt)} methods for \code{"glm"} and
+      \code{"glmlist"} now do partially match a string \code{tt}, as
+      documented, thanks to \I{Amal Tawfik}'s report and patch in
+      \PR{19179}.
     }
   }
 }
