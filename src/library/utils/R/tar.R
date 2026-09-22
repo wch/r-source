@@ -73,25 +73,25 @@ untar <- function(tarfile, files = NULL, list = FALSE, exdir = ".",
                 TAR <- paste(ZIP, "-dc", shQuote(tarfile), "|", TAR)
                 tarfile <- "-"
                 cflag <- ""
-            } else stop(sprintf("No %s command found", sQuote("gzip")))
+            } else stop(gettextf("No %s command found", sQuote("gzip")), domain = NA)
         if (cflag == "j")
             if (nzchar(ZIP <- Sys.getenv("R_BZIPCMD"))) {
                 TAR <- paste(ZIP,  "-dc", shQuote(tarfile), "|", TAR)
                 tarfile <- "-"
                 cflag <- ""
-            } else stop(sprintf("No %s command found", sQuote("bzip2")))
+            } else stop(gettextf("No %s command found", sQuote("bzip2")), domain = NA)
         if (cflag == "J")
             if (nzchar(Sys.which("xz"))) {
                 TAR <- paste("xz -dc", shQuote(tarfile), "|", TAR)
                 tarfile <- "-"
                 cflag <- ""
-            } else stop(sprintf("No %s command found", sQuote("xz")))
+            } else stop(gettextf("No %s command found", sQuote("xz")), domain = NA)
         if (cflag == "-zstd")
             if (nzchar(Sys.which("zstd"))) {
                 TAR <- paste("zstd -dc", shQuote(tarfile), "|", TAR)
                 tarfile <- "-"
                 cflag <- ""
-            } else stop(sprintf("No %s command found", sQuote("zstd")))
+            } else stop(gettextf("No %s command found", sQuote("zstd")), domain = NA)
     }
 
     if (list) {
