@@ -5037,7 +5037,7 @@ function(pkgDir)
                     paste(c(utils::head(.eval_with_capture(traceback(tb))$output, 5),
                             "  ..."),
                           collapse = "\n"),
-                    "\n")
+                    "\n", domain = NA)
         }), error = identity, finally = {
             sink(type = "message")
             sink(type = "output")

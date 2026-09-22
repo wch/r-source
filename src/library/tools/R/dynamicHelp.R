@@ -124,7 +124,7 @@ httpd <- function(path, query, ...)
                         else { # query is a named chr vector 
                             paste(paste(names(query), query, sep = "="),
                                   collapse = ",")
-                        }))
+                        }), domain = NA)
     }
     linksToTopics <-
         config_val_to_logical(Sys.getenv("_R_HELP_LINKS_TO_TOPICS_", "TRUE"))

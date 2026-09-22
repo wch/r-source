@@ -634,7 +634,7 @@ nls <-
             if(!setequal(nx, ns)) {
                 ## we may want to make this an error condition eventually
                 warning(gettextf("different names for %s and %s: names ignored",
-                                 sQuote("start"), sQuote(w)))
+                                 sQuote("start"), sQuote(w)), domain = NA)
                     return(x)
             }
             else
@@ -645,13 +645,13 @@ nls <-
                 w <- deparse(substitute(x))
                 stop(gettextf("mismatched names for %s and %s",
                             sQuote("start"),
-                            sQuote(w)))
+                            sQuote(w)), domain = NA)
             }
 
             if (any(duplicated(nx))){
                 w <- deparse(substitute(x))
                 stop(gettextf("duplicated names in %s",
-                     sQuote(w)))
+                     sQuote(w)), domain = NA)
             }
 
             ## (or xx <- start; xx[] <- default, but likely too cryptic)

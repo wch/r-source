@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.7.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-09-02 17:58\n"
+"POT-Creation-Date: 2026-09-22 11:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -313,12 +313,6 @@ msgid "Non-topic package-anchored link(s) in Rd file '%s':"
 msgstr ""
 
 msgid "See section 'Cross-references' in the 'Writing R Extensions' manual."
-msgstr ""
-
-msgid "Call sequence:"
-msgstr ""
-
-msgid "..."
 msgstr ""
 
 msgid "No dataset created in 'envir'"
@@ -738,18 +732,6 @@ msgstr ""
 msgid "The default JSS style may not be modified."
 msgstr ""
 
-msgid "inst/doc"
-msgstr ""
-
-msgid ","
-msgstr ""
-
-msgid "ignored as vignettes have been rebuilt."
-msgstr ""
-
-msgid "Run R CMD build with --no-build-vignettes to prevent rebuilding."
-msgstr ""
-
 msgid "invalid value for '--compact-vignettes', assuming %s"
 msgstr ""
 
@@ -811,12 +793,6 @@ msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org
 msgstr ""
 
 msgid "<p>To view output in the browser, the <a href='https://CRAN.R-project.org/package=knitr'>knitr</a> package must be installed and the environment variable <code>_R_HELP_ENABLE_ENHANCED_HTML_</code> must be set to TRUE.</p>"
-msgstr ""
-
-msgid "HTTPD-REQUEST %s%s"
-msgstr ""
-
-msgid "="
 msgstr ""
 
 msgid "No files in this directory"
@@ -1296,6 +1272,9 @@ msgstr ""
 msgid "cannot source package code:"
 msgstr ""
 
+msgid "Call sequence:"
+msgstr ""
+
 msgid "error in inferior call:\n  %s"
 msgstr ""
 
@@ -1428,11 +1407,6 @@ msgstr[1]    ""
 
 msgid        "unable to re-encode %s line %s"
 msgid_plural "unable to re-encode %s lines %s"
-msgstr[0]    ""
-msgstr[1]    ""
-
-msgid        "%s file\n"
-msgid_plural "%s files\n"
 msgstr[0]    ""
 msgstr[1]    ""
 

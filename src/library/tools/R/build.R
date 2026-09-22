@@ -375,13 +375,13 @@ build_exclude <- function(allfiles, pkgdir, pkgname) {
                     copied <- file.copy(tocopy, doc_dir, copy.date = TRUE)
                     if (!all(copied)) {
                     	warning(sprintf(ngettext(sum(!copied),
-                                                 "%s file\n", "%s files\n"),
+                                                 "%s file\n", "%s files\n", domain = NA),
                                         sQuote("inst/doc")),
                     	        strwrap(paste(sQuote(basename(tocopy[!copied])), collapse=", "),
                     	                indent = 4, exdent = 2),
 			        "\n  ignored as vignettes have been rebuilt.",
 			        "\n  Run R CMD build with --no-build-vignettes to prevent rebuilding.",
-			     call. = FALSE)
+			     call. = FALSE, domain = NA)
 			file.copy(tocopy[!copied], doc_dir, overwrite = TRUE, copy.date = TRUE)
 		    }
                     unlink(c(vigns$outputs, unlist(vigns$sources)))
