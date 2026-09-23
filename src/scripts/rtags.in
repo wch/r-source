@@ -7,7 +7,7 @@ revision='$Rev$'
 version=`set - ${revision}; echo ${2}`
 version="rtags/etags front-end: ${R_VERSION} (r${version})
 
-Copyright (C) 2008-2020 The R Core Team.
+Copyright (C) 2008-2026 The R Core Team.
 This is free software; see the GNU General Public License version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -19,7 +19,7 @@ Options:
   -h, --help		print short help message and exit
   -v, --version		print version info and exit
   -o, --output=FILE	write output to FILE (see below for defaults)
-      --no-c		do not tag C (.c, .h) files
+      --no-c		do not tag C (.c, .h) and C++ files
       --no-R		do not tag R (.R, .r, .S, .s) files
       --no-Rd		do not tag Rd (.Rd) files
       --ctags           write Ctags format (default is Etags)
@@ -163,18 +163,13 @@ if ${rdfiles}; then
 fi
 
 if ${cfiles}; then
-    if ${verbose}; then 
-	find -L ${SRCDIR} -type f -name "*.[ch]" -print
-	find -L ${SRCDIR} -type f -name "*.cpp" -print
-	find -L ${SRCDIR} -type f -name "*.hpp" -print
-	find -L ${SRCDIR} -type f -name "*.cc" -print
-	find -L ${SRCDIR} -type f -name "*.hh" -print
-    fi
-    find -L ${SRCDIR} -type f -name "*.[ch]" -print0 | xargs -0 ${tagprog} -o ${ofile} -a -l c
-    find -L ${SRCDIR} -type f -name "*.cpp" -print0 | xargs -0 ${tagprog} -o ${ofile} -a -l c
-    find -L ${SRCDIR} -type f -name "*.hpp" -print0 | xargs -0 ${tagprog} -o ${ofile} -a -l c
-    find -L ${SRCDIR} -type f -name "*.cc" -print0 | xargs -0 ${tagprog} -o ${ofile} -a -l c
-    find -L ${SRCDIR} -type f -name "*.hh" -print0 | xargs -0 ${tagprog} -o ${ofile} -a -l c
+  ops="-exec ${tagprog} -o ${ofile} -a {} +"
+  if ${verbose}; then ops="-print ${ops}"; fi
+  find -L ${SRCDIR} -type f -name "*.[ch]" ${ops}
+  find -L ${SRCDIR} -type f -name "*.cpp"  ${ops}
+  find -L ${SRCDIR} -type f -name "*.hpp"  ${ops}
+  find -L ${SRCDIR} -type f -name "*.cc"   ${ops}
+  find -L ${SRCDIR} -type f -name "*.hh"   ${ops}
 fi
 
 
