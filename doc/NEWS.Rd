@@ -441,6 +441,9 @@
       \item \code{text.default(.., col = numeric(0))} and similar no longer
       segfault in "instrumented" versions of R, fixing \PR{19178} thanks to
       \I{Jiang Yuancheng}'s \command{fusion-fuzz} and \I{Ivan Krylov}.
+
+      \item \command{R CMD rtags} (on Unix-alikes) no longer fails from
+      a bad escape if \command{sh} is \command{bash} or \command{busybox}.
     }
   }
 }

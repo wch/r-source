@@ -141,13 +141,12 @@ if ${verbose}; then VERBOSE=TRUE; else VERBOSE=FALSE; fi
 if ${append}; then APPEND=TRUE; else APPEND=FALSE; fi
 
 if ${rfiles}; then
-    SCRIPT_DIR=$(dirname $0)
     echo "
 
 require(utils)
 
-rtags(normalizePath('${SRCDIR}'), pattern = '[.]*\\\\\.[RrSs]$', 
-      keep.re = '/R/[^/]*\\\\\.[RrSs]', 
+rtags(normalizePath('${SRCDIR}'), pattern = '[.][RrSs]$', 
+      keep.re = '/R/[^/]*[.][RrSs]', 
       verbose = ${VERBOSE}, 
       type = '${tagprog}',
       ofile = '${ofile}', 
