@@ -44,9 +44,29 @@ chol2inv(x, size = NCOL(x), LINPACK = FALSE, diag.only = FALSE)
 }
 \examples{
 cma <- chol(ma <- cbind(1, 1:3, c(1,3,7)))
-ma \%*\% (chi <- chol2inv(cma)) # = diag(3)
+ma \%*\% (chi <- chol2inv(cma)) #% = diag(3)
 diag(chi) # you can get directly via
 chol2inv(cma, diag.only = TRUE)
+
+## 4x4 example:
+tr <- rbind(c(1, 0,0,0),
+            c(3,-1,0,0),
+            c(0,1,-1,0), 4:1)
+tr
+(ma <- 5*diag(4)+ tr+ t(tr)) # symmetric (by construction)
+cma <- chol(ma)
+chima <- chol2inv(cma)
+chima * 90
+stopifnot(all.equal(diag(4), chima \%*\% ma, %
+                    tolerance = 1e-14)) # seen 2.4e-15
+## using size <= ncol(.):
+str(Lchi <- lapply(1:4, \(k) chol2inv(cma, size = k)))
+stopifnot(identical(Lchi[[4]], chima))
+## equivalence (size = k):
+for(k in 1:4) stopifnot(all.equal(Lchi[[k]], chol2inv(cma[1:k,1:k])))
+## diag.only:
+for(k in 1:4)
+    stopifnot(all.equal(chol2inv(cma, size = k, diag.only=TRUE), diag(Lchi[[k]])))
 }
 \keyword{algebra}
 \keyword{array}
