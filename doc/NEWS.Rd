@@ -352,7 +352,13 @@
 
       \item Added protection against out-of-range values for graphical
       parameters \code{lty}, \code{lend}, and \code{ljoin} in
-      \pkg{graphics} function calls (\PR{19170}). Thanks to \I{Adam Berkeš}.
+      \pkg{graphics} function calls (\PR{19170}). Thanks to \I{Adam
+        Berkeš}.
+
+      \item \code{cairo_pdf()} no longer silently ignores \code{grid.newpage()}
+      calls after drawing a \code{glyphGrob} containing two or more glyphs
+      inside a masked \code{viewport}. Thanks to \I{Trevor Davis}' patch
+      proposal in \PR{19075}.
     }
   }
 }
