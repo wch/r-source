@@ -3768,6 +3768,22 @@ stopifnot(identical(A1, anova(fitP,       test = "Ra")),
 ## "Ra" gave error  "undefined columns selected"  in  R <= 4.6.1
 
 
+## out-of-range graphical line parameters
+local({
+    pdf(NULL)
+    on.exit(dev.off())
+    plot.new()
+    plot.window(0:1, 0:1)
+
+    max.int <- as.double(.Machine$integer.max)
+    lines(0:1, 0:1, lty = max.int)
+
+    assertErrV(lines(0:1, 0:1, lty = max.int + 1))
+    assertErrV(lines(0:1, 0:1, lend = max.int + 1))
+    assertErrV(lines(0:1, 0:1, ljoin = max.int + 1))
+})
+## produced undefined behvaior
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

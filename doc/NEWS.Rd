@@ -349,6 +349,10 @@
       \code{"glmlist"} now do partially match a string \code{tt}, as
       documented, thanks to \I{Amal Tawfik}'s report and patch in
       \PR{19179}.
+
+      \item Added protection against out-of-range values for graphical
+      parameters \code{lty}, \code{lend}, and \code{ljoin} in
+      \pkg{graphics} function calls (\PR{19170}). Thanks to \I{Adam Berkeš}.
     }
   }
 }
