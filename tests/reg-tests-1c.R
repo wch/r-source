@@ -732,6 +732,7 @@ stopifnot(identical(x, y))
 
 
 ## besselJ()/besselY() with too large order -- now NaN with warning
+if(.Machine$sizeof.pointer >= 8) # 32-bit cannot allocate 7.5 Gb (PR#19175#c3)
 besselJ(1, 2^64)     # Warning ... too large for bessel_[jy]() algorithm
 besselY(1, c(2^(60:70), Inf))
 ## seg.faulted in R <= 3.1.2
