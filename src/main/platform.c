@@ -2449,9 +2449,9 @@ attribute_hidden SEXP do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #ifdef Unix
-static Rboolean var_R_can_use_X11 = -1;
+static int var_R_can_use_X11 = -1; /* -1 = not yet determined */
 
-extern Rboolean R_access_X11(void); /* from src/unix/X11.c */
+extern bool R_access_X11(void); /* from ../unix/X11.c */
 
 static bool R_can_use_X11(void)
 {
