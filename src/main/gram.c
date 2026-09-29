@@ -3588,7 +3588,12 @@ static SEXP xxpipe(SEXP lhs, SEXP rhs, YYLTYPE *lloc_rhs)
 	    SEXP alist = list1(R_MissingArg);
 	    SET_TAG(alist, var);
 	    SEXP fun = lang4(R_FunctionSymbol, alist, expr, R_NilValue);
-	    return lang2(fun, lhs);
+	    /* the result stays on the parser stack until the next
+	       reduction, so it must be preserved like any other value */
+	    PRESERVE_SV(ans = lang2(fun, lhs));
+	    RELEASE_SV(lhs);
+	    RELEASE_SV(rhs);
+	    return ans;
 	}
 
 	/* check for placeholder in the RHS function */

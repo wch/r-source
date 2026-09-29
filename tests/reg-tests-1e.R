@@ -3787,6 +3787,21 @@ local({
 ## produced undefined behvaior
 
 
+## parsing '<lhs> |> <var> => <expr>' left the reduced call unprotected on the
+## parser stack, so a GC before the enclosing reduction could free it
+## (found by fuzzing; '=>' is still opt-in, and stays enabled once seen)
+Sys.setenv("_R_USE_PIPEBIND_" = "true")
+gctorture(TRUE)
+e <- parse(text = "x |> b => f(b) + { y <- 1; y <- 1; y <- 1; y <- 1; y <- 1 }",
+           keep.source = FALSE)
+gctorture(FALSE)
+Sys.unsetenv("_R_USE_PIPEBIND_")
+ex <- quote((function(b) f(b))(x)); ex[[1]] <- ex[[1]][[2]] # no `(` call
+stopifnot(identical(e[[1]][[2]], ex))
+## gave garbage (or a crash) for the LHS of '+' in R <= 4.6.x
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
