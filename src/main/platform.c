@@ -2694,7 +2694,10 @@ attribute_hidden SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     if (recursive == NA_LOGICAL) recursive = 0;
     mode = asInteger(CADDDR(args));
     if (mode == NA_LOGICAL) mode = 0777;
-    strcpy(dir, R_ExpandFileName(translateCharFP(STRING_ELT(path, 0))));
+    const char *q = R_ExpandFileName(translateCharFP(STRING_ELT(path, 0)));
+    if (strlen(q) > R_PATH_MAX - 1) // allow for terminator
+	error(_("invalid '%s' argument"), "path");
+    strcpy(dir, q);
     if (strlen(dir) == 0) error(_("zero-length 'path' argument"));
     /* remove trailing slashes */
     p = dir + strlen(dir) - 1;
