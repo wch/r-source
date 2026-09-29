@@ -483,7 +483,7 @@ attribute_hidden SEXP Rf_registerRoutines(SEXP sSymbolList) {
     R_CMethodDef *cRoutines = n_c ? (R_CMethodDef*) R_alloc(n_c + 1, sizeof(R_CMethodDef)) : NULL;
     R_CallMethodDef *callRoutines = n_call ? (R_CallMethodDef*) R_alloc(n_call + 1, sizeof(R_CallMethodDef)) : NULL;
     R_FortranMethodDef *fortranRoutines = n_f ? (R_FortranMethodDef*) R_alloc(n_f + 1, sizeof(R_FortranMethodDef)) : NULL;
-    R_ExternalMethodDef *externalRoutines = n_ext ? (R_ExternalMethodDef*) R_alloc(n_c + 1, sizeof(R_ExternalMethodDef)) : NULL;
+    R_ExternalMethodDef *externalRoutines = n_ext ? (R_ExternalMethodDef*) R_alloc(n_ext + 1, sizeof(R_ExternalMethodDef)) : NULL;
     /* populate them from the symbols */
     i = n_c = n_call = n_f = n_ext = 0;
     while (i < n) {
