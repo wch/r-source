@@ -456,6 +456,14 @@
       a bad escape if \command{sh} is \command{bash} or \command{busybox}.
     }
   }
+  \subsection{Bug Fixes (Windows)}{
+    \itemize{
+      \item \code{file.copy(*, date=TRUE)} no longer opens files for
+      exclusive access when copying the file time.  Consequently, the time
+      \emph{is} copied now and concurrent attempts to open the source file should
+      work reliably, thanks to \I{Kevin Ushey}'s report and patch in \PR{19187}.
+    }
+  }
 }
 
 \section{\Rlogo Changes in R 4.6.1}{
