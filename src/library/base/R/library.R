@@ -707,9 +707,18 @@ function(package, lib.loc = NULL, quietly = FALSE, warn.conflicts,
 
 use <-
 function(package, include.only, pos = 2)
-    invisible(library(package, pos = pos, lib.loc = NULL, character.only = TRUE,
-                      logical.return = TRUE, include.only = include.only,
-                      attach.required = FALSE))
+{
+    stopifnot(is.character(package), length(package) == 1L)
+    if(length(opos <- which(paste0("package:", package) == search()))) {
+        if(!missing(include.only))
+            include.only <- union(ls(opos, all.names = TRUE),
+                                  include.only)
+        detach(pos = opos)
+    }
+    invisible(library(package, pos = pos, lib.loc = NULL,
+                      character.only = TRUE, logical.return = TRUE,
+                      include.only = include.only, attach.required = FALSE))
+}
 
 .packages <-
 function(all.available = FALSE, lib.loc = NULL)
