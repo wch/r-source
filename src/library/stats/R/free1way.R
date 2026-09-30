@@ -291,7 +291,7 @@
                                           ncol = ncol(x),
                                           byrow = TRUE)
 
-        Ftmb <- exp(logFtmb <- F(tmb, log = TRUE))
+        Ftmb <- exp(logFtmb <- F(tmb, log.p = TRUE))
         ### log-sum-exp trick and log(1 - exp()) via pexp
         if (rightcensored) {
             logprb <- log1p(- Ftmb[- nrow(Ftmb), , drop = FALSE])
@@ -319,7 +319,7 @@
                                           ncol = ncol(x),
                                           byrow = TRUE)
 
-        Ftmb <- exp(logFtmb <- F(tmb, log = TRUE))
+        Ftmb <- exp(logFtmb <- F(tmb, log.p = TRUE))
         ### log-sum-exp trick and log(1 - exp()) via pexp
         if (rightcensored) {
             logprb <- log1p(- Ftmb[- nrow(Ftmb), , drop = FALSE])
@@ -363,7 +363,7 @@
                                           ncol = ncol(x),
                                           byrow = TRUE)
 
-        Ftmb <- exp(logFtmb <- F(tmb, log = TRUE))
+        Ftmb <- exp(logFtmb <- F(tmb, log.p = TRUE))
         ### log-sum-exp trick and log(1 - exp()) via pexp
         if (rightcensored) {
             logprb <- log1p(- Ftmb[- nrow(Ftmb), , drop = FALSE])
@@ -403,7 +403,7 @@
                                           ncol = ncol(x),
                                           byrow = TRUE)
 
-        Ftmb <- exp(logFtmb <- F(tmb, log = TRUE))
+        Ftmb <- exp(logFtmb <- F(tmb, log.p = TRUE))
         ### log-sum-exp trick and log(1 - exp()) via pexp
         if (rightcensored) {
             logprb <- log1p(- Ftmb[- nrow(Ftmb), , drop = FALSE])
@@ -444,7 +444,7 @@
                                           ncol = ncol(x),
                                           byrow = TRUE)
 
-        Ftmb <- exp(logFtmb <- F(tmb, log = TRUE))
+        Ftmb <- exp(logFtmb <- F(tmb, log.p = TRUE))
         ### log-sum-exp trick and log(1 - exp()) via pexp
         if (rightcensored) {
             logprb <- log1p(- Ftmb[- nrow(Ftmb), , drop = FALSE])
