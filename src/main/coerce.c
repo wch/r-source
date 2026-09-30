@@ -2397,7 +2397,7 @@ static bool anyNA(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(REAL_NO_NA(x))
 	    return false;
 	ITERATE_BY_REGION(x, xD, i, nbatch, double, REAL, {
-		for (int k = 0; k < nbatch; k++)
+		for (R_xlen_t k = 0; k < nbatch; k++)
 		    if (ISNAN(xD[k]))
 			return true;
 	    });
@@ -2408,7 +2408,7 @@ static bool anyNA(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(INTEGER_NO_NA(x))
 	    return false;
 	ITERATE_BY_REGION(x, xI, i, nbatch, int, INTEGER, {
-		for (int k = 0; k < nbatch; k++)
+		for (R_xlen_t k = 0; k < nbatch; k++)
 		    if (xI[k] == NA_INTEGER)
 			return true;
 	    });
