@@ -3809,6 +3809,15 @@ for(obj in list(ss, ss$fit))
 ## These could cause a segfault in R <= 4.6.1
 
 
+## format(<utf8>, width = large) -- PR#19188
+assertWarnV(# j=0 --> warning: NAs introduced by coercion to integer range
+  lapply(0:3, \(j)
+	 tryCid(format("\u00e9", width = 2^31 - j))) -> errs)
+stopifnot(unlist(lapply(errs, inherits, "error"))
+vapply(errs, `[[`, "..", "message")
+## j=1,2 would segfault in R <= 4.6.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

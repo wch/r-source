@@ -462,7 +462,12 @@
 
       \item \code{predict(smooth.spline(..), deriv = -99)} and similar
       invalid \code{deriv} values now signal errors instead of segfaulting,
-      thanks to \I{Adam Berkeš} report and proposal in \PR{19190}.
+      thanks to \I{Adam Berkeš}' report and proposal in \PR{19190}.
+
+      \item \code{format(x, width = 2^31 -1)} for an non-ascii
+      character \code{x} such as \code{x = "\u00e9"} now signals an error
+      as the required width is too large, rather than segfaulting,
+      thanks to \I{Adam Berkeš}' report in \PR{19188}.
     }
   }
   \subsection{Bug Fixes (Windows)}{
