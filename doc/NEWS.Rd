@@ -459,6 +459,10 @@
       \code{TRUE} on a Unix-alike where X11 is not actually available when
       built by a C compiler without C23 \code{enum} base types, thanks to
       \I{Trevor Davis}' report and patch in \PR{19180}.
+
+      \item \code{predict(smooth.spline(..), deriv = -99)} and similar
+      invalid \code{deriv} values now signal errors instead of segfaulting,
+      thanks to \I{Adam Berkeš} report and proposal in \PR{19190}.
     }
   }
   \subsection{Bug Fixes (Windows)}{

@@ -3801,6 +3801,14 @@ stopifnot(identical(e[[1]][[2]], ex))
 ## gave garbage (or a crash) for the LHS of '+' in R <= 4.6.x
 
 
+## NULL and negative 'deriv' in predict.smooth.spline() - PR#19190
+ss <- smooth.spline(1:4)
+for(obj in list(ss, ss$fit))
+    for(d in list(NULL, -99L))
+        assertErrV(predict(obj, x = 1, deriv = d))
+## These could cause a segfault in R <= 4.6.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
