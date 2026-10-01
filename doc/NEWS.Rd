@@ -81,6 +81,15 @@
       pair instead of crashing \R, fixing \PR{19153}.
     }
   }
+  \subsection{Bug Fixes (Windows)}{
+    \itemize{
+      \item \code{path.expand("~")} and similar now should work correctly
+      on Windows when the user name is not in ASCII and neither
+      \env{\%HOME\%} nor \env{\%USER\%} environment variables are set,
+      fixing \PR{18949} thanks to the report and patch from \I{Ivan Krylov}
+      and \I{Mauricio Vargas}'s \I{R Dev Day} work.
+    }
+  }
 }
 
 \section{\Rlogo Changes in R 4.6.1}{
