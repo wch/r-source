@@ -337,7 +337,7 @@ stopifnot(identical(f1, factor(c(1,2,NA))),
 f. <- f <- factor(c(letters[c(1:3,3:1)],"NA", "d","d", NA), exclude=NULL)
 is.na(f.)[2:3] <- TRUE
 f.
-stopifnot(all(f == f), identical(f == f., f. == f.),
+stopifnot(f == f, identical(f == f., f. == f.),
           identical(2:3, which(is.na(f. == f.))))
 ## f == f was wrong in R 1.5.0 -- 2.7.1
 
@@ -1661,7 +1661,7 @@ DF <- data.frame(a = letters[1:3], b = letters[4:6], stringsAsFactors = FALSE)
 DF2 <- stack(DF)
 stopifnot(class(DF2$values) == "character") # was factor
 DF3 <- unstack(DF2) # contained factors
-stopifnot(all(sapply(DF3, class) == "character"))
+stopifnot(sapply(DF3, class) == "character")
 DF4 <- stack(DF[1])
 stopifnot(identical(unstack(DF4), DF[1])) # was a list
 ## issues in R < 2.14.0

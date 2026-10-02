@@ -265,7 +265,7 @@ stopifnot(is.finite(q0 <- qbeta(-1e10, 50,40, log.p=TRUE)),
 ## infinite loop or NaN in R <= 2.7.0
 
 ## phyper(x, 0,0,0), notably for huge x
-stopifnot(all(phyper(c(0:3, 1e67), 0,0,0) == 1))
+stopifnot(phyper(c(0:3, 1e67), 0,0,0) == 1)
 ## practically infinite loop and NaN in R <= 2.7.1 (PR#11813)
 
 ## plnorm(<= 0, . , log.p=TRUE)
@@ -352,7 +352,7 @@ stopifnot(qgamma(.99, .00001) == 0,
 ## pgamma() had inaccuracies, e.g.,
 ## pgamma(x, shape = 2^-64, lower.tail=FALSE)  was discontinuous at x=1
 
-stopifnot(all(qpois((0:8)/8, lambda=0) == 0))
+stopifnot(qpois((0:8)/8, lambda=0) == 0)
 ## gave Inf as p==1 was checked *before* lambda==0
 
 ## extreme tail of non-central chisquare

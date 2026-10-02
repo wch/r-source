@@ -106,7 +106,7 @@ cbind(npk, foo)
 
 if(suppressMessages(require("Matrix", .Library))) {
   print(cS. <- contr.SAS(5, sparse = TRUE))
-  stopifnot(all(contr.SAS(5) == cS.),
+  stopifnot(all(contr.SAS(5) == cS.), # all(.): coerces l*Matrix to logical
 	    all(contr.helmert(5, sparse = TRUE) == contr.helmert(5)))
 
   x1 <- x2 <- c('a','b','a','b','c')

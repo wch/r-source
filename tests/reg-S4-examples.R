@@ -115,7 +115,7 @@ setMethod("Compare", signature("track", "track"),
   NA)
  })
 
-#stopifnot(all(t1==t1))
+#stopifnot(t1==t1)
 #stopifnot(identical(t1<t1, NA))
 
 

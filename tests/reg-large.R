@@ -267,7 +267,7 @@ if(availableGB > 16) withAutoprint({
 ## match(<long character>, *)  PR#17552
 if(availableGB > 44) withAutoprint({ ## seen 40 G ('RES')
     system.time(m <- match(rep("a", 2^31), "a")) # 34.7 sec user (55 elapsed)
-    stopifnot(all(m == 1L))
+    stopifnot(m == 1L)
     rm(m)
     system.time({x <- character(2^31); x[26:1] <- letters }) # 1.6 user | 9.4 elapsed
     system.time(m <- match(x, "a"))# 18.2 user | 51.6 elapsed
