@@ -312,7 +312,7 @@ static void scan_cleanup(void *data)
 {
     LocalData *ld = data;
     if(ld->con && !ld->ttyflag && !ld->wasopen) {
-	ld->con->close(ld->con);
+	if (ld->con->isopen) ld->con->close(ld->con);
 	ld->con = NULL;
     }
     if(ld->quoteset && ld->quoteset[0]) {
