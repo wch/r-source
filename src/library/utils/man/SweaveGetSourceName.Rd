@@ -37,29 +37,33 @@ SweaveGetSourceName()
 \examples{
 nmRnw <- "example-4.Rnw"
 exfile <- system.file("Sweave", nmRnw, package = "utils")
+file.show(exfile)
 
-## Check the contents of the file
-if (interactive()) file.show(exfile)
+## Sweave the file in a separate process using 'R CMD Sweave'
+tools::Rcmd(c("Sweave", "--encoding=UTF-8", shQuote(exfile)))
 
-## Sweave the file in a separate process
-expr <- paste0("Sweave('", exfile, "', ",
-               "encoding = 'utf-8')")
-system2("R", c("-e", paste0("\"", expr, "\"")))
-
-## View the LaTeX file
+## View the LaTeX file, including the 'exfile' path
 nmtex <- sub("Rnw$", "tex", nmRnw)
-if (interactive()) file.show(nmtex)
+\dontdiff{file.show(nmtex)}
 
 ## Stangle was called from within Sweave in the file
 nmR <- sub("Rnw$", "R", nmRnw) # default R output file name
-if (interactive()) file.show(nmR)
+\dontdiff{file.show(nmR)}
 
-## Repeat using 'R CMD Sweave'
-system2("R", c("CMD", "Sweave", exfile, "--encoding=utf-8"))
-if (interactive()) file.show(nmtex)
-if (interactive()) file.show(nmR)
+## Also supported but less convenient here: Sweave via 'Rscript -e'
+Rscript <- file.path(R.home("bin"), "Rscript")
+expr <- sprintf("Sweave('\%s', encoding = 'UTF-8')", exfile)
+system2(Rscript, c("-e", shQuote(expr)))
+\donttest{file.show(nmtex)}
+\donttest{file.show(nmR)}
+
+## Not supported: SweaveGetSourceName() called from tools::R()
+try(tools::R(Sweave, list(exfile, encoding = "UTF-8")))
 
 ## Do not use the function interactively
 \dontrun{SweaveGetSourceName()}
+
+## Cleanup
+unlink(c(nmtex, nmR))
 }
 \keyword{utilities}
