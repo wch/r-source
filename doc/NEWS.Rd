@@ -96,6 +96,11 @@
 
       \item \command{R CMD rtags} (on Unix-alikes) no longer fails from
       a bad escape if \command{sh} is \command{bash} or \command{busybox}.
+
+      \item \code{capabilities("X11")} no longer incorrectly returns
+      \code{TRUE} on a Unix-alike where X11 is not actually available when
+      built by a C compiler without C23 \code{enum} base types, thanks to
+      \I{Trevor Davis}' report and patch in \PR{19180}.
     }
   }
   \subsection{Bug Fixes (Windows)}{
