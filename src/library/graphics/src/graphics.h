@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012   The R Core Team.
+ *  Copyright (C) 2012--2026   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -70,4 +70,4 @@ SEXP RunregisterBase(void);
 SEXP C_StemLeaf(SEXP x, SEXP scale, SEXP swidth, SEXP atom);
 SEXP C_BinCount(SEXP x, SEXP breaks, SEXP right, SEXP lowest);
 
-Rboolean isNAcol(SEXP col, int index, int ncol);
+bool isNAcol(SEXP col, int index, int ncol);

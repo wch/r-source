@@ -92,6 +92,10 @@
       \item \code{besselI(1, 1e11)} and \code{besselK(..)} now signal a
       warning and return \code{NaN} instead of typically segfaulting,
       fixing \PR{19175} thanks to \I{Ben Bolker}.
+
+      \item \code{text.default(.., col = numeric(0))} and similar no longer
+      segfault in "instrumented" versions of R, fixing \PR{19178} thanks to
+      \I{Jiang Yuancheng}'s \command{fusion-fuzz} and \I{Ivan Krylov}.
     }
   }
   \subsection{Bug Fixes (Windows)}{
