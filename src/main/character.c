@@ -1034,12 +1034,15 @@ attribute_hidden SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (l >= 1 && isdigit(0xff & (int) This[1])) need_prefix = TRUE;
 	    } else if (!isalpha(0xff & (int) This[0])) need_prefix = TRUE;
 	}
+	/* Use R_alloc() rather than R_Calloc(): the invalid multibyte
+	   string error below would otherwise leak the buffer.
+	   vmaxset() at the end of each iteration releases it. */
 	if (need_prefix) {
-	    tmp = R_Calloc(l+2, char);
+	    tmp = R_alloc(l+2, sizeof(char));
 	    strcpy(tmp, "X");
 	    strcat(tmp, translateChar(STRING_ELT(arg, i)));
 	} else {
-	    tmp = R_Calloc(l+1, char);
+	    tmp = R_alloc(l+1, sizeof(char));
 	    strcpy(tmp, translateChar(STRING_ELT(arg, i)));
 	}
 	if (mbcslocale) {
@@ -1066,14 +1069,11 @@ attribute_hidden SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_STRING_ELT(ans, i, mkChar(tmp));
 	/* do we have a reserved word?  If so the name is invalid */
 	if (!isValidName(tmp)) {
-	    /* FIXME: could use R_Realloc instead */
-	    cbuf = CallocCharBuf(strlen(tmp) + 1);
+	    cbuf = R_alloc(strlen(tmp) + 2, sizeof(char));
 	    strcpy(cbuf, tmp);
 	    strcat(cbuf, ".");
 	    SET_STRING_ELT(ans, i, mkChar(cbuf));
-	    R_Free(cbuf);
 	}
-	R_Free(tmp);
 	vmaxset(vmax);
     }
     UNPROTECT(1);
