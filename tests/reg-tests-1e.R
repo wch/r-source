@@ -3742,8 +3742,12 @@ stopifnot(exprs = {
 if(.Machine$sizeof.pointer >= 8) { # 32-bit cannot allocate 7.5 Gb (PR#19175#c3)
     assertWarnV(bI <- besselI(1, 1e10))     # Warning ... too large for bessel_[ik]() algorithm
     assertWarnV(bK <- besselK(1, c(2^(60:70), Inf)))
+    for(sc in c(FALSE, TRUE)) {
+        assertWarnV(bK <- besselK(0, c(-Inf, -1e11), expon.scaled = sc))
+        stopifnot(is.nan(bK))
+    }
 }
-## segfaulted for order >= 2^31 in R <= 4.6.1
+## segfaulted for |order| >= 2^31 in R <= 4.6.1
 
 
 ## New  chol2inv(.., diag.only = TRUE) -- wish of PR#19177

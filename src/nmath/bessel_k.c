@@ -58,8 +58,8 @@ double bessel_k(double x, double alpha, double expo)
     }
     if(alpha < 0)
 	alpha = -alpha;
-    else if (alpha > max_alpha_k) { // NB: same bound in math_3B() [ ../main/arithmetic.c ]
-	MATHLIB_WARNING2(_("besselK(x, nu): nu=%g > max_alpha_k (= %g): too large for bessel_k() algorithm"),
+    if (alpha > max_alpha_k) { // NB: same bound in math_3B() [ ../main/arithmetic.c ]
+	MATHLIB_WARNING2(_("besselK(x, nu): |nu|=%g > max_alpha_k (= %g): too large for bessel_k() algorithm"),
 			 alpha, max_alpha_k);
 	// FIXME? asymptotic formula (w/ potential accuracy loss) would be better than NaN
 	return ML_NAN;
@@ -105,8 +105,8 @@ double bessel_k_ex(double x, double alpha, double expo, double *bk)
     }
     if(alpha < 0)
 	alpha = -alpha;
-    else if (alpha > max_alpha_k) { // NB: same bound in math_3B() [ ../main/arithmetic.c ]
-	MATHLIB_WARNING2(_("besselK(x, nu): nu=%g > max_alpha_k (= %g): too large for bessel_k() algorithm"),
+    if (alpha > max_alpha_k) { // NB: same bound in math_3B() [ ../main/arithmetic.c ]
+	MATHLIB_WARNING2(_("besselK(x, nu): |nu|=%g > max_alpha_k (= %g): too large for bessel_k() algorithm"),
 			 alpha, max_alpha_k);
 	// FIXME? asymptotic formula (w/ potential accuracy loss) would be better than NaN
 	return ML_NAN;

@@ -339,12 +339,6 @@
       checks its argument and behaves better for a fake "function", fixing
       \PR{19173} thanks to \I{Mark Padgham}'s report and patch proposal.
 
-      \item \code{path.expand("~")} and similar now should work correctly
-      on Windows when the user name is not in ASCII and neither
-      \env{\%HOME\%} nor \env{\%USER\%} environment variables are set,
-      fixing \PR{18949} thanks to the report and patch from \I{Ivan Krylov}
-      and \I{Mauricio Vargas}'s \I{R Dev Day} work.
-
       \item The \code{anova(.., test = tt)} methods for \code{"glm"} and
       \code{"glmlist"} now do partially match a string \code{tt}, as
       documented, thanks to \I{Amal Tawfik}'s report and patch in
@@ -448,6 +442,10 @@
       warning and return \code{NaN} instead of typically segfaulting,
       fixing \PR{19175} thanks to \I{Ben Bolker}.
 
+      Further, \code{besselK(1, -1e11)} and similar warn about too large
+      \code{|nu|}, returning \code{NaN} rather than segfaulting, fixing
+      \PR{19196} thanks to \I{Adam Berkeš}.
+
       \item \code{text.default(.., col = numeric(0))} and similar no longer
       segfault in "instrumented" versions of R, fixing \PR{19178} thanks to
       \I{Jiang Yuancheng}'s \command{fusion-fuzz} and \I{Ivan Krylov}.
@@ -472,6 +470,12 @@
   }
   \subsection{Bug Fixes (Windows)}{
     \itemize{
+      \item \code{path.expand("~")} and similar now should work correctly
+      on Windows when the user name is not in ASCII and neither
+      \env{\%HOME\%} nor \env{\%USER\%} environment variables are set,
+      fixing \PR{18949} thanks to the report and patch from \I{Ivan Krylov}
+      and \I{Mauricio Vargas}'s \I{R Dev Day} work.
+
       \item \code{file.copy(*, date=TRUE)} no longer opens files for
       exclusive access when copying the file time.  Consequently, the time
       \emph{is} copied now and concurrent attempts to open the source file should
