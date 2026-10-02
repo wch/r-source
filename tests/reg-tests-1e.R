@@ -3842,6 +3842,23 @@ if(englishMsgs)
 ## libquadmath does) or silently gave "" in R <= 4.6.x
 
 
+## the "embedded nul in string" error built its message from an unprotected
+## CHARSXP, and translating that CHARSXP to the native encoding could trigger
+## a GC that freed it first (found by fuzzing)
+s <- strrep(iconv("\u00e9", "UTF-8", "latin1"), 30000) # latin1, large vector
+r <- serialize(s, NULL)
+idx <- which(r == as.raw(0xe9))
+for (frac in c(1/2, 1/4)) { # nul position where the translation is as long
+    rr <- r                 # as the CHARSXP, in a UTF-8 resp. C locale
+    rr[idx[length(idx) * frac]] <- as.raw(0)
+    gctorture(TRUE)
+    res <- tryCatch(unserialize(rr), error = conditionMessage)
+    gctorture(FALSE)
+    stopifnot(startsWith(res, "embedded nul in string: '"))
+}
+## gave "'Rf_getCharCE' must be called on a CHARSXP" (or a crash) in R <= 4.6.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

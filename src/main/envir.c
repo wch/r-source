@@ -4768,8 +4768,10 @@ SEXP mkCharLenCE(const char *name, int len, cetype_t enc)
 	SEXP c;
 	/* This is tricky: we want to make a reasonable job of
 	   representing this string, and EncodeString() is the most
-	   comprehensive */
-	c = allocCharsxp(len);
+	   comprehensive.  It may translate c, and the R_alloc() that
+	   involves can run the GC, so c must be protected: the error
+	   unwind pops from the PROTECT stack. */
+	PROTECT(c = allocCharsxp(len));
 	if (len) memcpy(CHAR_RW(c), name, len);
 	switch(enc) {
 	case CE_UTF8: SET_UTF8(c); break;
