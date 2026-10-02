@@ -88,6 +88,10 @@
 
       \item \command{R CMD rtags} (on Unix-alikes) no longer fails from
       a bad escape if \command{sh} is \command{bash} or \command{busybox}.
+
+      \item \code{besselI(1, 1e11)} and \code{besselK(..)} now signal a
+      warning and return \code{NaN} instead of typically segfaulting,
+      fixing \PR{19175} thanks to \I{Ben Bolker}.
     }
   }
   \subsection{Bug Fixes (Windows)}{

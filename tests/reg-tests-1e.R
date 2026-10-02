@@ -3453,6 +3453,14 @@ stopifnot(identical(L00, ksmooth(x,y, x.points=NULL)),
 ## did seg.fault, trying to access x.points[1] from C
 
 
+## besselI()/besselK() with too large order -- now NaN with warning
+if(.Machine$sizeof.pointer >= 8) { # 32-bit cannot allocate 7.5 Gb (PR#19175#c3)
+    assertWarnV(bI <- besselI(1, 1e10))     # Warning ... too large for bessel_[ik]() algorithm
+    assertWarnV(bK <- besselK(1, c(2^(60:70), Inf)))
+}
+## segfaulted for order >= 2^31 in R <= 4.6.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

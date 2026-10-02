@@ -26,9 +26,23 @@
  */
 #include "nmath.h"
 #include "bessel.h"
+#include <limits.h>
+
+// set in Rmath.h: #define M_bessel_j_max_alpha 1e9
+static const double max_alpha_j = M_bessel_j_max_alpha;
 
 #ifndef MATHLIB_STANDALONE
 #include <R_ext/Memory.h>
+#endif
+
+/* Use                                 -B # to make newly
+   (cd `R-devel... RHOME`/src/nmath; make -k CFLAGS='-DDEBUG_bessel_j' -bessel_j.o && (cd ../..; make -k R))
+*/
+#ifdef DEBUG_bessel_j
+# include <R_ext/Print.h>
+# define R_ifDEBUG_printf(...) REprintf(__VA_ARGS__)
+#else
+# define R_ifDEBUG_printf(...)
 #endif
 
 
@@ -40,9 +54,6 @@ static void J_bessel(double *x, double *alpha, int *nb,
 // unused now from R  -- rather R's besselJ() calls  bessel_j_ex()  below
 double bessel_j(double x, double alpha)
 {
-    int nb, ncalc;
-    double na, *bj;
-
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
@@ -52,21 +63,23 @@ double bessel_j(double x, double alpha)
 	return ML_NAN;
     }
     // ==> x >= 0  from now on
-    na = floor(alpha);
+    double na = floor(alpha);
     if (alpha < 0) {
 	/* Using Abramowitz & Stegun  9.1.2
 	 * this may not be quite optimal (CPU and accuracy wise) */
 	return(((alpha - na == 0.5) ? 0 : bessel_j(x, -alpha) * cospi(alpha)) +
 	       ((alpha      == na ) ? 0 : bessel_y(x, -alpha) * sinpi(alpha)));
     }
-    else if (alpha > 1e7) {
-	MATHLIB_WARNING(_("besselJ(x, nu): nu=%g too large for bessel_j() algorithm"),
-			alpha);
+    else if (alpha > max_alpha_j) { // NB: same bound in math_2B() [ ../main/arithmetic.c ]
+	MATHLIB_WARNING2(_("besselJ(x, nu): nu=%g > max_alpha_j (= %g): too large for bessel_j() algorithm"),
+			 alpha, max_alpha_j);
+	// FIXME asymptotic formula (w/ potential accuracy loss) is better than NaN; e.g. Bessel::BesselJ()
 	return ML_NAN;
     }
-    nb = 1 + (int)na; /* nb-1 <= alpha < nb */
+    int ncalc, nb = 1 + (int)na; /* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1); // ==> alpha' in [0, 1)
 
+    double *bj;
 #ifdef MATHLIB_STANDALONE
     bj = (double *) calloc(nb, sizeof(double));
     if (!bj) MATHLIB_ERROR("%s", _("bessel_j allocation error"));
@@ -97,6 +110,7 @@ double bessel_j(double x, double alpha)
  * modified version of bessel_j(), accepting a work array instead of allocating one.*/
 double bessel_j_ex(double x, double alpha, double *bj)
 {
+    R_ifDEBUG_printf("bessel_j(x=%g, alpha=%g): ", x, alpha);
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
@@ -105,24 +119,33 @@ double bessel_j_ex(double x, double alpha, double *bj)
 	ML_WARNING(ME_RANGE, "bessel_j");
 	return ML_NAN;
     }
-    // ==> x >= 0.  from now on
+    // ==> x >= 0  from now on
     double na = floor(alpha);
+    R_ifDEBUG_printf(" -> na = %d", na);
     if (alpha < 0) {
+	R_ifDEBUG_printf(", alpha < 0 --> bessel_j() * cospi(.) + bessel_y() * sinpi(.)\n");
 	/* Using Abramowitz & Stegun  9.1.2
 	 * this may not be quite optimal (CPU and accuracy wise) */
 	return(((alpha - na == 0.5) ? 0 : bessel_j_ex(x, -alpha, bj) * cospi(alpha)) +
 	       ((alpha      == na ) ? 0 : bessel_y_ex(x, -alpha, bj) * sinpi(alpha)));
     }
-    else if (alpha > 1e7) { // NB: same bound 'besselJY_max_nu' in math_2b() and ./bessel_y.c
-	// FIXME: do better e.g., Bessel::BesselJ()
-	MATHLIB_WARNING(_("besselJ(x, nu): nu=%g > 1e7; too large for bessel_j() algorithm"),
-			alpha);
+    else if (alpha > max_alpha_j) { // NB: same bound in math_2B() [ ../main/arithmetic.c ]
+	MATHLIB_WARNING2(_("besselJ(x, nu): nu=%g > max_alpha_j (= %g): too large for bessel_j() algorithm"),
+			 alpha, max_alpha_j);
+	// FIXME asymptotic formula (w/ potential accuracy loss) is better than NaN; e.g. Bessel::BesselJ()
+
+	R_ifDEBUG_printf(", alpha > max_alpha_j --> giving up: return(NaN)   __FIXME?__\n");
+
 	return ML_NAN;
     }
     int ncalc, nb = 1 + (int)na; /* nb-1 <= alpha < nb */
     alpha -= (double)(nb-1); // ==> alpha' in [0, 1)
+    R_ifDEBUG_printf(", nb=%d, new alpha = %.15g  --> calling J_bessel()\n", nb, alpha);
     J_bessel(&x, &alpha, &nb, bj, &ncalc);
+  /*~~~~~~~~*/
+    R_ifDEBUG_printf("after J_bessel(): ncalc = %d ", ncalc);
     if(ncalc != nb) {/* error input */
+	R_ifDEBUG_printf(" != nb (= %d) -- should NEVER HAPPEN!!\n", nb);
       if(ncalc < 0)
 	MATHLIB_WARNING4(_("bessel_j(%g): ncalc (=%d) != nb (=%d); alpha=%g. Arg. out of range?\n"),
 			 x, ncalc, nb, alpha);
@@ -130,6 +153,16 @@ double bessel_j_ex(double x, double alpha, double *bj)
 	MATHLIB_WARNING2(_("bessel_j(%g,nu=%g): precision lost in result\n"),
 			 x, alpha+(double)nb-1);
     }
+#ifdef DEBUG_bessel_j
+    else /* ncalc == nb : */ REprintf("\n");
+    REprintf("bj[0:(nb-1)] == b[1:nb]:\n");
+    if(nb <= 10) {
+	for(int i=0; i < nb; i++) REprintf("%g%s", bj[i], (i == nb-1) ? "\n" : ", ");
+    } else {
+	REprintf("%g, %g, %g, %g, %g, ...,", bj[0], bj[1], bj[2], bj[3], bj[4]);
+	REprintf(" %g, %g, %g, %g, %g\n", bj[nb-5], bj[nb-4], bj[nb-3], bj[nb-2], bj[nb-1]);
+    }
+#endif
     x = bj[nb-1];
     return x;
 }
@@ -219,6 +252,12 @@ static void J_bessel(double *x, double *alpha, int *nb,
  --------------------------------------------------------------------- */
 #define very_small_nu  0x1p-800 // 2^-800 = 1.4996968....e-241
 
+/* was  xlrg_BESS_J = 1e5  in ./bessel.h -- *can* go higher, losing a bit of prec.
+   --- NB: we now ensure that the  __asymptotic__ branch 2) is taken in such cases
+ */
+#define xlarge_J_Bessel 1e24
+    /*			==== not "safe" - in order to experiment */
+
     --b; /* so, we use  b[1] .. b[nb]  in the code below */
 
     double nu = *alpha, // in [0, 1)   {ensured by caller bessel_j*()}
@@ -231,15 +270,17 @@ static void J_bessel(double *x, double *alpha, int *nb,
 
 	int i, m, n;
 	*ncalc = *nb;
+	R_ifDEBUG_printf("J_bessel() {args ok: nb = %d, nu = %g}:\n", *nb, nu);
+
 	/* Initialize result array to zero. */
 	for (i = 1; i <= *nb; ++i)
 	    b[i] = 0.;
-	if(*x > xlrg_BESS_IJ) {
+	if(*x > xlarge_J_Bessel) { // was xlrg_BESS_J = 1e5
 	    ML_WARNING(ME_RANGE, "J_bessel");
-	    /* indeed, the limit is 0; but cutoff may happen too early */
+	    /* indeed, the limit is 0; but cutoff happens *MUCH* too early */
 	    return;
 	}
-	int intx = (int) (*x);
+	double fl_x = floor(*x); // ok also for x > INT_MAX
 
 	/*===================================================================
 	  Branch into  3 cases :
@@ -255,6 +296,7 @@ static void J_bessel(double *x, double *alpha, int *nb,
 	  /* --------------------------------------------------------------- ============= branch 1)
 	     Two-term ascending series for small X.
 	     --------------------------------------------------------------- */
+	    R_ifDEBUG_printf(" --- branch 1) Two-term ascending series for small x < rtnsig_BESS :\n");
 
 	    alpem = 1. + nu;
 	    double halfx = (*x > enmten_BESS) ? .5 * *x :  0.;
@@ -291,14 +333,18 @@ static void J_bessel(double *x, double *alpha, int *nb,
 		    }
 		}
 	    }
-	} else if (*x > 25. && *nb <= intx + 1) {
-	    /* ------------------------------------------------------------ ============= branch 2)
+	} else if (*x > INT_MAX-1 || (*x > 25. && *nb <= fl_x + 1)) {
+	    /*     ^^^^^^^^^^^^ ==> cannot use type integer int_x ==> for now must be in this branch
+	     * ------------------------------------------------------------ ============= branch 2)
 	       Asymptotic series for X > 25 (and not much larger nb)
 	       ------------------------------------------------------------ */
+
 	    // m := #{terms in asymptotic series} to be used
 	    if (*x >= 130.)	m = 4;
 	    else if (*x >= 35.) m = 8;
 	    else		m = 11; // ==> k := 2m <= 22  <==> length(fact[]) >= 23
+
+	    R_ifDEBUG_printf(" --- branch 2)  Asymptotic series (m=%d) for large x or [x > 25 & nb <= fl(x)+1]: ", m);
 
 	    /*---------------------------------------------------------------------
 	     *  Factorial(N)
@@ -313,14 +359,14 @@ static void J_bessel(double *x, double *alpha, int *nb,
 	    double xc = sqrt(pi2 / *x),
 		xin = 1 / (64 * *x * *x),
 		xm = 4. * (double) m,
-	    /* ------------------------------------------------
-	       Argument reduction for SIN and COS routines.
-	       ------------------------------------------------ */
+		/* "High accuracy" argument reduction for sin() and cos() :
+		   ------------------------------------------------------ */
 		t = trunc(*x / (twopi1 + twopi2) + .5),
 		z = (*x - t * twopi1) - t * twopi2 - (nu + .5) / pi2,
 		vsin = sin(z),
 		vcos = cos(z),
 		gnu = twonu;
+	    R_ifDEBUG_printf(" , xc = %g, vsin = %g, vcos = %g\n", m, xc, vsin, vcos);
 	    for (i = 1; i <= 2; ++i) {
 		s = (xm - 1. - gnu) * (xm - 1. + gnu) * xin * .5;
 		t = (gnu - (xm - 3.)) * (gnu + (xm - 3.));
@@ -329,17 +375,20 @@ static void J_bessel(double *x, double *alpha, int *nb,
 		    capp = s * t / fact[k],
 		    capq = s * t1/ fact[k + 1],
 		    xk = xm;
-		for (; k >= 4; k -= 2) {/* k + 2(j-2) == 2m,  for j = 1,..,  */
+		R_ifDEBUG_printf(" i=%d, (s,t,t1) = (%g,%g,%g):\n", i, s,t,t1);
+		for (; k >= 4; k -= 2) {/* k + 2(j-1) == 2m,  for j = 1,..,  */
 		    xk -= 4.;
 		    s = (xk - 1. - gnu) * (xk - 1. + gnu);
 		    t1 = t;
 		    t = (gnu - (xk - 3.)) * (gnu + (xk - 3.));
 		    capp = (capp + 1. / fact[k - 2]) * s * t  * xin;
 		    capq = (capq + 1. / fact[k - 1]) * s * t1 * xin;
+		    R_ifDEBUG_printf("    k=%d, cap{p,q} = {%g, %g}\n", k, capp, capq);
 		}
 		capp += 1.;
 		capq = (capq + 1.) * (gnu * gnu - 1.) * (.125 / *x);
 		b[i] = xc * (capp * vcos - capq * vsin);
+		R_ifDEBUG_printf("   --> b[i] = %g\n", b[i]);
 		if (*nb == 1)
 		    return; // result:  b[i] = b[1]
 
@@ -354,21 +403,26 @@ static void J_bessel(double *x, double *alpha, int *nb,
 		    b[i] = gnu * b[i - 1] / *x - b[i - 2];
 	}
 	else {
-	    /* rtnsig_BESS <= x && ( x <= 25 || intx+1 < *nb ) :
+	    /* rtnsig_BESS <= x && ( x <= 25 || fl_x+1 < *nb ) :
 	       -------------------------------------------------------- ============= branch 3)
 	       Use recurrence to generate results.
 	       First initialize the calculation of P*S.
 	       -------------------------------------------------------- */
+	    R_ifDEBUG_printf(" --- branch 3)  Use recurrence [usual case]:");
 
 	    if(nu != 0. && fabs(nu) < very_small_nu) {
+		R_ifDEBUG_printf("  very small nonzero nu=%g, set to nu=%s%g;",
+				 nu, (nu < 0.)?"-":"", very_small_nu);
 		nu = (nu < 0.) ? -very_small_nu : very_small_nu; // in R <= 4.5.2  besselJ(2, 2e-16) gave 1.119e+15
 		twonu = ldexp(nu, 1);
 	    }
 
-	    int nbmx = *nb - intx; // = nb - floor(x)
+	    int intx = (int) (*x), // MUST NOT have  x > INT_MAX = 2147483647 = 2.147..e9
+		nbmx = *nb - intx; // = nb - floor(x)
 	    n = intx + 1;
-	    en = (double)(n + n) + twonu;
+	    en = 2.*fl_x + 2. + twonu; // was (double)(n + n) + twonu {which fails for n = INT_MAX}
 	    p = en / *x;
+	    R_ifDEBUG_printf(" nbmx = %d (>= 3 ?), n = %d, p = en/x = %g\n", nbmx, n, p);
 	    /* ---------------------------------------------------
 	       Calculate general significance test.
 	       --------------------------------------------------- */
@@ -382,12 +436,14 @@ static void J_bessel(double *x, double *alpha, int *nb,
 		int nstart = intx + 2,
 		    nend = *nb - 1;
 		en = (double) (nstart + nstart) - 2. + twonu;
+		R_ifDEBUG_printf(" nbmx >= 3 case; en=%g; for(k in nstart:nend = %d:%d)\n", en, nstart,nend);
 		for (int k = nstart; k <= nend; ++k) {
 		    int n = k;
 		    en += 2.;
 		    pold = plast;
 		    plast = p;
 		    p = en * plast / *x - pold;
+		    R_ifDEBUG_printf("    k=%d, p=%g >? %g = tover\n", k, p, tover);
 		    if (p > tover) {
 			/* -------------------------------------------
 			   To avoid overflow, divide P*S by TOVER.
@@ -418,6 +474,7 @@ static void J_bessel(double *x, double *alpha, int *nb,
 			--n;
 			en -= 2.;
 			nend = min0(*nb,n);
+			R_ifDEBUG_printf("  inside (p > tover) before for(i = nstart:nend = %d:%d:\n", nstart,nend);
 			for (int i = nstart; i <= nend; ++i) {
 			    pold = psavel;
 			    psavel = psave;
@@ -438,9 +495,11 @@ static void J_bessel(double *x, double *alpha, int *nb,
 		   Calculate special significance test for NBMX > 2.
 		   -----------------------------------------------------*/
 		test = fmax2(test, sqrt(plast * ensig_BESS) * sqrt(p + p));
+ 		R_ifDEBUG_printf(" .. after for(k ..):  had never (p > tover): n=%d, en = %g, p = %g\n", n, en, p);
 	    } // end if{ nbmx >= 3 }
 	    /* ------------------------------------------------
 	       Calculate P*S until significance test passes. */
+	    R_ifDEBUG_printf("  before do { ... p = * } until p >= test = %g:\n", test);
 	    do {
 		++n;
 		en += 2.;
@@ -461,6 +520,8 @@ L190:
 	    double em = (double)m;
 	    m = (n << 1) - (m << 2);/* = 2 n - 4 (n/2)
 				       = 0 for even, 2 for odd n */
+	    R_ifDEBUG_printf("L190, init.: ncalc = %d; (p = %g < %g = test) = %d; (n,en,em)=(%d,%g,%g)\n",
+			     *ncalc, p, test, (p < test), n, en, em);
 	    if (m == 0)
 		sum = 0.;
 	    else {
@@ -474,6 +535,8 @@ L190:
 	       Recur backward via difference equation, calculating
 	       (but not storing) b[N], until N = NB.
 	       -------------------------------------------------------- */
+	    R_ifDEBUG_printf(" Recur backward via diff.eq, m=%d, sum = %g -- for(i = 1..{nend=%d}):\n",
+			     m, sum, nend);
 	    for (int i = 0; i < nend; ++i) {
 		--n;
 		en -= 2.;
@@ -497,9 +560,13 @@ L190:
 	      Store b[NB].
 	      --------------------------------------------------*/
 	    b[n] = aa;
+	    if(n != *nb) R_ifDEBUG_printf(" [n=%d != %d= nb] --- should NOT HAPPEN!\n", n, *nb);
+	    R_ifDEBUG_printf("  --> sum = %g,  b[n = %d] := %g", sum, n, aa);
 	    if (nend >= 0) {
+		R_ifDEBUG_printf(", nend= %d >= 0", nend);
 		if (n <= 1) {
 		    sum += b[1] * ((nu == 0.) ? 1. : nu); // as |nu| >=  very_small_nu
+		    R_ifDEBUG_printf(", n=nb <= 1 -> updated sum=%g & goto L250.\n", sum);
 		    goto L250;
 		}
 		else {/*-- nb >= 2 : ---------------------------
@@ -508,6 +575,7 @@ L190:
 		    --n; // => n = nb-1
 		    en -= 2.;
 		    b[n] = en * aa / *x - bb;
+		    R_ifDEBUG_printf(", nb >= 2; b[n=%d] = %g\n", n, b[n]);
 		    if (n == 1)
 			goto L240;
 
@@ -519,9 +587,12 @@ L190:
 			if (alpem == 0.)
 			    alpem = 1.;
 			sum = (sum + b[n] * alp2em) * alpem / em;
+			R_ifDEBUG_printf(", m != 0; em=%g, updated sum=%g\n", em, sum);
 		    }
 		}
 	    }
+	    else R_ifDEBUG_printf("\n");
+
 
 	    /* if (n - 2 != 0) */
 	    /* --------------------------------------------------------
@@ -531,6 +602,7 @@ L190:
 	    for (n = n-1; n >= 2; n--) {
 		en -= 2.;
 		b[n] = en * b[n + 1] / *x - b[n + 2];
+		R_ifDEBUG_printf("n >= 2; recursive b[n=%d] = %g", n, b[n]);
 		m = m ? 0 : 2; /* m = 2 - m failed on gcc4-20041019 */
 		if (m != 0) {
 		    em -= 1.;
@@ -539,7 +611,9 @@ L190:
 		    if (alpem == 0.)
 			alpem = 1.;
 		    sum = (sum + b[n] * alp2em) * alpem / em;
+		    R_ifDEBUG_printf(" updated sum = %g\n", sum);
 		}
+		else R_ifDEBUG_printf("\n");
 	    }
 	    /* ---------------------------------------
 	       Calculate b[1].
@@ -552,6 +626,7 @@ L240:
 	    if (alp2em == 0.)
 		alp2em = 1.;
 	    sum += b[1] * alp2em;
+	    R_ifDEBUG_printf(" L240: b[1] = %g and updated sum = %g\n", b[1], sum);
 
 L250:
 	    /* ---------------------------------------------------
@@ -559,7 +634,10 @@ L250:
 	       ---------------------------------------------------*/
 	    // NB. ensured above that |nu| >= very_small_nu
 	    if(nu != 0.) { /* was if(fabs(nu) > very_small_nu) , was if(nu + 1. != 1.); then '> 1e-15' .. */
+		R_ifDEBUG_printf("|nu| = %g >= %g = very_small_nu; sum=%g --> sum *= <fac>, fac = %g;",
+				 fabs(nu), very_small_nu, sum, Rf_gamma_cody(nu) * pow(.5* *x, -nu));
 		sum *= (Rf_gamma_cody(nu) * pow(.5* *x, -nu));
+		R_ifDEBUG_printf(" -> new sum = %g\n", sum);
 	    }
 
 #ifdef UNDERFLOW_NOT_GOOD_ENOUGH
@@ -569,11 +647,15 @@ L250:
 #endif
 	    for (n = 1; n <= *nb; ++n) {
 #ifdef UNDERFLOW_NOT_GOOD_ENOUGH
-		if (fabs(b[n]) < aa)
+		if (fabs(b[n]) < aa) {
+		    R_ifDEBUG_printf(" very small final b[n] = %g -- set to 0\n", b[n]);
 		    b[n] = 0.;
-		else
+		} else
 #endif
+		{
 		    b[n] /= sum;
+		    R_ifDEBUG_printf(" final b[n] (after ` / sum`): %g\n", b[n]);
+		}
 	    }
 	}
 

@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2014 Ross Ihaka and the R Core team.
- *  Copyright (C) 2002-3    The R Foundation
+ *  Copyright (C) 1998-2026 Ross Ihaka and the R Core team.
+ *  Copyright (C) 2002-2026 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,6 +27,9 @@
 #include "nmath.h"
 #include "bessel.h"
 
+// set in Rmath.h: #define M_bessel_ik_max_alpha 1e9  -- new (2026, R 4.7.0)
+static const double max_alpha_k = M_bessel_ik_max_alpha;
+
 #ifndef MATHLIB_STANDALONE
 #include <R_ext/Memory.h>
 #endif
@@ -37,9 +40,9 @@
 static void K_bessel(double *x, double *alpha, int *nb,
 		     int *ize, double *bk, int *ncalc);
 
+// in API, Rmath.h -- but *not* called from R ---> bessel_k_ex() below
 double bessel_k(double x, double alpha, double expo)
 {
-    int nb, ncalc, ize;
     double *bk;
 #ifndef MATHLIB_STANDALONE
     const void *vmax;
@@ -53,10 +56,15 @@ double bessel_k(double x, double alpha, double expo)
 	ML_WARNING(ME_RANGE, "bessel_k");
 	return ML_NAN;
     }
-    ize = (int)expo;
     if(alpha < 0)
 	alpha = -alpha;
-    nb = 1+ (int)floor(alpha);/* nb-1 <= |alpha| < nb */
+    else if (alpha > max_alpha_k) { // NB: same bound in math_3B() [ ../main/arithmetic.c ]
+	MATHLIB_WARNING2(_("besselK(x, nu): nu=%g > max_alpha_k (= %g): too large for bessel_k() algorithm"),
+			 alpha, max_alpha_k);
+	// FIXME? asymptotic formula (w/ potential accuracy loss) would be better than NaN
+	return ML_NAN;
+    }
+    int ncalc, ize = (int)expo, nb = 1+ (int)floor(alpha);/* nb-1 <= |alpha| < nb */
     alpha -= (double)(nb-1);
 #ifdef MATHLIB_STANDALONE
     bk = (double *) calloc(nb, sizeof(double));
@@ -83,12 +91,10 @@ double bessel_k(double x, double alpha, double expo)
     return x;
 }
 
-/* modified version of bessel_k that accepts a work array instead of
-   allocating one. */
+/* modified version of bessel_k() accepting a work array instead of allocating one.
+   called from R via Math3B() in ../main/arithmetic.c */
 double bessel_k_ex(double x, double alpha, double expo, double *bk)
 {
-    int nb, ncalc, ize;
-
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
@@ -97,10 +103,15 @@ double bessel_k_ex(double x, double alpha, double expo, double *bk)
 	ML_WARNING(ME_RANGE, "bessel_k");
 	return ML_NAN;
     }
-    ize = (int)expo;
     if(alpha < 0)
 	alpha = -alpha;
-    nb = 1+ (int)floor(alpha);/* nb-1 <= |alpha| < nb */
+    else if (alpha > max_alpha_k) { // NB: same bound in math_3B() [ ../main/arithmetic.c ]
+	MATHLIB_WARNING2(_("besselK(x, nu): nu=%g > max_alpha_k (= %g): too large for bessel_k() algorithm"),
+			 alpha, max_alpha_k);
+	// FIXME? asymptotic formula (w/ potential accuracy loss) would be better than NaN
+	return ML_NAN;
+    }
+    int ncalc, ize = (int)expo, nb = 1+ (int)floor(alpha);/* nb-1 <= |alpha| < nb */
     alpha -= (double)(nb-1);
     K_bessel(&x, &alpha, &nb, &ize, bk, &ncalc);
     if(ncalc != nb) {/* error input */
