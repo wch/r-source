@@ -78,11 +78,21 @@ SEXP dpermdist2(SEXP x, SEXP m) {
            sum_a > m_a => sum_a := min(sum_a, m_a) = m_a
            sum_b > m_b => sum_b := min(sum_b, m_b) = m_b */
     sum_a = INTEGER(m)[0];
-    for (int i = n - sum_a; i < n; i++)
-        sum_b += iscore_b[i];
+    if (sum_a == INT_MAX)
+        error("overflow error; cannot compute exact distribution");
+    for (int i = n - sum_a; i < n; i++) {
+        const int inc = iscore_b[i];
+        if (sum_b > INT_MAX - inc)
+            error("overflow error; cannot compute exact distribution");
+        sum_b += inc;
+    }
 
     /* initialize H in Algorithm 'Verteilung 3' */
+    if (sum_b == INT_MAX)
+            error("overflow error; cannot compute exact distribution");
     sum_bp1 = sum_b + 1;
+    if (sum_a + 1 > INT_MAX / sum_bp1)
+            error("overflow error; cannot compute exact distribution");
     dH = (double*) R_alloc((sum_a + 1) * sum_bp1, sizeof(double));
     for (int i = 0; i <= sum_a; i++) {
         idx = i * sum_bp1;
@@ -168,10 +178,16 @@ SEXP dpermdist1(SEXP x) {
     n = LENGTH(x);
     iscores = INTEGER(x);
 
-    for (int i = 0; i < n; i++)
-        sum_a += iscores[i];
+    for (int i = 0; i < n; i++) {
+        const int inc = iscores[i];
+        if (sum_a > INT_MAX - inc)
+            error("overflow error; cannot compute exact distribution");
+        sum_a += inc;
+    }
 
     /* initialize H in Algorithm 'Verteilung 2' */
+    if (sum_a == INT_MAX)
+        error("overflow error; cannot compute exact distribution");
     PROTECT(ret = allocVector(REALSXP, sum_a + 1));
     dH = REAL(ret);
     for (int i = 0; i <= sum_a; i++)
