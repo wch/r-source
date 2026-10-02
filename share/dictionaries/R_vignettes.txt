@@ -2,11 +2,17 @@ ethernet
 hostname
 initializations
 layouting
+Lua
 makefiles
 multipanel
 pre
 prescheduling
 procedurally
 reloadable
+Rtangle
+RweaveLatex
+Stangle
 substream
+uncommented
+unparsable
 workspaces
