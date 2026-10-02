@@ -85,6 +85,9 @@
       Additionally, also by \I{Adam Berkeš}, \code{x <- rep(999,0);
 	ksmooth(x, x, x.points = 1)} no longer writes out of bounds, fixing
       \PR{19171}.
+
+      \item \command{R CMD rtags} (on Unix-alikes) no longer fails from
+      a bad escape if \command{sh} is \command{bash} or \command{busybox}.
     }
   }
   \subsection{Bug Fixes (Windows)}{
