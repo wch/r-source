@@ -28,6 +28,9 @@ use(package, include.only, pos = 2)
   \code{Depends} clause of the \code{DESCRIPTION} file of the package to
   be used never get attached automatically to the search path.
 
+  Calling \code{use()} on an already attached package adds the given
+  includes to what was already included.
+
   This therefore allows to write R scripts with full control over what
   gets found on the search path.  In addition, such scripts can easily
   be integrated as package code, replacing the calls to \code{use} by
