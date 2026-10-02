@@ -3822,6 +3822,26 @@ vapply(errs, `[[`, "..", "message")
 ## j=1,2 would segfault in R <= 4.6.1
 
 
+## sprintf() with a width or precision near INT_MAX, PR#19192
+imax <- .Machine$integer.max
+assertErrV(sprintf("%2147483647s", "a"))
+assertErrV(sprintf("%*s", imax, "a"))
+assertErrV(sprintf("%-2147483647d", 1L))
+assertErrV(sprintf("%99999999999s", "a"))
+assertErrV(sprintf("%.2147483647f", 1))
+stopifnot(exprs = {
+    identical(sprintf("%.2147483647s", "a"), "a")
+    identical(sprintf("%.*s", imax, "a"), "a")
+    identical(sprintf("%.99999999999s", "a"), "a")
+    identical(sprintf("%.2147483647g", 0.1), sprintf("%.9000g", 0.1))
+})
+if(englishMsgs)
+    stopifnot(grepl("length 2147483647 is greater than maximal",
+                    tryCmsg(sprintf("%2147483647s", "a"))))
+## overflowed the C stack (glibc 2.31 with printf hooks registered, as
+## libquadmath does) or silently gave "" in R <= 4.6.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

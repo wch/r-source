@@ -70,6 +70,51 @@ static bool checkfmt(const char *fmt, const char *pattern)
     return strcspn(p, pattern) ? true : false;
 }
 
+/* Read a run of digits, saturating at INT_MAX. */
+static int scandigits(char **pp)
+{
+    char *p = *pp;
+    int v = 0;
+
+    for (; *p >= '0' && *p <= '9'; p++) {
+	int d = *p - '0';
+	v = (v > (INT_MAX - d) / 10) ? INT_MAX : 10 * v + d;
+    }
+    *pp = p;
+    return v;
+}
+
+/*
+   Bound the field width and precision before snprintf() sees them.
+   A width above MAXLINE fails the length check after the call anyway.
+   A precision above MAXLINE is lowered to MAXLINE + 1, which cannot
+   change a result that fits.  Values near INT_MAX are not safe to pass
+   on: glibc 2.31 overflows the stack on them once any printf hooks are
+   registered, as libquadmath does when loaded.
+*/
+static void boundspec(char *fmt)
+{
+    char *p = fmt, *prec, num[16];
+    int width, nc;
+
+    if (*p != '%') return;
+    for (p++; *p == '-' || *p == '+' || *p == ' ' || *p == '#' || *p == '0'; p++)
+	;
+    width = scandigits(&p);
+    if (width > MAXLINE)
+	error(_("required resulting string length %d is greater than maximal %d"),
+	      width, MAXLINE);
+
+    if (*p != '.') return;
+    prec = ++p;
+    if (scandigits(&p) > MAXLINE) {
+	/* never longer than the digits it replaces */
+	nc = snprintf(num, sizeof(num), "%d", MAXLINE + 1);
+	memmove(prec + nc, p, strlen(p) + 1);
+	memcpy(prec, num, nc);
+    }
+}
+
 #define TRANSLATE_CHAR(_STR_, _i_)  \
    ((use_UTF8) ? translateCharUTF8(STRING_ELT(_STR_, _i_))  \
     : translateChar(STRING_ELT(_STR_, _i_)))
@@ -93,6 +138,7 @@ attribute_hidden SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #define _my_sprintf(_X_)						\
     {									\
+	boundspec(fmtp);						\
 	int nc = snprintf(bit, MAXLINE+1, fmtp, _X_);			\
 	if (nc > MAXLINE)						\
 	    error(_("required resulting string length %d is greater than maximal %d"), \
