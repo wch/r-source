@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2025 The R Core Team
+ *  Copyright (C) 1998--2026 The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -222,9 +222,9 @@ attribute_hidden void R_check_locale(void)
 	if (R_strieql(p, "ISO8859-1")) known_to_be_latin1 = latin1locale = TRUE;
 # if __APPLE__
 	/* On Darwin 'regular' locales such as 'en_US' are UTF-8 (hence
-	   MB_CUR_MAX == 6), but CODESET is "" 
-	   2021: that comment dated from 2008: MB_CUR_MAX is now 4 in 
-	   a UTF-8 locale, even on 10.13. 
+	   MB_CUR_MAX == 6), but CODESET is ""
+	   2021: that comment dated from 2008: MB_CUR_MAX is now 4 in
+	   a UTF-8 locale, even on 10.13.
 	*/
 	if (*p == 0 && (MB_CUR_MAX == 4 || MB_CUR_MAX == 6)) {
 	    known_to_be_utf8 = utf8locale = TRUE;
@@ -1271,7 +1271,7 @@ struct R_dirent *R_readdir(R_DIR *rdir)
 {
     if (!rdir) {
 	errno = EFAULT;
-	return NULL; 
+	return NULL;
     }
 #ifdef Win32
     if (rdir->pattern) {
@@ -1373,7 +1373,7 @@ attribute_hidden R_WDIR *R_wopendir(const wchar_t *name)
     if (!rdir->pattern) {
 	free(rdir);
 	return NULL;
-    }   
+    }
     rdir->hfind = INVALID_HANDLE_VALUE;
     return rdir;
 }
@@ -1382,7 +1382,7 @@ attribute_hidden struct R_wdirent *R_wreaddir(R_WDIR *rdir)
 {
     if (!rdir) {
 	errno = EFAULT;
-	return NULL; 
+	return NULL;
     }
     if (rdir->pattern) {
 	/* starting the search */
@@ -2808,14 +2808,21 @@ static void copyFileTime(const wchar_t *from, const wchar_t * to)
     HANDLE hFrom, hTo;
     FILETIME modft;
 
-    hFrom = CreateFileW(from, GENERIC_READ, 0, NULL, OPEN_EXISTING,
+    /* Only attribute access and allow sharing:
+       exclusive access would fail if the files are open elsewhere
+       and fail concurrent attempts to open them, too. */
+    hFrom = CreateFileW(from, FILE_READ_ATTRIBUTES,
+			FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE,
+			NULL, OPEN_EXISTING,
 			FILE_FLAG_BACKUP_SEMANTICS, NULL);
     if (hFrom == INVALID_HANDLE_VALUE) return;
     int res  = GetFileTime(hFrom, NULL, NULL, &modft);
     CloseHandle(hFrom);
     if(!res) return;
 
-    hTo = CreateFileW(to, GENERIC_WRITE, 0, NULL, OPEN_EXISTING,
+    hTo = CreateFileW(to, FILE_WRITE_ATTRIBUTES,
+		      FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE,
+		      NULL, OPEN_EXISTING,
 		      FILE_FLAG_BACKUP_SEMANTICS, NULL);
     if (hTo == INVALID_HANDLE_VALUE) return;
     SetFileTime(hTo, NULL, NULL, &modft);
@@ -3833,7 +3840,7 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 # pragma clang diagnostic ignored "-Wpedantic"
 #elif defined __GNUC__
 # pragma GCC diagnostic push
-# pragma GCC diagnostic ignored "-Wpedantic"	
+# pragma GCC diagnostic ignored "-Wpedantic"
 #endif
     if (!dladdr((void *)do_eSoftVersion, &dl_info1)) ok = FALSE;
     if (!dladdr((void *)dladdr, &dl_info2)) ok = FALSE;
@@ -3883,7 +3890,7 @@ do_eSoftVersion(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_STRING_ELT(ans, i, nfo);
 	} else if (errno == ENOENT)
 	    /* macOs (Big Sur) has a cache for system-provided dynamic
-	       libraries and they no longer exist as regular files. The 
+	       libraries and they no longer exist as regular files. The
 	       dynamic linker knows how to find them, but not regular file
 	       operations such as realpath(). Hence, when the file is not
 	       found, report what we have from the dynamic linker. */

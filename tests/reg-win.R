@@ -22,8 +22,8 @@ y <- c("0x1p+0", "0x1p+1", "0x1.8p+1", "0x1p+2", "0x1.4p+2", "0x1.8p+2",
        "0x1.cp+2", "0x1p+3")
 stopifnot(identical(x, y))
 
-## binary mode in download.file(,method="wininet") (PR#17715)
 
+## binary mode in download.file(,method="wininet") (PR#17715)
 src <- file.path(tempdir(), "source.bin")
 dst <- file.path(tempdir(), "target.bin")
 url <- file.path("file://", src)
@@ -32,3 +32,20 @@ writeBin(d, src)
 download.file(url, dst, method = "wininet", mode = "wb")
 dstbin <- readBin(dst, "raw")
 stopifnot(identical(d, dstbin))
+
+
+## file.copy(copy.date = TRUE) opened the files for exclusive access when
+## copying the file time, so the time was not copied if the source file was
+## open elsewhere and concurrent attempts to open the source file could fail (PR#19187)
+src <- tempfile("source")
+dir <- tempfile("target")
+writeLines("hello", src)
+dir.create(dir)
+Sys.setFileTime(src, as.POSIXct("2020-01-01 12:00:00", tz = "UTC"))
+con <- file(src, "rb")
+## copy into an existing directory, so that the internal copy code is used
+ok <- file.copy(src, dir, copy.date = TRUE)
+close(con)
+dst <- file.path(dir, basename(src))
+stopifnot(ok, file.mtime(src) == print(file.mtime(dst)))
+## the file time was not copied in R <= 4.6.1

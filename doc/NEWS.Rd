@@ -86,9 +86,6 @@
 	ksmooth(x, x, x.points = 1)} no longer writes out of bounds, fixing
       \PR{19171}.
 
-      \item \command{R CMD rtags} (on Unix-alikes) no longer fails from
-      a bad escape if \command{sh} is \command{bash} or \command{busybox}.
-
       \item \code{besselI(1, 1e11)} and \code{besselK(..)} now signal a
       warning and return \code{NaN} instead of typically segfaulting,
       fixing \PR{19175} thanks to \I{Ben Bolker}.
@@ -96,6 +93,9 @@
       \item \code{text.default(.., col = numeric(0))} and similar no longer
       segfault in "instrumented" versions of R, fixing \PR{19178} thanks to
       \I{Jiang Yuancheng}'s \command{fusion-fuzz} and \I{Ivan Krylov}.
+
+      \item \command{R CMD rtags} (on Unix-alikes) no longer fails from
+      a bad escape if \command{sh} is \command{bash} or \command{busybox}.
     }
   }
   \subsection{Bug Fixes (Windows)}{
@@ -105,6 +105,11 @@
       \env{\%HOME\%} nor \env{\%USER\%} environment variables are set,
       fixing \PR{18949} thanks to the report and patch from \I{Ivan Krylov}
       and \I{Mauricio Vargas}'s \I{R Dev Day} work.
+
+      \item \code{file.copy(*, date=TRUE)} no longer opens files for
+      exclusive access when copying the file time.  Consequently, the time
+      \emph{is} copied now and concurrent attempts to open the source file should
+      work reliably, thanks to \I{Kevin Ushey}'s report and patch in \PR{19187}.
     }
   }
 }
