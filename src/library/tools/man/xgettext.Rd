@@ -1,6 +1,6 @@
 % File src/library/tools/man/xgettext.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2023 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{xgettext}
@@ -38,8 +38,7 @@ xgettext2pot(dir, potFile, name = "R", version, bugs)
   \item{asCall}{logical: if \code{TRUE} each argument is converted to
     string and returned whole, otherwise the string literals within each
     argument are extracted (recursively). See Examples.}
-
-  \item{potFile}{name of \code{po} template file to be produced.
+  \item{potFile}{name of the PO template file to be produced.
     Defaults to \file{R-\var{pkgname}.pot} where
     \var{pkgname} is the basename of \file{dir}.}
   \item{name, version, bugs}{as recorded in the template file:
@@ -59,13 +58,11 @@ xgettext2pot(dir, potFile, name = "R", version, bugs)
   to \code{gettext} (or \code{warning}, etc.) whose strings would be visible
   if \code{asCall} is false.
 
-  \code{xgettext2pot} calls \code{xgettext} and then \code{xngettext},
-  and writes a PO template file (to \code{potFile}) for use with the GNU \I{gettext}
-  tools.  This ensures that the strings for simple translation are
-  unique in the file (as GNU \I{gettext} requires), but does not do so
-  for \code{ngettext} calls (and the rules are not stated in the GNU \I{gettext}
-  manual, but \command{msgfmt} complains if there is duplication between
-  the sets.).
+  \code{xgettext2pot} calls \code{xgettext} (with \code{asCall = FALSE})
+  and then \code{xngettext}, and writes the unique strings from each set
+  to a PO template file (\code{potFile}) for use with the GNU \I{gettext}
+  tools (\command{msgfmt} will complain if there is duplication between
+  the sets).
 
   If applied to the \pkg{base} package, this also looks in the \file{.R}
   files in \file{\var{\link{R_HOME}}/share/R}.
