@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2025   The R Core Team.
+ *  Copyright (C) 1999-2026   The R Core Team.
  *
  *  Based on ACM TOMS643 (1993)
  *
@@ -211,7 +211,10 @@ fexact(int nrow, int ncol, const int table[], int ldtabl,
 	for (j = 0; j < ncol; ++j) {
 	    if (table[i + j * ldtabl] < 0)
 		prterr(2, "All elements of TABLE must be nonnegative.");
-	    ntot += table[i + j * ldtabl];
+	    int inc = table[i + j * ldtabl];
+	    if (ntot > INT_MAX - inc)
+		prterr(40, "Workspace allocation size overflow (ntot + inc > INT_MAX).");
+	    ntot += inc;
 	}
     }
     if (ntot == 0) {
@@ -231,14 +234,20 @@ fexact(int nrow, int ncol, const int table[], int ldtabl,
 	nro = ncol;
     }
     k = nrow + ncol + 1;
+    if (k > INT_MAX / nco)
+	prterr(40, "Workspace allocation size overflow (k * nco > INT_MAX).");
     kk = k * nco;
 
+    if (ntot == INT_MAX)
+	prterr(40, "Workspace allocation size overflow (ntot == INT_MAX).");
     i1  = iwork(iwkmax, &iwkpt, ntot + 1, i_real);
     i2  = iwork(iwkmax, &iwkpt, nco, i_int);
     i3  = iwork(iwkmax, &iwkpt, nco, i_int);
     i3a = iwork(iwkmax, &iwkpt, nco, i_int);
     i3b = iwork(iwkmax, &iwkpt, nro, i_int);
     i3c = iwork(iwkmax, &iwkpt, nro, i_int);
+    if (kk > ((INT_MAX - k * 5) >> 1) || nco > (INT_MAX - 4*n2_stack) / 7)
+	prterr(40, "Workspace allocation size overflow (ikh > INT_MAX).");
     int ikh = imax2(k * 5 + (kk << 1), nco * 7 + 4*n2_stack);
     iiwk= iwork(iwkmax, &iwkpt, ikh, i_int);
     ikh = imax2(nco + 1 + 2*n2_stack, k);
@@ -1834,12 +1843,20 @@ int iwork(int iwkmax, int *iwkpt, int number, int itype)
     int i;
 
     i = *iwkpt;
-    if (itype == 2 || itype == 3)
+    if (itype == 2 || itype == 3) {
+	if (i > INT_MAX - number)
+	    prterr(40, "Workspace allocation size overflow (iwkmax + number > INT_MAX).");
 	*iwkpt += number;
+    }
     else { /* double */
 	if (i % 2 != 0)
 	    ++i;
-	*iwkpt += (number << 1);
+	if (number > (INT_MAX >> 1))
+	    prterr(40, "Workspace allocation size overflow (number << 1 > INT_MAX).");
+	number <<= 1;
+	if (i > INT_MAX - number)
+	    prterr(40, "Workspace allocation size overflow (iwkmax + number > INT_MAX).");
+	*iwkpt += number;
 	i /= 2;
     }
     if (*iwkpt > iwkmax)
@@ -2065,6 +2082,9 @@ SEXP Fexact(SEXP x, SEXP pars, SEXP work, SEXP smult)
 {
     int nr = nrows(x), nc = ncols(x), ws = asInteger(work),
 	mult = asInteger(smult);
+    if (xlength(x) > INT_MAX)
+	error(_("Fexact(): matrix is too large, %lld > INT_MAX\n"
+	        "Rather set 'simulate.p.value=TRUE'\n"), (long long)xlength(x));
     pars = PROTECT(coerceVector(pars, REALSXP));
     double p, prt, *rp =  REAL(pars);
     fexact(nr, nc, INTEGER(x), nr,
