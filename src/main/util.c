@@ -1622,19 +1622,26 @@ size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
 	size_t sz = 4*strlen(s) + 1;
 	char err[sz], *q;
 	const char *p;
+	/* Bound each mbrtowc() by the bytes actually left before the
+	   terminating nul.  The previous code passed the caller's fixed
+	   count 'n' (typically R_MB_CUR_MAX) and decremented it in step with
+	   'p'; once it fell out of step it underflowed to a huge size_t, so
+	   mbrtowc() was told far more bytes were available than remained and
+	   could read past the end of 's' into unmapped memory. */
+	size_t nb = strlen(s);
 	for(p = s, q = err; *p; ) {
 	    /* don't do the first to keep ps state straight */
-	    if(p > s) used = mbrtowc(NULL, p, n, ps);
+	    if(p > s) used = mbrtowc(NULL, p, nb, ps);
 	    if(used == 0) break;
 	    else if((int) used > 0) {
 		memcpy(q, p, used);
 		p += used;
 		q += used; sz -= used;
-		n -= used;
+		nb -= used;
 	    } else {
 		snprintf(q, sz, "<%02x>", (unsigned char) *p++);
 		q += 4; sz -= 4;
-		n--;
+		nb--;
 	    }
 	}
 	*q = '\0';
