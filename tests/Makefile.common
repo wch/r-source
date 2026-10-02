@@ -314,7 +314,7 @@ test-CRANtools:
 
 ## Not part of any other target.
 ## On x86_64 Linux uses up to 220GB of VM and takes the best part of an hour.
-## On Linux tests are skipped if there is no enough memory.
+## On Linux tests are skipped if there is not enough memory.
 test-Large:
 	@$(ECHO) "running tests needing large amounts of processor memory"
 	@$(ECHO) "  (is slow, notably when memory is available)"
@@ -328,6 +328,10 @@ test-Random:
 	@$(ECHO) "running tests of random deviate generation"
 	@$(MK) $(test-out-random) RVAL_IF_DIFF=1
 
+test-Reg-enc:
+	@$(ECHO) "running tests with 'encoding'"
+	@$(MK) $(test-out-reg-enc) R="$(R2)"
+
 test-Reg:
 	@$(ECHO) "running regression tests ..."
 	@if test -n "${TEST_MC_CORES}"; then \
@@ -335,7 +339,7 @@ test-Reg:
 	else \
 	  $(MK) $(test-out-reg) RVAL_IF_DIFF=1; \
 	fi
-	@$(MK) $(test-out-reg-enc) R="$(R2)"
+	@$(MK) test-Reg-enc
 	@$(MK) $(test-out-reg3) RVAL_IF_DIFF=0
 
 test-Regexp:
