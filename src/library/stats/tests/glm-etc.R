@@ -333,7 +333,7 @@ stopifnot(exprs = {
     length(ae15) == 2
     all.equal( coef (fit  ),   coef (fit15),     tolerance = 6e-16)# (0 ; Lnx x86_64)
     all.equal( coef (fit  ),   coef (fitw30),    tolerance = 1e-14)# seen 1.135e-15 [Lnx x86_64]
-    all.equal( coef (fitw30),  coef (fiF100w30), tolerance = 2e-15)# seen 3.43 e-16 [Lnx x86_64]
+    all.equal( coef (fitw30),  coef (fiF100w30), tolerance = 1e-14)# seen 2.146e-15 [Apple M1, Xcode 26.3, LLVM flang 23.1.1]
     all.equal(resid (fitw30), resid (fiF100w30), tolerance = 2e-13)# .. 3.81e-14
     all.equal(fitted(fitw30), fitted(fiF100w30), tolerance = 1e-13)# .. 1.38e-14
 })
