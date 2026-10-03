@@ -1596,7 +1596,7 @@ attribute_hidden SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 attribute_hidden SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP a, r, dims, dimnames, dimnamesnames = R_NilValue,
-	ndimnamesnames, rnames, cnames;
+	ndimnamesnames, rnames, cnames, dimr, nmdma, nmdmr;
     int ldim, ncol = 0, nrow = 0;
     R_xlen_t len = 0;
 
@@ -1687,11 +1687,22 @@ attribute_hidden SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(2); /* r, dimnamesnames */
 	goto not_matrix;
     }
-    PROTECT(dims = allocVector(INTSXP, 2));
-    INTEGER(dims)[0] = ncol;
-    INTEGER(dims)[1] = nrow;
-    setAttrib(r, R_DimSymbol, dims);
-    UNPROTECT(1); /* dims */
+    PROTECT(dimr = allocVector(INTSXP, 2));
+    INTEGER(dimr)[0] = ncol;
+    INTEGER(dimr)[1] = nrow;
+    if(ldim == 2) {
+	nmdma = getAttrib(dims, R_NamesSymbol);
+	if(nmdma != R_NilValue) {
+	    PROTECT(nmdma);
+	    PROTECT(nmdmr = allocVector(STRSXP, 2));
+	    SET_STRING_ELT(nmdmr, 0, STRING_ELT(nmdma, 1));
+	    SET_STRING_ELT(nmdmr, 1, STRING_ELT(nmdma, 0));
+	    setAttrib(dimr, R_NamesSymbol, nmdmr);
+	    UNPROTECT(2);
+	}
+    }
+    setAttrib(r, R_DimSymbol, dimr);
+    UNPROTECT(1); /* dimr */
     /* R <= 2.2.0: dropped list(NULL,NULL) dimnames :
      * if(rnames != R_NilValue || cnames != R_NilValue) */
     if(!isNull(dimnames)) {
@@ -1795,22 +1806,6 @@ attribute_hidden SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* special case for 2D arrays (PR#19133) */
 	SEXP r = do_transpose(call, op, args, rho);
 	if (resize) {
-	    /* <FIXME>
-	       Since c69642, "aperm() now preserves names(dim(.))"
-	       so need to ensure this here too.
-	       Ideally do_transpose() would do that?
-	    */
-	    SEXP dimsr = getAttrib(r, R_DimSymbol);
-	    SEXP nmdm = getAttrib(dimsa, R_NamesSymbol);
-	    if(nmdm != R_NilValue) { // dimsr needs correctly permuted names()
-		PROTECT(r);
-		PROTECT(nmdm);
-		SEXP nm_dr = PROTECT(allocVector(STRSXP, 2));
-		SET_STRING_ELT(nm_dr, 0, STRING_ELT(nmdm, 1));
-                SET_STRING_ELT(nm_dr, 1, STRING_ELT(nmdm, 0));
-		setAttrib(dimsr, R_NamesSymbol, nm_dr);
-		UNPROTECT(3);
-	    }
 	    UNPROTECT(1);
 	    return r;
 	}
