@@ -1557,8 +1557,8 @@ function(dir)
 }
 
 .DESCRIPTION_to_HTML <- 
-function(descfile, dynamic = FALSE, resources = NULL, hooks = list()) {
-
+function(descfile, dynamic = FALSE, resources = NULL, hooks = list())
+{
     ## Similar to .DESCRIPTION_to_latex().
 
     if(is.null(resources))
@@ -1891,3 +1891,17 @@ function(descfile, dynamic = FALSE, resources = NULL, hooks = list()) {
               names(desc), desc),
       "</table>")
 }
+
+image_data_uri <-
+function(file)
+{
+    if(!length(file) || !nzchar(file) || !file.exists(file))
+        return(NA_character_)
+    size <- file.size(file)
+    if(is.na(size) || size == 0)
+        return(NA_character_)
+    mime <- mime_type(file)
+    if(is.na(mime)) return(NA_character_)
+    sprintf("data:%s;base64,%s", mime, base64_encode(file))
+}
+
