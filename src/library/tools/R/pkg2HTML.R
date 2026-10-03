@@ -107,7 +107,7 @@
 
 pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                      outputEncoding = "UTF-8",
-                     stylesheet = file.path(R.home("doc"), "html", "R-nav.css"),
+                     stylesheet = file.path(resources, "R-nav.css"),
                      hooks = list(pkg_href = function(pkg) sprintf("%s.html", pkg)),
                      texmath = getOption("help.htmlmath"),
                      prism = TRUE,
@@ -115,11 +115,13 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                      toc_entry = c("name", "title"),
                      ...,
                      Rhtml = FALSE,
-                     mathjax_config = file.path(R.home("doc"), "html", "mathjax-config.js"),
+                     mathjax_config = file.path(resources, "mathjax-config.js"),
                      include_description = TRUE,
-		     concordance = FALSE)
+		     concordance = FALSE,
+                     resources = "https://cloud.R-project.org/web/resources")
 {
     toc_entry <- match.arg(toc_entry)
+    stopifnot(is.character(resources), length(resources) == 1L)
     hcontent <- .convert_package_rdfiles(package = package, dir = dir, lib.loc = lib.loc,
                                          outputEncoding = outputEncoding,
                                          Rhtml = Rhtml, hooks = hooks,
@@ -213,7 +215,8 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
               '<main>')
 
     if (include_description)
-        writeHTML(.DESCRIPTION_to_HTML(descfile, hooks = hooks))
+        writeHTML(.DESCRIPTION_to_HTML(descfile, resources = resources,
+                                       hooks = hooks))
     lapply(names(hcontent), function(rdfile) {
         h <- hcontent[[rdfile]]
     	if (concordance) {

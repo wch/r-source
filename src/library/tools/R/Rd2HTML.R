@@ -1557,9 +1557,15 @@ function(dir)
 }
 
 .DESCRIPTION_to_HTML <- 
-function(descfile, dynamic = FALSE, hooks = list()) {
+function(descfile, dynamic = FALSE, resources = NULL, hooks = list()) {
 
     ## Similar to .DESCRIPTION_to_latex().
+
+    if(is.null(resources))
+        resources <- if(dynamic)
+                         "/doc/html"
+                     else
+                         "https://cloud.R-project.org/web/resources"
 
     if(dynamic) {
         if(is.null(hooks$description_license_paths))
@@ -1854,10 +1860,7 @@ function(descfile, dynamic = FALSE, hooks = list()) {
                          .ORCID_iD_regexp),
                  paste0("<a href=\"https://orcid.org/\\1\">",
                         "<img alt=\"ORCID iD\" ",
-                        if(dynamic)
-                            " src=\"/doc/html/orcid.svg\" "
-                        else
-                            " src=\"https://cloud.R-project.org/web/resources/orcid.svg\" ",
+                        sprintf(" src=\"%s/orcid.svg\" ", resources),
                         "style=\"width:16px; height:16px; margin-left:4px; margin-right:4px; vertical-align:middle\"",
                         "></a>"),
                  desc["Author"])
@@ -1866,10 +1869,7 @@ function(descfile, dynamic = FALSE, hooks = list()) {
                          .ROR_ID_regexp),
                  paste0("<a href=\"https://ror.org/\\1\">",
                         "<img alt=\"ROR ID\" ",
-                        if(dynamic)
-                            " src=\"/doc/html/ror.svg\" "
-                        else
-                            " src=\"https://cloud.R-project.org/web/resources/ror.svg\" ",
+                        sprintf(" src=\"%s/ror.svg\" ", resources),
                         "style=\"width:20px; height:20px; margin-left:4px; margin-right:4px; vertical-align:middle\"",
                         "></a>"),
                  desc["Author"])
