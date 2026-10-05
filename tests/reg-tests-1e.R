@@ -3870,6 +3870,20 @@ stopifnot(all.equal(imP[, "dffit"], dffits(fitP)),
 ## dffit, cov.r and dfb.* used the leave-one-out sigma in R 4.6.0 and 4.6.1
 
 
+## wilcox.test(*, exact=TRUE)  when p ~= 1 -- PR#19144
+x <- c(-71, -54, -41, -33, -30:-29, -27, -1:0, 2:26, 28, 31:32, 34:40, 42:53, 55:70, 72:99)
+(pvW <- vapply(c("two.sided", "greater", "less"),
+               function(alt) wilcox.test(x, exact = TRUE, alternative = alt)$p.value, .1))
+pvX <- c( # exact values:
+    two.sided = 409667043355 / 2^97
+  , greater   = 409667043355 / 2^98
+  , less  = 1 - 194595959493 / 2^97)
+all.equal(pvX, pvW, tolerance = 0) # 3.87e-15
+stopifnot(print(abs(pvW/pvX - 1)) <= c(2e-14, 2e-14, 0),
+          all.equal(2, pvW[["two.sided"]]/pvW[["greater"]]))
+## not ok in  R <= 4.6.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
