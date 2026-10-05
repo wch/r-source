@@ -102,6 +102,10 @@
       built by a C compiler without C23 \code{enum} base types, thanks to
       \I{Trevor Davis}' report and patch in \PR{19180}.
     }
+      
+      \item \code{influence.measures()} inadvertently wasn't updated along
+      with \code{dffits()}, \code{dfbetas()}, \code{covratio()}. \PR{19167} by
+      \I{Amal Tawfik}. 
   }
   \subsection{Bug Fixes (Windows)}{
     \itemize{
