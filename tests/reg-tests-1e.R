@@ -3859,6 +3859,17 @@ for (frac in c(1/2, 1/4)) { # nul position where the translation is as long
 ## gave "'Rf_getCharCE' must be called on a CHARSXP" (or a crash) in R <= 4.6.x
 
 
+## influence.measures() must agree with the direct access functions for a
+## glm with fixed dispersion (binomial, poisson)
+counts <- c(18,17,15,20,10,20,25,13,12); outcome <- gl(3,1,9); treatment <- gl(3,3)
+fitP <- glm(counts ~ outcome + treatment, family = poisson())
+imP <- influence.measures(fitP)$infmat
+stopifnot(all.equal(imP[, "dffit"], dffits(fitP)),
+          all.equal(imP[, "cov.r"], covratio(fitP)),
+          all.equal(unname(imP[, 1:5]), unname(dfbetas(fitP))))
+## dffit, cov.r and dfb.* used the leave-one-out sigma in R 4.6.0 and 4.6.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -366,17 +366,26 @@ influence.measures <- function(model, infl = influence(model))
     s <- sqrt(sum(e^2, na.rm=TRUE)/df.residual(model))
     mqr <- qr.lm(model)
     xxi <- chol2inv(mqr$qr, mqr$rank)
-    si <- infl$sigma
+    ## glm with fixed dispersion: use sigma(model), not the leave-one-out
+    ## sigma, as dffits.glm(), dfbetas.glm() and covratio() do
+    fixedDisp <- inherits(model, "glm") && !estDisp(model$family)
+    si <- if(fixedDisp) rep_len(sigma(model), length(infl$sigma)) else infl$sigma
     h <- infl$hat
     is.mlm <- is.matrix(e)
     cf <- if(is.mlm) aperm(infl$coefficients, c(1L,3:2)) else infl$coefficients
-    dfbetas <- cf / outer(infl$sigma, sqrt(diag(xxi)))
+    dfbetas <- cf / outer(si, sqrt(diag(xxi)))
     vn <- variable.names(model); vn[vn == "(Intercept)"] <- "1_"
     dimnames(dfbetas)[[length(dim(dfbetas))]] <- paste0("dfb.", abbreviate(vn))
     ## Compatible to dffits():
     dffits <- e*sqrt(h)/(si*(1-h))
     if(any(ii <- is.infinite(dffits))) dffits[ii] <- NaN
-    cov.ratio <- (si/s)^(2 * p)/(1 - h)
+    cov.ratio <-
+        if(fixedDisp) { # as covratio()
+            nn <- nrow(mqr$qr)
+            e.star <- e/(si*sqrt(1-h))
+            1/((1-h) * (((nn - p - 1) + e.star^2)/(nn - p))^p)
+        } else
+            (si/s)^(2 * p)/(1 - h)
     cooks.d <-
         if(inherits(model, "glm"))
             (infl$pear.res/(1-h))^2 * h/(summary(model)$dispersion * p)

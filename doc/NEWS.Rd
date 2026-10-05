@@ -114,6 +114,7 @@
       \item \code{chol2inv()} gains optional switch \code{diag.only} for
       shortcutting \code{diag(chol2inv(.))}, wished for with a patch and
       reproducible analysis in \PR{19177} by \I{Adam Marstrand}.
+
     }
   }
 
@@ -466,6 +467,10 @@
       character \code{x} such as \code{x = "\u00e9"} now signals an error
       as the required width is too large, rather than segfaulting,
       thanks to \I{Adam Berkeš}' report in \PR{19188}.
+      
+      \item \code{influence.measures()} inadvertently wasn't updated along
+      with \code{dffits()}, \code{dfbetas()}, \code{covratio()}. \PR{19167} by
+      \I{Amal Tawfik}. 
     }
   }
   \subsection{Bug Fixes (Windows)}{
