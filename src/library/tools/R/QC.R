@@ -3358,7 +3358,7 @@ function(dir, force_suggests = TRUE, check_incoming = FALSE,
     ## If the package itself is the VignetteBuilder,
     ## we may not have installed it yet.
     defer <- package_name %in%  db["VignetteBuilder"]
-    vigns <-
+    vigns <- if (!ignore_vignettes)
         .package_vignettes_via_call_to_R(dir = dir,
                                          subdirs = file.path("inst", "doc"),
                                          check = !defer)
