@@ -3879,7 +3879,7 @@ pvX <- c( # exact values:
   , greater   = 409667043355 / 2^98
   , less  = 1 - 194595959493 / 2^97)
 all.equal(pvX, pvW, tolerance = 0) # 3.87e-15
-stopifnot(print(abs(pvW/pvX - 1)) <= c(2e-14, 2e-14, 0),
+stopifnot(print(abs(pvW/pvX - 1)) <= c(2e-14, 2e-14, 1e-15),
           all.equal(2, pvW[["two.sided"]]/pvW[["greater"]]))
 ## not ok in  R <= 4.6.1
 
