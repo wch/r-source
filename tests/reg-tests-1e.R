@@ -3729,6 +3729,25 @@ stopifnot(identical(L00, ksmooth(x,y, x.points=NULL)),
 ## did seg.fault, trying to access x.points[1] from C
 
 
+## malformed ALTREP serialized class metadata
+altrep <- rawToChar(serialize(1:3, NULL, ascii = TRUE))
+marker <- "\n2\n13\n1\n13\n254\n"
+pos <- gregexpr(marker, altrep, fixed = TRUE)[[1L]]
+stopifnot(length(pos) == 1L, pos > 0L)
+replacements <- c("\n2\n13\n1\n8357\n254\n",
+                  "\n2\n14\n1\n13\n254\n",
+                  "\n2\n13\n0\n254\n")
+errs <- lapply(replacements, function(replacement) {
+    serialized <- charToRaw(sub(marker, replacement, altrep, fixed = TRUE))
+    tryCid(unserialize(serialized))
+})
+stopifnot(vapply(errs, inherits, NA, what = "error"),
+          vapply(errs, function(e)
+              grepl("invalid ALTREP serialized class", conditionMessage(e), fixed = TRUE),
+              NA))
+## an invalid type value indexed beyond Type2Table and seg.faulted
+
+
 ## lm(data = .)
 (lmd <- lm(data = swiss))
 stopifnot(all.equal(coef(lmd), tolerance = 1e-4,
