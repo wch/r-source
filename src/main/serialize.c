@@ -2251,6 +2251,22 @@ static void DecodeVersion(int packed, int *v, int *p, int *s)
     *s = packed;
 }
 
+/* ReadChar opens iconv descriptors lazily and caches them in the stream;
+   close them both when unserialization finishes and when an error unwinds
+   out of it */
+static void CloseInStreamConverters(void *data)
+{
+    R_inpstream_t stream = data;
+    if (stream->nat2nat_obj && stream->nat2nat_obj != (void *)-1) {
+	Riconv_close(stream->nat2nat_obj);
+	stream->nat2nat_obj = NULL;
+    }
+    if (stream->nat2utf8_obj && stream->nat2utf8_obj != (void *)-1) {
+	Riconv_close(stream->nat2utf8_obj);
+	stream->nat2utf8_obj = NULL;
+    }
+}
+
 SEXP R_Unserialize(R_inpstream_t stream)
 {
     int version;
@@ -2291,18 +2307,17 @@ SEXP R_Unserialize(R_inpstream_t stream)
 
     /* Read the actual object back */
     PROTECT(ref_table = MakeReadRefTable());
-    obj =  ReadItem(ref_table, stream);
 
-    if (version == 3) {
-	if (stream->nat2nat_obj && stream->nat2nat_obj != (void *)-1) {
-	    Riconv_close(stream->nat2nat_obj);
-	    stream->nat2nat_obj = NULL;
-	}
-	if (stream->nat2utf8_obj && stream->nat2utf8_obj != (void *)-1) {
-	    Riconv_close(stream->nat2utf8_obj);
-	    stream->nat2utf8_obj = NULL;
-	}
-    }
+    RCNTXT cntxt;
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+		 R_NilValue, R_NilValue);
+    cntxt.cend = &CloseInStreamConverters;
+    cntxt.cenddata = stream;
+
+    obj = ReadItem(ref_table, stream);
+
+    endcontext(&cntxt);
+    CloseInStreamConverters(stream);
     UNPROTECT(1);
 
     return obj;
