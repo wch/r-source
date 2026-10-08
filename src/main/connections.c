@@ -7340,15 +7340,20 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	    opt = 16;  // force gzip format
 	}
 	while(1) {
-	    buf = (Bytef *) R_alloc(outlen, sizeof(Bytef));
-	    // R_uncompress is in gzio.h
+	    uLong buflen = outlen;
+	    buf = (Bytef *) R_alloc(buflen, sizeof(Bytef));
+	    // R_uncompress is in gzio.h.  It sets outlen to the number of
+	    // bytes actually produced, whatever the result.
 	    int res = R_uncompress(buf, &outlen, p, inlen, opt);
-	    if(res == Z_BUF_ERROR) {
-		if(outlen < ULONG_MAX/2) {
-		    outlen *= 2; continue;
+	    if(res == Z_BUF_ERROR && outlen == buflen) {
+		// the output buffer filled up: grow it and retry
+		if(buflen < ULONG_MAX/2) {
+		    outlen = buflen ? 2*buflen : 1; continue;
 		} else break;
 	    }
 	    if(res >= 0) break;
+	    // Z_BUF_ERROR with room left in the buffer means the input
+	    // ended prematurely, so a bigger buffer cannot help.
 	    error("internal error %d in memDecompress(%s)", res,
 		  "type = \"gzip\"");
 	}
