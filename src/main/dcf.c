@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2025   The R Core Team.
+ *  Copyright (C) 2001-2026   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -75,10 +75,28 @@ static SEXP mkCharUTF8sub(const char *s)
     return ans;
 }
 
-static void con_cleanup(void *data)
+/* What do_readDCF() has to release however it exits: the error() calls
+   in its read loop would otherwise leak the line buffer and the compiled
+   regexps, and leave open a connection it opened itself. */
+typedef struct dcf_info {
+    Rconnection con;
+    bool wasopen;
+    char **buf;			/* the line buffer, which realloc() may move */
+    regex_t *regex[5];
+    int nregex;			/* how many of regex[] have been compiled */
+} dcf_info;
+
+static void dcf_cleanup(void *data)
 {
-    Rconnection con = data;
-    if(con->isopen) con->close(con);
+    dcf_info *pdi = (dcf_info *) data;
+
+    for(int i = 0; i < pdi->nregex; i++)
+	tre_regfree(pdi->regex[i]);
+    pdi->nregex = 0;
+    free(*pdi->buf);
+    *pdi->buf = NULL;
+    if(!pdi->wasopen && pdi->con->isopen)
+	pdi->con->close(pdi->con);
 }
 
 static bool field_is_foldable_p(const char *, SEXP);
@@ -115,13 +133,18 @@ attribute_hidden SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     int nwhat, nret, nc, nr, m, k, lastm, need, i, n_eblanklines = 0;
     bool blank_skip, field_skip = false;
     int whatlen, dynwhat, buflen = 8096; // was 100, but that re-alloced often
-    char *line, *buf;
+    char *line, *buf = NULL;
     regex_t blankline, contline, trailblank, regline, eblankline;
     regmatch_t regmatch[1];
     SEXP file, what, what2, retval, retval2, dims, dimnames;
     Rconnection con = NULL;
     bool wasopen, is_eblankline;
     RCNTXT cntxt;
+    dcf_info di = {
+	.buf = &buf,
+	.regex = { &blankline, &trailblank, &contline, &regline, &eblankline },
+	.nregex = 0
+    };
 
     SEXP fold_excludes;
     bool field_fold = true, has_fold_excludes;
@@ -133,14 +156,16 @@ attribute_hidden SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     file = CAR(args);
     con = getConnection(asInteger(file));
     wasopen = con->isopen;
-    if(!wasopen) {
-	if(!con->open(con)) error(_("cannot open the connection"));
-	/* Set up a context which will close the connection on error */
-	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
-		     R_NilValue, R_NilValue);
-	cntxt.cend = &con_cleanup;
-	cntxt.cenddata = con;
-    }
+    if(!wasopen && !con->open(con))
+	error(_("cannot open the connection"));
+    /* Set up a context which will close the connection if we opened it,
+       and free the line buffer and regexps, on error */
+    di.con = con;
+    di.wasopen = wasopen;
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+		 R_NilValue, R_NilValue);
+    cntxt.cend = &dcf_cleanup;
+    cntxt.cenddata = &di;
     if(!con->canread) error(_("cannot read from this connection"));
 
     args = CDR(args);
@@ -166,6 +191,7 @@ attribute_hidden SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     tre_regcompb(&contline, "^[ \t]+", REG_EXTENDED);
     tre_regcompb(&regline, "^[^:]+:[ \t]*", REG_EXTENDED);
     tre_regcompb(&eblankline, "^[ \f\n\r\t\v]+\\.[ \f\n\r\t\v]*$", REG_EXTENDED);
+    di.nregex = 5;
 
     k = 0;
     lastm = -1; /* index of the field currently being recorded */
@@ -236,11 +262,11 @@ attribute_hidden SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 			need += (int) strlen(line + offset) + n_eblanklines;
 		    }
 		    if(buflen < need) {
+			/* on failure, dcf_cleanup() frees the old buffer */
 			char *tmp = (char *) realloc(buf, need);
-			if(!tmp) {
-			    free(buf);
+			if(!tmp)
 			    error(_("could not allocate memory for 'read.dcf'"));
-			} else buf = tmp;
+			buf = tmp;
 			buflen = need;
 		    }
 		    strcpy(buf, CHAR(STRING_ELT(retval, lastm + nwhat * k)));
@@ -318,10 +344,9 @@ attribute_hidden SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 			need = (int) (Rf_strchr(line, ':') - line + 1);
 			if(buflen < need){
 			    char *tmp = (char *) realloc(buf, need);
-			    if(!tmp) {
-				free(buf);
+			    if(!tmp)
 				error(_("could not allocate memory for 'read.dcf'"));
-			    } else buf = tmp;
+			    buf = tmp;
 			    buflen = need;
 			}
 			strncpy(buf, line, Rf_strchr(line, ':') - line);
@@ -356,13 +381,8 @@ attribute_hidden SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     vmaxset(vmax);
-    if(!wasopen) {endcontext(&cntxt); con->close(con);}
-    free(buf);
-    tre_regfree(&blankline);
-    tre_regfree(&contline);
-    tre_regfree(&trailblank);
-    tre_regfree(&regline);
-    tre_regfree(&eblankline);
+    endcontext(&cntxt);
+    dcf_cleanup(&di);
 
     if(!blank_skip) k++;
 
