@@ -3568,6 +3568,33 @@ local({
 ## write.dcf() relied on the Encoding field (in R <= 4.6.0)
 
 
+## read.dcf() matches a repeated field name containing an invalid byte
+local({
+    tf <- tempfile()
+    rec <- c(charToRaw("Package: p\nX"), as.raw(0xff), charToRaw("Y: v\n\n"))
+    con <- file(tf, "wb")
+    writeBin(rep(rec, 3), con)
+    close(con)
+    dC <- read.dcf(tf)
+    dR <- read.dcf(tf, all = TRUE)
+    stopifnot(identical(dim(dC), c(3L, 2L)),
+              identical(colnames(dC), c("Package", "X<ff>Y")),
+              identical(colnames(dC), names(dR)),
+              identical(unname(dC[, "X<ff>Y"]), dR[["X<ff>Y"]]))
+    ## Malformed lines with invalid bytes: the repaired line is shorter
+    ## than the 20 bytes the error message keeps.
+    for (b in list(as.raw(0xff), c(charToRaw("  "), as.raw(0xff)))) {
+        con <- file(tf, "wb")
+        writeBin(b, con)
+        close(con)
+        msg <- tryCatch(read.dcf(tf), error = conditionMessage)
+        stopifnot(grepl("<ff>", msg, fixed = TRUE))
+    }
+    unlink(tf)
+})
+## previously a duplicate "X<ff>Y" column per record (in R-devel since r90200)
+
+
 ## seq.int(along.with = *) for non-vector objects (PR#19100)
 stopifnot(identical(seq.int(along.with = NULL), integer(0)),
           identical(seq.int(along.with = mean), 1L))

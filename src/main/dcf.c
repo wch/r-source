@@ -173,6 +173,13 @@ attribute_hidden SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     void *vmax = vmaxget();
     char buf0[MAXELTSIZE];
     while((line = Rconn_getline2(con, buf0, MAXELTSIZE))) {
+	/* Repair invalid UTF-8 in the whole line before matching, as the
+	   all = TRUE R code does: a new field name is recorded repaired, so
+	   matching its later occurrences against the raw bytes would fail
+	   and add a duplicate column for each.  The repaired copy comes from
+	   R_alloc() and may be shorter than 21 bytes. */
+	if(!utf8Valid(line))
+	    line = (char *) reEnc3(line, "UTF-8", "UTF-8", 1);
 	if(strlen(line) == 0 ||
 	   tre_regexecb(&blankline, line, 0, 0, 0) == 0) {
 	    /* A blank line.  The first one after a record ends a new
@@ -201,7 +208,8 @@ attribute_hidden SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 		/* A continuation line: wrong if at the beginning of a
 		   record. */
 		if((lastm == -1) && !field_skip) {
-		    line[20] = '\0';
+		    if(strlen(line) > 20)
+			line[20] = '\0';
 		    error(_("Found continuation line starting '%s ...' at begin of record."),
 			  line);
 		}
@@ -340,7 +348,8 @@ attribute_hidden SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 		    }
 		} else {
 		    /* Must be a regular line with no tag ... */
-		    line[20] = '\0';
+		    if(strlen(line) > 20)
+			line[20] = '\0';
 		    error(_("Line starting '%s ...' is malformed!"), line);
 		}
 	    }
