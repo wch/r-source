@@ -34,22 +34,45 @@ static void transferVector(SEXP s, SEXP t);
 /* Build a CHARSXP marked as UTF-8 from the NUL-terminated string 's'.
    DCF files are required to be UTF-8, so 's' is interpreted as UTF-8
    regardless of its actual encoding; any invalid byte sequences are
-   repaired by escaping them as "<xx>", exactly as
+   repaired by escaping them as "<xx>", as
    iconv(from = "UTF-8", to = "UTF-8", sub = "byte") does (which the R
    code paths in read.dcf()/write.dcf() also use).  The common case of
-   already-valid input is handled without conversion. */
+   already-valid input is handled without conversion.
+
+   The escaping is done with utf8Valid()'s rules rather than by iconv():
+   glibc and libiconv pass 4-byte sequences above U+10FFFF through,
+   which utf8Valid() rejects, so an iconv() round trip could leave the
+   result invalid and do_readDCF() would then re-encode the whole field
+   value for every further continuation line. */
 static SEXP mkCharUTF8sub(const char *s)
 {
     if (utf8Valid(s))
 	return mkCharCE(s, CE_UTF8);
 
-    /* reEnc3() performs the iconv() repair via Riconv(); subst = 1 selects
-       the "<xx>" hexadecimal substitution for invalid bytes.  It returns a
-       string allocated with R_alloc() (and freed at the vmaxset() in
-       do_readDCF()), or 's' itself if iconv is unavailable.  Either way
-       mkCharCE() copies the bytes into the CHARSXP below. */
-    const char *repaired = reEnc3(s, "UTF-8", "UTF-8", 1);
-    return mkCharCE(repaired, CE_UTF8);
+    const void *vmax = vmaxget();
+    char *out = R_alloc(4 * strlen(s) + 1, sizeof(char)); /* all escaped */
+    char *q = out;
+    for (const char *p = s; *p; ) {
+	if ((unsigned char) *p < 0x80) {
+	    *q++ = *p++;
+	    continue;
+	}
+	int len = utf8ValidClen(p);
+	if (len > 0) {
+	    memcpy(q, p, len);
+	    q += len;
+	    p += len;
+	} else {
+	    snprintf(q, 5, "<%02x>", (unsigned char) *p);
+	    q += 4;
+	    p++;
+	}
+    }
+    *q = '\0';
+
+    SEXP ans = mkCharCE(out, CE_UTF8);
+    vmaxset(vmax);
+    return ans;
 }
 
 static void con_cleanup(void *data)

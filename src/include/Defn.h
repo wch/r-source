@@ -2454,6 +2454,7 @@ size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
 Rboolean mbcsValid(const char *str);
 char *mbcsTruncateToValid(char *s);
 Rboolean utf8Valid(const char *str);
+int utf8ValidClen(const char *);
 char *Rf_strchr(char *s, int c);
 char *Rf_strrchr(char *s, int c);
 const char *Rf_strchr_const(const char *s, int c);

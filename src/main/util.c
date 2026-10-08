@@ -1706,6 +1706,17 @@ Rboolean utf8Valid(const char *str)
     return valid_utf8(str, strlen(str)) == 0;
 }
 
+/* Number of bytes in the valid UTF-8 character starting at 's', judged
+   by the same rules as utf8Valid(), or 0 if 's' does not start one. */
+attribute_hidden int utf8ValidClen(const char *s)
+{
+    int len = utf8clen(*s);
+    for (int i = 1; i < len; i++)
+	if (!s[i])
+	    return 0;
+    return valid_utf8(s, len) == 0 ? len : 0;
+}
+
 attribute_hidden SEXP do_validUTF8(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);

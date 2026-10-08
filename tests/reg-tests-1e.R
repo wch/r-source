@@ -3885,6 +3885,20 @@ stopifnot(print(abs(pvW/pvX - 1)) <= c(2e-14, 2e-14, 1e-15),
 
 
 
+## read.dcf() escapes 4-byte sequences above U+10FFFF, which iconv()
+## passes through but validUTF8() rejects, like other invalid bytes
+local({
+    bad <- as.raw(c(0xf6, 0xb6, 0xb6, 0xb6))
+    x <- rawToChar(c(charToRaw("A: v\n "), bad, charToRaw("\n lue\n")))
+    con <- textConnection(x)
+    d <- read.dcf(con)
+    close(con)
+    stopifnot(identical(d[[1L, "A"]], "v\n<f6><b6><b6><b6>\nlue"), validUTF8(d))
+})
+## gave "????" in R-devel since r90200, and re-encoded the whole field
+## value for each further continuation line
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
