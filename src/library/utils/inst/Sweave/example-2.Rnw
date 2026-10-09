@@ -24,9 +24,7 @@ foo::foo(42)
 We may also redo the boxplot of the \texttt{airquality} dataset
 in proportions approximately equal to the golden ratio.
 \begin{center}
-<<echo=FALSE, fig=TRUE, width=wd, height=ht>>=
-data(airquality, package="datasets")
-library("graphics")
+<<boxplot, echo=FALSE, fig=TRUE, width=wd, height=ht>>=
 boxplot(Ozone ~ Month, data = airquality)
 @
 \end{center}

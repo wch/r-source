@@ -92,7 +92,8 @@ RtangleOptions(options)
 
 \section{Chunk annotation (\code{annotate})}{
   By default \code{annotate = TRUE}, the annotation is of one of the forms%
-\preformatted{###################################################
+\preformatted{
+###################################################
 ### code chunk number 3: viewport
 ###################################################
 
@@ -179,25 +180,23 @@ RtangleOptions(options)
   \code{\link{Sweave}}, \code{\link{RweaveLatex}}
 }
 \examples{
-## Simple example
+\dontshow{oldwd <- setwd(tempdir()) # outputs from Stangle()}
+## A simple Rnw file
 nmRnw <- "example-1.Rnw"
 exfile <- system.file("Sweave", nmRnw, package = "utils")
+file.show(exfile)
 
-## Check the contents of the file
-if (interactive()) file.show(exfile)
-
-## Tangle the file in the current working directory with the
-## default options
+## Tangle the file in the current working directory with default options
 Stangle(exfile)
 
-## View the R script
+## View the generated R script
 nmR <- sub("Rnw$", "R", nmRnw) # default R output file name
-if (interactive()) file.show(nmR)
-\dontshow{file.rename(nmR, sub(".R$", "-default.R", nmR))}
+\donttest{file.show(nmR)}% path
+\dontshow{stopifnot(file.rename(nmR, sub(".R$", "-default.R", nmR)))}
 ## Reduce spacing between code chunks to a single blank line
 Stangle(exfile, chunk.sep = "\n")
-if (interactive()) file.show(nmR)
-\dontshow{file.rename(nmR, sub(".R$", "-single.R", nmR))}
+\donttest{file.show(nmR)}
+\dontshow{stopifnot(file.rename(nmR, sub(".R$", "-single.R", nmR)))}
 ## Repeat with custom annotations
 my.Ann <- function(options, chunk, output) {
     cat("### chunk #", options$chunknr, ": ",
@@ -206,21 +205,23 @@ my.Ann <- function(options, chunk, output) {
         file = output, sep = "")
 }
 Stangle(exfile, annotate = my.Ann, chunk.sep = "\n")
-if (interactive()) file.show(nmR)
-\dontshow{file.rename(nmR, sub(".R$", "-myAnn.R", nmR))}
+\donttest{file.show(nmR)}
+\dontshow{stopifnot(file.rename(nmR, sub(".R$", "-myAnn.R", nmR)))}
+
 ## Options taking their values from objects for weaving
 ## purposes instead use their default value, with a warning,
 ## on tangling
 nmRnw <- "example-2.Rnw"
 exfile <- system.file("Sweave", nmRnw, package = "utils")
-if (interactive()) file.show(exfile)
+file.show(exfile)
 Stangle(exfile)
-if (interactive()) file.show(sub("Rnw$", "R", nmRnw))
+\donttest{file.show(sub("Rnw$", "R", nmRnw))}
+
 
 ## More advanced example with finer control of output
 nmRnw <- "example-3.Rnw"
 exfile <- system.file("Sweave", nmRnw, package = "utils")
-if (interactive()) file.show(exfile)
+file.show(exfile)
 Stangle(exfile)
 
 ## Note in the R script: chunk #1 commented out; invalid R
@@ -228,23 +229,25 @@ Stangle(exfile)
 ## separator between chunks #2 and #3; last chunk left out
 ## of the script
 nmR <- sub("Rnw$", "R", nmRnw)
-if (interactive()) file.show(nmR)
+\donttest{file.show(nmR)}
 
 ## The effect of 'chunk.sep=FALSE' in chunk #3 is more
 ## interesting without the annotations
 Stangle(exfile, annotate = FALSE, chunk.sep = "\n")
-if (interactive()) file.show(nmR)
-\dontshow{file.rename(nmR, sub(".R$", "-noAnn.R", nmR))}
+\donttest{file.show(nmR)}
+\dontshow{stopifnot(file.rename(nmR, sub(".R$", "-noAnn.R", nmR)))}
 ## With 'drop.evalFALSE = TRUE', unevaluated chunks are
 ## entirely dropped from the tangled script
 Stangle(exfile, annotate = FALSE, drop.evalFALSE = TRUE)
-if (interactive()) file.show(nmR)
-\dontshow{file.rename(nmR, sub(".R$", "-noAnn-noF.R", nmR))}
+\donttest{file.show(nmR)}
+\dontshow{stopifnot(file.rename(nmR, sub(".R$", "-noAnn-noF.R", nmR)))}
 ## Tangling with 'split=TRUE' extracts the shell script in
 ## chunk #4 to a file 'hello.sh', and the text file in
 ## chunk #5 to a file 'README'
 Stangle(exfile, split = TRUE, annotate = FALSE)
-if (interactive()) file.show("hello.sh")
-if (interactive()) file.show("README")
+file.show("hello.sh")
+file.show("README")
+
+\dontshow{setwd(oldwd)}
 }
 \keyword{utilities}

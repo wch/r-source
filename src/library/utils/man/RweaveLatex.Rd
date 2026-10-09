@@ -56,6 +56,7 @@ RweaveLatexOptions(options)
 \details{
   An Sweave driver is a function of no arguments that returns a named
   list of five functions:
+  % CAVE: This is duplicated from vignette("Sweave")!
   \describe{
     \item{\code{setup(file, syntax, \dots)}}{Set up the driver, e.g.
       open the output file. Its return value is an object which is
@@ -70,7 +71,8 @@ RweaveLatexOptions(options)
     \item{\code{writedoc(object, chunk)}}{Write out a documentation
       chunk. Returns a possibly updated \code{object}.}
     \item{\code{finish(object, error)}}{Finish up, or clean up if
-      \code{error} is true.}
+      \code{error} is true.
+      Its return value determines that of \code{\link{Sweave}}.}
     \item{\code{checkopts(options)}}{Convert or validate \code{options}
       given as a named list of character strings.}
   }
@@ -83,7 +85,7 @@ RweaveLatexOptions(options)
   elements of the driver, respectively.
   \code{makeRweaveLatexCodeRunner} creates a function suitable as the
   \code{runcode} element of the driver.
-  
+
   The \LaTeX file generated needs to contain the line
   \samp{\\usepackage\{Sweave\}}, and if this is not present in the
   Sweave source file (possibly in a comment), it is inserted by the
@@ -166,9 +168,10 @@ RweaveLatexOptions(options)
   values in parentheses show the default values). Character string
   values should be quoted when passed from \code{\link{Sweave}} through
   \code{\dots} but not when used in the header of a code chunk.
-
-  The \emph{logical} and \emph{numerical} chunk options below may take
-  their values from objects defined in earlier, evaluated code chunks.
+  For \R \eqn{\ge} 4.6.0,
+  \emph{logical} and \emph{numeric} chunk options may take
+  their values from objects defined in earlier, evaluated code chunks,
+  see \sQuote{Examples}.
   \describe{
     \item{engine:}{character string (\code{"R"}).  Only chunks with
       \code{engine} equal to \code{"R"} or \code{"S"} are processed.}
@@ -178,7 +181,7 @@ RweaveLatexOptions(options)
 
     \item{keep.source:}{logical (\code{TRUE}).  When echoing, if
       \code{TRUE} the original source is copied to the file.  Otherwise,
-      deparsed source is echoed.} 
+      deparsed source is echoed.}
 
     \item{eval:}{logical (\code{TRUE}).  If \code{FALSE}, the code chunk
       is not evaluated, and hence no text nor graphical output
@@ -198,11 +201,11 @@ RweaveLatexOptions(options)
       code chunk is ignored entirely, i.e., neither parsed nor
       evaluated. Chunks ignored on weaving are written out on tangling
       as normal code chunks (unless \code{ignore=TRUE})}
-    
+
     \item{ignore:}{logical (\code{FALSE}). An alternative way to set
       both \code{ignore.on.weave} and \code{ignore.on.tangle} of
       \code{\link{Rtangle}}.}
-    
+
     \item{weave:}{An alternative way to specify \code{!ignore.on.weave}.}
 
     \item{term:}{logical (\code{TRUE}).  If \code{TRUE}, visibility of
@@ -260,16 +263,13 @@ RweaveLatexOptions(options)
       not).  Defaults taken from \code{pdf.options()}.}
 
     \item{png:}{logical (\code{FALSE}), indicating whether PNG figures
-      should be generated.  Ignored if \code{fig = FALSE}.
-      Only available in \R \eqn{\ge} 2.13.0.}
+      should be generated.  Ignored if \code{fig = FALSE}.}
 
     \item{jpeg:}{logical (\code{FALSE}), indicating whether JPEG figures
-      should be generated.  Ignored if \code{fig = FALSE}.
-      Only available in \R \eqn{\ge} 2.13.0.}
+      should be generated.  Ignored if \code{fig = FALSE}.}
 
     \item{grdevice:}{character (\code{NULL}): see section
-      \sQuote{Custom Graphics Devices}.  Ignored if \code{fig = FALSE}.
-      Only available in \R \eqn{\ge} 2.13.0.}
+      \sQuote{Custom Graphics Devices}.  Ignored if \code{fig = FALSE}.}
 
     \item{width:}{numeric (6), width of figures in inches.  See
       \sQuote{Details}.}
@@ -354,37 +354,37 @@ my.Swd <- function(name, width, height, ...)
 }
 
 \seealso{
-  \sQuote{\href{../doc/Sweave.pdf}{Sweave User Manual}}, a vignette in
+  \sQuote{\href{../doc/Sweave.pdf}{Sweave User Manual}},
+  available as \code{\link{vignette}("Sweave")} in
   the \pkg{utils} package.
 
   \code{\link{Sweave}}, \code{\link{Rtangle}}
 }
 \examples{
+\dontshow{oldwd <- setwd(tempdir()) # outputs from Sweave()}
+## A simple Rnw file
 nmRnw <- "example-1.Rnw"
 exfile <- system.file("Sweave", nmRnw, package = "utils")
-
-## Check the contents of the file
-if (interactive()) file.show(exfile)
+file.show(exfile)
 
 ## Weave the file in the current working directory
-Sweave(exfile)
+Sweave(exfile) -> nmtex
+file.show(nmtex)
 
-## View the LaTeX file
-nmtex <- sub("Rnw$", "tex", nmRnw)
-if (interactive()) file.show(nmtex)
 
-## Options may take their values from objects defined in
-## earlier code chunks
+## Logical and numeric options may take their values from objects
+## defined in earlier code chunks, e.g., 'eval=hasfoo'
 nmRnw <- "example-2.Rnw"
 exfile <- system.file("Sweave", nmRnw, package = "utils")
-if (interactive()) file.show(exfile)
-Sweave(exfile)
-nmtex <- sub("Rnw$", "tex", nmRnw)
-if (interactive()) file.show(nmtex)
+file.show(exfile)
+Sweave(exfile) |> file.show()
 
-## View the plot in default PDF viewer
-nmpdf <- sub("\\\\.Rnw$", "-003.pdf", nmRnw)
+## View the generated plot in the default PDF viewer
+nmpdf <- sub("[.]Rnw$", "-boxplot.pdf", nmRnw)
+stopifnot(file.exists(nmpdf))
 if (interactive()) system2(getOption("pdfviewer"), nmpdf)
+
+\dontshow{setwd(oldwd)}
 }
 
 \keyword{utilities}
