@@ -2199,7 +2199,8 @@ changed, either by editing that file or in a file such as
 be changed include @samp{CC}, @samp{CXX}, @samp{FC}, @samp{FLIBS} and
 the corresponding flags, and perhaps @samp{CXXCPP}, @samp{DYLIB_LD},
 @samp{MAIN_LD}, @samp{SHLIB_CXXLD} and @samp{SHLIB_LD}, as well as their
-@samp{CXX11}, @samp{CXX14}, @samp{CXX17} and @samp{CXX20} variants.
+@samp{CXX11}, @samp{CXX14}, @samp{CXX17}, @samp{CXX20}, @samp{CXX23} and
+@samp{CXX26} variants.
 
 So for example you could select a specific @I{LLVM}
 @command{clang} for both C and C++ with extensive checking by having in
@@ -2213,6 +2214,7 @@ CXX14 = $(CXX)
 CXX17 = $(CXX)
 CXX20 = $(CXX)
 CXX23 = $(CXX)
+CXX26 = $(CXX)
 CFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
 CXXFLAGS = -g -O2 -Wall -pedantic -Wconversion -Wno-sign-conversion
 CXX11FLAGS = $(CXXFLAGS)
@@ -2220,6 +2222,7 @@ CXX14FLAGS = $(CXXFLAGS)
 CXX17FLAGS = $(CXXFLAGS)
 CXX20FLAGS = $(CXXFLAGS)
 CXX23FLAGS = $(CXXFLAGS)
+CXX26FLAGS = $(CXXFLAGS)
 @end example
 @noindent
 (the current @I{SDK} can be found by running @command{xcrun -show-sdk-path})
