@@ -138,6 +138,20 @@ character(0)
 > 
 > 
 > cleanEx()
+> nameEx("Rcmd")
+> ### * Rcmd
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Rcmd
+> ### Title: 'R CMD' Interface
+> ### Aliases: Rcmd
+> ### Keywords: utilities
+> 
+> ### ** Examples
+> 
+> 
+> cleanEx()
 > nameEx("Rd2HTML")
 > ### * Rd2HTML
 > 
