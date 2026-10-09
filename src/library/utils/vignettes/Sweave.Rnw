@@ -876,6 +876,7 @@ named list of five functions:
     chunk.  Returns a possibly updated \code{object}.
 \item{\code{finish(object, error)}} Finish up, or clean up if
     \code{error} is true.
+    Its return value determines that of \code{Sweave}.
 \item{\code{checkopts(options)}} Convert or validate \code{options}
     given as a named list of character strings.
 \end{description}
