@@ -347,7 +347,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
                                         # 1e-30: a few times .Machine$double.eps^2
         warning("essentially perfect fit: summary may be unreliable")
     p1 <- 1L:p
-    R <- chol2inv(Qr$qr[p1, p1, drop = FALSE])
+    R <- chol2inv(Qr$qr, p)
     se <- sqrt(diag(R) * resvar)
     est <- z$coefficients[Qr$pivot[p1]]
     tval <- est/se
