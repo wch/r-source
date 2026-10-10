@@ -3958,6 +3958,14 @@ local({
 ## gave "????" in R-devel since r90200, and re-encoded the whole field
 ## value for each further continuation line
 
+## iconv(sub = "Unicode") and sub = "c99" never returned on invalid UTF-8 input
+x <- rawToChar(as.raw(c(0x61, 0xc3, 0x28, 0xe2, 0x82))) # "a", a lone lead byte, a truncated sequence
+stopifnot(identical(iconv(x, "UTF-8", "ASCII", sub = "Unicode"), "a<c3>(<e2><82>"),
+          identical(iconv(x, "UTF-8", "ASCII", sub = "c99"),     "a<c3>(<e2><82>"),
+          identical(iconv("caf\u00e9", "UTF-8", "ASCII", sub = "Unicode"), "caf<U+00E9>"))
+## looped forever in R <= 4.6.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
