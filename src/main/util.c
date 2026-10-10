@@ -1435,25 +1435,34 @@ utf8toucs(wchar_t *wc, const char *s)
 	} else return (size_t)-1;
     }
     if(sizeof(wchar_t) < 4) return (size_t)-2;
-    /* So now handle 5.6 byte sequences with no testing */
+    /* 5- and 6-byte sequences (RFC 2279, withdrawn by RFC 3629): kept
+       for compatibility, but checked like the shorter forms so the
+       result fits in 31 bits.  0xFE and 0xFF are never lead bytes. */
     if (byte < 0xFC) {
 	if(strlen(s) < 5) return (size_t)-2;
-	*w = (wchar_t) (((byte & 0x0F) << 24)
-			| (unsigned int) ((s[1] & 0x3F) << 12)
-			| (unsigned int) ((s[2] & 0x3F) << 12)
-			| (unsigned int) ((s[3] & 0x3F) << 6)
-			| (s[4] & 0x3F));
-	return 5;
-    } else {
+	if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)
+	    && ((s[3] & 0xC0) == 0x80) && ((s[4] & 0xC0) == 0x80)) {
+	    *w = (wchar_t) (((byte & 0x03) << 24)
+			    | (unsigned int) ((s[1] & 0x3F) << 18)
+			    | (unsigned int) ((s[2] & 0x3F) << 12)
+			    | (unsigned int) ((s[3] & 0x3F) << 6)
+			    | (s[4] & 0x3F));
+	    return 5;
+	} else return (size_t)-1;
+    } else if (byte < 0xFE) {
 	if(strlen(s) < 6) return (size_t)-2;
-	*w = (wchar_t) (((byte & 0x0F) << 30)
-			| (unsigned int) ((s[1] & 0x3F) << 24)
-			| (unsigned int) ((s[2] & 0x3F) << 18)
-			| (unsigned int) ((s[3] & 0x3F) << 12)
-			| (unsigned int) ((s[4] & 0x3F) << 6)
-			| (s[5] & 0x3F));
-	return 6;
-    }
+	if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)
+	    && ((s[3] & 0xC0) == 0x80) && ((s[4] & 0xC0) == 0x80)
+	    && ((s[5] & 0xC0) == 0x80)) {
+	    *w = (wchar_t) (((byte & 0x01) << 30)
+			    | (unsigned int) ((s[1] & 0x3F) << 24)
+			    | (unsigned int) ((s[2] & 0x3F) << 18)
+			    | (unsigned int) ((s[3] & 0x3F) << 12)
+			    | (unsigned int) ((s[4] & 0x3F) << 6)
+			    | (s[5] & 0x3F));
+	    return 6;
+	} else return (size_t)-1;
+    } else return (size_t)-1;
 }
 
 /* despite its name this translates to UTF-16 if there are (invalid)
@@ -1541,6 +1550,7 @@ static size_t Rwcrtomb32(char *s, R_wchar_t cvalue, size_t n)
     if(cvalue == 0) return 0;
     for (i = 0; i < sizeof(utf8_table1)/sizeof(int); i++)
 	if (cvalue <= utf8_table1[i]) break;
+    if (i >= sizeof(utf8_table1)/sizeof(int)) return 0; /* not encodable */
     if (i >= n - 1) return 0;  /* need space for terminal null */
     if (s) {
 	s += i;
