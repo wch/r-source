@@ -558,11 +558,11 @@ if(FALSE) {
                               sQuote(pkg), "MD5"))
 	    }
 	}
-        
+
         if (isTRUE(config_val_to_logical(Sys.getenv("_R_INSTALL_REQUIRE_SIGNED", "FALSE"))) &&
             !sig.ok) errmsg(gettextf("Valid signature is required, but package %s could not be successfully verified.",
                                        sQuote(pkg)))
-        
+
         if (tar_up) {
             starsmsg(stars, sQuote(pkg),
                      " was already a binary package and will not be rebuilt")
@@ -2267,7 +2267,14 @@ if(FALSE) {
         }
         stop("cannot create unique directory for build")
       }
-      tmpdir <- make_tmpdir(user.tmpdir)
+      tmpdir <- if(nzchar(Sys.getenv("PKG_BUILD_DIR_BARE"))) {
+                    if (!dir.exists(user.tmpdir) &&
+                        !dir.create(user.tmpdir, showWarnings = FALSE,
+                                    recursive = TRUE))
+                        stop("cannot create PKG_BUILD_DIR")
+                    user.tmpdir
+                } else
+                    make_tmpdir(user.tmpdir)
     } else {
       tmpdir <- tempfile("R.INSTALL")
       if (!dir.create(tmpdir))

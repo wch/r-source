@@ -4784,6 +4784,24 @@ If true, give an error if installing only package libraries via
 available.
 Default: true (false only for special applications, which analyze native
 code of packages).
+
+@item PKG_BUILD_DIR
+@itemx PKG_BUILD_DIR_BARE
+Control where a source tarball is unpacked. By default this is a
+sub-directory of the @code{tmpdir()} of the @R{} session used by
+@command{INSTALL}, so something like
+@example
+/tmp/RtmpmSltnZ/R.INSTALLc3d251cb815a/pkgname
+@end example
+If @env{PKG_BUILD_DIR} is set, this unpacks to something like
+@example
+PKG_BUILD_DIR/F4yZakUy/pkgname
+@end example
+@emph{and} that directory is kept when @command{INSTALL} finishes, so
+any logs and compiled objects can be examined. As from @R 4.7.0, if
+@env{PKG_BUILD_DIR_BARE} is set (to any non-empty value) the random
+part is omitted. In all cases the directory is created recursively if
+necessary.
 @end vtable
 
 
