@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2025  The R Core Team
+ *  Copyright (C) 1997--2026  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -31,7 +31,8 @@
 #include <Defn.h>
 #include <Internal.h>
 
-#define imax2(x, y) ((x < y) ? y : x)
+// for both int & double
+#define max2(x, y) ((x < y) ? y : x)
 
 #include "Print.h"
 #include "RBufferUtils.h"
@@ -70,6 +71,7 @@ attribute_hidden SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
  * accept 3-arg form, silently.
  */
 
+// TODO !??
 #ifdef future_R_4_1_or_newer
     checkArity(op, args);
 #else
@@ -443,6 +445,7 @@ attribute_hidden SEXP do_filepath(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+// TODO --- add new  `na.string` argument to format.default()
 /* format.default(x, trim, digits, nsmall, width, justify, na.encode,
 		  scientific, decimal.mark) */
 attribute_hidden SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -490,7 +493,7 @@ attribute_hidden SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid '%s' argument"), "justify");
     args = CDR(args);
 
-    int na = asLogical(CAR(args));
+    int na = asLogical(CAR(args)); // or asInteger(.) for 'na.string' arg?
     if(na == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "na.encode");
     args = CDR(args);
@@ -538,7 +541,7 @@ attribute_hidden SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	case LGLSXP:
 	    PROTECT(y = allocVector(STRSXP, n));
 	    if (trim) w = 0; else formatLogical(LOGICAL(x), n, &w);
-	    w = imax2(w, wd);
+	    w = max2(w, wd);
 	    for (i = 0; i < n; i++) {
 		strp = EncodeLogical(LOGICAL(x)[i], w);
 		SET_STRING_ELT(y, i, mkChar(strp));
@@ -549,7 +552,7 @@ attribute_hidden SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	    PROTECT(y = allocVector(STRSXP, n));
 	    if (trim) w = 0;
 	    else formatInteger(INTEGER(x), n, &w);
-	    w = imax2(w, wd);
+	    w = max2(w, wd);
 	    for (i = 0; i < n; i++) {
 		strp = EncodeInteger(INTEGER(x)[i], w);
 		SET_STRING_ELT(y, i, mkChar(strp));
@@ -559,7 +562,7 @@ attribute_hidden SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	case REALSXP:
 	    formatReal(REAL(x), n, &w, &d, &e, nsmall);
 	    if (trim) w = 0;
-	    w = imax2(w, wd);
+	    w = max2(w, wd);
 	    PROTECT(y = allocVector(STRSXP, n));
 	    for (i = 0; i < n; i++) {
 		strp = EncodeReal0(REAL(x)[i], w, d, e, my_OutDec);
@@ -572,7 +575,7 @@ attribute_hidden SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	    int wi, di, ei;
 	    formatComplex(COMPLEX(x), n, &w, &d, &e, &wi, &di, &ei, nsmall);
 	    if (trim) wi = w = 0;
-	    w = imax2(w, wd); wi = imax2(wi, wd);
+	    w = max2(w, wd); wi = max2(wi, wd);
 	    PROTECT(y = allocVector(STRSXP, n));
 	    for (i = 0; i < n; i++) {
 		strp = EncodeComplex(COMPLEX(x)[i], w, d, e, wi, di, ei, my_OutDec);
@@ -584,14 +587,12 @@ attribute_hidden SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	{
 	    /* this has to be different from formatString/EncodeString as
 	       we don't actually want to encode here */
-	    const char *s;
-	    char *q;
-	    int b, cnt = 0, j;
 	    /* This is clumsy, but it saves rewriting and re-testing
 	       this complex code */
 	    SEXP xx = PROTECT(duplicate(x));
 	    for (i = 0; i < n; i++) {
-		SEXP x_i =  STRING_ELT(xx, i);
+		SEXP x_i = STRING_ELT(xx, i);
+		const char *s;
 		if(IS_BYTES(x_i)) {
 		    const char *p = CHAR(x_i), *q;
 		    char *pp = R_alloc(4*strlen(p)+1, 1), *qq = pp, buf[5];
@@ -614,42 +615,48 @@ attribute_hidden SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (adj != Rprt_adj_none) {
 		for (i = 0; i < n; i++)
 		    if (STRING_ELT(xx, i) != NA_STRING)
-			w = imax2(w, Rstrlen(STRING_ELT(xx, i), 0));
-		    else if (na) w = imax2(w, R_print.na_width);
+			w = max2(w, Rstrlen(STRING_ELT(xx, i), 0)); // Rstrlen() _defined_ to return int
+		    else if (na) w = max2(w, R_print.na_width);
 	    } else w = 0;
 	    /* now calculate the buffer size needed, in bytes */
 
-	    for (i = 0; i < n; i++)
+	    double dcnt = 0.;
+	    for (i = 0; i < n; i++) {
 		if (STRING_ELT(xx, i) != NA_STRING) {
 		    int il = Rstrlen(STRING_ELT(xx, i), 0);
-		    cnt = imax2(cnt, LENGTH(STRING_ELT(xx, i)) + imax2(0, w-il));
+		    dcnt = max2(dcnt, LENGTH(STRING_ELT(xx, i)) + (double)max2(0, w-il));
 		} else if (na)
-		    cnt = imax2(cnt, R_print.na_width + imax2(0, w-R_print.na_width));
-	    R_CheckStack2(cnt+1);
-	    char buff[cnt+1];
+		    dcnt = max2(dcnt, R_print.na_width + (double)max2(0, w-R_print.na_width));
+	    }
+	    if(dcnt >= INT_MAX)
+		error(_("final maximal string length = %.0f is too large"), dcnt);
+	    int cnt1 = (int)dcnt + 1; // <= INT_MAX
+	    R_CheckStack2(cnt1);
+	    char buff[cnt1];
 	    PROTECT(y = allocVector(STRSXP, n));
 	    for (i = 0; i < n; i++) {
 		if(!na && STRING_ELT(xx, i) == NA_STRING) {
 		    SET_STRING_ELT(y, i, NA_STRING);
 		} else {
-		    q = buff;
 		    SEXP s0 = (STRING_ELT(xx, i) == NA_STRING) ? R_print.na_string : STRING_ELT(xx, i);
-		    s = CHAR(s0);
+		    const char *s = CHAR(s0);
+		    char *q = buff;
 		    int il = Rstrlen(s0, 0);
-		    b = w - il;
+		    int b = w - il;
 		    if(b > 0 && adj != Rprt_adj_left) {
 			int b0 = (adj == Rprt_adj_centre) ? b/2 : b;
-			for(j = 0 ; j < b0 ; j++) *q++ = ' ';
+			for(int j = 0; j < b0; j++) *q++ = ' ';
 			b -= b0;
 		    }
-		    for(j = 0; j < LENGTH(s0); j++) *q++ = *s++;
+		    for(int j = 0; j < LENGTH(s0); j++) *q++ = *s++;
 		    if(b > 0 && adj != Rprt_adj_right)
-			for(j = 0 ; j < b ; j++) *q++ = ' ';
+			for(int j = 0; j < b; j++) *q++ = ' ';
 		    *q = '\0';
 		    SET_STRING_ELT(y, i, mkChar(buff));
 		}
 	    }
-	}
+	} // end {case STRSXP}
+
 	UNPROTECT(2); /* xx , y */
 	PROTECT(y);
 	break;
@@ -669,7 +676,7 @@ attribute_hidden SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 
     UNPROTECT(1); /* y */
     return y;
-}
+} // do_format()
 
 /* format.info(obj)  --> 3 integers  (w,d,e) with the formatting information
  *			w = total width (#{chars}) per item

@@ -3415,12 +3415,12 @@ stopifnot(identical(f(FALSE), 100),
 ## PR#19109 -- `dim<-` dimension vector product can overflow
 x <- integer()
 er <- tryCid(dim(x) <- rep(2^16, 4))
-stopifnot(inherits(er, "error"))
-if(englishMsgs)
-    stopifnot(grepl("too many", conditionMessage(er)))
+stopifnot(inherits(er, "error"),
+          identical(gettext("too many elements specified", domain="R"),
+                    conditionMessage(er)))
 ## gave no error but an x of length zero; x[] <- .. would seg.fault
 t30 <- 2^30
-for(nd in c(2:4, 33:37)) { # 
+for(nd in c(2:4, 33:37)) {
     d. <- c(rep(t30, nd), 0)
     x <- integer();   dim(x) <- d.
     y <- array(integer(), dim = d.)
@@ -3441,10 +3441,6 @@ stopifnot(RR == "2", length(RR) == 1000L)
 ## RR was '2' "randomly" in R <= 4.6.1
 
 
-
-## keep at end
-
-
 ## ksmooth(.., x.points = <invalid>) -- PR#19153
 x <- 1:11; y <- (x - 5)^2
 L00 <- list(x = numeric(), y = numeric())
@@ -3459,6 +3455,15 @@ if(.Machine$sizeof.pointer >= 8) { # 32-bit cannot allocate 7.5 Gb (PR#19175#c3)
     assertWarnV(bK <- besselK(1, c(2^(60:70), Inf)))
 }
 ## segfaulted for order >= 2^31 in R <= 4.6.1
+
+
+## format(<utf8>, width = large) -- PR#19188
+assertWarnV(# j=0 --> warning: NAs introduced by coercion to integer range
+  lapply(0:3, \(j)
+	 tryCid(format("\u00e9", width = 2^31 - j))) -> errs)
+stopifnot(unlist(lapply(errs, inherits, "error")))
+vapply(errs, `[[`, "..", "message")
+## j=1,2 would segfault in R <= 4.6.1
 
 
 

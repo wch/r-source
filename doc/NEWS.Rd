@@ -101,11 +101,16 @@
       \code{TRUE} on a Unix-alike where X11 is not actually available when
       built by a C compiler without C23 \code{enum} base types, thanks to
       \I{Trevor Davis}' report and patch in \PR{19180}.
-      
+
       \item \code{influence.measures()} inadvertently wasn't updated along
       with \code{dffits()}, \code{dfbetas()}, \code{covratio()}. \PR{19167} by
-      \I{Amal Tawfik}. 
-    } 
+      \I{Amal Tawfik}.
+
+      \item \code{format(x, width = 2^31 -1)} for an non-ascii
+      character \code{x} such as \code{x = "\u00e9"} now signals an error
+      as the required width is too large, rather than segfaulting,
+      thanks to \I{Adam Berkeš}' report in \PR{19188}.
+    }
   }
   \subsection{Bug Fixes (Windows)}{
     \itemize{
