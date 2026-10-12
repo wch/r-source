@@ -102,14 +102,18 @@
       built by a C compiler without C23 \code{enum} base types, thanks to
       \I{Trevor Davis}' report and patch in \PR{19180}.
 
-      \item \code{influence.measures()} inadvertently wasn't updated along
-      with \code{dffits()}, \code{dfbetas()}, \code{covratio()}. \PR{19167} by
-      \I{Amal Tawfik}.
+      \item \code{predict(smooth.spline(..), deriv = -99)} and similar
+      invalid \code{deriv} values now signal errors instead of segfaulting,
+      thanks to \I{Adam Berkeš}' report and proposal in \PR{19190}.
 
       \item \code{format(x, width = 2^31 -1)} for an non-ascii
       character \code{x} such as \code{x = "\u00e9"} now signals an error
       as the required width is too large, rather than segfaulting,
       thanks to \I{Adam Berkeš}' report in \PR{19188}.
+
+      \item \code{influence.measures()} inadvertently wasn't updated along
+      with \code{dffits()}, \code{dfbetas()}, \code{covratio()}. \PR{19167} by
+      \I{Amal Tawfik}.
     }
   }
   \subsection{Bug Fixes (Windows)}{

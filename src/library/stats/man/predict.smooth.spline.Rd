@@ -1,6 +1,6 @@
 % File src/library/stats/man/predict.smooth.spline.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2007 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{predict.smooth.spline}
@@ -16,7 +16,7 @@
 \arguments{
   \item{object}{a fit from \code{smooth.spline}.}
   \item{x}{the new values of x.}
-  \item{deriv}{integer; the order of the derivative required.}
+  \item{deriv}{integer (>= 0); the order of the derivative required.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \value{

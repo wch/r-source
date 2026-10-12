@@ -1,7 +1,7 @@
 #  File src/library/stats/R/smspline.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -148,7 +148,7 @@ smooth.spline <-
     nk <- nknots + 2L ## == length(knot) - 4
 
     spar.is.lambda <- !missing(lambda)
-    if (spar.is.lambda <- !missing(lambda)) {
+    if (spar.is.lambda) {
         if(!missing(spar)) stop("must not specify both 'spar' and 'lambda'")
         ispar <- 1L
     } else
@@ -340,6 +340,8 @@ predict.smooth.spline <- function(object, x, deriv = 0, ...)
 
 predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
 {
+    if(!length(deriv) || deriv < 0)
+        stop("'deriv' must be a non-negative integer")
     if(missing(x))
 	x <- seq.int(from = object$min, to = object$min + object$range,
                      length.out = length(object$coef) - 4L)
