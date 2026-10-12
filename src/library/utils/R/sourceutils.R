@@ -153,32 +153,32 @@ getParseData <- function(x, includeText = NA) {
     if (is.null(data) && !is.null(srcfile$original))
         data <- srcfile$original$parseData
         
-    if (!is.null(data)) {
-        tokens <- attr(data, "tokens")
-        data <- t(unclass(data))
-        colnames(data) <- c( "line1", "col1",
-		 	     "line2", "col2",
-		 	     "terminal", "token.num", "id", "parent" )
-    	data <- data.frame(data[, -c(5,6), drop = FALSE], token = tokens,
-    	                   terminal = as.logical(data[,"terminal"]),
-    	                   text = attr(data, "text"),
-    			   stringsAsFactors = FALSE)
-    	o <- order(data[,1], data[,2], -data[,3], -data[,4])
-    	data <- data[o,]
-    	rownames(data) <- data$id
-    	attr(data, "srcfile") <- srcfile
-	gettext <-
-	    if(isTRUE(includeText))
-		which(!nzchar(data$text))
-	    else if(is.na(includeText))
-		which(!nzchar(data$text) & data$terminal)
-	    else {
-		data$text <- NULL
-		integer(0)
-	    }
-        if (length(gettext))
-	    data$text[gettext] <- getParseText(data, data$id[gettext])
+    if (is.null(data))
+      return(NULL)
+    tokens <- attr(data, "tokens")
+    data <- t(unclass(data))
+    colnames(data) <- c( "line1", "col1",
+                "line2", "col2",
+                "terminal", "token.num", "id", "parent" )
+    data <- data.frame(data[, -c(5,6), drop = FALSE], token = tokens,
+                        terminal = as.logical(data[,"terminal"]),
+                        text = attr(data, "text"),
+                stringsAsFactors = FALSE)
+    o <- order(data[,1], data[,2], -data[,3], -data[,4])
+    data <- data[o,]
+    rownames(data) <- data$id
+    attr(data, "srcfile") <- srcfile
+    if (!isTRUE(includeText) && !is.na(includeText)) {
+        data$text <- NULL
+        return(data)
     }
+    gettext <- .is_text_truncation(data$text, data$token)
+    if (is.na(includeText))
+      gettext <- gettext & data$terminal
+    gettext <- which(gettext)
+    if (!length(gettext))
+      return(data)
+    data$text[gettext] <- getParseText(data, data$id[gettext])
     data
 }
 
@@ -190,7 +190,7 @@ getParseText <- function(parseData, id) {
     	text <- character(nrow(d))
     	blank <- seq_along(text)
     } else
-    	blank <- which(!nzchar(text) | (d$token == "STR_CONST" & startsWith(text, "[")))
+    	blank <- which(.is_text_truncation(d$text, d$token))
     for (i in blank) {
 	lines <- getSrcLines(srcfile, d$line1[i], d$line2[i])
         n <- length(lines)
@@ -199,4 +199,10 @@ getParseText <- function(parseData, id) {
         text[i] <- paste(lines, collapse="\n")
     }
     text
+}
+
+.is_text_truncation <- function(text, token) {
+    !nzchar(text) |
+      (startsWith(text, "[") &
+       token %in% c("STR_CONST", "SYMBOL", "SYMBOL_FUNCTION_CALL", "SYMBOL_SUB", "SYMBOL_FORMALS", "SYMBOL_PACKAGE", "SLOT"))
 }
