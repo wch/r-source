@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1998--2026  The R Core Team.
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2025   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -375,11 +375,13 @@ attribute_hidden SEXP matchArgs_NR(SEXP formals, SEXP supplied, SEXP call)
 		    last = CDR(last);
 		    SET_TAG(last, TAG(b));
 		}
+	    unsigned long len_u_args = (unsigned long) length(unused);
+	    unused = PROTECT(deparse1line(unused, 0));
 	    errorcall(call /* R_GlobalContext->call */,
 		      ngettext("unused argument %s",
-			       "unused arguments %s",
-			       (unsigned long) length(unused)),
-		      strchr(CHAR(asChar(deparse1line(unused, 0))), '('));
+			       "unused arguments %s", len_u_args),
+		      strchr(CHAR(asChar(unused)), '('));
+	    UNPROTECT(1);
 	}
     }
     UNPROTECT(1);

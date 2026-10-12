@@ -361,6 +361,10 @@
       calls after drawing a \code{glyphGrob} containing two or more glyphs
       inside a masked \code{viewport}. Thanks to \I{Trevor Davis}' patch
       proposal in \PR{19075}.
+
+      \item Long stringed error messages are now protected from premature
+      garbage collection, fixing \PR{19210}, reported and analyzed by
+      \I{Yuancheng Jiang}.
     }
   }
 }
