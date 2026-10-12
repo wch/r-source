@@ -7,7 +7,6 @@
 
 
 \section{\Rlogo Changes in R 4.6.1 patched}{
-
   \subsection{Bug Fixes}{
     \itemize{
       \item In plain-text help (\code{Rd2txt}), paragraphs are again
@@ -89,6 +88,10 @@
       \item \code{besselI(1, 1e11)} and \code{besselK(..)} now signal a
       warning and return \code{NaN} instead of typically segfaulting,
       fixing \PR{19175} thanks to \I{Ben Bolker}.
+
+      Further, \code{besselK(1, -1e11)} and similar warn about too large
+      \code{|nu|}, returning \code{NaN} rather than segfaulting, fixing
+      \PR{19196} thanks to \I{Adam Berkeš}.
 
       \item \code{text.default(.., col = numeric(0))} and similar no longer
       segfault in "instrumented" versions of R, fixing \PR{19178} thanks to
