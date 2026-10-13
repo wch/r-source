@@ -3966,14 +3966,12 @@ stopifnot(identical(iconv(x, "UTF-8", "ASCII", sub = "Unicode"), "a<c3>(<e2><82>
 ## looped forever in R <= 4.6.1
 
 ## getParseData doesn't truncate long strings
-op <- options(keep.source = TRUE)
 long_a <- strrep("a", 1200L)
 long_expr <- sprintf("`%1$s`::`%1$s`(`%1$s` = '%1$s', . = function(`%1$s`) 0, .. = .@`%1$s`)", long_a)
-pd <- getParseData(parse(text = long_expr))
+pd <- getParseData(parse(text = long_expr, keep.source = TRUE))
 long_idx <- nchar(pd$text) > 1000L
 stopifnot(sum(long_idx) == 6L,
           grepl("^(STR_CONST|SYMBOL|SLOT)", pd$token[long_idx]))
-options(op)
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
