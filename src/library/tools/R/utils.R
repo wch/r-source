@@ -2986,23 +2986,20 @@ function(src, dst, ...)
 ### ** base64_encode
 
 base64_encode <-
-function(file)
+function(file, x = readBin(file, 'raw', file.size(file)))
 {
-    ## read file as octets
-    x <- as.numeric(readBin(file, 'raw', len <- file.size(file)))
-    if(len == 0L) return("")
-    ## group octets into 24-bit big-endian clusters with zero padding
-    x <- matrix(c(x, rep(0, c(0, 2, 1)[1 + len %% 3])), 3)
-    ## split into sextets
-    x <- outer(
-        6 * 3:0, colSums(x * 2^(8 * 2:0)),
-        function(shift, cluster) (cluster %/% 2^shift) %% 2^6
-    )
-    ## last 1 or 2 bytes may need to be a padding byte
-    if (rem <- len %% 3) x[length(x) - 0:(2-rem)] <- 64
-    ## encode sextets using Base64 alphabet
-    paste(c(LETTERS, letters, 0:9, '+', '/', '=')[x + 1], collapse = '')
+    if (!missing(file) && !missing(x)) 
+        stop("'file' and 'x' are mutually exclusive")
+     if (!is.raw(x)) {
+        if (is.character(x) && length(x) == 1L)
+            x <- charToRaw(x)
+        else
+            stop("'x' must be a raw vector or a (scalar) character string")
+    }
+    if(length(x) == 0L) return("")
+    .Call(C_Rbase64_encode, x)
 }
+
 
 ### Local variables: ***
 ### mode: outline-minor ***
