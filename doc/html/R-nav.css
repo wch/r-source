@@ -177,6 +177,16 @@ nav a:hover {
     text-decoration: none;
 }
 
+pre code a:link, pre code a:visited {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+pre code a:hover {
+    color: rgb(40%, 40%, 40%);
+}
+
+
 /*  
 .dropdown-menu ul li
 {

@@ -477,6 +477,9 @@ HTMLcomponents <- function(title = "R", logo = FALSE,
         PRISM_CSS <- 
             if (dynamic) "/doc/html/prism.css"
             else PRISM_CSS_STATIC
+        USAGE_ARGS_JS <-
+            if (dynamic) "/doc/html/usage-args.js"
+            else NULL
     }
 
     addh('<!DOCTYPE html>',
@@ -519,9 +522,12 @@ HTMLcomponents <- function(title = "R", logo = FALSE,
     ## Footer:
     addf('\n</div>\n') # closes div.container
     ## include JS from prismjs.com for code highlighting
-    if (prism && length(PRISM_JS) > 0L)
+    if (prism && length(PRISM_JS) > 0L) {
         for (u in PRISM_JS)
             addf('<script src="', urlify(u), '"></script>\n')
+        if (!is.null(USAGE_ARGS_JS))
+            addf('<script src="', urlify(USAGE_ARGS_JS), '"></script>\n')
+    }
     addf('</body></html>\n')
 
     ## Optional part of header (title + logo, up, top)

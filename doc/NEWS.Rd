@@ -115,6 +115,10 @@
       shortcutting \code{diag(chol2inv(.))}, wished for with a patch and
       reproducible analysis in \PR{19177} by \I{Adam Marstrand}.
 
+      \item Dynamic HTML help pages are postprocessed to link function
+      arguments in the Usage section to their documentation in the
+      Arguments section. 
+
     }
   }
 
