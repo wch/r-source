@@ -82,6 +82,19 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         stop("only one of 'include.only' and 'exclude' can be used",
              call. = FALSE)
 
+    ## <FIXME>
+    ## Temporarily provide a mechanism for experimenting with not
+    ## attaching required packages by default via setting env var
+    ## _R_LIBRARY_ATTACH_REQUIRED_ to false.
+    ## Currently undocumented.
+    ## The current implementation only works for library() but not
+    ## require(), as this calls library() with given attach.required.
+    if(missing(attach.required) &&
+       (tolower(Sys.getenv("_R_LIBRARY_ATTACH_REQUIRED_", "")) ==
+        "false"))
+        attach.required <- FALSE
+    ## </FIXME>
+
     testRversion <- function(pkgInfo, pkgname, pkgpath)
     {
         if(is.null(built <- pkgInfo$Built))
