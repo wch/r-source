@@ -169,7 +169,7 @@
   To install for all available sub-architectures,
   %% If the configure script is known to work for both Windows architectures,
   %% use flag \option{--force-biarch} (and packages can specify this
-  %% \emph{via} a \samp{Biarch: yes} field in their \code{DESCRIPTION} files).
+  %% \emph{via} a \samp{Biarch: yes} field in their \file{DESCRIPTION} files).
   a single tarball can be installed with
 \preformatted{R CMD INSTALL --merge-multiarch mypkg_version.tar.gz}
 }

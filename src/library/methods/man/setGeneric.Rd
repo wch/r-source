@@ -133,7 +133,7 @@ setGeneric(name, def= , group=list(), valueClass=character(),
   function plus methods for it. When the function is in
   another package, it must be available by name, for
   example through an \code{importFrom()} directive in this package's
-  \code{NAMESPACE} file. Not required for functions in \code{"base"},
+  \file{NAMESPACE} file. Not required for functions in \code{"base"},
   which are implicitly imported.
 
   A generic version of

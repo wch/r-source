@@ -43,7 +43,7 @@ For details, see \link{S3Methods}.
 
 In modern \R, a function \code{meth} in a package is registered as an S3 method
 for function \code{fun} and class \code{Class} by
-including in the package's \code{NAMESPACE} file the directive
+including in the package's \file{NAMESPACE} file the directive
 \preformatted{
     S3method(fun, Class, meth)
 }
@@ -85,7 +85,7 @@ To define the class and a method for this function:
         NextMethod(tolower(x))
     setMethod("unique", "uncased", unique.uncased)
 }
-In addition, the \code{NAMESPACE} for the package should contain:
+In addition, the \file{NAMESPACE} for the package should contain:
 \preformatted{
     S3method(unique, uncased)
     exportMethods(unique)

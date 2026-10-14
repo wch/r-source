@@ -76,7 +76,7 @@ added to a table of known classes.
 
 To make the class and the generating function publicly available, the
 package should include \code{POS} in \code{exportClasses()} and
-\code{export()} directives in its \code{NAMESPACE} file:
+\code{export()} directives in its \file{NAMESPACE} file:
 
 \code{exportClasses(Pos); export(Pos)}
 }

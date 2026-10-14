@@ -25,7 +25,7 @@ use(package, include.only, pos = 2)
 \details{
   This is a simple wrapper around \code{\link{library}} which always
   uses \code{attach.required = FALSE}, so that packages listed in the
-  \code{Depends} clause of the \code{DESCRIPTION} file of the package to
+  \code{Depends} clause of the \file{DESCRIPTION} file of the package to
   be used never get attached automatically to the search path.
 
   Calling \code{use()} on an already attached package adds the given

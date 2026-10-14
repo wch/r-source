@@ -288,8 +288,8 @@ namespace of the current package, assuming the call in question appears directly
 package, as it should to avoid ambiguity.
 The  class definition
 must be already defined in this package, in the imports directives of
-the package's \code{DESCRIPTION} and
-\code{NAMESPACE} files or in the basic classes defined by the methods package.
+the package's \file{DESCRIPTION} and
+\file{NAMESPACE} files or in the basic classes defined by the methods package.
 (The \sQuote{methods} package must be included in the imports directives
 for any package that uses
 S4 methods and classes, to satisfy the

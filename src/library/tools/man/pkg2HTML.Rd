@@ -75,7 +75,7 @@ pkg2HTML(package, dir = NULL, lib.loc = NULL,
     \code{texmath = "mathjax"}.
   }
   \item{include_description}{ logical flag indicating whether the output
-    should begin with the contents of the \code{DESCRIPTION} file.
+    should begin with the contents of the \file{DESCRIPTION} file.
   }
   \item{concordance}{ logical flag indicating whether the output
     should contain concordance information.}

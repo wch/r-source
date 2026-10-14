@@ -70,7 +70,7 @@ conflictRules(pkg, mask.ok = NULL, exclude = NULL)
     exclude or include in the attached frame. Only one of these arguments
     may be used in a call to \code{library} or \code{require}.}
   \item{attach.required}{logical specifying whether required packages
-    listed in the \code{Depends} clause of the \code{DESCRIPTION} file
+    listed in the \code{Depends} clause of the \file{DESCRIPTION} file
     should be attached automatically.}
 }
 \details{

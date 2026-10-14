@@ -4795,7 +4795,7 @@ importMethodsFrom(package, ...)
 @noindent
 listing the classes and functions with methods respectively.  Suppose we
 had two small packages @pkg{A} and @pkg{B} with @pkg{B} using @pkg{A}.
-Then they could have @code{NAMESPACE} files
+Then they could have @file{NAMESPACE} files
 
 @quotation
 @cartouche
