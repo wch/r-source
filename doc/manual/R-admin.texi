@@ -1024,7 +1024,7 @@ Setting these to an empty value will disable @abbr{OpenMP} for that
 compiler (and configuring with @option{--disable-openmp} will disable
 all detection@footnote{This does not necessarily disable @emph{use} of
 @abbr{OpenMP} -- the @command{configure} code allows for platforms where
-@abbr{OpenMP} is used without a flag. For the`classic'' @command{flang}
+@abbr{OpenMP} is used without a flag.  For the `classic' @command{flang}
 compiler in late 2017, the Fortran runtime always used @abbr{OpenMP}.}
 of @abbr{OpenMP}).  The @command{configure} detection test is to compile
 and link a standalone @abbr{OpenMP} program, which is not the same as
