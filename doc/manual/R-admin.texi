@@ -1020,16 +1020,16 @@ SHLIB_OPENMP_FFLAGS
 @end example
 
 @noindent
-Setting these to an empty value will disable @abbr{OpenMP} for that compiler
-(and configuring with @option{--disable-openmp} will disable all
-detection@footnote{This does not necessarily disable @emph{use} of
-@abbr{OpenMP} -- the @command{configure} code allows for platforms where @abbr{OpenMP}
-is used without a flag. For the @command{flang} compiler in late 2017,
-the Fortran runtime always used @abbr{OpenMP}.} of @abbr{OpenMP}).  The
-@command{configure} detection test is to compile and link a standalone
-@abbr{OpenMP} program, which is not the same as compiling a shared object and
-loading it into the C program of @R{}'s executable.  Note that
-overridden values are not tested.
+Setting these to an empty value will disable @abbr{OpenMP} for that
+compiler (and configuring with @option{--disable-openmp} will disable
+all detection@footnote{This does not necessarily disable @emph{use} of
+@abbr{OpenMP} -- the @command{configure} code allows for platforms where
+@abbr{OpenMP} is used without a flag. For the`classic'' @command{flang}
+compiler in late 2017, the Fortran runtime always used @abbr{OpenMP}.}
+of @abbr{OpenMP}).  The @command{configure} detection test is to compile
+and link a standalone @abbr{OpenMP} program, which is not the same as
+compiling a shared object and loading it into the C program of @R{}'s
+executable.  Note that overridden values are not tested.
 
 @node C++ Support, C standards, OpenMP Support, Other Options
 @subsection C++ Support
@@ -5579,9 +5579,8 @@ tar xf flang-23.1.1-darwin22.6.0.tar.xz -C/
 to install to @file{/opt/R/flang-23}.  (If you download in a browser you
 will need to strip attrbutes with @command{xattr -c}.)
 
-Cuurently (Oct 2026) this successfully builds @R{} and all but around 50
-@acronym{CRAN} packages -- the main issue is that when compiling it
-fails to find modules such as @file{iso_c_binding.mod}.
+Cuurently (Oct 2026) this successfully builds @R{} and all but a handful
+of @acronym{CRAN} packages.
 
 @node Cairo graphics, Other C/C++ compilers, Fortran compilers, macOS
 @subsection Cairo graphics
