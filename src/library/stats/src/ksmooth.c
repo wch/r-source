@@ -37,6 +37,7 @@ static void BDRksmooth(double *x, double *y, R_xlen_t n,
     R_xlen_t imin = 0;
     double cutoff = 0.0, num, den, x0, w;
 
+    if(np == 0) return;
     /* bandwidth is in units of half inter-quartile range. */
     if(kern == 1) {bw *= 0.5; cutoff = bw;}
     if(kern == 2) {bw *= 0.3706506; cutoff = 4*bw;}

@@ -3722,11 +3722,14 @@ stopifnot(
 
 
 ## ksmooth(.., x.points = <invalid>) -- PR#19153
+## ksmooth(.., n.points = 0)         -- PR#19219
 x <- 1:11; y <- (x - 5)^2
 L00 <- list(x = numeric(), y = numeric())
 stopifnot(identical(L00, ksmooth(x,y, x.points=NULL)),
           identical(L00, ksmooth(x,y, x.points=rep(NA,999))))
 ## did seg.fault, trying to access x.points[1] from C
+stopifnot(identical(L00, ksmooth(x,y, n.points = 0)))
+## ditto segfaulted in R <= 4.6.1
 
 
 ## malformed ALTREP serialized class metadata
