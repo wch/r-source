@@ -1399,8 +1399,10 @@ static SEXP NewWeakRef(SEXP key, SEXP val, SEXP fin, Rboolean onexit)
     }
 
     PROTECT(key);
-    PROTECT(val = MAYBE_REFERENCED(val) ? duplicate(val) : val);
+    /* fin before val: R_MakeWeakRefC() passes a fresh finalizer object,
+       and duplicate(val) below can collect it */
     PROTECT(fin);
+    PROTECT(val = MAYBE_REFERENCED(val) ? duplicate(val) : val);
     w = allocVector(VECSXP, WEAKREF_SIZE);
     SET_TYPEOF(w, WEAKREFSXP);
     if (key != R_NilValue) {
