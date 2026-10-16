@@ -3356,7 +3356,7 @@ around this is for the package's @file{configure} script to include
 @example
 if test -z "$CMAKE"; then CMAKE="`which cmake`"; fi
 if test -z "$CMAKE"; then CMAKE=/Applications/CMake.app/Contents/bin/cmake; fi
-if test -f "$CMAKE"; then echo "no 'cmake' command found"; exit 1; fi
+if test ! -f "$CMAKE"; then echo "no 'cmake' command found"; exit 1; fi
 @end example
 @noindent
 and for the second approach to substitute @env{CMAKE} into
