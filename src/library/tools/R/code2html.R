@@ -90,7 +90,7 @@
     old_opts_chunk <- knitr::opts_chunk$get()
     on.exit(knitr::opts_knit$restore(old_opts_knit), add = TRUE)
     on.exit(knitr::opts_chunk$restore(old_opts_chunk), add = TRUE)
-    knitr::opts_knit$set(upload.fun = function(x) paste0("data:", mime_type(x), ";base64,", xfun::base64_encode(x)),
+    knitr::opts_knit$set(upload.fun = function(x) paste0("data:", mime_type(x), ";base64,", base64_encode(x)),
                          unnamed.chunk.label = sprintf("%s-%s", type, package))
     knitr::opts_chunk$set(comment = "", warning = TRUE, message = TRUE, error = TRUE,
                           fig.path = file.path(figdir, "fig-"),
