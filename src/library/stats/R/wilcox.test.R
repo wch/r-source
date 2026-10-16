@@ -536,7 +536,7 @@ function(x, y, mu, n.x = length(x), n.y = length(y), digits.rank)
     STATISTIC <- c("W" = sum(r[seq_along(x)]) - n.x * (n.x + 1) / 2)
     list(statistic = STATISTIC, z = if(TIES) r else NULL)
 }
-            
+
 .wilcox_test_two_stat_asymp <-
 function(x, y, mu, n.x = length(x), n.y = length(y), digits.rank)
 {
@@ -768,7 +768,7 @@ function(STAT, n.x, n.y, alternative, correct)
            "greater" = F(z, lower.tail = FALSE),
            "two.sided" = 2 * min(p <- F(z), 1 - p))
 }
-    
+
 .wilcox_test_two_cint_asymp <-
 function(x, y, n.x, n.y, alternative, conf.level, correct,
          tol.root, digits.rank)
@@ -925,7 +925,7 @@ function(q, m, n, z = NULL, lower.tail = TRUE)
 
     y <- rep.int(NA_real_, length(q))
     i <- which(!is.na(q))
-    if(!any(i))
+    if(!length(i))
         return(y)
 
     ## Support of U
@@ -935,17 +935,23 @@ function(q, m, n, z = NULL, lower.tail = TRUE)
              seq.int(0, 2 * m * n) / 2
     ## Density
     d <- .dwilcox(s, m, n, z)
-    y[i] <- vapply(q[i],
-                   function(e) {
-                       ## NOTE: C code in src/nmath uses a fuzz of 1e-7.
-                       sum(d[s < e + 1e-8])
-                   },
-                   0)
-    if(lower.tail) y else 1 - y
+    y[i] <- vapply(q[i], function(e) sum(d[s < e + 1e-8]), 0)# C code in src/nmath uses 1e-7.
+
+    if(lower.tail) {
+        y[i] <- pmin(y[i], 1) # PR#19144
+        y
+    } else { # upper tail:
+        r <- 1 - y #  for y ~ 1 prevent strong cancellation:
+        if(any(yi1 <- abs(y[i] - 1) < 0x1p-6)) { # |y - 1| < 2^-6 (1/64 = 1.6% )
+            ## compute the *complementary* sum for these (with same fuzz)
+            r[i][yi1] <- vapply(q[i][yi1], function(e) sum(d[s >= e + 1e-8]), 0)
+        }
+        r
+    }
 }
 
 .qwilcox <-
-function(p, m, n, z = NULL, lower.tail = TRUE)    
+function(p, m, n, z = NULL, lower.tail = TRUE)
 {
     if(is.null(z))
         return(qwilcox(p, m, n, lower.tail = lower.tail))
@@ -962,7 +968,7 @@ function(p, m, n, z = NULL, lower.tail = TRUE)
          else
              seq.int(0, 2 * m * n) / 2
     v <- .pwilcox(s, m, n, z)
-    if(!lower.tail)
+    if(!lower.tail) # FIXME for (orig.) p ~~ 1  !?!
         p <- 1 - p
     ## See qwilcox C code:
     p <- p - 10 * .Machine$double.eps
@@ -976,11 +982,11 @@ function(x, n, z = NULL)
     if(is.null(z))
         return(dsignrank(x, n))
 
-    if(!all(2 * z == floor(2 * z)) || any(z < 1)) 
+    if(!all(2 * z == floor(2 * z)) || any(z < 1))
         stop("'z' is not a rank vector")
     y <- rep.int(NA_real_, length(x))
     i <- which(!is.na(x))
-    if(!any(i)) 
+    if(!length(i))
         return(y)
     ## scores can be x.5: in that case need to multiply by f=2.
     f <- 2 - all(z == floor(z))
@@ -1000,7 +1006,7 @@ function(q, n, z = NULL, lower.tail = TRUE)
 
     y <- rep.int(NA_real_, length(q))
     i <- which(!is.na(q))
-    if(!any(i)) 
+    if(!length(i))
         return(y)
 
     ## Support of V
@@ -1010,13 +1016,19 @@ function(q, n, z = NULL, lower.tail = TRUE)
              seq.int(0, n * (n + 1)) / 2
     ## Density
     d <- .dsignrank(s, n, z)
-    y[i] <- vapply(q[i],
-                   function(e) {
-                       ## NOTE: C code in src/nmath uses a fuzz of 1e-7.
-                       sum(d[s < e + 1e-8])
-                   },
-                   0)
-    if(lower.tail) y else 1 - y
+    y[i] <- vapply(q[i], function(e) sum(d[s < e + 1e-8]), 0)# C code in src/nmath uses 1e-7.
+
+    if(lower.tail) {
+        y[i] <- pmin(y[i], 1) # PR#19144
+        y
+    } else { # upper tail:
+        r <- 1 - y #  for y ~ 1 prevent strong cancellation:
+        if(any(yi1 <- abs(y[i] - 1) < 0x1p-6)) { # |y - 1| < 2^-6 (1/64 = 1.6% )
+            ## compute the *complementary* sum for these (with same fuzz)
+            r[i][yi1] <- vapply(q[i][yi1], function(e) sum(d[s >= e + 1e-8]), 0)
+        }
+        r
+    }
 }
 
 .qsignrank <-
@@ -1026,10 +1038,10 @@ function(p, n, z = NULL, lower.tail = TRUE)
         return(qsignrank(p, n, lower.tail = lower.tail))
 
     y <- rep.int(NA_real_, length(p))
-    if (any(i <- (p < 0) | (p > 1))) 
+    if (any(i <- (p < 0) | (p > 1)))
         y[i] <- NaN
     i <- !is.na(p) & !i
-    if (!any(i)) 
+    if (!any(i))
         return(y)
 
     s <- if(all(z == floor(z)))
@@ -1037,9 +1049,9 @@ function(p, n, z = NULL, lower.tail = TRUE)
          else
              seq.int(0, n * (n + 1)) / 2
     v <- .psignrank(s, n, z)
-    if (!lower.tail) 
+    if (!lower.tail) # FIXME for (orig.) p ~~ 1  !?!
         p <- 1 - p
     p <- p - 10 * .Machine$double.eps
     y[i] <- vapply(p[i], function(e) s[v >= e][1L], 0)
     y
-}   
+}

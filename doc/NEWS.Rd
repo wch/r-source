@@ -182,10 +182,15 @@
       computation got a missing \code{dnorm(z)} factor, and so did the
       2-sample case, in addition to more fixes.
 
+      Further, if \code{wilcox.test(.., exact=TRUE)}'s p-value is close to
+      the 0 or 1 boundaries, the calculation no longer suffers severely
+      from cancellation, thanks to \I{Tasuku Kobayashi}'s reports and
+      \I{Ahmed Sattar Jabbar}'s suggestion in \PR{19144}.
+
       \item The data part of \code{getGenerics()} listed package names for
       generic functions defined in more than one package.  Now it
       lists generic function names, as intended.  Thanks to \I{Michael
-      Chirico} for report and patch proposal (\PR{19080}).
+	Chirico} for report and patch proposal (\PR{19080}).
 
       \item Overly long \code{dyn.load()} error messages (C level
       \code{dlerror()}), should no longer corrupt its state, thanks to
