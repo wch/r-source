@@ -38,14 +38,14 @@ SEXP isoreg(SEXP y)
     SET_VECTOR_ELT(ans, 2, yf = allocVector(REALSXP, n));
     SET_VECTOR_ELT(ans, 3, iKnots= allocVector(INTSXP, n));
 
+    /* yc := cumsum(0,y); yc[0] also when n == 0 */
+    REAL(yc)[0] = 0.;
     if (n == 0) {
 	UNPROTECT(1); /* ans */
 	return ans; /* avoid segfault below */
     }
 
     /* unneeded: y = coerceVector(y, REALSXP); */
-    /* yc := cumsum(0,y) */
-    REAL(yc)[0] = 0.;
     double tmp = 0.;
     for (i = 0; i < n; i++) {
 	tmp += REAL(y)[i];

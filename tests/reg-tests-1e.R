@@ -3989,7 +3989,6 @@ stopifnot(identical(strsplit(x, "|",  perl = TRUE, useBytes = TRUE),
 ## heap-buffer-overflow in R 4.4.0 to 4.6.1 (visible under ASan)
 
 
-
 ## nls() when the model evaluates to a zero-column data frame
 local({
     y <- 1:3
@@ -3999,6 +3998,14 @@ local({
         stopifnot(grepl("evaluated to length 0, not 1", conditionMessage(E)))
 })
 ## segfaulted in R <= 4.6.1
+
+
+## isoreg() on empty input left 'yc' uninitialized -- PR#19224
+x <- lapply(1:1e4, function(i) 12345.5 + 0); rm(x); invisible(gc()) # free nodes holding junk
+stopifnot(vapply(1:5, function(i) identical(0, print(isoreg(numeric(0))$yc)), NA))
+## returned stale heap contents in R <= 4.6.1
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

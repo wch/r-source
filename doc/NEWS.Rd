@@ -379,7 +379,6 @@
 
 
 \section{\Rlogo Changes in R 4.6.1 patched}{
-
   \subsection{Bug Fixes}{
     \itemize{
       \item In plain-text help (\code{Rd2txt}), paragraphs are again
@@ -490,6 +489,9 @@
       \item \code{influence.measures()} inadvertently wasn't updated along
       with \code{dffits()}, \code{dfbetas()}, \code{covratio()}. \PR{19167} by
       \I{Amal Tawfik}.
+
+      \item \code{isoreg(numeric(0))} no longer returns unallocated component
+      \code{yc}, fixing \PR{19224} thanks to \I{Kevin Ushey}.
     }
   }
   \subsection{Bug Fixes (Windows)}{
