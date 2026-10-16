@@ -83,7 +83,7 @@
 
       Additionally, also by \I{Adam Berkeš}, \code{x <- rep(999,0);
 	ksmooth(x, x, x.points = 1)} no longer writes out of bounds, fixing
-      \PR{19171}.
+      \PR{19171}.  Ditto for \code{ksmooth(x, x, n.points = 0)}, \PR{19219}.
 
       \item \code{besselI(1, 1e11)} and \code{besselK(..)} now signal a
       warning and return \code{NaN} instead of typically segfaulting,
