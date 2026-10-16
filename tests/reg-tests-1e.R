@@ -3990,6 +3990,16 @@ stopifnot(identical(strsplit(x, "|",  perl = TRUE, useBytes = TRUE),
 
 
 
+## nls() when the model evaluates to a zero-column data frame
+local({
+    y <- 1:3
+    E <- tryCid(nls(y ~ data.frame(), start = list(b = 0.5)))
+    stopifnot(inherits(E, "error"))
+    if(englishMsgs)
+        stopifnot(grepl("evaluated to length 0, not 1", conditionMessage(E)))
+})
+## segfaulted in R <= 4.6.1
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

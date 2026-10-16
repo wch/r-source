@@ -209,6 +209,9 @@ nls_iter(SEXP m, SEXP control, SEXP doTraceArg)
 	}
 
 	SEXP newIncr = PROTECT(eval(incr, R_GlobalEnv));
+	if(LENGTH(newIncr) != nPars)
+	    error(_("'%s' evaluated to length %d, not %d"), "m$incr()",
+		  LENGTH(newIncr), nPars);
 	double
 	    *par   = REAL(pars),
 	    *npar  = REAL(newPars),
