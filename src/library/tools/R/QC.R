@@ -6359,7 +6359,8 @@ function(package, dir, lib.loc = NULL)
             this <- sub('^"(.*)"$', "\\1", this)
             this <- sub("^'(.*)'$", "\\1", this)
             if (p %in% "base") {
-                this <- setdiff(this, ls(baseenv(), all.names = TRUE))
+                this <- setdiff(this,
+                                c(ls(baseenv(), all.names = TRUE), extras$base))
                 if(length(this))
                     imp2un <- c(imp2un, paste(p, this, sep = "::"))
                 next
