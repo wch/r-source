@@ -369,6 +369,11 @@
       \item \code{strsplit(str, perl=TRUE, bytes=TRUE)} no longer accesses
       invalid memory in case \code{str} is an invalid UTF-8 string, fixing
       \PR{19212}, thanks to \I{Kevin Ushey}.
+
+      \item \code{trace} with non-\code{NULL} \code{exit} replaced
+      rematched S4 method definition with non-rematched one that
+      evaluated \code{exit} twice, first on \code{.local} exit and again
+      on method exit.
     }
   }
 }

@@ -277,7 +277,6 @@ stopifnot(any(as.character(rd) != "\n"),
 ## empty output in R <= 4.2.x
 
 
-
 ## expand.model.frame() for non-data fits (PR#18414)
 y <- 1:10
 g <- gl(2, 5)
@@ -1139,7 +1138,6 @@ for(f in fbList) {
 ## with Error in as.function.default(....): list argument expected
 
 
-
 ## fix error message of as.function(..1, *)
 (msg <- tryCmsg(as.function(list({}, 1), .GlobalEnv)))
 stopifnot(!englishMsgs || grepl("invalid formal argument list", msg),
@@ -1589,7 +1587,7 @@ stopifnot(exprs = {
 
 ## debugonce(<simple>) error when called twice --  PR#18824
 setGeneric("zzz", function(x) standardGeneric("zzz"))
-setMethod("zzz", c(x = "NULL"), function(x) NULL)
+setMethod(zzz, c(x = "NULL"), function(x) NULL)
 m0 <- selectMethod(zzz, signature = "NULL")
 debugonce(zzz, signature = "NULL")
 m1 <- selectMethod(zzz, signature = "NULL")
@@ -1602,6 +1600,7 @@ stopifnot(exprs = {
     is(m1, "MethodDefinitionWithTrace")
     identical(m0, m3)
     identical(m1, m2)
+    removeGeneric("zzz")
 })
 ## 2nd debugonce() call failed in R <= 4.4.2
 
@@ -4036,6 +4035,20 @@ assertErrV(KalmanForecast(3, list(1,"a")))
 assertErrV(qr.influence(qr = list(1,"a"), res = 0))
 ## segfaulted in R <= 4.6.1
 
+
+## R < 4.6.3: tracing rematched S4 methods mishandled 'tracer', 'exit'
+setGeneric("F", function (x, ...) standardGeneric("F"))
+setMethod(F, sig <- c(x = "ANY"), function (x, y, ...) invisible(NULL))
+incV <- function () v <<- v + 1L; v <- 0L
+## trace(exit=): replacement lost rematched property, evaluated twice
+body(m1 <- getMethod(F, sig)); F()
+stopifnot(identical(v, 0L), isRematched(m1), !is(m1, "traceable"))
+trace("F", signature = sig, exit = incV)
+body(m2 <- getMethod(F, sig)); F()
+stopifnot(identical(v, 1L), isRematched(m2),  is(m2, "traceable"))
+trace("F", signature = sig, exit = incV)
+body(m3 <- getMethod(F, sig)); F()
+stopifnot(identical(v, 2L), identical(m2, m3), removeGeneric("F"))
 
 
 ## keep at end

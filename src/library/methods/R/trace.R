@@ -1,7 +1,7 @@
 #  File src/library/methods/R/trace.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2016, 2022-2025 The R Core Team
+#  Copyright (C) 1995-2016, 2022-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -197,6 +197,7 @@
                                     ed = edit))
             at <- 3L
             tracer <- expr
+            exit <- NULL
             print <- FALSE
         }
         if(is.null(def)) {
