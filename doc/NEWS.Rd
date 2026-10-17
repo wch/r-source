@@ -366,10 +366,6 @@
       inside a masked \code{viewport}. Thanks to \I{Trevor Davis}' patch
       proposal in \PR{19075}.
 
-      \item Long stringed error messages are now protected from premature
-      garbage collection, fixing \PR{19210}, reported and analyzed by
-      \I{Yuancheng Jiang}.
-
       \item \code{strsplit(str, perl=TRUE, bytes=TRUE)} no longer accesses
       invalid memory in case \code{str} is an invalid UTF-8 string, fixing
       \PR{19212}, thanks to \I{Kevin Ushey}.
@@ -490,8 +486,15 @@
       with \code{dffits()}, \code{dfbetas()}, \code{covratio()}. \PR{19167} by
       \I{Amal Tawfik}.
 
+      \item Long stringed error messages are now protected from premature
+      garbage collection, fixing \PR{19210}, reported and analyzed by
+      \I{Yuancheng Jiang}.
+
       \item \code{isoreg(numeric(0))} no longer returns unallocated component
       \code{yc}, fixing \PR{19224} thanks to \I{Kevin Ushey}.
+
+      \item \code{KalmanLike(1:5, list(1,2))} and similar no longer
+      segfault, fixing \PR{19217} thanks to \I{Kevin Ushey} and \I{Adam Berkeš}.
     }
   }
   \subsection{Bug Fixes (Windows)}{

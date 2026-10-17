@@ -4002,9 +4002,8 @@ local({
 
 ## isoreg() on empty input left 'yc' uninitialized -- PR#19224
 x <- lapply(1:1e4, function(i) 12345.5 + 0); rm(x); invisible(gc()) # free nodes holding junk
-stopifnot(vapply(1:5, function(i) identical(0, print(isoreg(numeric(0))$yc)), NA))
+stopifnot(vapply(1:5, function(i) identical(0, isoreg(numeric(0))$yc), NA))
 ## returned stale heap contents in R <= 4.6.1
-
 
 
 ## fisher.test() when the workspace left for the hash tables is < 2 entries
@@ -4020,14 +4019,23 @@ local({
 })
 ## segfaulted or gave p-value 0 in R <= 4.6.1
 
+
 ## parse(keep.source = TRUE) after a lexer error in a previous parse
-local({
-    try(parse(text = "#a\n#a\n#a\ny + '\\q'", keep.source = TRUE), silent = TRUE)
-    pd <- getParseData(parse(text = "c#\nc#\n", keep.source = TRUE))
-    stopifnot(identical(pd$parent[pd$token == "COMMENT"],
-                        -pd$id[pd$token == "expr"]))
+stopifnot(exprs = {
+    inherits(tryCid(parse(text = "#a\n#a\n#a\ny + '\\q'", keep.source = TRUE)), "error")
+    is.list(pd <- getParseData(parse(text = "c#\nc#\n",   keep.source = TRUE)))
+    identical(pd$parent[pd$token == "COMMENT"],
+              -pd$id[pd$token == "expr"])
 })
 ## looped forever in R <= 4.6.1
+
+
+## Kalman*() with a list 'mod' lacking names -- PR#19217
+assertErrV(KalmanLike(1, list(1, 2)))
+assertErrV(KalmanForecast(3, list(1,"a")))
+assertErrV(qr.influence(qr = list(1,"a"), res = 0))
+## segfaulted in R <= 4.6.1
+
 
 
 ## keep at end
