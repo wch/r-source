@@ -1659,7 +1659,7 @@ function(package = "base", lib.loc = NULL, auto = NULL)
               note = paste("R package version", meta$Version)
               )
 
-    ## CRAN-style repositories: CRAN, R-Forge, Bioconductor
+    ## CRAN-style repositories: CRAN, R-Forge, Bioconductor, R-universe
     if(identical(meta$Repository, "CRAN")) {
         z$url <-
             sprintf("https://CRAN.R-project.org/package=%s", package)
@@ -1684,6 +1684,14 @@ function(package = "base", lib.loc = NULL, auto = NULL)
             sprintf("https://bioconductor.org/packages/%s", package)
         z$doi <-
             sprintf("10.18129/B9.bioc.%s", package)
+    }
+
+    if(!is.null(meta$Repository) &&
+       endsWith(meta$Repository, "r-universe.dev")) {
+        z$url <- paste(meta$Repository, meta$Package, sep = "/")
+        if(!is.null(meta$RemoteSha)) {
+            z$note <- sprintf("%s, commit %s", z$note, meta$RemoteSha)
+        }
     }
     
     ## Git repositories: GitHub, GitLab, ...
