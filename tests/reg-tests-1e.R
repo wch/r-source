@@ -3495,6 +3495,16 @@ stopifnot(print(abs(pvW/pvX - 1)) <= c(2e-14, 2e-14, 1e-15),
 ## not ok in  R <= 4.6.1
 
 
+## strsplit(perl = TRUE) stepped over an empty match by utf8clen() -- PR#19212
+x <- "\xff"; Encoding(x) <- "bytes"
+y <- "a\xffb"; Encoding(y) <- "bytes"
+stopifnot(identical(strsplit(x, "|",  perl = TRUE, useBytes = TRUE),
+                    strsplit(x, "|",               useBytes = TRUE)),
+          identical(strsplit(y, "x*", perl = TRUE, useBytes = TRUE),
+                    strsplit(y, "x*",              useBytes = TRUE)))
+## heap-buffer-overflow in R 4.4.0 to 4.6.1 (visible under ASan)
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

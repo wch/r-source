@@ -120,6 +120,10 @@
       \item Long stringed error messages are now protected from premature
       garbage collection, fixing \PR{19210}, reported and analyzed by
       \I{Yuancheng Jiang}.
+
+      \item \code{strsplit(str, perl=TRUE, bytes=TRUE)} no longer accesses
+      invalid memory in case \code{str} is an invalid UTF-8 string, fixing
+      \PR{19212}, thanks to \I{Kevin Ushey}.
     }
   }
   \subsection{Bug Fixes (Windows)}{
