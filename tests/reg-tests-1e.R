@@ -4055,6 +4055,13 @@ body(m3 <- getMethod(F, sig)); F()
 stopifnot(identical(v, 2L), identical(m2, m3), removeGeneric("F"))
 
 
+## besselY() with large negative non-integer order -- NaN with warning
+assertWarnV(bY <- besselY(1, -2e7 - c(0.5, 0.25)))
+stopifnot(is.nan(bY))
+## segfaulted in R-devel since r90571
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
