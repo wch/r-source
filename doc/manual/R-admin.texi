@@ -5568,9 +5568,10 @@ but when installing a few packages.)
 @subsubsection Using @command{flang}
 
 It is intended in future to use @I{LLVM}'s @command{flang} as the
-Fortran compiler.  There is a prelinimary binary distribution at @uref{
-https://github.com/R-macos/llvm-project/releases}.  Installing
-that needs something like
+Fortran compiler, at least on @cputype{arm64}.  There is a prelinimary
+binary distribution at @uref{
+https://github.com/R-macos/llvm-project/releases}.  Installing that
+needs something like
 @example
 curl -OL https://github.com/R-macos/llvm-project/releases/download/23.1.1/flang-23.1.1-darwin22.6.0.tar.xz
 tar xf flang-23.1.1-darwin22.6.0.tar.xz -C/
@@ -5579,7 +5580,7 @@ tar xf flang-23.1.1-darwin22.6.0.tar.xz -C/
 to install to @file{/opt/R/flang-23}.  (If you download in a browser you
 will need to strip attrbutes with @command{xattr -c}.)
 
-Cuurently (Oct 2026) this successfully builds @R{} and all but a handful
+Currently (Oct 2026) this successfully builds @R{} and all but a handful
 of @acronym{CRAN} packages.
 
 @node Cairo graphics, Other C/C++ compilers, Fortran compilers, macOS
