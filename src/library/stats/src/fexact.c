@@ -281,6 +281,8 @@ fexact(int nrow, int ncol, const int table[], int ldtabl,
 	numb = (mult << 3) + 12;
     }
     ldkey = (iwkmax - iwkpt) / numb - 1;
+    if (ldkey < 1)
+	prterr(40, "Out of workspace.");
     if(mult * (double)ldkey > INT_MAX)
 	error(_("integer overflow would happen in 'mult * ldkey' = %g"),
 	      mult * (double)ldkey);
