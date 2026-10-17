@@ -2265,8 +2265,6 @@ a4 <- abbreviate(a)
 stopifnot(is.na(a4) == is.na(a))
 a5 <- chartr("NA", "na", a)
 stopifnot(is.na(a5) == is.na(a))
-## A UTF-8 replacement may not be representable in the native C locale.
-tools::assertError(chartr("a", intToUtf8(256L), "a"))
 a6 <- gsub(na, "na", a)
 stopifnot(is.na(a6))
 a6a <- gsub("NANA", na, a)

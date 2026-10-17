@@ -4036,6 +4036,10 @@ assertErrV(qr.influence(qr = list(1,"a"), res = 0))
 ## segfaulted in R <= 4.6.1
 
 
+## PR#19226: UTF-8 replacement not representable in current locale
+tools::assertError(chartr("a", intToUtf8(256L), "a")) # since LC_ALL=C
+
+
 ## R < 4.6.3: tracing rematched S4 methods mishandled 'tracer', 'exit'
 setGeneric("F", function (x, ...) standardGeneric("F"))
 setMethod(F, sig <- c(x = "ANY"), function (x, y, ...) invisible(NULL))
