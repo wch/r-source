@@ -4020,6 +4020,16 @@ local({
 })
 ## segfaulted or gave p-value 0 in R <= 4.6.1
 
+## parse(keep.source = TRUE) after a lexer error in a previous parse
+local({
+    try(parse(text = "#a\n#a\n#a\ny + '\\q'", keep.source = TRUE), silent = TRUE)
+    pd <- getParseData(parse(text = "c#\nc#\n", keep.source = TRUE))
+    stopifnot(identical(pd$parent[pd$token == "COMMENT"],
+                        -pd$id[pd$token == "expr"]))
+})
+## looped forever in R <= 4.6.1
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

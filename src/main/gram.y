@@ -1646,9 +1646,15 @@ void R_FinalizeSrcRefState(void)
     if (PS_IDS != R_NilValue) {
 	if (ParseState.prevState || ID_COUNT > MAX_DATA_COUNT) {
 	    PS_SET_IDS(R_NilValue);
-        } else {/* Remove the parent records */
+        } else {
+	    /* Remove the parent records.  'identifier' is the id of the
+	       last node, not a count, so include it: when a lexer error
+	       unwinds mid-expression that node is a recorded one, and a
+	       stale ID_ID would make finalizeData() treat an unrecorded
+	       node of the next parse as present in its parse data, in
+	       which case the comment-parent walk can loop forever. */
             if (identifier > ID_COUNT) identifier = ID_COUNT;
-            for (int i=0; i < identifier; i++) {
+            for (int i=0; i <= identifier; i++) {
 		ID_ID(i) = 0;
 	        ID_PARENT(i) = 0;
 	    }
