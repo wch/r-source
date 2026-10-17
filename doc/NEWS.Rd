@@ -5,7 +5,6 @@
 \title{R News}
 \encoding{UTF-8}
 
-
 \section{\Rlogo Changes in R 4.6.1 patched}{
   \subsection{Bug Fixes}{
     \itemize{
@@ -117,6 +116,10 @@
       \item \code{influence.measures()} inadvertently wasn't updated along
       with \code{dffits()}, \code{dfbetas()}, \code{covratio()}. \PR{19167} by
       \I{Amal Tawfik}.
+
+      \item Long stringed error messages are now protected from premature
+      garbage collection, fixing \PR{19210}, reported and analyzed by
+      \I{Yuancheng Jiang}.
     }
   }
   \subsection{Bug Fixes (Windows)}{
