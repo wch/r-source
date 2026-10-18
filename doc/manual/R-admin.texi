@@ -978,16 +978,16 @@ SHLIB_OPENMP_FFLAGS
 @end example
 
 @noindent
-Setting these to an empty value will disable @abbr{OpenMP} for that compiler
-(and configuring with @option{--disable-openmp} will disable all
-detection@footnote{This does not necessarily disable @emph{use} of
-@abbr{OpenMP} -- the @command{configure} code allows for platforms where @abbr{OpenMP}
-is used without a flag. For the @command{flang} compiler in late 2017,
-the Fortran runtime always used @abbr{OpenMP}.} of @abbr{OpenMP}).  The
-@command{configure} detection test is to compile and link a standalone
-@abbr{OpenMP} program, which is not the same as compiling a shared object and
-loading it into the C program of @R{}'s executable.  Note that
-overridden values are not tested.
+Setting these to an empty value will disable @abbr{OpenMP} for that
+compiler (and configuring with @option{--disable-openmp} will disable
+all detection@footnote{This does not necessarily disable @emph{use} of
+@abbr{OpenMP} -- the @command{configure} code allows for platforms where
+@abbr{OpenMP} is used without a flag.  For the `classic' @command{flang}
+compiler in late 2017, the Fortran runtime always used @abbr{OpenMP}.}
+of @abbr{OpenMP}).  The @command{configure} detection test is to compile
+and link a standalone @abbr{OpenMP} program, which is not the same as
+compiling a shared object and loading it into the C program of @R{}'s
+executable.  Note that overridden values are not tested.
 
 @node C++ Support
 @subsection C++ Support
@@ -1066,7 +1066,7 @@ extensions': what those are is hard to track down.
 For the use of C++ in @R{} packages,
 @pxref{, , , R-exts, Writing R Extensions}.
 
-@uref{https://en.cppreference.com/w/cpp/compiler_support.html} indicates
+@uref{https://en.cppreference.com/cpp/compiler_support} indicates
 which versions of common compilers support (parts of) which C++
 standards.
 
@@ -3559,7 +3559,7 @@ java-latest-openjdk-devel
 @end example
 @noindent
 where the @code{-devel} @abbr{RPM}s are needed to complete the
-@abbr{JDK}. Note that @code{-latest-} may be a non-LTS version such as
+@abbr{JDK}. Note that @code{-latest-} may be a non-@abbr{LTS} version such as
 27 and so not recommended.
 
 Debian/Ubuntu use @samp{-jre} and @samp{-jdk}, e.g.
@@ -4910,7 +4910,7 @@ This has to be used in conjunction with a Fortran compiler: the
 which is needed for some versions of @command{gfortran}.
 
 The current out-of-the-box default for @command{clang++} is to use the
-C++ runtime @code{libstdc++} associatesd with the installed
+C++ runtime @code{libstdc++} associated with the installed
 @command{g++}.  Using the runtime from the
 @url{https://libcxx.llvm.org/, @code{libc++}} project (Fedora
 @acronym{RPM} @code{libcxx-devel}) @emph{via} @option{-stdlib=libc++}
@@ -4931,15 +4931,15 @@ FPIEFLAGS=-fPIE
 in @file{config.site}. (@command{configure} tries that value if it is
 unset.)
 
-@node flang
+@node flang, Intel compilers, Clang, Linux
 @subsection @I{flang}
 
 The name @command{flang} has been used for two projects: this is about
 the sub-project of @I{LLVM} which builds a Fortran compiler and runtime
-libraries.  The compiler command was @command{flang-new} prior to
+libraries.  The compiler command was called @command{flang-new} prior to
 version 20.
 
-The version in @I{LLVM} 16 and later was able to build @R{} on @cputype{x86_64} Linux
+As from @I{LLVM} 16 this is able to build @R{} on @cputype{x86_64} Linux
 with
 @example
 FC=/path/to/flang (or flang-new)
@@ -4951,8 +4951,7 @@ passed @command{make check-all}.  There is also support for
 tested with @R{}.
 
 
-@c This was about 'Classic Flang'.  The newer version is not
-@c yet able to compile Fortran.
+@c This was about 'Classic Flang'.
 @c There is a project called @command{flang}
 @c (@uref{https://github.com/flang-compiler/flang})) to develop a
 @c Fortran compiler similar to clang but based on the Portland Group's front
@@ -5638,7 +5637,7 @@ of @I{Accelerate} show differences from the reference BLAS (and most others)
 in the use of @code{NA} @emph{vs} @code{NaN} and a substantial number of
 @R{} packages fail their checks.
 
-@node OpenBLAS (macOS)
+@node OpenBLAS (macOS),  , Accelerate, Other libraries
 @subsubsection @I{OpenBLAS}
 
 @R{} has been built on @cputype{arm64} using @I{OpenBLAS} 0.3.29 (sources
@@ -5997,7 +5996,7 @@ signalling behaviour; @I{Sun/Sparc}, @I{SGI/IRIX} and @cputype{ix86}
 Linux required no special action, FreeBSD requires a call to (the macro)
 @code{fpsetmask(0)} and @I{OSF1} required that computation be done with
 a @option{-ieee_with_inexact} flag etc. With Intel compilers on Intel
-machines, one has to explicitly disable flush-to-zero and
+machines, one had to explicitly disable flush-to-zero and
 @I{denormals-are-zero} modes.  Some ARM processors (including Apple
 Silicon) by default use @I{runfast} mode, which includes flush-to-zero
 and @I{default-nan} and hence has to be disabled.  With @I{default-nan}
@@ -6009,10 +6008,27 @@ top level directory.
 
 Beware of using high levels of optimization, at least initially.  On
 many compilers these reduce the degree of compliance to the
-@acronym{IEEE} model.  For example, using @option{-fast} on the Oracle
+@acronym{IEC} model.  For example, using @option{-fast} on the Oracle
 compilers has caused @R{}'s @code{NaN} to be set incorrectly, and
 @command{gcc}'s @option{-ffast-math} and @command{clang}'s
 @option{-Ofast} have given incorrect results.
+
+@strong{Long doubles}: @R{} (and many packages) makes use of the C
+@code{long double} type to accumulate intermediate results.  On some
+platforms this uses the @cputype{ix86}/@cputype{x86_64} `extended
+precision' model which is (almost always) implemented in hardware in the
+floating-point unit.  Originally (in the 8087 @abbr{FPU}) all double-precision
+arithmetic was done in extended-precision and converted when stored, so
+using long doubles had negligible cost in computational time.  No other
+commonly-used platform uses extended-precision arithmetic: they either
+provide @code{long double} as the same as @code{double} or as a 128-bit
+type by (almost always) software emulation.  For ARM, compiler vendors
+are divided: GCC uses software emulation of the 128-bit IEEE 754-2008
+type, whereas @I{LLVM} (and hence Apple) use @code{double}.
+
+All use of C @code{long double} in @R{} can be suppressed by
+@command{--disable-long-double}: this can be desirable on platforms with
+software emulation of long doubles.
 
 @strong{Shared Objects}: There seems to be very little agreement
 across platforms on what needs to be done to build shared objects.
@@ -6048,7 +6064,8 @@ have had a fair amount of practice at porting @R{} to new platforms
 One thing you might want to add for a new platform is the mapping of
 C/C++/Fortran calls to entry point names used for @command{R CMD check}.
 See @uref{https://svn.r-project.org/R-dev-web/trunk/sotools.txt} for how
-to do so.
+to do so.  This is likely to be needed for a new compiler (especially for
+Fortran) and has been needed for compiler name changes and updates
 
 
 @node Function and variable index
