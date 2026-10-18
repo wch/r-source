@@ -5095,10 +5095,10 @@ unset.)
 
 The name @command{flang} has been used for two projects: this is about
 the sub-project of @I{LLVM} which builds a Fortran compiler and runtime
-libraries.  The compiler command was @command{flang-new} prior to
+libraries.  The compiler command was called @command{flang-new} prior to
 version 20.
 
-The version in @I{LLVM} 16 and later was able to build @R{} on @cputype{x86_64} Linux
+As from @I{LLVM} 16 this is able to build @R{} on @cputype{x86_64} Linux
 with
 @example
 FC=/path/to/flang (or flang-new)
@@ -5110,8 +5110,7 @@ passed @command{make check-all}.  There is also support for
 tested with @R{}.
 
 
-@c This was about 'Classic Flang'.  The newer version is not
-@c yet able to compile Fortran.
+@c This was about 'Classic Flang'.
 @c There is a project called @command{flang}
 @c (@uref{https://github.com/flang-compiler/flang})) to develop a
 @c Fortran compiler similar to clang but based on the Portland Group's front
@@ -5568,9 +5567,9 @@ but when installing a few packages.)
 @subsubsection Using @command{flang}
 
 It is intended in future to use @I{LLVM}'s @command{flang} as the
-Fortran compiler, at least on @cputype{arm64}.  There is a prelinimary
-binary distribution at @uref{
-https://github.com/R-macos/llvm-project/releases}.  Installing that
+Fortran compiler, at least on @cputype{arm64}.  There is a preliminary
+binary distribution at
+@uref{https://github.com/R-macos/llvm-project/releases}.  Installing that
 needs something like
 @example
 curl -OL https://github.com/R-macos/llvm-project/releases/download/23.1.1/flang-23.1.1-darwin22.6.0.tar.xz
@@ -5580,8 +5579,15 @@ tar xf flang-23.1.1-darwin22.6.0.tar.xz -C/
 to install to @file{/opt/R/flang-23}.  (If you download in a browser you
 will need to strip attrbutes with @command{xattr -c}.)
 
-Currently (Oct 2026) this successfully builds @R{} and all but a handful
-of @acronym{CRAN} packages.
+Currently to build some packages you will need
+@example
+FCFLAGS="-g -O2 -pedantic -fintrinsic-modules-path /opt/R/flang-23/lib/clang/23/finclude/flang/arm64-apple-darwin22.6.0"
+SHLIB_FCLDFLAGS="-Wl,-dylib -Wl,-headerpad_max_install_names -Wl,-undefined -Wl,dynamic_lookup"
+@end example
+in @file{config.site}.
+
+Currently (Oct 2026) this successfully builds @R{} and all but one
+@acronym{CRAN} package.
 
 @node Cairo graphics, Other C/C++ compilers, Fortran compilers, macOS
 @subsection Cairo graphics
