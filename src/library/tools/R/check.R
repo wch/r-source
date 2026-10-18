@@ -3525,7 +3525,9 @@ add_dummies <- function(dir, Log)
             bad_files <- noEOL<- character()
             for(f in all_files) {
                 if (!file.exists(f)) next
-                contents <- readChar(f, file.size(f), useBytes = TRUE)
+                fsize <- file.size(f)
+                if (fsize == 0L) next
+                contents <- readChar(f, fsize, useBytes = TRUE)
                 if (grepl("\r", contents, fixed = TRUE, useBytes = TRUE))
                     bad_files <- c(bad_files, f)
                 if (!grepl("\n$", contents, useBytes = TRUE))
