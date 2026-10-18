@@ -5552,6 +5552,15 @@ symlink is broken, the driver will issue a warning and use @code{xcrun
 is used when using @command{gfortran} to link, so not when building @R{}
 but when installing a few packages.)
 
+This has problems identifiying macOS versions 26 and later: use
+@example
+FC="/opt/gfortran/bin/gfortran -mmacosx-version-min=26"
+@end example
+@noindent
+(or 27 or later) or set environment variable
+@env{MACOSX_DEPLOYMENT_TARGET} (which also applies to Apple
+@command{clang}).
+
 @c Other builds of @command{gfortran} for @code{arm64} macOS 14 are
 @c available at
 @c @uref{https://github.com/fxcoudert/gfortran-for-macOS/releases}. To use
@@ -6050,10 +6059,10 @@ However, there are some important details.
 @itemize
 
 @item
-Current @acronym{CRAN} macOS distributions are targeted at @I{Sonoma} or
-@I{Big Sur} (Intel) so it is wise to ensure that the compilers generate
-code that will run on that OS or later.  With the recommended
-compilers we can use something like
+Current @acronym{CRAN} macOS distributions are targeted at @I{Sonoma}
+(@cputype{arm64} or @I{Big Sur} (Intel) so it is wise to ensure that the
+compilers generate code that will run on that OS or later.  With the
+recommended compilers we can use something like
 @example
 CC="clang -mmacos-version-min=14.0"
 CXX="clang++ -mmacos-version-min=14.0"
