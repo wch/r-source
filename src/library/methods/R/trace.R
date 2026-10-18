@@ -42,6 +42,16 @@
 			      print = TRUE, signature = NULL,
 			      where = .GlobalEnv, edit = FALSE, from = NULL,
 			      untrace = FALSE, classMethod = FALSE) {
+    validTrace <-
+    function (f, e) {
+        ## FIXME? signal error if 'f' is not NULL, symbol, call, or
+        ## function; that would suggest user error like missing quote()
+        if (is.function(f))
+            substitute(trace(), list(trace = if (is.name(e)) e else f))
+        else f
+    }
+    tracer <- validTrace(tracer, substitute(tracer))
+    exit <- validTrace(exit, substitute(exit))
     fromPackage <-
         if(is.function(where)) {
             ## start from the function's environment:  important for
@@ -124,24 +134,6 @@
     else {
         what <- as(what, "character")
         if(length(what) != 1) {
-            if (nargs() != 1) {
-                if(!is.null(exit)) {
-                    if(is.function(exit)) {
-                        tname <- substitute(exit)
-                        if(is.name(tname))
-                            exit <- tname
-                        exit <- substitute(TRACE(), list(TRACE=exit))
-                    }
-                }
-                if(!is.null(tracer)) {
-                    if(is.function(tracer)) {
-                        tname <- substitute(tracer)
-                        if(is.name(tname))
-                            tracer <- tname
-                        tracer <- substitute(TRACE(), list(TRACE=tracer))
-                    }
-                }
-            }
             for(f in what) {
                 if(nargs() == 1)
                     trace(f)
@@ -188,13 +180,16 @@
                 else def
         def <- selectMethod(what, signature, fdef = fdef, optional = TRUE)
         if(isRematched(def)) {
-            expr <- substitute(trace(.local, tracer = tr, at = at,
-                                     exit = ex,  print = pr,
-                                     edit = ed,
+            expr <- substitute(trace(.local, tracer = tr, exit = ex,
+                                     at = at, print = pr, edit = ed,
                                      where = sys.frame(sys.nframe())),
-                               list( tr = substitute(tracer),
-                                    ex = exit, at = at, pr = print,
-                                    ed = edit))
+                               list(tr = if (is.name(tracer) ||
+                                             is.call(tracer))
+                                             enquote(tracer),
+                                    ex = if (is.name(exit) ||
+                                             is.call(exit))
+                                             enquote(exit),
+                                    at = at, pr = print, ed = edit))
             at <- 3L
             tracer <- expr
             exit <- NULL
@@ -240,22 +235,6 @@
         }
     }
     else {
-        if(!is.null(exit)) {
-            if(is.function(exit)) {
-                tname <- substitute(exit)
-                if(is.name(tname))
-                    exit <- tname
-                exit <- substitute(TRACE(), list(TRACE=exit))
-            }
-        }
-        if(!is.null(tracer)) {
-            if(is.function(tracer)) {
-                tname <- substitute(tracer)
-                if(is.name(tname))
-                    tracer <- tname
-                tracer <- substitute(TRACE(), list(TRACE=tracer))
-            }
-        }
         original <- .untracedFunction(def)
         traceClass <- .traceClassName(.class1(original))
         if(is.null(getClassDef(traceClass))) {
@@ -267,7 +246,7 @@
             ## trace with the version found in the edit environment
             def <- .findNewDefForTrace(what, signature, edit, fromPackage)
             environment(def) <- environment(original)
-            if(is.null(c(tracer, exit))) {
+            if(is.null(tracer) && is.null(exit)) {
                 newFun <- new(traceClass, original)
                 newFun@.Data <- def
             }

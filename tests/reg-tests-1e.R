@@ -4052,7 +4052,21 @@ body(m2 <- getMethod(F, sig)); F()
 stopifnot(identical(v, 1L), isRematched(m2),  is(m2, "traceable"))
 trace("F", signature = sig, exit = incV)
 body(m3 <- getMethod(F, sig)); F()
-stopifnot(identical(v, 2L), identical(m2, m3), removeGeneric("F"))
+stopifnot(identical(v, 2L), identical(m2, m3))
+untrace(F, signature = sig)
+## trace(tracer=): replacement had call trace(.local, tracer=*, ...)
+##                 with bad 'tracer' component under some conditions
+##                 ==> PR#18707
+traceF <- function (.) { trace(F, signature = sig, tracer = .); F() }
+traceF(quote({})) # was Error .... : object '.' not found
+body(getMethod(F, sig)) # saw trace(.local, tracer = ., ...),
+                        # now tracer = base::quote({})
+fnf <- tryCatch(traceF(function () {}), error = identity)
+body(getMethod(F, sig)) # saw trace(.local, tracer = ., ...),
+                        # now tracer = base::quote(.())
+stopifnot(inherits(fnf, "functionNotFoundError"),
+          identical(conditionCall(fnf), quote(.())),
+          removeGeneric("F"))
 
 
 ## besselY() with large negative non-integer order -- NaN with warning
