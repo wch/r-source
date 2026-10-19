@@ -194,7 +194,7 @@ static bool warn1902 = false;
 static const int month_days[12] =
   {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-// Careful : days_in_year is for base-0 years, days_in_month for base-1970.
+// Careful : days_in_year is for base-0 years, days_in_month for base-1900.
 #define isleap(y) ((((y) % 4) == 0 && ((y) % 100) != 0) || ((y) % 400) == 0)
 #define days_in_year(year) (isleap(year) ? 366 : 365)
 #define days_in_month(mon, yr) ((mon == 1 && isleap(1900+yr)) ? 29 : month_days[mon])
@@ -686,7 +686,7 @@ static stm * localtime0(const double *tp, const int local, stm *ltm)
     /* month within year */
     int mon;
     for (mon = 0;
-	 day >= (tmp = days_in_month(mon, y)); // days_in_month in 1900-based
+	 day >= (tmp = days_in_month(mon, y)); // days_in_month is 1900-based
 	 day -= tmp, mon++);
     res->tm_mon = mon;
     res->tm_mday = day + 1;
