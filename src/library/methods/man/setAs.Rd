@@ -1,6 +1,6 @@
 % File src/library/methods/man/setAs.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setAs}
@@ -85,13 +85,15 @@ Inheritance can also be defined explicitly by a call to
 The two versions have slightly different implications for coerce methods.
 Simple inheritance implies that inherited slots behave identically in the subclass and the superclass.
 Whenever two classes are related by simple inheritance, corresponding coerce methods
-are defined for both direct and replacement use of \code{as}.
+are defined implicitly for both direct and replacement use of \code{as}.
 In the case of simple inheritance, these methods do the obvious
 computation:  they extract or replace the slots in the object that
 correspond to those in the superclass definition.
 
 The implicitly defined coerce methods may be overridden by a call
-to \code{setAs}; note, however, that the implicit methods are defined for each
+to \code{setAs}, with the effect of changing the inheritance type
+from simple to explicit (\code{setAs} evaluates a suitable call to
+\code{setIs}).  Note that the implicit methods are defined for each
 subclass-superclass pair, so that you must override each of these
 explicitly, not rely on inheritance.
 
