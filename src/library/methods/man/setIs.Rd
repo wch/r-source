@@ -1,6 +1,6 @@
 % File src/library/methods/man/setIs.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{setIs}
@@ -96,7 +96,7 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
 
 
   \item
-    Supplying \code{coerce}  and \code{replace} arguments to \code{setAs}.
+    Supplying \code{coerce}  and \code{replace} arguments to \code{setIs}.
       \R allows arbitrary inheritance relationships, using the same
       mechanism for defining coerce methods by a call to
       \code{\link{setAs}}.  The difference between the  two is simply
