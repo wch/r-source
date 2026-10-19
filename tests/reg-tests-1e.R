@@ -3508,8 +3508,16 @@ stopifnot(identical(strsplit(x, "|",  perl = TRUE, useBytes = TRUE),
 
 ## isoreg() on empty input left 'yc' uninitialized -- PR#19224
 x <- lapply(1:1e4, function(i) 12345.5 + 0); rm(x); invisible(gc()) # free nodes holding junk
-stopifnot(vapply(1:5, function(i) identical(0, print(isoreg(numeric(0))$yc)), NA))
+stopifnot(vapply(1:5, function(i) identical(0, isoreg(numeric(0))$yc), NA))
 ## returned stale heap contents in R <= 4.6.1
+
+
+## keep at end
+## Kalman*() with a list 'mod' lacking names -- PR#19217
+assertErrV(KalmanLike(1, list(1, 2)))
+assertErrV(KalmanForecast(3, list(1,"a")))
+assertErrV(qr.influence(qr = list(1,"a"), res = 0))
+## segfaulted in R <= 4.6.1
 
 
 

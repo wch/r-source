@@ -127,6 +127,9 @@
 
       \item \code{isoreg(numeric(0))} no longer returns unallocated component
       \code{yc}, fixing \PR{19224} thanks to \I{Kevin Ushey}.
+
+      \item \code{KalmanLike(1:5, list(1,2))} and similar no longer
+      segfault, fixing \PR{19217} thanks to \I{Kevin Ushey} and \I{Adam Berkeš}.
     }
   }
   \subsection{Bug Fixes (Windows)}{

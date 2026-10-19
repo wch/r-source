@@ -34,6 +34,10 @@ SEXP getListElement(SEXP list, char *str)
     SEXP elmt = R_NilValue, names = getAttrib(list, R_NamesSymbol);
     int i;
 
+    /* an unnamed list has no element called str; STRING_ELT() on the
+       NULL names is unchecked here (Defn.h) and reads off R_NilValue */
+    if (TYPEOF(names) != STRSXP)
+	return R_NilValue;
     for (i = 0; i < length(list); i++)
 	if (strcmp(CHAR(STRING_ELT(names, i)), str) == 0) { /* ASCII only */
 	    elmt = VECTOR_ELT(list, i);
