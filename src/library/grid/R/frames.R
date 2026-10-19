@@ -308,7 +308,7 @@ grid.pack <- function(gPath, grob, redraw=TRUE,
                     row, row.before, row.after,
                     col, col.before, col.after,
                     width, height, force.width, force.height,
-                    border),
+                    border, dynamic),
            redraw)
 }
 

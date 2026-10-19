@@ -376,10 +376,10 @@
       \code{tracer} and \code{exit} components.  Thanks to Hao Wang for
       the report (\PR{18707}).
 
-      \item Fix for \code{grid.pack(..., row.after=)}
+      \item Fixes for \code{grid.pack(row.after=)}
       (and \code{row.before} and \code{col.after} and
-      \code{col.before}).
-      Thanks to \I{Athenkosi Nkonyeni} for report.
+      \code{col.before}) and \code{grid.pack(dynamic=TRUE)}.
+      Thanks to \I{Athenkosi Nkonyeni} for reports.
     }
   }
 }
