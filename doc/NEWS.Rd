@@ -124,6 +124,9 @@
       \item \code{strsplit(str, perl=TRUE, bytes=TRUE)} no longer accesses
       invalid memory in case \code{str} is an invalid UTF-8 string, fixing
       \PR{19212}, thanks to \I{Kevin Ushey}.
+
+      \item \code{isoreg(numeric(0))} no longer returns unallocated component
+      \code{yc}, fixing \PR{19224} thanks to \I{Kevin Ushey}.
     }
   }
   \subsection{Bug Fixes (Windows)}{

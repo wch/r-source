@@ -3506,6 +3506,13 @@ stopifnot(identical(strsplit(x, "|",  perl = TRUE, useBytes = TRUE),
 
 
 
+## isoreg() on empty input left 'yc' uninitialized -- PR#19224
+x <- lapply(1:1e4, function(i) 12345.5 + 0); rm(x); invisible(gc()) # free nodes holding junk
+stopifnot(vapply(1:5, function(i) identical(0, print(isoreg(numeric(0))$yc)), NA))
+## returned stale heap contents in R <= 4.6.1
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
