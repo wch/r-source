@@ -4623,11 +4623,9 @@ specified as part of @code{FCFLAGS}.
 
 The search mechanism can be changed using the configure variable
 @code{FC} which specifies the command that runs the Fortran compiler.
-If your Fortran compiler is in a non-standard location, you
-@enindex PATH
-should set the environment variable @env{PATH} accordingly before
-running @command{configure}, or use the configure variable @code{FC} to
-specify its full path.
+If your Fortran compiler is not one of these (for example,
+@command{flang}), specfy if in the configure variable @code{FC}.  If it
+is not on your path, use this to specify its full path.
 
 If your Fortran libraries are in slightly peculiar places, you should
 @enindex LD_LIBRARY_PATH
@@ -5454,8 +5452,9 @@ FFLAGS="-g -O2 -mmacos-version-min=11.0"
 FCFLAGS="-g -O2 -mmacos-version-min=11.0"
 @end example
 @noindent
-where @code{11.0} can be replaced by @code{12.0}, @code{13.0},
-@code{14.0} or @code{15.0}
+where @code{11.0} can be replaced by a valid macOS version number such
+as @code{26.0}.  (Setting this is needed in macOS 26.0 or later to
+circumvent a bug in @command{gfortran}.)
 
 To install packages using compiled code one needs the Command Line Tools
 (or @I{Xcode}) and appropriate compilers, e.g.@: the C/C++ compilers from
@@ -5479,11 +5478,11 @@ tar xf subversion-1.14.3-darwin15.6.tar.gz
 sudo cp subversion-1.14.3-darwin15.6/svn $LOCAL/bin
 @end example
 
-If building software or installing source packages with @command{cmake}
-(or a non-Apple @command{make}) for `Apple Silicon' ensure it contains
-the @cputype{arm64} architecture (use @command{file} to be sure).
-Running Apple compilers from an @cputype{x86_64} executable will
-generate @cputype{x86_64} code @dots{}.
+@c If building software or installing source packages with @command{cmake}
+@c (or a non-Apple @command{make}) for `Apple Silicon' ensure it contains
+@c the @cputype{arm64} architecture (use @command{file} to be sure).
+@c Running Apple compilers from an @cputype{x86_64} executable will
+@c generate @cputype{x86_64} code @dots{}.
 
 @c If you have a build@footnote{For example, some Homebrew
 @c distributions.} of @code{cairo} with dynamic libraries, you can add
@@ -5526,15 +5525,13 @@ browser, consider using @command{curl -OL} to download (as illustrated
 above) or @command{xattr -c} to remove extended attributes.
 
 @command{configure} defaults to @option{--with-internal-tzcode} on
-macOS.  The native implementation used to be unusable on earlier
-versions (with a 32-bit @code{time_t} and/or timezone tables missing
-information beyond the 32-bit range).  As from macOS 12.6, option
-@option{--without-internal-tzcode} can be used to override this and @R{}
-contains sufficient workarounds (for example, the native code fails to
-recognize dates with a negative @code{tm_year}, that is dates before
-1900) for @R{} to pass its checks.  However, there are discrepancies,
-notably in Europe in the 1900s and 1940s, even though the Olson database
-contains the correct information.
+macOS.  (The native implementation used to be unusable.)  As from macOS
+12.6, option @option{--without-internal-tzcode} can be used to override
+this and @R{} contains sufficient workarounds (for example, the native
+code fails to recognize dates with a negative @code{tm_year}, that is
+dates before 1900) for @R{} to pass its checks.  However, there are
+discrepancies, notably in Europe in the 1900s and 1940s, even though the
+Olson database contains the correct information.
 
 @node Fortran compilers, Cairo graphics, Prerequisites, macOS
 @subsection Fortran compiler
@@ -5554,7 +5551,7 @@ but when installing a few packages.)
 
 This has problems identifiying macOS versions 26 and later: use
 @example
-FC="/opt/gfortran/bin/gfortran -mmacosx-version-min=26"
+FC="/opt/gfortran/bin/gfortran -mmacosx-version-min=26.0"
 @end example
 @noindent
 (or 27 or later) or set environment variable
@@ -5596,7 +5593,7 @@ SHLIB_FCLDFLAGS="-Wl,-dylib -Wl,-headerpad_max_install_names -Wl,-undefined -Wl,
 in @file{config.site}.
 
 Currently (Oct 2026) this successfully builds @R{} and all but one
-@acronym{CRAN} package.
+@acronym{CRAN} package (although a score or so fail their checks).
 
 @node Cairo graphics, Other C/C++ compilers, Fortran compilers, macOS
 @subsection Cairo graphics
@@ -5703,30 +5700,34 @@ rather than the system ones.
 
 It is normally possible to build @R{} with GCC (built from the sources,
 from a @command{gfortran} distribution, from @I{Homebrew}, @dots{}).
-@c re-trested with GCC 14.1
+@c re-tested with GCC 14.1
 When last tested it was not possible to use @command{gcc} to build the
 @code{quartz()} device, so @command{configure --without-aqua} may be
-required.  @R{} was built and tested with the GCC 14.2 compilers in the
-@code{arm64} @command{gfortran} distribution mentioned above using a
-@file{config.site} containing
-@example
-CC=/opt/gfortran/bin/gcc
-CXX=/opt/gfortran/bin/g++
-FC=/opt/gfortran/bin/gfortran
-CFLAGS="-g -O2 -Wall -pedantic -Wstrict-prototypes"
-C17FLAGS="-g -O2 -Wall -pedantic -Wno-strict-prototypes"
-C90FLAGS=$C17FLAGS
-C99FLAGS=$C17FLAGS
-CXXFLAGS="-g -O2 -Wall -pedantic"
-CPPFLAGS='-isystem /opt/R/arm64/include'
-LDFLAGS=-L/opt/R/arm64/lib
-@end example
+required.
+
+@c Failed to cofigure on macOS 27 with the 'fixed' headers, specifically stdio.h
+@c @R{} was built and tested with the GCC 14.2 compilers in the
+@c @code{arm64} @command{gfortran} distribution mentioned above using a
+@c @file{config.site} containing
+@c @example
+@c CC="/opt/gfortran/bin/aarch64-apple-darwin20.0-gcc -mmacosx-version-min=26.0"
+@c CXX="/opt/gfortran/bin/aarch64-apple-darwin20.0-g++ -mmacosx-version-min=26.0"
+@c FC="/opt/gfortran/bin/gfortran -mmacosx-version-min=26.0"
+@c CFLAGS="-g -O2 -Wall -pedantic -Wstrict-prototypes"
+@c C17FLAGS="-g -O2 -Wall -pedantic -Wno-strict-prototypes"
+@c C90FLAGS=$C17FLAGS
+@c C99FLAGS=$C17FLAGS
+@c CXXFLAGS="-g -O2 -Wall -pedantic"
+@c CPPFLAGS='-isystem /opt/R/arm64/include'
+@c LDFLAGS=-L/opt/R/arm64/lib
+@c @end example
 
 It is usually possible to add some @abbr{OpenMP} support to the Apple
 @command{clang} compilers: see @uref{https://mac.r-project.org/openmp/}.
 Note that that approach is somewhat fragile as it needs a
-@file{libomp.dylib} library matching the version of the compiler
-used.
+@file{libomp.dylib} library matching the version of the compiler used.
+(And often none is available for the latest version(s) of Apple
+@command{clang}.)
 
 @node Other libraries, Tcl/Tk headers and libraries, Other C/C++ compilers, macOS
 @subsection Other libraries
@@ -6060,9 +6061,9 @@ However, there are some important details.
 
 @item
 Current @acronym{CRAN} macOS distributions are targeted at @I{Sonoma}
-(@cputype{arm64} or @I{Big Sur} (Intel) so it is wise to ensure that the
-compilers generate code that will run on that OS or later.  With the
-recommended compilers we can use something like
+(14, @cputype{arm64}) or @I{Big Sur} (11, Intel) so it is wise to ensure
+that the compilers generate code that will run on that OS or later.
+With the recommended compilers we can use something like
 @example
 CC="clang -mmacos-version-min=14.0"
 CXX="clang++ -mmacos-version-min=14.0"
@@ -6091,7 +6092,7 @@ install_name_tool -change /usr/local/llvm/lib/libc++.1.dylib \
 @var{pkg}.so
 
 install_name_tool -change
-/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0/libgfortran.5.dylib \
+/opt/gfortran/lib//aarch64-apple-darwin20.0/14.2.0/libgfortran.5.dylib \
 /Library/Frameworks/R.framework/Resources/lib/libgfortran.5.dylib \
 @var{pkg}.so
 
