@@ -497,6 +497,11 @@
       with \code{dffits()}, \code{dfbetas()}, \code{covratio()}. \PR{19167} by
       \I{Amal Tawfik}.
 
+      \item If \code{wilcox.test(..., exact=TRUE)}'s p-value is close to
+      the 0 or 1 boundaries, the calculation no longer suffers severely
+      from cancellation, thanks to \I{Tasuku Kobayashi}'s reports and
+      \I{Ahmed Sattar Jabbar}'s suggestion in \PR{19144}.
+
       \item Long stringed error messages are now protected from premature
       garbage collection, fixing \PR{19210}, reported and analyzed by
       \I{Yuancheng Jiang}.
@@ -574,11 +579,6 @@
       \item \code{wilcox.test(x, exact=FALSE, correct = k)}'s p-value
       computation got a missing \code{dnorm(z)} factor, and so did the
       2-sample case, in addition to more fixes.
-
-      Further, if \code{wilcox.test(.., exact=TRUE)}'s p-value is close to
-      the 0 or 1 boundaries, the calculation no longer suffers severely
-      from cancellation, thanks to \I{Tasuku Kobayashi}'s reports and
-      \I{Ahmed Sattar Jabbar}'s suggestion in \PR{19144}.
 
       \item The data part of \code{getGenerics()} listed package names for
       generic functions defined in more than one package.  Now it
