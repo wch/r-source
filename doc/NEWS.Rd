@@ -373,13 +373,16 @@
 
       \item When tracing rematched S4 methods, \code{trace} could insert
       a call \code{trace(.local, tracer=, exit=, \dots)} with improper
-      \code{tracer} and \code{exit} components.  Thanks to Hao Wang for
+      \code{tracer} and \code{exit} components.  Thanks to \I{Hao Wang} for
       the report (\PR{18707}).
 
       \item Fixes for \code{grid.pack(row.after=)}
       (and \code{row.before} and \code{col.after} and
       \code{col.before}) and \code{grid.pack(dynamic=TRUE)}.
       Thanks to \I{Athenkosi Nkonyeni} for reports.
+
+      \item \code{parse_Rd()} should no longer leak memory when errors are
+      raised, thanks to \I{Kevin Ushey}'s report and patch in \PR{19184}.
     }
   }
 }
