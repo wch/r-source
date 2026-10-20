@@ -5066,21 +5066,31 @@ This has to be used in conjunction with a Fortran compiler: the
 @command{configure} code will remove @option{-lgcc} from @env{FLIBS},
 which is needed for some versions of @command{gfortran}.
 
-The current out-of-the-box default for @command{clang++} is to use the
-C++ runtime @code{libstdc++} associated with the installed
-@command{g++}.  Using the runtime from the
+The current out-of-the-box default for most builds of @command{clang++}
+on Linux is to use the C++ runtime @code{libstdc++} associated with the
+installed @command{g++}.  Using the runtime from the
 @url{https://libcxx.llvm.org/, @code{libc++}} project (Fedora
-@acronym{RPM} @code{libcxx-devel}) @emph{via} @option{-stdlib=libc++}
-has also been tested.
+@acronym{RPM} @code{libcxx-devel}) is tested regularly. The version of
+@code{libc++} in LLVM 23 tidied up `transitive inclusions' in C++ system
+headers and so uncovered errors in many packages which used C++ headers
+but did not include them directly.
 
-Recent versions have (optional when built) @abbr{OpenMP} support.@footnote{This
-also needs the @abbr{OpenMP} runtime which has sometimes been distributed
-separately.}
+Which C++ runtime is used can be changed by, for example
+@example
+CXX="clang++- -stdlib=libc++"
+@end example
+@noindent
+when @R{} is configured or in a @file{Makevars} file (@pxref{Customizing
+package compilation}).
 
-There are problems mixing @command{clang} 15.0.0 and later built as
-default on Linux to produce PIE code and @command{gfortran} 11 or later,
-which does not.  One symptom is that @command{configure} does not detect
-@code{FC_LEN_T}, which can be overcome by setting
+Recent versions of @command{clang} have (optional when built)
+@abbr{OpenMP} support.@footnote{This also needs the @abbr{OpenMP}
+runtime @code{libomp} which has sometimes been distributed separately.}
+
+There have been problems mixing @command{clang} 15.0.0 and later built
+as default on Linux to produce PIE code and @command{gfortran} 11 or
+later, which does not.  One symptom is that @command{configure} does not
+detect @code{FC_LEN_T}, which can be overcome by setting
 @example
 FPIEFLAGS=-fPIE
 @end example
@@ -6092,7 +6102,7 @@ install_name_tool -change /usr/local/llvm/lib/libc++.1.dylib \
 @var{pkg}.so
 
 install_name_tool -change
-/opt/gfortran/lib//aarch64-apple-darwin20.0/14.2.0/libgfortran.5.dylib \
+/opt/gfortran/lib/gcc/aarch64-apple-darwin20.0/14.2.0/libgfortran.5.dylib \
 /Library/Frameworks/R.framework/Resources/lib/libgfortran.5.dylib \
 @var{pkg}.so
 
