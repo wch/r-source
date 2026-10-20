@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2016   The R Core Team.
+ *  Copyright (C) 2026   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -104,7 +104,7 @@ SEXP Rbase64_encode(SEXP rawvec) {
     const unsigned char *src = RAW(rawvec);
     raw2base64(src, len, buf);
     SEXP ret = PROTECT(Rf_allocVector(STRSXP, 1));
-    SET_STRING_ELT(ret, 0, Rf_mkCharLen(buf, out_len));
+    SET_STRING_ELT(ret, 0, Rf_mkCharLen(buf, (int)out_len));
     UNPROTECT(1);
     return ret;
 }
