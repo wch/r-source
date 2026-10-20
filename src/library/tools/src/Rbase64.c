@@ -104,7 +104,7 @@ SEXP Rbase64_encode(SEXP rawvec) {
     const unsigned char *src = RAW(rawvec);
     raw2base64(src, len, buf);
     SEXP ret = PROTECT(Rf_allocVector(STRSXP, 1));
-    SET_STRING_ELT(ret, 0, Rf_mkCharLen(buf, (int)out_len));
+    SET_STRING_ELT(ret, 0, Rf_mkCharLenCE(buf, (int)out_len, CE_BYTES));
     UNPROTECT(1);
     return ret;
 }

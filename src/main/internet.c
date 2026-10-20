@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-2021   The R Core Team.
+ *  Copyright (C) 2001-2026   The R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -170,7 +170,7 @@ SEXP Rsockread(SEXP ssock, SEXP smaxlen)
     if (maxlen < 0) // presumably -1, error from recv
 	error("Error reading data in Rsockread");
     SEXP ans = PROTECT(allocVector(STRSXP, 1));
-    SET_STRING_ELT(ans, 0, mkCharLen(buf, maxlen));
+    SET_STRING_ELT(ans, 0, mkCharLenCE(buf, maxlen, CE_NATIVE));
     UNPROTECT(2); /* rbuf, ans */
     return ans;
 		       
