@@ -261,7 +261,7 @@ mod.dims <- function(dim, dims, index, new.index, nindex, force) {
     else if (index==nindex)
       dims <- unit.c(dims[1L:(nindex-1)], dim)
     else
-      dims <- unit.c(dims[1L:(index-1)], dim, dims[(index+1):(nindex-1)])
+      dims <- unit.c(dims[1L:(index-1)], dim, dims[(index+1):nindex])
   }
   dims
 }
