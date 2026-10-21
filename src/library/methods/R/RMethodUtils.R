@@ -855,8 +855,10 @@ cacheMetaData <-
         packages <- c(packages, attr(others, "package"))
     }
     ## check for duplicates
-    dups <- duplicated(generics) & duplicated(packages)
-    generics <- generics[!dups]
+    if (anyDuplicated(gp <- paste(generics, packages, sep = ":"))) {
+        generics <- generics[nd <- !duplicated(gp)]
+        packages <- packages[nd]
+    }
     for(i in seq_along(generics)) {
         f <- generics[[i]]
         fpkg <- packages[[i]]
