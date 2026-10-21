@@ -439,6 +439,12 @@ R_pcre2_prepare(const char *pattern, SEXP subject, bool use_UTF8,
 	char buf[256];
 	pcre2_get_error_message(errcode, (PCRE2_UCHAR *)buf, sizeof(buf));
 	pcre2_compile_context_free(ccontext);
+	/* The tables belong to the caller, whose cleanup the error unwind
+	   skips. */
+	if (*tables) {
+	    free((void *)*tables);
+	    *tables = NULL;
+	}
 	warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"), buf,
 	        to_native(pattern + erroffset, use_UTF8));
 	error(_("invalid regular expression '%s'"),
@@ -510,6 +516,10 @@ R_pcre_prepare(const char *pattern, SEXP subject, bool use_UTF8,
 	*tables = pcre_maketables();
     *re = pcre_compile(pattern, options, &errorptr, &erroffset, *tables);
     if (!*re) {
+	/* The tables belong to the caller, whose cleanup the error unwind
+	   skips. */
+	pcre_free((void *)*tables);
+	*tables = NULL;
 	if (errorptr)
 	    warning(_("PCRE pattern compilation error\n\t'%s'\n\tat '%s'\n"),
 	            errorptr, to_native(pattern + erroffset, use_UTF8));
