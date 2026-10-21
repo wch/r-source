@@ -3853,6 +3853,24 @@ stopifnot(identical(e[[1]][[2]], ex))
 ## gave garbage (or a crash) for the LHS of '+' in R <= 4.6.x
 
 
+## available.packages() "CRAN" filter, now linear in the number of duplicates
+local({
+    op <- options(repos = c(CRAN = "https://cran.example.org",
+                            other = "https://other.example.org"))
+    on.exit(options(op))
+    f <- utils:::available_packages_filters_db$CRAN
+    cran <- "https://cran.example.org/src/contrib"
+    x <- "https://x.example.org/src/contrib"
+    y <- "https://y.example.org/src/contrib"
+    db <- cbind(Package = c("a", "a", "b", "b", "c", "a", "d", "d", "e", "e"),
+                Repository = c(cran, x, x, y, x, y, cran, cran, x, cran))
+    stopifnot(identical(f(db), db[c(1, 3, 4, 5, 7, 8, 10), ]))
+    options(repos = c(other = "https://other.example.org"))
+    stopifnot(identical(f(db), db))
+})
+## same results as before, which took seconds for thousands of duplicates
+
+
 ## NULL and negative 'deriv' in predict.smooth.spline() - PR#19190
 ss <- smooth.spline(1:4)
 for(obj in list(ss, ss$fit))

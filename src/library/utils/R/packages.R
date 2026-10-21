@@ -388,18 +388,14 @@ function(db) {
 available_packages_filters_db$CRAN <-
 function(db)
 {
-    packages <- db[, "Package"]
-    dups <- packages[duplicated(packages)]
-    drop <- integer()
     CRAN <- getOption("repos")["CRAN"]
     ## do nothing if there is no CRAN repos on the list
     if(is.na(CRAN)) return(db)
-    for(d in dups) {
-        pos <- which(packages == d)
-        ind <- !startsWith(db[pos, "Repository"], CRAN)
-        if(!all(ind)) drop <- c(drop, pos[ind])
-    }
-    if(length(drop)) db[-drop, , drop = FALSE] else db
+    packages <- db[, "Package"]
+    onCRAN <- startsWith(db[, "Repository"], CRAN)
+    ## Drop the non-CRAN entries of packages which are also on CRAN.
+    drop <- !onCRAN & packages %in% packages[onCRAN]
+    if(any(drop)) db[!drop, , drop = FALSE] else db
 }
 
 
