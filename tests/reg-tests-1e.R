@@ -3879,6 +3879,31 @@ for(obj in list(ss, ss$fit))
 ## These could cause a segfault in R <= 4.6.1
 
 
+## tools:::.remove_stale_dups(), used by available.packages() and
+## write_PACKAGES(latestOnly = TRUE), now ordering all duplicates at once
+local({
+    db <- cbind(Package = c("a", "b", "a", "c", "a", "b", "c", "d", "d"),
+                Version = c("1.0", "0.9", "1.0-1", "2.0", "1.0-1", "0.10",
+                            "2.0.0", "1.0", "1.0"),
+                Repository = paste0("r", 1:9))
+    ## the highest version, and of equal ones the first
+    keep <- c(3, 4, 6, 8)
+    stopifnot(identical(tools:::.remove_stale_dups(db), db[keep, ]))
+    df <- as.data.frame(db)
+    stopifnot(identical(tools:::.remove_stale_dups(df), df[keep, ]))
+    ## more than 100 duplicates, many in the same version
+    n <- 150
+    db <- cbind(Package = rep(paste0("p", 1:n), 3),
+                Version = c(rep("1.0", n), rep(c("1.1", "0.9"), length.out = n),
+                            rep("1.0", n)),
+                Repository = rep(c("A", "B", "C"), each = n))
+    keep <- ifelse(1:n %% 2 == 1, n + 1:n, 1:n)
+    stopifnot(identical(tools:::.remove_stale_dups(db), db[sort(keep), ]),
+              identical(tools:::.remove_stale_dups(db[1:n, ]), db[1:n, ]))
+})
+## same results as before, which looped over the duplicated packages
+
+
 ## format(<utf8>, width = large) -- PR#19188
 assertWarnV(# j=0 --> warning: NAs introduced by coercion to integer range
   lapply(0:3, \(j)

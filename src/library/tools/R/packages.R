@@ -361,28 +361,25 @@ function(ap)
     ## with highest version number.
     ## (Also works for data frame package repository dbs.)
     pkgs <- ap[ , "Package"]
-    dup_pkgs <- pkgs[duplicated(pkgs)]
-    if (length(dup_pkgs) > 100) {
-        ## Some packages may be in multiple repositories in the same
-        ## version. Handle those specially for performance reasons.
-        ap <- ap[!duplicated(ap[, c("Package", "Version")]), , drop = FALSE]
-        pkgs <- ap[ , "Package"]
-        dup_pkgs <- pkgs[duplicated(pkgs)]
+    if(!anyDuplicated(pkgs)) return(ap)
+    vers <- ap[ , "Version"]
+    ## Some packages may be in multiple repositories in the same
+    ## version: keep the first, without comparing versions.
+    stale <- duplicated(cbind(pkgs, vers))
+    ## Of the remaining duplicates keep the first with the highest
+    ## version, ordering all of them at once and parsing each distinct
+    ## version only once.
+    wh <- which(!stale)
+    wh <- wh[pkgs[wh] %in% pkgs[wh][duplicated(pkgs[wh])]]
+    if(length(wh)) {
+        g <- match(pkgs[wh], pkgs[wh])
+        v <- vers[wh]
+        uv <- unique(v)
+        rank <- xtfrm(package_version(uv))[match(v, uv)]
+        o <- order(g, -rank, wh)
+        stale[wh[o][duplicated(g[o])]] <- TRUE
     }
-    stale_dups <- integer(length(dup_pkgs))
-    i <- 1L
-    for (dp in dup_pkgs) {
-        wh <- which(dp == pkgs)
-        vers <- package_version(ap[wh, "Version"])
-        keep_ver <- max(vers)
-	keep_idx <- which.max(vers == keep_ver) # they might all be max
-        wh <- wh[-keep_idx]
-        end_i <- i + length(wh) - 1L
-        stale_dups[i:end_i] <- wh
-        i <- end_i + 1L
-    }
-    ## Possible to have only one package in a repository
-    if(length(stale_dups)) ap[-stale_dups, , drop = FALSE] else ap
+    ap[!stale, , drop = FALSE]
 }
 
 package_dependencies <-
