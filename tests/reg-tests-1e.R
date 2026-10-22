@@ -3839,6 +3839,22 @@ local({
 ## produced undefined behvaior
 
 
+## available.packages() "subarch" filter (only active in builds with a
+## sub-architecture, as on Windows), now checking distinct Archs entries once
+local({
+    f <- utils:::available_packages_filters_db$subarch
+    db <- cbind(Package = paste0("p", 1:6),
+                Archs = c(NA, "x64", "i386, x64", "i386", "x64", "i386,x64"))
+    r_arch <- .Platform$r_arch
+    keep <- if(!nzchar(r_arch)) 1:6
+            else if(r_arch == "x64") c(1, 2, 3, 5, 6)
+            else if(r_arch == "i386") c(1, 3, 4, 6)
+            else 1
+    stopifnot(identical(f(db), db[keep, , drop = FALSE]))
+})
+## same results as before, which took 15 times as long for CRAN on Windows
+
+
 ## parsing '<lhs> |> <var> => <expr>' left the reduced call unprotected on the
 ## parser stack, so a GC before the enclosing reduction could free it
 ## (found by fuzzing; '=>' is still opt-in, and stays enabled once seen)

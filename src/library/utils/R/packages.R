@@ -313,11 +313,11 @@ function(db)
     if(!nzchar(current)) return(db)
     archs <- db[, "Archs"]
     if(all(is.na(archs))) return(db)
-    OK <- unlist(lapply(archs, function(x) {
-        if(is.na(x)) return(TRUE)
-        this <- strsplit(x, "[[:space:]]*,[[:space:]]*")[[1L]]
-        current %in% this
-    }))
+    ## There are few distinct Archs entries, so only check those.
+    u <- unique(archs[!is.na(archs)])
+    ok <- vapply(strsplit(u, "[[:space:]]*,[[:space:]]*"),
+                 function(this) current %in% this, NA)
+    OK <- is.na(archs) | ok[match(archs, u)]
     db[OK, , drop = FALSE]
 }
 
