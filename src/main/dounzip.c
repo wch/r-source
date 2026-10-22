@@ -168,7 +168,7 @@ static void stripDotDot(const char *dest, char *outname, const char *fn)
 static int makeParents(const char *dest, const char *outname, char *dirs)
 {
     const char *pp = outname + strlen(dest) + 1, *p;
-    while ((p = Rf_strchr(pp, '/'))) {
+    while ((p = Rf_strchr_const(pp, '/'))) {
 	strcpy(dirs, outname);
 	dirs[p - outname] = '\0';
 	if (!R_FileExists(dirs) && R_mkdir(dirs)) return -1;
