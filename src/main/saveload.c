@@ -2132,7 +2132,13 @@ static SEXP RestoreToEnv(SEXP ans, SEXP aenv)
 
     PROTECT(ans);
     a = ans;
-    while (a != R_NilValue) {a = CDR(a); cnt++;}
+    while (a != R_NilValue) {
+	/* a hand-crafted file can splice any object into the chain */
+	if (TYPEOF(a) != LISTSXP || TYPEOF(TAG(a)) != SYMSXP)
+	    error(_("loaded data is not in pair list form"));
+	a = CDR(a);
+	cnt++;
+    }
     PROTECT(names = allocVector(STRSXP, cnt));
     cnt = 0;
     a = ans;
