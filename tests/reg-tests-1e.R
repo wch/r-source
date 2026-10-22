@@ -3521,6 +3521,13 @@ assertErrV(qr.influence(qr = list(1,"a"), res = 0))
 
 
 
+## besselY() with large negative non-integer order -- NaN with warning
+assertWarnV(bY <- besselY(1, -2e7 - c(0.5, 0.25)))
+stopifnot(is.nan(bY))
+## segfaulted in R-devel since r90571
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
