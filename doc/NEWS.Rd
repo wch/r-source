@@ -396,8 +396,11 @@
       raised, thanks to \I{Kevin Ushey}'s report and patch in \PR{19184}.
 
       \item \code{delete.response} inadvertently converted indices
-      (components \code{response}, \code{offset}, \code{specials}) from
+      (attributes \code{response}, \code{offset}, \code{specials}) from
       integer to double.
+
+      \item \code{delete.response} did not modify optional attribute
+      \code{dataClasses}.
     }
   }
 }
