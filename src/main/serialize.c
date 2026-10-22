@@ -514,8 +514,15 @@ static void InString(R_inpstream_t stream, char *buf, int length)
 		;
 	    UngetChar(&iss, c);
 	    for (i = 0; i < length; i++) {
-		if ((c =  GetChar(&iss)) == '\\') {
-		    switch(c = GetChar(&iss)) {
+		/* fgetc() and text connections return EOF without an
+		   error: stop here rather than fill the rest of the
+		   string with EOF bytes */
+		if ((c = GetChar(&iss)) == EOF)
+		    error(_("read error"));
+		if (c == '\\') {
+		    if ((c = GetChar(&iss)) == EOF)
+			error(_("read error"));
+		    switch(c) {
 		    case 'n' : buf[i] = '\n'; break;
 		    case 't' : buf[i] = '\t'; break;
 		    case 'v' : buf[i] = '\v'; break;

@@ -4151,6 +4151,16 @@ local({
 
 
 
+## unserialize() in ascii format stopped at end of input instead of padding
+x <- strrep("a", 100)
+s <- rawToChar(serialize(x, NULL, ascii = TRUE))
+tc <- textConnection(substr(s, 1, nchar(s) - 50)) # cut inside the string
+r <- tryCatch(unserialize(tc), error = identity); close(tc)
+stopifnot(inherits(r, "error"))
+## silently returned a string padded with EOF bytes in R <= 4.6.0
+
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
