@@ -4134,6 +4134,22 @@ stopifnot(is.nan(bY))
 ## segfaulted in R-devel since r90571
 
 
+## available.packages() "R_version" filter, now comparing each distinct R
+## dependency once
+local({
+    f <- utils:::available_packages_filters_db$R_version
+    db <- cbind(Package = paste0("p", 1:10),
+                Depends = c(NA, "R (>= 2.0)", "R (>= 999.0)", "methods, R(>=3.0)",
+                            "R (>= 2.0), R (< 3.0)", "Rcpp (>= 999.0)",
+                            "R\n    (>= 999.0)", "XR (>= 999.0)",
+                            paste0("R (== ", getRversion(), ")"),
+                            "R (>= 999.0), methods"))
+    stopifnot(identical(f(db), db[c(1, 2, 4, 6, 8, 9), ]),
+              identical(f(db[c(1, 6, 8), ]), db[c(1, 6, 8), ]))
+})
+## same results as before, which took 2-3 times as long for CRAN
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

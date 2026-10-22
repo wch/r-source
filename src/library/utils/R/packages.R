@@ -268,29 +268,31 @@ function(db)
     }
     
     depends <- db[, "Depends"]
-    depends[is.na(depends)] <- ""
-    ## Collect the (versioned) R depends entries.
-    x <- lapply(strsplit(gsub("[[:space:]]", "", depends), ",",
-                         fixed = TRUE),
-                function(s) s[startsWith(s, "R(")])
-    lens <- lengths(x)
-    pos <- which(lens > 0L)
+    ## Only entries mentioning R can have an R dependency.
+    pos <- which(grepl("R[[:space:]]*\\(", depends))
     if(!length(pos)) return(db)
-    lens <- lens[pos]
-    ## Unlist.
-    x <- unlist(x)
-    end <- 3L + (substring(x, 4L, 4L) == "=")
+    ## Collect the (versioned) R depends entries and their rows in db.
+    x <- strsplit(gsub("[[:space:]]", "", depends[pos]), ",", fixed = TRUE)
+    row <- rep.int(pos, lengths(x))
+    x <- unlist(x, use.names = FALSE)
+    i <- startsWith(x, "R(")
+    if(!any(i)) return(db)
+    x <- x[i]
+    row <- row[i]
+    ## Packages share few distinct R dependencies, so only compare those.
+    ux <- unique(x)
+    end <- 3L + (substring(ux, 4L, 4L) == "=")
     ## Extract ops.
-    ops <- substring(x, 3L, end)
-    ## Split target versions according to ops.
-    ver <- split(substring(x, end + 1L, nchar(x) - 1L), ops)
+    ops <- substring(ux, 3L, end)
+    ver <- substring(ux, end + 1L, nchar(ux) - 1L)
     ## Compare current to target grouped by op.
-    res <- logical(length(x))
-    for(op in names(ver))
-        res[ops == op] <- cmp(op, ver[[op]])
+    res <- logical(length(ux))
+    for(op in unique(ops))
+        res[ops == op] <- cmp(op, ver[ops == op])
+    res <- res[match(x, ux)]
     ## And assemble test results according to the rows of db.
-    pos <- pos[!vapply(split(res, rep.int(seq_along(lens), lens)), all,
-                       NA)]
+    pos <- unique(row)
+    pos <- pos[!vapply(split(res, row), all, NA)]
     if(length(pos))
         db <- db[-pos, , drop = FALSE]
     db
