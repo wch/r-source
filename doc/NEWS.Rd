@@ -397,7 +397,8 @@
 
       \item \code{delete.response} inadvertently converted indices
       (attributes \code{response}, \code{offset}, \code{specials}) from
-      integer to double.
+      integer to double.  It also replaced \code{NULL} components of
+      \code{specials} with \code{logical(0L)}.
 
       \item \code{delete.response} did not modify optional attribute
       \code{dataClasses}.

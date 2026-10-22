@@ -4190,10 +4190,14 @@ local({
 
 
 ## 'delete.response' converted indices from integer to double
-t1 <- terms(y ~ offset(a) + x + f(w), specials = "f")
+## and replaced NULL components of 'specials' with logical(0L)
+t1 <- terms(y ~ offset(a) + x + f(w), specials = c("f", "g"))
 a0 <- attributes(t0 <- delete.response(t1))
 stopifnot(identical(a0$response, 0L),
-          is.integer(a0$offset), is.integer(a0$specials$f))
+          is.integer(a0$offset),
+          identical(names(a0$specials), c("f", "g")),
+          is.integer(a0$specials$f),
+          is.null(a0$specials$g))
 
 
 ## 'delete.response' did not modify optional attribute 'dataClasses'

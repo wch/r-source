@@ -173,7 +173,8 @@ delete.response <- function (termobj)
         if(length(a$offset))
             a$offset <- off(a$offset)
         for(i in seq_along(a$specials))
-            a$specials[[i]] <- off(a$specials[[i]])
+            if(!is.null(b <- a$specials[[i]]))
+                a$specials[[i]] <- off(b)
         attributes(termobj) <- a
     }
     termobj
