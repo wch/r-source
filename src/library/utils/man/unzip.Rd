@@ -1,6 +1,6 @@
 % File src/library/utils/man/unzip.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{unzip}
@@ -67,7 +67,10 @@ unzip(zipfile, files = NULL, list = FALSE, overwrite = TRUE,
   we chose not to restore them by default.
 
   The internal method now follows \command{unzip} 6.00 in how it handles
-  extracted file paths which contain \code{"../"}.
+  extracted file paths which contain \code{"../"}.  It does not extract
+  through symbolic links: if the path of a member below \code{exdir}
+  passes through, or is, an existing symbolic link, extraction stops at
+  that member with a warning.
 }
 
 \value{

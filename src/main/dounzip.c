@@ -111,6 +111,72 @@ static void setFileTime(const char *fn, tm_unz tmu_date)
 }
 #endif
 
+#define UNZ_UNSAFE_LINK -201
+
+/* The caller chooses 'dest' itself.  Below it, refuse to create anything
+   through a symbolic link, whether an intermediate component or a
+   pre-existing final component (which fopen() would follow).  Must run on
+   the path as it will be used, i.e. after "../" components are removed. */
+static int isExtractLink(const char *path)
+{
+#ifdef Win32
+    DWORD attrs = GetFileAttributesA(path);
+    return attrs != INVALID_FILE_ATTRIBUTES &&
+	(attrs & FILE_ATTRIBUTE_REPARSE_POINT);
+#else
+    struct stat st;
+    return lstat(path, &st) == 0 && S_ISLNK(st.st_mode);
+#endif
+}
+
+static int hasExtractLink(const char *dest, const char *outname)
+{
+    char path[R_PATH_MAX];
+    size_t len = strlen(outname), base = strlen(dest) + 1;
+    strcpy(path, outname); /* extract_one has already checked its length */
+    for (size_t i = base; i < len; i++) {
+	if (path[i] == '/') {
+	    path[i] = '\0';
+	    int linked = isExtractLink(path);
+	    path[i] = '/';
+	    if (linked) return 1;
+	}
+    }
+    return len > base && isExtractLink(path);
+}
+
+/* Remove "../" components below 'dest', as unzip 6.00 does, warning once. */
+static void stripDotDot(const char *dest, char *outname, const char *fn)
+{
+    char *pp = outname + strlen(dest) + 1, *p;
+    bool warned = FALSE;
+    while ((p = Rf_strchr(pp, '/'))) {
+	if (p - pp == 2 && !strncmp(pp, "..", 2)) {
+	    if (!warned) {
+		warning(_("skipped \"../\" path component(s) in '%s'"), fn);
+		warned = true;
+	    }
+	    memmove(pp, p + 1, strlen(p + 1) + 1);
+	} else {
+	    pp = p + 1;
+	}
+    }
+}
+
+/* Create missing parents of 'outname' below 'dest' (which exists).
+   Returns 0, or -1 with errno set and the failing directory in 'dirs'. */
+static int makeParents(const char *dest, const char *outname, char *dirs)
+{
+    const char *pp = outname + strlen(dest) + 1, *p;
+    while ((p = Rf_strchr(pp, '/'))) {
+	strcpy(dirs, outname);
+	dirs[p - outname] = '\0';
+	if (!R_FileExists(dirs) && R_mkdir(dirs)) return -1;
+	pp = p + 1;
+    }
+    return 0;
+}
+
 #define BUF_SIZE 4096
 static int
 extract_one(unzFile uf, const char *const dest, const char * const filename,
@@ -118,7 +184,7 @@ extract_one(unzFile uf, const char *const dest, const char * const filename,
 {
     int err = UNZ_OK;
     FILE *fout;
-    char  outname[R_PATH_MAX], dirs[R_PATH_MAX], buf[BUF_SIZE], *p, *pp;
+    char  outname[R_PATH_MAX], dirs[R_PATH_MAX], buf[BUF_SIZE], *p;
     char *fn, fn0[R_PATH_MAX];
 
     err = unzOpenCurrentFile(uf);
@@ -162,53 +228,37 @@ extract_one(unzFile uf, const char *const dest, const char * const filename,
 #ifdef Win32
     R_fixslash(outname); /* ensure path separator is / */
 #endif
+    /* Normalize before looking at the file system, so that the symlink
+       check and the directory creation see the same path. */
+    stripDotDot(dest, outname, fn);
     p = outname + strlen(outname) - 1;
-    bool warned = FALSE;
-    if (*p == '/') { /* Directories are stored with trailing slash */
-	if (!junk) {
-	    *p = '\0';
-	    if (!R_FileExists(outname)) {
-		/* make parents as required: have already checked dest exists */
-		pp = outname + strlen(dest) + 1;
-		while((p = Rf_strchr(pp, '/'))) {
-		    if (p - pp == 2 && !strncmp(pp, "..", 2)) {
-			if (!warned) {
-			    warning(
-			      _("skipped \"../\" path component(s) in '%s'"),
-			      fn);
-			    warned = true;
-			}
-			memmove(pp, p + 1, strlen(p + 1) + 1);
-		    } else {
-			strcpy(dirs, outname);
-			dirs[p - outname] = '\0';
-			if (!R_FileExists(dirs)) R_mkdir(dirs);
-			pp = p + 1;
-		    }
-		}
-		err = R_mkdir(outname);
-	    }
+    bool isdir = (*p == '/'); /* Directories are stored with trailing slash */
+    if (isdir) {
+	if (junk) { /* nothing to create */
+	    unzCloseCurrentFile(uf);
+	    return UNZ_OK;
+	}
+	*p = '\0';
+    }
+    if (hasExtractLink(dest, outname)) {
+	warning(_("cannot extract '%s' through a symbolic link"), fn);
+	unzCloseCurrentFile(uf);
+	return UNZ_UNSAFE_LINK;
+    }
+    /* make parents as required: have already checked dest exists */
+    if (makeParents(dest, outname, dirs)) {
+	int serrno = errno;
+	unzCloseCurrentFile(uf);
+	error(_("cannot create directory '%s': %s"), dirs, strerror(serrno));
+    }
+    if (isdir) {
+	if (!R_FileExists(outname) && R_mkdir(outname)) {
+	    int serrno = errno;
+	    unzCloseCurrentFile(uf);
+	    error(_("cannot create directory '%s': %s"), outname,
+		  strerror(serrno));
 	}
     } else {
-	/* make parents as required: have already checked dest exists */
-	pp = outname + strlen(dest) + 1;
-	while((p = Rf_strchr(pp, '/'))) {
-	    if (p - pp == 2 && !strncmp(pp, "..", 2)) {
-		if (!warned) {
-		    warning(
-		      _("skipped \"../\" path component(s) in '%s'"),
-		      fn);
-		    warned = true;
-		}
-		memmove(pp, p + 1, strlen(p + 1) + 1);
-	    } else {
-		strcpy(dirs, outname);
-		dirs[p - outname] = '\0';
-		/* Rprintf("dirs is %s\n", dirs); */
-		if (!R_FileExists(dirs)) R_mkdir(dirs);
-		pp = p + 1;
-	    }
-	}
 	/* Rprintf("extracting %s\n", outname); */
 	if (!overwrite && R_FileExists(outname)) {
 	    warning(_(" not overwriting file '%s"), outname);
@@ -427,6 +477,8 @@ SEXP Runzip(SEXP args)
 	    break;
 	case -200:
 	    warning(_("write error in extracting from zip file"));
+	    break;
+	case UNZ_UNSAFE_LINK: /* already warned, naming the member */
 	    break;
 	default:
 	    warning(_("error %d in extracting from zip file"), rc);
