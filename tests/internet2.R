@@ -20,6 +20,19 @@ tools::assertWarning(ap2 <- available.packages(repos = "http://foo.bar"))
 stopifnot(nrow(ap1) == 0, identical(ap1, ap2))
 ## had failed for a while in R-devel (left empty *.rds file)
 
+## available.packages() rewrites its cache with fast compression, and
+## downloads the index again if the cache cannot be read
+cu <- contrib.url("https://cloud.r-project.org", "source")
+cache <- file.path(tempdir(), paste0("repos_", URLencode(cu, TRUE), ".rds"))
+ap1 <- available.packages(cu)
+if(nzchar(extSoftVersion()[["zstd"]])) # zstd magic number
+    stopifnot(identical(readBin(cache, "raw", 4L), as.raw(c(0x28, 0xb5, 0x2f, 0xfd))))
+ap2 <- available.packages(cu) # from the cache
+writeLines("not an .rds file", cache)
+ap3 <- available.packages(cu) # downloaded again
+stopifnot(identical(ap1, ap2), nrow(ap3) > 0)
+## an unreadable cache was an error; xz-compressed caches were slow to read
+
 ## download.file(.. , headers = character()) - PR#17710
 ## https://bugs.r-project.org/show_bug.cgi?id=17710
 ## character() should be the same as NULL, but was not for wininet

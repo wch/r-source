@@ -104,11 +104,17 @@ function(contriburl = contrib.url(repos, type), method,
                 if(file.exists(dest)) {
                     age <- difftime(timestamp, file.mtime(dest), units = "secs")
                     if(isTRUE(age < max_repo_cache_age)) {
-                        res0 <- readRDS(dest)
-                        used_dest <- TRUE
-                        ## Be defensive :
-                        if(length(res0))
-                            rownames(res0) <- res0[, "Package"]
+                        ## An unreadable cache (e.g., written with zstd by
+                        ## another R build) is downloaded again below.
+                        res0 <- tryCatch(readRDS(dest), error = identity)
+                        if(inherits(res0, "error"))
+                            unlink(dest)
+                        else {
+                            used_dest <- TRUE
+                            ## Be defensive :
+                            if(length(res0))
+                                rownames(res0) <- res0[, "Package"]
+                        }
                     }
                     else
                         unlink(dest)    # Cache too old.
@@ -118,7 +124,6 @@ function(contriburl = contrib.url(repos, type), method,
                 ## Try .rds and readRDS(), and then .gz or plain DCF and
                 ## read.dcf(), catching problems from both missing or
                 ## invalid files.
-                need_dest <- FALSE
                 op <- options(warn = -1L)
                 z <- tryCatch({
                     z <- download.file(url = paste0(repos, "/PACKAGES.rds"),
@@ -137,7 +142,6 @@ function(contriburl = contrib.url(repos, type), method,
                 if(inherits(z, "error")) {
                     ## Downloading or reading .rds failed, so try the
                     ## DCF variants.
-                    if(!ignore_repo_cache) need_dest <- TRUE
                     tmpf <- tempfile()
                     on.exit(unlink(tmpf))
                     op <- options(warn = -1L)
@@ -185,10 +189,17 @@ function(contriburl = contrib.url(repos, type), method,
 
                 if(length(res0)) {
                     rownames(res0) <- res0[, "Package"]
-                    if(need_dest)
-                        saveRDS(res0, dest, compress = TRUE)
-                } else if(!need_dest) {
-                    ## download.file() gave an empty .rds
+                    if(!ignore_repo_cache) {
+                        ## (Re)write the cache with fast compression, as
+                        ## repositories typically serve xz-compressed
+                        ## indices, which are slow to decompress on each use.
+                        con <- if(nzchar(extSoftVersion()[["zstd"]]))
+                                   zstdfile(dest, "wb", compression = 1L)
+                               else file(dest, "wb")
+                        saveRDS(res0, con)
+                        close(con)
+                    }
+                } else {
                     ## Do not cache empty results.
                     unlink(dest)
                 }
