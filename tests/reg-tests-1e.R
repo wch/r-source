@@ -4189,6 +4189,13 @@ local({
 ## segfaulted (E1) or looped forever (E2) in R <= 4.6.1
 
 
+## 'delete.response' converted indices from integer to double
+t1 <- terms(y ~ offset(a) + x + f(w), specials = "f")
+a0 <- attributes(t0 <- delete.response(t1))
+stopifnot(identical(a0$response, 0L),
+          is.integer(a0$offset), is.integer(a0$specials$f))
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
