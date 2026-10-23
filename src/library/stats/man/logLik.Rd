@@ -49,7 +49,7 @@ logLik(object, \dots)
   of the GLM is estimated and has been counted as a parameter in the AIC
   value, and for all other families it is assumed that the dispersion is
   known.  Note that this procedure does not give the maximized
-  likelihood for \code{"glm"} fits from the Gamma and inverse gaussian
+  likelihood for \code{"glm"} fits from the Gamma and inverse Gaussian
   families, as the estimate of dispersion used is not the MLE.
 
   For \code{"lm"} fits it is assumed that the scale has been estimated

@@ -32,7 +32,7 @@ sigma(object, ...)
  The \pkg{stats} package provides the S3 generic, a default method,
  and a method for objects of class \code{"glm"}. 
  The default method is correct typically for (asymptotically / approximately)
- generalized gaussian (\dQuote{least squares}) problems, since it is
+ generalized Gaussian (\dQuote{least squares}) problems, since it is
  defined as
  \preformatted{
    sigma.default <- function (object, use.fallback = TRUE, ...)

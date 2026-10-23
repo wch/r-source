@@ -69,7 +69,7 @@ simulate(object, nsim = 1, seed = NULL, \dots)
   basic shape parameter, since dispersion is inversely proportional to
   shape.
 
-  For an inverse gaussian GLM the model assumed is
+  For an inverse Gaussian GLM the model assumed is
   \eqn{IG(\mu_i, \lambda w_i)} (see
   \url{https://en.wikipedia.org/wiki/Inverse_Gaussian_distribution})
   where \eqn{\lambda} is estimated by the inverse of the dispersion

@@ -4624,7 +4624,7 @@ specified as part of @code{FCFLAGS}.
 The search mechanism can be changed using the configure variable
 @code{FC} which specifies the command that runs the Fortran compiler.
 If your Fortran compiler is not one of these (for example,
-@command{flang}), specfy if in the configure variable @code{FC}.  If it
+@command{flang}), specify it in the configure variable @code{FC}.  If it
 is not on your path, use this to specify its full path.
 
 If your Fortran libraries are in slightly peculiar places, you should
@@ -5071,7 +5071,7 @@ on Linux is to use the C++ runtime @code{libstdc++} associated with the
 installed @command{g++}.  Using the runtime from the
 @url{https://libcxx.llvm.org/, @code{libc++}} project (Fedora
 @acronym{RPM} @code{libcxx-devel}) is tested regularly. The version of
-@code{libc++} in LLVM 23 tidied up `transitive inclusions' in C++ system
+@code{libc++} in @I{LLVM} 23 tidied up `transitive inclusions' in C++ system
 headers and so uncovered errors in many packages which used C++ headers
 but did not include them directly.
 
@@ -5559,7 +5559,7 @@ symlink is broken, the driver will issue a warning and use @code{xcrun
 is used when using @command{gfortran} to link, so not when building @R{}
 but when installing a few packages.)
 
-This has problems identifiying macOS versions 26 and later: use
+This has problems identifying macOS versions 26 and later: use
 @example
 FC="/opt/gfortran/bin/gfortran -mmacosx-version-min=26.0"
 @end example
@@ -5593,7 +5593,7 @@ tar xf flang-23.1.1-darwin22.6.0.tar.xz -C/
 @end example
 @noindent
 to install to @file{/opt/R/flang-23}.  (If you download in a browser you
-will need to strip attrbutes with @command{xattr -c}.)
+will need to strip attributes with @command{xattr -c}.)
 
 Currently to build some packages you will need
 @example

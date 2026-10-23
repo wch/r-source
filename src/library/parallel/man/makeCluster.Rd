@@ -64,7 +64,7 @@ registerClusterType(type, starter, make.default = FALSE)
 
   \code{makePSOCKcluster} is an enhanced version of
   \code{makeSOCKcluster} in package \CRANpkg{snow}.  It runs
-  \command{Rscript} on the specified host(s) to set up a worker process
+  \command{\link{Rscript}} on the specified host(s) to set up a worker process
   which listens on a socket for expressions to evaluate, and returns the
   results (as serialized objects).
 
@@ -104,7 +104,7 @@ registerClusterType(type, starter, make.default = FALSE)
     \item{\code{homogeneous}}{Logical, default true.  See \sQuote{Note}.}
     \item{\code{rscript}}{See \sQuote{Note}.}
     \item{\code{rscript_args}}{Character vector of additional
-      arguments for \command{Rscript} such as \option{--no-environ}.}
+      arguments for \command{\link{Rscript}} such as \option{--no-environ}.}
     \item{\code{renice}}{A numerical \sQuote{niceness} to set for the
       worker processes, e.g.\sspace{}\code{15} for a low priority.
       OS-dependent: see \code{\link{psnice}} for details.}

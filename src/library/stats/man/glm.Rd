@@ -246,11 +246,11 @@ glm.fit(x, y, weights = rep.int(1, nobs),
     parameters, computed via the \code{aic} component of the family.
     For binomial and Poison families the dispersion is
     fixed at one and the number of parameters is the number of
-    coefficients.  For gaussian, Gamma and inverse gaussian families the
+    coefficients.  For Gaussian, Gamma and inverse Gaussian families the
     dispersion is estimated from the residual deviance, and the number
     of parameters is the number of coefficients plus one.  For a
-    gaussian family the MLE of the dispersion is used so this is a valid
-    value of AIC, but for Gamma and inverse gaussian families it is not.
+    Gaussian family the MLE of the dispersion is used so this is a valid
+    value of AIC, but for Gamma and inverse Gaussian families it is not.
     For families fitted by quasi-likelihood the value is \code{NA}.}
   \item{null.deviance}{The deviance for the null model, comparable with
     \code{deviance}. The null model will include the offset, and an

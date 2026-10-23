@@ -105,7 +105,7 @@ free1way(y, ...)
     minus one-half of the log-determinant of the observed Fisher information to be
     added as a penalty to the log-likelihood. If the argument is positive,
     the penalty term is multiplied by this value. Penalised estimation helps
-    to de-bias maximum likelihood estimators especially in the presence of
+    to \I{debias} maximum likelihood estimators especially in the presence of
     many small blocks. For binary outcomes, it is equivalent to Firth'
     method. Only Wald-type inference is available after penalised
     estimation.}

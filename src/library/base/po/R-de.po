@@ -129,7 +129,7 @@ msgid "invalid 'name' argument"
 msgstr "ungültiges 'name' Argument"
 
 msgid "package %s is required by %s, which may no longer work correctly"
-msgstr "Paket '%s' wird von %s benötigt, welches evtl. nicht mehr korrekt arbeitet"
+msgstr "Paket %s wird von %s benötigt, welches evtl. nicht mehr korrekt arbeitet"
 
 msgid "package %s is required by %s so will not be detached"
 msgstr "Paket %s wird von %s benötigt, wird deshalb nicht detached"

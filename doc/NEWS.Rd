@@ -178,8 +178,8 @@
       can no longer place a link or file outside the extraction directory;
       rejects hard- and symbolic-link targets restored as file copies,
       which resolve outside the extraction directory or pass through a
-      symbolic link; applies the umask to extracted files; also no longer
-      restores \abbr{setuid} or \abbr{setgid} permission bits.
+      symbolic link; applies the \command{umask} to extracted files; also no longer
+      restores \samp{setuid} or \samp{setgid} permission bits.
       Similarly, the internal method of \code{unzip()} no longer extracts
       through symbolic links below \code{exdir}, both thanks to \I{Kevin
       Ushey}'s report and patch in \PR{19229}.

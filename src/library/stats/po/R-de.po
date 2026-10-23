@@ -1155,7 +1155,7 @@ msgid "glm.fit: fitted rates numerically 0 occurred"
 msgstr "glm.fit: angepasste Raten, die numerisch 0 sind, aufgetreten"
 
 msgid "the following arguments to 'anova.glm' are invalid and dropped:"
-msgstr "die folgenden Argumente für 'anova.glm' sind unzulässig und werden verworfen"
+msgstr "die folgenden Argumente für 'anova.glm' sind unzulässig und werden verworfen:"
 
 msgid ","
 msgstr ","

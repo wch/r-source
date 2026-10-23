@@ -13,4 +13,7 @@
 \usage{
 \special{R RHOME}
 }
+\seealso{
+  \code{\link{R.home}}
+}
 \keyword{utilities}

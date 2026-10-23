@@ -117,7 +117,8 @@
     \item{\env{R_PCRE_JIT_STACK_MAXSIZE}:}{Optional.  Consulted when
       \I{PCRE}'s \abbr{JIT} pattern compiler is first used.  See \code{\link{grep}}.}
     \item{\env{R_PDFVIEWER}:}{The path to the default PDF viewer.  Used
-      by \command{R CMD Rd2pdf}.}
+      by \command{R CMD \link{Rd2pdf}} and to initialize
+      \code{\link{options}("pdfviewer")}.}
     \item{\env{R_PLATFORM}:}{The platform -- a string of the form
       \code{"\var{cpu}-\var{vendor}-\var{os}"}, see \code{\link{R.Version}}.}
     \item{\env{R_PROFILE}:}{Optional.  The path to the site profile

@@ -66,7 +66,7 @@ numToBits(x)
 
   \code{numToInts()} and
   \code{numToBits()} split \code{\link{double}} precision numeric vectors
-  either into to two \code{\link{integer}}s each or into 64 bits each,
+  either into two \code{\link{integer}}s each or into 64 bits each,
   stored as \code{raw}.  In both cases the unpacking is least-significant
   element first.
 }
