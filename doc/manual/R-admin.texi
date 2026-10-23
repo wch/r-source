@@ -4939,7 +4939,7 @@ FPIEFLAGS=-fPIE
 in @file{config.site}. (@command{configure} tries that value if it is
 unset.)
 
-@node flang, Intel compilers, Clang, Linux
+@node flang
 @subsection @I{flang}
 
 The name @command{flang} has been used for two projects: this is about
@@ -5406,7 +5406,7 @@ FC="/opt/gfortran/bin/gfortran -mmacosx-version-min=26.0"
 @c in @file{config.site} to ensure the matching Fortran run-time libraries are
 @c found.
 
-@node Cairo graphics, Other C/C++ compilers, Fortran compilers, macOS
+@node Cairo graphics
 @subsection Cairo graphics
 
 @cindex Cairo
@@ -5657,7 +5657,7 @@ of @I{Accelerate} show differences from the reference BLAS (and most others)
 in the use of @code{NA} @emph{vs} @code{NaN} and a substantial number of
 @R{} packages fail their checks.
 
-@node OpenBLAS (macOS),  , Accelerate, Other libraries
+@node OpenBLAS (macOS)
 @subsubsection @I{OpenBLAS}
 
 @R{} has been built on @cputype{arm64} using @I{OpenBLAS} 0.3.29 (sources
