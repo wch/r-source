@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.7.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-09-22 14:23\n"
+"POT-Creation-Date: 2026-10-23 16:40\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1036,6 +1036,12 @@ msgid "path contains '..'"
 msgstr ""
 
 msgid "cannot extract through symlink"
+msgstr ""
+
+msgid "link target outside extraction directory"
+msgstr ""
+
+msgid "link target is the extraction directory"
 msgstr ""
 
 msgid "'tarfile' must be a character string or a connection"

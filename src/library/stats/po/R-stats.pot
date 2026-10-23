@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.7.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-09-22 13:50\n"
+"POT-Creation-Date: 2026-10-23 17:38\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -921,9 +921,6 @@ msgstr ""
 msgid "not enough observations"
 msgstr ""
 
-msgid "computing Newton updated failed in %s"
-msgstr ""
-
 msgid "incorrect dimensions"
 msgstr ""
 
@@ -1068,6 +1065,12 @@ msgstr ""
 msgid "maximum number of iterations must be > 0"
 msgstr ""
 
+msgid "value of 'tol' must be >= 0"
+msgstr ""
+
+msgid "value of 'wtol' must be >= 0"
+msgstr ""
+
 msgid "'family' argument seems not to be a valid family object"
 msgstr ""
 
@@ -1078,6 +1081,9 @@ msgid "invalid fitted means in empty model"
 msgstr ""
 
 msgid "length of 'start' should equal %d and correspond to initial coefs for %s"
+msgstr ""
+
+msgid "weights smaller than tolerance wtol*sum(w) = %g treated as zero"
 msgstr ""
 
 msgid "NAs in V(mu)"
@@ -1327,9 +1333,6 @@ msgid "incompatible dimensions"
 msgstr ""
 
 msgid "missing or negative weights not allowed"
-msgstr ""
-
-msgid "weights smaller than tolerance wtol*sum(w) = %g treated as zero"
 msgstr ""
 
 msgid "invalid 'lm' object:  no 'terms' component"
@@ -2122,6 +2125,9 @@ msgid "type = \"partial\" is not yet implemented"
 msgstr ""
 
 msgid "not a valid \"smooth.spline\" object"
+msgstr ""
+
+msgid "'deriv' must be a non-negative integer"
 msgstr ""
 
 msgid "'span' must be between 0 and 1."
