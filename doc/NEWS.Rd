@@ -399,6 +399,9 @@
       (attributes \code{response}, \code{offset}, \code{specials}) from
       integer to double.  It also replaced \code{NULL} components of
       \code{specials} with \code{logical(0L)}.
+
+      \item \code{unzip(., unzip = "internal")} no longer leaks the zip
+      handle on error, thanks to \I{Kevin Ushey}, see \PR{19233}
     }
   }
 }

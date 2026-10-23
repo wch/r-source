@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file dounzip.c
- *  first part Copyright (C) 2002-2026  The R Core Team
+ *  first part  Copyright (C) 2002-2026 The R Core Team
  *  second part Copyright (C) 1998-2010 Gilles Vollant
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -25,6 +25,7 @@
 
 #define HAVE_BZIP2
 
+#define R_USE_SIGNALS 1
 #include <Defn.h>
 #include <Fileio.h> /* for R_fopen */
 #include "unzip.h"
@@ -292,6 +293,11 @@ extract_one(unzFile uf, const char *const dest, const char * const filename,
 }
 
 
+static void unz_cleanup(void *data)
+{
+    unzClose((unzFile) data);
+}
+
 static int
 zipunzip(const char *zipname, const char *dest, int nfiles, const char **files,
 	 SEXP *pnames, int *nnames, int overwrite, int junk, int setTime)
@@ -299,9 +305,16 @@ zipunzip(const char *zipname, const char *dest, int nfiles, const char **files,
     int   i, err = UNZ_OK;
     unzFile uf;
     SEXP names = *pnames;
+    RCNTXT cntxt;
 
     uf = unzOpen64(zipname);
     if (!uf) return 1;
+    /* extract_one() raises an R error when an output file cannot be opened.
+       => make sure we unwind at unzClose() below and don't leak with this context: */
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+		 R_NilValue, R_NilValue);
+    cntxt.cend = &unz_cleanup;
+    cntxt.cenddata = uf;
     if (nfiles == 0) { /* all files */
 	unz_global_info64 gi;
 	unzGetGlobalInfo64(uf, &gi);
@@ -337,6 +350,7 @@ zipunzip(const char *zipname, const char *dest, int nfiles, const char **files,
 	}
     }
     *pnames = names;
+    endcontext(&cntxt);
     unzClose(uf);
     UNPROTECT(1); /* names */
     return err;
@@ -344,40 +358,38 @@ zipunzip(const char *zipname, const char *dest, int nfiles, const char **files,
 
 static SEXP ziplist(const char *zipname)
 {
-    SEXP ans = R_NilValue, names, lengths, dates;
-    unzFile uf;
-    uLong i;
-    unz_global_info64 gi;
-    int err, nfiles;
-
-    uf = unzOpen64(zipname);
+    unzFile uf = unzOpen64(zipname);
     if (!uf) error(_("zip file '%s' cannot be opened"), zipname);
+    /* allocVector() below raises an R error when the entry count read
+       from the central directory is not a usable length.
+       => open context, also covering explicit errors here. */
+    RCNTXT cntxt;
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+		 R_NilValue, R_NilValue);
+    cntxt.cend = &unz_cleanup;
+    cntxt.cenddata = uf;
 
+    unz_global_info64 gi;
     gi.number_entry = 0; /* =Wall */
-    err = unzGetGlobalInfo64 (uf, &gi);
-    if (err != UNZ_OK) {
-	unzClose(uf);
+    int err = unzGetGlobalInfo64 (uf, &gi);
+    if (err != UNZ_OK)
 	error("error %d with zipfile in unzGetGlobalInfo", err);
-    }
-    nfiles = (int) gi.number_entry;
+    int nfiles = (int) gi.number_entry;
     /* name, length, datetime */
-    PROTECT(ans = allocVector(VECSXP, 3));
-    SET_VECTOR_ELT(ans, 0, names = allocVector(STRSXP, nfiles));
+    SEXP ans = PROTECT(allocVector(VECSXP, 3)), names, lengths, dates;
+    SET_VECTOR_ELT(ans, 0, names   = allocVector(STRSXP, nfiles));
     SET_VECTOR_ELT(ans, 1, lengths = allocVector(REALSXP, nfiles));
-    SET_VECTOR_ELT(ans, 2, dates = allocVector(STRSXP, nfiles));
+    SET_VECTOR_ELT(ans, 2, dates   = allocVector(STRSXP, nfiles));
 
-    for (i = 0; i < nfiles; i++) {
+    for (ulong i = 0; i < nfiles; i++) {
 	char filename_inzip[R_PATH_MAX], date[50];
 	unz_file_info64 file_info;
 
 	err = unzGetCurrentFileInfo64(uf, &file_info, filename_inzip,
 				      sizeof(filename_inzip), NULL, 0, NULL, 0);
 	if (err != UNZ_OK ||
-	    file_info.size_filename >= sizeof(filename_inzip)) {
-
-	    unzClose(uf);
+	    file_info.size_filename >= sizeof(filename_inzip))
 	    error("error %d with zipfile in unzGetCurrentFileInfo\n", err);
-	}
 	/* In theory at least bit 11 of the flag tells us that the
 	   filename is in UTF-8, so FIXME */
 	SET_STRING_ELT(names, i, mkChar(filename_inzip));
@@ -392,12 +404,11 @@ static SEXP ziplist(const char *zipname)
 
 	if (i < nfiles - 1) {
 	    err = unzGoToNextFile(uf);
-	    if (err != UNZ_OK) {
-		unzClose(uf);
+	    if (err != UNZ_OK)
 		error("error %d with zipfile in unzGoToNextFile\n", err);
-	    }
 	}
     }
+    endcontext(&cntxt);
     unzClose(uf);
 
     UNPROTECT(1);
@@ -528,8 +539,9 @@ static Rboolean unz_open(Rconnection con)
 	return FALSE;
     }
     if (unzLocateFile(uf, p+1, 1) != UNZ_OK) {
-	warning(_("cannot locate file '%s' in zip file '%s'"), p+1, path);
+	/* close first: the warning is an error under options(warn = 2) */
 	unzClose(uf);
+	warning(_("cannot locate file '%s' in zip file '%s'"), p+1, path);
 	return FALSE;
     }
     unzOpenCurrentFile(uf);

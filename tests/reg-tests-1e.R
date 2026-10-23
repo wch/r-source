@@ -20,6 +20,7 @@ options(nwarnings = 10000, # (rather than just 50)
         width = 99) # instead of 80
 
 onWindows <- .Platform$OS.type == "windows"
+onUnix    <- .Platform$OS.type == "unix"
 englishMsgs <- {
     ## 1. LANGUAGE takes precedence over locale settings:
     if(nzchar(lang <- Sys.getenv("LANGUAGE")))
@@ -4149,35 +4150,30 @@ local({
 ## same results as before, which took 2-3 times as long for CRAN
 
 
-
 ## unserialize() in ascii format stopped at end of input instead of padding
 x <- strrep("a", 100)
 s <- rawToChar(serialize(x, NULL, ascii = TRUE))
 tc <- textConnection(substr(s, 1, nchar(s) - 50)) # cut inside the string
 r <- tryCatch(unserialize(tc), error = identity); close(tc)
 stopifnot(inherits(r, "error"))
-## silently returned a string padded with EOF bytes in R <= 4.6.0
+## silently returned a string padded with EOF bytes in R <= 4.6.2
 
 
-
-## load() of a hand-crafted RDX2 file whose pairlist chain holds a
-## non-pairlist node
+## load() of a hand-crafted RDX2 file whose pairlist chain holds a non-pairlist node
 local({
     f <- tempfile()
+    writeBraw <- function(obj) writeBin(obj, raw(), endian = "big")
     ## version 2 header, then a LISTSXP node tagged with the symbol "x",
     ## with CAR = NULL
     node <- c(charToRaw("RDX2\nX\n"),
-              writeBin(c(2L, 0x00040500L, 0x00020300L, 0x402L, 1L, 0x40009L),
-                       raw(), endian = "big"),
-              writeBin(1L, raw(), endian = "big"), charToRaw("x"),
-              writeBin(0xfeL, raw(), endian = "big"))
+              writeBraw(c(2L, 0x00040500L, 0x00020300L, 0x402L, 1L, 0x40009L)),
+              writeBraw(1L), charToRaw("x"),
+              writeBraw(0xfeL))
     ## CDR: an EXTPTRSXP (prot = NULL, tag = ref to "x")
-    writeBin(c(node, writeBin(c(0x16L, 0xfeL, 0x1ffL), raw(), endian = "big")),
-             f)
+    writeBin(c(node, writeBraw(c(0x16L, 0xfeL, 0x1ffL))),  f)
     E1 <- tryCid(load(f, new.env()))
     ## CDR: a new SYMSXP "y", whose value slot is R_UnboundValue
-    writeBin(c(node, writeBin(c(1L, 0x40009L, 1L), raw(), endian = "big"),
-               charToRaw("y")), f)
+    writeBin(c(node, writeBraw(c(1L, 0x40009L, 1L)), charToRaw("y")),  f)
     E2 <- tryCid(load(f, new.env()))
     stopifnot(inherits(E1, "error"), inherits(E2, "error"))
     if(englishMsgs)
@@ -4185,11 +4181,10 @@ local({
                   grepl("not in pair list form", conditionMessage(E2)))
     unlink(f)
 })
-## segfaulted (E1) or looped forever (E2) in R <= 4.6.1
+## segfaulted (E1) or looped forever (E2) in R <= 4.6.2
 
 
-## 'delete.response' converted indices from integer to double
-## and replaced NULL components of 'specials' with logical(0L)
+## 'delete.response' no longer returning "double" indices
 t1 <- terms(y ~ offset(a) + x + f(w), specials = c("f", "g"))
 a0 <- attributes(t0 <- delete.response(t1))
 stopifnot(identical(a0$response, 0L),
@@ -4197,6 +4192,7 @@ stopifnot(identical(a0$response, 0L),
           identical(names(a0$specials), c("f", "g")),
           is.integer(a0$specials$f),
           is.null(a0$specials$g))
+##converted indices to double & replaced NULL components of 'specials' with logical() in R <= 4.6.2
 
 
 ## scan() stripping a UTF-8 BOM from a first field that fills its buffer
@@ -4205,6 +4201,27 @@ if (l10n_info()[["UTF-8"]]) {
     stopifnot(identical(scan(text = x, what = "", quiet = TRUE), strrep("a", 8186L)))
 }
 ## read 3 bytes past the end of the field buffer in R <= 4.6.1
+
+
+## unzip(*, unzip = "internal") leaks the zip handle on error -- PR#19233
+le <- function(x, n) writeBin(as.integer(x), raw(), size = n, endian = "little")
+entries <- as.raw(c(0x01, 0x00, 0x00, 0xff, 0, 0, 0, 0))
+record <- c(as.raw(c(0x50, 0x4b, 0x06, 0x06)), le(44, 8), le(45, 2), le(45, 2),
+            le(0, 4), le(0, 4), entries, entries, le(0, 8), le(0, 8))
+locator <- c(as.raw(c(0x50, 0x4b, 0x06, 0x07)), le(0, 4), le(4, 8), le(1, 4))
+zipfile <- tempfile(fileext = ".zip")
+writeBin(c(le(0, 4), record, locator), zipfile) # pad: minizip code treats offset 0 as "not found"
+if(dir.exists(dfd <- "/dev/fd")) withAutoprint({
+    nfd <- function() length(list.files(dfd))
+    (n1 <- nfd())
+    for (i in 1:50)
+        tryCatch(unzip(zipfile, list = TRUE, unzip = "internal"), error = function(e) {})
+    (n2 <- nfd())
+    stopifnot(n2 - n1 == 0)
+})          # ^^^^^^^
+unlink(zipfile)
+## n2 - n1 was 50 in R <= 4.6.2
+
 
 
 ## keep at end
