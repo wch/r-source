@@ -486,15 +486,10 @@ Rd2HTML <-
             package <- package[1L]
         } else {
             dir <- dirname(package)
-            if(nzchar(dir) &&
+            if(nzchar(dir) && # isn't this always TRUE here?
                file_test("-f", dfile <- file.path(package, "DESCRIPTION"))) {
                 version <- .read_description(dfile)["Version"]
                 package <- basename(package)
-            } else {
-                ## Should we really do this?
-                ## Used when Rdconv is given a package argument.
-                version <- utils::packageDescription(package,
-                                                     fields = "Version")
             }
         }
         if(is.na(version)) version <- ""

@@ -98,8 +98,7 @@
              concordance = attr(h, "concordance"))
     }
     structure(lapply(db, rd2lines, standalone = FALSE, ...),
-              pkgdir = pkgdir, src.type = src.type,
-              descfile = file.path(pkgdir, "DESCRIPTION"))
+              pkgdir = pkgdir, src.type = src.type)
 
 }
 
@@ -126,10 +125,9 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
                                          outputEncoding = outputEncoding,
                                          Rhtml = Rhtml, hooks = hooks,
                                          texmath = "katex", prism = prism, concordance = concordance, ...)
-    descfile <- attr(hcontent, "descfile")
     src.type <- attr(hcontent, "src.type")
     pkgdir <- attr(hcontent, "pkgdir")
-    descmeta <- .read_description(descfile)
+    descmeta <- .get_package_metadata(pkgdir)
     pkgname <- descmeta["Package"]
     if (is.null(out)) {
         out <- if (is.null(hooks$pkg_href)) ""
@@ -232,9 +230,15 @@ pkg2HTML <- function(package, dir = NULL, lib.loc = NULL,
               '</nav>',
               '<main>')
 
-    if (include_description)
+    if (include_description) {
+        is_base_pkg <- identical(unname(descmeta["Priority"]), "base")
+        descfile <- file.path(pkgdir,
+                              if (is_base_pkg && src.type == "source")
+                                  "DESCRIPTION.in"
+                              else "DESCRIPTION")
         writeHTML(.DESCRIPTION_to_HTML(descfile, resources = resources,
                                        hooks = hooks))
+    }
     lapply(names(hcontent), function(rdfile) {
         h <- hcontent[[rdfile]]
     	if (concordance) {
