@@ -162,7 +162,7 @@ delete.response <- function (termobj)
     a <- attributes(termobj)
     y <- a$response
     if(!is.null(y) && y) {
-        off <- function (i) { if (any(p <- i > y)) i[p] <- i-1L; i }
+        off <- function (i) { if (any(p <- i > y)) i[p] <- i[p]-1L; i }
         termobj[[2L]] <- NULL
         a$response <- 0L
         a$variables <- a$variables[-(1L+y)]
