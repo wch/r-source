@@ -167,7 +167,6 @@ delete.response <- function (termobj)
         a$response <- 0L
         a$variables <- a$variables[-(1L+y)]
         a$predvars <- a$predvars[-(1L+y)]
-        a$dataClasses <- a$dataClasses[-y]
         if(length(a$factors))
             a$factors <- a$factors[-y, , drop = FALSE]
         if(length(a$offset))
