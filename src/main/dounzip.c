@@ -380,9 +380,7 @@ static SEXP ziplist(const char *zipname)
     SET_VECTOR_ELT(ans, 0, names   = allocVector(STRSXP, nfiles));
     SET_VECTOR_ELT(ans, 1, lengths = allocVector(REALSXP, nfiles));
     SET_VECTOR_ELT(ans, 2, dates   = allocVector(STRSXP, nfiles));
-
-    ulong i;
-    for (i = 0; i < nfiles; i++) {
+    for (uLong i = 0; i < nfiles; i++) {
 	char filename_inzip[R_PATH_MAX], date[50];
 	unz_file_info64 file_info;
 
