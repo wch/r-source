@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.7.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-09-02 17:54\n"
+"POT-Creation-Date: 2026-10-24 23:43\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -456,13 +456,7 @@ msgstr ""
 msgid "'filename' must be a non-empty character string"
 msgstr ""
 
-msgid "type = \"quartz\" is unavailable. trying \"Xlib\""
-msgstr ""
-
-msgid "type = \"cairo\" is unavailable. trying \"Xlib\""
-msgstr ""
-
-msgid "type = \"cairo-png\" is unavailable. trying \"Xlib\""
+msgid "%s is unavailable; trying %s"
 msgstr ""
 
 msgid "compression is not supported for type = \"quartz\""
