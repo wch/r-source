@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/unix/png.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2023 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -58,34 +58,33 @@ png <- function(filename = "Rplot%03d.png",
     if(!missing(antialias)) new$antialias <- match.arg(antialias, aa.cairo)
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     antialias <- match(d$antialias, aa.cairo)
-    if(type == "quartz") {
-        if(capabilities("aqua")) {
+    if(type == "quartz" && capabilities("aqua")) {
             width <- g$width/ifelse(is.na(res), 72, res);
             height <- g$height/ifelse(is.na(res), 72, res);
             invisible(.External(C_Quartz, "png", path.expand(filename),
                                 width, height, pointsize, d$family,
                                 d$antialias != "none", "", bg,
                                 "white", if(is.na(res)) NULL else res))
-        } else warning('type = "quartz" is unavailable. trying "Xlib"')
-    } else if (type == "cairo") {
-        if(capabilities("cairo")) {
+    } else if (type == "cairo" && capabilities("cairo")) {
         invisible(.External(C_devCairo, filename, 2L, g$width, g$height,
-                            pointsize, bg, res, antialias, 100L, d$family, 300,
-                            optionSymbolFont(d$symbolfamily)))
-        } else warning('type = "cairo" is unavailable. trying "Xlib"')
-    } else if (type == "cairo-png") {
-        if(capabilities("cairo")) {
-            invisible(.External(C_devCairo, filename, 5L, g$width, g$height,
-                                pointsize, bg, res, antialias, 100L, d$family,
-                                300, optionSymbolFont(d$symbolfamily)))
-        } else warning('type = "cairo-png" is unavailable. trying "Xlib"')
-    } else
+                            pointsize, bg, res, antialias, 100L, d$family,
+                            300, optionSymbolFont(d$symbolfamily)))
+    } else if (type == "cairo-png" && capabilities("cairo")) {
+        invisible(.External(C_devCairo, filename, 5L, g$width, g$height,
+                            pointsize, bg, res, antialias, 100L, d$family,
+                            300, optionSymbolFont(d$symbolfamily)))
+    } else {
+        if (type != "Xlib")
+            warning(gettextf("%s is unavailable; trying %s",
+                             paste0('type = "', type, '"'), '"Xlib"'),
+                    domain = NA)
         invisible(.External2(C_X11,
                              paste0("png::", filename),
                              g$width, g$height, pointsize, d$gamma,
                              d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
                              0L, 0L, "", 0, 0, d$family,
                              optionSymbolFont(d$symbolfamily)))
+    }
 }
 
 jpeg <- function(filename = "Rplot%03d.jpeg",
@@ -103,28 +102,29 @@ jpeg <- function(filename = "Rplot%03d.jpeg",
     if(!missing(antialias)) new$antialias <- match.arg(antialias, aa.cairo)
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     antialias <- match(d$antialias, aa.cairo)
-    if(type == "quartz") {
-        if(capabilities("aqua")) {
+    if(type == "quartz" && capabilities("aqua")) {
             width <- g$width/ifelse(is.na(res), 72, res);
             height <- g$height/ifelse(is.na(res), 72, res);
             invisible(.External(C_Quartz, "jpeg", path.expand(filename),
                                 width, height, pointsize, d$family,
                                 d$antialias != "none", "", bg,
                                 "white", if(is.na(res)) NULL else res))
-        } else warning('type = "quartz" is unavailable. trying "Xlib"')
-    } else if (type == "cairo") {
-        if(capabilities("cairo")) {
+    } else if (type == "cairo" && capabilities("cairo")) {
             invisible(.External(C_devCairo, filename, 3L, g$width, g$height,
                                 pointsize, bg, res, antialias, quality, d$family,
                                 300, optionSymbolFont(d$symbolfamily)))
-        } else warning('type = "cairo" is unavailable. trying "Xlib"')
-    } else
+    } else {
+        if (type != "Xlib")
+            warning(gettextf("%s is unavailable; trying %s",
+                             paste0('type = "', type, '"'), '"Xlib"'),
+                    domain = NA)
         invisible(.External2(C_X11,
                             paste0("jpeg::", quality, ":", filename),
                             g$width, g$height, pointsize, d$gamma,
                             d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
                             0L, 0L, "", 0, 0, d$family,
                             optionSymbolFont(d$symbolfamily)))
+    }
 }
 
 tiff <- function(filename = "Rplot%03d.tiff",
@@ -151,8 +151,7 @@ tiff <- function(filename = "Rplot%03d.tiff",
                        "zip" = 8L, "lzw+p" = 15L, "zip+p" = 18L,
                        "lerc" = 34887L, "lzma" = 34925L,
                        "zstd" = 50000L, "webp" = 50001L)
-    if(type == "quartz") {
-        if(capabilities("aqua")) {
+    if(type == "quartz" && capabilities("aqua")) {
             width <- g$width/ifelse(is.na(res), 72, res);
             height <- g$height/ifelse(is.na(res), 72, res);
             if (comp != 1L)
@@ -161,20 +160,22 @@ tiff <- function(filename = "Rplot%03d.tiff",
                                 width, height, pointsize, d$family,
                                 d$antialias != "none", "", bg,
                                 "white", if(is.na(res)) NULL else res))
-        } else warning('type = "quartz" is unavailable. trying "Xlib"')
-    } else if (type == "cairo") {
-        if(capabilities("cairo")) {
+    } else if (type == "cairo" && capabilities("cairo")) {
             invisible(.External(C_devCairo, filename, 8L, g$width, g$height,
                                 pointsize, bg, res, antialias, comp, d$family,
                                 300, optionSymbolFont(d$symbolfamily)))
-        } else warning('type = "cairo" is unavailable. trying "Xlib"')
-    } else
+    } else {
+        if (type != "Xlib")
+            warning(gettextf("%s is unavailable; trying %s",
+                             paste0('type = "', type, '"'), '"Xlib"'),
+                    domain = NA)
         invisible(.External2(C_X11,
                              paste0("tiff::", comp, ":", filename),
                              g$width, g$height, pointsize, d$gamma,
                              d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
                              0L, 0L, "", 0, 0, d$family,
                              optionSymbolFont(d$symbolfamily)))
+    }
 }
 
 bmp <- function(filename = "Rplot%03d.bmp",
@@ -191,27 +192,28 @@ bmp <- function(filename = "Rplot%03d.bmp",
     if(!missing(antialias)) new$antialias <- match.arg(antialias, aa.cairo)
     d <- check.options(new, name.opt = ".X11.Options", envir = .X11env)
     antialias <- match(d$antialias, aa.cairo)
-    if(type == "quartz") {
-        if(capabilities("aqua")) {
+    if(type == "quartz" && capabilities("aqua")) {
         width <- g$width/ifelse(is.na(res), 72, res);
         height <- g$height/ifelse(is.na(res), 72, res);
         invisible(.External(C_Quartz, "bmp", path.expand(filename),
                             width, height, pointsize, d$family,
                             d$antialias != "none", "", bg,
                             "white", if(is.na(res)) NULL else res))
-        } else warning('type = "quartz" is unavailable. trying "Xlib"')
-    } else if (type == "cairo") {
-        if(capabilities("cairo")) {
-            invisible(.External(C_devCairo, filename, 9L, g$width, g$height,
-                                pointsize, bg, res, antialias, 100L, d$family,
-                                300, optionSymbolFont(d$symbolfamily)))
-        } else warning('type = "cairo" is unavailable. trying "Xlib"')
-    } else
+    } else if (type == "cairo" && capabilities("cairo")) {
+        invisible(.External(C_devCairo, filename, 9L, g$width, g$height,
+                            pointsize, bg, res, antialias, 100L, d$family,
+                            300, optionSymbolFont(d$symbolfamily)))
+    } else {
+        if (type != "Xlib")
+            warning(gettextf("%s is unavailable; trying %s",
+                             paste0('type = "', type, '"'), '"Xlib"'),
+                    domain = NA)
         invisible(.External2(C_X11, paste0("bmp::", filename),
                              g$width, g$height, pointsize, d$gamma,
                              d$colortype, d$maxcubesize, bg, bg, d$fonts, res,
                              0L, 0L, "", 0, 0, d$family,
                              optionSymbolFont(d$symbolfamily)))
+    }
 }
 
 grSoftVersion <- function() {
