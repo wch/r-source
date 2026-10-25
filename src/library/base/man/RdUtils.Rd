@@ -1,6 +1,6 @@
 % File src/library/base/man/RdUtils.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2016 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{RdUtils}
@@ -34,12 +34,12 @@
   from Rd sources.  It will make use of the environment variables
 #ifdef unix
   \env{R_PAPERSIZE} (set by \command{R CMD}, with a default set when \R
-  was installed: values for \env{R_PAPERSIZE} are \code{a4},
-  \code{letter}, \code{legal} and \code{executive})
+  was installed: values for \env{R_PAPERSIZE} are \samp{a4},
+  \samp{letter}, \samp{legal} and \samp{executive})
 #endif
 #ifdef windows
-  \env{R_PAPERSIZE} (default \code{a4}, also \code{legal} and
-  \code{executive})
+  \env{R_PAPERSIZE} (default \samp{a4}, also \samp{letter}, \samp{legal} and
+  \samp{executive})
 #endif
   and \env{R_PDFVIEWER} (the PDF previewer).  Also,
   \env{RD2PDF_INPUTENC} can be set to \code{inputenx} to make use of the

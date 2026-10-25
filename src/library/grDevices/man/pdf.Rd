@@ -1,6 +1,6 @@
 % File src/library/grDevices/man/pdf.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{pdf}
@@ -43,7 +43,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     increased (with a warning) if necessary.  Defaults to \code{"1.4"},
     but see \sQuote{Details}.}
   \item{paper}{the target paper size.  The choices are
-    \code{"a4"}, \code{"letter"}, \code{"legal"} (or \code{"us"}) and
+    \code{"a4"}, \code{"letter"} (or \code{"us"}), \code{"legal"} and
     \code{"executive"} (and these can be capitalized), or \code{"a4r"}
     and \code{"USr"} for rotated (\sQuote{landscape}).
     The default is \code{"special"}, which means that the \code{width}
@@ -57,12 +57,12 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
     \code{"default"}.  The latter is interpreted
     \describe{
       \item{on Unix-alikes}{
-	as \file{"ISOLatin1.enc"} unless the locale is recognized as
+    as \file{"ISOLatin1.enc"} unless the locale is recognized as
     corresponding to a language using ISO 8859-\{2,5,7,13,15\} or \I{KOI8}-\{R,U\}.
       }
       \item{on Windows}{
-    as \file{"CP1250.enc"} (Central European), \code{"CP1251.enc"} (Cyrillic),
-    \code{"CP1253.enc"} (Greek) or \code{"CP1257.enc"} (Baltic) if one
+    as \file{"CP1250.enc"} (Central European), \file{"CP1251.enc"} (Cyrillic),
+    \file{"CP1253.enc"} (Greek) or \file{"CP1257.enc"} (Baltic) if one
     of those codepages is in use, otherwise \file{"WinAnsi.enc"}
     (codepage 1252).
       }
@@ -121,7 +121,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   \code{fonts} argument.
 
   If a device-independent \R graphics font family is specified (e.g., via
-  \code{par(family = )} in the graphics package), the PDF device makes use
+  \code{\link{par}(family = )} in the \pkg{graphics} package), the PDF device makes use
   of the PostScript font mappings to convert the \R graphics font family
   to a PDF-specific font family description.  (See the
   documentation for \code{\link{pdfFonts}}.)
@@ -135,8 +135,8 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   to ensure that these fonts are available on the system and third-party
   software (e.g., Ghostscript) may be required to embed the fonts so
   that the PDF can be included in other documents (e.g., LaTeX): see
-  \code{\link{embedFonts}}.  The URW-based families described for
-  in section \sQuote{Families}.can be used with viewers, platform dependently:
+  \code{\link{embedFonts}}.  The URW-based families described
+  in section \sQuote{Families} can be used with viewers, platform dependently:
   \describe{
     \item{on Unix-alikes}{viewers set up to use URW fonts, which is
       usual with those based on \code{xpdf} or Ghostscript.}
@@ -158,7 +158,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   supported by Acrobat 5 in 2001; it is very unlikely not to be
   supported in a current viewer.)
 
-  Line widths as controlled by \code{par(lwd = )} are in multiples of
+  Line widths as controlled by \code{\link{par}(lwd = )} are in multiples of
   1/96 inch.  Multiples less than 1 are allowed.  \code{pch = "."} with
   \code{cex = 1} corresponds to a square of side 1/72 inch, which is
   also the \sQuote{pixel} size assumed for graphics parameters such as
@@ -177,7 +177,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
 
   When the background colour is fully transparent (as is the initial
   default value), the PDF produced does not paint the background.  Most
-  PDF viewers will use a white canvas so the visual effect is if the
+  PDF viewers will use a white canvas so the visual effect is as if the
   background were white.  This will not be the case when printing onto
   coloured paper, though.
 }
@@ -190,12 +190,12 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   For use with \code{onefile = FALSE}, give a C integer format such as
   \code{"Rplot\%03d.pdf"} (the default in that case) which is expanded
   using the page number, so this uses files \file{Rplot001.pdf}, \dots,
-  \file{Rplot999.pdf}, \file{Rplot1000.pdf},
+  \file{Rplot999.pdf}, \file{Rplot1000.pdf}, \dots.
 
   A single integer format matching the \link{regular expression}
   \code{"\%[#0 +=-]*[0-9.]*[diouxX]"} is allowed in \code{file}.  The
-  character string should not otherwise contain a \code{\%}: if it is
-  really necessary, use \code{\%\%} in the string for \code{\%} in the
+  character string should not otherwise contain a \samp{\%}: if it is
+  really necessary, use \samp{\%\%} in the string for \samp{\%} in the
   file path.
 
   For \code{pdf}, \code{file} can be \code{NULL} when no external file
@@ -206,13 +206,13 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
 }
 
 \section{Families}{
-  Font families are collections of fonts covering the five font faces,
+  Font families are collections of fonts covering the five font faces
   (conventionally plain, bold, italic, bold-italic and symbol) selected
-  by the graphics parameter \code{\link{par}(font = )} or the grid
+  by the graphics parameter \code{\link{par}(font = )} or the \pkg{grid}
   parameter \code{\link{gpar}(fontface = )}.  Font families can be
   specified either as an initial/default font family for the device
   via the \code{family} argument or after the device is opened by
-  the graphics parameter \code{\link{par}(family = )} or the grid
+  the graphics parameter \code{\link{par}(family = )} or the \pkg{grid}
   parameter \code{\link{gpar}(fontfamily = )}.  Families which will be
   used in addition to the initial family must be specified in the
   \code{fonts} argument when the device is opened.
@@ -225,10 +225,10 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
   \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
   \code{"Palatino"} or \code{"Times"}, and refers to the standard Adobe
-  PostScript fonts families of those names which are included (or
+  PostScript font families of those names which are included (or
   cloned) in all common PDF/PostScript renderers.
 
-  Many PDF/PostScript renders (including those based on
+  Many PDF/PostScript renderers (including those based on
   Ghostscript) use the URW equivalents of these fonts, which are
   \code{"URWGothic"}, \code{"URWBookman"}, \code{"NimbusMon"},
   \code{"NimbusSan"}, \code{"NimbusSanCond"}, \code{"CenturySch"},
@@ -245,10 +245,9 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   families \code{"URW2Helvetica"} (with \samp{Oblique} fonts),
   \code{"URW2HelveticaItalic"} (with \samp{Italic} fonts),
   \code{"URW2Times"} and \code{"NimbusMonoPS"}.  As recent versions of
-  Ghostscript will render with (and embed) these fonts. these families
+  Ghostscript will render with (and embed) these fonts, these families
   should be used instead of \code{"URWHelvetica"}, \code{"URWTimes"},
-  \code{"NimbusSan"}, \code{"NimbusRom"}, and \code{"NimbusMon"}
-  
+  \code{"NimbusSan"}, \code{"NimbusRom"}, and \code{"NimbusMon"}.
 
   Another type of family makes use of CID-keyed fonts for East Asian
   languages -- see \code{\link{pdfFonts}}.
@@ -259,7 +258,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   earlier versions of \R, the initial family can also be specified as a
   vector of four or five \abbr{afm} files.
 
-  Note that \R does not embed the font(s) used in the PostScript output:
+  Note that \R does not embed the font(s) used in the PDF output:
   see \code{\link{embedFonts}} for a utility to help do so.
 
   Viewers and embedding applications frequently substitute fonts for
@@ -274,7 +273,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   (in the range 0--255).  Most commonly \R uses \I{ISOLatin1} encoding, and
   the examples for \code{\link{text}} are in that encoding.  However,
   the encoding used on machines running \R may well be different, and by
-  using the \code{encoding} argument the glyphs can be matched to
+  using the \code{encoding} argument the glyphs can be matched to the
   encoding in use.  This suffices for European and Cyrillic languages,
   but not for East Asian languages.  For the latter, composite CID fonts are
   used.  These fonts are useful for other languages: for example they
@@ -291,7 +290,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
   \code{"ISOLatin9.enc"} (ISO 8859-15, including Euro),
   \code{"Cyrillic.enc"} (ISO 8859-5), \code{"KOI8-R.enc"},
   \code{"KOI8-U.enc"}, and the Windows encodings \code{"WinAnsi.enc"}
-  (also known as \code{"CP1252.enc"}, \code{"CP1250.enc"}
+  (also known as \code{"CP1252.enc"}), \code{"CP1250.enc"}
   (Central/Eastern Europe), \code{"CP1251.enc"} (Cyrillic),
   \code{"Greek.enc"} (ISO 8859-7), \code{"CP1253.enc"} (modern Greek)
   and \code{"CP1257.enc"} (\sQuote{Baltic Rim}).  Note that many glyphs
@@ -427,7 +426,7 @@ pdf(file = if(onefile) "Rplots.pdf" else "Rplot\%03d.pdf",
 
   There was a different font bug in the \command{pdf.js} viewer included
   in Firefox: that mapped Dingbats to the Symbol font and so displayed
-  symbols such \code{pch = 1} as lambda.
+  symbols such as \code{pch = 1} as \eqn{\lambda}.
 }
 
 \seealso{
