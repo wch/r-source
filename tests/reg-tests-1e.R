@@ -4249,6 +4249,27 @@ stopifnot(identical(attr(t0a,   "variables"), v0),
 ## in R <= 4.6.2
 
 
+## S4 methods for 'initialize', .Object="oldClass"|".environment"
+## evaluated arguments of type "symbol" or "call" when dispatching
+## next methods (PR#16629)
+snms <- c("ANY", "name", "call", "expression"); . <- FALSE
+dots <- list(., quote(.), quote(identity(.)), expression(.))
+names(snms) <- names(dots) <- snms
+setOldClass("old")
+setClass("oldWithSlots", contains =         "old", slots = snms)
+setClass("envWithSlots", contains = "environment", slots = snms)
+x <- do.call(new, c(list("oldWithSlots"), dots), quote = TRUE)
+y <- do.call(new, c(list("envWithSlots"), dots), quote = TRUE)
+## was Error in validObject(.Object) :
+##   .... got class "logical", should be or extend class "name"|"call"
+stopifnot(identical(lapply(snms, slot, object = x), dots),
+          identical(lapply(snms, slot, object = y), dots),
+          removeClass("envWithSlots"),
+          removeClass("oldWithSlots"),
+          removeClass("old"))
+## in R <= 4.6.2
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

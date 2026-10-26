@@ -280,7 +280,7 @@
         ## named slots are done as in the default method, which will also call validObject()
         if(length(elements)>0) {
             elements <- c(list(.Object), elements)
-            .Object <- do.call(`callNextMethod`, elements)
+            .Object <- do.call(callNextMethod, elements, quote = TRUE)
         }
          else
            validObject(.Object)
@@ -644,7 +644,7 @@
                   }
                   .Object@.xData <- selfEnv
                   if(length(objs)) # call next method with remaining args
-                      .Object <- do.call(callNextMethod, c(.Object, args))
+                      .Object <- do.call(callNextMethod, c(.Object, args), quote = TRUE)
                   .Object
               }, where = where)
 }
