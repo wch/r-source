@@ -1,5 +1,5 @@
 # Translation of src/library/base/po/R-base.pot to German
-# Copyright (C) 2005-2025 The R Foundation
+# Copyright (C) 2005-2026 The R Foundation
 # This file is distributed under the same license as the R package.
 # Detlef Steuer <detlef.steuer@hsu-hh.de>, 2007-2025.
 #
@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: R 4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2026-09-03 23:24\n"
-"PO-Revision-Date: 2026-05-01 14:17+0200\n"
-"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
+"PO-Revision-Date: 2026-10-26 09:36+0100\n"
+"Last-Translator: Sebastian Meyer <seb.meyer@fau.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgid "'%s' is defunct."
 msgstr "'%s' ist nicht mehr gültig."
 
 msgid "Use '%s' instead."
-msgstr "Benutzen Sie stattdessen '%s'"
+msgstr "Benutzen Sie stattdessen '%s'."
 
 msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
 msgstr "Siehe help(\"Defunct\") und help(\"%s-defunct\")."
@@ -96,7 +96,7 @@ msgid "dim(X) must have a positive length"
 msgstr "dim(X) muss positive Länge haben"
 
 msgid "'X' must have named dimnames"
-msgstr "'X' muss benannte Dimensionen besitzten"
+msgstr "'X' muss benannte Dimensionen besitzen"
 
 msgid "not all elements of 'MARGIN' are names of dimensions"
 msgstr "nicht alle Elemente von 'MARGIN' sind Namen von Dimensionen"
@@ -941,7 +941,7 @@ msgid "nothing specified to be save()d"
 msgstr "keine Argumente für save() angegeben"
 
 msgid "'%s' must be a non-empty character string"
-msgstr "'%s' muss nicht-leere Zeichenkette sein"
+msgstr "'%s' muss eine nicht-leere Zeichenkette sein"
 
 msgid "'compress' must be logical or character"
 msgstr "'compress' muss logical oder character sein"
@@ -1049,7 +1049,9 @@ msgstr "unzulässig den Speichermodus eines Faktors zu ändern"
 msgid ""
 "namespace %s is not available and has been replaced\n"
 "by .GlobalEnv when processing object %s"
-msgstr "Namensraum %s ist nicht verfügar und ist durch.GlobalEnv ersetzt worden während Objekt %s verarbeitet wurde"
+msgstr ""
+"Namensraum %s ist nicht verfügar und wurde durch .GlobalEnv ersetzt\n"
+"  während Objekt %s verarbeitet wurde"
 
 msgid "namespace is already attached"
 msgstr "Namensraum ist bereits angehängt"
@@ -1072,9 +1074,8 @@ msgstr ""
 msgid "namespace %s %s is already loaded, but %s %s is required"
 msgstr "Namensraum %s %s ist bereits geladen, aber %s %s wird gefordert"
 
-#, fuzzy
 msgid "namespace '%s' is already loaded so argument '%s' will be ignored."
-msgstr "Namensraum %s %s ist bereits geladen, aber %s %s wird gefordert"
+msgstr "Namensraum '%s' ist bereits geladen, also wird Argument '%s' ignoriert."
 
 msgid "- loading"
 msgstr "- Laden"
@@ -1111,12 +1112,14 @@ msgstr "Paket %s unterliegt einer Lizenz, die in einer interaktiven Sitzung akze
 msgid "package %s has a license that you need to accept after viewing"
 msgstr "Paket %s unterliegt einer Lizenz, die nach Ansicht akzeptiert werden muss"
 
-#, fuzzy
 msgid ""
 "package %s has a license that you need to accept:\n"
 "  according to the DESCRIPTION file it is\n"
 "  %s"
-msgstr "Paket %s unterliegt einer Lizenz, die nach Ansicht akzeptiert werden muss"
+msgstr ""
+"Paket %s unterliegt einer Lizenz, die akzeptiert werden muss:\n"
+"  gemäß der DESCRIPTION Datei ist es\n"
+"  %s"
 
 msgid "license for package %s not accepted"
 msgstr "Lizenz für Paket %s nicht akzeptiert"
@@ -1403,13 +1406,13 @@ msgid "'by' argument is much too small"
 msgstr "'by' Argument ist viel zu klein"
 
 msgid "'length.out' must be a non-negative number"
-msgstr "'length.out' muss eine nicht negative Zahl sein"
+msgstr "'length.out' muss eine nicht-negative Zahl sein"
 
 msgid "too many arguments"
 msgstr "zu viele Argumente"
 
 msgid "invalid 'compress' argument:"
-msgstr "ungültiges 'compress' Argument"
+msgstr "ungültiges 'compress' Argument:"
 
 msgid "'compress' is ignored unless 'file' is a file name"
 msgstr "'compress' wird ignoriert, außer 'file' ist ein Dateiname"
@@ -1553,7 +1556,7 @@ msgid "Sys.setenv(LANGUAGE=\"%s\") may have failed"
 msgstr "Sys.setenv(LANGUAGE=\"%s\") evtl. fehlgeschlagen"
 
 msgid "attempt to set an attribute on NULL"
-msgstr ""
+msgstr "Versuch ein Attribut für NULL zu setzen"
 
 msgid "incorrect value for 'x'"
 msgstr "falscher Wert für 'x'"
@@ -1870,12 +1873,8 @@ msgstr[1] "'by' muss gültige Spalten spezifizieren"
 
 msgid "Function found when exporting methods from the namespace %s which is not S4 generic: %s"
 msgid_plural "Functions found when exporting methods from the namespace %s which are not S4 generic: %s"
-msgstr[0] ""
-"Funktion beim Methodenexport des Namensraums %s gefunden, die nicht generisch S4\n"
-"ist: %s"
-msgstr[1] ""
-"Funktionen beim Methodenexport des Namensraums %s gefunden, die nicht generisch S4\n"
-"sind: %s"
+msgstr[0] "Funktion beim Methodenexport des Namensraums %s gefunden, die nicht S4-generisch ist: %s"
+msgstr[1] "Funktionen beim Methodenexport des Namensraums %s gefunden, die nicht S4-generisch sind: %s"
 
 msgid "No methods found in package %s for request: %s when loading %s"
 msgid_plural "No methods found in package %s for requests: %s when loading %s"
@@ -2071,213 +2070,3 @@ msgstr[1] ""
 
 #~ msgid "wrong argument"
 #~ msgstr "falsches Argument"
-
-#~ msgid ""
-#~ "The following object is masked %s %s:\n"
-#~ "\n"
-#~ "%s\n"
-#~ msgid_plural ""
-#~ "The following objects are masked %s %s:\n"
-#~ "\n"
-#~ "%s\n"
-#~ msgstr[0] ""
-#~ "Das folgende Objekt ist maskiert %s %s:\n"
-#~ "\n"
-#~ "%s\n"
-#~ msgstr[1] ""
-#~ "Die folgenden Objekte sind maskiert %s %s:\n"
-#~ "\n"
-#~ "%s\n"
-
-#~ msgid "'nu' must be 0, nrow(x) or ncol(x)"
-#~ msgstr "'nu' muss entweder 0, nrow(x) oder ncol(x) sein"
-
-#~ msgid "'nv' must be 0, nrow(x) or ncol(x)"
-#~ msgstr "'nv' muss entweder 0, nrow(x) oder ncol(x) sein"
-
-#~ msgid "too many 'S3method' directives"
-#~ msgstr "zu viele 'S3method' Direktiven"
-
-#~ msgid "non-square matrix in 'chol'"
-#~ msgstr "nicht-quadratische Matrix in 'chol'"
-
-#~ msgid "non-matrix argument to 'chol'"
-#~ msgstr "nicht-matrix Argument für 'chol'"
-
-#~ msgid "matrix not positive definite"
-#~ msgstr "Matrix nicht positiv definit"
-
-#~ msgid "'keep.source' is deprecated and will be ignored"
-#~ msgstr "'keep.source' ist veraltet und wird ignoriert"
-
-#~ msgid "non-positive definite matrix in 'chol'"
-#~ msgstr "nicht positiv definite Matrix in 'chol'"
-
-#~ msgid "non-numeric argument to 'chol2inv'"
-#~ msgstr "nicht-numerisches Argument für 'chol2inv'"
-
-#~ msgid "invalid 'size' argument in 'chol2inv'"
-#~ msgstr "ungültiges 'size' Argument in 'chol2inv'"
-
-#~ msgid "singular matrix in 'chol2inv'"
-#~ msgstr "singuläre Matrix in 'chol2inv'"
-
-#~ msgid "'nv' must be 0 or ncol(x)"
-#~ msgstr "'nv' muss 0 oder ncol(x) sein"
-
-#~ msgid "found an S4 version of %s so it has not been imported correctly"
-#~ msgstr "S4 Version von '%s' gefunden, diese war also nicht korrekt importiert"
-
-#~ msgid "Use of save versions prior to 2 is deprecated"
-#~ msgstr "Sicherungen älter als Version 2 sind veraltet"
-
-#~ msgid "T used instead of TRUE"
-#~ msgstr "T statt TRUE benutzt"
-
-#~ msgid "F used instead of FALSE"
-#~ msgstr "F statt FALSE benutzt"
-
-#~ msgid "cannot find namespace environment"
-#~ msgstr "kann keine Namensraum-Umgebung finden"
-
-#~ msgid "items"
-#~ msgstr "Punkte"
-
-#~ msgid "have been removed from the search path"
-#~ msgstr "sind aus dem  Suchpfad entfernt worden"
-
-#~ msgid "0 extent dimensions"
-#~ msgstr "Dimensionen mit 0 Ausdehnung"
-
-#~ msgid "Buggy version of Kinderman-Ramage generator used"
-#~ msgstr "Fehlerhafte Version des Kinderman-Ramage Generators benutzt."
-
-#~ msgid "Buggy version of Kinderman-Ramage generator is not allowed"
-#~ msgstr "Fehlerhafte Version des Kinderman-Ramage Generators ist nicht zulässig."
-
-#~ msgid "you cannot be serious"
-#~ msgstr "Das meinen Sie nicht ernst"
-
-#~ msgid "RHS must be list"
-#~ msgstr "rechte Seite muss einen Liste sein"
-
-#~ msgid "labels/breaks length conflict"
-#~ msgstr "labels/breaks unterschiedlicher Länge"
-
-#~ msgid "--> row.names NOT used"
-#~ msgstr "--> row.names NICHT genutzt"
-
-#~ msgid "'ch' returned code %d in 'eigen'"
-#~ msgstr "'ch' gab Kode %d zurück in 'eigen'"
-
-#~ msgid "'cg' returned code %d in 'eigen'"
-#~ msgstr "'cg' gab Kode %d zurück in 'eigen'"
-
-#~ msgid "'rg' returned code %d in 'eigen'"
-#~ msgstr "'rg' gab Kode %d zurück in 'eigen'"
-
-#~ msgid "invalid factor level, NAs generated"
-#~ msgstr "ungültige Faktorniveaus, NAs erzeugt"
-
-#~ msgid "'subset' must evaluate to logical"
-#~ msgstr "'subset' muss sich zu booleschem Wert berechnen"
-
-#~ msgid "License"
-#~ msgstr "Lizenz"
-
-#~ msgid ""
-#~ "file %s has magic number '%s'\n"
-#~ "   Use of save versions prior to 2 is deprecated"
-#~ msgstr ""
-#~ "Datei %s hat die Magic Number '%s'\n"
-#~ "   Nutzung von Sicherungen älter als Version 2 ist veraltet"
-
-#~ msgid "(loaded the methods namespace)"
-#~ msgstr "(Namensraum von methos geladen)"
-
-#~ msgid "doc"
-#~ msgstr "doc"
-
-#~ msgid "'by' must specify valid column(s)"
-#~ msgstr "'by' muss gültige Spalte(n) spezifizieren"
-
-#~ msgid "unary"
-#~ msgstr "unär"
-
-#~ msgid "MARGIN ="
-#~ msgstr "MARGIN ="
-
-#~ msgid "value for '"
-#~ msgstr "Wert für '"
-
-#~ msgid "' not found"
-#~ msgstr "' nicht gefunden"
-
-#~ msgid "to"
-#~ msgstr "bis"
-
-#~ msgid "since"
-#~ msgstr "seit"
-
-#~ msgid "is already defined in the"
-#~ msgstr "ist bereits definiert im"
-
-#~ msgid "namespace"
-#~ msgstr "Namensraum"
-
-#~ msgid "failed to assign NativeSymbolInfo for"
-#~ msgstr "Zuweisung von nativeSymbolInfo gescheitert für"
-
-#~ msgid "not found"
-#~ msgstr "nicht gefunden"
-
-#~ msgid "' has changed"
-#~ msgstr "' hat sich geändert"
-
-#~ msgid "is not"
-#~ msgstr "ist nicht"
-
-#~ msgid "all"
-#~ msgstr "alle"
-
-#~ msgid "TRUE"
-#~ msgstr "TRUE"
-
-#~ msgid "non-numeric argument to 'chol'"
-#~ msgstr "nicht-numerisches Argument zu 'chol'"
-
-#~ msgid "do not know how to convert '%s' to class \"POSIXlt\""
-#~ msgstr "weiss nicht, wie '%s' in Klasse \"POSIXlt\" umgewandelt wird"
-
-#~ msgid "do not know how to convert '%s' to class \"POSIXct\""
-#~ msgstr "weiss nicht, wie '%s' in Klasse \"POSIXct\" umgewandelt wird"
-
-#~ msgid "'shrink.sml' must be numeric > 0"
-#~ msgstr "'shrink.sml' muss numerisch und > 0 sein"
-
-#~ msgid "'min.n' must be non-negative integer <= n"
-#~ msgstr "'min.n' muss nicht negative ganze Zahl <= n sein"
-
-#~ msgid "'high.u.bias' must be non-negative numeric"
-#~ msgstr "'high.u.bias' muss nicht negativ numerisch sein"
-
-#~ msgid "'u5.bias' must be non-negative numeric"
-#~ msgstr "'u5.bias' muss nicht negativ numerisch sein"
-
-#~ msgid "'eps.correct' must be 0, 1, or 2"
-#~ msgstr "'eps.correct' muss 0, 1 oder 2 sein"
-
-#~ msgid "'b' must be compatible with 'a'"
-#~ msgstr "'b' muss kompatibel sein mit 'a'"
-
-#~ msgid "invalid argument values in 'backsolve'"
-#~ msgstr "ungültige Argumentwerte in 'backsolve'"
-
-#~ msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
-#~ msgstr "singuläre Matrix in 'backsolve'. Erste Null in Diagonale [%d]"
-
-#~ msgid "Expected a single logical value for the S4 state flag"
-#~ msgstr "Erwarte einzelnen, logischen Wert für das S4 Status-Flag"
-
-#~ msgid "Expected a single logical value for the S3 state flag"
-#~ msgstr "Erwarte einzelnen logischen Wert für das S3 Status-Flag"

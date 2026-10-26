@@ -1,14 +1,15 @@
 # Translation of po/R.pot to German.
-# Copyright (C) 2005-2025 The R Foundation
+# Copyright (C) 2005-2026 The R Foundation
 # This file is distributed under the same license as the R package.
 # Detlef Steuer <steuer@hsu-hh.de>, 2005-2025.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: R-4.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2026-09-02 17:50-0700\n"
-"PO-Revision-Date: 2025-04-08 17:03+0200\n"
-"Last-Translator: Detlef Steuer <steuer@hsu-hh.de>\n"
+"PO-Revision-Date: 2026-10-26 09:36+0100\n"
+"Last-Translator: Sebastian Meyer <seb.meyer@fau.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -355,9 +356,7 @@ msgid "RNGkind: unimplemented RNG kind %d"
 msgstr "RNGkind: nicht implementierter RNG-Typ %d"
 
 msgid "RNGkind: severe deviations from normality for Kinderman-Ramage + Marsaglia-Multicarry"
-msgstr ""
-"RNGkind: erhebliche Abweichungen von Normalität für Kindermann-Ramage + Marsaglia-\n"
-"Multicarry"
+msgstr "RNGkind: erhebliche Abweichungen von Normalität für Kindermann-Ramage + Marsaglia-Multicarry"
 
 msgid "RNGkind: deviations from normality for Ahrens-Dieter + Marsaglia-Multicarry"
 msgstr "RNGkind: Abweichungen von Normalität für Ahrens-Dieter + Marsaglia-Multicarry"
@@ -588,16 +587,16 @@ msgid ""
 "values must be length %d,\n"
 " but FUN(X[[%lld]]) result is length %d"
 msgstr ""
-"Werte müssen die Länge %d,.haben,\n"
-"Ergebnis von FUN(X[[%lld]]) hat .aber Länge %d"
+"Werte müssen die Länge %d haben,\n"
+"  Ergebnis von FUN(X[[%lld]]) hat aber Länge %d"
 
 #, c-format
 msgid ""
 "values must be type '%s',\n"
 " but FUN(X[[%lld]]) result is type '%s'"
 msgstr ""
-"Werte müssen vom Typ '%s', sein,\n"
-"Ergebnis .von FUN(X[[%lld]]) ist aber Typ '%s'"
+"Werte müssen vom Typ '%s' sein,\n"
+"  Ergebnis von FUN(X[[%lld]]) ist aber Typ '%s'"
 
 #, c-format
 msgid "dimnames(<value>) is neither NULL nor list of length %d"
@@ -630,14 +629,14 @@ msgid ""
 "  Use c() or as.vector() instead."
 msgstr ""
 "Recycling-Array mit Länge 1 in Array-Vektor-Rechnungen ist veraltet.\n"
-" Bitte stattdessen c() oder as.vector() nutzen."
+"  Bitte stattdessen c() oder as.vector() nutzen."
 
 msgid ""
 "Recycling array of length 1 in vector-array arithmetic is deprecated.\n"
 "  Use c() or as.vector() instead."
 msgstr ""
 "Recycling-Array der Länge 1 in Vektor-Array-Rechnungen ist veraltet.\n"
-" Bitte stattdessen c() oder as.vector() nutzen."
+"  Bitte stattdessen c() oder as.vector() nutzen."
 
 msgid "non-conformable arrays"
 msgstr "nicht passende Arrays"
@@ -645,7 +644,7 @@ msgstr "nicht passende Arrays"
 msgid "longer object length is not a multiple of shorter object length"
 msgstr ""
 "Länge des längeren Objektes\n"
-"ist kein Vielfaches der Länge des kürzeren Objektes"
+"  ist kein Vielfaches der Länge des kürzeren Objektes"
 
 msgid "invalid argument to unary operator"
 msgstr "ungültiges Argument für unären Operator"
@@ -718,9 +717,8 @@ msgstr "negative Ausdehnung für ein 3D Array"
 msgid "'alloc3DArray': too many elements specified"
 msgstr "'alloc3DArray': zu viele Elemente angegeben"
 
-#, fuzzy
 msgid "'dim' cannot be of length 0"
-msgstr "'dims' kann nicht Länge 0 haben"
+msgstr "'dim' kann nicht Länge 0 haben"
 
 msgid "the dims contain missing values"
 msgstr "das dims Argument enthält fehlende Werte"
@@ -779,9 +777,8 @@ msgstr "'resize' muss TRUE oder FALSE sein"
 msgid "value out of range in 'perm'"
 msgstr "Wert außerhalb des Bereichs in 'perm'"
 
-#, fuzzy
 msgid "'x' must be numeric or complex"
-msgstr "'x' muss numerisch sein"
+msgstr "'x' muss numerisch oder komplex sein"
 
 msgid "'x' is too short"
 msgstr "'x' ist zu kurz"
@@ -794,7 +791,7 @@ msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
 msgstr "singuläre Matrix in 'backsolve'. Erste Null in Diagonale [%d]"
 
 msgid "attempt to set an attribute on NULL"
-msgstr "Versuch ein Attribut von NULL zu setzen"
+msgstr "Versuch ein Attribut für NULL zu setzen"
 
 #, c-format
 msgid "row names must be 'character' or 'integer', not '%s'"
@@ -804,13 +801,12 @@ msgstr "Zeilennamen müssen 'character' oder 'integer' sein, nicht '%s'"
 msgid "getAttrib: invalid type (%s) for TAG"
 msgstr "getAttrib: ungültiger Typ (%s) für TAG"
 
-#, fuzzy
 msgid "'name' is not a symbol or a scalar string"
-msgstr "'names' ist keine Zeichenkette"
+msgstr "'name' ist weder Symbol noch Zeichenkette"
 
-#, fuzzy, c-format
+#, c-format
 msgid "cannot set an attribute on a '%s'"
-msgstr "kann kein Attribut für ein Symbol setzen"
+msgstr "kann kein Attribut für ein '%s' setzen"
 
 #, c-format
 msgid "invalid type (%s) for 'names': must be vector or NULL"
@@ -823,9 +819,9 @@ msgstr "'names'-Attribut [%lld] muss die gleiche Länge wie der Vektor [%lld] ha
 msgid "names() applied to a non-vector"
 msgstr "names() angewendet auf einen Nicht-Vektor"
 
-#, fuzzy, c-format
+#, c-format
 msgid "invalid time series parameters specified (%d)"
-msgstr "ungültige Zeitreihen Parameter spezifiziert"
+msgstr "ungültige Zeitreihen-Parameter spezifiziert (%d)"
 
 msgid "'tsp' attribute must be numeric"
 msgstr "'tsp' Attribut muss numerisch sein"
@@ -913,9 +909,8 @@ msgstr "ungültiger Typ '%s' für den Slot-Namen"
 msgid "'name' must be non-null character string"
 msgstr "'name' muss eine nicht-null Zeichenkette sein"
 
-#, fuzzy
 msgid "'name' must be a scalar string"
-msgstr "'norm' muss eine Zeichenkette sein"
+msgstr "'name' muss eine Zeichenkette sein"
 
 msgid "invalid type or length for slot name"
 msgstr "ungültiger Typ oder ungültige Länge für den Slot-Namen"
@@ -1104,17 +1099,17 @@ msgstr "Anzahl der Zeichen ist in \"bytes\"-Kodierung nicht berechenbar, %s"
 msgid "width is not computable for %s in \"bytes\" encoding"
 msgstr "Breite ist nicht berechenbar für %s, wenn \"bytes\"-Kodierung benutzt wird\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "invalid multibyte string, element %lld"
-msgstr "ungültige multibyte Zeichenkette, Element %ld"
+msgstr "ungültige multibyte Zeichenkette, Element %lld"
 
-#, fuzzy, c-format
+#, c-format
 msgid "number of characters is not computable in \"bytes\" encoding, element %lld"
-msgstr "Anzahl der Zeichen ist in \"bytes\"-Kodierung nicht berechenbar, Element %ld"
+msgstr "Anzahl der Zeichen ist in \"bytes\"-Kodierung nicht berechenbar, Element %lld"
 
-#, fuzzy, c-format
+#, c-format
 msgid "width is not computable in \"bytes\" encoding, element %lld"
-msgstr "Breite ist nicht berechenbar, wenn \"bytes\"-Kodierung benutzt wird, Element %ld"
+msgstr "Breite ist in \"bytes\"-Kodierung nicht berechenbar, Element %lld"
 
 msgid "extracting substrings from a non-character object"
 msgstr "extrahieren von Teilzeichenketten aus einem nicht-character Objekt"
@@ -1247,9 +1242,8 @@ msgstr "ungültige Argumentenliste"
 msgid "'length = %lld' in coercion to '%s'"
 msgstr "'length(x) = %lld > 1' in forcierter Umwandlung zu '%s'"
 
-#, fuzzy
 msgid "NA in coercion to boolean"
-msgstr "NAs durch Umwandlung in Bereich ganzer Zahlen erzeugt"
+msgstr "NA bei Umwandlung nach boolesch"
 
 msgid "type \"single\" unimplemented in R"
 msgstr "Typ \"single\" nicht in R implementiert"
@@ -1866,9 +1860,8 @@ msgstr "'cummax' für komplexe Zahlen nicht definiert"
 msgid "'cummin' not defined for complex numbers"
 msgstr "'cummin' für komplexe Zahlen nicht definiert"
 
-#, fuzzy
 msgid "'cumvar' not defined for complex numbers"
-msgstr "'cummax' für komplexe Zahlen nicht definiert"
+msgstr "'cumvar' für komplexe Zahlen nicht definiert"
 
 msgid "unknown cumxxx function"
 msgstr "unbekannte cumxxx Funktion"
@@ -2208,7 +2201,7 @@ msgid ""
 " to recover"
 msgstr ""
 "%s in Zeile %d aufgetreten\n"
-" benuzten Sie ein Kommando wie\n"
+" benutzen Sie ein Kommando wie\n"
 " x <- edit()\n"
 " zur Wiederherstellung"
 
@@ -2333,9 +2326,8 @@ msgstr "Fill wird ignoriert (Gerät hängt Pfad an)"
 msgid "FillStroke ignored (device is appending path)"
 msgstr "FillStroke wird ignoriert (Gerät hängt Pfad an)"
 
-#, fuzzy
 msgid "Index out of bounds"
-msgstr "Indizierung außerhalb der Grenzen"
+msgstr "Index außerhalb der Grenzen"
 
 #, c-format
 msgid "cannot change value of locked binding for '%s'"
@@ -2370,9 +2362,8 @@ msgstr "Argument zu '%s' ist keine Umgebung"
 msgid "indexing '...' with non-positive index %d"
 msgstr "Indizieren von '...' mit nicht-positivem Index %d"
 
-#, fuzzy
 msgid "bad ... value"
-msgstr "unbrauchbarer Wert"
+msgstr "unbrauchbarer ... Wert"
 
 #, c-format
 msgid "the ... list contains fewer than %d element"
@@ -2446,7 +2437,7 @@ msgstr "zweites Argument muss eine Umgebung sein"
 
 #, c-format
 msgid "first argument to '%s' must be a symbol"
-msgstr "erstes Argument für '%s'  muss ein Symbol sein"
+msgstr "erstes Argument für '%s' muss ein Symbol sein"
 
 #, c-format
 msgid "second argument to '%s' must be an environment"
@@ -2944,9 +2935,9 @@ msgstr "Bytecodeprofiling läuft nicht"
 msgid "byte code profiling is not supported in this build"
 msgstr "Bytecodeprofiling wird in diesem Binary nicht unterstützt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not of type %s"
-msgstr "'%s' ist kein %s"
+msgstr "'%s' ist nicht vom Typ %s"
 
 #, c-format
 msgid "'%s' events not supported in this device"
@@ -3377,9 +3368,7 @@ msgid "argument 'MoreArgs' of 'mapply' is not a list or pairlist"
 msgstr "Argument 'MoreArgs' von 'mapply' weder Liste noch Paarliste"
 
 msgid "longer argument not a multiple of length of shorter"
-msgstr ""
-"Länge des längeren Objektes\n"
-"\tist kein Vielfaches der Länge des kürzeren Objektes"
+msgstr "Längeres Argument ist kein Vielfaches der Länge des kürzeren"
 
 msgid "invalid partial string match"
 msgstr "ungültige Teilzeichenketten-übereinstimmung"
@@ -4181,7 +4170,7 @@ msgstr "zu wenig positive Wahrscheinlichkeiten"
 msgid "cannot take a sample larger than the population when 'replace = FALSE'"
 msgstr ""
 "kann keine Stichprobe größer als die Grundgesamtheit nehmen,\n"
-" wenn 'replace = FALSE'"
+"  wenn 'replace = FALSE'"
 
 msgid "incorrect number of probabilities"
 msgstr "falsche Anzahl von Wahrscheinlichkeiten"
@@ -4196,8 +4185,8 @@ msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
 msgstr ""
-"Argument sollte Zeichenkette der Länge 1 sein, nur das erste Element\n"
-"wird benutzt"
+"Argument sollte Zeichenkette der Länge 1 sein;\n"
+"  nur das erste Element wird benutzt"
 
 msgid "argument 'x' must be a raw vector"
 msgstr "Argument 'x' muss ein raw-Vektor sein"
@@ -4561,9 +4550,8 @@ msgstr ""
 msgid "%s -- future R's default 'recycle = TRUE' will recycle 'nvec'"
 msgstr ""
 
-#, fuzzy
 msgid "'nvec' must be a vector of non-negative integers"
-msgstr "'lengths' muss ein Vektor nicht-negativer ganzer Zahlen sein"
+msgstr "'nvec' muss ein Vektor nicht-negativer ganzer Zahlen sein"
 
 msgid "'from' contains NAs"
 msgstr "'from' enthält NAs"
@@ -4671,13 +4659,13 @@ msgstr "Lesen fehlgeschlagen"
 msgid "error reading from ascii connection"
 msgstr "Lesefehler aus ASCII-Verbindung"
 
-#, fuzzy, c-format
+#, c-format
 msgid "unexpected format in ascii connection '%s'"
-msgstr "unerwartetes Format aus ASCII-Verbindung"
+msgstr "unerwartetes Format in ASCII-Verbindung '%s'"
 
-#, fuzzy, c-format
+#, c-format
 msgid "error reading from connection '%s'"
-msgstr "Lesefehler aus Verbindung"
+msgstr "Lesefehler aus Verbindung '%s'"
 
 msgid "only ascii format can be written to text mode connections"
 msgstr "nur ASCII kann in Verbindung im Textmodus geschrieben werden"
@@ -4742,16 +4730,16 @@ msgstr "raw vectors können nicht sortiert werden"
 msgid "NA or infinite index"
 msgstr "NA oder unendlicher Index"
 
-#, fuzzy, c-format
+#, c-format
 msgid "'partial' index %lld outside bounds"
-msgstr "Index %lld außerhalb der Grenzen"
+msgstr "'partial' Index %lld außerhalb der Grenzen"
 
 msgid "NA index"
 msgstr "NA Index"
 
-#, fuzzy, c-format
+#, c-format
 msgid "'partial' index %d outside bounds"
-msgstr "Index %d ist außerhalb der Grenzen"
+msgstr "'partial' Index %d außerhalb der Grenzen"
 
 msgid "invalid ties.method for rank() [should never happen]"
 msgstr "ungültige ties.method für rank() [sollte nie vorkommen]"
@@ -6593,1034 +6581,3 @@ msgstr "Warnung: editiere nur das erste in der Dateiliste"
 
 #~ msgid "negative value in 'x'"
 #~ msgstr "negativer Wert in 'x'"
-
-#~ msgid "'jobu' and 'jobv' must be character strings"
-#~ msgstr "'jobu' und 'jobv' müssen Charakterobjekte sein"
-
-#~ msgid ""
-#~ "bad target context--should NEVER happen;\n"
-#~ "please bug.report() [R_run_onexits]"
-#~ msgstr ""
-#~ "unbrauchbarer Zielkontext -- sollte NIE passieren;\n"
-#~ "bitte bug.report() [R_run_onexits]"
-
-#~ msgid "invalid assignment left-hand side"
-#~ msgstr "ungültige linke Seite in Zuweisung"
-
-#, fuzzy
-#~ msgid "\"%s\" is not an existing slot in an object of class \"%s\""
-#~ msgstr "kein Slot des Namens \"%s\" für dieses Objekt der Klasse \"%s\""
-
-#~ msgid "R_CompiledFileName: buffer too small"
-#~ msgstr "R_CompiledFileName: Buffer zu klein"
-
-#~ msgid ".C(..): Width cannot be zero"
-#~ msgstr ".C(..): Breite kann nicht 0 sein"
-
-#~ msgid ".C(..): 'type' must be \"integer\" for  \"d\"-format"
-#~ msgstr ".C(..): 'type' muss für das \"d\"-Format \"integer\" sein"
-
-#~ msgid ".C(..): 'type' must be \"real\" for this format"
-#~ msgstr ".C(..): 'type' muss für dieses Format \"real\" sein"
-
-#~ msgid "bad hsv to rgb color conversion"
-#~ msgstr "unbrauchbarer Konverter hsv -> rgb"
-
-#~ msgid "unknown palette (need >= 2 colors)"
-#~ msgstr "unbekannte Palette (brauche >= 2 Farben)"
-
-#~ msgid "maximum number of colors exceeded"
-#~ msgstr "maximale Anzahl von Farben überschritten"
-
-#~ msgid "invalid RGB specification"
-#~ msgstr "ungültige RGB Spezifikation"
-
-#~ msgid "invalid color name '%s'"
-#~ msgstr "ungültiger Farbname '%s'"
-
-#~ msgid "invalid color specification '%s'"
-#~ msgstr "ungültige Farbspezifikation '%s'"
-
-#~ msgid "supplied color is not numeric nor character"
-#~ msgstr "angegebene Farbe ist weder numeric noch character"
-
-#, fuzzy
-#~ msgid "invalid color specification"
-#~ msgstr "ungültige Farbspezifikation"
-
-#~ msgid "rcont2 [%d,%d]: exp underflow to 0; algorithm failure"
-#~ msgstr "rcont2 [%d,%d]: exp underflow nach 0; Algorithmus versagt"
-
-#~ msgid "no R-to-C converter found corresponding to identifier"
-#~ msgstr "kein R-to-C Konvertierer gefunden, der zum Bezeichner passt"
-
-#~ msgid "invalid USE.NAMES value"
-#~ msgstr "ungültiger USE.NAMES Wert"
-
-#~ msgid "duplicated levels will not be allowed in factors anymore"
-#~ msgstr "doppelt auftretende Faktorstufen werden nicht mehr zulässig sein"
-
-#~ msgid "... used in an incorrect context"
-#~ msgstr "... in falschem Kontext benutzt"
-
-#~ msgid "NAOK used more than once"
-#~ msgstr "NAOK mehr als einmal benutzt"
-
-#~ msgid "PACKAGE used more than once"
-#~ msgstr "PACKAGE mehr als einmal benutzt"
-
-#~ msgid "Invalid graphics state"
-#~ msgstr "ungültiger Grafikzustand"
-
-#~ msgid "invalid mode to pass to Fortran (arg %d)"
-#~ msgstr "ungültiger Modus zur Übergabe nach Fortran (Arg. %d)"
-
-#~ msgid "invalid function in call_R"
-#~ msgstr "ungültiger Funktionsaufruf in call_R"
-
-#~ msgid "invalid argument count in call_R"
-#~ msgstr "ungültige Argumentanzahl in call_R"
-
-#~ msgid "invalid return value count in call_R"
-#~ msgstr "ungültige Zahl von Rückgabewerten in call_R"
-
-#~ msgid "can't use R profiling while byte code profiling"
-#~ msgstr "kann R profiling nicht nutzen während Profiling von Byte-Code läuft"
-
-#~ msgid "bad switch names"
-#~ msgstr "unzulässige switch Namen"
-
-#~ msgid "constBuf must be a generic vector"
-#~ msgstr "constBuf muss ein generischer Vektor sein"
-
-#~ msgid "bad constCount value"
-#~ msgstr "unbrauchbarer Wert für constCount"
-
-#~ msgid "lapack routines cannot be accessed in module"
-#~ msgstr "Lapackroutinen können nicht im Modul angesprochen werden"
-
-#~ msgid "lapack routines cannot be loaded"
-#~ msgstr "lapack Routinen können nicht geladen werden"
-
-#~ msgid "'UseMethod' called from outside a closure"
-#~ msgstr "'UseMethod' außerhalb eines 'closure' aufgerufen"
-
-#~ msgid "invalid `which' in TeX"
-#~ msgstr "ungültiges 'which' in TeX"
-
-#~ msgid "internal error in do_random1"
-#~ msgstr "interner Fehler in do_random1"
-
-#~ msgid "internal error in do_random2"
-#~ msgstr "interner Fehler in do_random2"
-
-#~ msgid "internal error in do_random3"
-#~ msgstr "interner Fehler in do_random3"
-
-#~ msgid "%s%d:%d: %s"
-#~ msgstr "%s%d:%d: %s"
-
-#~ msgid ""
-#~ "%s%d:%d: %s\n"
-#~ "%d: %s\n"
-#~ "%*s"
-#~ msgstr ""
-#~ "%s%d:%d :%s\n"
-#~ "%d: %s\n"
-#~ "%*s"
-
-#~ msgid ""
-#~ "%s%d:%d: %s\n"
-#~ "%d: %s\n"
-#~ "%d: %s\n"
-#~ "%*s"
-#~ msgstr ""
-#~ "%s%d:%d: %s\n"
-#~ "%d: %s\n"
-#~ "%d: %s\n"
-#~ "%*s"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "cannot mkdir R_TempDir"
-#~ msgstr "mkdir R_TempDir geht nicht"
-
-#~ msgid "csduplicated not called on a STRSXP"
-#~ msgstr "csduplicated nicht mit einem STRSXP aufgerufen"
-
-#~ msgid "color intensity %g, not in [0,1]"
-#~ msgstr "Farbintensität %g, nicht in [0,1]"
-
-#~ msgid "color intensity %d, not in 0:255"
-#~ msgstr "Farbintensität %d, nicht in 0:255"
-
-#~ msgid "alpha level %g, not in [0,1]"
-#~ msgstr "Alphalevel %g, nicht in [0,1]"
-
-#~ msgid "alpha level %d, not in 0:255"
-#~ msgstr "Alphalevel %d, nicht in 0:255"
-
-#~ msgid "invalid hsv color"
-#~ msgstr "ungültige hsv Farbe"
-
-#~ msgid "invalid hcl color"
-#~ msgstr "ungültige hcl Farbe"
-
-#~ msgid "invalid 'names' vector"
-#~ msgstr "ungültiger 'names' Vektor"
-
-#~ msgid "invalid gray level, must be in [0,1]."
-#~ msgstr "ungültige Graustufe, muss in [0,1] sein"
-
-#~ msgid "rgb is not a matrix (internally)"
-#~ msgstr "rgb ist keine Matrix (intern)"
-
-#~ msgid "rgb must have 3 rows (internally)"
-#~ msgstr "rgb muss 3 Zeilen haben (intern)"
-
-#~ msgid "invalid bind address specification"
-#~ msgstr "ungültige Adressenspezifikation für bind"
-
-#~ msgid "'outFile' must be a single file"
-#~ msgstr "'outFile' muss genau eine Datei sein"
-
-#~ msgid "unknown type"
-#~ msgstr "unbekannter Typ"
-
-#~ msgid "Menu functions can only be used in the GUI"
-#~ msgstr "Menüfunktionen können nur im GUI genutzt werden"
-
-#~ msgid "unable to retrieve items for %s (%s)"
-#~ msgstr "kann keine Elemente für %s (%s) erhalten"
-
-#~ msgid "unable to add menu (%s)"
-#~ msgstr "kann Menü (%s) nicht hinzufügen"
-
-#~ msgid "unable to add menu item (%s)"
-#~ msgstr "kann Menüpunkt (%s) nicht hinzufügen"
-
-#~ msgid "unable to delete menu item (%s)"
-#~ msgstr "kann Menüpunkt (%s) nicht entfernen"
-
-#~ msgid "'savehistory' can only be used in Rgui and Rterm"
-#~ msgstr "'savehistory' kann nur im Rgui und im Rterm benutzt werden"
-
-#~ msgid "'loadhistory' can only be used in Rgui and Rterm"
-#~ msgstr "'loadhistory' kann nur im Rgui und im Rterm benutzt werden"
-
-#~ msgid "Select one or more"
-#~ msgstr "Wähle eine oder mehrere"
-
-#~ msgid "Select one"
-#~ msgstr "Wähle eine"
-
-#~ msgid "argument must be a character vector or a raw vector"
-#~ msgstr "Argument muss ein Charakter-Vektor oder ein raw Vektor sein"
-
-#~ msgid "'default' must be a character string"
-#~ msgstr "'default' muss eine Zeichenkette sein"
-
-#~ msgid "'default' is overlong"
-#~ msgstr "'default' ist zu lang"
-
-#~ msgid "'caption' must be a character string"
-#~ msgstr "'caption' muss eine Zeichenkette sein"
-
-#~ msgid "'multi' must be a logical value"
-#~ msgstr "'multi' muss ein boolescher Wert sein"
-
-#~ msgid "'filterindex' must be an integer value"
-#~ msgstr "'filterindex' muss ein ganzzahliger Wert sein"
-
-#~ msgid "'title' must be a character string"
-#~ msgstr "'title' muss eine Zeichenkette sein"
-
-#~ msgid "'%s' element %d is not a window handle"
-#~ msgstr "'%s' Element %d ist kein Fenster handle"
-
-#~ msgid "Registry key '%ls' not found"
-#~ msgstr "Registry-Schlüssel '%ls' nicht gefunden"
-
-#~ msgid "string terminated by newline or EOF"
-#~ msgstr "Zeichenkette durch newline oder EOF beendet"
-
-#~ msgid "the first argument must be of mode character"
-#~ msgstr "erstes Argument muss Charakter Mode haben"
-
-#~ msgid "Selection: "
-#~ msgstr "Auswahl: "
-
-#~ msgid "cannot allocate buffer in 'readTableHead'"
-#~ msgstr "kann keinen Zwischenspeicher in 'readTableHead' zuteilen"
-
-#~ msgid "\\ followed by EOF"
-#~ msgstr "\\ gefolgt von EOF"
-
-#~ msgid "incomplete final line found by readTableHeader on '%s'"
-#~ msgstr "unvollständige letzte Zeile von readTableHeader gefunden in '%s'"
-
-#~ msgid "'file' is not a connection"
-#~ msgstr "'file' ist keine Verbindung"
-
-#~ msgid "corrupt data frame -- length of column %d does not not match nrows"
-#~ msgstr "korrupter Data Frame -- Länge der Spalte %d entspricht nicht nrows"
-
-#~ msgid "corrupt matrix -- dims not not match length"
-#~ msgstr "korrupte Matrix -- dims entspricht nicht Länge"
-
-#~ msgid "NA's in .C(\"bincode\",... NAOK=FALSE)"
-#~ msgstr "NAs in .C(\"bincode\",... NAOK=FALSE)"
-
-#~ msgid "NA's in .C(\"bincount\",... NAOK=FALSE)"
-#~ msgstr "NAs in .C(\"bincount\",... NAOK=FALSE)"
-
-#~ msgid "no dyn.load support in this R version"
-#~ msgstr "keine dyn.load Unterstützung in dieser R Version"
-
-#~ msgid "'dim' specifies too large an array"
-#~ msgstr "'dim' spezifiziert ein zu großes Array"
-
-#~ msgid "Event GE_ScalePS requires a single numeric value"
-#~ msgstr "Ereignis GE_ScalePS verlangt einzelnen numerischen Wert"
-
-#~ msgid "vector size cannot be negative"
-#~ msgstr "Vektorgröße kann nicht negativ sein"
-
-#~ msgid "missing value for 'length'"
-#~ msgstr "fehlender Wert für 'length'"
-
-#~ msgid "missing observations in cov/cor"
-#~ msgstr "fehlende Beobachtungen in cov/cor"
-
-#~ msgid "'x' is NULL"
-#~ msgstr "'x' ist NULL"
-
-#~ msgid "no complete element pairs"
-#~ msgstr "keine vollständigen Elementpaare"
-
-#~ msgid "invalid 'use' (computational method)"
-#~ msgstr "ungültiger 'use' (Berechnungsmethode)"
-
-#~ msgid "'x' is empty"
-#~ msgstr "'x' ist leer"
-
-#~ msgid "the standard deviation is zero"
-#~ msgstr "Standardabweichung ist Null"
-
-#~ msgid "invalid form in unary minus check"
-#~ msgstr "ungültige Form in unärem minus Check"
-
-#~ msgid "Function '%s' is not in the derivatives table"
-#~ msgstr "Funktion '%s' ist nicht in der Tabelle der Ableitungen"
-
-#~ msgid "variable must be a character string"
-#~ msgstr "Variable muss eine Zeichenkette sein"
-
-#~ msgid "invalid expression in '%s'"
-#~ msgstr "ungültiger Ausdruck in '%s'"
-
-#~ msgid "invalid variable names"
-#~ msgstr "ungültige Variablennamen"
-
-#~ msgid "invalid tag"
-#~ msgstr "ungültiger tag"
-
-#~ msgid "ENCODING used more than once"
-#~ msgstr "ENCODING mehr als einmal benutzt"
-
-#~ msgid "ENCODING argument must be a single character string"
-#~ msgstr "ENCODING Argument muss eine einfache Zeichenkette sein"
-
-#~ msgid "unsupported encoding '%s'"
-#~ msgstr "nicht unterstützte Kodierung '%s'"
-
-#~ msgid "conversion problem in re-encoding to '%s'"
-#~ msgstr "Konvertierungsproblem bei der Rekodierung nach '%s'"
-
-#~ msgid "fft factorization error"
-#~ msgstr "fft Faktorisierungs-Fehler"
-
-#~ msgid "vector-valued (multivariate) series required"
-#~ msgstr "vektorwertige (multivariate) Reihe verlangt"
-
-#~ msgid "no factors"
-#~ msgstr "keine Faktoren"
-
-#~ msgid "bad units specified in '%s'"
-#~ msgstr "unbrauchbare Einheit in '%s' spezifiziert"
-
-#~ msgid "attempt to plot on null device"
-#~ msgstr "Versuch auf das Nulldevice zu zeichnen"
-
-#~ msgid "outer margins too large (fig.region too small)"
-#~ msgstr "äußere Ränder zu groß (figure region zu klein)"
-
-#~ msgid "figure region too large"
-#~ msgstr "figure region zu groß"
-
-#~ msgid "figure margins too large"
-#~ msgstr "Grafikränder zu groß"
-
-#~ msgid "plot region too large"
-#~ msgstr "plot region zu groß"
-
-#~ msgid "nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"
-#~ msgstr "unendliche Achsengrenzen [GDcale(%g,%g,%d, .); log=%d]"
-
-#~ msgid "axis style \"%c\" unimplemented"
-#~ msgstr "Achsenstil \"%c\" nicht implementiert"
-
-#~ msgid "No graphics device is active"
-#~ msgstr "kein aktives Grafikdevice"
-
-#~ msgid "plot.new has not been called yet"
-#~ msgstr "plot.new wurde noch nicht aufgerufen"
-
-#~ msgid "unable to allocate memory (in GPolygon)"
-#~ msgstr "kann keinen Speicher zuteilen (in GPolygon)"
-
-#~ msgid "zero-length arrow is of indeterminate angle and so skipped"
-#~ msgstr "Pfeil ohne Länge hat keine Richtung und wird ignoriert"
-
-#~ msgid "invalid par(\"bty\") = '%c'; no box() drawn"
-#~ msgstr "ungültiger par(\"bty\") = '%c': keine box() gezeichnet"
-
-#~ msgid "invalid argument to GBox"
-#~ msgstr "ungültiges Argument für GBox"
-
-#~ msgid "Metric information not available for this device"
-#~ msgstr "Metrische Information für dieses Device nicht möglich"
-
-#~ msgid "invalid term in model formula"
-#~ msgstr "ungültiger Term in Modellformel"
-
-#~ msgid "invalid model formula"
-#~ msgstr "ungültige Modellformel"
-
-#~ msgid "invalid power in formula"
-#~ msgstr "ungültige Potenz in Formel"
-
-#~ msgid "invalid model formula in ExtractVars"
-#~ msgstr "ungültige Modellformel in ExtractVars"
-
-#~ msgid "duplicated name '%s' in data frame using '.'"
-#~ msgstr "verdoppelter Name '%s' in Data Frame bei Benutzung von '.'"
-
-#~ msgid "invalid model formula in EncodeVars"
-#~ msgstr "ungültige Modellformel in EncodeVars"
-
-#~ msgid "'specials' must be NULL or a character vector"
-#~ msgstr "'specials' muss NULL oder eine Charaktervektor sein"
-
-#~ msgid "'data' argument is of the wrong type"
-#~ msgstr "Argument 'data' hat falschen Typ"
-
-#~ msgid "'.' in formula and no 'data' argument"
-#~ msgstr "'.' erscheint in der Formel und 'data' Argument ist ungültig"
-
-#~ msgid "invalid formula in 'update'"
-#~ msgstr "ungültige Formel in 'update'"
-
-#~ msgid "formula expected"
-#~ msgstr "Formel wird erwartet"
-
-#~ msgid "invalid variables"
-#~ msgstr "ungültige Variablen"
-
-#~ msgid "number of variables != number of variable names"
-#~ msgstr "Anzahl Variablen und Anzahl Variablennamen sind unterschiedlich"
-
-#~ msgid "invalid extra variables"
-#~ msgstr "ungültige zusätzliche Variablen"
-
-#~ msgid "invalid extra variable names"
-#~ msgstr "ungültige zusätzliche Variablennamen"
-
-#~ msgid "overlong names in '%s'"
-#~ msgstr "überlange Namen in '%s'"
-
-#~ msgid "invalid type (%s) for variable '%s'"
-#~ msgstr "ungültiger Typ (%s) für die Variable '%s'"
-
-#~ msgid "variable lengths differ (found for '%s')"
-#~ msgstr "Variablenlängen sind unterschiedlich (gefunden für '%s')"
-
-#~ msgid "invalid result from na.action"
-#~ msgstr "ungültiges Ergebnis aus na.action"
-
-#~ msgid "invalid model frame"
-#~ msgstr "ungültiger model frame"
-
-#~ msgid "do not know how many cases"
-#~ msgstr "kenne nicht die Anzahl der Fälle"
-
-#~ msgid "variable lengths differ (found for variable %d)"
-#~ msgstr "Variablenlängen sind unterschiedlich (gefunden für Variable %d)"
-
-#~ msgid "variable %d has no levels"
-#~ msgstr "Variable %d hat keine Levels"
-
-#~ msgid "the response appeared on the right-hand side and was dropped"
-#~ msgstr "Antwortvariable erschien auf der rechten Seite und wurde verworfen"
-
-#~ msgid "term %d would require %.0g columns"
-#~ msgstr "Term %d würde %.0g Spalten benötigen"
-
-#~ msgid "matrix would require %.0g columns"
-#~ msgstr "Matrix würde %.0g Spalten benötigen"
-
-#~ msgid "problem with term %d in model.matrix: no columns are assigned"
-#~ msgstr "Problem mit dem Term %d in model.matrix: keine Spalten zugewiesen"
-
-#~ msgid "term names will be truncated"
-#~ msgstr "Term-Namen werden abgeschnitten"
-
-#~ msgid "complex variables are not currently allowed in model matrices"
-#~ msgstr "Komplexe Variablen sind momentan in Modellmatrizen nicht erlaubt"
-
-#~ msgid "variables of type '%s' are not allowed in model matrices"
-#~ msgstr "Variablen des Typs '%s' sind in Modellmatrizen nicht erlaubt"
-
-#~ msgid "'R_get_primname' called on a non-primitive"
-#~ msgstr "'R_get_primname' für ein non-primitive aufgerufen"
-
-#~ msgid "objective function in optim evaluates to length %d not 1"
-#~ msgstr "Zielfunktion gibt Ergebnis der Länge %d zurück, nicht Länge 1"
-
-#~ msgid "gradient in optim evaluated to length %d not %d"
-#~ msgstr "Gradient in optim gibt Ergebnis der Länge %d zurück, nicht Länge %d"
-
-#~ msgid "'fn' is not a function"
-#~ msgstr "'fn' ist keine Funktion"
-
-#~ msgid "'parscale' is of the wrong length"
-#~ msgstr "'parscale' hat falsche Länge"
-
-#~ msgid "'gr' is not a function"
-#~ msgstr "'gr' ist keine Funktion"
-
-#~ msgid "'ndeps' is of the wrong length"
-#~ msgstr "'ndeps' hat falsche Länge"
-
-#~ msgid "unknown 'method'"
-#~ msgstr "unbekannte 'method'"
-
-#~ msgid "NA replaced by maximum positive value"
-#~ msgstr "NA durch größte positive Zahl ersetzt"
-
-#~ msgid "NA/Inf replaced by maximum positive value"
-#~ msgstr "NA/Inf durch größte positive Zahl ersetzt"
-
-#~ msgid "invalid function value in 'optimize'"
-#~ msgstr "ungültiger Funktionswert in 'optimize'"
-
-#~ msgid "attempt to minimize non-function"
-#~ msgstr "Versuch etwas anderes als eine Funktion zu minimieren"
-
-#~ msgid "'xmin' not less than 'xmax'"
-#~ msgstr "'xmin' ist nicht kleiner als 'xmax'"
-
-#~ msgid "-Inf replaced by maximally negative value"
-#~ msgstr "-Inf durch maximal negative Zahl ersetzt"
-
-#~ msgid "invalid function value in 'zeroin'"
-#~ msgstr "ungültiger Funktionswert in 'zeroin'"
-
-#~ msgid "NA value for '%s' is not allowed"
-#~ msgstr "NA Wert für '%s' nicht erlaubt"
-
-#~ msgid "non-finite value supplied by 'nlm'"
-#~ msgstr "nicht-endlicher Wert von 'nlm' angegeben"
-
-#~ msgid "invalid function value in 'nlm' optimizer"
-#~ msgstr "ungültiger Funktionswert in 'nlm' Optimierung"
-
-#~ msgid "function value caching for optimization is seriously confused"
-#~ msgstr "Funktionswertzwischenspeicher für die Optimierung ernsthaft durcheinander"
-
-#~ msgid "numeric parameter expected"
-#~ msgstr "numerischer Parameter erwartet"
-
-#~ msgid "conflicting parameter lengths"
-#~ msgstr "Parameter Längen passen nicht"
-
-#~ msgid "missing value in parameter"
-#~ msgstr "fehlender Wert in Parameter"
-
-#~ msgid "invalid parameter type"
-#~ msgstr "ungültiger Parametertyp"
-
-#~ msgid "invalid NA value in parameter"
-#~ msgstr "ungültige NA Wert in Parameter"
-
-#~ msgid "non-positive number of parameters in nlm"
-#~ msgstr "nicht-positive Zahl von Parametern in nlm"
-
-#~ msgid "nlm is inefficient for 1-d problems"
-#~ msgstr "nlm ist für 1-d Probleme ineffizient"
-
-#~ msgid "invalid gradient tolerance in nlm"
-#~ msgstr "ungültige Gradiententoleranz in nlm"
-
-#~ msgid "invalid iteration limit in nlm"
-#~ msgstr "ungültiges Iterationslimit in nlm"
-
-#~ msgid "minimization function has no good digits in nlm"
-#~ msgstr "Minimierungsfunktion hat keine guten Dezimalen in nlm"
-
-#~ msgid "no analytic gradient to check in nlm!"
-#~ msgstr "kein analytischer Gradient zur Überprüfung in nlm"
-
-#~ msgid "no analytic Hessian to check in nlm!"
-#~ msgstr "keine analytische Hessematrix zur Überprüfung in nlm"
-
-#~ msgid "probable coding error in analytic gradient"
-#~ msgstr "wahrscheinlicher Programmierfehler im analytischen Gradienten"
-
-#~ msgid "probable coding error in analytic Hessian"
-#~ msgstr "wahrscheinlicher Programmierfehler in analytischer Hessematrix"
-
-#~ msgid ""
-#~ "*** unknown error message (msg = %d) in nlm()\n"
-#~ "*** should not happen!"
-#~ msgstr ""
-#~ "*** unbekannte Fehlermeldung (msg = %d) in nlm()\n"
-#~ "*** sollte nicht passieren!"
-
-#~ msgid "Relative gradient close to zero.\n"
-#~ msgstr "Relativer Gradient nahe Null.\n"
-
-#~ msgid "Current iterate is probably solution.\n"
-#~ msgstr "Aktuelle Iteration ist wahrscheinlich Lösung.\n"
-
-#~ msgid "Successive iterates within tolerance.\n"
-#~ msgstr "Aufeinanderfolgende Iterationen innerhalb der Toleranz.\n"
-
-#~ msgid "Last global step failed to locate a point lower than x.\n"
-#~ msgstr "Letzter globaler Schritt fand keinen Punkt unterhalb x.\n"
-
-#~ msgid ""
-#~ "Either x is an approximate local minimum of the function,\n"
-#~ "the function is too non-linear for this algorithm,\n"
-#~ "or steptol is too large.\n"
-#~ msgstr ""
-#~ "Entweder ist x angenähertes lokales Minimum der Funktion,\n"
-#~ "die Funktion ist zu nichtlinear für diesen Algorithmus\n"
-#~ "oder steptol ist zu groß.\n"
-
-#~ msgid "Iteration limit exceeded.  Algorithm failed.\n"
-#~ msgstr "Iterationslimit überschritten. Algorithmus fehlgeschlagen.\n"
-
-#~ msgid ""
-#~ "Maximum step size exceeded 5 consecutive times.\n"
-#~ "Either the function is unbounded below,\n"
-#~ "becomes asymptotic to a finite value\n"
-#~ "from above in some direction,\n"
-#~ "or stepmx is too small.\n"
-#~ msgstr ""
-#~ "Maximale Schrittgröße fünf Mal nacheinander überschritten.\n"
-#~ "Entweder ist die Funktion nicht nach unten beschränkt,\n"
-#~ "nähert sich asymptotisch einem endlichen Wert\n"
-#~ "von oben in eine Richtung an\n"
-#~ "oder stepmx ist zu klein.\n"
-
-#~ msgid "hessian supplied is of the wrong length or mode, so ignored"
-#~ msgstr "angegebene Hessematrix hat falsche Länge oder falschen Modus und wird deshalb ignoriert"
-
-#~ msgid "gradient supplied is of the wrong length or mode, so ignored"
-#~ msgstr "angegebener Gradient hat falsche Länge oder falschen Modus und wird deshalb ignoriert"
-
-#~ msgid "invalid value specified for graphical parameter \"%s\""
-#~ msgstr "ungültiger Wert für den Grafikparameter \"%s\" spezifiziert"
-
-#~ msgid "graphical parameter \"%s\" has the wrong length"
-#~ msgstr "Grafikparameter \"%s\" hat falsche Länge"
-
-#~ msgid "graphical parameter \"%s\" cannot be set"
-#~ msgstr "Grafikparameter \"%s\" kann nicht gesetzt werden"
-
-#~ msgid "graphical parameter 'family' has a maximum length of 200 bytes"
-#~ msgstr "Grafikparameter 'family' hat eine maximale Länge von 200 bytes"
-
-#~ msgid "parameter \"mfg\" has the wrong length"
-#~ msgstr "Parameter \"mfg\" hat falsche Länge"
-
-#~ msgid "parameter \"j\" in \"mfg\" is out of range"
-#~ msgstr "Parameter \"j\" in \"mfg\" ist außerhalb des zulässigen Bereiches"
-
-#~ msgid "value of nr in \"mfg\" is wrong and will be ignored"
-#~ msgstr "Wert für nr in \"mfg\" ist falsch und wird ignoriert"
-
-#~ msgid "value of nc in \"mfg\" is wrong and will be ignored"
-#~ msgstr "Wert für nc in \"mfg\" ist falsch und wird ignoriert"
-
-#~ msgid "calling par(new=TRUE) with no plot"
-#~ msgstr "par(new) ohne Plot aufgerufen"
-
-#~ msgid "graphical parameter \"%s\" is obsolete"
-#~ msgstr "Grafikparameter \"%s\" ist veraltet"
-
-#~ msgid "invalid argument passed to par()"
-#~ msgstr "ungültiges Argument an par() übergeben"
-
-#~ msgid "too many rows in layout, limit %d"
-#~ msgstr "zu viele Zeilen in layout, höchstens %d zulässig"
-
-#~ msgid "too many columns in layout, limit %d"
-#~ msgstr "zu viele Spalten in layout, höchstens %d zulässig"
-
-#~ msgid "too many cells in layout, limit %d"
-#~ msgstr "zu viele Zellen in layout, höchstens %d zulässig"
-
-#~ msgid "only NA allowed in logical plotting symbol"
-#~ msgstr "nur NA ist als logisches Symbol zum Plotten erlaubt"
-
-#~ msgid "invalid plotting symbol"
-#~ msgstr "ungültiges Plotsymbol"
-
-#~ msgid "invalid 'vfont' value [typeface]"
-#~ msgstr "ungültiger Wert für 'vfont' [typeface]"
-
-#~ msgid "invalid 'vfont' value [typeface = %d, fontindex = %d]"
-#~ msgstr "ungültiger Wert für 'vfont' [typeface = %d, fontindex =%d]"
-
-#~ msgid "invalid graphics parameter"
-#~ msgstr "ungültiger Grafikparameter"
-
-#~ msgid "at least 3 arguments required"
-#~ msgstr "mindestens 3 Argumente nötig"
-
-#~ msgid "\"log=\" specification must be character"
-#~ msgstr "\"log=\" Spezifikation muss ein Charakter sein"
-
-#~ msgid "invalid \"log=%s\" specification"
-#~ msgstr "ungültige \"log=%s\" Spezifikation"
-
-#~ msgid "NAs not allowed in 'xlim'"
-#~ msgstr "NAs in 'xlim' nicht erlaubt"
-
-#~ msgid "need finite 'xlim' values"
-#~ msgstr "endliche 'xlim' Werte nötig"
-
-#~ msgid "NAs not allowed in 'ylim'"
-#~ msgstr "NAs in 'ylim' nicht erlaubt"
-
-#~ msgid "need finite 'ylim' values"
-#~ msgstr "endliche 'ylim' Werte nötig"
-
-#~ msgid "Logarithmic axis must have positive limits"
-#~ msgstr "logarithmische Achse muss positive Grenzen haben"
-
-#~ msgid "invalid type for axis labels"
-#~ msgstr "ungültiger Typ für die Achsen-Label"
-
-#~ msgid "invalid axis number %d"
-#~ msgstr "ungültige Achsnummer %d"
-
-#~ msgid "zero length 'padj' specified"
-#~ msgstr "'padj' mit Länge 0 angegeben"
-
-#~ msgid "'labels' is supplied and not 'at'"
-#~ msgstr "'labels' ist angegeben und nicht 'at'"
-
-#~ msgid "'at' and 'labels' lengths differ, %d != %d"
-#~ msgstr "Länge von 'at' und 'labels' unterschiedlich, %d != %d"
-
-#~ msgid "no locations are finite"
-#~ msgstr "keine endlichen Positionen"
-
-#~ msgid "invalid plotting structure"
-#~ msgstr "ungültige Plotstruktur"
-
-#~ msgid "'x' and 'y' lengths differ in %s()"
-#~ msgstr "Längen von 'x' und 'y' sind unterschiedlich in %s()"
-
-#~ msgid "plot type '%s' will be truncated to first character"
-#~ msgstr "Plottyp '%s' wird nach dem ersten Buchstaben abgeschnitten"
-
-#~ msgid "invalid plot type"
-#~ msgstr "ungültiger Plottyp"
-
-#~ msgid "invalid plot type '%c'"
-#~ msgstr "ungültiger Plottyp in '%c'"
-
-#~ msgid "invalid third argument"
-#~ msgstr "ungültiges drittes Argument"
-
-#~ msgid "invalid fourth argument"
-#~ msgstr "ungültiges viertes Argument"
-
-#~ msgid "cannot mix zero-length and non-zero-length coordinates"
-#~ msgstr "kann keine Koordinaten mit Länge 0 und Länge ungleich 0 mischen"
-
-#~ msgid "unable to allocate memory (in GPath)"
-#~ msgstr "kann keinen Speicher zuteilen (in GPath)"
-
-#~ msgid "invalid x or y (in GPath)"
-#~ msgstr "unzulässiges x oder y (in GPath)"
-
-#~ msgid "invalid arrow head length"
-#~ msgstr "ungültige Pfeilspitzenlänge"
-
-#~ msgid "invalid arrow head angle"
-#~ msgstr "ungültiger Pfeilspitzenwinkel"
-
-#~ msgid "invalid arrow head specification"
-#~ msgstr "ungültige Pfeilsitzenspezifikation"
-
-#~ msgid "zero length 'labels'"
-#~ msgstr "'labels' mit Länge 0"
-
-#~ msgid "no coordinates were supplied"
-#~ msgstr "keine Koordinaten angegeben"
-
-#~ msgid "zero length 'text' specified"
-#~ msgstr "'text' mit Länge 0 angegeben"
-
-#~ msgid "zero length 'side' specified"
-#~ msgstr "'side' mit Länge 0 angegeben"
-
-#~ msgid "zero length 'line' specified"
-#~ msgstr "'line' mit Länge 0 angegeben"
-
-#~ msgid "zero length 'outer' specified"
-#~ msgstr "'outer' mit Länge 0 angegeben"
-
-#~ msgid "zero length 'at' specified"
-#~ msgstr "'at' mit Länge 0 angegeben"
-
-#~ msgid "zero length 'adj' specified"
-#~ msgstr "'adj' mit Länge 0 angegeben"
-
-#~ msgid "zero length 'cex' specified"
-#~ msgstr "'cex' mit Länge 0 angegeben"
-
-#~ msgid "zero length 'col' specified"
-#~ msgstr "'col' mit Länge 0 angegeben"
-
-#~ msgid "zero length 'font' specified"
-#~ msgstr "'font' mit Länge 0 angegeben"
-
-#~ msgid "invalid a=, b= specification"
-#~ msgstr "ungültige a=, b= Angabe"
-
-#~ msgid "invalid number of points in locator()"
-#~ msgstr "ungültige Anzahl von Punkten in locator()"
-
-#~ msgid "invalid number of points in identify()"
-#~ msgstr "ungültige Anzahl von Punkten in identify()"
-
-#~ msgid "incorrect argument type"
-#~ msgstr "falscher Argumenttyp"
-
-#~ msgid "different argument lengths"
-#~ msgstr "unterschiedliche Argumentlängen"
-
-#~ msgid "more 'labels' than points"
-#~ msgstr "mehr 'labels' als Punkte"
-
-#~ msgid "warning: no point within %.2f inches\n"
-#~ msgstr "Warnung: kein Punkt mit %.2f inches\n"
-
-#~ msgid "warning: nearest point already identified\n"
-#~ msgstr "Warnung: nächster Punkt bereits identifiziert\n"
-
-#~ msgid "invalid units"
-#~ msgstr "ungültige Einheiten"
-
-#~ msgid "invalid dendrogram input"
-#~ msgstr "ungültige Eingabe für Dendrogramm"
-
-#~ msgid "invalid symbol parameter vector"
-#~ msgstr "ungültiger Symbolparametervektor"
-
-#~ msgid "invalid symbol coordinates"
-#~ msgstr "ungültige Symbolkoordinaten"
-
-#~ msgid "x/y/parameter length mismatch"
-#~ msgstr "x/y/Parameter haben unterschiedliche Längen"
-
-#~ msgid "invalid circles data"
-#~ msgstr "ungültige Daten für Kreise"
-
-#~ msgid "invalid squares data"
-#~ msgstr "ungültige Daten für Quadrate"
-
-#~ msgid "invalid rectangles data (need 2 columns)"
-#~ msgstr "ungültige Daten für Rechtecke (zwei Spalten nötig)"
-
-#~ msgid "invalid stars data"
-#~ msgstr "ungültige Daten für Sterne"
-
-#~ msgid "invalid thermometers data (need 3 or 4 columns)"
-#~ msgstr "ungültige Daten für Thermometer (3 oder 4 Spalten nötig)"
-
-#~ msgid "invalid thermometers[,%s]"
-#~ msgstr "ungültige Thermometer[,%s]"
-
-#~ msgid "thermometers[,%s] not in [0,1] -- may look funny"
-#~ msgstr "Thermometer[,%s] nicht in [0,1] -- sieht evtl. lustig aus"
-
-#~ msgid "invalid thermometers[,1:2]"
-#~ msgstr "ungültige Thermometer[,1:2]"
-
-#~ msgid "invalid boxplots data (need 5 columns)"
-#~ msgstr "ungültige Daten für boxplot (5 Spalten nötig)"
-
-#~ msgid "boxplots[,5] outside [0,1] -- may look funny"
-#~ msgstr "boxplots[,5] außerhalb von [0,1] -- sieht evtl. lustig aus"
-
-#~ msgid "invalid boxplots[, 1:4]"
-#~ msgstr "ungültige boxplots[, 1:4]"
-
-#~ msgid "incorrect length for '%s' argument"
-#~ msgstr "falsche Länge für das '%s' Argument"
-
-#~ msgid "unable to allocate memory (in do_xspline)"
-#~ msgstr "kann keinen Speicher zuteilen (in do_xspline)"
-
-#~ msgid "insufficient 'x' or 'y' values"
-#~ msgstr "zu wenig 'x' oder 'y' Werte"
-
-#~ msgid "dimension mismatch"
-#~ msgstr "Dimensionen passen nicht"
-
-#~ msgid "no contour values"
-#~ msgstr "keine Konturwerte"
-
-#~ msgid "missing 'x' values"
-#~ msgstr "fehlende 'x' Werte"
-
-#~ msgid "increasing 'x' values expected"
-#~ msgstr "'x' Werte aufsteigend erwartet"
-
-#~ msgid "missing 'y' values"
-#~ msgstr "fehlende 'y' Werte"
-
-#~ msgid "increasing 'y' values expected"
-#~ msgstr "'y' Werte aufsteigend erwartet"
-
-#~ msgid "invalid NA contour values"
-#~ msgstr "ungültige NA Werte für Kontur"
-
-#~ msgid "invalid x / y values or limits"
-#~ msgstr "ungültige x / y Werte oder Grenzen"
-
-#~ msgid "invalid contour levels: must be strictly increasing"
-#~ msgstr "ungültige Konturwerte: müssen streng monoton ansteigen"
-
-#~ msgid "Axis orientation not calculated"
-#~ msgstr "Achsenorientierung nicht berechnet"
-
-#~ msgid "too few parameters"
-#~ msgstr "zu wenig Parameter "
-
-#~ msgid "invalid 'x' limits"
-#~ msgstr "ungültige Grenzen für 'x'"
-
-#~ msgid "invalid 'z' limits"
-#~ msgstr "ungültige Grenzen für 'z'"
-
-#~ msgid "'xlab' must be a character vector of length 1"
-#~ msgstr "'xlab' muss ein Charktervektor der Länge 1 sein"
-
-#~ msgid "'ylab' must be a character vector of length 1"
-#~ msgstr "'ylab' muss ein Charktervektor der Länge 1 sein"
-
-#~ msgid "'zlab' must be a character vector of length 1"
-#~ msgstr "'zlab' muss ein Charktervektor der Länge 1 sein"
-
-#~ msgid "invalid viewing parameters"
-#~ msgstr "ungültige Parameter für Ansicht"
-
-#~ msgid "invalid first argument 'n'"
-#~ msgstr "ungültiges erstes Argument 'n'"
-
-#~ msgid "character vector element does not have type CHARSXP"
-#~ msgstr "Element eines Charaktervektors ist nicht vom Typ CHARSXP"
-
-#~ msgid "no input has determined the number of cases"
-#~ msgstr "Anzahl der Fälle durch keine Eingabe festgelegt"
-
-#~ msgid "not all arguments have the same length"
-#~ msgstr "nicht alle Argumente haben gleiche Länge"
-
-#~ msgid "non-numeric matrix in rowsum(): this cannot happen"
-#~ msgstr "nicht-numerische Matrix in rowsum(): dies kann nicht passieren"
-
-#~ msgid "'method' must be a character string"
-#~ msgstr "'method' muss Zeichenkette sein"
-
-#~ msgid "the '%*' constructed 'fmt2' length exceeds maximum of %d"
-#~ msgstr "die mit '%*' konstruierte 'fmt2' Länge überschreitet das Maximum %d"
-
-#~ msgid "lists must be duplicated in .C"
-#~ msgstr "Listen müssen in .C dubliziert werden"
-
-#~ msgid "conversion problem in re-encoding from '%s'"
-#~ msgstr "Konvertierungsproblem bei der Rekodierung von '%s'"
-
-#~ msgid "cannot mix 0-length vectors with others"
-#~ msgstr "kann keine Vektoren mit 0-Länge mit anderen mischen"
-
-#~ msgid "this version of R cannot write byte code objects"
-#~ msgstr "diese R Version kann keine Bytecodeobjekte schreiben"
-
-#~ msgid "this version of R cannot read byte code objects"
-#~ msgstr "diese R Version kann keine Bytecodeobjekte lesen"
-
-#~ msgid "binary format is deprecated; using xdr instead"
-#~ msgstr "binäres Format ist veraltet; nutze stattdessen xdr"
-
-#~ msgid "string marked as \"bytes\" found, so using useBytes = TRUE"
-#~ msgstr "Zeichenkette markiert, da \"bytes\" gefunden, also wird useBytes = TRUE benutzt"
-
-#~ msgid "no locator capability in device driver"
-#~ msgstr "Treiber dieses Devices hat keine Möglichkeit locator zu nutzen"
-
-#~ msgid ""
-#~ "invalid body argument for \"function\"\n"
-#~ "Should NEVER happen; please bug.report() [mkCLOSXP]"
-#~ msgstr ""
-#~ "ungültiges body Argument für \"function\"\n"
-#~ "Sollte NIE passieren: bitte bug.report()! [mkCLOSXP]"
-
-#~ msgid "vector: zero-length 'type' argument"
-#~ msgstr "Vektor: Argument 'type' der Länge 0"
-
-#~ msgid "function is too long to keep source (at line %d)"
-#~ msgstr "Funktion ist zu lang, um die Quellen zu behalten (Zeile %d)"
-
-#~ msgid "functions nested too deeply in source code at line %d"
-#~ msgstr "Funktionen im Quelltext zu tief verschachtelt (Zeile %d)"
-
-#~ msgid "can only handle simple real vectors"
-#~ msgstr "kann nur einfache reelle Vektoren behandeln"
-
-#~ msgid "not a simple matrix"
-#~ msgstr "keine einfache Matrix"
-
-#~ msgid "proc.time() is not implemented on this system"
-#~ msgstr "proc.time() ist auf diesem System nicht implementiert"
-
-#~ msgid "setTimelimit() is not implemented on this system"
-#~ msgstr "setTimelimit() ist auf diesem System nicht implementiert"
-
-#~ msgid "setSessionTimelimit() is not implemented on this system"
-#~ msgstr "setSessionTimelimit() ist auf diesem System nicht implementiert"
-
-#~ msgid "type=\"cairo\" is not supported on this build -- using \"Xlib\""
-#~ msgstr "type=\"cairo\" in diesem Build nicht unterstützt -- nutze \"Xlib\""
-
-#~ msgid "invalid string argument"
-#~ msgstr "ungültiges Zeichenkettenargument"
-
-#~ msgid "unimplemented cairo-based device"
-#~ msgstr "nicht implementiertes, cairo-basiertes Device"
-
-#~ msgid "unable to start device '%s'"
-#~ msgstr "kann Device '%s' nicht starten"
-
-#~ msgid "cairo-based devices are not supported on this build"
-#~ msgstr "cairo-basierte Devices sind auf dieser Plattform nicht unterstützt"
