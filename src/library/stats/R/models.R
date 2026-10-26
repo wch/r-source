@@ -217,85 +217,56 @@ reformulate <- function (termlabels, response=NULL, intercept = TRUE, env = pare
     formula(fexpr, env)
 }
 
-drop.terms <- function(termobj, dropx = NULL, keep.response = FALSE)
+.subsetTerms <- function (x, i, keep.response)
 {
-    if (!length(dropx))
-	if(keep.response) termobj else delete.response(termobj)
-    else {
-        if(!inherits(termobj, "terms"))
-            stop(gettextf("'termobj' must be a object of class %s",
-                          dQuote("terms")),
-                 domain = NA)
-	response <- attr(termobj, "response")
-	newformula <- attr(termobj, "term.labels")[-dropx]
-	if (!is.null(off <- attr(termobj, "offset")))
-	    newformula <- c(newformula,
-			    as.character(attr(termobj, "variables")[off + 1L]))
-	newformula <-
-	    reformulate(newformula,
-			response = if(response && keep.response) termobj[[2L]],
-			intercept = attr(termobj, "intercept"),
-			env = environment(termobj))
-	result <- terms(newformula, specials=names(attr(termobj, "specials")))
-
-	# Edit the optional attributes
-	dropOpt <- if(response && !keep.response) # we have a response in termobj, but not in the result
-		       c(response, dropx + length(response))
-		   else
-		       dropx + max(response)
-
-	if (!is.null(predvars <- attr(termobj, "predvars"))) {
-	    # predvars is a language expression giving a list of
-	    # values corresponding to terms in the model
-            # so add 1 for the name "list"
-	    attr(result, "predvars") <- predvars[-(dropOpt+1)]
-	}
-	if (!is.null(dataClasses <- attr(termobj, "dataClasses"))) {
-	    # dataClasses is a character vector of
-	    # values corresponding to terms in the model
-	    attr(result, "dataClasses") <- dataClasses[-dropOpt]
-	}
-	result
+    tl <- attr(x, "term.labels")[i]
+    if (!is.null(offset <- attr(x, "offset")))
+        tl <- c(tl, as.character(attr(x, "variables")[1L + offset]))
+    rf <- reformulate(tl,
+                      if (keep.response && attr(x, "response")) x[[2L]],
+                      attr(x, "intercept"), environment(x))
+    ans <- terms(rf, specials = names(attr(x, "specials")))
+    predvars <- attr(x, "predvars")
+    dataClasses <- attr(x, "dataClasses")
+    if (!is.null(predvars) || !is.null(dataClasses)) {
+        ## These optional attributes align with 'variables', *not* with
+        ## 'term.labels' in general (e.g., when there are interactions
+        ## or offsets), so we must index with 'j' as defined here, *not*
+        ## with 'i'.
+        variables <- attr(x, "variables")
+        j <- match(as.character(attr(ans, "variables")[-1L]),
+                   as.character(variables[-1L]))
+        if (!is.null(predvars))
+            attr(ans, "predvars") <- predvars[c(1L, 1L + j)]
+        if (!is.null(dataClasses)) {
+            if ((nd <- length(dataClasses)) >= (nv <- length(variables)))
+                j <- c(j, nv:nd) # for "(weights)", "(offset)", ...
+            attr(ans, "dataClasses") <- dataClasses[j]
+        }
     }
+    ans
 }
 
+drop.terms <- function (termobj, dropx = NULL, keep.response = FALSE)
+{
+    if (!inherits(termobj, "terms"))
+        stop(gettextf("'%s' must be an object of class \"%s\"",
+                      "termobj", "terms"),
+             domain = NA)
+    if (!is.null(dropx) && !is.numeric(dropx))
+        stop(gettextf("'%s' must be numeric or NULL",
+                      "dropx"),
+             domain = NA)
+    if (!is.null(dropx) && any(dropx <- as.integer(dropx)))
+        .subsetTerms(termobj, -dropx, keep.response = keep.response)
+    else if (keep.response)
+        termobj
+    else delete.response(termobj)
+}
 
 `[.terms` <- function (termobj, i)
 {
-    resp <- if (attr(termobj, "response")) termobj[[2L]]
-    newformula <- attr(termobj, "term.labels")[i]
-    if (!is.null(off <- attr(termobj, "offset")))
-	newformula <- c(newformula,
-			as.character(attr(termobj, "variables")[off + 1L]))
-    if (length(newformula) == 0L) newformula <- "1"
-    newformula <- reformulate(newformula, resp, attr(termobj, "intercept"), environment(termobj))
-    result <- terms(newformula, specials = names(attr(termobj, "specials")))
-
-    # Edit the optional attributes
-
-    addindex <- function(index, offset)
-        # add a non-negative offset to a possibly negative index
-    	ifelse(index < 0, index - offset,
-    	       ifelse(index == 0, 0, index + offset))
-
-    if (is.logical(i))
-    	i <- which(rep_len(i, length.out = length(attr(termobj, "term.labels"))))
-
-    response <- attr(termobj, "response")
-    if (response)
-	iOpt <- c(if (max(i) > 0) response, # inclusive indexing
-	          addindex(i, max(response)))
-    else
-	iOpt <- i
-
-    if (!is.null(predvars <- attr(termobj, "predvars")))
-	attr(result, "predvars") <- predvars[c(if (max(iOpt) > 0) 1,
-	                                     addindex(iOpt, 1))]
-
-    if (!is.null(dataClasses <- attr(termobj, "dataClasses")))
-	attr(result, "dataClasses") <- dataClasses[iOpt]
-
-    result
+    .subsetTerms(termobj, i, keep.response = TRUE)
 }
 
 

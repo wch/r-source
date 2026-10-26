@@ -400,6 +400,13 @@
       integer to double.  It also replaced \code{NULL} components of
       \code{specials} with \code{logical(0L)}.
 
+      \item When interaction terms or offsets were present,
+      \code{drop.terms} and \code{[.terms} could return a \code{terms}
+      object with invalid \code{predvars} and \code{dataClasses}
+      attributes.  One consequence was that \code{x[-j]} and
+      \code{x[seq_len(n)[-j]]} could differ for objects \code{x} with
+      \code{n} terms and indices \code{j} in \code{seq_len(n)}.
+
       \item \code{unzip(., unzip = "internal")} no longer leaks the zip
       handle on error, thanks to \I{Kevin Ushey}, see \PR{19233}
     }

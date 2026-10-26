@@ -4223,6 +4223,31 @@ unlink(zipfile)
 ## n2 - n1 was 50 in R <= 4.6.2
 
 
+## 'drop.terms' and '[.terms' mishandled the optional attributes
+## 'predvars' and 'dataClasses' from terms(model.frame.default(...))
+t1 <- terms(lm(y ~ offset(a) + x1 * x2 + x3 + offset(b),
+               data.frame(y=0, a=0, x1=0, x2=0, x3=0, b=0),
+               weights = 1, offset = 1))
+str(t1, vec.len = 8L) # terms are x1, x2, x3, x1:x2
+t0a <- drop.terms(t1, c(3L, 4L), keep.response = TRUE) # drop x3, x1:x2
+t0b <- t1[ c(1L, 2L)] # should be equivalent
+t0c <- t1[-c(3L, 4L)] # ditto
+v0 <- quote(list(y, x1, x2, offset(a), offset(b)))
+stopifnot(identical(attr(t0a,   "variables"), v0),
+          identical(attr(t0a, "term.labels"), c("x1", "x2")),
+          identical(attr(t0a,    "predvars"), v0), # was FALSE, had:
+          ##   predvars=quote(list(y, offset(a), x1, offset(b)))
+          identical(attr(t0a, "dataClasses") |> names(),
+                    c(as.character(attr(t0a, "predvars")[-1L]),
+                      "(weights)", "(offset)")),
+          identical(t0b, t0a), # was FALSE, had:
+          ##   predvars=quote(list(y, offset(a), x1))
+          ## *and*
+          ##   names(dataClasses)=as.character(predvars[-1L])
+          ## *losing* "(weights)", "(offset)"
+          identical(t0c, t0a))
+## in R <= 4.6.2
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
