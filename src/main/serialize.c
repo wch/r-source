@@ -2009,7 +2009,10 @@ static SEXP ReadItem_Recursive (int flags, SEXP ref_table, R_inpstream_t stream)
 	    {
 		/* These are all short strings */
 		length = InInteger(stream);
-		if (length < 0)
+		/* Primitive names come from R_FunTab.  An implausible
+		   length from the stream must not become a large
+		   stack allocation. */
+		if (length < 0 || length > 255)
 		    error(_("invalid length"));
 		R_CheckStack2(length+1);
 		char cbuf[length+1];
