@@ -1,5 +1,5 @@
 #  File src/library/utils/R/str.R
-#  Part of the R package, https://www.R-project.org
+#  Part of R, https://www.R-project.org
 #
 #  Copyright (C) 1995-2026 The R Core Team
 #
@@ -39,7 +39,7 @@ str.data.frame <- function(object, ...)
 	"\n", sep = "")
 
     ## calling next method, usually  str.default:
-    if(length(l <- list(...)) && any("give.length" == names(l)))
+    if("give.length" %in% ...names())
 	invisible(NextMethod("str", ...))
     else invisible(NextMethod("str", give.length=structure(FALSE, from="data.frame"), ...))
 }
@@ -324,7 +324,7 @@ str.default <-
     }
     else if(is.function(object)) {
 	cat(if(is.null(ao <- args(object))) deParse(object)
-	else { dp <- deParse(ao); paste(dp[-length(dp)], collapse="\n") },"\n")
+	    else { dp <- deParse(ao); paste(dp[-length(dp)], collapse="\n") },"\n")
     } else if(is.list(object)) {
 	i.pl <- is.pairlist(object)
 	is.d.f <- is.data.frame(object)
