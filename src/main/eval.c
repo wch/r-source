@@ -2248,6 +2248,8 @@ static SEXP make_applyClosure_env(SEXP call, SEXP op, SEXP arglist, SEXP rho,
     if (!isEnvironment(rho))
 	errorcall(call, "'rho' must be an environment not %s: detected in C-level applyClosure",
 		  R_typeToChar(rho));
+    if (TYPEOF(op) != CLOSXP)
+	errorcall(call, "'op' must be a closure not %s: detected in C-level applyClosure", R_typeToChar(op));
 
     formals = FORMALS(op);
     savedrho = CLOENV(op);
