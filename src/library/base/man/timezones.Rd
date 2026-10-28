@@ -1,6 +1,6 @@
 % File src/library/base/man/timezones.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{timezones}
@@ -144,8 +144,9 @@ OlsonNames(tzdir = NULL)
 
   %% Debian/Ubuntu: https://mm.icann.org/pipermail/tz/2024-March/058812.html
   Increasingly OSes are (optionally or always) not including
-  \sQuote{legacy} names such as \code{US/Eastern}: only names of the
-  forms \code{Continent/City} and \code{Etc/...} are fully portable.
+  \sQuote{legacy} names such as \code{CET}, \code{Cuba}, \code{GB},
+  \code{GMT},\code{NZ} and\code{US/Eastern}: only names of the forms
+  \code{Continent/City} and \code{Etc/...} are fully portable.
 
   The abbreviations used have changed over the years: for example France
   used \samp{PMT} (\sQuote{Paris Mean Time}) from 1891 to 1911 then
@@ -346,8 +347,8 @@ OlsonNames(tzdir = NULL)
 Sys.timezone()
 
 str(OlsonNames()) ## typically around six hundred names,
-## typically some acronyms/aliases such as "UTC", "NZ", "MET", "Eire", ..., but
-## mostly pairs (and triplets) such as "Pacific/Auckland"
+## typically some acronyms/aliases such as "UTC", "NZ", "MET", "Eire", ...,
+## but mostly pairs (and triplets) such as "Pacific/Auckland"
 table(sl <- grepl("/", OlsonNames()))
 OlsonNames()[ !sl ] # the simple ones
 head(Osl <- strsplit(OlsonNames()[sl], "/"))
