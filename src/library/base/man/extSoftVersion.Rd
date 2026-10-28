@@ -1,6 +1,6 @@
 % File src/library/base/man/extSoftVersion.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2014-2025 R Core Team
+% Copyright 2014-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{extSoftVersion}
@@ -28,9 +28,9 @@ extSoftVersion()
   \item{bzlib}{The version of \code{bzlib} (from \command{bzip2}) in use.}
   \item{xz}{The version of \code{liblzma} (from \command{xz}) in use.}
   \item{libdeflate}{The version of \code{libdeflate} (if any, otherwise
-    \code{""}) used when \R was built.}
-  \item{zstd}{The version of \code{libzstd} (from \command{zstd}) in use
-    (if any, otherwise \code{""}).}
+    \code{""}) used when \R was built. Support added in \R 4.4.0.}
+  \item{zstd}{The version of \code{libzstd} in use
+    (if any, otherwise \code{""}).  Support was added in \R 4.5.0.}
   \item{PCRE}{The version of \code{PCRE} in use. PCRE1 has versions < 10.00,
     PCRE2 has versions >= 10.00.}
   \item{ICU}{The version of \code{ICU} in use (if any, otherwise \code{""}).}
@@ -49,7 +49,7 @@ extSoftVersion()
   Note that the values for \code{bzlib} and \code{pcre} normally contain
   a date as well as the version number, and that for \code{tre} includes
   several items separated by spaces, the version number being the
-  second.
+  second.  \code{zlib}'s value can be something like \code{1.3.1.zlib-ng}.
 
   For \code{\link{iconv}} this will give the implementation as well as the
   version, for example \code{"GNU libiconv 1.14"}, \code{"glibc
