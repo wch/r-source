@@ -4270,6 +4270,22 @@ stopifnot(identical(lapply(snms, slot, object = x), dots),
 ## in R <= 4.6.2
 
 
+## S4 methods for 'initialize', .Object="array"|"matrix"|"ts" did not
+## give higher precedence to named components of '...' (PR#14323)
+for (nm in c("array", "matrix", "ts", "numeric")) {
+    nm.sub <- paste0(nm, ".sub")
+    setClass(nm.sub, contains = nm, slots = c(label = "character"))
+    A <- new(nm.sub, new(nm), label = "A")
+    B <- new(nm.sub, new(nm), label = "B")
+    stopifnot(identical(A@label, "A"),
+              identical(B@label, "B"),
+              identical(new(nm.sub, A, label = "B"), B), # 'new' gave A
+              identical(new(nm.sub, B, label = "A"), A), # 'new' gave B
+              removeClass(nm.sub))
+}
+## in R <= 4.6.2
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

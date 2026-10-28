@@ -1491,9 +1491,9 @@ setDataPart <- function(object, value, check = TRUE) {
 
 .mergeAttrs <- function(value, object, explicit = NULL) {
     supplied <- attributes(object)
-    if(length(explicit))
-        supplied[names(explicit)] <- explicit
     valueAttrs <- attributes(value)
+    if(length(explicit))
+        valueAttrs[names(explicit)] <- explicit
     ## names are special.
     if(length(supplied$names) && length(valueAttrs$names) == 0L) {
         if(length(value) != length(object))
