@@ -807,7 +807,12 @@ realSubscript(SEXP s, R_xlen_t ns, R_xlen_t nx, R_xlen_t *stretch,
 	} else isna = true;
     }
     if (max >= (double)nx+1.) {
-#ifndef LONG_VECTOR_SUPPORT
+#ifdef LONG_VECTOR_SUPPORT
+	/* Avoid an out-of-range conversion to R_xlen_t. */
+	if (max > R_XLEN_T_MAX) {
+	    ECALL(call, _("subscript too large"));
+	}
+#else
 	if (max > INT_MAX) {
 	    ECALL(call, _("subscript too large for 32-bit R"));
 	}
