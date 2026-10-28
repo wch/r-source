@@ -4233,7 +4233,7 @@ const Rbyte *(RAW_RO)(SEXP x) {
 	error("%s() can only be applied to a '%s', not a '%s'",
 	      "RAW_RO", "raw", R_typeToChar(x));
     CHKZLN(x);
-    return RAW(x);
+    return RAW_RO(x);
 }
 
 double *(REAL)(SEXP x) {
