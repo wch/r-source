@@ -7035,10 +7035,12 @@ static SEXP R_findBCInterpreterExpression(void)
 
 attribute_hidden SEXP R_getCurrentSrcref(void)
 {
+    SEXP srcref;
     if (R_Srcref != R_InBCInterpreter)
-	return R_Srcref;
+	srcref = R_Srcref;
     else
-	return R_findBCInterpreterSrcref(NULL);
+	srcref = R_findBCInterpreterSrcref(NULL);
+    return srcref ? srcref : R_NilValue; // don't return C NULL
 }
 
 static Rboolean maybeClosureWrapper(SEXP expr)
