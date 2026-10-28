@@ -193,7 +193,7 @@ function(contriburl = contrib.url(repos, type), method,
                         ## (Re)write the cache with fast compression, as
                         ## repositories typically serve xz-compressed
                         ## indices, which are slow to decompress on each use.
-                        con <- if(nzchar(extSoftVersion()[["zstd"]]))
+                        con <- if(capabilities("zstd"))
                                    zstdfile(dest, "wb", compression = 1L)
                                else file(dest, "wb")
                         saveRDS(res0, con)
@@ -264,7 +264,7 @@ available_packages_filters_db$R_version <-
 function(db)
 {
     ## Ignore packages which don't fit our version of R.
-    
+
     ## Compare current R version to given R version dependency which may
     ## also be an SVN revision.
     cmp <- function(o, v) {
@@ -277,7 +277,7 @@ function(db)
             y[p] <- do.call(o, list(getRversion(), v[p]))
         y
     }
-    
+
     depends <- db[, "Depends"]
     ## Only entries mentioning R can have an R dependency.
     pos <- which(grepl("R[[:space:]]*\\(", depends))
