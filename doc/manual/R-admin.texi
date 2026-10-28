@@ -5428,6 +5428,7 @@ FC="/opt/gfortran/bin/gfortran -mmacosx-version-min=26.0"
 @c in @file{config.site} to ensure the matching Fortran run-time libraries are
 @c found.
 
+@node Using flang
 @subsubsection Using @command{flang}
 
 It is intended in future to use @I{LLVM}'s @command{flang} as the

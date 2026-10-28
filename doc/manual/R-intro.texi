@@ -1372,6 +1372,7 @@ classification (grouping) of the components of other vectors of the same length.
 While the ``real'' application of factors is with model formulae
 (@pxref{Contrasts}), we here look at a specific example.
 
+@node A specific example
 @section A specific example
 
 Suppose, for example, we have a sample of 30 tax accountants from all
@@ -2826,6 +2827,7 @@ example).  In most cases this will load an @R{} object of the same name.
 However, in a few cases it loads several objects, so see the on-line
 help for the object to see what to expect.
 
+@node Loading data from other R packages
 @subsection Loading data from other R packages
 
 To access data from a particular package, use the @code{package}

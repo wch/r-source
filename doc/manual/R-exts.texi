@@ -9252,7 +9252,8 @@ This chapter is based on reports from users and the information may not
 be current.
 
 
-@node Profilong on Linux
+@node Profiling on Linux
+@anchor{Profilong on Linux}@c old link
 @subsection Profiling on Linux
 
 Options include using @command{sprof} for a shared object, and
@@ -9266,6 +9267,7 @@ used to be.  There is also `Google Performance Tools', also known as
 All of these work best when @R{} and any packages have been built with
 debugging symbols.
 
+@node perf
 @subsubsection @command{perf}
 
 This seems the most widely distributed tool.
@@ -9301,6 +9303,7 @@ which shows which shared libraries (@abbr{DSO}s) the time was spent in.
 @command{perf annotate} can be used on an application built with GCC and
 @option{-ggdb}: it interleaves disassembled and source code.
 
+@node oprofile and operf
 @subsubsection @command{oprofile} and @command{operf}
 
 The @command{oprofile} project has two modes of operation.  Since
@@ -9386,7 +9389,7 @@ The profiling data is by default stored in sub-directory
 @file{oprofile_data} of the current directory, which can be removed at
 the end of the session.
 
-
+@node sprof
 @subsubsection @command{sprof}
 
 You can select shared objects to be profiled with @command{sprof} by
@@ -12255,6 +12258,7 @@ should @strong{not} be included within an @code{extern "C"} block (as
 they include system headers@footnote{Even including C system headers in
 such a block has caused compilation errors.}).
 
+@node External C++ code
 @subsection External C++ code
 
 Quite a lot of external C++ software is header-only (e.g.@: most of the
