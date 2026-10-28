@@ -20,7 +20,7 @@ functions without reinstalling a large package.
 evalSource(source, package = "", lock = TRUE, cache = FALSE)
 
 insertSource(source, package = "", functions = , methods = ,
-           force = )
+             force = )
 
 }
 \arguments{

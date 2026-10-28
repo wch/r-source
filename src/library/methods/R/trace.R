@@ -739,20 +739,17 @@ evalSource <- function(source, package = "", lock = TRUE, cache = FALSE) {
     env
 }
 
-insertSource <- function(source, package = "",
-                         functions = allPlainObjects(),
-                         methods = (if(missing(functions)) allMethodTables() else NULL)
-##                         ,classes = (if(missing(functions)) allClassDefs() else NULL)
-                         , force = missing(functions) & missing(methods)
-                     ){
+insertSource <-
+function (source, package = "",
+          functions = allPlainObjects(),
+          methods = if (missing(functions)) allMethodTables(),
+          force = missing(functions) && missing(methods)) {
     MPattern <- .TableMetaPattern()
     CPattern <- .ClassMetaPattern()
     allPlainObjects <- function()
         allObjects[!(grepl(MPattern, allObjects) | grepl(CPattern, allObjects))]
     allMethodTables <- function()
         allObjects[grepl(MPattern, allObjects)]
-##    allClassDefs <- function()
-##        allObjects[grepl(CPattern, allObjects)]
     differs <- function(f1, f2)
         !(identical(body(f1), body(f2)) && identical(args(f1), args(f2)))
     if(is.environment(source) && !nzchar(package)) {
@@ -780,7 +777,7 @@ insertSource <- function(source, package = "",
                 envp <- tryCatch(as.environment(pname), error = function(cond)NULL)
                 if(is.null(envp))
                     stop(gettextf(
-                     "cannot find an environment corresponding to package name \'%s\"",
+                     "cannot find an environment corresponding to package name \"%s\"",
                      package), domain = NA)
             }
             envns <- tryCatch(asNamespace(package), error = function(cond)NULL)
@@ -832,19 +829,6 @@ insertSource <- function(source, package = "",
         methods <- sub(.TableMetaPrefix(), "", methodNames)
         methods <- sub(":.*","",methods)
     }
-    ## if(!missing(classes)) {
-    ##     .mnames <- allMethodNames()
-    ##     notThere <- sapply(classes,
-    ##      function(fname) length(grep(fname, .mnames, fixed = TRUE) == 0)
-    ##     )
-    ##     if(any(notThere)) {
-    ##         warning(gettextf("Can't insert these classes (class definition not found in source): %s",
-    ##                 paste('"',classes[notThere],'"',
-    ##                       sep = "", collapse = ", ")),
-    ##                 domain = NA)
-    ##         classes <- classes[!notThere]
-    ##     }
-    ## }
     notTraceable <- newObjects <- objectsDone <- character()
     for(i in seq_along(functions)) {
         this <- functions[[i]]
@@ -886,9 +870,6 @@ insertSource <- function(source, package = "",
     for(i in seq_along(methods)) {
         .copyMethods(methods[[i]], methodNames[[i]], env, envp)
     }
-    ## for(class in classes) {
-    ##     .copyClass(class, env, envwhere)
-    ## }
     ## return the environment, after cleaning up the dummy functions and
     ## adding a time stamp, if the source was parsed on this call
     if(!is.environment(source)) {
@@ -929,10 +910,6 @@ insertSource <- function(source, package = "",
                   f, paste(methodsInserted, collapse =", ")),
                   domain = NA)
     }
-}
-
-.copyClass <- function(class, env, envwhere) {
-    message("Pretend we inserted class ", class, domain = NA)
 }
 
 .findNewDefForTrace <- function(what, signature, env, package) {
