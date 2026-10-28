@@ -123,6 +123,9 @@ capabilities(what = NULL,
     function \code{\link{curlGetHeaders}} and optionally by
     \code{\link{download.file}} and \code{\link{url}}.   As from \R
     3.3.0 always true for Unix-alikes, and as from \R 4.2.0 true on Windows.}
+
+  \item{zstd}{Is there support for \code{zstd} compression?  Optional
+    since \R 4.5.0.}
 }
 \seealso{
   \code{\link{.Machine}$sizeof.pointer == 8} for 64-bit builds of \R
