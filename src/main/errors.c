@@ -916,7 +916,7 @@ NORET void errorcall(SEXP call, const char *format,...)
 
     if (call == R_CurrentExpression)
 	/* behave like error( */
-	call = getCurrentCall();
+	call = PROTECT(getCurrentCall()); // unprotected by the jump
 
     va_start(ap, format);
     vsignalError(call, format, ap);
@@ -960,7 +960,8 @@ void error(const char *format, ...)
     va_start(ap, format);
     Rvsnprintf_mbcs(buf, min(BUFSIZE, R_WarnLength), format, ap);
     va_end(ap);
-    errorcall(getCurrentCall(), "%s", buf);
+    SEXP call = PROTECT(getCurrentCall()); // unprotected by the jump
+    errorcall(call, "%s", buf);
 }
 
 static void try_jump_to_restart(void)
