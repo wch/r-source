@@ -327,10 +327,10 @@ adist_full(SEXP x, SEXP y, double *costs, bool opt_counts)
 	if(nxi && (xi[0] == NA_INTEGER)) {
 	    for(j = 0; j < ny; j++) {
 		ANS(i, j) = NA_REAL;
-	    }
-	    if(opt_counts) {
-		for(m = 0; m < 3; m++) {
-		    COUNTS(i, j, m) = NA_INTEGER;
+		if(opt_counts) {
+		    for(m = 0; m < 3; m++) {
+			COUNTS(i, j, m) = NA_INTEGER;
+		    }
 		}
 	    }
 	} else {
