@@ -36,9 +36,9 @@ structure <- function (.Data, ...)
             names(attrib)[ok] <- replace[m[ok]]
         }
         ## prior to 2.5.0 factors would deparse to double codes
-        if(any(attrib[["class", exact = TRUE]] == "factor")
-           && typeof(.Data) == "double")
-            storage.mode(.Data) <- "integer"
+        ## if(any(attrib[["class", exact = TRUE]] == "factor")
+        ##    && typeof(.Data) == "double")
+        ##     storage.mode(.Data) <- "integer"
         attributes(.Data) <- c(attributes(.Data), attrib)
     }
     .Data
