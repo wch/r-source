@@ -404,6 +404,7 @@ function(db)
     CRAN <- getOption("repos")["CRAN"]
     ## do nothing if there is no CRAN repos on the list
     if(is.na(CRAN)) return(db)
+    if (!endsWith(CRAN, '/')) CRAN <- paste0(CRAN, '/')
     packages <- db[, "Package"]
     onCRAN <- startsWith(db[, "Repository"], CRAN)
     ## Drop the non-CRAN entries of packages which are also on CRAN.
