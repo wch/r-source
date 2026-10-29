@@ -168,6 +168,9 @@ typedef struct {
 
     double fontscale;
     int holdlevel;
+    Rboolean replaying;
+    Rboolean needsave;
+    char histtitle[128];
 } X11Desc;
 
 typedef X11Desc* pX11Desc;

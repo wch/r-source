@@ -108,8 +108,10 @@ X11.options(\dots, reset = FALSE)
 
   \item{reset}{logical: should the defaults be reset to their defaults?}
 
-  \item{\dots}{Any of the arguments to \code{X11}, plus \code{colortype}
-    and \code{maxcubesize} (see section \sQuote{Colour Rendering}).}
+  \item{\dots}{Any of the arguments to \code{X11}; additionally
+    \code{colortype} and \code{maxcubesize} (see section \sQuote{Colour
+      Rendering}), and \code{keys} (see Details).
+  }
 }
 \details{
   The defaults for all of the arguments of \code{X11} are set by
@@ -173,6 +175,21 @@ X11.options(\dots, reset = FALSE)
   cursor, and when plotting computations are in progress (and this can
   be detected) it is a watch cursor.  (The exact cursors displayed will
   depend on the window manager in use.)
+
+  If display recording is enabled (as it is by default; see
+  \code{\link{dev.control}}), previously displayed plots are stored and
+  can be redisplayed. The easiest way to do so is using key bindings
+  associated with the device window. These key bindings can be set by
+  calling \code{X11.options(keys = k)} where \code{k} is a named list of
+  character vectors specifying the key bindings for plot history
+  navigation: with names \code{back}, \code{forward}, \code{first}, and
+  \code{last}. The default bindings are given by \code{list(back =
+  c("Left", "PgUp"), forward = c("Right", "PgDn"), first = "Home", last
+  = "End")}. Other special key names supported are \code{"Up"},
+  \code{"Down"}, \code{"Home"}, \code{"End"}, \code{"Ins"},
+  \code{"Del"}, and \code{"F1"} through \code{"F12"}. All names can be
+  prefixed by \code{"ctrl-"}.
+
 }
 
 \section{X11 Fonts}{

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2025  The R Core Team
+ *  Copyright (C) 1997--2026  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -200,6 +200,12 @@ static void SetLinetype(const pGEcontext, pX11Desc);
 static void X11_Close_bitmap(pX11Desc xd);
 static char* translateFontFamily(char* family, pX11Desc xd);
 
+/* Support replaying previous plots (history) */
+static void X11_UpdateTitle(pDevDesc dd, Rboolean active);
+static void X11_HistoryNewPage(pDevDesc dd);
+static void X11_HistoryClose(pDevDesc dd);
+static void X11_HistoryKey(pDevDesc dd, XKeyEvent *xkey);
+
 static double RedGamma	 = 1.0;
 static double GreenGamma = 1.0;
 static double BlueGamma	 = 1.0;
@@ -330,6 +336,7 @@ static void Cairo_NewPage(const pGEcontext gc, pDevDesc dd)
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
+    if (xd->type == WINDOW) X11_HistoryNewPage(dd);
     cairo_reset_clip(xd->cc);
     xd->fill = R_OPAQUE(gc->fill) ? gc->fill: xd->canvas;
     CairoColor(xd->fill, xd);
@@ -759,19 +766,25 @@ static void handleEvent(XEvent event)
 	pDevDesc dd = (pDevDesc) temp;
 	pGEDevDesc gdd = desc2GEDesc(dd);
 	if(gdd->dirty) {
-#ifdef HAVE_WORKING_X11_CAIRO
 	    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+
+#ifdef HAVE_WORKING_X11_CAIRO
 	    /* We can use the buffered copy where we have it */ 
 	    if(xd->buffered == 1) {
 		cairo_paint(xd->xcc);
 		/* workaround for bug in cairo 1.12.x (PR#15168) */
 		cairo_surface_flush(xd->xcs);
-	    } else if (xd->buffered > 1)
+	    } else if (xd->buffered > 1) {
 		/* rely on timer to repaint eventually */
 		xd->last_activity = currentTime();
-	    else
+	    } else
 #endif
+	    {
+		Rboolean was_replaying = xd->replaying;
+		xd->replaying = TRUE;
 		GEplayDisplayList(gdd);
+		xd->replaying = was_replaying;
+	    }
 	    XSync(display, 0);
 	}
     } else if (event.type == ConfigureNotify) {
@@ -820,9 +833,19 @@ static void handleEvent(XEvent event)
 	    while (XCheckTypedWindowEvent(display, event.xexpose.window, Expose, &event));
 	    pGEDevDesc gdd = desc2GEDesc(dd);
 	    if(gdd->dirty) {
+		Rboolean was_replaying = xd->replaying;
+		xd->replaying = TRUE;
 		GEplayDisplayList(gdd);
+		xd->replaying = was_replaying;
 		XSync(display, 0);
 	    }
+	}
+    } else if (event.type == KeyPress) {
+	if (inclose) return;
+	caddr_t temp;
+	if (XFindContext(display, event.xkey.window, devPtrContext, &temp) == 0) {
+	    pDevDesc dd = (pDevDesc) temp;
+	    X11_HistoryKey(dd, &event.xkey);
 	}
     } else if ((event.type == ClientMessage) &&
 	     (event.xclient.message_type == _XA_WM_PROTOCOLS)) {
@@ -2003,6 +2026,7 @@ static void X11_NewPage(const pGEcontext gc, pDevDesc dd)
 	return;
     }
 
+    X11_HistoryNewPage(dd);
     FreeX11Colors();
     if ( (model == PSEUDOCOLOR2) || (xd->fill != gc->fill)) {
 	xd->fill = R_OPAQUE(gc->fill) ? gc->fill : xd->canvas;
@@ -2121,6 +2145,7 @@ static void X11_Close(pDevDesc dd)
 	}
 #endif
 
+	X11_HistoryClose(dd);
 	XFreeGC(display, xd->wgc);
 	XDestroyWindow(display, xd->window);
 	XSync(display, 0);
@@ -2154,38 +2179,38 @@ static void X11_Close(pDevDesc dd)
     inclose = FALSE;
 }
 
-static void X11_Activate(pDevDesc dd)
+static void X11_UpdateTitle(pDevDesc dd, Rboolean active)
 {
-    char t[150];
+    char t[220];
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
-    if (xd->type > WINDOW) return;
+    if (xd->type > WINDOW || !xd->window) return;
     if(xd->title[0]) {
 	snprintf(t, 140, xd->title, ndevNumber(dd) + 1);
 	t[139] = '\0';
     } else {
 	snprintf(t, 140, "R Graphics: Device %d", ndevNumber(dd) + 1);
     }
-    strcat(t, " (ACTIVE)");
+    if (active)
+	strcat(t, " (ACTIVE)");
+    else
+	strcat(t, " (inactive)");
+    if (xd->histtitle[0]) {
+	strncat(t, xd->histtitle, 127);
+	t[sizeof(t) - 1] = '\0';
+    }
     XStoreName(display, xd->window, t);
     XSync(display, 0);
 }
 
+static void X11_Activate(pDevDesc dd)
+{
+    X11_UpdateTitle(dd, TRUE);
+}
+
 static void X11_Deactivate(pDevDesc dd)
 {
-    char t[150];
-    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
-
-    if (xd->type > WINDOW) return;
-    if(xd->title[0]) {
-	snprintf(t, 140, xd->title, ndevNumber(dd) + 1);
-	t[139] = '\0';
-    } else {
-	snprintf(t, 140 ,"R Graphics: Device %d", ndevNumber(dd) + 1);
-    }
-    strcat(t, " (inactive)");
-    XStoreName(display, xd->window, t);
-    XSync(display, 0);
+    X11_UpdateTitle(dd, FALSE);
 }
 
 static void X11_Rect(double x0, double y0, double x1, double y1,
@@ -2622,11 +2647,167 @@ static int translate_key(KeySym keysym)
 	case XK_Page_Up: 	return knPGUP;
 	case XK_Page_Down: 	return knPGDN;
 	case XK_End:  return knEND;
-	case XK_Begin:return knHOME;
+	case XK_Begin:
+	case XK_Home: return knHOME;
 	case XK_Insert:  	return knINS;
+	case XK_Delete:  	return knDEL;
 	}
     }
     return knUNKNOWN;
+}
+
+/* User-friendly names for use in X11.options(key = ...) */
+
+static const char *X11_keynames[] = {
+    "Left", "Up", "Right", "Down",
+    "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12",
+    "PgUp", "PgDn", "End", "Home", "Ins", "Del"
+};
+
+static SEXP X11_InvokeHistoryCallback(const char *action, int dev_num,
+				      SEXP key, SEXP snapshot)
+{
+    SEXP graphicsNS, fn, call, res = R_NilValue;
+    int err = 0;
+
+    PROTECT(graphicsNS = R_FindNamespace(ScalarString(mkChar("grDevices"))));
+    PROTECT(fn = findVarInFrame(graphicsNS, install("x11_history_callback")));
+    if (TYPEOF(fn) == PROMSXP)
+	fn = eval(fn, graphicsNS);
+    if (TYPEOF(fn) == CLOSXP) {
+	PROTECT(call = lang5(fn, mkString(action), ScalarInteger(dev_num),
+			     key, snapshot));
+	res = R_tryEval(call, graphicsNS, &err);
+	UNPROTECT(1);
+    }
+    UNPROTECT(2);
+    return err ? R_NilValue : res;
+}
+
+static void X11_HistoryNewPage(pDevDesc dd)
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    if (xd->type > WINDOW) return;
+    if (xd->replaying) return;
+
+    pGEDevDesc gdd = desc2GEDesc(dd);
+    int dev_num = ndevNumber(dd) + 1;
+    SEXP snapshot = R_NilValue;
+
+    if (xd->needsave && gdd && gdd->savedSnapshot != R_NilValue) {
+	snapshot = gdd->savedSnapshot;
+    }
+    PROTECT(snapshot);
+    X11_InvokeHistoryCallback("newPage", dev_num, R_NilValue, snapshot);
+    UNPROTECT(1);
+
+    xd->needsave = TRUE;
+    if (xd->histtitle[0]) {
+	xd->histtitle[0] = '\0';
+	X11_UpdateTitle(dd, ndevNumber(dd) == curDevice());
+    }
+}
+
+static void X11_HistoryClose(pDevDesc dd)
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    if (xd->type > WINDOW) return;
+    int dev_num = ndevNumber(dd) + 1;
+    X11_InvokeHistoryCallback("close", dev_num, R_NilValue, R_NilValue);
+}
+
+static void X11_HistoryKey(pDevDesc dd, XKeyEvent *xkey)
+{
+    pX11Desc xd = (pX11Desc) dd->deviceSpecific;
+    if (inclose || !dd || !xd || xd->type > WINDOW) return;
+    if (dd->gettingEvent || xd->replaying || xd->holdlevel > 0) return;
+
+    char keybuffer[64] = "";
+    char *keystart = keybuffer;
+    XComposeStatus compose;
+    KeySym keysym = NoSymbol;
+    int keycode;
+    unsigned int orig_state = xkey->state;
+
+    if (xkey->state & ControlMask) {
+	keystart += 5;
+	snprintf(keybuffer, sizeof(keybuffer), "ctrl-");
+	xkey->state &= ~ControlMask;
+	xkey->state |= ShiftMask;
+    }
+    XLookupString(xkey, keystart,
+		  (int)(sizeof(keybuffer) - (keystart - keybuffer)),
+		  &keysym, &compose);
+    xkey->state = orig_state;
+
+    if (keysym == NoSymbol) return;
+    if (IsModifierKey(keysym)) return;
+
+    const char *kname = NULL;
+    char fullkey[64] = "";
+    if ((keycode = translate_key(keysym)) > knUNKNOWN) {
+	if (orig_state & ControlMask) {
+	    snprintf(fullkey, sizeof(fullkey), "ctrl-%s", X11_keynames[keycode]);
+	    kname = fullkey;
+	} else {
+	    kname = X11_keynames[keycode];
+	}
+    } else if (*keystart) {
+	kname = keybuffer;
+    } else {
+	char *ks = XKeysymToString(keysym);
+	if (ks) {
+	    if (orig_state & ControlMask) {
+		snprintf(fullkey, sizeof(fullkey), "ctrl-%s", ks);
+		kname = fullkey;
+	    } else {
+		kname = ks;
+	    }
+	}
+    }
+    if (!kname || !*kname) return;
+
+    pGEDevDesc gdd = desc2GEDesc(dd);
+    if (!gdd) return;
+    int dev_num = ndevNumber(dd) + 1;
+    int saved_dev = curDevice();
+
+    SEXP cur_snapshot = R_NilValue;
+    if (xd->needsave && gdd->displayList != R_NilValue) {
+	cur_snapshot = GEcreateSnapshot(gdd);
+    }
+    PROTECT(cur_snapshot);
+    SEXP skey = PROTECT(mkString(kname));
+    SEXP res = PROTECT(X11_InvokeHistoryCallback("key", dev_num, skey, cur_snapshot));
+
+    if (TYPEOF(res) == VECSXP && LENGTH(res) >= 2) {
+	SEXP snapshot = VECTOR_ELT(res, 0);
+	SEXP stitle = VECTOR_ELT(res, 1);
+	if (snapshot != R_NilValue) {
+	    xd->replaying = TRUE;
+	    if (TYPEOF(stitle) == STRSXP && LENGTH(stitle) >= 1) {
+		strncpy(xd->histtitle, CHAR(STRING_ELT(stitle, 0)),
+			sizeof(xd->histtitle) - 1);
+		xd->histtitle[sizeof(xd->histtitle) - 1] = '\0';
+	    }
+	    XDefineCursor(display, xd->window, watch_cursor);
+	    XSync(display, 0);
+	    GEplaySnapshot(snapshot, gdd);
+#ifdef HAVE_WORKING_X11_CAIRO
+	    if (xd->useCairo && xd->buffered)
+		Cairo_update(xd);
+#endif
+	    XDefineCursor(display, xd->window, arrow_cursor);
+	    if (curDevice() != saved_dev)
+		selectDevice(saved_dev);
+	    X11_UpdateTitle(dd, ndevNumber(dd) == curDevice());
+	    xd->replaying = FALSE;
+	    xd->needsave = FALSE;
+	}
+    }
+    if (curDevice() != saved_dev)
+	selectDevice(saved_dev);
+    UNPROTECT(3);
 }
 
 static void X11_eventHelper(pDevDesc dd, int code)
@@ -2739,6 +2920,7 @@ static void X11_Mode(int mode, pDevDesc dd)
 	return;
     }
     if(mode == 1) {
+	if (!xd->replaying) xd->needsave = TRUE;
 	if(xd->type==WINDOW) XDefineCursor(display, xd->window, watch_cursor);
 	XSync(display, 0);
     }

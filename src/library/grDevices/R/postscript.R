@@ -60,8 +60,8 @@ check.options <-
 	    doubt <- rep.int(FALSE, length(prev))
 	    for(fn in check.attributes)
 		if(any(ii <- sapply(prev, fn) != sapply(new, fn))) {
-                    ## skip 'fonts';
-                    ii <- ii & (names(prev) != "fonts")
+                    ## skip 'fonts' and 'keys';
+                    ii <- ii & !(names(prev) %in% c("fonts", "keys"))
                     if(!any(ii)) next
 		    doubt <- doubt | ii
 		    do.keep <- ii & !override.check

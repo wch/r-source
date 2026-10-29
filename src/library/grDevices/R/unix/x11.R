@@ -1,7 +1,7 @@
 #  File src/library/grDevices/R/unix/x11.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2014 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,8 +31,12 @@ assign(".X11.Options",
             family = "sans",
             symbolfamily = "default",
             xpos = NA_integer_, ypos = NA_integer_,
-	    title = "", type = "cairo", antialias = "default"),
+	    title = "", type = "cairo", antialias = "default",
+            keys = list(back = c("Left", "PgUp"), forward = c("Right", "PgDn"),
+                        first = "Home", last = "End")),
        envir = .X11env)
+
+assign(".X11.History", new.env(hash = TRUE, parent = emptyenv()), envir = .X11env)
 
 assign(".X11.Options.default",
        get(".X11.Options", envir = .X11env),
@@ -227,4 +231,115 @@ optionSymbolFont <- function(family) {
     } else {
         checkSymbolFont(family)
     }
+}
+
+
+####################
+# X11 plot history
+####################
+
+## The X11() device calls this function to both store (action=newPage)
+## and retrieve (action=key) snapshots, which are stored in lists
+## keyed to device number. The list is deleted when a device is closed
+## (action=close).
+
+x11_history_callback <- function(action, dev, key = NULL, snapshot = NULL)
+{
+    history_env <- get(".X11.History", envir = .X11env)
+    dkey <- as.character(dev)
+
+    if (action == "close") {
+        history_env[[dkey]] <- NULL
+        return(invisible(NULL))
+    }
+
+    snapshot <- 
+        if (!is.null(snapshot) && is.list(snapshot) && length(snapshot) >= 1L && !is.null(snapshot[[1L]])) {
+            if (inherits(snapshot, "recordedplot"))
+                snapshot
+            else
+                structure(snapshot,
+                          pid = Sys.getpid(),
+                          Rversion = getRversion(),
+                          class = "recordedplot")
+        } else NULL
+
+    ## retrieve or create history list tied to this device
+    h <- history_env[[dkey]] %||% list(plots = list(), pos = 0L)
+
+    if (action == "newPage") {
+        if (!is.null(snapshot)) {
+            n <- length(h$plots)
+            if (h$pos > 0L && h$pos <= n)
+                h$plots[[h$pos]] <- snapshot
+            else
+                h$plots[[n + 1L]] <- snapshot
+        }
+        ## New page is now being drawn at the tail of history
+        h$pos <- length(h$plots) + 1L
+        history_env[[dkey]] <- h
+        return(invisible(NULL))
+    }
+
+    if (action == "key") {
+        keys <- X11.options()$keys
+        if (is.null(keys) || is.null(key) || !nzchar(key)) return(NULL)
+
+        ## Determine which navigation action matches the pressed key
+        ## (currently supported actions are back, forward, first and
+        ## last)
+        nav <- NULL
+        for (act in names(keys)) {
+            if (key %in% keys[[act]]) {
+                nav <- act
+                break
+            }
+        }
+        if (is.null(nav)) return(NULL)
+
+        ## Allow synonyms
+        nav <- switch(nav,
+                      prev = , previous = , back = "back",
+                      `next` = , forward = "forward",
+                      first = , home = "first",
+                      last = , end = "last",
+                      nav)
+
+        ## Save current unsaved plot before navigating away
+        if (!is.null(snapshot)) {
+            n <- length(h$plots)
+            if (h$pos > 0L && h$pos <= n)
+                h$plots[[h$pos]] <- snapshot
+            else {
+                h$plots[[n + 1L]] <- snapshot
+                h$pos <- n + 1L
+            }
+        }
+
+        n <- length(h$plots)
+        if (n == 0L) {
+            history_env[[dkey]] <- h
+            return(NULL)
+        }
+
+        cur <- if (h$pos < 1L || h$pos > n) n + 1L else h$pos
+        target_pos <- switch(nav,
+                             back    = max(1L, cur - 1L),
+                             forward = min(n,  cur + 1L),
+                             first   = 1L,
+                             last    = n,
+                             cur)
+
+        if (target_pos < 1L || target_pos > n || target_pos == h$pos) {
+            history_env[[dkey]] <- h
+            return(NULL)
+        }
+
+        h$pos <- target_pos
+        history_env[[dkey]] <- h
+        title_str <- sprintf(" [%d/%d]", target_pos, n)
+        return(list(h$plots[[target_pos]], title_str))
+    }
+
+    invisible(NULL)
 }

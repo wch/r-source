@@ -119,6 +119,9 @@
       arguments in the Usage section to their documentation in the
       Arguments section.
 
+      \item The X11 on-screen devices now supports history navigation
+      through (customizable) key bindings.
+
     }
   }
 
