@@ -3870,6 +3870,20 @@ function(dfile)
     allpkgs <- c(unique(depends), unique(imports),
                  unique(suggests), unique(enhances))
     out <- unique(allpkgs[duplicated(allpkgs)])
+    ## Within a field, an unversioned or identical repeated entry
+    ## cannot be part of such a range, so is redundant.
+    repeated <- list()
+    for(field in c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")) {
+        if(is.na(entries <- db[field]))
+            next
+        entries <- gsub("[[:space:]]+", "", unlist(strsplit(entries, ",")))
+        entries <- entries[nzchar(entries)]
+        pkgs <- sub("^([[:alnum:].]+).*$", "\\1", entries)
+        bad <- (pkgs %in% pkgs[duplicated(pkgs)]) &
+            (!grepl("(", entries, fixed = TRUE) | duplicated(entries))
+        if(any(bad))
+            repeated[[field]] <- unique(pkgs[bad])
+    }
     links <- missing_incs <- character()
     llinks <-  .get_requires_with_version_from_package_db(db, "LinkingTo")
     have_src <- TRUE # dummy
@@ -3904,6 +3918,7 @@ function(dfile)
         missing_incs <- as.vector(llinks[!nzchar(incs)])
     }
     out <- list(duplicates = unique(allpkgs[duplicated(allpkgs)]),
+                repeated = repeated,
                 bad_links = links, missing_incs = missing_incs,
                 have_src = have_src)
     class(out) <- "check_package_description2"
@@ -3919,6 +3934,16 @@ function(x, ...)
                    "Packages listed in more than one of Depends, Imports, Suggests, Enhances:"),
           paste(c(" ", sQuote(xx)), collapse = " "),
           "A package should be listed in only one of these fields.")
+      },
+      if(length(xx <- x$repeated)) {
+          c(unlist(Map(function(field, pkgs)
+                           sprintf(ngettext(length(pkgs),
+                                            "Package listed more than once in %s: %s",
+                                            "Packages listed more than once in %s: %s"),
+                                   field, paste(sQuote(pkgs), collapse = " ")),
+                       names(xx), xx),
+                   use.names = FALSE),
+            "Package dependency requirements should not be duplicated.")
       },
       if(!x$have_src)
           "'LinkingTo' field is unused: package has no 'src' directory",

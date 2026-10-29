@@ -162,6 +162,10 @@
       is now documented in the R Internals manual.  This is supplemented by
       \env{PKG_BUILD_DIR_BARE} to use \env{PKG_BUILD_DIR} as the
       unpacking directory without adding a random path component.
+
+      \item \command{R CMD check} now \samp{NOTE}s packages listed more
+      than once in a dependency field other than to give a version
+      range, e.g., \samp{Imports: utils, stats, utils}.
     }
   }
 
