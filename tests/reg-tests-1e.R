@@ -4366,6 +4366,38 @@ local({
 ## gave garbage, an error or a segfault in R <= 4.6.2
 
 
+## readLines() must free its line buffer on error, including after growth.
+## The error cases also exercise the cleanup under leak checkers.
+local({
+    tf <- tempfile()
+    old <- options(warn = 2)
+    for (mode in c("", "rt")) {
+        ## A corrupt gzip stream fails while reading the first line.
+        writeBin(as.raw(c(0x1f, 0x8b, 0x08, 0, 0, 0, 0, 0, 0, 3,
+                          rep(0xaf, 40))), tf)
+        con <- gzfile(tf, mode)
+        stopifnot(inherits(tryCid(readLines(con)), "error"),
+                  identical(isOpen(con), nzchar(mode)))
+        close(con)
+        ## Errors after growth, both during reading and after closing.
+        line <- strrep("a", 8000)
+        writeBin(c(charToRaw(line), as.raw(0), charToRaw("x\n")), tf)
+        con <- file(tf, mode)
+        stopifnot(inherits(tryCid(readLines(con)), "error"),
+                  identical(isOpen(con), nzchar(mode)))
+        close(con)
+        writeChar(line, tf, eos = NULL)
+        con <- file(tf, mode)
+        stopifnot(inherits(tryCid(readLines(con)), "error"),
+                  identical(isOpen(con), nzchar(mode)))
+        close(con)
+    }
+    options(old)
+    unlink(tf)
+})
+## leaked the buffer on errors in R <= 4.6.x
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

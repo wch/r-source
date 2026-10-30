@@ -4419,6 +4419,19 @@ static void con_cleanup(void *data)
     checkClose(con);
 }
 
+typedef struct {
+    char **buf; /* address of the buffer pointer, to track reallocations */
+    Rconnection con; /* NULL unless the connection still needs closing */
+} readLines_data;
+
+static void readLines_cleanup(void *data)
+{
+    readLines_data *d = data;
+    /* Closing the connection may itself raise an error. */
+    free(*d->buf);
+    if (d->con) checkClose(d->con);
+}
+
 /* readLines(con = stdin(), n = 1, ok = TRUE, warn = TRUE) */
 #define BUF_SIZE 1000
 attribute_hidden SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -4429,7 +4442,7 @@ attribute_hidden SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     int oenc = CE_NATIVE;
     Rconnection con = NULL;
     Rboolean wasopen;
-    char *buf;
+    char *buf = NULL;
     const char *encoding;
     RCNTXT cntxt;
     R_xlen_t i, n, nn, nnn, nread;
@@ -4454,6 +4467,13 @@ attribute_hidden SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     if(skipNul == NA_LOGICAL)
 	error(_("invalid '%s' argument"), "skipNul");
 
+    /* Clean up the current buffer and any connection opened here on error. */
+    readLines_data data = {&buf, NULL};
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
+		 R_NilValue, R_NilValue);
+    cntxt.cend = &readLines_cleanup;
+    cntxt.cenddata = &data;
+
     wasopen = con->isopen;
     if(!wasopen) {
 	char mode[5];
@@ -4462,11 +4482,7 @@ attribute_hidden SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	strcpy(con->mode, "rt");
 	if(!con->open(con)) error(_("cannot open the connection"));
 	strcpy(con->mode, mode);
-	/* Set up a context which will close the connection on error */
-	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
-		     R_NilValue, R_NilValue);
-	cntxt.cend = &con_cleanup;
-	cntxt.cenddata = con;
+	data.con = con;
 	if(!con->canread) error(_("cannot read from this connection"));
     } else {
 	if(!con->canread) error(_("cannot read from this connection"));
@@ -4502,10 +4518,9 @@ attribute_hidden SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(nbuf == buf_size-1) {  /* need space for the terminator */
 		buf_size *= 2;
 		char *tmp = (char *) realloc(buf, buf_size);
-		if(!tmp) {
-		    free(buf);
+		if(!tmp)
 		    error(_("cannot allocate buffer in readLines"));
-		} else buf = tmp;
+		buf = tmp;
 	    }
 	    if(skipNul && c == '\0') continue;
 	    if(c != '\n')
@@ -4526,12 +4541,19 @@ attribute_hidden SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	            (long long)nread + 1);
 	if(c == R_EOF) goto no_more_lines;
     }
-    if(!wasopen) {endcontext(&cntxt); con->close(con);}
+    if(!wasopen) {
+	data.con = NULL; /* do not close again if closing raises an error */
+	con->close(con);
+    }
+    endcontext(&cntxt);
     UNPROTECT(1);
     free(buf);
     return ans;
 no_more_lines:
-    if(!wasopen) {endcontext(&cntxt); con->close(con);}
+    if(!wasopen) {
+	data.con = NULL;
+	con->close(con);
+    }
     if(nbuf > 0) { /* incomplete last line */
 	if(con->text && !con->blocking &&
 	   (strcmp(con->class, "gzfile") != 0)) {
@@ -4545,6 +4567,7 @@ no_more_lines:
 			con->description);
 	}
     }
+    endcontext(&cntxt);
     free(buf);
     if(nread < nnn && !ok)
 	error(_("too few lines read in readLines"));
