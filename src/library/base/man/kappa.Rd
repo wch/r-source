@@ -1,6 +1,6 @@
 % File src/library/base/man/kappa.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2024 R Core Team
+% Copyright 1995-2026 R Core Team
 % Copyright 2008-2010 The R Foundation
 % Distributed under GPL 2 or later
 
@@ -42,8 +42,9 @@ rcond(x, norm = c("O","I","1"), triangular = FALSE, uplo = "U", \dots)
     currently only other possible value is \code{"I"} for the infinity
     norm.  For \code{exact=TRUE}, norm may be \code{"2"}, or any of the
     possible \code{type} values in \code{\link{norm}(., type = *)}.}
-  \item{method}{a partially matched character string specifying the method to be used;
-    \code{"qr"} is the default for back-compatibility, mainly.}
+  \item{method}{only used when \code{exact} is false, a string (partially
+    matched), specifying the method to be used; \code{"qr"} is the default
+    for back-compatibility, mainly.}
   \item{inv_z}{for \code{exact=TRUE, norm != "2"}, (an approximation of)
     \code{\link{solve}(z)}; could be the pseudo inverse or a fast
     approximate inverse of the matrix \code{z}.  By default,
@@ -157,8 +158,28 @@ pm7 <- rbind(c( 1, 13, 18, 23, 35, 40, 45),
 
 kappa(pm7, exact=TRUE, norm="1") # no problem for square matrix
 
+kappasX <- function(x, inv)
+    vapply(c("M","2","1","F"), # NB:  'O' = 'I' = '1'
+           \(nrm) kappa(x, exact=TRUE, norm=nrm, inv_z=inv), 1.2)
+
+ip7 <- solve(pm7)
+signif(kap7 <- kappasX(pm7, inv = ip7), 3)
+##    M     2     1     F
+## 1.21  7.55  9.79 15.80
+
+## NB: The exact cond.numbers of  A  and A^{-1}  are identical (by definition) for invertible matrices :
+stopifnot(all.equal(kap7, kappasX(ip7, inv = pm7),
+                    tolerance = 4e-15))# 2.353e-16 (x86_64; Lapack 3.12.0)
+
+
+## Rectangular matrices -----------------------------------------------
+
 m76 <- pm7[,1:6]
 (m79 <- cbind(pm7, 50:56, 63:57))
+
+try( kappa(m76, exact=TRUE, norm="1") )# error in  solve().. must be square
+
+## ==> use pseudo-inverse _instead_ of solve() for rectangular {and norm != "2"}:
 
 ## Moore-Penrose inverse { ~= MASS::ginv(); differing tol (value & meaning)}:
 ## pinv := p(seudo) inv(erse)
@@ -168,7 +189,7 @@ pinv <- function(X, s = svd(X), tol = 64*.Machine$double.eps) {
     dx <- dim(X)
     ## X = U D V' ==> Result =  V {1/D} U'
     pI <- function(u,d,v) tcrossprod(v, u / rep(d, each = dx[1L]))
-    pos <- (d <- s$d) > max(tol * max(dx) * d[1L], 0)
+    pos <- if(tol <= 0) TRUE else (d <- s$d) > max(tol * max(dx) * d[1L], 0)
     if (all(pos))
         pI(s$u, d, s$v)
     else if (!any(pos))
@@ -180,30 +201,24 @@ pinv <- function(X, s = svd(X), tol = 64*.Machine$double.eps) {
     }
 }
 
-## rectangular
-kappa(m76, norm="1")
-try( kappa(m76, exact=TRUE, norm="1") )# error in  solve().. must be square
-
-## ==> use pseudo-inverse instead of solve() for rectangular {and norm != "2"}:
+## use pseudo-inverse for rectangular matrices:
 iZ <- pinv(m76)
-kappa(m76, exact=TRUE, norm="1", inv_z = iZ)
-kappa(m76, exact=TRUE, norm="M", inv_z = iZ)
-kappa(m76, exact=TRUE, norm="I", inv_z = iZ)
+kappasX(m76, iZ)
 
-iX <- pinv(m79)
-kappa(m79, exact=TRUE, norm="1", inv_z = iX)
-kappa(m79, exact=TRUE, norm="M", inv_z = iX)
-kappa(m79, exact=TRUE, norm="I", inv_z = iX)
+kappasX(m79, pinv(m79))
 
 ## Using a more "accurate" than default inv_z [example by Cleve Moler]:
 A <- rbind(c(4.1,   2.8),
            c(9.676, 6.608))
 kappa(A) # -> Inf
 kappa(A, exact=TRUE) # 8.675057e+15 ( 2-norm )
+## NB the other exact cond.numbers are *not* very useful here:
 
 ## now for the 1-norm :
 try(kappa(A, exact=TRUE, norm = "1")) #-> Error: computationally singular
-try(kappa(A, exact=TRUE, norm = "1",
-          inv_z = solve(A, tol = 1e-19))) # 5.22057e16 on x86_64 Linux with GCC
+
+## Works here, if you tell solve() to be tolerant :
+try(kappasX(A, inv = solve(A, tol = 1e-19))) # ~ 10^16 ("2": 5.22e16) on x86_64 Linux with GCC
+try(kappasX(A, inv = pinv (A, tol = 1e-19))) # NB: tol = <small> !
 }
 \keyword{math}
