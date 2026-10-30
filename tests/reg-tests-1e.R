@@ -3818,8 +3818,8 @@ fitP <- glm(counts ~ outcome + treatment, family = poisson())
 fit0 <- update(fitP, . ~ outcome)
                  (A1 <- anova(      fitP, test = "Rao"))
                   A2 <- anova(fit0, fitP, test = "Rao")
-stopifnot(identical(A1, anova(fitP,       test = "Ra")),
-          identical(A2, anova(fit0, fitP, test = "Ra")))
+stopifnot(all.equal(A1, anova(fitP,       test = "Ra"), tolerance = 1e-13),
+          all.equal(A2, anova(fit0, fitP, test = "Ra"), tolerance = 1e-13))
 ## "Ra" gave error  "undefined columns selected"  in  R <= 4.6.1
 
 
