@@ -420,19 +420,15 @@ str.default <-
 	    str1 <- str1.ts(object,
                             if(isA <- is.array(object)) arrLenstr(object) else le.str)
 	    std.attr <- c("tsp", "class", if(isA) "dim")
-        } else if(is.vector(object)
-	       || is.atomic(object)
-               ##f fails for formula:
-               ##f typeof(object) in {"symbol", "language"} =: is.symbolic(.):
-               ##f || (is.language(object) && !is.expression(object))
-               || (is.language(object) && !is.expression(object) && !any(cl == "formula")) ) {
+	} else if(is.atomic(object)
+	       || is.vector(object)
+	       || (is.language(object) && !is.expression(object) && !any(cl == "formula")) ) {
 	    if(is.atomic(object)) {
 		##-- atomic:   numeric{dbl|int} complex character logical raw
 		mod <- substr(mode(object), 1, 4)
-		if     (mod == "nume")
-		    mod <- if(is.integer(object)) "int" else "num"
+		if     (mod == "nume")   mod <- if(is.integer(object)) "int" else "num"
 		else if(mod == "char") { mod <- "chr"; char.like <- TRUE }
-		else if(mod == "comp") mod <- "cplx" #- else: keep 'logi'
+		else if(mod == "comp")   mod <- "cplx" #- else: keep 'logi'
 		if(is.array(object)) {
 		    le.str <- arrLenstr(object)
 		    if(m <- match("AsIs", cl, 0L)) ## workaround bad format.AsIs()
@@ -480,8 +476,7 @@ str.default <-
 	    ## ideally we would figure out if as.character has a
 	    ## suitable method and use that.
 	} else if(has.class) {
-	    cat("Class", if(length(cl) > 1) "es",
-		" '", paste(cl, collapse = "', '"), "' ", sep = "")
+	    cat(pClass(cl))
 	    ## If there's a str.<method>, it should have been called before!
 	    uo <- unclass(object)
 	    if(!is.null(attributes(uo)$class)) {
