@@ -463,12 +463,13 @@ make info     @r{to create info files (not @samp{refman} nor @samp{fullrefman}).
 @c texi2any from July 2021.
 You will not be able to build any of these unless you have
 @command{texi2any} version 6.8 or later installed, and for PDF you must
-have @command{texi2dvi} and @file{texinfo.tex} installed (which are part
-of the @acronym{GNU} @I{Texinfo} distribution but are, especially
-@file{texinfo.tex}, often made part of the @TeX{} package @pkg{texinfo} in
-re-distributions).  The path to @command{texi2any} can be set by macro
-@samp{TEXI2ANY} in @file{config.site}.  NB: @command{texi2any} requires
-@command{perl}.
+have @command{texi2dvi}, @file{texinfo.tex} and @command{pdftex}
+installed (the first two are part of the @acronym{GNU} @I{Texinfo}
+distribution but are, especially @file{texinfo.tex}, often made part of
+the @TeX{} package @pkg{texinfo} in re-distributions).  The path to
+@command{texi2any} can be set by macro @samp{TEXI2ANY} in
+@file{config.site}.  NB: @command{texi2any} and @command{texi2dvi}
+require @command{perl}.
 
 The PDF versions can be viewed using any recent PDF viewer: they have
 hyperlinks that can be followed.  The info files are suitable for
