@@ -1048,6 +1048,28 @@ static void cairoRect(double x0, double y0, double x1, double y1,
 {
     pX11Desc xd = (pX11Desc) dd->deviceSpecific;
 
+    /* solve issue with image(), similar to approach taken in RQuartz_Rect */
+    switch(xd->type) {
+    case PNG:
+    case PNGdirect:
+    case JPEG:
+    case TIFF:
+    case BMP:
+        if (R_ALPHA(gc->fill) > 0 && R_ALPHA(gc->col) == 0) {
+            double ox0 = x0, ox1 = x1, oy0 = y0, oy1 = y1;
+            x0 = round(x0);
+            x1 = round(x1);
+            y0 = round(y0);
+            y1 = round(y1);
+            if (x0 == x1 && (ox0 != ox1)) x1 += ox1 - ox0;
+            if (y0 == y1 && (oy0 != oy1)) y1 += oy1 - oy0;
+        }
+	break;
+    default:
+	/* No correction: SVG, PDF, PS */
+	break;
+    }
+
     bool grouping = cairoBegin(xd);
     cairo_new_path(xd->cc);
     cairoRectPath(x0, y0, x1, y1, xd);
