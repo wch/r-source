@@ -1050,6 +1050,17 @@ stopifnot(chltU[,1] == "2026", chltU[,2] == "01",
 ## indeed, the first fixes were not ok in R <= 4.6.1
 
 
+## Week zero --> weekday before January 1 now rejected (-> NA) --> PR#19124, comment #7
+oldLCctype <- Sys.getlocale("LC_CTYPE")
+for (lc in c("C", "C.UTF-8")) {
+    if (nzchar(suppressWarnings(Sys.setlocale("LC_CTYPE", lc))))
+        stopifnot(is.na(strptime("2026 0 0", "%Y %U %w", tz = "UTC")),
+                  is.na(strptime("2026 0 1", "%Y %W %w", tz = "UTC")))
+}
+Sys.setlocale("LC_CTYPE", oldLCctype)
+## ASan reported an out-of-bounds read in R-devel r90605 through r90798.
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
