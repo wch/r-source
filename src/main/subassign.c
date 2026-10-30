@@ -152,6 +152,9 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
 
     /* Enlarge the vector itself. */
     len = xlength(x);
+    /* x can be a fresh coercion that nothing else keeps alive (from
+       SubassignTypeFix()), and warning() and EnlargeNames() allocate. */
+    PROTECT(x);
     if (LOGICAL(GetOption1(R_CheckBoundsSymbol))[0])
 	warning(_("assignment outside vector/list limits (extending from %lld to %lld)"),
 		(long long)len, (long long)newlen);
@@ -174,6 +177,7 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
 	    if (getAttrib(x, R_DimNamesSymbol) != R_NilValue)
 		setAttrib(x, R_DimNamesSymbol, R_NilValue);
 	}
+	UNPROTECT(1); /* x */
 	return x;
     }
 
@@ -211,7 +215,6 @@ static SEXP EnlargeVector(SEXP x, R_xlen_t newlen)
 
     if (newtruelen > R_LEN_T_MAX) newtruelen = newlen;
 */
-    PROTECT(x);
     PROTECT(newx = allocVector(TYPEOF(x), newtruelen));
 
     /* Copy the elements into place. */

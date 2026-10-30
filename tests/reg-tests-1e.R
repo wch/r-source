@@ -4353,6 +4353,19 @@ unlink(td, recursive = TRUE)
 ## no NOTE in R <= 4.6.2
 
 
+## x[i] <- v coercing and extending x with check.bounds on -- PR#19111
+local({
+    op <- options(check.bounds = TRUE)
+    on.exit(options(op))
+    x <- c(TRUE, FALSE)
+    gctorture(TRUE)
+    suppressWarnings(x[5] <- 1L)
+    gctorture(FALSE)
+    stopifnot(identical(x, c(1L, 0L, NA, NA, 1L)))
+})
+## gave garbage, an error or a segfault in R <= 4.6.2
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
