@@ -131,6 +131,9 @@
       \command{sed} error when the new \option{--package-metadata} linker flag
       is involved; an \samp{s}-command delimiter other than \samp{:} was needed
       (\PR{19060}, thanks to \I{Jeroen Ooms} and \I{Dirk Eddelbuettel}).
+
+      \item \code{libzstd} is required.  For \R 4.7.0 only, this can be
+      circumvented by configuring with \option{--without-libzstd}.
     }
   }
 
@@ -746,7 +749,7 @@
       \command{tar} programs do).
 
       \item \code{extSoftVersion()[["zstd"]]} now reports the version of
-      the \command{zstd} compression library if available, thanks to
+      the \code{libzstd} compression library if available, thanks to
       \I{Trevor Davis}' patch proposal in \PR{18914}.
 
       \item New logical \code{option()} \code{quiet}, defaulting to

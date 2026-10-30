@@ -919,7 +919,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 	---------------------------------------------------
 
-Binary distributions of R may include compiled code from the zstd
+Binary distributions of R may include compiled code from the libzstd
 reference library which is distributed under BSD-3 or GPL-2, and used
 here under the latter.
 

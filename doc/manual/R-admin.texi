@@ -3435,9 +3435,10 @@ future---@command{configure} warns when it is used.
 Library @code{libdeflate} (@url{https://github.com/ebiggers/libdeflate})
 is used by @code{memCompress()} and @code{memDecompress()} if available.
 
-The compression library for @code{zstd} is used if available.  It might
-be named @code{libzstd} or be part of a package including the
-@command{zstd} utilities.
+The Zstandard compression library and its headers are required.  It
+might be named @code{libzstd}@footnote{install Linux package
+@code{libzstd-dev} or @code{libzstd-devel}.} or be part of a package
+including the @command{zstd} utilities.
 
 Use of the X11 clipboard selection requires the @code{Xmu} headers and
 libraries.  These are normally part of an X11 installation (e.g.@: the
@@ -3464,8 +3465,8 @@ environment variable @env{R_GSCMD} at that time.
 @enindex R_GSCMD
 
 At the time of writing a full installation on Fedora Linux used the
-following packages and their development versions, and this may provide
-a useful checklist for other systems:
+following packages and their development versions and dependencies, and
+this may provide a useful checklist for other systems:
 @example
 bzip2 cairo fontconfig freetype fribidi gcc gcc-gfortran gcc-c++ glib2
 glibc harfbuzz lapack libX11 libXext libXt libcurl libdeflate libicu
@@ -3473,7 +3474,7 @@ libjpeg libpng libtiff libtirpc libxcrypt libzstd ncurses pango
 pkgconf-pkg-config pcre2 readline tcl tk xz zlib
 @end example
 @noindent
-plus, preferably a TeX installation and Java.
+plus, preferably, a TeX installation, @code{texinfo} and Java.
 
 
 
@@ -5175,7 +5176,8 @@ Binary components @code{pcre2}@footnote{If compiling it from source on
 @cputype{arm64}, @code{pcre2} (at least up to version 10.39) needs to be
 built without JIT support (the default) as the @R{} build segfaults if
 that is enabled, so do run @code{make check} on your build.}, @code{xz}
-(for @code{liblzma}) and @code{zstd} from
+(for @code{liblzma}) and @code{zstd}@footnote{which supplies
+@code{libstd} but not the command-line utilities.} from
 @uref{https://mac.r-project.org/bin/}.  There is an @R{} script there to
 help with installing all the needed components.  (At the time of writing
 @code{install.libs("r-base-dev")} installed neither @code{readline5} nor

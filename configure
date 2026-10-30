@@ -1090,6 +1090,7 @@ with_2025blas
 with_readline
 with_pcre2
 with_pcre1
+with_libzstd
 with_aqua
 with_tcltk
 with_tcl_config
@@ -1893,6 +1894,7 @@ Optional Packages:
   --with-pcre2            use PCRE2 library (if available) [yes]
   --with-pcre1            use PCRE1 library (if available and PCRE2 is not)
                           [yes]
+  --with-libzstd          use zstd library if available [yes]
   --with-aqua             macOS only: use Aqua (if available) [yes]
   --with-tcltk            use Tcl/Tk (if available), or specify its library
                           dir [yes]
@@ -4876,6 +4878,23 @@ fi
 
 else case e in #(
   e) use_pcre1=no ;;
+esac
+fi
+
+
+## zstd
+
+# Check whether --with-libzstd was given.
+if test ${with_libzstd+y}
+then :
+  withval=$with_libzstd; if test "${withval}" = no; then
+  use_libzstd=no
+else
+  use_libzstd=yes
+fi
+
+else case e in #(
+  e) use_libzstd=yes ;;
 esac
 fi
 
@@ -27569,7 +27588,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:27572: \"$ac_link\") >&5
+(eval echo $as_me:27591: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -27647,7 +27666,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:27650: \"$ac_link\") >&5
+(eval echo $as_me:27669: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -52926,7 +52945,8 @@ else
 fi
 
 
-## Zstd headers and libraries.
+## libzstd headers and libraries.
+if test "x$use_libzstd" = xyes; then
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for ZSTD_versionNumber in -lzstd" >&5
 printf %s "checking for ZSTD_versionNumber in -lzstd... " >&6; }
 if test ${ac_cv_lib_zstd_ZSTD_versionNumber+y}
@@ -53079,11 +53099,15 @@ fi
 printf "%s\n" "#define HAVE_ZSTD_DECOMPRESSBOUND 1" >>confdefs.h
 
   fi
-# so far we don't require it, but we might
-#else
-#  AC_MSG_ERROR("libzstd library and headers are required")
+# Required as from R 4.7.0
+else
+  as_fn_error $? "\"libzstd library and headers are required\"" "$LINENO" 5
 fi
 
+else
+# for completeness as R_ZSTD sets it
+have_zstd = no
+fi
 
 ## libdeflate headers and libraries.
 

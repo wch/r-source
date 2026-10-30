@@ -3851,9 +3851,9 @@ if test "x${have_zstd}" = xyes; then
   if test "x${have_zstd_decompressbound}" = xyes; then
     AC_DEFINE(HAVE_ZSTD_DECOMPRESSBOUND, 1, [Define if zstd has ZSTD_decompressBound])
   fi
-# so far we don't require it, but we might
-#else
-#  AC_MSG_ERROR("libzstd library and headers are required")
+# Required as from R 4.7.0
+else
+  AC_MSG_ERROR("libzstd library and headers are required")
 fi
 ])# R_ZSTD
 
