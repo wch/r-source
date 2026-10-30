@@ -466,12 +466,13 @@ make info     @r{to create info files (not @samp{refman} nor @samp{fullrefman}).
 @c texi2any from July 2021.
 You will not be able to build any of these unless you have
 @command{texi2any} version 6.8 or later installed, and for PDF you must
-have @command{texi2dvi} and @file{texinfo.tex} installed (which are part
-of the @acronym{GNU} @I{Texinfo} distribution but are, especially
-@file{texinfo.tex}, often made part of the @TeX{} package @pkg{texinfo} in
-re-distributions).  The path to @command{texi2any} can be set by macro
-@samp{TEXI2ANY} in @file{config.site}.  NB: @command{texi2any} requires
-@command{perl}.
+have @command{texi2dvi}, @file{texinfo.tex} and @command{pdftex}
+installed (the first two are part of the @acronym{GNU} @I{Texinfo}
+distribution but are, especially @file{texinfo.tex}, often made part of
+the @TeX{} package @pkg{texinfo} in re-distributions).  The path to
+@command{texi2any} can be set by macro @samp{TEXI2ANY} in
+@file{config.site}.  NB: @command{texi2any} and @command{texi2dvi}
+require @command{perl}.
 
 The PDF versions can be viewed using any recent PDF viewer: they have
 hyperlinks that can be followed.  The info files are suitable for
@@ -5171,16 +5172,16 @@ A Fortran compiler. @xref{Fortran compilers}.
 
 @item
 Binary components @code{pcre2}@footnote{If compiling it from source on
-@cputype{arm64}, @code{pcre2} (at least up to version 10.39) needs to
-be built without JIT support (the default) as the @R{} build segfaults
-if that is enabled, so do run @code{make check} on your build.} and
-@code{xz} (for @code{liblzma}) from
+@cputype{arm64}, @code{pcre2} (at least up to version 10.39) needs to be
+built without JIT support (the default) as the @R{} build segfaults if
+that is enabled, so do run @code{make check} on your build.}, @code{xz}
+(for @code{liblzma}) and @code{zstd} from
 @uref{https://mac.r-project.org/bin/}.  There is an @R{} script there to
 help with installing all the needed components.  (At the time of writing
 @code{install.libs("r-base-dev")} installed neither @code{readline5} nor
 those needed to support @I{Pango}.)
 
-Apple Silicon users of @I{Sonoma} (14) or later want the @code{darwin23}
+Apple Silicon users of @I{Sonoma} (macOS 14) or later want the @code{darwin23}
 components.  Intel users want the @code{darwin20} components: the
 @code{darwin17} ones are for macOS 10.13--10.15.
 
