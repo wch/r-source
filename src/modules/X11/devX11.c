@@ -2651,12 +2651,24 @@ static int translate_key(KeySym keysym)
 	case XK_Home: return knHOME;
 	case XK_Insert:  	return knINS;
 	case XK_Delete:  	return knDEL;
+	/* Keypad navigation keys (NumLock off) */
+	case XK_KP_Left:      return knLEFT;
+	case XK_KP_Up:        return knUP;
+	case XK_KP_Right:     return knRIGHT;
+	case XK_KP_Down:      return knDOWN;
+	case XK_KP_Page_Up:   return knPGUP;
+	case XK_KP_Page_Down: return knPGDN;
+	case XK_KP_End:       return knEND;
+	case XK_KP_Home:      return knHOME;
+	case XK_KP_Insert:    return knINS;
+	case XK_KP_Delete:    return knDEL;
 	}
     }
     return knUNKNOWN;
 }
 
-/* User-friendly names for use in X11.options(key = ...) */
+/* User-friendly names for use in X11.options(key = ...) corresponding
+   to enum R_KeyName in R_ext/GraphicsDevice.h */
 
 static const char *X11_keynames[] = {
     "Left", "Up", "Right", "Down",
@@ -2732,8 +2744,12 @@ static void X11_HistoryKey(pDevDesc dd, XKeyEvent *xkey)
     if (xkey->state & ControlMask) {
 	keystart += 5;
 	snprintf(keybuffer, sizeof(keybuffer), "ctrl-");
+	KeySym rawsym = XLookupKeysym(xkey, 0);
+	KeySym lower_ks, upper_ks;
+	XConvertCase(rawsym, &lower_ks, &upper_ks);
 	xkey->state &= ~ControlMask;
-	xkey->state |= ShiftMask;
+	if (upper_ks != lower_ks)
+	    xkey->state |= ShiftMask;
     }
     XLookupString(xkey, keystart,
 		  (int)(sizeof(keybuffer) - (keystart - keybuffer)),
@@ -2877,8 +2893,12 @@ static void X11_eventHelper(pDevDesc dd, int code)
 	    if (event.xkey.state & ControlMask) {
 	    	keystart += 5; 
 	    	snprintf(keybuffer, 13, "ctrl-"); /* report control keys using labels like "ctrl-A" */
+		KeySym rawsym = XLookupKeysym(&event.xkey, 0);
+		KeySym lower_ks, upper_ks;
+		XConvertCase(rawsym, &lower_ks, &upper_ks);
 	    	event.xkey.state &= ~ControlMask;
-	    	event.xkey.state |= ShiftMask;
+	    	if (upper_ks != lower_ks)
+		    event.xkey.state |= ShiftMask;
 	    }
       	    XLookupString(&event.xkey, keystart, 
 			  sizeof(keybuffer)-(int)(keystart-keybuffer), 
