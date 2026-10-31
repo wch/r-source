@@ -441,6 +441,14 @@
 
 
 .InitTraceFunctions <- function(envir)  {
+    ## Reproducible builds: stamp the class prototype with the value of
+    ## SOURCE_DATE_EPOCH when set (as done for reproducible builds), falling
+    ## back to the wall-clock Sys.time() otherwise (upstream behaviour).
+    .dateCreated <- local({
+        t <- Sys.getenv("SOURCE_DATE_EPOCH")
+        if (nzchar(t)) as.POSIXct(as.numeric(t), origin = "1970-01-01", tz = "UTC")
+        else Sys.time()
+    })
     setClass("traceable", representation(original = "PossibleMethod", source = "environment"), contains = "VIRTUAL",
              where = envir); clList <- "traceable"
     ## create the traceable classes
@@ -452,7 +460,7 @@
     }
     setClass("sourceEnvironment", contains = "environment",
              representation(packageName = "character", dateCreated = "POSIXt", sourceFile = "character"),
-             prototype = prototype( packageName = "", dateCreated = Sys.time(), sourceFile = ""))
+             prototype = prototype( packageName = "", dateCreated = .dateCreated, sourceFile = ""))
     clList <- c(clList, "sourceEnvironment")
     assign(".SealedClasses", c(get(".SealedClasses", envir), clList), envir)
     setMethod("initialize", "traceable",
