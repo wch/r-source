@@ -3421,9 +3421,10 @@ future---@command{configure} warns when it is used.
 Library @code{libdeflate} (@url{https://github.com/ebiggers/libdeflate})
 is used by @code{memCompress()} and @code{memDecompress()} if available.
 
-The compression library for @code{zstd} is used if available.  It might
-be named @code{libzstd} or be part of a package including the
-@command{zstd} utilities.
+The Zstandard compression library and headers are used if available.  It
+might be named @code{libzstd}@footnote{install Linux package
+@code{libstd-dev} or @code{libzstd-devel}.} or be part of a package
+including the @command{zstd} utilities.
 
 Use of the X11 clipboard selection requires the @code{Xmu} headers and
 libraries.  These are normally part of an X11 installation (e.g.@: the
@@ -3450,8 +3451,8 @@ environment variable @env{R_GSCMD} at that time.
 @enindex R_GSCMD
 
 At the time of writing a full installation on Fedora Linux used the
-following packages and their development versions, and this may provide
-a useful checklist for other systems:
+following packages and their development versions and dependencies, and
+this may provide a useful checklist for other systems:
 @example
 bzip2 cairo fontconfig freetype fribidi gcc gcc-gfortran gcc-c++ glib2
 glibc harfbuzz lapack libX11 libXext libXt libcurl libdeflate libicu
@@ -3459,7 +3460,7 @@ libjpeg libpng libtiff libtirpc libxcrypt libzstd ncurses pango
 pkgconf-pkg-config pcre2 readline tcl tk xz zlib
 @end example
 @noindent
-plus, preferably a TeX installation and Java.
+plus, preferably, a TeX installation, @code{texinfo} and Java.
 
 
 @node Tcl/Tk
@@ -4482,7 +4483,7 @@ specified as part of @code{FCFLAGS}.
 The search mechanism can be changed using the configure variable
 @code{FC} which specifies the command that runs the Fortran compiler.
 If your Fortran compiler is not one of these (for example,
-@command{flang}), specfy if in the configure variable @code{FC}.  If it
+@command{flang}), specify it in the configure variable @code{FC}.  If it
 is not on your path, use this to specify its full path.
 
 If your Fortran libraries are in slightly peculiar places, you should
@@ -4913,7 +4914,7 @@ on Linux is to use the C++ runtime @code{libstdc++} associated with the
 installed @command{g++}.  Using the runtime from the
 @url{https://libcxx.llvm.org/, @code{libc++}} project (Fedora
 @acronym{RPM} @code{libcxx-devel}) is tested regularly. The version of
-@code{libc++} in LLVM 23 tidied up `transitive inclusions' in C++ system
+@code{libc++} in @I{LLVM} 23 tidied up `transitive inclusions' in C++ system
 headers and so uncovered errors in many packages which used C++ headers
 but did not include them directly.
 
@@ -5150,16 +5151,17 @@ A Fortran compiler. @xref{Fortran compilers}.
 
 @item
 Binary components @code{pcre2}@footnote{If compiling it from source on
-@cputype{arm64}, @code{pcre2} (at least up to version 10.39) needs to
-be built without JIT support (the default) as the @R{} build segfaults
-if that is enabled, so do run @code{make check} on your build.} and
-@code{xz} (for @code{liblzma}) from
+@cputype{arm64}, @code{pcre2} (at least up to version 10.39) needs to be
+built without JIT support (the default) as the @R{} build segfaults if
+that is enabled, so do run @code{make check} on your build.}, @code{xz}
+(for @code{liblzma}) and @code{zstd}@footnote{which supplies
+@code{libstd} but not the command-line utilities.} from
 @uref{https://mac.r-project.org/bin/}.  There is an @R{} script there to
 help with installing all the needed components.  (At the time of writing
 @code{install.libs("r-base-dev")} installed neither @code{readline5} nor
 those needed to support @I{Pango}.)
 
-Apple Silicon users of @I{Sonoma} (14) or later want the @code{darwin23}
+Apple Silicon users of @I{Sonoma} (macOS 14) or later want the @code{darwin23}
 components.  Intel users want the @code{darwin20} components: the
 @code{darwin17} ones are for macOS 10.13--10.15.
 
@@ -5176,7 +5178,7 @@ sudo tar -xvzf xz-5.8.3-darwin.23-arm64.tar.xz -C /
 
 Downloading these components in a browser can be problematical: if you
 run into problems try removing extended attributes before
-un-@code{tar}-ing by e.g.
+@I{un-@code{tar}-ing} by e.g.
 @example
 xattr -c pcre2-10.47-darwin.23-arm64.tar.gz
 @end example
@@ -5386,7 +5388,7 @@ symlink is broken, the driver will issue a warning and use @code{xcrun
 is used when using @command{gfortran} to link, so not when building @R{}
 but when installing a few packages.)
 
-This has problems identifiying macOS versions 26 and later: use
+This has problems identifying macOS versions 26 and later: use
 @example
 FC="/opt/gfortran/bin/gfortran -mmacosx-version-min=26.0"
 @end example

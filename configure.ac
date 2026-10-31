@@ -3274,6 +3274,9 @@ fi
 if test "x$have_libdeflate" = xyes; then
   R_SH_VAR_ADD(r_external_libs, [libdeflate], [, ])
 fi
+if test "x$have_zstd" = xyes; then
+  R_SH_VAR_ADD(r_external_libs, [zstd], [, ])
+fi
 
 r_capabilities=
 r_no_capabilities=

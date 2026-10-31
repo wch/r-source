@@ -5,6 +5,21 @@
 \title{R News}
 \encoding{UTF-8}
 
+\section{\Rlogo Changes in R 4.6.2 patched}{
+  \subsection{New Features}{
+    \itemize{
+      \item \code{capabilities()} now reports if \code{zstd} compression
+      is supported.
+    }
+  }
+  \subsection{Installation}{
+    \itemize{
+      \item \command{configure} now reports if \code{zstd} support was found.
+    }
+  }
+}
+
+
 \section{\Rlogo Changes in R 4.6.2}{
   \subsection{Bug Fixes}{
     \itemize{
