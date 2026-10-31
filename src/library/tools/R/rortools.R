@@ -55,7 +55,15 @@
     ## Assume all given ids are canonical.
     urls <- sprintf("https://ror.org/%s", x)
     resp <- .curl_multi_run_worker(urls, nobody = TRUE)
-    vapply(resp, .curl_response_status_code, 0L) == 200L
+    ## <FIXME>
+    ## What we really want is
+    ##   vapply(resp, .curl_response_status_code, 0L) == 200L
+    ## However, as of 2026-10 the ROR web server apparently is under
+    ## very heavy load and typically gives 429 ... so for now do not
+    ## take this as indicating that the given ID is not alive.
+    ## Change back eventually, or use a better test ...
+    vapply(resp, .curl_response_status_code, 0L) %in% c(200L, 429L)
+    ## </FIXME>
 }
 
 ### ** ROR_ID_from_person
