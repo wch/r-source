@@ -8110,7 +8110,8 @@ function(dir, localOnly = FALSE, pkgSize = NA)
                 !grepl("/issues(/new(/choose)?)?/?$", z$path))
                  paste0(.gh_repo_URL(v), "/issues")
              else if(endsWith(z$authority, "gitlab.com") &&
-                     !endsWith(z$path, "/-/issues"))
+                     !endsWith(z$path, "/-/issues") &&
+                     !endsWith(z$path, "/-/work_items"))
                  paste0(.gh_repo_URL(v), "/-/issues")
              else
                  NULL
