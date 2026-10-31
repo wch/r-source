@@ -85,8 +85,8 @@ mkRbase:
 
 mkdesc:
 	@if test -f DESCRIPTION; then \
-	  if test "$(PKG_BUILT_STAMP)" != ""; then \
-	    $(ECHO) "tools:::.install_package_description('.', '$(top_builddir)/library/${pkg}', '$(PKG_BUILT_STAMP)')" | \
+	  if test "$(SOURCE_DATE_EPOCH)" != ""; then \
+	    $(ECHO) "tools:::.install_package_description('.', '$(top_builddir)/library/${pkg}', '$(SOURCE_DATE_EPOCH)')" | \
 	    R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null ; \
 	  else \
 	  $(ECHO) "tools:::.install_package_description('.', '$(top_builddir)/library/${pkg}')" | \
@@ -97,8 +97,9 @@ mkdesc:
 ## for base and tools
 mkdesc2:
 	@$(INSTALL_DATA) DESCRIPTION $(top_builddir)/library/$(pkg)
-	@if test "$(PKG_BUILT_STAMP)" != ""; then \
-	  $(ECHO) "Built: R $(VERSION); ; $(PKG_BUILT_STAMP); $(R_OSTYPE)" \
+	@if test "$(SOURCE_DATE_EPOCH)" != ""; then \
+	  $(ECHO) "Built: R $(VERSION); ; \
+	     `echo ${SOURCE_DATE_EPOCH} | awk '{print strftime("%a %b %d %H:%M:%S %p %Z %Y",$$1, 1)}'`; $(R_OSTYPE)" \
 	     >> $(top_builddir)/library/$(pkg)/DESCRIPTION ; \
 	else \
 	  $(ECHO) "Built: R $(VERSION); ; `TZ=UTC date`; $(R_OSTYPE)" \

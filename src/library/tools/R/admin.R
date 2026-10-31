@@ -66,10 +66,11 @@ function(dir, outDir, builtStamp=character())
         builtStamp <- format(Sys.time(), "%Y-%m-%d %H:%M:%S",
                              tz = "UTC", usetz = TRUE)
     } else {
-        ## Debian may have passed a timestamp in RFC 2822/5322 format,
-        ## if it parses use it but as ISO 8601, UTC, no sub-seconds
+        ## Reproducible Builds (by Debian and others) may set a 'SOURCE_DATE_EPOCH'
+        ## environment variable which basepkg.mk passes here as character; we format
+        ## it as ISO 8601, UTC, no subseconds
         prev <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
-        if (!is.na(res <- strptime(builtStamp, "%a, %d %b %Y %T %z", tz="UTC")))
+        if (!is.na(res <- as.POSIXct(as.numeric(builtStamp), tz="UTC")))
             builtStamp <- format(res, "%Y-%m-%d %H:%M:%S",
                                  tz = "UTC", usetz = TRUE)
         Sys.setlocale("LC_TIME", prev)
