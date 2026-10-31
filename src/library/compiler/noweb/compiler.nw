@@ -4353,7 +4353,7 @@ Complex assignment expressions are compiled by [[cmpComplexAssign]].
 cmpComplexAssign <- function(symbol, lhs, value, superAssign, cb, cntxt) {
     <<select complex assignment instructions>>
     <<protect the stack during a non-top-level complex assignment>>
-    <<compile the right hand side value expression>>
+    <<compile the right hand side value expression for a complex assignment>>
     <<compile the left hand side call>>
     <<unprotect the stack after a not-top-level complex assignment>>
     <<for tail calls return the value invisibly>>
@@ -4491,6 +4491,26 @@ if (! cntxt$toplevel) cb$putcode(INCLNKSTK.OP)
 <<unprotect the stack after a not-top-level complex assignment>>=
 if (! cntxt$toplevel) cb$putcode(DECLNKSTK.OP)
 @
+
+The [[INCLNKSTK]] instruction pushes a value on the stack that the
+[[DECLNKSTK]] instruction uses to restore the stack protection state
+and then removes. So in a non-top-level complex assignment the stack
+has changed from the loop top level state by the time the right hand
+side value is computed, and [[break]] or [[next]] calls in the right
+hand side value expression cannot be implemented as [[GOTO]]
+instructions: these would skip the [[DECLNKSTK]] instruction and leave
+the extra value on the stack. An argument context is therefore used
+for compiling the right hand side value expression in this case. In a
+top level complex assignment the right hand side value is computed
+before anything is placed on the stack, and a non-tail-call context is
+used as for simple assignments.
+<<compile the right hand side value expression for a complex assignment>>=
+if (cntxt$toplevel)
+    ncntxt <- make.nonTailCallContext(cntxt)
+else
+    ncntxt <- make.argContext(cntxt)
+cmp(value, cb, ncntxt)
+@ %def
 
 
 \subsection{Compiling setter calls}

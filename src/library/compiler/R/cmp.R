@@ -1727,7 +1727,10 @@ cmpComplexAssign <- function(symbol, lhs, value, superAssign, cb, cntxt) {
         endOP <- ENDASSIGN.OP
     }
     if (! cntxt$toplevel) cb$putcode(INCLNKSTK.OP)
-    ncntxt <- make.nonTailCallContext(cntxt)
+    if (cntxt$toplevel)
+        ncntxt <- make.nonTailCallContext(cntxt)
+    else
+        ncntxt <- make.argContext(cntxt)
     cmp(value, cb, ncntxt)
     csi <- cb$putconst(symbol)
     cb$putcode(startOP, csi)
