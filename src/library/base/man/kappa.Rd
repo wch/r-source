@@ -167,7 +167,8 @@ signif(kap7 <- kappasX(pm7, inv = ip7), 3)
 ##    M     2     1     F
 ## 1.21  7.55  9.79 15.80
 
-## NB: The exact cond.numbers of  A  and A^{-1}  are identical (by definition) for invertible matrices :
+## NB: The exact cond.numbers of  A  and A^{-1}  are identical
+## (by definition) for invertible matrices :
 stopifnot(all.equal(kap7, kappasX(ip7, inv = pm7),
                     tolerance = 4e-15))# 2.353e-16 (x86_64; Lapack 3.12.0)
 
