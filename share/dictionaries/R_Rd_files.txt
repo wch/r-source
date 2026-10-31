@@ -206,6 +206,7 @@ pharmacokinetics
 plaintext
 polyline
 polylines
+postprocessed
 preallocations
 precisions
 precomputed
@@ -237,6 +238,7 @@ recombinant
 recurse
 recursed
 redirections
+redisplayed
 reflectance
 rematched
 rematching
@@ -262,6 +264,7 @@ segfaulting
 selectable
 semantical
 Shellsort
+shortcutting
 shorthands
 SIGINT
 sigmoid
@@ -274,6 +277,7 @@ Stangle
 stateful
 stderr
 stdout
+stroker
 stylesheet
 subclassed
 subclasses
@@ -321,6 +325,7 @@ ultrametric
 unabbreviated
 unabsorbed
 unadjusted
+unallocated
 uncalibrated
 unclassed
 unclosed
