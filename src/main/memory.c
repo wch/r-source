@@ -1196,17 +1196,24 @@ static void AdjustHeapSize(R_size_t size_needed)
 	if (adjust_count < 50) {
 	    adjust_count++;
 
-	    /* estimate next in-use count by assuming linear growth */
-	    R_size_t next_in_use = R_NodesInUse + (R_NodesInUse - last_in_use);
+	    /* A decrease in live nodes contributes no predicted growth. */
+	    double growth = R_NodesInUse > last_in_use
+		? (double)(R_NodesInUse - last_in_use) : 0.0;
+
+	    /* Try to achieve and occupancy rate of R_NGrowFrac. */
+	    double target = ((double) R_NodesInUse + growth) / R_NGrowFrac;
 	    last_in_use = R_NodesInUse;
 
-	    /* try to achieve and occupancy rate of R_NGrowFrac */
-	    R_size_t next_nsize = (R_size_t) (next_in_use / R_NGrowFrac);
-	    if (next_nsize > R_NSize + change)
-		change = next_nsize - R_NSize;
+	    /* Exclude out-of-range conversion, including a rounded-up
+	       SIZE_MAX. */
+	    if (target < (double) R_SIZE_T_MAX) {
+		R_size_t next_nsize = (R_size_t) target;
+		if (next_nsize > R_NSize && next_nsize - R_NSize > change)
+		    change = next_nsize - R_NSize;
+	    }
 	}
 
-	if (R_MaxNSize >= R_NSize + change)
+	if (R_NSize <= R_MaxNSize && change <= R_MaxNSize - R_NSize)
 	    R_NSize += change;
     }
     else if (node_occup < R_NShrinkFrac) {
