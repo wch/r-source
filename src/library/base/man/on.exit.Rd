@@ -1,6 +1,6 @@
 % File src/library/base/man/on.exit.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{on.exit}
@@ -41,6 +41,14 @@ on.exit(expr = NULL, add = FALSE, after = TRUE)
   If multiple \code{on.exit} expressions are set using \code{add = TRUE}
   then all expressions will be run even if one signals an error.
 
+  \code{expr} is attached to the function call from whose evaluation
+  frame \code{on.exit} is called.  At top level, for example in a script
+  run by \command{Rscript}, there is no such call and \code{expr} is
+  silently discarded.  Within \code{\link{eval}}, which includes each
+  top-level expression of a file run by \code{\link{source}}, \code{expr}
+  is attached to the \code{eval} call, and so is run as soon as that
+  expression has been evaluated.
+
   This is a \sQuote{special} \link{primitive} function: it only
   evaluates the arguments \code{add} and \code{after}.
 }
@@ -58,8 +66,12 @@ on.exit(expr = NULL, add = FALSE, after = TRUE)
 \examples{
 require(graphics)
 
-opar <- par(mai = c(1,1,1,1))
-on.exit(par(opar))
-\dontshow{par(opar)}
+f <- function() {
+    opar <- par(mai = c(1,1,1,1))
+    on.exit(par(opar))
+    par("mai") # changed while f() runs
+}
+f()
+par("mai") # restored when f() exited
 }
 \keyword{programming}
