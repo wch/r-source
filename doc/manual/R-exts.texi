@@ -5688,6 +5688,13 @@ mitigate the effects of extended-precision calculations.  The platform
 most often seen to give different numerical results is @cputype{arm64} macOS,
 so be sure to include that in any empirical determination.
 
+@c Seen in many packages with MKL 2016.2.0
+@strong{Never} test floating-point results using @code{identical()} (even
+though @CRANpkg{testthat} allows it): use a tolerance.  Even running
+the same computation twice may give slightly different results as the
+steps may be re-ordered, some steps may be done in/saved to
+higher-precision, @dots{}.
+
 Tests which involve random inputs or non-deterministic algorithms should
 normally set a seed or be tested for many seeds.
 
