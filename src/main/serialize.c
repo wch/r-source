@@ -3125,7 +3125,7 @@ struct fileid {
     double size, mtime, ino, dev;
 };
 
-#define NC 100
+#define NC 256
 static int used = 0;
 static char *names[NC];
 static char *ptr[NC];
