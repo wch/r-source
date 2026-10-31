@@ -275,7 +275,7 @@ tre_parse_bracket_items(tre_parse_ctx_t *ctx, int negate,
   while (status == REG_OK)
     {
       skip = 0;
-      if (re == ctx->re_end)
+      if (re >= ctx->re_end)
 	{
 	  status = REG_EBRACK;
 	}
@@ -362,8 +362,8 @@ tre_parse_bracket_items(tre_parse_ctx_t *ctx, int negate,
 	  else
 	    {
 	      DPRINT(("tre_parse_bracket:   char: '%.*" STRF "'\n", REST(re)));
-	      if (*re == CHAR_MINUS && *(re + 1) != CHAR_RBRACKET
-		  && ctx->re != re)
+	      if (*re == CHAR_MINUS && re + 1 < ctx->re_end
+		  && *(re + 1) != CHAR_RBRACKET && ctx->re != re)
 		/* Two ranges are not allowed to share and endpoint. */
 		status = REG_ERANGE;
 	      min = max = *re++;
@@ -442,6 +442,12 @@ tre_parse_bracket(tre_parse_ctx_t *ctx, tre_ast_node_t **result)
   items = xmalloc(sizeof(*items) * max_i);
   if (items == NULL)
     return REG_ESPACE;
+
+  if (ctx->re >= ctx->re_end)
+    {
+      xfree(items);
+      return REG_EBRACK;
+    }
 
   if (*ctx->re == CHAR_CARET)
     {
@@ -750,7 +756,7 @@ tre_parse_bound(tre_parse_ctx_t *ctx, tre_ast_node_t **result)
 	    case L'<':
 	      DPRINT(("tre_parse:    max cost: '%.*" STRF "'\n", REST(r)));
 	      r++;
-	      while (*r == L' ')
+	      while (r < ctx->re_end && *r == L' ')
 		r++;
 	      cost_max = tre_parse_int(&r, ctx->re_end);
 	      if (cost_max < 0)
@@ -770,7 +776,9 @@ tre_parse_bound(tre_parse_ctx_t *ctx, tre_ast_node_t **result)
 		  const tre_char_t *sr = r;
 #endif /* TRE_DEBUG */
 		  int cost = tre_parse_int(&r, ctx->re_end);
-		  /* XXX - make sure r is not past end. */
+		  /* Make sure r is not past end. */
+		  if (r >= ctx->re_end)
+		    return REG_EBRACE;
 		  switch (*r)
 		    {
 		    case L'i':	/* Insert cost */
@@ -1027,6 +1035,7 @@ tre_parse(tre_parse_ctx_t *ctx)
 		     && c == CHAR_RPAREN && depth > 0)
 		    || (!(ctx->cflags & REG_EXTENDED)
 			&& (c == CHAR_BACKSLASH
+			    && ctx->re + 1 < ctx->re_end
 			    && *(ctx->re + 1) == CHAR_RPAREN)))
 		  {
 		    if (!(ctx->cflags & REG_EXTENDED) && depth == 0)
@@ -1224,6 +1233,7 @@ tre_parse(tre_parse_ctx_t *ctx)
 	      /* Handle "(?...)" extensions.  They work in a way similar
 		 to Perls corresponding extensions. */
 	      if (ctx->cflags & REG_EXTENDED
+		  && ctx->re + 1 < ctx->re_end
 		  && *(ctx->re + 1) == CHAR_QUESTIONMARK)
 		{
 		  int new_cflags = ctx->cflags;
@@ -1233,6 +1243,8 @@ tre_parse(tre_parse_ctx_t *ctx)
 		  ctx->re += 2;
 		  while (/*CONSTCOND*/(void)1,1)
 		    {
+		      if (ctx->re >= ctx->re_end)
+			return REG_BADPAT;
 		      if (*ctx->re == L'i')
 			{
 			  DPRINT(("tre_parse:	    icase: '%.*" STRF "\n",
@@ -1298,10 +1310,10 @@ tre_parse(tre_parse_ctx_t *ctx)
 				  REST(ctx->re)));
 			  /* A comment can contain any character except a
 			     right parenthesis */
-			  while (*ctx->re != CHAR_RPAREN
-				 && ctx->re < ctx->re_end)
+			  while (ctx->re < ctx->re_end
+				 && *ctx->re != CHAR_RPAREN)
 			    ctx->re++;
-			  if (*ctx->re == CHAR_RPAREN && ctx->re < ctx->re_end)
+			  if (ctx->re < ctx->re_end && *ctx->re == CHAR_RPAREN)
 			    {
 			      ctx->re++;
 			      break;
@@ -1468,7 +1480,7 @@ tre_parse(tre_parse_ctx_t *ctx)
 		  break;
 		case L'x':
 		  ctx->re++;
-		  if (ctx->re[0] != CHAR_LBRACE && ctx->re < ctx->re_end)
+		  if (ctx->re < ctx->re_end && ctx->re[0] != CHAR_LBRACE)
 		    {
 		      /* 8 bit hex char. */
 		      char tmp[3] = {0, 0, 0};
@@ -1476,12 +1488,12 @@ tre_parse(tre_parse_ctx_t *ctx)
 		      DPRINT(("tre_parse:  8 bit hex: '%.*" STRF "'\n",
 			      REST(ctx->re - 2)));
 
-		      if (tre_isxdigit(ctx->re[0]) && ctx->re < ctx->re_end)
+		      if (ctx->re < ctx->re_end && tre_isxdigit(ctx->re[0]))
 			{
 			  tmp[0] = (char)ctx->re[0];
 			  ctx->re++;
 			}
-		      if (tre_isxdigit(ctx->re[0]) && ctx->re < ctx->re_end)
+		      if (ctx->re < ctx->re_end && tre_isxdigit(ctx->re[0]))
 			{
 			  tmp[1] = (char)ctx->re[0];
 			  ctx->re++;
@@ -1499,7 +1511,7 @@ tre_parse(tre_parse_ctx_t *ctx)
 		      long val;
 		      int i = 0;
 		      ctx->re++;
-		      while (ctx->re_end - ctx->re >= 0)
+		      while (ctx->re < ctx->re_end)
 			{
 			  if (ctx->re[0] == CHAR_RBRACE)
 			    break;
@@ -1523,6 +1535,8 @@ tre_parse(tre_parse_ctx_t *ctx)
 		  /*FALLTHROUGH*/
 
 		default:
+		  if (ctx->re >= ctx->re_end)
+		    return REG_EESCAPE;
 		  if (tre_isdigit(*ctx->re))
 		    {
 		      /* Back reference. */
@@ -1671,7 +1685,8 @@ tre_parse(tre_parse_ctx_t *ctx)
 		}
 
 /* R change */
-	      if ((ctx->cflags & REG_LITERAL) && !ctx->re[0]) {
+	      if ((ctx->cflags & REG_LITERAL)
+		  && (ctx->re >= ctx->re_end || !ctx->re[0])) {
 		  DPRINT(("tre_parse:	    literal empty: '%.*" STRF "'\n",
 			  REST(ctx->re)));
 		  result = tre_ast_new_literal(ctx->mem, EMPTY, -1, -1);

@@ -4421,6 +4421,12 @@ stopifnot(exprs = {
 
 
 
+## grepRaw() with truncated TRE patterns -- PR#18995
+for (p in c("[", "[[:alpha:", "[a-", "(", "(?", "(?#", "\\x", "\\x4", "\\x{4"))
+    tryCatch(grepRaw(p, "abc"), error = function(e) NULL)
+## read past the end of the pattern in R <= 4.6.2 (visible under ASan)
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
