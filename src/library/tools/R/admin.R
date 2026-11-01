@@ -182,10 +182,8 @@ function(dir, packages)
             stop(gettextf("cannot open directory '%s'", meta_dir))
         package_info_dcf_file <- file.path(dir, p, "DESCRIPTION")
         package_info_rds_file <- file.path(meta_dir, "package.rds")
-        if(file_test("-nt",
-                     package_info_rds_file,
-                     package_info_dcf_file))
-            next
+        ## Always regenerate: the mtime of package.rds and DESCRIPTION
+        ## can tie, making the result of a "-nt" test non-deterministic.
         saveRDS(.split_description(.read_description(package_info_dcf_file)),
                  package_info_rds_file)
     }
