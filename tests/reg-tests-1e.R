@@ -4427,6 +4427,13 @@ for (p in c("[", "[[:alpha:", "[a-", "(", "(?", "(?#", "\\x", "\\x4", "\\x{4"))
 ## read past the end of the pattern in R <= 4.6.2 (visible under ASan)
 
 
+## integer literals outside the int range -- PR#19050
+stopifnot(identical(suppressWarnings(str2lang("4294967296L")), 4294967296),
+          identical(suppressWarnings(str2lang("0x80000000L")), 2147483648),
+          identical(str2lang("2147483647L"), 2147483647L))
+## converted out-of-range doubles to int (undefined behaviour) in R <= 4.6.2
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

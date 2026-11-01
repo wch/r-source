@@ -4992,12 +4992,12 @@ static int NumericValue(int c)
     /* Make certain that things are okay. */
     if(c == 'L') {
 	double a = R_atof(yytext);
-	int b = (int) a;
 	/* We are asked to create an integer via the L, so we check that the
 	   double and int values are the same. If not, this is a problem and we
 	   will not lose information and so use the numeric value.
+	   The range test comes first, as (int) a is undefined outside it.
 	*/
-	if(a != (double) b) {
+	if(a < INT_MIN || a > INT_MAX || a != (int) a) {
 	    if(GenerateCode) {
 		if(seendot == 1 && seenexp == 0)
 		    warning(_("integer literal %s contains decimal; using numeric value"), yytext);
