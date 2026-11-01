@@ -163,11 +163,11 @@ Rd2ex(Rd, out = "", defines = .Platform$OS.type,
   For example, this man page was:
   \enumerate{
     \item built on
-    \Sexpr[stage=build]{format(Sys.time(), "\%Y-\%m-\%d at \%H:\%M:\%S")},
+    \Sexpr[stage=build]{format(as.POSIXct(if (nzchar(t <- Sys.getenv("SOURCE_DATE_EPOCH"))) as.numeric(t) else Sys.time(), origin = "1970-01-01", tz = "UTC"), "\%Y-\%m-\%d at \%H:\%M:\%S")},
     \item installed on
-    \Sexpr[stage=install]{format(Sys.time(), "\%Y-\%m-\%d at \%H:\%M:\%S")}, and
+    \Sexpr[stage=install]{format(as.POSIXct(if (nzchar(t <- Sys.getenv("SOURCE_DATE_EPOCH"))) as.numeric(t) else Sys.time(), origin = "1970-01-01", tz = "UTC"), "\%Y-\%m-\%d at \%H:\%M:\%S")}, and
     \item rendered on
-    \Sexpr[stage=render]{format(Sys.time(), "\%Y-\%m-\%d at \%H:\%M:\%S")}.
+    \Sexpr[stage=render]{format(as.POSIXct(if (nzchar(t <- Sys.getenv("SOURCE_DATE_EPOCH"))) as.numeric(t) else Sys.time(), origin = "1970-01-01", tz = "UTC"), "\%Y-\%m-\%d at \%H:\%M:\%S")}.
   }
 }
 
