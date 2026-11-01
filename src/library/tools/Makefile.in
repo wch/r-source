@@ -45,8 +45,13 @@ all: Makefile DESCRIPTION
 	  fi \
 	fi
 	@$(MAKE) sysdata
-	@$(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
-	  R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null
+	@if test "$(SOURCE_DATE_EPOCH)" != ""; then \
+	  $(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"', '"$(SOURCE_DATE_EPOCH)"')" | \
+	    R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null ; \
+	else \
+	  $(ECHO) "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
+	    R_DEFAULT_PACKAGES=NULL $(R_EXE) > /dev/null ; \
+	fi
 
 mkR: mkR1
 
