@@ -37,6 +37,21 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
         read.table(...)
     }
 
+    my_read_csv <- function(file) {
+        scount <- unique(count.fields(file, sep = ";")[-1])
+        ccount <- unique(count.fields(file, sep = ",")[-1])
+        sOK <- length(scount) == 1L
+        cOK <- length(ccount) == 1L
+        if (!(cOK || sOK)) stop(gettextf("File '%s' has unequal number of fields", file))
+        ## If !sOK, use comma. If both OK, we could prefer the one
+        ## with more fields, but for now prefer comma only if scount == 1
+        if (!sOK || (cOK && sOK && scount == 1)) {
+            my_read_table(file, header = TRUE, sep = ",", as.is = FALSE)
+        } else {
+            my_read_table(file, header = TRUE, sep = ";", as.is = FALSE)
+        }
+    }
+
     stopifnot(is.character(list))
     names <- c(as.character(substitute(list(...))[-1L]), list)
 
@@ -177,10 +192,8 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
                                CSV = , csv = ,
                                csv.gz = , csv.bz2 = , csv.xz =
                                assign(name,
-                                      my_read_table(file,
-                                                    header = TRUE,
-                                                    sep = ";",
-                                                    as.is = FALSE),
+                                      ## support both ; (preferred) and , as separator
+                                      my_read_csv(file),
                                       envir = tmp_env),
                                found <- FALSE)
                     }
