@@ -56,9 +56,7 @@ ifneq "$(TEXI2ANY)" "missing"
 	@$(ECHO) "creating doc/manual/$@"
 	@$(TEXI2HTML) -I$(srcdir) \
 	  -c TOP_NODE_UP_URL=../html/index.html \
-	  $< -o $@.tmp || exit 1
-	@$(SED) -f $(srcdir)/quot.sed $@.tmp > $@
-	@rm -f $@.tmp
+	  $< -o $@ || exit 1
 
 .texi.info:
 	LC_ALL=C $(TEXI2ANY) --enable-encoding -I$(srcdir) $<

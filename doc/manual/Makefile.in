@@ -23,7 +23,7 @@ DISTFILES = \
 	resources.texi \
 	R-exts.R R-exts.c R-intro.R \
 	refman.top refman.bot \
-	ISBN Rman.css quot.sed \
+	ISBN Rman.css \
 	texi2epub.sh texi2html.sh
 SUBDIRS_WITH_NO_BUILD = images
 
@@ -129,9 +129,7 @@ docs: html
 	@$(ECHO) "creating doc/manual/$@"
 	@if test $(TEXI2ANY_VERSION_MAJ) -lt 7; then \
 	  mkdir -p tmp; \
-	  $(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp; \
-	  $(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html; \
-	  rm -f $@.tmp; \
+	  $(TEXI2HTML) --no-headers -I$(srcdir) $< -o tmp/$*.html; \
 	  $(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors "R Core Team"; \
 	  rm -R tmp; \
 	else \
@@ -143,9 +141,7 @@ docs: html
 
 .texi.mobi:
 	@mkdir -p tmp
-	@$(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp
-	@$(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html
-	@rm -f $@.tmp
+	@$(TEXI2HTML) --no-headers -I$(srcdir) $< -o tmp/$*.html
 	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors "R Core Team"
 	@rm -R tmp
 
@@ -154,9 +150,7 @@ R-intro.epub: R-intro.texi
 	@if test $(TEXI2ANY_VERSION_MAJ) -lt 7; then \
 	  mkdir -p tmp; \
 	  cp -R images tmp; \
-	  $(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp; \
-	  $(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html; \
-	  rm -f $@.tmp; \
+	  $(TEXI2HTML) --no-headers -I$(srcdir) $< -o tmp/$*.html; \
 	  $(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors \
 	    "W.N. Venables, D.M. Smith, R Core Team"; \
 	  rm -R tmp; \
@@ -170,9 +164,7 @@ R-intro.epub: R-intro.texi
 R-intro.mobi: R-intro.texi
 	@mkdir -p tmp
 	@cp -r images tmp
-	@$(TEXI2HTML) --no-headers -I$(srcdir) $< -o $@.tmp
-	@$(SED) -f $(srcdir)/quot.sed $@.tmp > tmp/$*.html
-	@rm -f $@.tmp
+	@$(TEXI2HTML) --no-headers -I$(srcdir) $< -o tmp/$*.html
 	$(EBOOK) tmp/$*.html $@ $(EBOOK_OPTS) --authors \
   "W.N. Venables, D.M. Smith, R Core Team"
 	@rm -R tmp
