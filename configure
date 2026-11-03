@@ -64238,6 +64238,10 @@ if test "${USE_INCLUDED_LIBINTL}" = "yes"; then
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Using the bundled libintl is deprecated." >&5
 printf "%s\n" "$as_me: WARNING: Using the bundled libintl is deprecated." >&2;}
 fi
+if test -z "${r_cv_prog_cc_m}"; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: No way was found to determine C dependencies, so incremental builds may be incomoplete." >&5
+printf "%s\n" "$as_me: WARNING: No way was found to determine C dependencies, so incremental builds may be incomoplete." >&2;}
+fi
 
 
 ### Local variables: ***

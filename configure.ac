@@ -3447,6 +3447,9 @@ fi
 if test "${USE_INCLUDED_LIBINTL}" = "yes"; then
   AC_MSG_WARN([Using the bundled libintl is deprecated.])
 fi
+if test -z "${r_cv_prog_cc_m}"; then
+  AC_MSG_WARN([No way was found to determine C dependencies, so incremental builds may be incomoplete.])
+fi
 
 
 ### Local variables: ***
