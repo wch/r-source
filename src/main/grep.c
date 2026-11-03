@@ -2056,6 +2056,8 @@ sub_buffer_size_init(size_t replen, int ns, int nsubs, int global,
     if (global) {
 	double dnns = (double)ns * (*maxrep + 1.) + 1000.;
 	if (dnns > 10000) dnns = 2.*ns + (double)replen + 1000.;
+	if (dnns < (double)ns + *maxrep + 1000.)
+	    dnns = (double)ns + *maxrep + 1000.;
 	*nns = sub_buffer_check_overflow(dnns);
     } else
 	*nns = sub_buffer_check_overflow((double)ns +

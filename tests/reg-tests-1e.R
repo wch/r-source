@@ -4464,6 +4464,20 @@ stopifnot(identical(Fold, getMethod(gnm, sig))) # 'Fold' restored
 ## in R <= 4.6.2
 
 
+## gsub() when the first replacement is longer than the initial buffer:
+## empty input, or a long match repeated by back-references
+local({
+    r <- strrep("b", 2000)
+    for(perl in c(FALSE, TRUE))
+        stopifnot(identical(gsub("", r, "", perl = perl), r),
+                  identical(gsub("(.*)", "\\1\\1\\1", strrep("a", 4000),
+                                 perl = perl), strrep("a", 12000)))
+    w <- strrep("\u00e9", 2000)
+    stopifnot(identical(gsub("", w, ""), w))
+})
+## overflowed a heap buffer, typically aborting, in R <= 4.6.2
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
