@@ -4434,6 +4434,36 @@ stopifnot(identical(suppressWarnings(str2lang("4294967296L")), 4294967296),
 ## converted out-of-range doubles to int (undefined behaviour) in R <= 4.6.2
 
 
+## methods::evalSource did not create S4 method tables when not caching,
+## so methods::insertSource did not trace S4 methods (PR#15242)
+pkg <- "methods"
+gnm <- "cbind2"
+sig <- c(x = "ANY", y = "ANY")
+def <- function (x, y, ...) NULL
+Fold <- getMethod(gnm, sig)
+sM <- substitute(setMethod(g, s, d), list(g = gnm, s = sig, d = def))
+dput(sM, tf <- tempfile())
+E0 <- evalSource(tf, package = pkg) # cache=FALSE by default
+stopifnot(is(E0, "sourceEnvironment"))
+L0 <- as.list(E0, all.names = TRUE) |> Filter(f = is.environment)
+stopifnot(length(L0) == 1L) # one method table (had zero)
+E1 <- L0[[1L]]
+L1 <- as.list(E1, all.names = TRUE)
+stopifnot(length(L1) == 1L) # one method
+Fnew <- L1[[1L]]
+stopifnot(identical(Fold, getMethod(gnm, sig)), # 'Fnew' not cached
+          identical(Fnew, setDataPart(Fold, `environment<-`(def, E0))))
+insertSource(E0, package = pkg, methods = gnm)
+Fwtr <- getMethod(gnm, sig)
+stopifnot(is(Fwtr, "MethodDefinitionWithTrace"),
+          identical(as(Fwtr, "MethodDefinition"),
+                    `environment<-`(Fnew, environment(Fold))),
+          identical(Fwtr@original, Fold))
+untrace(gnm, signature = sig)
+stopifnot(identical(Fold, getMethod(gnm, sig))) # 'Fold' restored
+## in R <= 4.6.2
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

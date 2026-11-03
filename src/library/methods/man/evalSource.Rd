@@ -53,9 +53,6 @@ details section); methods from this table will be inserted by
 \code{insertSource}.  In both cases, the revised function or method is
 inserted only if it differs from the version in the corresponding
 package as loaded.
-
-If \code{what} is omitted, the results of evaluating the source file
-will be compared to the contents of the package (see the details section).
 }
 \item{lock, cache}{
 Optional arguments to control the actions taken by \code{evalSource}.

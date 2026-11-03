@@ -574,6 +574,7 @@ setMethod <-
             .addToMetaTable(fdef, signature, definition, where, nSig)
         resetGeneric(f, fdef, mtable, gwhere, deflt) # Note: gwhere not used by resetGeneric
     }
+    else .addToMetaTable(fdef, signature, definition, where, nSig)
     ## assigns the methodslist object
     ## and deals with flags for primitives & for updating group members
     assignMethodsMetaData(f, whereMethods, fdef, where)

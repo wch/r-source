@@ -244,7 +244,7 @@
         }
         if(doEdit && is.environment(edit)) {
             ## trace with the version found in the edit environment
-            def <- .findNewDefForTrace(what, signature, edit, fromPackage)
+            def <- .findNewDefForTrace(what, .sigLabel(signature), edit, fromPackage)
             environment(def) <- environment(original)
             if(is.null(tracer) && is.null(exit)) {
                 newFun <- new(traceClass, original)
@@ -819,7 +819,7 @@ function (source, package = "",
         }
     }
     .mnames <- allMethodTables()
-    if(length(methods) > 0) {
+    if(!missing(methods)) {
 	notThere <- vapply(methods, function(fname)
 	    length(grep(fname, .mnames, fixed = TRUE)) == 0, NA)
         if(any(notThere)) {
@@ -891,7 +891,7 @@ function (source, package = "",
 .copyMethods <- function(f, tableName, env, envwhere) {
     differs <- function(o1, o2)
         !(is.function(o2) && # o2 can be NULL
-          identical(body(o2), body(o2)) && identical(args(o1), args(o2)))
+          identical(body(o1), body(o2)) && identical(args(o1), args(o2)))
     table <- get(tableName, envir=env)
     fdef <- getGeneric(f, where = envwhere)
     if(!is(fdef, "genericFunction")) {
@@ -907,7 +907,7 @@ function (source, package = "",
             curdef <- curTable[[this]]
             if(differs(def, curdef)) {
                 suppressMessages(
-                   .TraceWithMethods(f, signature = this, where = envwhere,
+                   .TraceWithMethods(f, signature = def@defined, where = envwhere,
                               edit = env))
                 TRUE
             } else
