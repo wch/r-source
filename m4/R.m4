@@ -331,23 +331,17 @@ dnl are different, as it creates dependencies of the form
 dnl   ${srcdir}/foo.o: /path/to/bar.h
 dnl Could be made to work, of course ...
 dnl Note also that it does not create a 'conftest.o: conftest.c' line.
-dnl For gcc 3.2 or better, we want to use '-MM' in case this works.
-dnl Also adopted by clang, so version test is not really appopriate.
-cc_minus_MM=false
-if test "${GCC}" = yes; then
-  case "${CC_VERSION}" in
-    1.*|2.*|3.[[01]]*) ;;
-    *) cc_minus_MM="${CC} -MM" ;;
-  esac
-fi
-for prog in "${cc_minus_MM}" "${CC} -M" "${CPP} -M" "cpp -M"; do
+dnl -MM was introduced in gcc 3.2 and later adopted by clang
+dnl cpp supports -MM, at least from GCC.
+for prog in "${CC} -MM" "${CC} -M" "${CPP} -MM" "cpp -MM" "${CPP} -M" "cpp -M"; do
   if ${prog} ${CPPFLAGS} conftest.c 2>/dev/null | \
       grep 'conftest.o: conftest.c' >/dev/null; then
     r_cv_prog_cc_m="${prog}"
     break
   fi
 done])
-if test "${r_cv_prog_cc_m}" = "${cc_minus_MM}"; then
+dnl don't use expanded version of $(CC)
+if test "${r_cv_prog_cc_m}" = "${CC} -MM"; then
   r_cv_prog_cc_m="\$(CC) -MM"
 elif  test "${r_cv_prog_cc_m}" = "${CC} -M"; then
   r_cv_prog_cc_m="\$(CC) -M"
@@ -400,6 +394,7 @@ EOF
 else
   cat << \EOF >> ${r_cc_rules_frag}
 .c.d:
+	@echo "don't know how to make \$[@] from \$<"
 	@echo > $[@]
 EOF
 fi
@@ -518,12 +513,13 @@ fi
 ## ------------
 ## Check whether the C++ compiler accepts '-M' for generating
 ## dependencies.
-## Not currently used -- better to use -MM if it were.
+## Not currently used in R nor for packages at least by R CMD INSTALL
+## Better to use -MM
 AC_DEFUN([R_PROG_CXX_M],
 [AC_REQUIRE([R_PROG_CC_M])
 AC_CACHE_CHECK([whether ${CXX} accepts -M for generating dependencies],
                [r_cv_prog_cxx_m],
-[echo "#include <math.h>" > conftest.cc
+[echo "#include <cmath>" > conftest.cc
 dnl No real point in using AC_LANG_* and ${ac_ext}, as we need to create
 dnl hard-wired suffix rules.  We could be a bit more careful as we
 dnl actually only test suffix '.cc'.
@@ -537,8 +533,7 @@ fi])
 ## R_PROG_CXX_MAKEFRAG
 ## -------------------
 ## Generate a Make fragment with suffix rules for the C++ compiler.
-## Used for both building R (Makeconf) and add-ons (etc/Makeconf).
-## <FIXME> If the .d rules were actually use, use CXXXPP? </FIXME>
+## Used for add-ons (etc/Makeconf).
 AC_DEFUN([R_PROG_CXX_MAKEFRAG],
 [r_cxx_rules_frag=Makefrag.cxx
 AC_REQUIRE([R_PROG_CXX_M])
