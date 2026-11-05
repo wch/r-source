@@ -15,6 +15,7 @@ getVaW <- function(expr, obj=FALSE) {
                             invokeRestart("muffleWarning") })
     structure(val %||% quote(._NULL_()), warning = W) # NULL cannot have attr.
 }
+all.equal13 <- function(x, y, ...) all.equal(x, y, tolerance = 1e-13, ...)
 options(nwarnings = 10000, # (rather than just 50)
         warn = 2, # only caught or asserted warnings
         width = 99) # instead of 80
@@ -471,10 +472,10 @@ assertWarnV(print(predict(mod2, newdata=nd, rankdeficient = "warnif")))
                   predict(mod2, newdata=nd, rankdeficient = "NA") # NA's but no warning
 nm5 <- as.character(1:5)
 stopifnot(exprs = {
-    all.equal(setNames(rep(0, 5), nm5), predict(mod2), tol=1e-13) # pred: 1.776e-15
+    all.equal13(setNames(rep(0, 5), nm5), predict(mod2)) # pred: 1.776e-15
     is.numeric(p2 <- predict(mod2, newdata = data.frame(y=rep(1,5)))) # no warning, no NA:
     identical(p2,    predict(mod2, newdata = data.frame(y=rep(1,5)), rankdeficient="NA"))
-    all.equal(p2, setNames(rep(1, 5), nm5), tol=1e-13)# off.= x+2y + x-y = 2x+y =4+1=5; 5+<intercept> = 1
+    all.equal13(p2, setNames(rep(1, 5), nm5))# off.= x+2y + x-y = 2x+y =4+1=5; 5+<intercept> = 1
 })
 ## fine, using model.offset() now
 
@@ -3818,8 +3819,8 @@ fitP <- glm(counts ~ outcome + treatment, family = poisson())
 fit0 <- update(fitP, . ~ outcome)
                  (A1 <- anova(      fitP, test = "Rao"))
                   A2 <- anova(fit0, fitP, test = "Rao")
-stopifnot(all.equal(A1, anova(fitP,       test = "Ra"), tolerance = 1e-13),
-          all.equal(A2, anova(fit0, fitP, test = "Ra"), tolerance = 1e-13))
+stopifnot(all.equal13(A1, anova(fitP,       test = "Ra")),
+          all.equal13(A2, anova(fit0, fitP, test = "Ra")))
 ## "Ra" gave error  "undefined columns selected"  in  R <= 4.6.1
 
 
@@ -4484,6 +4485,21 @@ local({
     stopifnot(identical(gsub("", w, ""), w))
 })
 ## overflowed a heap buffer, typically aborting, in R <= 4.6.2
+
+
+## smooth(*, "S") mis-reported changes, affecting "3RS3R" and "3RSS" -- PR#19280
+x <- c(0.5, 1, 3, 3, 1, 0)
+sS <- smooth(x, "S")
+(s3RS <- smooth(smooth(x, "3R"), "S"))
+stopifnot(exprs = {
+    attr(sS, "changed") # was FALSE wrongly
+    all.equal13(c(0.5, 1:3, 1:0), c(sS)) # {always}
+    all.equal13(c(s3RS), c(sS))          # ditto
+    all.equal13(c(smooth(x)),         c(smooth(s3RS, "3R")))
+    all.equal13(c(smooth(x, "3RSS")), c(smooth(s3RS, "S")))
+})
+## smooth(x) was identical to x and sS said "NOT changed", in R <= 4.6.2
+
 
 
 ## keep at end

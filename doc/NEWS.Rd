@@ -477,8 +477,14 @@
       \item \command{configure} now reports if \code{zstd} support was found.
     }
   }
+  \subsection{Bug Fixes}{
+    \itemize{
+      \item \code{smooth(*, "S")} now reports a change when the last plateau it splits
+      is unchanged on its right side, so "3RS3R" and "3RSS" are correct now
+      in such cases.  Fixes \PR{19280} reported with patch by \I{Kevin Ushey}.
+    }
+  }
 }
-
 
 \section{\Rlogo Changes in R 4.6.2}{
   \subsection{Bug Fixes}{
