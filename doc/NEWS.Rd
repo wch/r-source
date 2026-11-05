@@ -415,6 +415,9 @@
       integer to double.  It also replaced \code{NULL} components of
       \code{specials} with \code{logical(0L)}.
 
+      \item \code{delete.response} did not modify optional attribute
+      \code{dataClasses}.
+
       \item When interaction terms or offsets were present,
       \code{drop.terms} and \code{[.terms} could return a \code{terms}
       object with invalid \code{predvars} and \code{dataClasses}

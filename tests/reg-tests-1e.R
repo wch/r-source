@@ -4205,6 +4205,14 @@ stopifnot(identical(a0$response, 0L),
 ##converted indices to double & replaced NULL components of 'specials' with logical() in R <= 4.6.2
 
 
+## 'delete.response' did not modify optional attribute 'dataClasses'
+t1 <- terms(model.frame(y ~ x, data.frame(x = 0, y = 0)))
+a0 <- attributes(t0 <- delete.response(t1))
+stopifnot(identical(a0$predvars, quote(list(x))),
+          identical(a0$dataClasses, c(x = .MFclass(0))))
+## in R <= 4.6.2
+
+
 ## scan() stripping a UTF-8 BOM from a first field that fills its buffer
 if (l10n_info()[["UTF-8"]]) {
     x <- paste0("\ufeff", strrep("a", 8186L)) # 8189 bytes: buffer size - 3
