@@ -339,6 +339,7 @@ rematchDefinition <- function(definition, generic, mnames, fnames, signature)
     if(!added && keepsDots) {
         ## the formal args of the method must be identical to generic
         formals(definition) <- formals(generic)
+        attr(body(definition), "srcref") <- NULL
         return(definition)
     }
     dotsPos <- match("...", fnames)
