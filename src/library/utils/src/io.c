@@ -415,9 +415,9 @@ SEXP countfields(SEXP args)
 		if(!data.wasopen) data.con->close(data.con);
 		error(_("quoted string on line %d terminated by EOF"), inquote);
 	    }
-	    if (inquote && c == quote)
-		inquote = 0;
-	    else if (strchr(data.quoteset, c)) {
+	    if (inquote) {
+		if (c == quote) inquote = 0;
+	    } else if (strchr(data.quoteset, c)) {
 		inquote = nlines + 1;
 		quote = c;
 	    }
