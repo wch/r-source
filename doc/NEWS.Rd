@@ -478,6 +478,9 @@
   \subsection{Installation}{
     \itemize{
       \item \command{configure} now reports if \code{zstd} support was found.
+
+      \item The way \command{configure} tests for C and ObjC
+      \command{make} dependencies is now less fragile and works on macOS 27.2.
     }
   }
   \subsection{Bug Fixes}{

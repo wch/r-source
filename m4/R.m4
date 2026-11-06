@@ -335,7 +335,7 @@ dnl -MM was introduced in gcc 3.2 and later adopted by clang
 dnl cpp supports -MM, at least from GCC.
 for prog in "${CC} -MM" "${CC} -M" "${CPP} -MM" "cpp -MM" "${CPP} -M" "cpp -M"; do
   if ${prog} ${CPPFLAGS} conftest.c 2>/dev/null | \
-      grep 'conftest.o: conftest.c' >/dev/null; then
+      grep '^conftest.o: ' >/dev/null; then
     r_cv_prog_cc_m="${prog}"
     break
   fi
@@ -1169,7 +1169,7 @@ AC_CACHE_VAL([r_cv_prog_objc_m],
 [echo "#include <math.h>" > conftest.m
 for prog in "${OBJC} -MM" "${OBJC} -M" "${CPP} -M" "cpp -M"; do
   if ${prog} ${CPPFLAGS} conftest.m 2>/dev/null | \
-      grep 'conftest.o: conftest.m' >/dev/null; then
+      grep '^conftest.o: ' >/dev/null; then
     r_cv_prog_objc_m="${prog}"
     break
   fi
