@@ -461,6 +461,9 @@
       S4 method tables in \code{E}, so \code{insertSource(E, \dots)} did
       not trace S4 methods.  Thanks to \I{Takeshi Arabiki} for the
       report (\PR{15242}).
+
+      \item \code{aperm(x, perm)} and \code{t(x)} did not support arrays
+      \code{x} of type \code{"expression"}.
     }
   }
 }
