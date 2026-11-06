@@ -3439,12 +3439,14 @@ The files and directories are checked for sufficient permissions
 
 @item
 The files are checked for binary executables, using a suitable version
-of @command{file} if available@footnote{A suitable @command{file.exe} is
-part of the Windows toolset: it checks for @command{gfile} if a suitable
-@command{file} is not found: the latter is available in the @I{OpenCSW}
-collection for Solaris at @uref{https://www.opencsw.org/}.  The source
-repository is @uref{https://astron.com/pub/file/}.}.  (There may be
-rare false positives.)
+of the @command{file} command-line utility if available@footnote{A
+suitable @command{file.exe} is part of the Windows toolset, but minimal
+Linux environments such as Alpine Linux may not have @command{file}
+pre-installed.
+The source repository is @uref{https://astron.com/pub/file/}.
+Command @command{gfile} (from the now-historical @I{OpenCSW} collection
+for Solaris at @uref{https://www.opencsw.org/}) is tried if a suitable
+@command{file} is not found.}.  (There may be rare false positives.)
 
 @item
 The @file{DESCRIPTION} file is checked for completeness, and some of its
@@ -5004,10 +5006,11 @@ the POSIX standard.  Nor did Solaris support @samp{$(@var{cmd})}.}
 @command{ash} (@uref{https://en.wikipedia.org/wiki/Almquist_shell},
 a `lightweight shell with few builtins) or derivatives such as @command{dash}.
 Beware of assuming that all the POSIX command-line utilities are
-available, especially on Windows where only a subset (which has changed
-by version of @file{Rtools}) is provided for use with @R{}.  One
-particular issue is the use of @command{echo}, for which two behaviours
-are allowed
+available, especially in minimal Linux environments (e.g., Alpine Linux
+does not have @command{file} pre-installed) or on Windows where only a
+subset (which has changed by version of @file{Rtools}) is provided for
+use with @R{}. One particular issue is the use of @command{echo}, for
+which two behaviours are allowed
 (@uref{https://pubs.opengroup.org/onlinepubs/9699919799/utilities/echo.html})
 and both have occurred as defaults on @R{} platforms: portable
 applications should use neither @option{-n} (as the first argument) nor
