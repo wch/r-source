@@ -16,6 +16,11 @@
     \itemize{
       \item \command{configure} now reports if \code{zstd} support was found.
 
+      \item \command{configure} issues a warning if no way is found to
+      determine C dependencies, as without this updating a build is
+      unreliable, for example if \file{Rversion.h} is changed (and it
+      holds the SVN revision).  (Seen with macOS SDK 27.2.)
+
       \item The way \command{configure} tests for C and ObjC
       \command{make} dependencies is now less fragile and works on macOS 27.2.
     }
@@ -314,7 +319,7 @@
       \command{tar} programs do).
 
       \item \code{extSoftVersion()[["zstd"]]} now reports the version of
-      the \command{zstd} compression library if available, thanks to
+      the \code{libzstd} compression library if available, thanks to
       \I{Trevor Davis}' patch proposal in \PR{18914}.
 
       \item New logical \code{option()} \code{quiet}, defaulting to
