@@ -145,9 +145,10 @@
   % --  you update the Rd2HTML() regression check in ../../../../tests/reg-tests-1d.R :
   Unfortunately, the conversion is complicated by the operation of time
   zones and leap seconds (according to this version of \R's data,
-  \Sexpr{length(.leap.seconds)} days have been 86401 seconds long so
-  far, the last being on (actually, immediately before)
-  \Sexpr{format(as.Date(utils::tail(.leap.seconds, 1)))}: the times of the
+  \Sexpr{length(.leap.seconds)} days have been 86401 seconds long,
+  the last being on (actually, immediately before)
+  \Sexpr{format(as.Date(utils::tail(.leap.seconds, 1)))},
+  with no further leap seconds planned: the times of the
   extra seconds are in the object \code{.leap.seconds}).  The details of
   this are entrusted to the OS services where possible.  It seems that
   some rare systems used to use leap seconds, but all known current
