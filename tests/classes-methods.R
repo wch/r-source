@@ -382,4 +382,29 @@ stopifnot(identical(h1, 1), identical(n, 1),
           identical(attr(h, "label"), "kept"),
           identical(h(2), 2), identical(n, 1)) # h no longer traced
 
+
+## validObject(x) coerced 'x' to simple superclasses unnecessarily
+## (PR#17944)
+setClass("A0", validity = function (object) { object; TRUE })
+setClass("A1", contains = "A0")
+as(new("A1"), "A0") # make implicit coercion "visible" to 'trace'
+trace("coerce", signature = c(from = "A1", to = "A0"),
+      tracer = quote(stop("unnecessary coercion", domain = NA)))
+stopifnot(identical(getClass("A1")@  contains$A0,
+                    getClass("A0")@subclasses$A1),
+          getClass("A1")@contains$A0@simple,
+          validObject(new("A1"))) # was Error .... : unnecessary coercion
+setAs("A1", "A0", function (from) from) # simple->explicit inheritance
+trace("coerce", signature = c(from = "A1", to = "A0"),
+      tracer = quote(stop(  "necessary coercion", domain = NA)))
+stopifnot(identical(getClass("A1")@  contains$A0,
+                    getClass("A0")@subclasses$A1),
+          !getClass("A1")@contains$A0@simple,
+          tryCatch({ validObject(new("A1")); "" },
+                   error = conditionMessage) == "necessary coercion",
+          removeClass("A1"),
+          removeClass("A0"))
+## in R <= 4.6.2
+
+
 cat('Time elapsed: ', proc.time(),'\n')

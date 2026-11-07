@@ -538,7 +538,7 @@ validObject <- function(object, test = FALSE, complete = FALSE)
 	}
 	validityMethod <- superDef@validity
 	if(is.function(validityMethod)) {
-	    errors <- c(errors, anyStrings(validityMethod(as(object, superClass))))
+	    errors <- c(errors, anyStrings(validityMethod(if (exti@simple) object else as(object, superClass))))
 	    if(length(errors))
 		break
 	}

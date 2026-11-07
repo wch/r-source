@@ -464,6 +464,11 @@
 
       \item \code{aperm(x, perm)} and \code{t(x)} did not support arrays
       \code{x} of type \code{"expression"}.
+
+      \item \code{validObject(x)} coerced \code{x} to simple
+      superclasses unnecessarily.  Now validity methods for simple
+      superclasses are called with \code{x} as the argument.  Thanks to
+      \I{Hervé Pagès} for the report (\PR{17944}).
     }
   }
 }
