@@ -1498,7 +1498,7 @@ attribute_hidden SEXP do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (mbcslocale || use_WC == TRUE) {
 	int j, nb, nc;
 	xtable_t *xtable, *tbl;
-	int xtable_cnt;
+	R_xlen_t xtable_cnt;
 	struct wtr_spec *trs_cnt, **trs_cnt_ptr;
 	wchar_t c_old, c_new, *wc;
 	const char *xi, *s;
@@ -1569,6 +1569,10 @@ attribute_hidden SEXP do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	      xtable_cnt++) ;
 	wtr_free_spec(trs_cnt);
 	R_Free(trs_cnt_ptr);
+	/* the table is indexed with int below; counted in int, 2^32
+	   entries wrapped to 0 and the table was written past its end */
+	if (xtable_cnt > INT_MAX)
+	    error(_("'old' expands to too many characters"));
 	xtable = (xtable_t *) R_alloc(xtable_cnt+1, sizeof(xtable_t));
 
 	trs_old_ptr = R_Calloc(1, struct wtr_spec *);
