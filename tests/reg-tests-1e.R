@@ -4502,6 +4502,33 @@ stopifnot(exprs = {
 
 
 
+## corrupt .Random.seed must not be used as is
+rk <- RNGkind()
+msgs <- character()
+h <- function(w) { msgs <<- c(msgs, conditionMessage(w)); invokeRestart("muffleWarning") }
+set.seed(1); s <- .Random.seed
+.Random.seed <- integer(0)
+withCallingHandlers(runif(1), warning = h)
+stopifnot(length(.Random.seed) == 626L)
+s[2] <- -1000000000L # Mersenne-Twister position before the state array
+.Random.seed <- s
+stopifnot(runif(1) >= 0, .Random.seed[2] > 0L)
+s[1] <- 10303L # user-supplied normal generator, none loaded
+.Random.seed <- s
+withCallingHandlers(rnorm(1), warning = h)
+stopifnot(.Random.seed[1] %% 10000L %/% 100L != 3L)
+stopifnot(length(msgs) == 2L, grepl("length 0", msgs[1]),
+          grepl("normal generator", msgs[2]))
+RNGkind("L'Ecuyer-CMRG"); set.seed(1); s <- .Random.seed
+s[5:7] <- 0L # second component all zero: the generator degenerates
+.Random.seed <- s
+runif(1)
+stopifnot(any(.Random.seed[5:7] != 0L))
+do.call(RNGkind, as.list(rk))
+## read before the state array, called a NULL function pointer, and kept
+## a degenerate L'Ecuyer-CMRG state in R <= 4.6.2
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
