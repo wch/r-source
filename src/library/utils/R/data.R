@@ -37,9 +37,20 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
         read.table(...)
     }
 
+    unique_fields <- function(file, sep) {
+        ## For the given separator, what is the number of fields
+        ## (per-line, then unique-d after dropping the header)? Need
+        ## to be careful about NAs (indicate multi-line fields)
+        fcount <- count.fields(file, sep = sep)
+        ## newlines give NA-s, so drop them first
+        fcount <- fcount[!is.na(fcount)]
+        ## Also drop header
+        unique(fcount[-1])
+    }
+
     my_read_csv <- function(file) {
-        scount <- unique(count.fields(file, sep = ";")[-1])
-        ccount <- unique(count.fields(file, sep = ",")[-1])
+        scount <- unique_fields(file, sep = ";")
+        ccount <- unique_fields(file, sep = ",")
         sOK <- length(scount) == 1L
         cOK <- length(ccount) == 1L
         if (!(cOK || sOK)) stop(gettextf("File '%s' has unequal number of fields", file))
