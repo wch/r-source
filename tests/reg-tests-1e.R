@@ -4529,6 +4529,12 @@ do.call(RNGkind, as.list(rk))
 ## a degenerate L'Ecuyer-CMRG state in R <= 4.6.2
 
 
+## deriv() and deriv3() when 'function.arg' is a zero-length logical
+stopifnot(is.expression(deriv (~x^2, "x", logical(0))),
+          is.expression(deriv3(~x^2, "x", logical(0))))
+## segfaulted or returned a function, depending on the build, in R <= 4.6.2
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
