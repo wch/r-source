@@ -1,7 +1,7 @@
 #  File src/library/methods/R/Methods.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -1482,7 +1482,9 @@ registerImplicitGenerics <- function(what = .ImplicitGenericsTable(where),
     ## xtra... <- FALSE
     if(!identical(formals(f1d), formals(f2d))) {
 	a1 <- names(formals(f1d)); a2 <- names(formals(f2d))
-	if(identical(a1, a2))
+	if(identical(a1, a2) ||
+	   (identical(c(a1, "..."), a2) && allow.extra.dots &&
+	    !identical(`length<-`(formals(f2d), length(a1)), formals(f1d))))
 	    return(gettext("formal arguments differ (in default values?)"))
 	else if(identical(c(a1, "..."), a2) && allow.extra.dots)
             ## silently accept an extra "..."
