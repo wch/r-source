@@ -431,9 +431,12 @@ setAs <-
 
 canCoerce <- function(object, Class) {
     is(object, Class) ||
-    !is.null(selectMethod("coerce", c(.class1(object), Class),
-			  optional = TRUE,
-			  useInherited = c(from=TRUE, to=FALSE)))
+    (extends(Class, thisClass <- .class1(object)) &&
+     !identical(getClassDef(Class)@contains[[thisClass]]@replace,
+                .ErrorReplace)) ||
+    !is.null(selectMethod("coerce", c(thisClass, Class),
+                          optional = TRUE,
+                          useInherited = c(TRUE, FALSE)))
 }
 
 ## turn raw function into method for coerce() or coerce<-()

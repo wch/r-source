@@ -407,4 +407,29 @@ stopifnot(identical(getClass("A1")@  contains$A0,
 ## in R <= 4.6.2
 
 
+## 'canCoerce' missed uncached implicit coercion to subclass (PR#16423)
+setClass("A0", slots = c(x0 = "numeric"))
+setClass("A1", slots = c(x1 = "numeric"))
+setClass("A2", slots = c(x2 = "numeric"))
+setIs("A1", "A0",
+      coerce = function (from) new("A0", x0 = from@x1),
+      replace = function (from, value) new("A1", x1 = value@x0))
+setIs("A2", "A1",
+      coerce = function (from) new("A1", x1 = from@x2))
+stopifnot(## Implicit coercion to superclass
+          canCoerce(new("A1"), "A0"),
+          canCoerce(new("A2"), "A1"),
+          ## Implicit coercion to subclass
+          canCoerce(new("A0"), "A1"), # was FALSE, wrongly
+          identical(as(new("A0"), "A1"), new("A1")),
+          canCoerce(new("A0"), "A1"), # still, after caching
+         !canCoerce(new("A1"), "A2"), # as no 'replace'
+          tryCatch({ as(new("A1"), "A2"); FALSE },
+                   error = function (.) TRUE),
+          removeClass("A2"),
+          removeClass("A1"),
+          removeClass("A0"))
+## in R <= 4.6.2
+
+
 cat('Time elapsed: ', proc.time(),'\n')

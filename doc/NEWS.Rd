@@ -464,6 +464,10 @@
       superclasses unnecessarily.  Now validity methods for simple
       superclasses are called with \code{x} as the argument.  Thanks to
       \I{Hervé Pagès} for the report (\PR{17944}).
+
+      \item \code{canCoerce} did not consider an uncached implicit
+      coercion from the object class to a subclass.  Thanks to
+      \I{Hervé Pagès} for the report (\PR{16423}).
     }
   }
 }
