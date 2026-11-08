@@ -486,9 +486,9 @@
       \item \command{configure} issues a warning if no way is found to
       determine C dependencies, as without this updating a build is
       unreliable, for example if \file{Rversion.h} is changed (and it
-      holds the SVN revision).  (Seen with macOS SDK 27.2.)
+      holds the SVN revision).  (Seen with macOS \abbr{SDK} 27.2.)
 
-      \item The way \command{configure} tests for C and ObjC
+      \item The way \command{configure} tests for C and Objective-C
       \command{make} dependencies is now less fragile and works on macOS 27.2.
     }
   }
