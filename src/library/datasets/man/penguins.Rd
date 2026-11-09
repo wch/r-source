@@ -53,7 +53,9 @@ penguins_raw
     \item{\samp{Sample Number}}{\code{numeric}, continuous numbering sequence for each sample}
     \item{\code{Region}}{\code{character}, the region of Palmer \acronym{LTER} sampling grid}
     \item{\code{Stage}}{\code{character}, denoting reproductive stage at sampling}
-    \item{\samp{Individual ID}}{\code{character}, unique ID for each individual in dataset}
+    \item{\samp{Individual ID}}{\code{character}, ID of the penguin
+      \strong{within} \code{studyName}, e.g.\sspace\code{"N67A1"}
+      (nest/adult index), not unique overall}
     \item{\samp{Clutch Completion}}{\code{character}, 
       if the study nest was observed with a full clutch, i.e., 2 eggs}
     \item{\samp{Delta 15 N (o/oo)}}{\code{numeric}, the ratio of stable isotopes 15N:14N}
@@ -73,9 +75,6 @@ penguins_raw
       \bibshow{R:Palmer_Station_Antarctica_LTER+Gorman:2020c}
     }
   }
-
-  The title naming convention for the source for the Gentoo and Chinstrap
-  data is that same as for \enc{Adélie}{Adelie} penguins.
 }
 \details{
   \bibcitet{R:Gorman+Williams+Fraser:2014}
