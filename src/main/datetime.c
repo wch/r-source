@@ -1451,13 +1451,14 @@ attribute_hidden SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		Rf_error("output string exceeded 2048 bytes");
 	    }
 
-	    /* Now assume tzone abbreviated name is < 40 bytes,
-	       but they are currently 3 or 4 bytes.
-	    */
+	    /* Time zone abbreviations are currently 3 or 4 bytes, but
+	       both the "zone" component and the "tzone" attribute can be
+	       set by the user, and the strftime output may already have
+	       filled buff, so check the appended length fits. */
 	    if(UseTZ) {
+		const char *p = NULL;
 		if(have_zone) {
-		    const char *p = CHAR(STRING_ELT(VECTOR_ELT(x, 9), i%nlen[9]));
-		    if(strlen(p)) {strcat(buff, " "); strcat(buff, p);}
+		    p = CHAR(STRING_ELT(VECTOR_ELT(x, 9), i%nlen[9]));
 		} else if(!isNull(tz)) {
 		    int ii = 0;
 		    if(LENGTH(tz) == 3) {
@@ -1465,8 +1466,14 @@ attribute_hidden SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 			else if(tm.tm_isdst == 0) ii = 1;
 			else ii = 0; /* Use base timezone name */
 		    }
-		    const char *p = CHAR(STRING_ELT(tz, ii));
-		    if(strlen(p)) {strcat(buff, " "); strcat(buff, p);}
+		    p = CHAR(STRING_ELT(tz, ii));
+		}
+		if(p && *p) {
+		    size_t len = strlen(buff), plen = strlen(p);
+		    if(len + 1 + plen >= sizeof(buff))
+			Rf_error("output string exceeded 2048 bytes");
+		    buff[len] = ' ';
+		    memcpy(buff + len + 1, p, plen + 1);
 		}
 	    }
 	    SET_STRING_ELT(ans, i, mkChar(buff));

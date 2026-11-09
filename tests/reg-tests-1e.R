@@ -4568,6 +4568,17 @@ stopifnot(identical(deparse(e), "(-2)^2"),
 ## gave "-2^2", which re-parses as -(2^2), in R <= 4.6.2
 
 
+## format(<POSIXlt>, usetz = TRUE) appended the zone past the output buffer
+x <- as.POSIXlt("2024-01-15 12:30:00", tz = "Europe/London")
+f44 <- strrep("a", 2044)
+stopifnot(identical(nchar(format(x, f44, usetz = TRUE)), 2048L))
+tools::assertError(format(x, paste0(f44, "a"), usetz = TRUE))
+y <- as.POSIXlt("2024-01-15 12:30:00", tz = "UTC")
+y$zone <- strrep("Z", 5000)
+tools::assertError(format(y, "%Y", usetz = TRUE))
+## overflowed a stack buffer, typically aborting, in R <= 4.6.2
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
