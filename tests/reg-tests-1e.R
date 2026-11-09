@@ -4535,6 +4535,23 @@ stopifnot(is.expression(deriv (~x^2, "x", logical(0))),
 ## segfaulted or returned a function, depending on the build, in R <= 4.6.2
 
 
+## rasterImage() with zero-length 'angle' or 'interpolate'
+local({
+    r <- as.raster(matrix(0, 1, 1))
+    pdf(NULL); on.exit(dev.off())
+    plot.new()
+    for(E in list(tryCid(rasterImage(r, 0, 0, 1, 1, interpolate = NULL)),
+                  tryCid(rasterImage(r, 0, 0, 1, 1, interpolate = logical())),
+                  tryCid(rasterImage(r, 0, 0, 1, 1, angle = NULL)),
+                  tryCid(rasterImage(r, 0, 0, 1, 1, angle = numeric()))))
+        stopifnot(inherits(E, "error"))
+    if(englishMsgs)
+        stopifnot(grepl("invalid 'interpolate' argument",
+                        conditionMessage(tryCid(rasterImage(r, 0, 0, 1, 1,
+                                                            interpolate = NULL)))))
+})
+## divided by zero (SIGFPE on x86_64), or read out of bounds, in R <= 4.6.2
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())

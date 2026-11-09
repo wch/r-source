@@ -1934,6 +1934,10 @@ SEXP C_raster(SEXP args)
 
     angle = CAR(args); args = CDR(args);
     interpolate = CAR(args); args = CDR(args);
+    if (LENGTH(angle) == 0)
+	error(_("invalid '%s' argument"), "angle");
+    if (LENGTH(interpolate) == 0)
+	error(_("invalid '%s' argument"), "interpolate");
 
     GSavePars(dd);
     ProcessInlinePars(args, dd);
