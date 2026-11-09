@@ -4552,6 +4552,23 @@ local({
 })
 ## divided by zero (SIGFPE on x86_64), or read out of bounds, in R <= 4.6.2
 
+## deparse() of a negative constant as the left operand of ^, [, [[ or $
+x <- -2
+e <- bquote(.(x)^2)
+stopifnot(identical(deparse(e), "(-2)^2"),
+          identical(eval(parse(text = deparse(e))[[1]]), eval(e)),
+          identical(deparse(call("^", -2L, 2)), "(-2L)^2"),
+          identical(deparse(call("[", -1, 1)), "(-1)[1]"),
+          ## unchanged: no parens where none are needed
+          identical(deparse(call("^", 2, -2)), "2^-2"),
+          identical(deparse(call("*", -1, 2)), "-1 * 2"),
+          identical(deparse(call("-", -1)), "--1"),
+          identical(deparse(call(":", -1, 2)), "-1:2"),
+          identical(deparse(call("^", NA_integer_, 2)), "NA_integer_^2"),
+          identical(deparse(call("^", NA_real_, 2)), "NA_real_^2"))
+## gave "-2^2", which re-parses as -(2^2), in R <= 4.6.2
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
