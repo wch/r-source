@@ -4474,7 +4474,7 @@ stopifnot(identical(Fold, getMethod(gnm, sig))) # 'Fold' restored
 
 
 ## gsub() when the first replacement is longer than the initial buffer:
-## empty input, or a long match repeated by back-references
+## empty input, or a long match repeated by back-references -- PR#19273
 local({
     r <- strrep("b", 2000)
     for(perl in c(FALSE, TRUE))
@@ -4501,8 +4501,7 @@ stopifnot(exprs = {
 ## smooth(x) was identical to x and sS said "NOT changed", in R <= 4.6.2
 
 
-
-## corrupt .Random.seed must not be used as is
+## corrupt .Random.seed must not be used as is -- PR#19276
 rk <- RNGkind()
 msgs <- character()
 h <- function(w) { msgs <<- c(msgs, conditionMessage(w)); invokeRestart("muffleWarning") }
@@ -4529,13 +4528,13 @@ do.call(RNGkind, as.list(rk))
 ## a degenerate L'Ecuyer-CMRG state in R <= 4.6.2
 
 
-## deriv() and deriv3() when 'function.arg' is a zero-length logical
+## deriv() and deriv3() when 'function.arg' is a zero-length logical -- PR#19285
 stopifnot(is.expression(deriv (~x^2, "x", logical(0))),
           is.expression(deriv3(~x^2, "x", logical(0))))
 ## segfaulted or returned a function, depending on the build, in R <= 4.6.2
 
 
-## rasterImage() with zero-length 'angle' or 'interpolate'
+## rasterImage() with zero-length 'angle' or 'interpolate' -- PR#19284
 local({
     r <- as.raster(matrix(0, 1, 1))
     pdf(NULL); on.exit(dev.off())
