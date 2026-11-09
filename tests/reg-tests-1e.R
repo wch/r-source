@@ -4527,7 +4527,6 @@ do.call(RNGkind, as.list(rk))
 ## read before the state array, called a NULL function pointer, and kept
 ## a degenerate L'Ecuyer-CMRG state in R <= 4.6.2
 
-
 ## deriv() and deriv3() when 'function.arg' is a zero-length logical -- PR#19285
 stopifnot(is.expression(deriv (~x^2, "x", logical(0))),
           is.expression(deriv3(~x^2, "x", logical(0))))
@@ -4577,6 +4576,13 @@ y <- as.POSIXlt("2024-01-15 12:30:00", tz = "UTC")
 y$zone <- strrep("Z", 5000)
 tools::assertError(format(y, "%Y", usetz = TRUE))
 ## overflowed a stack buffer, typically aborting, in R <= 4.6.2
+
+## dev.set(1) returns the device it opens, as documented -- PR#19281
+op <- options(device = function(...) pdf(NULL))
+d <- dev.set(1L)
+stopifnot(identical(d, dev.cur()), names(d) == "pdf")
+dev.off(d); options(op)
+## returned c("null device" = 1L) in R <= 4.6.2
 
 
 ## keep at end

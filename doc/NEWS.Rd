@@ -468,6 +468,11 @@
       \item \code{canCoerce} did not consider an uncached implicit
       coercion from the object class to a subclass.  Thanks to
       \I{Hervé Pagès} for the report (\PR{16423}).
+
+      \item \code{dev.set(1)} now returns the number and name of the
+      device it opens, as documented, rather than
+      \code{c("null device" = 1)}, thanks to \I{Trevor Davis}' report
+      and patch in \PR{19281}.      
     }
   }
 }
