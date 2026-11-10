@@ -329,7 +329,7 @@ function(x, n, z, alternative, conf.level, digits.rank, digits.zap)
             if(lower)
                 .psignrank(v, n, z)
             else
-                .psignrank(v, n, z, lower.tail = FALSE)
+                .psignrank(v - 1/4, n, z, lower.tail = FALSE)
         }
         ## Identical to what we use for .wilcox_test_two_cint_exact():
         ## could put into general purpose functions which compute the
