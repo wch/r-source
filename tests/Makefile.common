@@ -51,7 +51,7 @@ test-src-regexp = utf8-regex.R PCRE.R
 test-src-segfault = no-segfault.R
 test-src-tz = timezone.R
 test-src-cond = conditions.R
-test-src-misc-dev = misc-devel.R
+test-src-misc-dev = misc-devel.R reg-fuzz.R
 
 test-src-reg-1 = array-subset.R \
   classes-methods.R \

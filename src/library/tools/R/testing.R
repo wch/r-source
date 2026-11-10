@@ -813,7 +813,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet", "
         message("running sloppy specific tests", domain = NA)
         for (f in tests2) runone(f, TRUE)
         message("running regression tests", domain = NA)
-        for (f in tests3) { 
+        for (f in tests3) {
             if (runone(f)) return(invisible(1L))
             if (f == "reg-plot") {
                 comparePdf(f)
@@ -843,6 +843,7 @@ testInstalledBasic <- function(scope = c("basic", "devel", "both", "internet", "
         runone("p-r-random-tests", TRUE)
         message("running miscellaneous strict devel checks", domain = NA)
         if (runone("misc-devel")) return(invisible(1L))
+        if (runone("reg-fuzz")) return(invisible(1L))
         message("running tests demos from base and stats", domain = NA)
         if (runone("demos")) return(invisible(1L))
         if (runone("demos2")) return(invisible(1L))
