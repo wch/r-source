@@ -37,8 +37,12 @@ structure <- function (.Data, ...)
         }
         ## prior to 2.5.0 factors would deparse to double codes
         if(any(attrib[["class", exact = TRUE]] == "factor")
-           && typeof(.Data) == "double")
+           && typeof(.Data) == "double") {
+            if(tolower(Sys.getenv("_R_STRUCTURE_FIX_FACTOR_STORAGE_MODE_",
+                                  "")) == "false")
+                .Deprecated(msg = "Giving doubles a \"factor\" class attribute is deprecated.")
             storage.mode(.Data) <- "integer"
+        }
         attributes(.Data) <- c(attributes(.Data), attrib)
     }
     .Data
