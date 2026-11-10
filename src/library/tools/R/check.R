@@ -6387,6 +6387,10 @@ add_dummies <- function(dir, Log)
                              "^ld: warning: -single_module is obsolete",
                              "^ld: warning: .*was built for newer"
                              )
+                ## rustc wrning
+                warn_re <- c(warn_re,
+                             "^warning: the following packages contain code that will be rejected by a future version of Rust"
+                             )
 
                 ## <FIXME>
                 ## Support for RcppArmadillo 15 transition.
