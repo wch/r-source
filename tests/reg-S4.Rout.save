@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2024-08-27 r87063) -- "Unsuffered Consequences"
-Copyright (C) 2024 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu
+R Under development (unstable) (2026-11-10 r90872) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin25.6.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -157,6 +157,7 @@ show method
 > ## show(foo)
 > 
 > setMethod("print", "bar", function(x, ...){cat("S4 print method\n")})
+creating formal generic function 'print' in global environment
 > foo
 show method
 > print(foo)
@@ -652,12 +653,14 @@ An object of class "foo"
 > setGeneric("order", signature="...",
 + 	   function (..., na.last=TRUE, decreasing=FALSE)
 + 	   standardGeneric("order"))
-Creating a new generic function for 'order' in the global environment
+creating formal generic function 'order' in global environment
+  ignoring implicit definition in package 'base'
 [1] "order"
 > stopifnot(identical(rbind(1), matrix(1,1,1)))
 > setGeneric("rbind", function(..., deparse.level=1)
 + 	   standardGeneric("rbind"), signature = "...")
-Creating a new generic function for 'rbind' in the global environment
+creating formal generic function 'rbind' in global environment
+  ignoring implicit definition in package 'base'
 [1] "rbind"
 > stopifnot(identical(rbind(1), matrix(1,1,1)))
 > ## gave Error in .Method( .... in R 2.8.0
@@ -784,7 +787,7 @@ List of 7
 > ## implicit generics ..
 > setMethod("sample", "C2",
 +           function(x, size, replace=FALSE, prob=NULL) {"sample.C2"})
-Creating a generic function for 'sample' from package 'base' in the global environment
+creating formal generic function 'sample' in global environment
 > stopifnot(is(sample,"standardGeneric"),
 + 	  ## the signature must come from the implicit generic:
 + 	  identical(sample@signature, c("x", "size")),
@@ -797,7 +800,8 @@ Creating a generic function for 'sample' from package 'base' in the global envir
 > ## (For test, qqplot must be a "simple" function:)
 > stopifnot(is.function(qqplot) && identical(class(qqplot), "function"))
 > setGeneric("qqplot", function(x, y, ...) standardGeneric("qqplot"))
-Creating a new generic function for 'qqplot' in the global environment
+creating formal generic function 'qqplot' in global environment
+  ignoring implicit definition in package 'stats'
 [1] "qqplot"
 > stopifnot(is(qqplot, "standardGeneric"),
 + 	  identical(qqplot@signature, c("x","y")))
@@ -845,7 +849,7 @@ Creating a new generic function for 'qqplot' in the global environment
 > 
 > setMethod("is.unsorted", "A", function(x, na.rm, strictly)
 +     is.unsorted(x@aa, na.rm=na.rm, strictly=strictly))
-Creating a generic function for 'is.unsorted' from package 'base' in the global environment
+creating formal generic function 'is.unsorted' in global environment
 > 
 > stopifnot(!is.unsorted(a), # 11:16 *is* sorted
 + 	  is.unsorted(rev(a)))
@@ -1181,7 +1185,7 @@ class(from) <- "foo"
 > ## ----- from here on, keep at EOF -----
 > 
 > cat('Time elapsed: ', proc.time(),'\n')
-Time elapsed:  0.869 0.169 1.642 0.001 0.003 
+Time elapsed:  0.427 0.03 0.466 0.005 0.005 
 > 
 > ### NB: Only add new tests here _IF_   checking output,
 > ### --  otherwise use ./classes-methods.R

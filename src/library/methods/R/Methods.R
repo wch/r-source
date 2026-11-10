@@ -151,10 +151,6 @@ setGeneric <-
                             simpleInheritanceOnly = simpleInheritanceOnly)
         }
     }
-    doMessage <-
-        sys.nframe() >= 2L && identical(sys.function(-1L), setMethod) &&
-        !isS3Generic(fdef)
-    msg <- NULL
     if(identical(package, thisPackage)) {
         ensureGeneric.fdef()
     } else {
@@ -172,37 +168,33 @@ setGeneric <-
 	    cmp <- .identicalGeneric(fdef, implicit,
 				     allow.extra.dots =
 				     !nzchar(Sys.getenv("R_SETGENERIC_PICKY_DOTS")))
-            if(isTRUE(cmp)) {
+            cmpT <- isTRUE(cmp)
+            if (cmpT || (is.null(def) && is.null(signature)))
                 fdef <- implicit
+            else
+                fdef@package <-
+                    packageSlot(fdef@generic) <-
+                    packageSlot(environment(fdef)[[".Generic"]]) <-
+                    thisPackage
+            msg <-
+            if (identical(thisPackage, ".GlobalEnv"))
+                gettextf("creating formal generic function '%s' in global environment",
+                         name)
+            else
+                gettextf("creating formal generic function '%s' in package '%s'",
+                         name, thisPackage)
+            if (!(cmpT && identical(package, "base"))) {
+                msg. <-
+                if (cmpT || (is.null(def) && is.null(signature)))
+                    gettextf("using implicit definition in package '%s'",
+                             package)
+                else
+                    gettextf("ignoring implicit definition in package '%s'",
+                             package)
+                msg <- c(msg, msg.)
             }
-            else {
-                doMessage <- TRUE
-                if (is.null(def) && is.null(signature)) {
-                    msg <- gettextf("using implicit definition in package '%s'",
-                                    package)
-                    fdef <- implicit
-                }
-                else {
-                    msg <- gettextf("ignoring implicit definition in package '%s'",
-                                    package)
-                    fdef@package <-
-                        packageSlot(fdef@generic) <-
-                        packageSlot(environment(fdef)[[".Generic"]]) <-
-                        thisPackage
-                }
-            }
+            message(paste(msg, collapse = "\n  "), domain = NA)
         }
-    }
-    if (doMessage) {
-        msg <-
-        c(if (identical(thisPackage, ".GlobalEnv"))
-              gettextf("creating formal generic function '%s' in global environment",
-                       name)
-          else
-              gettextf("creating formal generic function '%s' in package '%s'",
-                       name, thisPackage),
-          msg)
-        message(paste(msg, collapse = "\n  "), domain = NA)
     }
     if(identical(fdef@signature, "..."))
 	fdef <- .dotsGeneric(fdef)
