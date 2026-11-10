@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-05-22 r90067) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-11-10 r90868) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -16,9 +16,9 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > #### Some examples of the KS and Wilcoxon tests
->
+> 
 > ### ------ Kolmogorov Smirnov (KS) --------------
->
+> 
 > ## unrealistic one of PR#14561
 > ds1 <- c(1.7,2,3,3,4,4,5,5,6,6)
 > ks.test(ds1, "pnorm", mean = 3.3, sd = 1.55216)
@@ -33,7 +33,7 @@ Warning message:
 In ks.test.default(ds1, "pnorm", mean = 3.3, sd = 1.55216) :
   ties should not be present for the one-sample Kolmogorov-Smirnov test
 > # how on earth can sigma = 1.55216 be known?
->
+> 
 > # R >= 2.14.0 allows the equally invalid
 > ks.test(ds1, "pnorm", mean = 3.3, sd = 1.55216, exact = TRUE)
 
@@ -46,7 +46,7 @@ alternative hypothesis: two-sided
 Warning message:
 In ks.test.default(ds1, "pnorm", mean = 3.3, sd = 1.55216, exact = TRUE) :
   ties should not be present for the one-sample Kolmogorov-Smirnov test
->
+> 
 > ## Try out the effects of rounding
 > set.seed(123)
 > ds2 <- rnorm(1000)
@@ -117,24 +117,24 @@ In ks.test.default(round(ds2, 1), "pnorm", exact = TRUE) :
 In ks.test.default(round(ds2, 1), "pnorm", exact = TRUE) :
   ties should not be present for the one-sample Kolmogorov-Smirnov test
 > 
->
+> 
 > ### ------ Wilcoxon (Mann Whitney) --------------
->
+> 
 > options(nwarnings = 1000)
 > (alts <- setNames(, eval(formals(stats:::wilcox.test.default)$alternative)))
-  two.sided        less     greater
-"two.sided"      "less"   "greater"
+  two.sided        less     greater 
+"two.sided"      "less"   "greater" 
 > x0 <- setNames(0:4, paste0("n_", 1L + 0:4))
 > str(x.set <- list(s0 = lapply(x0, function(m) 0:m),
 +                   s. = lapply(x0, function(m) c(1e-9, seq_len(m)))))
 List of 2
- $ s0:List of 5
+ $ s0: List of 5
   ..$ n_1: int 0
   ..$ n_2: int [1:2] 0 1
   ..$ n_3: int [1:3] 0 1 2
   ..$ n_4: int [1:4] 0 1 2 3
   ..$ n_5: int [1:5] 0 1 2 3 4
- $ s.:List of 5
+ $ s.: List of 5
   ..$ n_1: num 1e-09
   ..$ n_2: num [1:2] 1e-09 1e+00
   ..$ n_3: num [1:3] 1e-09 1e+00 2e+00
@@ -158,43 +158,43 @@ List of 2
 > if(!identical(w1, ww)) # typically they *are* identical ==> no new warnings
 +     summary(ww)
 > ## unique(ww) # (were 4 different ones)
->
+> 
 > ## RL is very nested tree of "htest" results
 > str(RL, max.level = 2)
 List of 6
- $ d.rank=Inf:List of 2
-  ..$ s0:List of 3
-  ..$ s.:List of 3
- $ d.rank=20 :List of 2
-  ..$ s0:List of 3
-  ..$ s.:List of 3
- $ d.rank=15 :List of 2
-  ..$ s0:List of 3
-  ..$ s.:List of 3
- $ d.rank=10 :List of 2
-  ..$ s0:List of 3
-  ..$ s.:List of 3
- $ d.rank=7  :List of 2
-  ..$ s0:List of 3
-  ..$ s.:List of 3
- $ d.rank=5  :List of 2
-  ..$ s0:List of 3
-  ..$ s.:List of 3
+ $ d.rank=Inf: List of 2
+  ..$ s0: List of 3
+  ..$ s.: List of 3
+ $ d.rank=20 : List of 2
+  ..$ s0: List of 3
+  ..$ s.: List of 3
+ $ d.rank=15 : List of 2
+  ..$ s0: List of 3
+  ..$ s.: List of 3
+ $ d.rank=10 : List of 2
+  ..$ s0: List of 3
+  ..$ s.: List of 3
+ $ d.rank=7  : List of 2
+  ..$ s0: List of 3
+  ..$ s.: List of 3
+ $ d.rank=5  : List of 2
+  ..$ s0: List of 3
+  ..$ s.: List of 3
 > str(RL[["d.rank=7"]]$s.$two.sided, max.level = 1) # 5 x {list of 9, class "htest"}
 List of 5
- $ n_1:List of 9
+ $ n_1: List of 9
   ..- attr(*, "class")= chr "htest"
- $ n_2:List of 9
+ $ n_2: List of 9
   ..- attr(*, "class")= chr "htest"
- $ n_3:List of 9
+ $ n_3: List of 9
   ..- attr(*, "class")= chr "htest"
- $ n_4:List of 9
+ $ n_4: List of 9
   ..- attr(*, "class")= chr "htest"
- $ n_5:List of 9
+ $ n_5: List of 9
   ..- attr(*, "class")= chr "htest"
 > str(RL[["d.rank=7"]]$s.$two.sided [1:2], give.attr = FALSE)
 List of 2
- $ n_1:List of 9
+ $ n_1: List of 9
   ..$ statistic  : Named num 1
   ..$ parameter  : NULL
   ..$ p.value    : num 1
@@ -204,7 +204,7 @@ List of 2
   ..$ data.name  : chr "x"
   ..$ conf.int   : num [1:2] -Inf Inf
   ..$ estimate   : Named num 1e-09
- $ n_2:List of 9
+ $ n_2: List of 9
   ..$ statistic  : Named num 2
   ..$ parameter  : NULL
   ..$ p.value    : num 1
@@ -212,9 +212,9 @@ List of 2
   ..$ alternative: chr "two.sided"
   ..$ method     : chr "Wilcoxon signed rank exact test"
   ..$ data.name  : chr "x"
-  ..$ conf.int   : num [1:2] 1e-09 Inf
+  ..$ conf.int   : num [1:2] -Inf Inf
   ..$ estimate   : Named num 0.5
->
+> 
 > cc <- lapply(RL, function(A) lapply(A, function(B) lapply(B, function(bb) lapply(bb, class))))
 > ##N table(unlist(cc))
 > ## in R <= 3.3.1,  with try( .. ) above and only digits.rank=Inf, we got
@@ -225,9 +225,9 @@ List of 2
 > ## two.sided1 two.sided2 two.sided3
 > ## less1      less2
 > ## greater1   greater2
->
+> 
 > ##--- How close are the stats of  (0:m)  to those of  (eps, 1:m) ------------
->
+> 
 > ## Contained errors in older versions:
 > stR <- lapply(stats, function(COMP)
 +            lapply(RL, function(A)
@@ -244,13 +244,13 @@ List of 2
 > ##                                        recurs. use.nms
 > ## a) P-value s
 > pv <- stR$p.value
->
+> 
 > str(apv <- simplify2array(
 +         lapply(pv, \(L0) simplify2array(
 +                              lapply(L0, \(L) simplify2array(lapply(L, unList))))))
 +     )
- num [1:5, 1:3, 1:2, 1:6] 1 1 0.5 0.25 0.125 1 1 1 1 1 ...
- - attr(*, "dimnames")=List of 4
+num [1:5, 1:3, 1:2, 1:6] 1 1 0.5 0.25 0.125 1 1 1 1 1 ...
+ - attr(*, "dimnames")= List of 4
   ..$ : chr [1:5] "n_1" "n_2" "n_3" "n_4" ...
   ..$ : chr [1:3] "two.sided" "less" "greater"
   ..$ : chr [1:2] "s0" "s."
@@ -273,14 +273,14 @@ List of 2
  $ Var4: Factor w/ 6 levels "d.rank=Inf","d.rank=20",..: 1 1 1 1 1 1 1 1 1 1 ...
  $ Freq: num  1 1 0.5 0.25 0.125 1 1 1 1 1 ...
 > str(ps. <- apv[,,"s.",])
- num [1:5, 1:3, 1:6] 1 0.5 0.25 0.125 0.0625 1 1 1 1 1 ...
- - attr(*, "dimnames")=List of 3
+num [1:5, 1:3, 1:6] 1 0.5 0.25 0.125 0.0625 1 1 1 1 1 ...
+ - attr(*, "dimnames")= List of 3
   ..$ : chr [1:5] "n_1" "n_2" "n_3" "n_4" ...
   ..$ : chr [1:3] "two.sided" "less" "greater"
   ..$ : chr [1:6] "d.rank=Inf" "d.rank=20" "d.rank=15" "d.rank=10" ...
 > str(ps0 <- apv[,,"s0",])
- num [1:5, 1:3, 1:6] 1 1 0.5 0.25 0.125 1 1 1 1 1 ...
- - attr(*, "dimnames")=List of 3
+num [1:5, 1:3, 1:6] 1 1 0.5 0.25 0.125 1 1 1 1 1 ...
+ - attr(*, "dimnames")= List of 3
   ..$ : chr [1:5] "n_1" "n_2" "n_3" "n_4" ...
   ..$ : chr [1:3] "two.sided" "less" "greater"
   ..$ : chr [1:6] "d.rank=Inf" "d.rank=20" "d.rank=15" "d.rank=10" ...
@@ -444,7 +444,7 @@ n_3.V         5    5       5
 n_4.V         9    9       9
 n_5.V        14   14      14
 
->
+> 
 > (aEst <- simplify2array(
 +      lapply(stR[["estimate"]],
 +             \(L0) simplify2array(
@@ -558,8 +558,8 @@ n_4.(pseudo)median   1.5e+00 1.5e+00 1.5e+00
 n_5.(pseudo)median   2.0e+00 2.0e+00 2.0e+00
 
 > str(aEst)
- num [1:5, 1:3, 1:2, 1:6] 0 0.5 1 1.5 2 0 0.5 1 1.5 2 ...
- - attr(*, "dimnames")=List of 4
+num [1:5, 1:3, 1:2, 1:6] 0 0.5 1 1.5 2 0 0.5 1 1.5 2 ...
+ - attr(*, "dimnames")= List of 4
   ..$ : chr [1:5] "n_1.(pseudo)median" "n_2.(pseudo)median" "n_3.(pseudo)median" "n_4.(pseudo)median" ...
   ..$ : chr [1:3] "two.sided" "less" "greater"
   ..$ : chr [1:2] "s0" "s."
@@ -576,25 +576,25 @@ n_5.(pseudo)median   2.0e+00 2.0e+00 2.0e+00
 > CI <- stR[["conf.int"]]
 > str(CI, max.level = 2)
 List of 6
- $ d.rank=Inf:List of 2
-  ..$ s0:List of 3
-  ..$ s.:List of 3
- $ d.rank=20 :List of 2
-  ..$ s0:List of 3
-  ..$ s.:List of 3
- $ d.rank=15 :List of 2
-  ..$ s0:List of 3
-  ..$ s.:List of 3
- $ d.rank=10 :List of 2
-  ..$ s0:List of 3
-  ..$ s.:List of 3
- $ d.rank=7  :List of 2
-  ..$ s0:List of 3
-  ..$ s.:List of 3
- $ d.rank=5  :List of 2
-  ..$ s0:List of 3
-  ..$ s.:List of 3
->
+ $ d.rank=Inf: List of 2
+  ..$ s0: List of 3
+  ..$ s.: List of 3
+ $ d.rank=20 : List of 2
+  ..$ s0: List of 3
+  ..$ s.: List of 3
+ $ d.rank=15 : List of 2
+  ..$ s0: List of 3
+  ..$ s.: List of 3
+ $ d.rank=10 : List of 2
+  ..$ s0: List of 3
+  ..$ s.: List of 3
+ $ d.rank=7  : List of 2
+  ..$ s0: List of 3
+  ..$ s.: List of 3
+ $ d.rank=5  : List of 2
+  ..$ s0: List of 3
+  ..$ s.: List of 3
+> 
 > if(FALSE) { # printing chCI below is much nicer
 +   str(aCI <- simplify2array(lapply(CI,
 +                      function(A) simplify2array(lapply(A,
@@ -624,16 +624,16 @@ List of 6
 +     ))
 , , s0, d.rank=Inf
 
-    two.sided       less               greater
-n_1 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_2 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_3 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_4 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_5 [0, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
+    two.sided          less               greater           
+n_1 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_2 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_3 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_4 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_5 [-Inf, Inf] (100%) [-Inf, 4] (100%)   [0, Inf] (100%)   
 
 , , s., d.rank=Inf
 
-    two.sided          less               greater
+    two.sided          less               greater           
 n_1 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
 n_2 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
 n_3 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
@@ -642,16 +642,16 @@ n_5 [-Inf, Inf] (100%) [-Inf, 4] (97%)    [1e-09, Inf] (97%)
 
 , , s0, d.rank=20
 
-    two.sided       less               greater
-n_1 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_2 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_3 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_4 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_5 [0, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
+    two.sided          less               greater           
+n_1 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_2 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_3 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_4 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_5 [-Inf, Inf] (100%) [-Inf, 4] (100%)   [0, Inf] (100%)   
 
 , , s., d.rank=20
 
-    two.sided          less               greater
+    two.sided          less               greater           
 n_1 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
 n_2 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
 n_3 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
@@ -660,16 +660,16 @@ n_5 [-Inf, Inf] (100%) [-Inf, 4] (97%)    [1e-09, Inf] (97%)
 
 , , s0, d.rank=15
 
-    two.sided       less               greater
-n_1 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_2 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_3 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_4 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_5 [0, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
+    two.sided          less               greater           
+n_1 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_2 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_3 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_4 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_5 [-Inf, Inf] (100%) [-Inf, 4] (100%)   [0, Inf] (100%)   
 
 , , s., d.rank=15
 
-    two.sided          less               greater
+    two.sided          less               greater           
 n_1 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
 n_2 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
 n_3 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
@@ -678,16 +678,16 @@ n_5 [-Inf, Inf] (100%) [-Inf, 4] (97%)    [1e-09, Inf] (97%)
 
 , , s0, d.rank=10
 
-    two.sided       less               greater
-n_1 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_2 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_3 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_4 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_5 [0, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
+    two.sided          less               greater           
+n_1 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_2 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_3 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_4 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_5 [-Inf, Inf] (100%) [-Inf, 4] (100%)   [0, Inf] (100%)   
 
 , , s., d.rank=10
 
-    two.sided          less               greater
+    two.sided          less               greater           
 n_1 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
 n_2 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
 n_3 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
@@ -696,44 +696,44 @@ n_5 [-Inf, Inf] (100%) [-Inf, 4] (97%)    [1e-09, Inf] (97%)
 
 , , s0, d.rank=7
 
-    two.sided       less               greater
-n_1 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_2 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_3 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_4 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_5 [0, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
+    two.sided          less               greater           
+n_1 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_2 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_3 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_4 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_5 [-Inf, Inf] (100%) [-Inf, 4] (100%)   [0, Inf] (100%)   
 
 , , s., d.rank=7
 
-    two.sided           less               greater
-n_1 [-Inf, Inf] (100%)  [-Inf, Inf] (100%) [-Inf, Inf] (100%)
-n_2 [1e-09, Inf] (100%) [-Inf, Inf] (100%) [1e-09, Inf] (100%)
-n_3 [1e-09, Inf] (100%) [-Inf, Inf] (100%) [1e-09, Inf] (100%)
-n_4 [1e-09, Inf] (100%) [-Inf, Inf] (100%) [1e-09, Inf] (100%)
-n_5 [1e-09, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
+    two.sided          less               greater            
+n_1 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%) 
+n_2 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%) 
+n_3 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%) 
+n_4 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%) 
+n_5 [-Inf, Inf] (100%) [-Inf, 4] (100%)   [1e-09, Inf] (100%)
 
 , , s0, d.rank=5
 
-    two.sided       less               greater
-n_1 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_2 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_3 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_4 [0, Inf] (100%) [-Inf, Inf] (100%) [0, Inf] (100%)
-n_5 [0, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
+    two.sided          less               greater           
+n_1 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_2 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_3 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_4 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
+n_5 [-Inf, Inf] (100%) [-Inf, 4] (100%)   [0, Inf] (100%)   
 
 , , s., d.rank=5
 
-    two.sided           less               greater
-n_1 [-Inf, Inf] (100%)  [-Inf, Inf] (100%) [-Inf, Inf] (100%)
-n_2 [1e-09, Inf] (100%) [-Inf, Inf] (100%) [1e-09, Inf] (100%)
-n_3 [1e-09, Inf] (100%) [-Inf, Inf] (100%) [1e-09, Inf] (100%)
-n_4 [1e-09, Inf] (100%) [-Inf, Inf] (100%) [1e-09, Inf] (100%)
-n_5 [1e-09, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
+    two.sided          less               greater            
+n_1 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%) 
+n_2 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%) 
+n_3 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%) 
+n_4 [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%) 
+n_5 [-Inf, Inf] (100%) [-Inf, 4] (100%)   [1e-09, Inf] (100%)
 
->
->
+> 
+> 
 > ##-------- 2-sample tests (working unchanged) ------------------
->
+> 
 > R2 <- lapply(alts, ## for all three alternatives
 +              function(alt)
 +                  lapply(seq_along(x0), function(k)
@@ -743,18 +743,18 @@ n_5 [1e-09, Inf] (100%) [-Inf, 4] (100%)   [0.5, Inf] (97%)
 [1] 1
 > if(!identical(w2, w1)) # typically they *are* identical ==> no new warnings
 +     summary(w2)
->
->
+> 
+> 
 > table(uc2 <- unlist(c2 <- lapply(R2, function(A) lapply(A, class))))
 
-htest
-   15
+htest 
+   15 
 > stopifnot(uc2 == "htest")
->
+> 
 > stR2 <- lapply(stats,
 +                function(COMP)
 +                    lapply(R2, function(A) lapply(A, `[[`, COMP)))
->
+> 
 > lapply(stats[-3], ## -3: "conf.int" separately
 +        function(ST) sapply(stR2[[ST]], unlist))
 $statistic
@@ -781,16 +781,16 @@ difference in location     0e+00  0e+00   0e+00
 difference in location     0e+00  0e+00   0e+00
 difference in location     0e+00  0e+00   0e+00
 
->
+> 
 > noquote(sapply(stR2[["conf.int"]], function(.) vapply(., formatCI, "")))
-     two.sided          less               greater
+     two.sided          less               greater           
 [1,] [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
 [2,] [-Inf, Inf] (100%) [-Inf, Inf] (100%) [-Inf, Inf] (100%)
-[3,] [-Inf, Inf] (100%) [-Inf, 2] (100%)   [-2, Inf] (100%)
-[4,] [-3, 3] (100%)     [-Inf, 2] (97%)    [-2, Inf] (97%)
-[5,] [-3, 3] (96%)      [-Inf, 2] (95%)    [-2, Inf] (97%)
->
->
+[3,] [-Inf, Inf] (100%) [-Inf, 2] (100%)   [-2, Inf] (100%)  
+[4,] [-3, 3] (100%)     [-Inf, 2] (97%)    [-2, Inf] (97%)   
+[5,] [-3, 3] (96%)      [-Inf, 2] (95%)    [-2, Inf] (97%)   
+> 
+> 
 > proc.time()
    user  system elapsed 
-  0.544   0.273   0.981 
+  0.268   0.042   0.289 

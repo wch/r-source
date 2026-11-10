@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-09-20 r90574) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-11-10 r90868) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -3377,8 +3377,8 @@ CN   constant TRUE       1.0 1.0 2.0 2.0 3.0 3.0 4.0 4.0 1.0 1.0 0.0  NA
      linear   TRUE       1.0 1.5 2.0 2.5 3.0 3.5 4.0 2.5 1.0 0.5 0.0  NA
               FALSE      1.0  NA  NA  NA 3.0  NA  NA  NA 1.0 0.5 0.0  NA
 > str(tbN <- as.table(ryN)) # 4 x 2 x 2 x 12 array
- 'table' num [1:4, 1:2, 1:2, 1:12] 1 1 1 1 1 1 1 1 1 1 ...
- - attr(*, "dimnames")=List of 4
+'table' num [1:4, 1:2, 1:2, 1:12] 1 1 1 1 1 1 1 1 1 1 ...
+ - attr(*, "dimnames")= List of 4
   ..$ rule  : chr [1:4] "N" "C" "NC" "CN"
   ..$ method: chr [1:2] "constant" "linear"
   ..$ na.rm : chr [1:2] "TRUE" "FALSE"
@@ -5185,7 +5185,7 @@ function (V)
         r[seq.int(from = 1L, by = p + 1L, length.out = p)] <- 1
     r
 }
-<bytecode: 0x564f1628bcf0>
+<bytecode: 0x5617cef0d2c8>
 <environment: namespace:stats>
 > stopifnot(all.equal(Cl, cov2cor(cov(longley))),
 +           all.equal(cor(longley, method = "kendall"),
@@ -6171,7 +6171,7 @@ NULL
 > ## to peek at the inner structure "if you must", use '[..]' indexing :
 > str(d3[2][[1]]) ## or the full
 List of 2
- $ :List of 2
+ $ : List of 2
   ..$ : int 13
   .. ..- attr(*, "label")= chr "Illinois"
   .. ..- attr(*, "members")= int 1
@@ -6185,7 +6185,7 @@ List of 2
   ..- attr(*, "members")= int 2
   ..- attr(*, "midpoint")= num 0.5
   ..- attr(*, "height")= num 6.24
- $ :List of 2
+ $ : List of 2
   ..$ : int 22
   .. ..- attr(*, "label")= chr "Michigan"
   .. ..- attr(*, "members")= int 1
@@ -6204,13 +6204,13 @@ List of 2
  - attr(*, "height")= num 18.4
 > str(d3[])
 List of 2
- $ :List of 2
+ $ : List of 2
   ..$ : int 8
   .. ..- attr(*, "members")= int 1
   .. ..- attr(*, "height")= num 0
   .. ..- attr(*, "label")= chr "Delaware"
   .. ..- attr(*, "leaf")= logi TRUE
-  ..$ :List of 2
+  ..$ : List of 2
   .. ..$ : int 1
   .. .. ..- attr(*, "label")= chr "Alabama"
   .. .. ..- attr(*, "members")= int 1
@@ -6227,8 +6227,8 @@ List of 2
   ..- attr(*, "members")= int 3
   ..- attr(*, "midpoint")= num 0.75
   ..- attr(*, "height")= num 16.9
- $ :List of 2
-  ..$ :List of 2
+ $ : List of 2
+  ..$ : List of 2
   .. ..$ : int 13
   .. .. ..- attr(*, "label")= chr "Illinois"
   .. .. ..- attr(*, "members")= int 1
@@ -6242,7 +6242,7 @@ List of 2
   .. ..- attr(*, "members")= int 2
   .. ..- attr(*, "midpoint")= num 0.5
   .. ..- attr(*, "height")= num 6.24
-  ..$ :List of 2
+  ..$ : List of 2
   .. ..$ : int 22
   .. .. ..- attr(*, "label")= chr "Michigan"
   .. .. ..- attr(*, "members")= int 1
@@ -6948,14 +6948,14 @@ and	9 plateau levels (y) with summary
 [1] "f"      "method" "na.rm"  "nobs"   "x"      "y"      "yleft"  "yright"
 > ## "f"     "method" "na.rm"  "nobs"   "x"     "y"    "yleft"  "yright"
 > utils::ls.str(environment(Fn12))
-f :  num 0
-method :  int 2
-na.rm :  logi TRUE
-nobs :  int 12
-x :  num [1:8] -2.2 -2 -0.6 0 0.1 0.6 0.8 0.9
-y :  num [1:8] 0.0833 0.1667 0.3333 0.5 0.5833 ...
-yleft :  num 0
-yright :  num 1
+f : num 0
+method : int 2
+na.rm : logi TRUE
+nobs : int 12
+x : num [1:8] -2.2 -2 -0.6 0 0.1 0.6 0.8 0.9
+y : num [1:8] 0.0833 0.1667 0.3333 0.5 0.5833 ...
+yleft : num 0
+yright : num 1
 > stopifnot(all.equal(quantile(Fn12), quantile(y)))
 > 
 > ###----------------- Plotting --------------------------
@@ -7351,15 +7351,15 @@ Link function: identity
 List of 12
  $ family    : chr "gaussian"
  $ link      : chr "identity"
- $ linkfun   :function (mu)  
- $ linkinv   :function (eta)  
- $ variance  :function (mu)  
- $ dev.resids:function (y, mu, wt)  
- $ aic       :function (y, n, mu, wt, dev)  
- $ mu.eta    :function (eta)  
- $ initialize:  expression({  n <- rep.int(1, nobs)  if (is.null(etastart) && is.null(start) && is.null(mustart) && ((family$link| __truncated__
- $ validmu   :function (mu)  
- $ valideta  :function (eta)  
+ $ linkfun   : function (mu)  
+ $ linkinv   : function (eta)  
+ $ variance  : function (mu)  
+ $ dev.resids: function (y, mu, wt)  
+ $ aic       : function (y, n, mu, wt, dev)  
+ $ mu.eta    : function (eta)  
+ $ initialize:   expression({  n <- rep.int(1, nobs)  if (is.null(etastart) && is.null(start) && is.null(mustart) && ((family$link| __truncated__
+ $ validmu   : function (mu)  
+ $ valideta  : function (eta)  
  $ dispersion: num NA
  - attr(*, "class")= chr "family"
 > 
@@ -7373,16 +7373,16 @@ Link function: inverse
 List of 13
  $ family    : chr "Gamma"
  $ link      : chr "inverse"
- $ linkfun   :function (mu)  
- $ linkinv   :function (eta)  
- $ variance  :function (mu)  
- $ dev.resids:function (y, mu, wt)  
- $ aic       :function (y, n, mu, wt, dev)  
- $ mu.eta    :function (eta)  
- $ initialize:  expression({  if (any(y <= 0))  stop("non-positive values not allowed for the 'Gamma' family")  n <- rep.int(1, n| __truncated__
- $ validmu   :function (mu)  
- $ valideta  :function (eta)  
- $ simulate  :function (object, nsim)  
+ $ linkfun   : function (mu)  
+ $ linkinv   : function (eta)  
+ $ variance  : function (mu)  
+ $ dev.resids: function (y, mu, wt)  
+ $ aic       : function (y, n, mu, wt, dev)  
+ $ mu.eta    : function (eta)  
+ $ initialize:   expression({  if (any(y <= 0))  stop("non-positive values not allowed for the 'Gamma' family")  n <- rep.int(1, n| __truncated__
+ $ validmu   : function (mu)  
+ $ valideta  : function (eta)  
+ $ simulate  : function (object, nsim)  
  $ dispersion: num NA
  - attr(*, "class")= chr "family"
 > gf$linkinv
@@ -7862,7 +7862,7 @@ attr(,".Environment")
 > environment(as.formula("y ~ x"))
 <environment: R_GlobalEnv>
 > environment(as.formula("y ~ x", env = new.env()))
-<environment: 0x564f14668d10>
+<environment: 0x5617cce0b350>
 > 
 > 
 > ## Create a formula for a model with a large number of variables:
@@ -9553,7 +9553,7 @@ List of 4
  $ hat         : Named num [1:50] 0.0677 0.1204 0.0875 0.0895 0.0696 ...
   ..- attr(*, "names")= chr [1:50] "Australia" "Austria" "Belgium" "Bolivia" ...
  $ coefficients: num [1:50, 1:5] 0.0916 -0.0747 -0.4752 0.0429 0.6604 ...
-  ..- attr(*, "dimnames")=List of 2
+  ..- attr(*, "dimnames")= List of 2
   .. ..$ : chr [1:50] "Australia" "Austria" "Belgium" "Bolivia" ...
   .. ..$ : chr [1:5] "(Intercept)" "pop15" "pop75" "dpi" ...
  $ sigma       : Named num [1:50] 3.84 3.84 3.83 3.84 3.81 ...
@@ -9632,7 +9632,7 @@ List of 9
  $ weights      : num [1:7] 0.3195 0.0123 0.0569 1.8154 0.8359 ...
  $ rank         : int 2
  $ assign       : NULL
- $ qr           :List of 5
+ $ qr           : List of 5
   ..$ qr   : num [1:7, 1:2] 3.0953 0.0355 0.106 0.5901 -0.5898 ...
   ..$ qraux: num [1:2] 1.2 1.02
   ..$ pivot: int [1:2] 1 2
@@ -9651,7 +9651,7 @@ List of 8
  $ rank         : int 2
  $ fitted.values: num [1:7] -0.146 -0.688 0.366 -0.804 0.399 ...
  $ assign       : NULL
- $ qr           :List of 5
+ $ qr           : List of 5
   ..$ qr   : num [1:7, 1:2] 3.321 0.298 0.414 0.408 -0.601 ...
   ..$ qraux: num [1:2] 1.34 1.32
   ..$ pivot: int [1:2] 1 2
@@ -9996,10 +9996,10 @@ X           -0.371  0.3114 -1.1913    0.249
 > 
 > utils::str(make.link("logit"))
 List of 5
- $ linkfun :function (mu)  
- $ linkinv :function (eta)  
- $ mu.eta  :function (eta)  
- $ valideta:function (eta)  
+ $ linkfun : function (mu)  
+ $ linkinv : function (eta)  
+ $ mu.eta  : function (eta)  
+ $ valideta: function (eta)  
  $ name    : chr "logit"
  - attr(*, "class")= chr "link-glm"
 > 
@@ -10762,17 +10762,17 @@ NA        0    3    0
  $ log(Volume): num  2.33 2.33 2.32 2.8 2.93 ...
  $ log(Height): num  4.25 4.17 4.14 4.28 4.39 ...
  $ log(Girth) : num  2.12 2.15 2.17 2.35 2.37 ...
- - attr(*, "terms")=Classes 'terms', 'formula'  language log(Volume) ~ log(Height) + log(Girth)
+ - attr(*, "terms")= Classes 'terms', 'formula' language log(Volume) ~ log(Height) + log(Girth)
   .. ..- attr(*, "variables")= language list(log(Volume), log(Height), log(Girth))
   .. ..- attr(*, "factors")= int [1:3, 1:2] 0 1 0 0 0 1
-  .. .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..- attr(*, "dimnames")= List of 2
   .. .. .. ..$ : chr [1:3] "log(Volume)" "log(Height)" "log(Girth)"
   .. .. .. ..$ : chr [1:2] "log(Height)" "log(Girth)"
   .. ..- attr(*, "term.labels")= chr [1:2] "log(Height)" "log(Girth)"
   .. ..- attr(*, "order")= int [1:2] 1 1
   .. ..- attr(*, "intercept")= int 1
   .. ..- attr(*, "response")= int 1
-  .. ..- attr(*, ".Environment")=<environment: R_GlobalEnv> 
+  .. ..- attr(*, ".Environment")= <environment: R_GlobalEnv> 
   .. ..- attr(*, "predvars")= language list(log(Volume), log(Height), log(Girth))
   .. ..- attr(*, "dataClasses")= Named chr [1:3] "numeric" "numeric" "numeric"
   .. .. ..- attr(*, "names")= chr [1:3] "log(Volume)" "log(Height)" "log(Girth)"
@@ -11787,7 +11787,7 @@ $nDcentral
 > myenv$x    <- seq(-3., 3., length.out = 31)
 > nD <- numericDeriv(quote(pnorm(x, mean, sd)), c("mean", "sd"), myenv)
 > str(nD)
- num [1:31] 0.00135 0.00256 0.00466 0.0082 0.0139 ...
+num [1:31] 0.00135 0.00256 0.00466 0.0082 0.0139 ...
  - attr(*, "gradient")= num [1:31, 1:2] -0.00443 -0.00792 -0.01358 -0.02239 -0.03547 ...
 > 
 > ## Visualize :
@@ -12923,14 +12923,14 @@ attr(,"class")
 $linkfun
 function (mu) 
 mu^lambda
-<bytecode: 0x564f16fadfa0>
-<environment: 0x564f16f2e1e8>
+<bytecode: 0x5617cfdcb1c0>
+<environment: 0x5617cfde6900>
 
 $linkinv
 function (eta) 
 pmax(eta^(1/lambda), .Machine$double.eps)
-<bytecode: 0x564f16fade50>
-<environment: 0x564f16f2e1e8>
+<bytecode: 0x5617cfdcafc8>
+<environment: 0x5617cfde6900>
 
 > 
 > 
@@ -16441,16 +16441,16 @@ Contrast 1 Contrast 2 Contrast 3
 > ## Show the argument list of each self-starting function:
 > str(fSS, give.attr = FALSE)
 List of 10
- $ SSasymp    :function (input, Asym, R0, lrc)  
- $ SSasympOff :function (input, Asym, lrc, c0)  
- $ SSasympOrig:function (input, Asym, lrc)  
- $ SSbiexp    :function (input, A1, lrc1, A2, lrc2)  
- $ SSfol      :function (Dose, input, lKe, lKa, lCl)  
- $ SSfpl      :function (input, A, B, xmid, scal)  
- $ SSgompertz :function (x, Asym, b2, b3)  
- $ SSlogis    :function (input, Asym, xmid, scal)  
- $ SSmicmen   :function (input, Vm, K)  
- $ SSweibull  :function (x, Asym, Drop, lrc, pwr)  
+ $ SSasymp    : function (input, Asym, R0, lrc)  
+ $ SSasympOff : function (input, Asym, lrc, c0)  
+ $ SSasympOrig: function (input, Asym, lrc)  
+ $ SSbiexp    : function (input, A1, lrc1, A2, lrc2)  
+ $ SSfol      : function (Dose, input, lKe, lKa, lCl)  
+ $ SSfpl      : function (input, A, B, xmid, scal)  
+ $ SSgompertz : function (x, Asym, b2, b3)  
+ $ SSlogis    : function (input, Asym, xmid, scal)  
+ $ SSmicmen   : function (input, Vm, K)  
+ $ SSweibull  : function (x, Asym, Drop, lrc, pwr)  
 > 
 > 
 > 
@@ -16759,7 +16759,7 @@ List of 21
  $ w         : num [1:19] 2 2 1 1 3 2 4 4 4 3 2 3 4 3 5 ...
  $ yin       : num [1:19] 6 13 16 10 26 22.5 21.5 35 ...
  $ tol       : num 7e-06
- $ data      :List of 3
+ $ data      : List of 3
   ..$ x: num [1:50] 4 4 7 7 8 9 10 10 10 11 11 12 12 12 12 ...
   ..$ y: num [1:50] 2 10 4 22 16 10 18 26 34 17 28 14 20 24 28 ...
   ..$ w: num 1
@@ -16777,7 +16777,7 @@ List of 21
  $ iparms    : Named int [1:5] 1 0 11 0 NA
   ..- attr(*, "names")= chr [1:5] "icrit" "ispar" "iter" "" "errorI"
  $ auxM      : NULL
- $ fit       :List of 5
+ $ fit       : List of 5
   ..$ knot : num [1:25] 0 0 0 0 0.14286 0.19048 0.2381 0.28571 ...
   ..$ nk   : int 21
   ..$ min  : num 4
@@ -17323,8 +17323,8 @@ Step function with continuity 'f'= 0.2 ,  3 knots at
 > unclass(sfun0)
 function (v) 
 .approxfun(x, y, v, method, yleft, yright, f, na.rm)
-<bytecode: 0x564f16411288>
-<environment: 0x564f12eb36c8>
+<bytecode: 0x5617cef50ed8>
+<environment: 0x5617cbc46c20>
 attr(,"call")
 stepfun(1:3, y0, f = 0)
 > ls(envir = environment(sfun0))
@@ -19367,7 +19367,7 @@ difference in location
 data:  -2:12
 V = 112, p-value = 0.001465
 alternative hypothesis: true location is not equal to 0
-95.5 percent confidence interval:
+95.2 percent confidence interval:
  2.5 7.5
 sample estimates:
 (pseudo)median 
@@ -19954,7 +19954,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  3.735 0.1 3.85 0 0 
+Time elapsed:  5.26 0.136 5.4 0 0 
 > grDevices::dev.off()
 null device 
           1 
