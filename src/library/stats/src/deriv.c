@@ -1228,7 +1228,7 @@ SEXP deriv(SEXP args)
     /* Prune the expression list removing eliminated sub-expressions */
     SETCDR(exprlist, Prune(CDR(exprlist)));
 
-    if (TYPEOF(funarg) == LGLSXP && length(funarg) > 0 &&
+    if (TYPEOF(funarg) == LGLSXP && XLENGTH(funarg) > 0 &&
 	LOGICAL(funarg)[0]) { /* fun = TRUE */
 	funarg = names;
     }
