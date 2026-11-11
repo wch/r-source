@@ -472,7 +472,13 @@
       \item \code{dev.set(1)} now returns the number and name of the
       device it opens, as documented, rather than
       \code{c("null device" = 1)}, thanks to \I{Trevor Davis}' report
-      and patch in \PR{19281}.      
+      and patch in \PR{19281}.
+
+      \item \code{str(x)} no longer prints to full internal
+      precision when \code{x} has a class, is of type \code{double}, but
+      \code{is.numeric(x)} is false, as e.g., for \code{"difftime"} objects
+      \code{x}.  Rather, \code{str.default()} obeys its default or explicit
+      \code{digits.d} argument, fixing \PR{19294}.
     }
   }
 }

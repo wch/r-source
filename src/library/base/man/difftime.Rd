@@ -1,6 +1,6 @@
 % File src/library/base/man/difftime.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{difftime}
@@ -92,6 +92,8 @@ as.difftime(tim, format = "\%X", units = "auto", tz = "UTC")
 
   Limited arithmetic is available on \code{"difftime"} objects: they can
   be added or subtracted, and multiplied or divided by a numeric vector.
+  Still, on purpose, \code{\link{is.numeric}(x)} is false for
+  \code{"difftime"} objects.
   In addition, adding or subtracting a numeric vector by a
   \code{"difftime"} object implicitly converts the numeric vector to a
   \code{"difftime"} object with the same units as the \code{"difftime"}

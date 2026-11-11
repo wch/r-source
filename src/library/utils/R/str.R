@@ -428,7 +428,7 @@ str.default <-
 		if     (mod == "nume")   mod <- if(is.integer(object)) "int" else "num"
 		else if(mod == "char") { mod <- "chr"; char.like <- TRUE }
 		else if(mod == "comp")   mod <- "cplx" #- else: keep 'logi'
-		if(is.array(object)) {
+		if(is.array(object)) { # incl. 'matrix'
 		    le.str <- arrLenstr(object)
 		    if(m <- match("AsIs", cl, 0L)) ## workaround bad format.AsIs()
 			oldClass(object) <- cl[-m]
@@ -558,7 +558,7 @@ str.default <-
 	} else if(is.logical(object)) {
 	    v.len <- 1.5 * v.len # was '3' originally (but S prints 'T' 'F' ..)
 	    format.fun <- formatNum
-	} else if(is.numeric(object)) {
+	} else if(is.double(object) || is.numeric(object)) { # is.numeric() is generic
 	    iv.len <- round(2.5 * v.len)
 	    if(iSurv <- inherits(object, "Surv"))
 		std.attr <- c(std.attr, "class")
