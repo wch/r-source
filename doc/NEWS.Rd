@@ -122,6 +122,11 @@
       \item The X11 on-screen devices now supports history navigation
       through (customizable) key bindings.
 
+      \item \code{model.matrix.default()} now catches and names an
+      unsuitable factor before calling \code{contrasts<-} (\PR{19148}),
+      and no longer warns about unused elements of \code{contrasts.arg}
+      (\PR{18313}, obviating an all too common workaround using
+      \code{suppressWarnings}).
     }
   }
 

@@ -1,7 +1,7 @@
 #  File src/library/stats/R/models.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -617,36 +617,45 @@ model.matrix.default <- function(object, data = environment(object),
     if(length(data)) {
         contr.funs <- as.character(getOption("contrasts"))
         namD <- names(data)
-        ## turn any character columns into factors
-        for(i in namD)
+        matchedCA <- rep(NA_integer_, length(data))
+        if (!is.null(contrasts.arg)) {
+            if (is.list(contrasts.arg)) {
+                if (is.null(namC <- names(contrasts.arg)))
+                    stop("'contrasts.arg' argument must be named")
+                matchedCA <- match(namD, namC)
+                ## no longer warn about unused contrasts (PR#18313)
+                ## for (nn in setdiff(namC, namD))
+                ##     warning(gettextf("variable '%s' is absent, its contrast will be ignored", nn),
+                ##             domain = NA)
+            } else warning("non-list contrasts argument ignored")
+        }
+        data <- unclass(data) # avoid costly [[<-.data.frame
+        isF <- logical(length(data))
+        for(i in seq_along(data)) {
+            ## turn any character columns into factors
             if(is.character(data[[i]]))
                 data[[i]] <- factor(data[[i]])
-        isF <- vapply(data, function(x) is.factor(x) || is.logical(x), NA)
-        isF[int] <- FALSE
-        isOF <- vapply(data, is.ordered, NA)
-        for(nn in namD[isF])            # drop response
-            if(is.null(attr(data[[nn]], "contrasts")))
-                contrasts(data[[nn]]) <- contr.funs[1 + isOF[nn]]
-        ## it might be safer to have numerical contrasts:
-        ##	  get(contr.funs[1 + isOF[nn]])(nlevels(data[[nn]]))
-        if (!is.null(contrasts.arg)) {
-          if (!is.list(contrasts.arg))
-              warning("non-list contrasts argument ignored")
-          else {  ## contrasts.arg is a list
-            if (is.null(namC <- names(contrasts.arg)))
-                stop("'contrasts.arg' argument must be named")
-            for (nn in namC) {
-                if (is.na(ni <- match(nn, namD)))
-                    warning(gettextf("variable '%s' is absent, its contrast will be ignored", nn),
-                            domain = NA)
-                else {
-                    ca <- contrasts.arg[[nn]]
-                    if(is.matrix(ca)) contrasts(data[[ni]], ncol(ca)) <- ca
-                    else contrasts(data[[ni]]) <- ca
-                }
+            x <- data[[i]]
+            isF[i] <- (i != int) && # skip response
+                (is.factor(x) || is.logical(x))
+            useCA <- !is.na(matchedCA[i])
+            if((isF[i] && is.null(attr(x, "contrasts"))) || useCA) {
+                ## catch unsuitable factor here and name it (PR#19148)
+                if(is.factor(x) && nlevels(x) < 2L)
+                    stop(gettextf("cannot set contrasts for variable '%s'", namD[i]), ":\n  ",
+                         gettext("contrasts can be applied only to factors with 2 or more levels"), # as in `contrasts<-`
+                         domain = NA)
+                if(useCA) {
+                    ca <- contrasts.arg[[matchedCA[i]]]
+                    if(is.matrix(ca)) contrasts(x, ncol(ca)) <- ca
+                    else contrasts(x) <- ca
+                } else
+                    contrasts(x) <- contr.funs[1L + is.ordered(x)]
+                ## it might be safer to have numerical contrasts:
+                ##   get(contr.funs[1L + is.ordered(x)])(nlevels(x))
+                data[[i]] <- x
             }
-          }
-        } ## non-null contrasts.arg
+        }
     } else { #  no rhs terms ('~1', or '~0'): internal model.matrix needs some variable
 	isF <- FALSE
 	data[["x"]] <- raw(nrow(data))

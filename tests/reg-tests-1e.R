@@ -4434,6 +4434,12 @@ stopifnot(identical(r, paste("'difftime' num", fmtd)))
 ## str() did *not* obey its 'digits.d' argument in  R <= 4.6.*
 
 
+## model.matrix() names an unsuitable factor in the error message -- PR#19148
+(msg <- tryCmsg(model.matrix(y ~ f1, data.frame(y = 1:3, f1 = factor("a")))))
+stopifnot(is.character(msg), grepl("f1", msg))
+## failed from `contrasts<-`(`*tmp*`, ...), hiding the variable, in R <= 4.6.*
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
