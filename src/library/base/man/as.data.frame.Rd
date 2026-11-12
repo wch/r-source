@@ -54,8 +54,8 @@ is.data.frame(x)
     meaning of \code{\link{data.frame}(*, check.names = !optional)}.
     See also the \code{make.names} argument of the \code{matrix} method.}
   \item{\dots}{additional arguments to be passed to or from methods.}
-  \item{stringsAsFactors}{logical: should the character vector be converted
-    to a factor?}
+  \item{stringsAsFactors}{logical: should the character vector(s) be converted
+    to \code{\link{factor}}?  Ignored for objects protected by \code{\link{I}}.}
   %% list method:
   \item{cut.names}{logical or integer; indicating if column names with
     more than 256 (or \code{cut.names} if that is numeric) characters
@@ -117,9 +117,6 @@ is.data.frame(x)
   \sQuote{flattening} all dimensions after the first and creating
   suitable column labels.
 
-  Character variables are converted to factor columns unless protected
-  by \code{\link{I}}.
-
   If a data frame is supplied, all classes preceding \code{"data.frame"}
   are stripped, and the row names are changed if that argument is supplied.
 
@@ -133,6 +130,7 @@ is.data.frame(x)
 }
 \seealso{
   \code{\link{data.frame}} and  \code{\link{make.names}};
+  \code{\link{list2DF}} taking all elements \dQuote{as is};
   \code{\link{as.data.frame.table}} for the \code{table} method (which has
   additional arguments).
 }
