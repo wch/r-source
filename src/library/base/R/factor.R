@@ -1,7 +1,7 @@
 #  File src/library/base/R/factor.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -134,11 +134,11 @@ droplevels.data.frame <- function(x, except = NULL, exclude, ...)
 
 as.vector.factor <- function(x, mode="any")
 {
-    if(mode=="list") as.list(x)
-    else if(mode== "any" || mode== "character" || mode== "logical")
-	as.vector(levels(x)[x], mode)
-    else
-	as.vector(unclass(x), mode)
+    if (mode == "any" || mode == "character" || mode == "logical")
+        as.vector(levels(x)[x], mode)
+    else if (mode == "list")
+        as.list.factor(x)
+    else as.vector(unclass(x), mode)
 }
 
 as.character.factor <- function(x,...) .Internal(asCharacterFactor(x))

@@ -45,9 +45,9 @@ as.list.data.frame <- function(x,...) {
 }
 as.vector.data.frame <- function(x, mode = "any") {
     x <- as.list.data.frame(x)
-    if(mode %in% c("any", "list"))
+    if (mode == "any" || mode == "list")
         x
-    else as.vector(x, mode=mode)
+    else as.vector(x, mode)
 }
 
 as.list.environment <- function(x, all.names=FALSE, sorted=FALSE, ...)
