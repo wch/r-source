@@ -1658,9 +1658,33 @@ rep.difftime <- function(x, ...)
 ## Added in 4.2.0.
 
 as.vector.POSIXlt <- function(x, mode = "any")
-    as.vector(as.list(x), mode)
+{
+    if (mode == "any" || mode == "list")
+        as.list.POSIXlt(x)
+    else if (mode == "character")
+        as.character.POSIXt(x)
+    else as.vector(unclass(as.POSIXct(x)), mode)
+}
 
 ## Added in 4.3.0.
 
 balancePOSIXlt <- function(x, fill.only=FALSE, classed=TRUE)
     .Internal(balancePOSIXlt(x, fill.only, classed))
+
+## Added in 4.7.0.
+
+as.vector.POSIXct <- function (x, mode = "any")
+{
+    if (mode == "list")
+        as.list.POSIXct(x)
+    else if (mode == "character")
+        as.character.POSIXt(x)
+    else as.vector(unclass(x), mode)
+}
+
+as.vector.difftime <- function (x, mode = "any")
+{
+    if (mode == "list")
+        as.list.difftime(x)
+    else as.vector(unclass(x), mode)
+}

@@ -464,3 +464,14 @@ xtfrm.Date <- function(x) as.numeric(x)
 ## Added in 3.5.0.
 
 .Date <- function(xx, cl = "Date") `class<-`(xx, cl)
+
+## Added in 4.7.0.
+
+as.vector.Date <- function (x, mode = "any")
+{
+    if (mode == "list")
+        as.list.Date(x)
+    else if (mode == "character")
+        as.character.Date(x)
+    else as.vector(unclass(x), mode)
+}

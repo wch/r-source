@@ -127,6 +127,15 @@
       and no longer warns about unused elements of \code{contrasts.arg}
       (\PR{18313}, obviating an all too common workaround using
       \code{suppressWarnings}).
+
+      \item \code{as.vector} gains methods for classes \code{Date},
+      \code{POSIXct}, and \code{difftime} that call methods for
+      \code{as.list} or \code{as.character} when \code{mode="list"} or
+      \code{"character"}.  The method for class \code{POSIXlt} is
+      changed to do the same and for all other modes work via class
+      \code{POSIXct}, a corollary being that
+      \code{as.vector(., mode="double")} now works as
+      \code{as.double(.)} rather than signalling an error.
     }
   }
 

@@ -7,9 +7,12 @@
 \title{Vectors - Creation, Coercion, etc}
 \alias{vector}
 \alias{as.vector}
-\alias{as.vector.data.frame}
-\alias{as.vector.factor}
+\alias{as.vector.Date}
+\alias{as.vector.POSIXct}
 \alias{as.vector.POSIXlt}
+\alias{as.vector.data.frame}
+\alias{as.vector.difftime}
+\alias{as.vector.factor}
 \alias{is.vector}
 \alias{atomic} % for cat.Rd and read.table.Rd
 \usage{

@@ -4440,6 +4440,44 @@ stopifnot(is.character(msg), grepl("f1", msg))
 ## failed from `contrasts<-`(`*tmp*`, ...), hiding the variable, in R <= 4.6.*
 
 
+## as.vector(x, mode="*") <==> as.*(x) for more of our classes
+Pct <- .POSIXct(60, "America/Toronto")
+Plt <- as.POSIXlt(Pct)
+unbalance <- function (x) `attr<-`(x, "balanced", NULL)
+stopifnot(exprs = {
+    identical(as.vector(Pct, "list"), list(Pct))
+    ## was list(60)
+    identical(as.vector(Pct, "character"), "1969-12-31 19:01:00")
+    ## was "60"
+    identical(as.vector(Plt, "list"), list(unbalance(Plt)))
+    ## OK, though should become list(Plt) ... FIXME
+    identical(as.vector(Plt, "character"), "1969-12-31 19:01:00")
+    ## was "list(sec = 0, min = 1, hour = 19, ...)"
+    identical(as.vector(Plt, "double"), 60)
+    ## was Error .... : 'list' object cannot be coerced to type 'double'
+})
+## now more comprehensively ...
+mm <- c("raw", "logical", "integer", "double", "numeric", "complex",
+        "character", "symbol", "name", "pairlist", "list", "expression")
+ff <- mget(paste0("as.", mm), inherits = TRUE); names(ff) <- NULL
+X <- list(0, .Date(0), Pct, as.POSIXlt(Pct), .difftime(60, "secs"),
+          factor("."), data.frame(. = 0))
+J <- rep(list(seq_along(mm)), length(X))
+## for "POSIXlt", test only "double", "numeric", "character", "list"
+J[[4L]] <- c(4L, 5L, 7L, 11L)
+## for "data.frame", test all except for "symbol", "name"
+J[[7L]] <- c(-8L, -9L)
+for (i in seq_along(X)) {
+    x <- X[[i]]
+    j <- J[[i]]
+    stopifnot(identical(lapply(mm[j], Funcall, x = x, f = as.vector),
+                        lapply(ff[j], Funcall, x = x)))
+}
+## remaining tests for "POSIXlt": go via "POSIXct"
+j <- -J[[4L]]
+stopifnot(identical(lapply(mm[j], Funcall, x = Plt, f = as.vector),
+                    lapply(ff[j], Funcall, x = Pct)))
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
