@@ -3520,11 +3520,30 @@ assertErrV(qr.influence(qr = list(1,"a"), res = 0))
 ## segfaulted in R <= 4.6.1
 
 
-
 ## besselY() with large negative non-integer order -- NaN with warning
 assertWarnV(bY <- besselY(1, -2e7 - c(0.5, 0.25)))
 stopifnot(is.nan(bY))
 ## segfaulted in R-devel since r90571
+
+
+## unzip(*, unzip = "internal") leaks the zip handle on error -- PR#19233
+le <- function(x, n) writeBin(as.integer(x), raw(), size = n, endian = "little")
+entries <- as.raw(c(0x01, 0x00, 0x00, 0xff, 0, 0, 0, 0))
+record <- c(as.raw(c(0x50, 0x4b, 0x06, 0x06)), le(44, 8), le(45, 2), le(45, 2),
+            le(0, 4), le(0, 4), entries, entries, le(0, 8), le(0, 8))
+locator <- c(as.raw(c(0x50, 0x4b, 0x06, 0x07)), le(0, 4), le(4, 8), le(1, 4))
+zipfile <- tempfile(fileext = ".zip")
+writeBin(c(le(0, 4), record, locator), zipfile) # pad: minizip code treats offset 0 as "not found"
+if(dir.exists(dfd <- "/dev/fd")) withAutoprint({
+    nfd <- function() length(list.files(dfd))
+    (n1 <- nfd())
+    for (i in 1:50)
+        tryCatch(unzip(zipfile, list = TRUE, unzip = "internal"), error = function(e) {})
+    (n2 <- nfd())
+    stopifnot(n2 - n1 == 0)
+})          # ^^^^^^^
+unlink(zipfile)
+## n2 - n1 was 50 in R <= 4.6.2
 
 
 
