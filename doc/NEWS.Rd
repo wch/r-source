@@ -496,6 +496,11 @@
 
       \item Fix for \code{contourLines()} and \code{contour()} with
       negative z values (\PR{19279}).  Thanks to \I{Kevin Ushey}.
+
+      \item \code{as.environment(x)} and \code{pos.to.env(x)} returned
+      a list rather than an environment for numeric \code{x} of length
+      greater than one.  Now they signal an error.  Thanks to
+      \I{Adam Berkeš} for the report (\PR{19306}).
     }
   }
 }

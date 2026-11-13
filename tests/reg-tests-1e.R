@@ -4365,7 +4365,6 @@ stopifnot(exprs = {
 ## space was missing after '<some>:' and '=' in some cases in R <= 4.6.2
 
 
-
 ## methods::evalSource did not create S4 method tables when not caching,
 ## so methods::insertSource did not trace S4 methods (PR#15242)
 pkg <- "methods"
@@ -4478,6 +4477,7 @@ j <- -J[[4L]]
 stopifnot(identical(lapply(mm[j], Funcall, x = Plt, f = as.vector),
                     lapply(ff[j], Funcall, x = Pct)))
 
+
 ## contourLines() and contour() with all-negative z: zmax was initialized to
 ## DBL_MIN, so the level perturbation used |min(z)| instead of the range
 z <- -1000 + matrix(c(0, 0.5, 1, 0.5, 1, 1.5, 1, 1.5, 2), 3)
@@ -4489,6 +4489,17 @@ stopifnot(length(cl) == 1L,
 ## the contour missed the grid points and no "all z values are equal"
 ## warning was given, in R <= 4.6.2
 tools::assertWarning(contourLines(matrix(-1, 3, 3)), verbose = TRUE)
+
+
+## as.environment(x), pos.to.env(x) for numeric 'x' (PR#19306)
+x <- c(-1L, -1L) # length(x) >= 2
+tools::assertError(as.environment(x)) # returned list
+tools::assertError(pos.to.env(x)) # ditto
+tools::assertError(getGeneric("initialize", where = x)) # caused segfault or bus error
+## in R <= 4.6.2
+
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
