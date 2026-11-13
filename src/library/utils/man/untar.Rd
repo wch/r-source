@@ -1,6 +1,6 @@
 % File src/library/utils/man/untar.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 2009-2025 R Core Team
+% Copyright 2009-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{untar}
@@ -208,6 +208,13 @@ untar(tarfile, files = NULL, list = FALSE, exdir = ".",
   workaround.  The internal implementation removes leading slashes (with
   a warning) and stops with an error for paths starting with \code{"~"}
   or containing \code{".."}, again unless \code{extras = "-P"} is specified.
+  It also stops with an error for a hard link whose target is an absolute
+  path, starts with \code{"~"}, resolves outside the extraction directory
+  or passes through a symbolic link; a symbolic link is restored as a file
+  copy (on Windows, or where symbolic links cannot be created) only if its
+  target meets the same conditions.  The permissions of extracted files
+  are subject to the umask, and the set-user-ID and set-group-ID bits of
+  archive members are not restored.
 
   Extracted files will overwrite existing file unless flag \option{-k}
   is included in \code{extras}.

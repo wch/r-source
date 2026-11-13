@@ -30,6 +30,17 @@
       \item \code{unzip(., unzip = "internal")} no longer leaks the zip
       handle on error, thanks to \I{Kevin Ushey}, see \PR{19233}
 
+      \item The internal method of \code{untar()} now checks the whole path
+      of every member, so that a final component of \code{".."} or \code{"~"}
+      can no longer place a link or file outside the extraction directory;
+      rejects hard- and symbolic-link targets restored as file copies,
+      which resolve outside the extraction directory or pass through a
+      symbolic link; applies the \command{umask} to extracted files; also no longer
+      restores \samp{setuid} or \samp{setgid} permission bits.
+      Similarly, the internal method of \code{unzip()} no longer extracts
+      through symbolic links below \code{exdir}, both thanks to \I{Kevin
+      Ushey}'s report and patch in \PR{19229}.
+
       \item \code{smooth(*, "S")} now reports a change when the last plateau it splits
       is unchanged on its right side, so "3RS3R" and "3RSS" are correct now
       in such cases.  Fixes \PR{19280} reported with patch by \I{Kevin Ushey}.
