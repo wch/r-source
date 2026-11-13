@@ -99,7 +99,7 @@ returnValue(default = NULL)
 }
 \details{
   The \code{trace} function operates by constructing a revised version
-  of the function (or of the method, if \code{signature} is supplied),
+  of the function (an S4 method if \code{signature} is supplied),
   and assigning the new object back where the original was found.
   If only the \code{what} argument is given, a line of trace printing is
   produced for each call to the function (back compatible with the
@@ -182,6 +182,9 @@ returnValue(default = NULL)
   of information out, but not much.  A warning message is issued when
   \code{trace} is used on a primitive.
 
+  Tracing informally classed functions requires that the informal class
+  is formally defined using \code{\link{setOldClass}}; see the examples.
+
   The practice of saving the traced version of the function back where
   the function came from means that tracing carries over from one
   session to another, \emph{if} the traced function is saved in the
@@ -190,7 +193,7 @@ returnValue(default = NULL)
   the global environment, are not saved in the image, so tracing expires
   with the session for such functions.
 
-  Tracing an S4 method is basically just like tracing a function, with the
+  Tracing an S4 method is like tracing any other function, with the
   exception that the traced version is stored by a call to
   \code{\link{setMethod}} rather than by direct assignment, and so is
   the untraced version after a call to \code{untrace}.
@@ -310,6 +313,24 @@ untrace(c("f", "as.matrix"))
 ## Useful to find how system2() is called in a higher-up function:
 trace(base::system2, quote(print(ls.str())))
 }
+
+
+## -------- Tracing informally classed functions --------
+
+cnm <- "functionWithAB"
+fab <- structure(function () "whatever",
+                 class = cnm, a = 0, b = 1)
+str(fab)
+tryCatch(trace(fab, browser), error = identity)
+methods::setClass(cnm, contains = "function",
+                  slots = c(a = "numeric", b = "numeric"))
+methods::setOldClass(cnm, S4Class = cnm)
+trace(fab, browser)
+str(fab)
+untrace(fab)
+str(fab) # restored
+methods::removeClass(cnm)
+
 
 ##-------- Tracing hidden functions : need 'where = *'
 ##
