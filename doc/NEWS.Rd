@@ -29,6 +29,10 @@
     \itemize{
       \item \code{unzip(., unzip = "internal")} no longer leaks the zip
       handle on error, thanks to \I{Kevin Ushey}, see \PR{19233}
+
+      \item \code{smooth(*, "S")} now reports a change when the last plateau it splits
+      is unchanged on its right side, so "3RS3R" and "3RSS" are correct now
+      in such cases.  Fixes \PR{19280} reported with patch by \I{Kevin Ushey}.
     }
   }
 }
