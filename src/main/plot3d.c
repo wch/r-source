@@ -186,7 +186,7 @@ SEXP GEcontourLines(double *x, int nx, double *y, int ny,
      * "tie-breaker" values
      */
     zmin = DBL_MAX;
-    zmax = DBL_MIN;
+    zmax = -DBL_MAX;
     for (i = 0; i < nx * ny; i++)
 	if (R_FINITE(z[i])) {
 	    if (zmax < z[i]) zmax =  z[i];

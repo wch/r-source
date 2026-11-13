@@ -4478,6 +4478,17 @@ j <- -J[[4L]]
 stopifnot(identical(lapply(mm[j], Funcall, x = Plt, f = as.vector),
                     lapply(ff[j], Funcall, x = Pct)))
 
+## contourLines() and contour() with all-negative z: zmax was initialized to
+## DBL_MIN, so the level perturbation used |min(z)| instead of the range
+z <- -1000 + matrix(c(0, 0.5, 1, 0.5, 1, 1.5, 1, 1.5, 2), 3)
+cl <- contourLines(1:3, 1:3, z, levels = -999)
+cp <- contourLines(1:3, 1:3, z + 2000, levels = 1001) # same surface, shifted
+stopifnot(length(cl) == 1L,
+          all.equal(cl[[1]][c("x", "y")], cp[[1]][c("x", "y")]),
+          all.equal(cl[[1]]$x, c(3, 2, 2, 1), tolerance = 0.01))
+## the contour missed the grid points and no "all z values are equal"
+## warning was given, in R <= 4.6.2
+tools::assertWarning(contourLines(matrix(-1, 3, 3)), verbose = TRUE)
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

@@ -1957,7 +1957,7 @@ SEXP C_contour(SEXP args)
 		  i+1, REAL(c)[i]);
 
     zmin = DBL_MAX;
-    zmax = DBL_MIN;
+    zmax = -DBL_MAX;
     for (i = 0; i < nx * ny; i++)
 	if (R_FINITE(REAL(z)[i])) {
 	    if (zmax < REAL(z)[i]) zmax =  REAL(z)[i];

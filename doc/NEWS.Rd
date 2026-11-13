@@ -493,6 +493,9 @@
       \code{is.numeric(x)} is false, as e.g., for \code{"difftime"} objects
       \code{x}.  Rather, \code{str.default()} obeys its default or explicit
       \code{digits.d} argument, fixing \PR{19294}.
+
+      \item Fix for \code{contourLines()} and \code{contour()} with
+      negative z values (\PR{19279}).  Thanks to \I{Kevin Ushey}.
     }
   }
 }
