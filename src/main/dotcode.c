@@ -99,7 +99,9 @@ static R_INLINE bool isNativeSymbolInfo(SEXP op)
       (e.g. getNativeSymbolInfo("foo")$address)
    c) or a NativeSymbolInfo itself  (e.g. getNativeSymbolInfo("foo"))
 
-   It copies the symbol name to buf.
+   It copies the symbol name to buf.  An address without registration
+   information carries no name: the name is then taken from the
+   NativeSymbolInfo if there is one, and is empty otherwise.
 
    NB: in the last two cases it sets fun and symbol as well!
  */
@@ -162,11 +164,26 @@ checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun,
 		error(_("symbol '%s' is too long"), p);
 	    memcpy(buf, p, strlen(p)+1);
 	}
+	else if (buf) {
+	    buf[0] = '\0';
+	}
 
 	return;
     }
     else if(isNativeSymbolInfo(op)) {
 	checkValidSymbolId(VECTOR_ELT(op, 1), call, fun, symbol, buf);
+
+	SEXP name = VECTOR_ELT(op, 0);
+	if (buf && buf[0] == '\0' && isValidString(name)) {
+	    /* only used in messages, so truncate rather than fail */
+	    const char *p = CHAR(STRING_ELT(name, 0));
+	    size_t n = strlen(p);
+	    if (n >= MaxSymbolBytes)
+		n = MaxSymbolBytes - 1;
+	    memcpy(buf, p, n);
+	    buf[n] = '\0';
+	}
+
 	return;
     }
 
