@@ -530,6 +530,10 @@
       \item \code{smooth(*, "S")} now reports a change when the last plateau it splits
       is unchanged on its right side, so "3RS3R" and "3RSS" are correct now
       in such cases.  Fixes \PR{19280} reported with patch by \I{Kevin Ushey}.
+
+      \item \code{runmed(<has_NA_not_at_pos_1>, na.action = "na.omit")} no
+      longer returns a \dQuote{random} smoothed value before the \code{NA},
+      fixing \PR{19300}, from the report and patch by \I{Adam Berkeš}.
     }
   }
 }
