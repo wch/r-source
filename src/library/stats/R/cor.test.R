@@ -94,17 +94,20 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 if(exact && !TIES) {
                     q <- round((r + 1) * n * (n - 1) / 4)
                     STATISTIC <- c(T = q)
-                    pkendall <- function(q, n) .Call(C_pKendall, q, n)
+                    ## pKendall() can exceed 1 by a few ulp; upper tail via symmetry
+                    pkendall <- function(q, n, lower.tail = TRUE)
+                        pmin(1, .Call(C_pKendall,
+                                      if(lower.tail) q else n * (n - 1) / 2 - q, n))
                     PVAL <-
                         switch(alternative,
                                "two.sided" = {
                                    if(q > n * (n - 1) / 4)
-                                       p <- 1 - pkendall(q - 1, n)
+                                       p <- pkendall(q, n, lower.tail = FALSE)
                                    else
                                        p <- pkendall(q, n)
                                    min(2 * p, 1)
                                },
-                               "greater" = 1 - pkendall(q - 1, n),
+                               "greater" = pkendall(q, n, lower.tail = FALSE),
                                "less" = pkendall(q, n))
                 } else {
                     xties <- table(x[duplicated(x)]) + 1
