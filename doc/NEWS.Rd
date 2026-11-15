@@ -487,6 +487,12 @@
       a list rather than an environment for numeric \code{x} of length
       greater than one.  Now they signal an error.  Thanks to
       \I{Adam Berkeš} for the report (\PR{19306}).
+
+      \item The internal HTTP server (used by the dynamic help system)
+      removes dot segments (\code{/../} and \code{/./}) also when they
+      were percent-encoded and on Windows converts \code{\\} to the
+      \code{/} path separator.  Paths that include \code{\%00} are
+      rejected.
     }
   }
 }
