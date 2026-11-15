@@ -400,9 +400,7 @@ static int uri_decode(char *s)
     int bad = 0;
     char *t = s;
     while (*s) {
-	if (*s == '+') { /* + -> SPC */
-	    *(t++) = ' '; s++;
-	} else if (*s == '%') {
+	if (*s == '%') { /* NOTE: '+' is literal in paths, only the query uses it for SPC */
 	    unsigned char ec = 0;
 	    s++;
 	    if (*s >= '0' && *s <= '9') ec |= ((unsigned char)(*s - '0')) << 4;
@@ -1047,7 +1045,23 @@ static void worker_input_handler(void *data) {
 			}
 			url++;
 			bol[strlen(bol) - 9] = 0; /* cut off " HTTP/1.x" */
-			c->url = remove_dot_segments(url);
+			{   /* remove dot segments from the path, but not from the query */
+			    char *q = strchr(url, '?');
+			    if (q) *q = 0;
+			    c->url = remove_dot_segments(url);
+			    if (q) {
+				size_t pl = strlen(c->url);
+				char *u;
+				*q = '?';
+				if (!(u = (char*) realloc(c->url, pl + strlen(q) + 1))) {
+				    send_http_response(c, " 500 Out of memory\r\nConnection: close\r\nContent-length: 0\r\n\r\n");
+				    remove_worker(c);
+				    return;
+				}
+				strcpy(u + pl, q);
+				c->url = u;
+			    }
+			}
 			if (!strncmp(bol + rll - 3, "1.0", 3)) c->attr |= HTTP_1_0;
 			if (!strncmp(bol, "GET ", 4)) c->method = METHOD_GET;
 			if (!strncmp(bol, "POST ", 5)) c->method = METHOD_POST;
