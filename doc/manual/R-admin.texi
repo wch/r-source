@@ -3375,7 +3375,7 @@ Debian/Ubuntu world: see also
 @I{TrueType} versions of @I{Monotype} fonts such as @I{Arial} and Times New Roman.
 Another useful set of fonts is the `liberation' @I{TrueType} fonts available
 at
-@uref{https://pagure.io/liberation-fonts},@footnote{@code{ttf-liberation}
+@uref{https://pagure.io/liberation-fonts/},@footnote{@code{ttf-liberation}
 in Debian/Ubuntu.} which cover the Latin, Greek and Cyrillic alphabets
 plus a fair range of signs.  These share metrics with @I{Arial}, Times New
 Roman and Courier New, and contain fonts rather similar to the first two
@@ -3435,7 +3435,7 @@ future---@command{configure} warns when it is used.
 Library @code{libdeflate} (@url{https://github.com/ebiggers/libdeflate})
 is used by @code{memCompress()} and @code{memDecompress()} if available.
 
-The Zstandard compression library and its headers are required.  It
+The @I{Zstandard} compression library and its headers are required.  It
 might be named @code{libzstd}@footnote{install Linux package
 @code{libzstd-dev} or @code{libzstd-devel}.} or be part of a package
 including the @command{zstd} utilities.
@@ -3679,7 +3679,7 @@ time.
 
 @strong{NB:} For decades@footnote{The level 3 routines were added in
 1988.  A 2001 `standard' is available at
-@uref{https://www.netlib.org/blas/blast-forum/blas-report.pdf}.} the set
+@uref{https://netlib.org/blas/blast-forum/blas-report.pdf}.} the set
 of BLAS routines was unchanged: this changed in Jan 2025 when routines
 such as @code{dgemmtr} were added as part of LAPACK 3.12.1 and used in
 some low-level LAPACK routines.  This complicates the idea of swapping
@@ -5374,7 +5374,7 @@ builds work.  This has been far rarer since macOS 13.
 
 The default security settings can make it difficult to install Apple
 packages which have not been `notarized'@footnote{See
-@uref{https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution}.}
+@uref{https://developer.apple.com/documentation/security/notarizing-macos-software-before-distribution}.}
 by Apple.  And not just packages, as this has been seen for executables
 contained in tarballs/@I{zipfiles} (for example, for @command{pandoc}).
 Usually one can use @samp{Open With} (Control/right/two-finger-click in

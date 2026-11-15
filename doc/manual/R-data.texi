@@ -355,7 +355,7 @@ locales the comma is used as the decimal point (set this in
 semicolon as the field separator: use @code{write.csv2} for appropriate
 defaults.  There is an @abbr{IETF} standard for CSV files (which mandates
 commas and CRLF line endings, for which use @code{eol = "\r\n"}), RFC4180
-(see @uref{https://www.rfc-editor.org/rfc/rfc4180}), but what is more
+(see @uref{https://www.rfc-editor.org/info/rfc4180/}), but what is more
 important in practice is that the file is readable by the application it
 is targeted at.
 

@@ -34,7 +34,7 @@ parse_URI_reference(x)
 
   \code{parse_URI_reference()} is a helper which splits URI references
   into its scheme, authority, path, query and fragment parts.
-  See RFC 3986 (\url{https://www.rfc-editor.org/rfc/rfc3986}) for more
+  See RFC 3986 (\url{https://www.rfc-editor.org/info/rfc3986/}) for more
   information.
 }
 \value{
