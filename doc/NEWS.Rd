@@ -507,6 +507,10 @@
       no longer fail.  This matters since browsers also send cookies set
       by any other web application running on \samp{localhost}, as
       cookies are not specific to a port.
+
+      \item The internal HTTP server no longer decodes \samp{+} as a
+      space in the request path (only in the query string) and no
+      longer removes dot segments from the query string.
     }
   }
 }
