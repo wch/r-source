@@ -493,6 +493,12 @@
       were percent-encoded and on Windows converts \code{\\} to the
       \code{/} path separator.  Paths that include \code{\%00} are
       rejected.
+
+      \item The internal HTTP server accepts request and header lines of
+      up to 16k bytes (previously 1k) so that requests with many cookies
+      no longer fail.  This matters since browsers also send cookies set
+      by any other web application running on \samp{localhost}, as
+      cookies are not specific to a port.
     }
   }
 }
