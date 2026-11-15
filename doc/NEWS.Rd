@@ -488,6 +488,14 @@
       greater than one.  Now they signal an error.  Thanks to
       \I{Adam Berkeš} for the report (\PR{19306}).
 
+      \item \code{as(object, name)} signalled an error when
+      \code{class(object)[1]} was not formally defined and
+      \code{class(object)[-1]} contained \code{name}, never searching
+      for a method for \code{coerce} with signature
+      \code{c(from="ANY", to=name)}.  Now it searches and signals an
+      error only on failure.  Thanks to \I{Michael Chirico} for
+      the report (\PR{19023}).
+
       \item The internal HTTP server (used by the dynamic help system)
       removes dot segments (\code{/../} and \code{/./}) also when they
       were percent-encoded and on Windows converts \code{\\} to the
