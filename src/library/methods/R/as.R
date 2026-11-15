@@ -1,7 +1,7 @@
 #  File src/library/methods/R/as.R
 #  Part of the R package, https://www.R-project.org
 #
-#  Copyright (C) 1995-2025 The R Core Team
+#  Copyright (C) 1995-2026 The R Core Team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ as <-
   ## If the `is' relation is FALSE, and `coerceFlag' is `TRUE',
   ## the coerce function will be called (which will throw an error if there is
   ## no valid way to coerce the two objects).  Otherwise, `NULL' is returned.
-  function(object, Class, strict = TRUE, ext = possibleExtends(thisClass, Class))
+  function(object, Class, strict = TRUE, ext)
 {
     thisClass <- .class1(object)
     if(.identC(thisClass, Class) || .identC(Class, "ANY"))
@@ -51,7 +51,11 @@ as <-
             canCache <- TRUE
             inherited <- FALSE
             if(is(object, Class)) {
+                thisClassDef <- getClassDef(thisClass)
                 ClassDef <- getClassDef(Class, where)
+                if (missing(ext))
+                    ext <- possibleExtends(thisClass, Class,
+                                           thisClassDef, ClassDef)
                 ## use the ext information, computed or supplied
                 if (isTRUE(ext))
                     asMethod <- .makeAsMethod(quote(from), TRUE, Class, ClassDef, where)
@@ -60,8 +64,10 @@ as <-
                     asMethod <- .makeAsMethod(ext@coerce, ext@simple, Class, ClassDef, where)
                     canCache <- !is.function(test) || isTRUE(body(test))
                 }
-                else stop(sprintf("internal problem in as(): %s is(object, \"%s\") is TRUE, but the metadata asserts that the 'is' relation is FALSE",
-                                  dQuote(thisClass), Class),
+                else if (is.null(thisClassDef))
+                    canCache <- FALSE
+                else stop(gettextf("is(%s, \"%s\") is TRUE but '%s' implies otherwise",
+                                   "object", Class, "ext"),
                           domain = NA)
             }
             if(is.null(asMethod) && extends(Class, thisClass)) {

@@ -4499,13 +4499,26 @@ tools::assertError(getGeneric("initialize", where = x)) # caused segfault or bus
 ## in R <= 4.6.2
 
 
-
 ## socketSelect() on a socket connection that is not open -- PR#19298
 s <- socketConnection(port = 8083L, open = "")
 msg <- tryCmsg(socketSelect(list(s), timeout = 0))
 close(s)
 stopifnot(is.character(msg), !englishMsgs || grepl("not open", msg))
 ## used an uninitialized file descriptor, possibly segfaulting, in R <= 4.6.2
+
+
+## as(object, name) for informally defined class(object)[1L],
+## with 'name' in class(object)[-1L] (PR#19023)
+x <- structure(array(0L), class = c("arraySubclass", "array"))
+y <- as.array(x)
+y0 <- as(x, "array", strict = FALSE) # gave ...
+## Error in as(x, "array") :
+##  internal problem in as(): "arraySubclass" is(object, "array")
+##  is TRUE, but the metadata asserts that the 'is' relation is FALSE
+y1 <- as(x, "array") # ditto
+stopifnot(identical(y, x), identical(y0, y), identical(y1, unclass(y)))
+## in R <= 4.6.2
+
 
 
 
