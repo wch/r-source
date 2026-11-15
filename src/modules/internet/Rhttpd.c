@@ -42,7 +42,7 @@
 
 /* size of the line buffer for each worker (request and header only)
  * requests that have longer headers will be rejected with 413 */
-#define LINE_BUF_SIZE 1024
+#define LINE_BUF_SIZE 16384
 
 /* maximum number of active workers (parallel connections)
  * when exceeded the server closes new connections */
