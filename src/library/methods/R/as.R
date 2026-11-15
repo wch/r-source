@@ -53,17 +53,16 @@ as <-
             if(is(object, Class)) {
                 ClassDef <- getClassDef(Class, where)
                 ## use the ext information, computed or supplied
-                if(isFALSE(ext))
-                    stop(sprintf("internal problem in as(): %s is(object, \"%s\") is TRUE, but the metadata asserts that the 'is' relation is FALSE",
-                                 dQuote(thisClass), Class),
-                         domain = NA)
-                else if(isTRUE(ext))
+                if (isTRUE(ext))
                     asMethod <- .makeAsMethod(quote(from), TRUE, Class, ClassDef, where)
-                else {
-                  test <- ext@test
-                  asMethod <- .makeAsMethod(ext@coerce, ext@simple, Class, ClassDef, where)
-                  canCache <- (!is.function(test)) || isTRUE(body(test))
-                 }
+                else if (!isFALSE(ext)) {
+                    test <- ext@test
+                    asMethod <- .makeAsMethod(ext@coerce, ext@simple, Class, ClassDef, where)
+                    canCache <- !is.function(test) || isTRUE(body(test))
+                }
+                else stop(sprintf("internal problem in as(): %s is(object, \"%s\") is TRUE, but the metadata asserts that the 'is' relation is FALSE",
+                                  dQuote(thisClass), Class),
+                          domain = NA)
             }
             if(is.null(asMethod) && extends(Class, thisClass)) {
                 ClassDef <- getClassDef(Class, where)
