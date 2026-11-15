@@ -1159,7 +1159,9 @@ static BBOX RenderNumber(SEXP expr, int draw, mathContext *mc,
     BBOX bbox;
     FontType prevfont = SetFont(PlainFont, gc);
     PrintDefaults();
-    bbox = RenderStr(CHAR(asChar(expr)), draw, mc, gc, dd);
+    SEXP str = PROTECT(asChar(expr));
+    bbox = RenderStr(CHAR(str), draw, mc, gc, dd);
+    UNPROTECT(1);
     SetFont(prevfont, gc);
     return bbox;
 }
