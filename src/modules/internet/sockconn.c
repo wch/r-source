@@ -251,6 +251,10 @@ Rconnection in_R_newsock(const char *host, int port, int server, int serverfd,
     ((Rsockconn)new->private)-> timeout = timeout;
     ((Rsockconn)new->private)-> serverfd = serverfd;
     ((Rsockconn)new->private)-> options = options;
+    /* no descriptor and nothing buffered until sock_open() */
+    ((Rsockconn)new->private)-> fd = -1;
+    ((Rsockconn)new->private)-> pstart = ((Rsockconn)new->private)-> inbuf;
+    ((Rsockconn)new->private)-> pend = ((Rsockconn)new->private)-> inbuf;
     return new;
 }
 

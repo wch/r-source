@@ -6916,6 +6916,9 @@ attribute_hidden SEXP do_sockselect(SEXP call, SEXP op, SEXP args, SEXP rho)
 	Rconnection conn = getConnection(asInteger(VECTOR_ELT(insock, i)));
 	if (!strcmp(conn->class, "sockconn")) {
 	    Rsockconn scp = conn->private;
+	    /* the descriptor and input buffer are only set up by sock_open() */
+	    if (!conn->isopen)
+		error(_("connection is not open"));
 	    INTEGER(insockfd)[i] = scp->fd;
 	    if (! LOGICAL(write)[i] && scp->pstart < scp->pend) {
 		LOGICAL(val)[i] = TRUE;
