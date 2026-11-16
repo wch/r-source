@@ -496,6 +496,12 @@
       error only on failure.  Thanks to \I{Michael Chirico} for
       the report (\PR{19023}).
 
+      \item \code{cacheMetaData(attach = FALSE)} uncached S4 generic
+      functions before S4 methods, causing error on unload for packages
+      defining methods for a \emph{group} generic function, when the
+      package defining the group generic function was not attached.
+      Thanks to \I{Michael Chirico} for the report (\PR{19079}).
+
       \item The internal HTTP server (used by the dynamic help system)
       removes dot segments (\code{/../} and \code{/./}) also when they
       were percent-encoded and on Windows converts \code{\\} to the

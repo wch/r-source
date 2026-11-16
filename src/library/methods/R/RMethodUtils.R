@@ -893,11 +893,11 @@ cacheMetaData <-
             fdef <- getGeneric(f, FALSE, searchWhere, fpkg)
         if(!is(fdef, "genericFunction"))
             next ## silently ignores all generics not visible from searchWhere
-        if(attach) {
+        if (attach)
             .cacheGeneric(f, fdef)
-        } else
-            .uncacheGeneric(f, fdef)
         methods <- .updateMethodsInTable(fdef, where, attach)
+        if (!attach && identical(fpkg, pkg))
+            .uncacheGeneric(f, fdef)
         cacheGenericsMetaData(f, fdef, attach, where, fdef@package, methods)
         if(.tr) message("--- done getting generic ", sQuote(f))
     }

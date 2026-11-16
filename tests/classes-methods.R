@@ -58,6 +58,19 @@ if (requireNamespace("Matrix", lib.loc = .Library, quietly = TRUE)) {
 }
 
 
+## PR#19079:
+## cacheMetaData(attach = FALSE) uncached generic functions before
+## methods, which was problematic for group generic functions, and
+## it uncached foreign generic functions
+if (requireNamespace("Matrix", lib.loc = .Library, quietly = TRUE)) {
+    stopifnot(isGeneric("Arith"),  isGeneric("isDiagonal"))
+    detach("package:methods")
+    unloadNamespace("Matrix") # was Error .... : subscript out of bounds
+    require("methods")
+    stopifnot(isGeneric("Arith"), !isGeneric("isDiagonal")) # was (F, T)
+}
+
+
 if(require("Matrix", lib.loc = .Library, quietly = TRUE)) {
     D5. <- Diagonal(x = 5:1)
     D5N <- D5.; D5N[5,5] <- NA
