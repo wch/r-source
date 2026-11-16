@@ -946,8 +946,7 @@ static void worker_input_handler(void *data) {
 	    remove_worker(c);
 	    return;
 	}
-	if (n == 0) { /* connection closed -> try to process and then remove */
-	    process_request(c);
+	if (n == 0) { /* connection closed before the request was complete - drop it */
 	    remove_worker(c);
 	    return;
 	}
@@ -1017,9 +1016,10 @@ static void worker_input_handler(void *data) {
 	    {
 		char *bol = s;
 		while (*s && *s != '\r' && *s != '\n') s++;
-		if (!*s) { /* incomplete line */
+		/* a trailing CR may be the first half of CRLF: wait for more data */
+		if (!*s || (*s == '\r' && !s[1])) { /* incomplete line */
 		    if (bol == c->line_buf) {
-			if (c->line_pos < LINE_BUF_SIZE) /* one, incomplete line, but the buffer is not full yet, just return */
+			if (c->line_pos < LINE_BUF_SIZE - 1) /* one, incomplete line, but the buffer is not full yet (one byte is reserved for the NUL), just return */
 			    return;
 			/* the buffer is full yet the line is incomplete - we're in trouble */
 			send_http_response(c, " 413 Request entity too large\r\nConnection: close\r\n\r\n");
@@ -1072,6 +1072,11 @@ static void worker_input_handler(void *data) {
 			    /* we generate a header with the method so it can be passed to the handler */
 			    if (!c->headers)
 				c->headers = alloc_buffer(1024, NULL);
+			    if (!c->headers) {
+				send_http_response(c, " 500 Out of memory\r\nConnection: close\r\nContent-length: 0\r\n\r\n");
+				remove_worker(c);
+				return;
+			    }
 			    /* make sure it fits */
 			    if (c->headers->size - c->headers->length >= 18 + (mend - bol)) {
 				if (!c->method) c->method = METHOD_OTHER;
@@ -1096,17 +1101,32 @@ static void worker_input_handler(void *data) {
 			char *k = bol;
 			if (!c->headers)
 			    c->headers = alloc_buffer(1024, NULL);
-			if (c->headers) { /* record the header line in the buffer */
+			if (!c->headers) {
+			    send_http_response(c, " 500 Out of memory\r\nConnection: close\r\nContent-length: 0\r\n\r\n");
+			    remove_worker(c);
+			    return;
+			}
+			{ /* record the header line in the buffer */
 			    size_t l = strlen(bol);
 			    if (l) { /* this should be really always true */
 				if (c->headers->length + l + 1 > c->headers->size) { /* not enough space? */
 				    size_t fits = c->headers->size - c->headers->length;
-				    if (fits) memcpy(c->headers->data + c->headers->length, bol, fits);
-				    if (alloc_buffer(2048, c->headers)) {
+				    size_t needs = 2048; /* base suggestion, will double until adequate later */
+				    if (fits) {
+					memcpy(c->headers->data + c->headers->length, bol, fits);
+					c->headers->length += fits;
+				    }
+				    /* grow until fits, it is implicitly bounded by LINE_BUF_SIZE */
+				    while (l + 1 - fits >= needs) needs <<= 1;
+				    if (alloc_buffer(needs, c->headers)) {
 					c->headers = c->headers->next;
 					if (l - fits) memcpy(c->headers->data, bol + fits, l - fits);
 					c->headers->length = l - fits;
 					c->headers->data[c->headers->length++] = '\n';
+				    } else { /* the header would be incomplete */
+					send_http_response(c, " 500 Out of memory\r\nConnection: close\r\nContent-length: 0\r\n\r\n");
+					remove_worker(c);
+					return;
 				    }
 				} else {
 				    memcpy(c->headers->data + c->headers->length, bol, l);
@@ -1173,9 +1193,8 @@ static void worker_input_handler(void *data) {
 		remove_worker(c);
 		return;
 	    }
-	    if (n == 0) { /* connection closed -> try to process and then remove */
-		process_request(c);
-	    remove_worker(c);
+	    if (n == 0) { /* connection closed before the body was complete - drop it */
+		remove_worker(c);
 		return;
 	    }
 	    c->body_pos += n;
@@ -1242,8 +1261,7 @@ static void worker_input_handler(void *data) {
 	    remove_worker(c);
 	    return;
 	}
-	if (n == 0) { /* connection closed -> try to process and then remove */
-	    process_request(c);
+	if (n == 0) { /* connection closed before the request was complete - drop it */
 	    remove_worker(c);
 	    return;
 	}
