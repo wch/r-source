@@ -678,6 +678,15 @@ static void process_request_(void *ptr)
 			code = asInteger(VECTOR_ELT(x, 3));
 		}
 	    }
+	    /* the status code must have three digits and only 1xx-5xx are
+	       defined (RFC 9110, 15), anything else (incl. NA) is an invalid response */
+	    if (code < 100 || code > 599) {
+		UNPROTECT(7);
+		send_http_response(c, " 500 Invalid status code from R\r\nConnection: close\r\nContent-type: text/plain\r\n\r\nServer error: invalid status code in the response from R\r\n");
+		c->attr |= CONNECTION_CLOSE; /* force close */
+		vmaxset(vmax);
+		return;
+	    }
 	    y = VECTOR_ELT(x, 0);
 	    if (TYPEOF(y) == STRSXP && LENGTH(y) > 0) {
 		char buf[64];
@@ -694,9 +703,19 @@ static void process_request_(void *ptr)
 		    unsigned int i = 0, n = LENGTH(sHeaders);
 		    for (; i < n; i++) {
 			const char *hs = translateCharUTF8(STRING_ELT(sHeaders, i));
+			if (!*hs) continue; /* an empty line would end the header */
 			send_response(c->sock, "\r\n", 2);
 			send_response(c->sock, hs, strlen(hs));
 		    }
+		}
+		/* 1xx, 204 and 304 responses can NOT have a body nor Content-Length
+		   (RFC 9110, 8.6 and RFC 9112, 6.3) - any payload is ignored */
+		if (code < 200 || code == 204 || code == 304) {
+		    send_response(c->sock, "\r\n\r\n", 4);
+		    UNPROTECT(7);
+		    fin_request(c);
+		    vmaxset(vmax);
+		    return;
 		}
 		/* special content - a file: either list(file="") or list(c("*FILE*", "")) - the latter will go away */
 		if (TYPEOF(xNames) == STRSXP && LENGTH(xNames) > 0 &&
@@ -776,9 +795,18 @@ static void process_request_(void *ptr)
 		    unsigned int i = 0, n = LENGTH(sHeaders);
 		    for (; i < n; i++) {
 			const char *hs = translateCharUTF8(STRING_ELT(sHeaders, i));
+			if (!*hs) continue; /* an empty line would end the header */
 			send_response(c->sock, "\r\n", 2);
 			send_response(c->sock, hs, strlen(hs));
 		    }
+		}
+		/* no body nor Content-Length in 1xx, 204 and 304 (see above) */
+		if (code < 200 || code == 204 || code == 304) {
+		    send_response(c->sock, "\r\n\r\n", 4);
+		    UNPROTECT(7);
+		    fin_request(c);
+		    vmaxset(vmax);
+		    return;
 		}
 		snprintf(buf, 64, "\r\nContent-length: %u\r\n\r\n", LENGTH(y));
 		send_response(c->sock, buf, strlen(buf));
