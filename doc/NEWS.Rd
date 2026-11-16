@@ -518,6 +518,11 @@
       corrupts request headers over 1k bytes in total and drops
       requests that were closed by the client before they were
       complete.
+
+      \item The internal HTTP server now sends 1xx, 204 and 304
+      responses without a body (as required by RFC 9110), skips empty
+      response headers and responds with an error when a handler
+      returns an invalid status code.
     }
   }
 }
