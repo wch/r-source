@@ -148,6 +148,8 @@ static struct sockaddr *build_sin(struct sockaddr_in *sa, const char *ip, int po
 #define THREAD_DISPOSE    0x20 /* the thread should dispose of the worker */
 #define CONTENT_TYPE      0x40 /* message has a specific content type set */
 #define CONTENT_FORM_UENC 0x80 /* message content type is application/x-www-form-urlencoded */
+#define BAD_LENGTH        0x100 /* conflicting or malformed Content-Length: */
+#define TRANSFER_ENCODING 0x200 /* Transfer-Encoding: was specified (unsupported) */
 
 struct buffer {
     struct buffer *next, *prev;
@@ -185,7 +187,8 @@ typedef struct httpd_conn {
     char *content_type;            /* content type (if set) */
     size_t line_pos, body_pos; /* positions in the buffers */
     long content_length;           /* desired content length */
-    char part, method, attr;       /* request part, method and connection attributes */
+    char part, method;             /* request part and method */
+    int attr;                      /* connection attributes */
     struct buffer *headers;        /* buffer holding header lines */
 } httpd_conn_t;
 
@@ -991,6 +994,16 @@ static void worker_input_handler(void *data) {
 		    remove_worker(c);
 		    return;
 		}
+		if (c->attr & TRANSFER_ENCODING) { /* we cannot decode chunked bodies, so do not misread them as new requests */
+		    send_http_response(c, " 501 Not Implemented (Transfer-Encoding)\r\nConnection: close\r\nContent-length: 0\r\n\r\n");
+		    remove_worker(c);
+		    return;
+		}
+		if (c->attr & BAD_LENGTH) {
+		    send_http_response(c, " 400 Bad Request (invalid Content-Length)\r\nConnection: close\r\nContent-length: 0\r\n\r\n");
+		    remove_worker(c);
+		    return;
+		}
 		if (c->attr & CONTENT_LENGTH && c->content_length) {
 		    if (c->content_length < 0 ||  /* we are parsing signed so negative numbers are bad */
 			c->content_length > 2147483640 || /* R will currently have issues with body around 2Gb or more, so better to not go there */
@@ -1163,19 +1176,40 @@ static void worker_input_handler(void *data) {
 				}
 			    }
 			}
-			while (*k && *k != ':') {
-			    if (*k >= 'A' && *k <= 'Z')
-				*k |= 0x20;
-			    k++;
+			{
+			    int ws = 0;
+			    while (*k && *k != ':') {
+				if (*k >= 'A' && *k <= 'Z')
+				    *k |= 0x20;
+				else if (*k == ' ' || *k == '\t')
+				    ws = 1;
+				k++;
+			    }
+			    /* whitespace in the field name (incl. before the colon) must be rejected,
+			       otherwise e.g. "Content-Length : n" would be ignored and the body misread
+			       as the next request */
+			    if (ws && *k == ':') {
+				send_http_response(c, " 400 Bad Request (invalid header)\r\nConnection: close\r\nContent-length: 0\r\n\r\n");
+				remove_worker(c);
+				return;
+			    }
 			}
 			if (*k == ':') {
 			    *(k++) = 0;
 			    while (*k == ' ' || *k == '\t') k++;
 			    DBG(printf("header '%s' => '%s'\n", bol, k));
 			    if (!strcmp(bol, "content-length")) {
+				char *ep;
+				long cl = strtol(k, &ep, 10);
+				while (*ep == ' ' || *ep == '\t') ep++;
+				/* the value must be a number and a repeated header must agree */
+				if (ep == k || *ep || ((c->attr & CONTENT_LENGTH) && cl != c->content_length))
+				    c->attr |= BAD_LENGTH;
 				c->attr |= CONTENT_LENGTH;
-				c->content_length = atol(k);
+				c->content_length = cl;
 			    }
+			    if (!strcmp(bol, "transfer-encoding"))
+				c->attr |= TRANSFER_ENCODING;
 			    if (!strcmp(bol, "content-type")) {
 				char *l = k;
 				/* convert content-type to lowercase to facilitate comparison
@@ -1189,8 +1223,14 @@ static void worker_input_handler(void *data) {
 				if (!strncmp(k, "application/x-www-form-urlencoded", 33))
 				    c->attr |= CONTENT_FORM_UENC;
 			    }
-			    if (!strcmp(bol, "host"))
+			    if (!strcmp(bol, "host")) {
+				if (c->attr & HOST_HEADER) { /* more than one Host: is invalid */
+				    send_http_response(c, " 400 Bad Request (multiple Host:)\r\nConnection: close\r\nContent-length: 0\r\n\r\n");
+				    remove_worker(c);
+				    return;
+				}
 				c->attr |= HOST_HEADER;
+			    }
 			    if (!strcmp(bol, "connection")) {
 				char *l = k;
 				while (*l) { if (*l >= 'A' && *l <= 'Z') *l |= 0x20; l++; }
