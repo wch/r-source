@@ -511,6 +511,13 @@
       \item The internal HTTP server no longer decodes \samp{+} as a
       space in the request path (only in the query string) and no
       longer removes dot segments from the query string.
+
+      \item The internal HTTP server now handles line endings split
+      across network packets, responds with an error instead of
+      waiting when a request or header line is too long, no longer
+      corrupts request headers over 1k bytes in total and drops
+      requests that were closed by the client before they were
+      complete.
     }
   }
 }
