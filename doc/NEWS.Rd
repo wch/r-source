@@ -523,6 +523,12 @@
       responses without a body (as required by RFC 9110), skips empty
       response headers and responds with an error when a handler
       returns an invalid status code.
+
+      \item The internal HTTP server now rejects requests with ambiguous
+      framing (as required by RFC 9112): \code{Transfer-Encoding} (not
+      supported), invalid or conflicting \code{Content-Length},
+      whitespace before the colon in a header field and more than one
+      \code{Host} header.  Previously such requests could be misread.
     }
   }
 }
