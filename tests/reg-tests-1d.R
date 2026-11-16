@@ -4912,15 +4912,18 @@ options(warn=0) # (collect warnings)
 psmm <- lapply(h.u, function(hu)
     lapply(fsS, function(f)
         lapply(nns, pretty, x = c(0, mm/f), high.u.bias=hu)))
-summary(warnings())## many "very small range 'cell'=<nnn>e+32<n>, corrected to 2.122e-314"
+summary(warnings())## many "very small range 'cell'=<nnn>e-32<n>, increased to 2.122e-314"
 (T <- table(psA <- unlist(psmm))) # is this portable?
 (nT <- as.numeric(names(T)))
 range(rEd <- abs(2e-314/diff(nT) - 1))
+badLD <- !b64 || # catch 32bit ppc : max(rEd)=0.8 (!) from PR#18521, same for
+    ((.Machine$longdouble.digits == 113) && grepl("musl", R.version$os)) # powl=pow (PR#19312)
+badLD
 stopifnot(exprs = {
     nT >= 0
     (nn <- length(nT)) <= 15 # always = 11 on  Lnx 64b
     7 <= nn
-    rEd <= if(b64) 2^-50 else 0.9 # Lnx 64b: only seen rEd == 0;  32bit ppc : 0.8 (!)
+    rEd <= if(badLD) 0.9 else 2^-50 # only seen rEd == 0
 })
 ## This used to be _very_ slow in R <= 4.5.1 because it produced _HUGE_ (non-pretty!) vectors;
 ## On Linux, an OS daemon would typically kill the R process for using too much resources:
