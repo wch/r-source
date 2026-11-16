@@ -576,6 +576,10 @@
       \item \code{runmed(<has_NA_not_at_pos_1>, na.action = "na.omit")} no
       longer returns a \dQuote{random} smoothed value before the \code{NA},
       fixing \PR{19300}, from the report and patch by \I{Adam Berkeš}.
+
+      \item \code{bessel[IJKY](., nu = <large>)} no longer allocate memory
+      in cases we know the current algorithm will give \code{NaN} with a
+      warning anyway, thanks to \I{Jeroen Ooms}'s \PR{19326}.
     }
   }
 }
