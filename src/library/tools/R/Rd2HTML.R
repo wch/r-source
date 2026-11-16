@@ -131,7 +131,7 @@ urlify <- function(x, reserved = FALSE, repeated = FALSE) {
     ## encode otherwise (perhaps utils::URLencode() should be enhanced
     ## accordingly?).
     ##
-    ## According to RFC 3986 <https://www.rfc-editor.org/rfc/rfc3986>, the
+    ## According to RFC 3986 <https://www.rfc-editor.org/info/rfc3986/>, the
     ## reserved characters are
     ##   c(gendelims, subdelims)
     ## with
@@ -182,7 +182,7 @@ urlify <- function(x, reserved = FALSE, repeated = FALSE) {
 
 urlify_email_address <- function(x) {
     ## As per RFC 6068
-    ## <https://www.rfc-editor.org/rfc/rfc6068#section-2> we must
+    ## <https://www.rfc-editor.org/info/rfc6068#section-2> we must
     ## percent encode
     ##   "%"
     ##   from gendelims:   c("/", "?", "#", "[", "]")  

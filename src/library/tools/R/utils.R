@@ -1913,9 +1913,9 @@ function(parent = parent.frame())
 .make_RFC_4646_langtag_regexp <-
 function()
 {
-    ## See <https://www.ietf.org/rfc/rfc4646.html>.
+    ## See <https://www.rfc-editor.org/info/rfc4646/>.
     ## Language tags can be of the form (in ABNF, see
-    ## <https://tools.ietf.org/rfc/rfc4234.txt>): 
+    ## <https://www.rfc-editor.org/info/rfc4234/>): 
     ##   langtag / privateuse / grandfathered
     ## where
     ##   privateuse    = ("x"/"X") 1*("-" (1*8alphanum))
