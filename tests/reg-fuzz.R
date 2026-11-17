@@ -7,6 +7,25 @@ tryCid <- function(expr) tryCatch(expr, error = identity)
 assertErrV  <- function(...) tools::assertError  (..., verbose=TRUE)
 assertWarnV <- function(...) tools::assertWarning(..., verbose=TRUE)
 
+onWindows <- .Platform$OS.type == "windows"
+onUnix    <- .Platform$OS.type == "unix"
+englishMsgs <- {
+    ## 1. LANGUAGE takes precedence over locale settings:
+    if(nzchar(lang <- Sys.getenv("LANGUAGE")))
+        lang == "en"
+    else { ## 2. Query the  locale
+        if(!onWindows) {
+            ## sub() :
+            lc.msgs <- sub("\\..*", "", print(Sys.getlocale("LC_MESSAGES")))
+            lc.msgs == "C" || substr(lc.msgs, 1,2) == "en"
+        } else { ## Windows
+            lc.type <- sub("\\..*", "", sub("_.*", "", print(Sys.getlocale("LC_CTYPE"))))
+            lc.type == "English" || lc.type == "C"
+        }
+    }
+}
+cat(sprintf("English messages: %s\n", englishMsgs))
+
 ### First dozen entries moved from ./tests-reg-tests-1e.R ----------------------
 
 ## malformed ALTREP serialized class metadata -- PR#19047
