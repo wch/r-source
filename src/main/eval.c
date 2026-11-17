@@ -7637,6 +7637,7 @@ static SEXP bcEval_loop(struct bcEval_locals *ploc)
 		    break;
 		case CTXT_NEXT:
 		    locals = recover_loop_locals(0, FALSE);
+		    BC_CHECK_SIGINT();
 		    break;
 		}
 	    }

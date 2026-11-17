@@ -206,6 +206,9 @@ local({
 local({
     n <- 30000 # 2n exceeds the default protect stack size
     x <- c(rep(rawToChar(as.raw(0xff)), n), intToUtf8(252))
+    ## invalid UTF-8 fails conversion in any locale; the native "\xff"
+    ## converts to U+007F in the C locale on Windows
+    Encoding(x) <- "UTF-8"
     r <- suppressWarnings(gregexpr(".", x))
     stopifnot(identical(vapply(r, `[`, 0L, 1L), c(rep(-1L, n), 1L)))
 })
@@ -234,6 +237,22 @@ local({
 ## each rejected name was released as if its length were its hash value, so
 ## 'used' wrapped around and the vector heap limit stopped applying, in R <= 4.6.2
 
+
+
+## 'next' as a call argument in a byte-compiled while()/repeat loop jumps back
+## by longjmp, which skipped every check for interrupts and time limits
+local({
+    f <- compiler::cmpfun(function() {
+        i <- 0L
+        while((i <- i + 1L) <= 1e8L) invisible(next)
+    })
+    setTimeLimit(elapsed = 0.5, transient = TRUE)
+    E <- tryCid(f())
+    stopifnot(inherits(E, "error"))
+    if(englishMsgs)
+        stopifnot(grepl("elapsed time limit", conditionMessage(E)))
+})
+## ran all 1e8 iterations without checking in R <= 4.6.2
 
 
 
