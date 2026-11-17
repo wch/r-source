@@ -51,14 +51,14 @@ isNamespaceLoaded <- function(name) .Internal(isRegisteredNamespace(name))
 getNamespaceName <- function(ns) {
     ns <- asNamespace(ns)
     if (isBaseNamespace(ns)) "base"
-    else .getNamespaceInfo(ns, "spec")["name"]
+    else .getNamespaceInfo(ns, "spec")[["name"]]
 }
 
 getNamespaceVersion <- function(ns) {
     ns <- asNamespace(ns)
     if (isBaseNamespace(ns))
         c(version = paste(R.version$major, R.version$minor, sep = "."))
-    else .getNamespaceInfo(ns, "spec")["version"]
+    else .getNamespaceInfo(ns, "spec")[["version"]]
 }
 
 getNamespaceExports <- function(ns) {

@@ -136,6 +136,10 @@
       \code{POSIXct}, a corollary being that
       \code{as.vector(., mode="double")} now works as
       \code{as.double(.)} rather than signalling an error.
+
+      \item \code{getNamespaceVersion()} and \code{getNamespaceName()} now
+      return an unnamed string, as suggested by \I{Pavel Krivitsky} on
+      R-devel.
     }
   }
 

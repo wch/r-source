@@ -4520,6 +4520,11 @@ stopifnot(identical(y, x), identical(y0, y), identical(y1, unclass(y)))
 ## in R <= 4.6.2
 
 
+## getNamespace{Name,Version}()
+(toolsNV <- c(getNamespaceName("tools"), getNamespaceVersion("tools")))
+stopifnot(is.null(names(toolsNV)), length(toolsNV) == 2L, toolsNV[[1]] == "tools")
+## no longer carry (uninformative) names() in R > 4.6.*
+
 
 
 ## keep at end
