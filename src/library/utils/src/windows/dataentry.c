@@ -1946,6 +1946,7 @@ SEXP Win_dataviewer(SEXP args)
 
     R_PreserveObject(DE->work); /* also preserves names */
     R_PreserveObject(DE->lens);
+    endcontext(&cntxt);
     UNPROTECT(nprotect);
     return R_NilValue;
 }

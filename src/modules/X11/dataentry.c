@@ -535,6 +535,7 @@ SEXP in_R_X11_dataviewer(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     R_PreserveObject(DE->work); /* also preserves names */
     R_PreserveObject(DE->lens);
+    endcontext(&cntxt);
     UNPROTECT(nprotect);
     return R_NilValue;
 }

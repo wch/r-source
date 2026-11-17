@@ -2430,7 +2430,10 @@ attribute_hidden SEXP do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     R_Serialize(s, &out);
-    if (!wasopen) con->close(con);
+    if (!wasopen) {
+	endcontext(&cntxt);
+	con->close(con);
+    }
     UNPROTECT(1);
     return R_NilValue;
 }
