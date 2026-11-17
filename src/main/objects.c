@@ -406,7 +406,7 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 		    }
 		}
 		SEXP val;
-		char buf[8192];
+		static char buf[8192];
 		switch(option) {
 		case 0: // forward all, as in the past before R 4.4.0
 		    UNPROTECT(1); /* newvars */
@@ -583,7 +583,7 @@ SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     else { // no method found
 #define CLLEN 1024
-	char cl[CLLEN] = {0};
+	char *cl = R_alloc(CLLEN, 1);
 	SEXP klass = PROTECT(R_data_class2(obj));
 	int nclass = length(klass);
 	if(!nclass)
