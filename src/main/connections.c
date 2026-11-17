@@ -5224,6 +5224,11 @@ attribute_hidden SEXP do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+/* utf8clen() returns up to 6 (for the 5- and 6-byte forms), more than
+   MB_CUR_MAX in UTF-8 locales on macOS and Windows, so the UTF-8
+   buffers below are sized by this rather than by R_MB_CUR_MAX. */
+#define UTF8CLEN_MAX 6
+
 /* FIXME: could do any MBCS locale, but would need pushback */
 static SEXP
 readFixedString(Rconnection con, int len, int useBytes, Rboolean *warnOnNul)
@@ -5234,7 +5239,7 @@ readFixedString(Rconnection con, int len, int useBytes, Rboolean *warnOnNul)
     const void *vmax = vmaxget();
 
     if(utf8locale && !useBytes) {
-	R_SIZE_T count = R_MB_CUR_MAX * (R_SIZE_T)len +1;
+	R_SIZE_T count = UTF8CLEN_MAX * (R_SIZE_T)len +1;
 	char *p = buf = (char *) R_alloc(count, sizeof(char));
 	memset(buf, 0, count);
 	mbstate_t mb_st;
@@ -5291,7 +5296,7 @@ rawFixedString(Rbyte *bytes, int len, int nbytes, int *np, int useBytes)
     /* Note: mkCharLenCE signals an error on embedded nuls. */
     if(utf8locale && !useBytes) {
 	int i, clen, iread = *np;
-	char *p = buf = (char *) R_alloc(R_MB_CUR_MAX*(R_SIZE_T)len +1, sizeof(char));
+	char *p = buf = (char *) R_alloc(UTF8CLEN_MAX*(R_SIZE_T)len +1, sizeof(char));
 	for(i = 0; i < len; i++, p += clen, iread += clen) {
 	    if (iread >= nbytes) break;
 	    Rbyte *q = bytes + iread;
