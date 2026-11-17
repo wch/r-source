@@ -406,7 +406,7 @@ SEXP dispatchMethod(SEXP op, SEXP sxp, SEXP dotClass, RCNTXT *cptr, SEXP method,
 		    }
 		}
 		SEXP val;
-		static char buf[8192]; // static to avoid C stack allocation
+		char buf[8192];
 		switch(option) {
 		case 0: // forward all, as in the past before R 4.4.0
 		    UNPROTECT(1); /* newvars */
@@ -583,7 +583,7 @@ SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     else { // no method found
 #define CLLEN 1024
-	static char cl[CLLEN] = {0}; // static to avoid C stack allocation
+	char cl[CLLEN] = {0};
 	SEXP klass = PROTECT(R_data_class2(obj));
 	int nclass = length(klass);
 	if(!nclass)
