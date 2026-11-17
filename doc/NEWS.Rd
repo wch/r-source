@@ -44,6 +44,11 @@
       \item \code{smooth(*, "S")} now reports a change when the last plateau it splits
       is unchanged on its right side, so "3RS3R" and "3RSS" are correct now
       in such cases.  Fixes \PR{19280} reported with patch by \I{Kevin Ushey}.
+
+      \item The internal HTTP server removes dot segments (\code{/../}
+      and \code{/./}) also when they were percent-encoded.  On Windows,
+      converts \code{\\} to the \code{/} path separator.  Paths that
+      include \code{\%00} are rejected.
     }
   }
 }
