@@ -392,9 +392,12 @@ static int send_http_response(httpd_conn_t *c, const char *text) {
     return send_response(c->sock, text, strlen(text));
 }
 
-/* decode URI in place (decoding never expands) */
-static void uri_decode(char *s)
+/* decode URI in place (decoding never expands)
+   returns non-zero if the input decodes to a NUL byte (which would silently
+   truncate the path) */
+static int uri_decode(char *s)
 {
+    int bad = 0;
     char *t = s;
     while (*s) {
 	if (*s == '+') { /* + -> SPC */
@@ -410,10 +413,12 @@ static void uri_decode(char *s)
 	    else if (*s >= 'a' && *s <= 'f') ec |= (unsigned char)(*s - 'a' + 10);
 	    else if (*s >= 'A' && *s <= 'F') ec |= (unsigned char)(*s - 'A' + 10);
 	    if (*s) s++;
+	    if (!ec) bad = 1;
 	    *(t++) = (char) ec;
 	} else *(t++) = *(s++);
     }
     *t = 0;
+    return bad;
 }
 
 /* parse a query string into a named character vector - must NOT be
@@ -560,6 +565,8 @@ static SEXP handler_for_path(const char *path) {
     return install("httpd");
 }
 
+static char *remove_dot_segments(char *p);
+
 /* process a request by calling the httpd() function in R */
 static void process_request_(void *ptr)
 {
@@ -579,7 +586,25 @@ static void process_request_(void *ptr)
 	*(s++) = 0;
 	query = s;
     }
-    uri_decode(c->url); /* decode the path part */
+    if (uri_decode(c->url)) { /* decode the path part */
+	send_http_response(c, " 400 Bad Request (invalid path encoding)\r\nConnection: close\r\nContent-length: 0\r\n\r\n");
+	c->attr |= CONNECTION_CLOSE;
+	vmaxset(vmax);
+	return;
+    }
+#ifdef _WIN32
+    /* '\\' is a path separator on Windows */
+    for (s = c->url; *s; s++)
+	if (*s == '\\') *s = '/';
+#endif
+    /* remove dot segments again, now from the decoded path, since encoded
+       dots ("%2e%2e") and separators ("%2f") are only visible after
+       decoding */
+    s = remove_dot_segments(c->url);
+    /* copy back since query points into c->url; the result is never
+       longer than the input, so it fits */
+    strcpy(c->url, s);
+    free(s);
     {   /* construct "try(httpd(url, query, body), silent=TRUE)" */
 	SEXP sTrue = PROTECT(ScalarLogical(TRUE));
 	SEXP sBody = PROTECT(parse_request_body(c));
