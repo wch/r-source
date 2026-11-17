@@ -1105,7 +1105,9 @@ static void TryToReleasePages(void)
 /* compute size in VEC units so result will fit in LENGTH field for FREESXPs */
 static R_INLINE R_size_t getVecSizeInVEC(SEXP s)
 {
-    if (IS_GROWABLE(s))
+    /* For a CHARSXP the growable bit is the 'cached' mark and
+       TRUELENGTH may hold a hash value. */
+    if (TYPEOF(s) != CHARSXP && IS_GROWABLE(s))
 	SET_STDVEC_LENGTH(s, XTRUELENGTH(s));
 
     R_size_t size;

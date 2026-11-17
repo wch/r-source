@@ -222,6 +222,19 @@ if (l10n_info()[["UTF-8"]]) {
 ## wrote past its buffer where MB_CUR_MAX is 4 (macOS), seg.faulting, in R <= 4.6.2
 
 
+## gc() accounting after releasing a long string that carries a hash value -- PR#19195
+local({
+    used <- function() gc()["Vcells", "used"]
+    v0 <- used()
+    errs <- lapply(1:8, function(i)
+        tryCid(as.name(paste0(strrep("a", 20000), i))))
+    stopifnot(vapply(errs, inherits, NA, what = "error"),
+              abs(used() - v0) < 1e6)
+})
+## each rejected name was released as if its length were its hash value, so
+## 'used' wrapped around and the vector heap limit stopped applying, in R <= 4.6.2
+
+
 
 
 ## keep at end
