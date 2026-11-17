@@ -202,6 +202,17 @@ local({
 ## read freed memory (visible under ASan or valgrind) in R <= 4.6.2
 
 
+## gregexpr() with strings that cannot be converted to wide characters -- PR#19301
+local({
+    n <- 30000 # 2n exceeds the default protect stack size
+    x <- c(rep(rawToChar(as.raw(0xff)), n), intToUtf8(252))
+    r <- suppressWarnings(gregexpr(".", x))
+    stopifnot(identical(vapply(r, `[`, 0L, 1L), c(rep(-1L, n), 1L)))
+})
+## leaked two protect stack entries per such string, so this gave
+## "protection stack overflow", in R <= 4.6.2
+
+
 
 
 ## keep at end

@@ -2564,6 +2564,7 @@ gregexpr_Regexc(const regex_t *reg, SEXP sstr, int useBytes, int use_WC,
 	    if ((*nwarn)++ < NWARN)
 		warning(_("input string %lld is invalid in this locale"),
 		        (long long)i+1);
+	    UNPROTECT(2);
 	    return gregexpr_BadStringAns();
 	}
 	len = strlen(string);
@@ -2572,6 +2573,7 @@ gregexpr_Regexc(const regex_t *reg, SEXP sstr, int useBytes, int use_WC,
 	if (!ws) {
 	    if ((*nwarn)++ < NWARN)
 		warning(_("input string %lld is invalid"), (long long)i+1);
+	    UNPROTECT(2);
 	    return gregexpr_BadStringAns();
 	}
 	len = wcslen(ws);
