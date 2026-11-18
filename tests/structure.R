@@ -51,18 +51,19 @@ stopifnot(chk_n_prt(w3), identical(noW(w3), x))
 ## factors were long deparsed with double (rather than integer codes).
 ## As from R 2.5.0 parsing such a deparse will given an error, so
 ## structure() coerces the codes to an integer vector.
-## Example from an earlier version of Puromycin.R
-state <- structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                     2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2),
-                   levels = c("treated", "untreated"), class = "factor")
-typeof(state)       # "integer" -- probably will become "double"
-storage.mode(state) # ditto
-attributes(state)
-cat(deparse(state))
-
-state2 <- structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
-                      2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L),
-                    levels = c("treated", "untreated"), class = "factor")
-identical(state,state2)
+## Changed in R 4.7.0 to no longer coerce.
+## ## Example from an earlier version of Puromycin.R
+## state <- structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+##                      2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2),
+##                    levels = c("treated", "untreated"), class = "factor")
+## typeof(state)       # "integer" -- probably will become "double"
+## storage.mode(state) # ditto
+## attributes(state)
+## cat(deparse(state))
+##
+## state2 <- structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
+##                       2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L),
+##                     levels = c("treated", "untreated"), class = "factor")
+## identical(state,state2)
 
 options(op) # in case this is source()d
