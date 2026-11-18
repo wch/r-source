@@ -6,25 +6,8 @@
 tryCid <- function(expr) tryCatch(expr, error = identity)
 assertErrV  <- function(...) tools::assertError  (..., verbose=TRUE)
 assertWarnV <- function(...) tools::assertWarning(..., verbose=TRUE)
-
 onWindows <- .Platform$OS.type == "windows"
 onUnix    <- .Platform$OS.type == "unix"
-englishMsgs <- {
-    ## 1. LANGUAGE takes precedence over locale settings:
-    if(nzchar(lang <- Sys.getenv("LANGUAGE")))
-        lang == "en"
-    else { ## 2. Query the  locale
-        if(!onWindows) {
-            ## sub() :
-            lc.msgs <- sub("\\..*", "", print(Sys.getlocale("LC_MESSAGES")))
-            lc.msgs == "C" || substr(lc.msgs, 1,2) == "en"
-        } else { ## Windows
-            lc.type <- sub("\\..*", "", sub("_.*", "", print(Sys.getlocale("LC_CTYPE"))))
-            lc.type == "English" || lc.type == "C"
-        }
-    }
-}
-cat(sprintf("English messages: %s\n", englishMsgs))
 
 ### First dozen entries moved from ./tests-reg-tests-1e.R ----------------------
 
@@ -234,7 +217,6 @@ local({
 ## leaked two protect stack entries per such string, so this gave
 ## "protection stack overflow", in R <= 4.6.2
 
-
 ## readChar() on a raw vector holding 6-byte UTF-8 lead bytes
 if (l10n_info()[["UTF-8"]]) {
     s <- readChar(as.raw(rep(0xff, 6 * 64)), 64L)
@@ -267,9 +249,9 @@ local({
     })
     setTimeLimit(elapsed = 0.5, transient = TRUE)
     E <- tryCid(f())
-    stopifnot(inherits(E, "error"))
-    if(englishMsgs)
-        stopifnot(grepl("elapsed time limit", conditionMessage(E)))
+    stopifnot(inherits(E, "error"),
+              identical(conditionMessage(E),
+                        gettext("reached elapsed time limit", domain="R")))
 })
 ## ran all 1e8 iterations without checking in R <= 4.6.2
 
