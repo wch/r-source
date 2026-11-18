@@ -961,8 +961,8 @@ attribute_hidden SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ans = seq_colon(1.0, (double)lout, call);
     } else if (by == R_MissingArg) { // and  len := length.out  specified, >= 1
 	double rfrom = asReal(from), rto = asReal(to), rby = 0; // -Wall
-	if(miss_to)   rto   = rfrom + (double)lout - 1;
-	if(miss_from) rfrom = rto   - (double)lout + 1;
+	if(miss_to)   rto   = rfrom + (double)(lout - 1);
+	if(miss_from) rfrom = rto   - (double)(lout - 1);
 	if(!R_FINITE(rfrom)) errorcall(call, _("'%s' must be a finite number"), "from");
 	if(!R_FINITE(rto))   errorcall(call, _("'%s' must be a finite number"), "to");
 	bool finite_del = 0;
@@ -973,8 +973,8 @@ attribute_hidden SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else // overflow in (to - from), nint >= 2  => finite 'by'
 		rby = (rto/nint - rfrom/nint);
 	}
-	if(rfrom <= INT_MAX && rfrom >= INT_MIN &&
-	   rto   <= INT_MAX && rto   >= INT_MIN &&
+	if(rfrom <= INT_MAX && rfrom > INT_MIN &&
+	   rto   <= INT_MAX && rto   > INT_MIN &&
 	   rfrom == (int)rfrom &&
 	   (lout <= 1 || rto == (int)rto) &&
 	   (lout <= 2 || rby == (int)rby)) {
@@ -1013,9 +1013,9 @@ attribute_hidden SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(!R_FINITE(rby))   errorcall(call, _("'%s' must be a finite number"), "by");
 	rto = rfrom + (double)(lout-1)*rby;
 	// avoid undefined behaviour by testing range before converting.
-	if(rfrom <= INT_MAX && rfrom >= INT_MIN
-	   &&  rto  <= INT_MAX &&  rto  >= INT_MIN
-	   && rby == (int)rby && rfrom == (int)rfrom) {
+	if(rfrom <= INT_MAX && rfrom > INT_MIN &&
+	   rto   <= INT_MAX && rto   > INT_MIN &&
+	   rby == (int)rby && rfrom == (int)rfrom) {
 	    ans = allocVector(INTSXP, lout);
 	    for(i = 0; i < lout; i++) {
 //		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();
@@ -1033,9 +1033,9 @@ attribute_hidden SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    rfrom = rto - (double)(lout-1)*rby;
 	if(!R_FINITE(rto)) errorcall(call, _("'%s' must be a finite number"), "to");
 	if(!R_FINITE(rby)) errorcall(call, _("'%s' must be a finite number"), "by");
-	if(rby == (int)rby && rto == (int)rto
-	   && rfrom <= INT_MAX && rfrom >= INT_MIN
-	   &&  rto  <= INT_MAX &&  rto  >= INT_MIN) {
+	if(rfrom <= INT_MAX && rfrom > INT_MIN &&
+	   rto   <= INT_MAX && rto   > INT_MIN &&
+	   rby == (int)rby && rto == (int)rto) {
 	    ans = allocVector(INTSXP, lout);
 	    for(i = 0; i < lout; i++) {
 //		if ((i+1) % NINTERRUPT == 0) R_CheckUserInterrupt();

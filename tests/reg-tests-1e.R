@@ -4542,6 +4542,19 @@ rm(saveToConnObj)
 ## segfaulted in R <= 4.6.*
 
 
+## seq.int(..., length.out = n) edge cases
+x <- c(2^.Machine[["double.digits"]], .Machine[["integer.max"]] + 1)
+for (s in list(seq, seq.int))
+for (y in c(-x, x))
+    stopifnot(identical(s(from = y, length.out = 1L), y),
+              identical(s(  to = y, length.out = 1L), y),
+              identical(s(from = y, length.out = 1L, by = 0L), y),
+              identical(s(  to = y, length.out = 1L, by = 0L), y))
+## had some FALSE from computing -x[1L] - 1 and casting -x[2L] to int
+## in R <= 4.6.2
+
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

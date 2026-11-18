@@ -533,6 +533,11 @@
       supported), invalid or conflicting \code{Content-Length},
       whitespace before the colon in a header field and more than one
       \code{Host} header.  Previously such requests could be misread.
+
+      \item \code{seq.int} misbehaved when \code{length.out} was not
+      missing and \code{from} or \code{to} was
+      \code{-.Machine[["integer.max"]] - 1L} or
+      \code{to} was \code{-2^.Machine[["double.digits"]]}.
     }
   }
 }
