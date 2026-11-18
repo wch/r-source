@@ -844,10 +844,6 @@ attribute_hidden SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if(along != R_MissingArg) {
 	lout = xlength(along);
-	if(One) {
-	    ans = lout ? seq_colon(1.0, (double)lout, call) : allocVector(INTSXP, 0);
-	    goto done;
-	}
     } else if(len != R_MissingArg && len != R_NilValue) {
 	double rout = asReal(len);
 	if(!R_FINITE(rout))
