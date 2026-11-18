@@ -266,9 +266,9 @@ stopifnot(identical(charToRaw(out), as.raw(0xff)))
 
 bad <- c(charToRaw("A\n3\n6\n8\n14\nUTF-8"), as.raw(0),
 	 charToRaw("padding!254\n"))
-assertError(unserialize(bad))
+assertErrV(unserialize(bad))
 con <- rawConnection(bad)
-assertError(infoRDS(con))
+assertErrV(infoRDS(con))
 close(con)
 
 
