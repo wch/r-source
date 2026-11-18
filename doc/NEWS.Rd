@@ -536,7 +536,7 @@
 
       \item \code{seq.int} misbehaved when \code{length.out} was not
       missing and \code{from} or \code{to} was
-      \code{-.Machine[["integer.max"]] - 1L} or
+      \code{-.Machine[["integer.max"]] - 1} or
       \code{to} was \code{-2^.Machine[["double.digits"]]}.
     }
   }
