@@ -15204,9 +15204,16 @@ Some functions useful in implementing new alternate representation
 @eapihdr R_ext/Altrep.h
 The class of an @I{ALTREP} object is identified by a class name symbol and a
 package name symbol; these can be retrieved using
-@code{R_altrep_class_name} and @code{R_altrep_class_package},
+@code{R_altrep_class_name} and @code{R_altrep_class_package}.
 @eapifun R_altrep_class_name
 @eapifun R_altrep_class_package
+When an @I{ALTREP} object is unserialized, its class is looked up by these
+two symbols, loading the namespace of the named package if necessary,
+and the class's @code{Unserialize} or @code{UnserializeEX} method is
+called with the state and attributes read from the stream.  The stream
+may be corrupt or crafted, so the state need not be what the class's
+@code{Serialized_state} method produced: these methods should check its
+type and length before using it and signal an error if it is malformed.
 The function @code{ALTREP_CLASS} is also available but is not likely to
 be needed and may be removed.  The type and contents of the value
 returned by @code{ALTREP_CLASS} are subject to change.

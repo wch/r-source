@@ -86,6 +86,10 @@ static SEXP new_compact_realseq(R_xlen_t, double, double);
 
 static SEXP compact_intseq_Unserialize(SEXP class, SEXP state)
 {
+    if ((TYPEOF(state) != REALSXP && TYPEOF(state) != INTSXP) ||
+	XLENGTH(state) < 3)
+	error("invalid compact_intseq serialized state");
+
     R_xlen_t n = COMPACT_INTSEQ_SERIALIZED_STATE_LENGTH(state);
     int n1 = COMPACT_INTSEQ_SERIALIZED_STATE_FIRST(state);
     int inc = COMPACT_INTSEQ_SERIALIZED_STATE_INCR(state);
@@ -363,6 +367,9 @@ static SEXP compact_realseq_Serialized_state(SEXP x)
 
 static SEXP compact_realseq_Unserialize(SEXP class, SEXP state)
 {
+    if (TYPEOF(state) != REALSXP || XLENGTH(state) < 3)
+	error("invalid compact_realseq serialized state");
+
     double inc = COMPACT_REALSEQ_INFO_INCR(state);
     R_xlen_t len = COMPACT_REALSEQ_INFO_LENGTH(state);
     double n1 = COMPACT_REALSEQ_INFO_FIRST(state);
@@ -656,6 +663,11 @@ static SEXP deferred_string_Serialized_state(SEXP x)
 
 static SEXP deferred_string_Unserialize(SEXP class, SEXP state)
 {
+    if (TYPEOF(state) != LISTSXP ||
+	TYPEOF(DEFERRED_STRING_STATE_INFO(state)) != INTSXP ||
+	XLENGTH(DEFERRED_STRING_STATE_INFO(state)) < 1)
+	error("invalid deferred string serialized state");
+
     SEXP arg = DEFERRED_STRING_STATE_ARG(state);
     SEXP info = DEFERRED_STRING_STATE_INFO(state);
     return R_deferred_coerceToString(arg, info);
@@ -1107,6 +1119,15 @@ static SEXP mmap_file(SEXP, int, Rboolean, Rboolean, Rboolean, Rboolean);
 
 static SEXP mmap_Unserialize(SEXP class, SEXP state)
 {
+    if (TYPEOF(state) != LISTSXP ||
+	TYPEOF(CDR(state)) != LISTSXP ||
+	TYPEOF(CDDR(state)) != LISTSXP ||
+	TYPEOF(MMAP_STATE_FILE(state)) != STRSXP ||
+	XLENGTH(MMAP_STATE_FILE(state)) < 1 ||
+	TYPEOF(CADDR(state)) != INTSXP ||
+	XLENGTH(CADDR(state)) < 4)
+	error("invalid mmap serialized state");
+
     SEXP file = MMAP_STATE_FILE(state);
     int type = MMAP_STATE_TYPE(state);
     Rboolean ptrOK = (Rboolean) MMAP_STATE_PTROK(state);
@@ -1514,6 +1535,10 @@ static SEXP make_wrapper(SEXP, SEXP);
 
 static SEXP wrapper_Unserialize(SEXP class, SEXP state)
 {
+    if (TYPEOF(state) != LISTSXP || TYPEOF(CDR(state)) != INTSXP ||
+	XLENGTH(CDR(state)) < NMETA)
+	error("invalid wrapper serialized state");
+
     return make_wrapper(CAR(state), CDR(state));
 }
 

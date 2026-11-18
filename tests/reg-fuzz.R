@@ -272,6 +272,29 @@ assertErrV(infoRDS(con))
 close(con)
 
 
+## malformed serialized state of the base ALTREP classes
+hdrlen <- length(serialize(NULL, NULL)) - 4L
+item <- function(x) serialize(x, NULL)[-seq_len(hdrlen)]
+altrepStream <- function(cls, type, state)
+    c(serialize(NULL, NULL)[seq_len(hdrlen)],
+      as.raw(c(0, 0, 0, 238)), # ALTREP_SXP
+      item(pairlist(as.name(cls), as.name("base"), type)),
+      item(state), item(NULL))
+states <- list(wrap_integer = 1:5, wrap_integer = c(2L, 7L, 9L),
+               wrap_integer = pairlist(1:3, 1L),
+               deferred_string = 1:3, deferred_string = pairlist(1.5),
+               mmap_integer = 1:3, mmap_integer = pairlist("x", 1, 13L))
+types <- c(wrap_integer = 13L, deferred_string = 16L, mmap_integer = 13L)
+errs <- Map(function(cls, state)
+                tryCid(unserialize(altrepStream(cls, types[[cls]], state))),
+            names(states), states)
+stopifnot(vapply(errs, function(e) inherits(e, "error") &&
+                 grepl("serialized state", conditionMessage(e)), NA))
+x <- .Internal(wrap_meta(c(1L, 5L, 9L), 1L, 1L))
+stopifnot(identical(unserialize(serialize(x, NULL)), x))
+## built garbage objects or seg.faulted in R <= 4.6.2
+
+
 ## keep at end
 rbind(last =  proc.time() - .pt,
       total = proc.time())
