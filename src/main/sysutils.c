@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997-2025   The R Core Team
+ *  Copyright (C) 1997-2026   The R Core Team
  *  Copyright (C) 1995-1996   Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -2179,7 +2179,9 @@ next_char:
     if(ttype == NT_FROM_NATIVE) Riconv_close(obj);
     if (mustWork && failed) {
 	const void *vmax = vmaxget();
-	const char *native_buf = reEnc3(cbuff->data, TO_WCHAR, "", 2);
+	const char *native_buf = reEnc4(cbuff->data,
+					(size_t) (outbuf - cbuff->data),
+					TO_WCHAR, "", 2);
 
 	/* copy to truncate (and mark as truncated) */
 	char err_buff[256];
@@ -2237,7 +2239,7 @@ const wchar_t *wtransChar2(SEXP x)
 	return wcopyAndFreeStringBuffer(&cbuff);
 }
 
-static int reEncodeIconv(const char *x, R_StringBuffer *cbuff,
+static int reEncodeIconv(const char *x, size_t length, R_StringBuffer *cbuff,
                          const char *fromcode, const char *tocode, int subst)
 {
     void * obj;
@@ -2251,10 +2253,7 @@ static int reEncodeIconv(const char *x, R_StringBuffer *cbuff,
     R_AllocStringBuffer(0, cbuff);
 top_of_loop:
     inbuf = x;
-    if (fromWchar)
-	inb = wcslen((wchar_t *)inbuf) * sizeof(wchar_t);
-    else
-	inb = strlen(inbuf);
+    inb = length;
     outbuf = cbuff->data; outb = cbuff->bufsize - 3;
     /* First initialize output */
     Riconv (obj, NULL, NULL, &outbuf, &outb);
@@ -2362,7 +2361,7 @@ static int reEncode(const char *x, R_StringBuffer *cbuff,
     default: return 1;
     }
 
-    return reEncodeIconv(x, cbuff, fromcode, tocode, subst);
+    return reEncodeIconv(x, strlen(x), cbuff, fromcode, tocode, subst);
 }
 
 /* This may return a R_alloc-ed result, so the caller has to manage the
@@ -2404,8 +2403,18 @@ attribute_hidden
 const char *reEnc3(const char *x,
                    const char *fromcode, const char *tocode, int subst)
 {
+    size_t length = !strcmp(fromcode, TO_WCHAR)
+	? wcslen((wchar_t *) x) * sizeof(wchar_t) : strlen(x);
+    return reEnc4(x, length, fromcode, tocode, subst);
+}
+
+/* As reEnc3, with the input length supplied explicitly. */
+attribute_hidden
+const char *reEnc4(const char *x, size_t length,
+		   const char *fromcode, const char *tocode, int subst)
+{
     R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
-    if (reEncodeIconv(x, &cbuff, fromcode, tocode, subst)) return x;
+    if (reEncodeIconv(x, length, &cbuff, fromcode, tocode, subst)) return x;
     size_t res = strlen(cbuff.data) + 1;
     char *p = R_alloc(res, 1);
     memcpy(p, cbuff.data, res);

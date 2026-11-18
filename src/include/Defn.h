@@ -2448,6 +2448,8 @@ SEXP Rf_installTrChar(SEXP);
 
 const wchar_t *wtransChar(SEXP x); /* from sysutils.c */
 const char *Rf_reEnc3(const char *x, const char *fromcode, const char *tocode, int subst);
+const char *Rf_reEnc4(const char *x, size_t length, const char *fromcode,
+		      const char *tocode, int subst);
 
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);

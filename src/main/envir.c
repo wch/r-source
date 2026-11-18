@@ -4713,7 +4713,7 @@ static void reportInvalidString(SEXP cval, int actionWhenInvalid)
 	else if (IS_LATIN1(cval))
 	    from = "CP1252";
 
-	native_str = reEnc3(CHAR(cval), from, "", 1);
+	native_str = reEnc4(CHAR(cval), LENGTH(cval), from, "", 1);
 	if (actionWhenInvalid == 1)
 	    warning("invalid string %s", native_str);
 	else if (actionWhenInvalid == 2)

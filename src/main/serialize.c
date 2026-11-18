@@ -1691,17 +1691,18 @@ static char *native_fromcode(R_inpstream_t stream)
     return from;
 }
 
-static void invalid_utf8_warning(const char *buf, const char *from)
+static void invalid_utf8_warning(const char *buf, int length, const char *from)
 {
     const void *vmax = vmaxget();
     const char *native_buf;
 
     if (utf8Valid(buf)) {
-	native_buf = reEnc3(buf, "UTF-8", "", 1);
+	native_buf = reEnc4(buf, length, "UTF-8", "", 1);
 	warning(_("input string '%s' cannot be translated from '%s' to UTF-8, but is valid UTF-8"),
 		native_buf, from);
     } else {
-	native_buf = reEnc(reEnc3(buf, from, "UTF-8", 1), CE_UTF8, CE_NATIVE, 2);
+	native_buf = reEnc(reEnc4(buf, length, from, "UTF-8", 1),
+			   CE_UTF8, CE_NATIVE, 2);
 	warning(_("input string '%s' cannot be translated to UTF-8, is it valid in '%s'?"),
 		native_buf, from);
     }
@@ -1757,7 +1758,7 @@ ReadChar(R_inpstream_t stream, char *buf, int length, int levs)
 	if (known_to_be_utf8) {
 	    /* nat2nat_obj is converting to UTF-8, no need to use nat2utf8_obj */
 	    stream->nat2utf8_obj = (void *)-1;
-	    invalid_utf8_warning(buf, native_fromcode(stream));
+	    invalid_utf8_warning(buf, length, native_fromcode(stream));
 	}
     }
     /* try converting to UTF-8 */
@@ -1776,7 +1777,7 @@ ReadChar(R_inpstream_t stream, char *buf, int length, int levs)
 	SEXP ans = ConvertChar(stream->nat2utf8_obj, buf, length, CE_UTF8);
 	if (ans != R_NilValue)
 	    return ans;
-	invalid_utf8_warning(buf, native_fromcode(stream));
+	invalid_utf8_warning(buf, length, native_fromcode(stream));
     }
     /* no translation possible */
     return mkCharLenCE(buf, length, CE_NATIVE);
@@ -2298,6 +2299,8 @@ SEXP R_Unserialize(R_inpstream_t stream)
 	    error(_("invalid length of encoding name"));
 	InString(stream, stream->native_encoding, nelen);
 	stream->native_encoding[nelen] = '\0';
+	if (memchr(stream->native_encoding, '\0', nelen))
+	    error(_("embedded nul in encoding name"));
 	break;
     }
     default:
@@ -2389,6 +2392,8 @@ attribute_hidden SEXP R_SerializeInfo(R_inpstream_t stream)
 	char nbuf[nelen + 1];
 	InString(stream, nbuf, nelen);
 	nbuf[nelen] = '\0';
+	if (memchr(nbuf, '\0', nelen))
+	    error(_("embedded nul in encoding name"));
 	SET_VECTOR_ELT(ans, 4, mkString(nbuf));
     }
     setAttrib(ans, R_NamesSymbol, names);

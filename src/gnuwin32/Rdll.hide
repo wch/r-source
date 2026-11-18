@@ -544,6 +544,7 @@
  Rf_promiseArgs
  Rf_qchisq_appr
  Rf_reEnc3
+ Rf_reEnc4
  Rf_readS3VarsFromFrame
  Rf_regcomp
  Rf_regerror

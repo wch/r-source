@@ -256,6 +256,21 @@ local({
 ## ran all 1e8 iterations without checking in R <= 4.6.2
 
 
+## invalid encodings in serialized data
+wide <- if (.Platform$OS.type == "windows") "UTF-16LE" else
+    paste0("UCS-4", if (.Platform$endian == "little") "LE" else "BE")
+bad <- c(charToRaw(sprintf("A\n3\n6\n8\n%d\n%s16\n1\n9\n1\n",
+			   nchar(wide), wide)), as.raw(0xff))
+out <- suppressWarnings(unserialize(bad))
+stopifnot(identical(charToRaw(out), as.raw(0xff)))
+
+bad <- c(charToRaw("A\n3\n6\n8\n14\nUTF-8"), as.raw(0),
+	 charToRaw("padding!254\n"))
+assertError(unserialize(bad))
+con <- rawConnection(bad)
+assertError(infoRDS(con))
+close(con)
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
