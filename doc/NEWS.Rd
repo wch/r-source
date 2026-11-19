@@ -140,6 +140,11 @@
       \item \code{getNamespaceVersion()} and \code{getNamespaceName()} now
       return an unnamed string, as suggested by \I{Pavel Krivitsky} on
       R-devel.
+
+      \item \code{seq.int} uses a compact representation for unit-spaced
+      sequences of integers, now also in usage with \code{length.out}
+      or \code{along.with} not missing, fulfilling the wish of
+      \I{Hugo Gruson} (\PR{19282}).
     }
   }
 

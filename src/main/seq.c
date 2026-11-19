@@ -956,18 +956,23 @@ attribute_hidden SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
     } else if (One) {
 	ans = seq_colon(1.0, (double)lout, call);
     } else if (by == R_MissingArg) { // and  len := length.out  specified, >= 1
-	double rfrom = asReal(from), rto = asReal(to), rby = 0; // -Wall
-	if(miss_to)   rto   = rfrom + (double)(lout - 1);
-	if(miss_from) rfrom = rto   - (double)(lout - 1);
+	double rfrom = asReal(from), rto = asReal(to), n = (double)(lout - 1);
+	if(miss_to)   rto   = rfrom + n;
+	if(miss_from) rfrom = rto   - n;
 	if(!R_FINITE(rfrom)) errorcall(call, _("'%s' must be a finite number"), "from");
 	if(!R_FINITE(rto))   errorcall(call, _("'%s' must be a finite number"), "to");
-	bool finite_del = 0;
+	double del = rto - rfrom;
+	if(fabs(del) == n) {
+	    ans = seq_colon(rfrom, rto, call);
+	    goto done;
+	}
+	bool finite_del = 0; /* -Wall */
+	double rby = 0.0; /* -Wall */
 	if(lout > 2) { // only then, use 'by'
-	    double nint = (double)(lout - 1);
-	    if((finite_del = (R_FINITE(rby = (rto - rfrom)) != 0)))
-		rby /= nint;
-	    else // overflow in (to - from), nint >= 2  => finite 'by'
-		rby = (rto/nint - rfrom/nint);
+	    finite_del = R_FINITE(del) != 0;
+	    rby = (finite_del)
+		? del/n
+		: rto/n - rfrom/n; // overflow in (to - from), n >= 2  =>  finite 'by'
 	}
 	if(rfrom <= INT_MAX && rfrom > INT_MIN &&
 	   rto   <= INT_MAX && rto   > INT_MIN &&
@@ -1003,11 +1008,15 @@ attribute_hidden SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	}
     } else if (miss_to) {
-	double rfrom = asReal(from), rby = asReal(by), rto;
+	double rfrom = asReal(from), rby = asReal(by);
 	if(miss_from) rfrom = 1.0;
 	if(!R_FINITE(rfrom)) errorcall(call, _("'%s' must be a finite number"), "from");
 	if(!R_FINITE(rby))   errorcall(call, _("'%s' must be a finite number"), "by");
-	rto = rfrom + (double)(lout-1)*rby;
+	double n = (double)(lout - 1), rto = rfrom + n*rby;
+	if(fabs(rby) == 1.0 && fabs(rto - rfrom) == n) {
+	    ans = seq_colon(rfrom, rto, call);
+	    goto done;
+	}
 	// avoid undefined behaviour by testing range before converting.
 	if(rfrom <= INT_MAX && rfrom > INT_MIN &&
 	   rto   <= INT_MAX && rto   > INT_MIN &&
@@ -1025,10 +1034,14 @@ attribute_hidden SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	}
     } else if (miss_from) {
-	double rto = asReal(to), rby = asReal(by),
-	    rfrom = rto - (double)(lout-1)*rby;
+	double rto = asReal(to), rby = asReal(by);
 	if(!R_FINITE(rto)) errorcall(call, _("'%s' must be a finite number"), "to");
 	if(!R_FINITE(rby)) errorcall(call, _("'%s' must be a finite number"), "by");
+	double n = (double)(lout - 1), rfrom = rto - n*rby;
+	if(fabs(rby) == 1.0 && fabs(rto - rfrom) == n) {
+	    ans = seq_colon(rfrom, rto, call);
+	    goto done;
+	}
 	if(rfrom <= INT_MAX && rfrom > INT_MIN &&
 	   rto   <= INT_MAX && rto   > INT_MIN &&
 	   rby == (int)rby && rto == (int)rto) {
