@@ -64,7 +64,10 @@ grid.panel <- function(x = stats::runif(10), y = stats::runif(10),
                        xscale=xscale, yscale=yscale)
   pushViewport(plot.vp)
   grid.grill()
-  grid.points(x, y, gp=gpar(col="blue"))
+  # A grid.multipanel() panel can receive no data, and unit() rejects
+  # zero-length values
+  if (length(x) && length(y))
+    grid.points(x, y, gp=gpar(col="blue"))
   grid.rect()
   if (axis.left)
     grid.yaxis(label=axis.left.label)

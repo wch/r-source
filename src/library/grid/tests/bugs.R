@@ -28,3 +28,5 @@ stopifnot(round(convertWidth(grobWidth(gf1),
                              "inches", valueOnly=TRUE),
                 digits=5) == 0)
 
+# grid.multipanel() with panels that receive no data
+grid.multipanel(x = 1:2, y = 1:2, z = 0:1)

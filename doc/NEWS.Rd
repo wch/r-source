@@ -543,6 +543,10 @@
       missing and \code{from} or \code{to} was
       \code{-.Machine[["integer.max"]] - 1} or
       \code{to} was \code{-2^.Machine[["double.digits"]]}.
+
+      \item \code{grid.multipanel()} would error
+      if zero points in a panel, including randomly within \code{R CMD
+      check}. Thanks to \I{Kevin Ushey} for report and patch.
     }
   }
 }
