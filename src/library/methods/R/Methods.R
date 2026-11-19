@@ -193,7 +193,10 @@ setGeneric <-
                              package)
                 msg <- c(msg, msg.)
             }
-            message(paste(msg, collapse = "\n  "), domain = NA)
+            ## Allow suppression by 'suppressPackageStartupMessages',
+            ## as some packages call 'setGeneric' from their load hook
+            packageStartupMessage(paste(msg, collapse = "\n  "),
+                                  domain = NA)
         }
     }
     if(identical(fdef@signature, "..."))
