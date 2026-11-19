@@ -263,7 +263,7 @@ bad <- c(charToRaw(sprintf("A\n3\n6\n8\n%d\n%s16\n1\n9\n1\n",
 			   nchar(wide), wide)), as.raw(0xff))
 out <- suppressWarnings(unserialize(bad))
 stopifnot(identical(charToRaw(out), as.raw(0xff)))
-
+## error for bad ones
 bad <- c(charToRaw("A\n3\n6\n8\n14\nUTF-8"), as.raw(0),
 	 charToRaw("padding!254\n"))
 assertErrV(unserialize(bad))
@@ -293,6 +293,45 @@ stopifnot(vapply(errs, function(e) inherits(e, "error") &&
 x <- .Internal(wrap_meta(c(1L, 5L, 9L), 1L, 1L))
 stopifnot(identical(unserialize(serialize(x, NULL)), x))
 ## built garbage objects or seg.faulted in R <= 4.6.2
+
+
+## duplicated(), unique() and anyDuplicated() with marked encodings
+## translated a long latin1 string repeatedly          -- PR#19329
+setEnc <- `Encoding<-`
+l1 <- setEnc("fa\xE7ile", "latin1") # short
+u1 <- enc2utf8(l1)
+long <- setEnc(strrep("\xE9", 5000), "latin1")
+x <- c(long, rep(c("", "a", "b", l1), 500), u1, enc2utf8(long))
+stopifnot(exprs = { # all these were true "forever":
+    identical(unique(x), c(long, "", "a", "b", l1))
+    identical(which(!duplicated(x)), 1:5)
+    identical(which(!duplicated(x, fromLast = TRUE)), c(1998:2000, 2002:2003))
+    identical(anyDuplicated(x), 6L)
+    identical(anyDuplicated(x, fromLast = TRUE), 2001L)
+    identical(duplicated(c(l1, u1, "a", "a"), incomparables = l1),
+              c(FALSE, FALSE, FALSE, TRUE))
+    identical(anyDuplicated(c(l1, "a", u1, "a"), incomparables = l1), 4L)
+})
+### Timing from `unique-latin1-translate-repro.R` (PR attachment 4082) --
+## 1. A long latin1 string among many short ASCII strings.
+p <- 200171L; n <- 2000L
+long <- setEnc(paste0("\xE9", strrep("a", p-3), "#v"), "latin1")
+short <- c("", vapply(32:126, function(i) rawToChar(as.raw(i)), ""))
+n1 <- length(x <- c(long, rep(short, length.out = n)))
+system.time(u <- unique(x)) # ~ 2 ms *after* patch; was ~ 1.3 sec
+## 2. Strings that differ only in their first character all hash alike
+rawtail <- rep(as.raw(0xe9), n)
+lat <- vapply(c(letters, LETTERS),
+              \(ch) rawToChar(c(charToRaw(ch), rawtail)), "", USE.NAMES = FALSE)
+Encoding(lat) <- "latin1"
+y <- rep(c(lat[1:26], enc2utf8(lat[27:52])), 200)
+system.time(v <- unique(y)) # ~ 65 ms; was ~ 0.9 sec
+stopifnot(length(u) == 97L, identical(nchar(u), c(p, 0:1, rep(1L, 94))),
+          identical(nchar(v), rep(n1, 52)),
+          identical(unique(substring(v, 2L,n1)),
+                    setEnc(strrep("\xe9", n), "latin1")))
+## times were around 1 sec each, in R <= 4.6.2
+
 
 
 ## keep at end

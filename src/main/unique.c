@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1997--2025  The R Core Team
+ *  Copyright (C) 1997--2026  The R Core Team
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -219,7 +219,7 @@ static R_INLINE hlen shash(SEXP x, R_xlen_t indx, HashData *d)
 	const void *vmax = vmaxget();
 	p = noTrans ? CHAR(xi) : translateCharUTF8(xi);
 	k = 0;
-	while (*p++)
+	for (; *p; p++)
 	    /* multiplier was 8 but 11 isn't a power of 2 */
 	    k = 11 * k + (unsigned int) *p;
 	vmaxset(vmax); /* discard any memory used by translateChar */
@@ -230,7 +230,7 @@ static R_INLINE hlen shash(SEXP x, R_xlen_t indx, HashData *d)
     /* Not having d->useCache really should not happen anymore. */
     p = translateCharUTF8(STRING_ELT(x, indx));
     k = 0;
-    while (*p++)
+    for (; *p; p++)
 	k = 11 * k + (unsigned int) *p; /* was 8 but 11 isn't a power of 2 */
     vmaxset(vmax); /* discard any memory used by translateChar */
     return scatter(k, d);
@@ -300,6 +300,15 @@ static R_INLINE int sequal(SEXP x, R_xlen_t i, SEXP y, R_xlen_t j)
     /* another pre-test to avoid the call to Seql */
     if (IS_CACHED(xi) && IS_CACHED(yj) && ENC_KNOWN(xi) == ENC_KNOWN(yj))
 	return 0;
+    /* Translating latin1 to UTF-8 never shortens a string, so a shorter string
+       that needs no translation (ASCII, UTF-8, or native in a UTF-8 locale)
+       cannot equal it: ==> spares translating a long latin1 string on every probe. */
+    if (IS_LATIN1(xi) != IS_LATIN1(yj)) {
+	SEXP l = IS_LATIN1(xi) ? xi : yj,
+	     o = IS_LATIN1(xi) ? yj : xi;
+	if (LENGTH(o) < LENGTH(l) && (utf8locale || IS_ASCII(o) || IS_UTF8(o)))
+	    return 0;
+    }
     return Seql(xi, yj);
 }
 

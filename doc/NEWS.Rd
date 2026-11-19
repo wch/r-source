@@ -137,9 +137,9 @@
       \code{as.vector(., mode="double")} now works as
       \code{as.double(.)} rather than signalling an error.
 
-      \item \code{getNamespaceVersion()} and \code{getNamespaceName()} now
-      return an unnamed string, as suggested by \I{Pavel Krivitsky} on
-      R-devel.
+      \item Utility functions \code{getNamespaceVersion()} and
+      \code{getNamespaceName()} now return \emph{un}named strings, as
+      suggested by \I{Pavel Krivitsky} on R-devel.
 
       \item \code{seq.int} uses a compact representation for unit-spaced
       sequences of integers, now also in usage with \code{length.out}
@@ -1670,7 +1670,11 @@
 
       \item When \code{file.choose()} is terminated with an \command{EOF},
       it now signals an error rather than returning garbage, thanks to
-      \I{Kevin Ushey}'s report and patch in \PR{19053},
+      \I{Kevin Ushey}'s report and patch in \PR{19053}.
+
+      \item \code{duplicated()}, \code{unique()} etc, become much faster for
+      the case of a long latin1 encoded string among smaller UTF-8 and ASCII
+      encoded ones, thanks to \I{Kevin Ushey}'s report and patch in \PR{19329}.
     }
   }
 }
