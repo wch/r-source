@@ -22,9 +22,6 @@ structure(.Data, \dots)
   \link{attributes} set.
 }
 \details{
-  Adding a class \code{"factor"} will ensure that numeric codes are
-  given integer storage mode.
-
   The historical feature to rename
   attributes \code{".Dim"}, \code{".Dimnames"}, \code{".Names"},
   \code{".Tsp"} and \code{".Label"} is deprecated since \R version 4.7.0.

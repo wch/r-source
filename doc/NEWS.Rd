@@ -145,6 +145,9 @@
       sequences of integers, now also in usage with \code{length.out}
       or \code{along.with} not missing, fulfilling the wish of
       \I{Hugo Gruson} (\PR{19282}).
+
+      \item Using \code{structure()} to add a \code{"factor"} class no
+      longer ensures that numeric codes are given integer storage mode.
     }
   }
 

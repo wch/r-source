@@ -35,14 +35,15 @@ structure <- function (.Data, ...)
                                      pc(replace[m[ok]]), " instead."))
             names(attrib)[ok] <- replace[m[ok]]
         }
+        ## <FIXME>
+        ## Remove eventually ...
         ## prior to 2.5.0 factors would deparse to double codes
+        ## Changed in R 4.7.0 to no longer ensure that numeric codes are
+        ## given integer storage mode.
         ## if(any(attrib[["class", exact = TRUE]] == "factor")
-        ##    && typeof(.Data) == "double") {
-        ##     if(tolower(Sys.getenv("_R_STRUCTURE_FIX_FACTOR_STORAGE_MODE_",
-        ##                           "")) == "false")
-        ##         .Deprecated(msg = "Giving doubles a \"factor\" class attribute is deprecated.")
+        ##    && typeof(.Data) == "double")
         ##     storage.mode(.Data) <- "integer"
-        ## }
+        ## </FIXME>        
         attributes(.Data) <- c(attributes(.Data), attrib)
     }
     .Data
