@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-07-08 r90215) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-11-20 r90940) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -81,28 +81,20 @@ Replacing special names '.Label', '.Dim' is deprecated; use 'levels', 'dim' inst
 > ## factors were long deparsed with double (rather than integer codes).
 > ## As from R 2.5.0 parsing such a deparse will given an error, so
 > ## structure() coerces the codes to an integer vector.
-> ## Example from an earlier version of Puromycin.R
-> state <- structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-+                      2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2),
-+                    levels = c("treated", "untreated"), class = "factor")
-> typeof(state)       # "integer" -- probably will become "double"
-[1] "integer"
-> storage.mode(state) # ditto
-[1] "integer"
-> attributes(state)
-$levels
-[1] "treated"   "untreated"
-
-$class
-[1] "factor"
-
-> cat(deparse(state))
-structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 2L,  2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L), levels = c("treated",  "untreated"), class = "factor")> 
-> state2 <- structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
-+                       2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L),
-+                     levels = c("treated", "untreated"), class = "factor")
-> identical(state,state2)
-[1] TRUE
+> ## Changed in R 4.7.0 to no longer coerce.
+> ## ## Example from an earlier version of Puromycin.R
+> ## state <- structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+> ##                      2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2),
+> ##                    levels = c("treated", "untreated"), class = "factor")
+> ## typeof(state)       # "integer" -- probably will become "double"
+> ## storage.mode(state) # ditto
+> ## attributes(state)
+> ## cat(deparse(state))
+> ##
+> ## state2 <- structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L,
+> ##                       2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L),
+> ##                     levels = c("treated", "untreated"), class = "factor")
+> ## identical(state,state2)
 > 
 > options(op) # in case this is source()d
 > 
