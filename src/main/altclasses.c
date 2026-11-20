@@ -1528,7 +1528,11 @@ static SEXP wrapper_Serialized_state(SEXP x)
 	! WRAPPER_NO_NA(x))
 	return NULL;
 
-    return CONS(WRAPPER_WRAPPED(x), WRAPPER_METADATA(x));
+    /* The state is only used while serializing.  CONS would increment
+       the reference count of the wrapped data, and that count is never
+       decremented, so the next WRAPPER_WRAPPED_RW on locked data would
+       signal an error. */
+    return CONS_NR(WRAPPER_WRAPPED(x), WRAPPER_METADATA(x));
 }
 
 static SEXP make_wrapper(SEXP, SEXP);

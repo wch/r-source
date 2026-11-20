@@ -4507,6 +4507,18 @@ stopifnot(is.character(msg), !englishMsgs || grepl("not open", msg))
 ## used an uninitialized file descriptor, possibly segfaulting, in R <= 4.6.2
 
 
+## Serializing a wrapper around an ALTREP object incremented the wrapped
+## object's reference count for good, so after its data had been
+## accessed, later access signalled "REFCNT on locked WRAPPER data"
+x <- rnorm(100)
+y <- .Internal(wrap_meta(.Internal(wrap_meta(x, 0L, FALSE)), 0L, FALSE))
+s <- sum(y)
+z <- unserialize(serialize(y, NULL))
+stopifnot(identical(sum(y), s), identical(y * 2, x * 2),
+          identical(z, y))
+## failed in R 4.6.2
+
+
 ## as(object, name) for informally defined class(object)[1L],
 ## with 'name' in class(object)[-1L] (PR#19023)
 x <- structure(array(0L), class = c("arraySubclass", "array"))
