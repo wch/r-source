@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-09-20 r85183) -- "Unsuffered Consequences"
-Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu
+R Under development (unstable) (2026-11-20 r90940) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin25.6.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -27,7 +27,7 @@ Type 'q()' to quit R.
 > e1
 c(F = (f <- 0.3), `Tail area` = 2 * if (f < 1) 30 else 90)
 > str(eval(e1))
- Named num [1:2] 0.3 60
+Named num [1:2] 0.3 60
  - attr(*, "names")= chr [1:2] "F" "Tail area"
 > mode(e1)
 [1] "call"
@@ -167,12 +167,12 @@ B(a = x + y, named = 3)
 + }
 > ## The first two were as desired:
 > callme()
-mm =  chr "Abc"
+mm = chr "Abc"
 > callme(mm="B")
-mm =  chr "Bde"
+mm = chr "Bde"
 > mycaller <- function(x = 1, callme = pi) { callme(x) }
 > mycaller()## wrongly gave `mm = NULL'  now = "Abc"
-mm =  chr "Abc"
+mm = chr "Abc"
 > 
 > CO <- utils::capture.output
 > 
@@ -998,5 +998,5 @@ In deparse(expr, backtick = backtick, ...) : deparse may be incomplete
 > 
 > ## at the very end
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.103 0.009 0.112 0 0 
+Time elapsed:  0.105 0.008 0.112 0 0 
 > 

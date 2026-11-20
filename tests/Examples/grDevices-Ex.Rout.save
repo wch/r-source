@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2026-07-17 r90265) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-11-20 r90940) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu
+Platform: aarch64-apple-darwin25.6.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1850,51 +1850,51 @@ detaching ‘package:grid’
  [1] -300 -200 -100    0  100  200  300  400  500  600  700
 > utils::str(c2 <- contourLines(z))
 List of 12
- $ :List of 3
+ $ : List of 3
   ..$ level: num -200
   ..$ x    : num [1:4] 0 0.00895 0.01961 0.02844
   ..$ y    : num [1:4] 0.918 0.941 0.971 1
- $ :List of 3
+ $ : List of 3
   ..$ level: num -200
   ..$ x    : num [1:4] 0.918 0.941 0.971 1
   ..$ y    : num [1:4] 0 0.00895 0.01961 0.02844
- $ :List of 3
+ $ : List of 3
   ..$ level: num -100
   ..$ x    : num [1:19] 0 0.0196 0.0294 0.0385 0.0546 ...
   ..$ y    : num [1:19] 0.592 0.618 0.632 0.647 0.676 ...
- $ :List of 3
+ $ : List of 3
   ..$ level: num -100
   ..$ x    : num [1:19] 0.592 0.618 0.632 0.647 0.676 ...
   ..$ y    : num [1:19] 0 0.0196 0.0294 0.0385 0.0546 ...
- $ :List of 3
+ $ : List of 3
   ..$ level: num 0
   ..$ x    : num [1:34] 0 0.0294 0.0588 0.0882 0.1176 ...
   ..$ y    : num [1:34] 0.267 0.268 0.268 0.268 0.269 ...
- $ :List of 3
+ $ : List of 3
   ..$ level: num 0
   ..$ x    : num [1:34] 0.267 0.268 0.268 0.268 0.269 ...
   ..$ y    : num [1:34] 0 0.0294 0.0588 0.0882 0.1176 ...
- $ :List of 3
+ $ : List of 3
   ..$ level: num 100
   ..$ x    : num [1:44] 1 0.995 0.971 0.941 0.912 ...
   ..$ y    : num [1:44] 0.381 0.382 0.387 0.393 0.398 ...
- $ :List of 3
+ $ : List of 3
   ..$ level: num 200
   ..$ x    : num [1:36] 1 0.997 0.971 0.941 0.918 ...
   ..$ y    : num [1:36] 0.499 0.5 0.51 0.52 0.529 ...
- $ :List of 3
+ $ : List of 3
   ..$ level: num 300
   ..$ x    : num [1:28] 1 0.998 0.971 0.943 0.941 ...
   ..$ y    : num [1:28] 0.617 0.618 0.632 0.647 0.648 ...
- $ :List of 3
+ $ : List of 3
   ..$ level: num 400
   ..$ x    : num [1:20] 1 0.999 0.971 0.957 0.941 ...
   ..$ y    : num [1:20] 0.734 0.735 0.755 0.765 0.776 ...
- $ :List of 3
+ $ : List of 3
   ..$ level: num 500
   ..$ x    : num [1:12] 1 0.999 0.971 0.965 0.941 ...
   ..$ y    : num [1:12] 0.852 0.853 0.877 0.882 0.904 ...
- $ :List of 3
+ $ : List of 3
   ..$ level: num 600
   ..$ x    : num [1:4] 1 0.999 0.971 0.97
   ..$ y    : num [1:4] 0.97 0.971 0.999 1
@@ -3633,15 +3633,15 @@ attr(,"class")
 > 
 > ## IGNORE_RDIFF_BEGIN
 > pretty(Sys.Date())
-[1] "2025-06-08" "2025-06-09" "2025-06-10" "2025-06-11" "2025-06-12"
-[6] "2025-06-13"
+[1] "2026-11-18" "2026-11-19" "2026-11-20" "2026-11-21" "2026-11-22"
+[6] "2026-11-23"
 > pretty(Sys.time(), n = 10)
- [1] "2025-06-10 09:12:42 NZST" "2025-06-10 09:12:43 NZST"
- [3] "2025-06-10 09:12:44 NZST" "2025-06-10 09:12:45 NZST"
- [5] "2025-06-10 09:12:46 NZST" "2025-06-10 09:12:47 NZST"
- [7] "2025-06-10 09:12:48 NZST" "2025-06-10 09:12:49 NZST"
- [9] "2025-06-10 09:12:50 NZST" "2025-06-10 09:12:51 NZST"
-[11] "2025-06-10 09:12:52 NZST"
+ [1] "2026-11-20 10:58:57 EST" "2026-11-20 10:58:58 EST"
+ [3] "2026-11-20 10:58:59 EST" "2026-11-20 10:59:00 EST"
+ [5] "2026-11-20 10:59:01 EST" "2026-11-20 10:59:02 EST"
+ [7] "2026-11-20 10:59:03 EST" "2026-11-20 10:59:04 EST"
+ [9] "2026-11-20 10:59:05 EST" "2026-11-20 10:59:06 EST"
+[11] "2026-11-20 10:59:07 EST"
 > ## IGNORE_RDIFF_END
 > pretty(as.Date("2000-03-01")) # R 1.0.0 came in a leap year
 [1] "2000-02-28" "2000-02-29" "2000-03-01" "2000-03-02" "2000-03-03"
@@ -4391,7 +4391,7 @@ NULL
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  35.674 0.408 36.103 0 0 
+Time elapsed:  21.487 0.526 22.039 0 0 
 > grDevices::dev.off()
 null device 
           1 

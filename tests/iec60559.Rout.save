@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2026-01-21 r89314) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-11-20 r90940) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu
+Platform: aarch64-apple-darwin25.6.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -58,11 +58,11 @@ Type 'q()' to quit R.
 > sprintf("%g, rt = %g, .^2 = %g", x, sqrt(x), x^2)
 [1] "-0, rt = -0, .^2 = 0"
 > stopifnot(exprs = {
-+    identical(1/ x, -Inf)
-+    identical(1/-x, +Inf)
-+    identical(x, -x,) # default num.eq=TRUE  ==> -0 "identical" 0
-+    ! identical(x, -x,    num.eq=FALSE) # but not bitwise identical
-+    identical(x, sqrt(x), num.eq=FALSE) # sqrt(-0) == -0
-+    identical(-x, x^2,    num.eq=FALSE) # (-0)^2   == +0 = --0
++     identical(1/ x, -Inf)
++     identical(1/-x, +Inf)
++     identical(x, -x,) # default num.eq=TRUE  ==> -0 "identical" 0
++     ! identical(x, -x,    num.eq=FALSE) # but not bitwise identical
++     identical(x, sqrt(x), num.eq=FALSE) # sqrt(-0) == -0
++     identical(-x, x^2,    num.eq=FALSE) # (-0)^2   == +0 = --0
 + })
->
+> 

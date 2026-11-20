@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-08-07 r90371) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-11-20 r90940) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin25.6.0
 
@@ -1496,12 +1496,12 @@ Warning in plot.histogram(r, freq = freq1, col = col, border = border, angle = a
 > utils::str(legend(-3, .9, ex.cs1, lty = 1:2, plot = FALSE,
 +            adj = c(0, 0.6)))  # adj y !
 List of 2
- $ rect:List of 4
+ $ rect: List of 4
   ..$ w   : num 1.2
   ..$ h   : num 0.251
   ..$ left: num -3
   ..$ top : num 0.9
- $ text:List of 2
+ $ text: List of 2
   ..$ x: num [1:2] -2.29 -2.29
   ..$ y: num [1:2] 0.816 0.733
 > legend(-3, 0.9, ex.cs1, lty = 1:2, col = 2:3,  adj = c(0, 0.6))
@@ -1515,12 +1515,12 @@ List of 2
 +                    hat(x) == median(x[i], i == 1, n))
 > utils::str(legend(4.1, 30, ex12, col = 2:3, lty = 2:3, lwd = 2))
 List of 2
- $ rect:List of 4
+ $ rect: List of 4
   ..$ w   : num 4.27
   ..$ h   : num 6.78
   ..$ left: num 4.1
   ..$ top : num 30
- $ text:List of 2
+ $ text: List of 2
   ..$ x: num [1:2] 5.22 5.22
   ..$ y: num [1:2] 27.3 24.6
 > 
@@ -2363,7 +2363,7 @@ N
 > points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 function (x, y = NULL, type = "p", ...) 
 plot.xy(xy.coords(x, y), type = type, ...)
-<bytecode: 0xb3fdac2e0>
+<bytecode: 0xc89f32e78>
 <environment: namespace:graphics>
 > 
 > 
@@ -3232,7 +3232,7 @@ function (xy = 1, warn.log = TRUE)
     u <- par("usr")
     xy * c(u[2L] - u[1L], u[4L] - u[3L])/par("pin")
 }
-<bytecode: 0xb3fec8200>
+<bytecode: 0xc8a506040>
 <environment: namespace:graphics>
 > 
 > ## plot labels offset 0.12 inches to the right
@@ -3313,7 +3313,7 @@ function (xy = 1, warn.log = TRUE)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.048 0.099 1.333 0 0 
+Time elapsed:  1.569 0.126 1.7 0 0 
 > grDevices::dev.off()
 null device 
           1 

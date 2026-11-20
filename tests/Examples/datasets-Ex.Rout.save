@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2026-01-21 r89314) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-11-20 r90940) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu
+Platform: aarch64-apple-darwin25.6.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2090,8 +2090,8 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 > dim(crimtab)
 [1] 42 22
 > utils::str(crimtab)
- 'table' int [1:42, 1:22] 0 0 0 0 0 0 1 0 0 0 ...
- - attr(*, "dimnames")=List of 2
+'table' int [1:42, 1:22] 0 0 0 0 0 0 1 0 0 0 ...
+ - attr(*, "dimnames")= List of 2
   ..$ : chr [1:42] "9.4" "9.5" "9.6" "9.7" ...
   ..$ : chr [1:22] "142.24" "144.78" "147.32" "149.86" ...
 > ## for nicer printing:
@@ -3657,9 +3657,9 @@ FALSE  TRUE
 > ### ** Examples
 > 
 > utils::str(sm <- sunspots)# the monthly version we keep unchanged
- Time-Series [1:2820] from 1749 to 1984: 58 62.6 70 55.7 85 83.5 94.8 66.3 75.9 75.5 ...
+Time-Series [1:2820] from 1749 to 1984: 58 62.6 70 55.7 85 83.5 94.8 66.3 75.9 75.5 ...
 > utils::str(sy <- sunspot.year)
- Time-Series [1:289] from 1700 to 1988: 5 11 16 23 36 58 29 20 10 8 ...
+Time-Series [1:289] from 1700 to 1988: 5 11 16 23 36 58 29 20 10 8 ...
 > ## The common time interval
 > (t1 <- c(max(start(sm), start(sy)),     1)) # Jan 1749
 [1] 1749    1
@@ -4005,7 +4005,7 @@ c0   -5.14
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.734 0.076 1.809 0 0 
+Time elapsed:  1.145 0.073 1.23 0 0 
 > grDevices::dev.off()
 null device 
           1 

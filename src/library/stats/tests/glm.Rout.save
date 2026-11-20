@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2026-11-20 r90940) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin25.6.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -68,42 +68,42 @@ inverse  mu      eta     eta    eta
 > other <- fns != "valideta"
 > str(linkO <- lapply(links, function(L) L[other]))
 List of 9
- $ logit   :List of 3
-  ..$ linkfun:function (mu)  
-  ..$ linkinv:function (eta)  
-  ..$ mu.eta :function (eta)  
- $ probit  :List of 3
-  ..$ linkfun:function (mu)  
-  ..$ linkinv:function (eta)  
-  ..$ mu.eta :function (eta)  
- $ cauchit :List of 3
-  ..$ linkfun:function (mu)  
-  ..$ linkinv:function (eta)  
-  ..$ mu.eta :function (eta)  
- $ cloglog :List of 3
-  ..$ linkfun:function (mu)  
-  ..$ linkinv:function (eta)  
-  ..$ mu.eta :function (eta)  
- $ identity:List of 3
-  ..$ linkfun:function (mu)  
-  ..$ linkinv:function (eta)  
-  ..$ mu.eta :function (eta)  
- $ log     :List of 3
-  ..$ linkfun:function (mu)  
-  ..$ linkinv:function (eta)  
-  ..$ mu.eta :function (eta)  
- $ sqrt    :List of 3
-  ..$ linkfun:function (mu)  
-  ..$ linkinv:function (eta)  
-  ..$ mu.eta :function (eta)  
- $ 1/mu^2  :List of 3
-  ..$ linkfun:function (mu)  
-  ..$ linkinv:function (eta)  
-  ..$ mu.eta :function (eta)  
- $ inverse :List of 3
-  ..$ linkfun:function (mu)  
-  ..$ linkinv:function (eta)  
-  ..$ mu.eta :function (eta)  
+ $ logit   : List of 3
+  ..$ linkfun: function (mu)  
+  ..$ linkinv: function (eta)  
+  ..$ mu.eta : function (eta)  
+ $ probit  : List of 3
+  ..$ linkfun: function (mu)  
+  ..$ linkinv: function (eta)  
+  ..$ mu.eta : function (eta)  
+ $ cauchit : List of 3
+  ..$ linkfun: function (mu)  
+  ..$ linkinv: function (eta)  
+  ..$ mu.eta : function (eta)  
+ $ cloglog : List of 3
+  ..$ linkfun: function (mu)  
+  ..$ linkinv: function (eta)  
+  ..$ mu.eta : function (eta)  
+ $ identity: List of 3
+  ..$ linkfun: function (mu)  
+  ..$ linkinv: function (eta)  
+  ..$ mu.eta : function (eta)  
+ $ log     : List of 3
+  ..$ linkfun: function (mu)  
+  ..$ linkinv: function (eta)  
+  ..$ mu.eta : function (eta)  
+ $ sqrt    : List of 3
+  ..$ linkfun: function (mu)  
+  ..$ linkinv: function (eta)  
+  ..$ mu.eta : function (eta)  
+ $ 1/mu^2  : List of 3
+  ..$ linkfun: function (mu)  
+  ..$ linkinv: function (eta)  
+  ..$ mu.eta : function (eta)  
+ $ inverse : List of 3
+  ..$ linkfun: function (mu)  
+  ..$ linkinv: function (eta)  
+  ..$ mu.eta : function (eta)  
 > v <- sapply(linkO, function(L) sapply(L, function(F) F((0:4)/4)),
 +             simplify = "array")
 > stopifnot(exprs = {
@@ -191,4 +191,4 @@ Number of Fisher Scoring iterations: 3
 > 
 > proc.time()
    user  system elapsed 
-  0.535   0.082   0.593 
+  0.141   0.025   0.162 

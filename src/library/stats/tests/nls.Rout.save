@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2022-03-19 r81942) -- "Unsuffered Consequences"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2026-11-20 r90940) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin25.6.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -62,7 +62,7 @@ Type 'q()' to quit R.
 > logist <- selfStart(logist, initial = logistInit) ##-> Error in R 1.5.0
 > str(logist)
 function (x, Asym, xmid, scal)  
- - attr(*, "initial")=function (mCall, LHS, data)  
+ - attr(*, "initial")= function (mCall, LHS, data)  
  - attr(*, "class")= chr "selfStart"
 > ## with parameters  and  getInitial():
 > logist <- selfStart(logist, initial = logistInit,
@@ -167,7 +167,7 @@ x -0.89
 > fit <- nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
 +            weights = wts, trace = TRUE)
 112.14    (3.04e+02): par = (0.12345 0.54321)
-0.0012128 (2.75e-06): par = (0.0051705 0.99915)
+0.0012128 (3.20e-06): par = (0.0051705 0.99915)
 > summary(fit, cor = TRUE)
 
 Formula: yeps ~ a + b * x
@@ -175,7 +175,7 @@ Formula: yeps ~ a + b * x
 Parameters:
   Estimate Std. Error t value Pr(>|t|)    
 a  0.00517    0.00764    0.68     0.52    
-b  0.99915    0.00119  841.37   <2e-16 ***
+b  0.99915    0.00119  841.38   <2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -196,8 +196,8 @@ b -0.89
 +             weights = wts, trace = TRUE, algorithm = "port")
   0:     56.070572: 0.123450 0.543210
   1:     6.3964587:  1.34546 0.700840
-  2: 0.00060639084: 0.00517053 0.999153
-  3: 0.00060639084: 0.00517051 0.999153
+  2: 0.00060639084: 0.00517052 0.999153
+  3: 0.00060639084: 0.00517052 0.999153
 > summary(fit2, cor = TRUE)
 
 Formula: yeps ~ a + b * x
@@ -650,8 +650,8 @@ b    NA 0.611
 552.85    (4.45e+00): par = (1.29 2.129)
 70.431    (1.29e+00): par = (1.9565 1.967)
 26.555    (4.44e-02): par = (1.9788 2.0064)
-26.503    (9.35e-05): par = (1.9798 2.0046)
-26.503    (7.17e-07): par = (1.9799 2.0046)
+26.503    (9.34e-05): par = (1.9798 2.0046)
+26.503    (7.45e-07): par = (1.9799 2.0046)
 > ## IGNORE_RDIFF_END
 > t1$with.start
 Nonlinear regression model
@@ -814,7 +814,7 @@ Consider specifying 'start' or using a selfStart model
 > str(xy1 <- approx(rex , xout= sqrt(2^-52)) )
 List of 2
  $ x: num 1.49e-08
- $ y: num 1.56e-08
+ $ y: num 1.55e-08
 > str(xy2 <- approx(rexC, xout=(2^-52)^(1/3)))
 List of 2
  $ x: num 6.06e-06
@@ -825,4 +825,4 @@ List of 2
 > 
 > proc.time()
    user  system elapsed 
-  3.481   0.135   3.613 
+  0.535   0.037   0.569 

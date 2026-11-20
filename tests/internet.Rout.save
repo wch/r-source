@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2023-05-04 r84393) -- "Unsuffered Consequences"
-Copyright (C) 2023 The R Foundation for Statistical Computing
-Platform: aarch64-apple-darwin22.4.0 (64-bit)
+R Under development (unstable) (2026-11-20 r90940) -- "Unsuffered Consequences"
+Copyright (C) 2026 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin25.6.0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -27,14 +27,14 @@ Type 'q()' to quit R.
 > ap <- available.packages(contrib.url("https://cran.r-project.org"))
 > ## IGNORE_RDIFF_BEGIN
 > nrow(ap)
-[1] 19457
+[1] 25808
 > ## IGNORE_RDIFF_END
 > 
 > # test url connections
 > zz <- url("https://cran.r-project.org/")
 > readLines(zz)
  [1] "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Frameset//EN\" \"http://www.w3.org/TR/html4/frameset.dtd\">"
- [2] "<html lang=en>"                                                                                                   
+ [2] "<html lang=en>"                                                                                           
  [3] "<head>"                                                                                                   
  [4] "<title>The Comprehensive R Archive Network</title>"                                                       
  [5] "<META HTTP-EQUIV=\"content-type\" CONTENT=\"text/html; charset=utf-8\">"                                  
