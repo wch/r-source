@@ -390,6 +390,18 @@ for (d in list(c(3L, 2L), c(NA, 2L), c(-2L, -2L))) {
 ## gave a matrix whose print() crashed R in R <= 4.6.2
 
 
+## unserialize() of a '...' list not ending in NULL -- PR#19354
+s <- serialize(1:10, NULL) # an ALTREP: (info, state, attributes)
+i <- grepRaw(as.raw(c(0,0,0,0xee)), s, fixed = TRUE)[1L]
+s[i + 3L] <- as.raw(0x11) # ALTREP_SXP -> DOTSXP with CDR the state
+assertErrV(unserialize(s))
+stopifnot(identical(unserialize(serialize(quote(f(x, y = 2)), NULL)),
+                    quote(f(x, y = 2))))
+x <- .Internal(wrap_meta(c(1L, 5L, 9L), 1L, TRUE)) # state is a dotted pair
+stopifnot(identical(unserialize(serialize(x, NULL)), x))
+## returned a dotted pair whose names() crashed R in R <= 4.6.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

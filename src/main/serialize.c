@@ -1919,6 +1919,10 @@ static SEXP ReadItem_Iterative(int flags, SEXP ref_table, R_inpstream_t stream)
     R_ReadItemDepth++;
     PROTECT(s = ReadItem_Recursive(flags, ref_table, stream));
     R_ReadItemDepth--;
+    // Calls and ... lists must end in NULL (other Pairlists need not).
+    if (s != R_NilValue &&
+	(TYPEOF(slast) == LANGSXP || TYPEOF(slast) == DOTSXP))
+	error(_("invalid call or '...' list"));
     SETCDR(slast, s);
     UNPROTECT(2); /* s, sfirst */
     return sfirst;
