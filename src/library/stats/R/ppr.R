@@ -59,6 +59,10 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
     if(trace) ism <- -(ism + 1L)
     if(missing(nterms)) stop("'nterms' is missing with no default")
     mu <- nterms; ml <- max.terms
+    if(length(mu) != 1L || is.na(mu) || mu < 1)
+        stop("'nterms' must be a positive integer")
+    if(length(ml) != 1L || is.na(ml) || ml < mu)
+        stop("'max.terms' must be at least 'nterms'")
     x <- as.matrix(x)
     y <- as.matrix(y)
     if(!is.numeric(x) || !is.numeric(y))

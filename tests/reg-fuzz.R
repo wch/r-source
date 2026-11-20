@@ -341,6 +341,24 @@ stopifnot(identical(grey(0.5, numeric()), character()),
 ## read past the empty alpha vector and seg.faulted in R <= 4.6.2
 
 
+## ppr() with a zero-length, negative or too large 'nterms' -- PR#19341
+local({
+    msg1 <- gettext("'nterms' must be a positive integer", domain = "R-stats")
+    msg2 <- gettext("'max.terms' must be at least 'nterms'", domain = "R-stats")
+    for(nt in list(NULL, integer(0), -1e6)) {
+        E <- tryCid(ppr(dist ~ speed, data = cars, nterms = nt, max.terms = 2))
+        stopifnot(inherits(E, "error"), identical(conditionMessage(E), msg1))
+    }
+    E <- tryCid(ppr(dist ~ speed, data = cars, nterms = 3, max.terms = 2))
+    stopifnot(inherits(E, "error"), identical(conditionMessage(E), msg2))
+    fit <- ppr(dist ~ speed, data = cars, nterms = 1, max.terms = 2)
+    stopifnot(fit$mu == 1, fit$ml == 2) # valid input unchanged
+})
+## Fortran read an empty 'nterms' as a scalar, and a negative one made it prune
+## terms past zero: both segfaulted; 'nterms > max.terms' gave a garbage fit;
+## in R <= 4.6.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
