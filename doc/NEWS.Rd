@@ -546,7 +546,11 @@
 
       \item \code{grid.multipanel()} would error
       if zero points in a panel, including randomly within \code{R CMD
-      check}. Thanks to \I{Kevin Ushey} for report and patch.
+        check}. Thanks to \I{Kevin Ushey} for report and patch.
+
+      \item \code{grid.pack()} and \code{grid.frame()} did not listen
+      to \code{redraw} argument.  Thanks to \I{Athenkosi Nkonyeni}
+      for report.
     }
   }
 }

@@ -126,7 +126,7 @@ grid.place <- function(gPath, grob,
                        redraw=TRUE) {
   grid.set(gPath,
            placeGrob(grid.get(gPath), grob, row, col),
-           redraw)
+           redraw=redraw)
 }
 
 # ... for a grob description
@@ -309,7 +309,7 @@ grid.pack <- function(gPath, grob, redraw=TRUE,
                     col, col.before, col.after,
                     width, height, force.width, force.height,
                     border, dynamic),
-           redraw)
+           redraw=redraw)
 }
 
 packGrob <- function(frame, grob,
