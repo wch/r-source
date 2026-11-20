@@ -494,6 +494,10 @@ SEXP gray(SEXP lev, SEXP a)
 	}
     } else {
 	int na = length(a);
+	if(!na) {
+	    UNPROTECT(3);
+	    return allocVector(STRSXP, 0);
+	}
 	for (i = 0; i < (nlev > na ? nlev : na); i++) {
 	    level = REAL(lev)[i % nlev];
 	    if (ISNAN(level) || level < 0 || level > 1)

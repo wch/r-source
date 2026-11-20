@@ -333,6 +333,14 @@ stopifnot(length(u) == 97L, identical(nchar(u), c(p, 0:1, rep(1L, 94))),
 ## times were around 1 sec each, in R <= 4.6.2
 
 
+## gray() with zero-length alpha, as rgb(), hsv() and hcl() -- PR#19350
+stopifnot(identical(grey(0.5, numeric()), character()),
+          identical(grey(rep(0.5, 1e6), alpha = logical()), character()),
+          identical(grey(0.5, numeric()), rgb(0.5, 0.5, 0.5, numeric())),
+          identical(grey(c(0, 1), 0.5), c("#00000080", "#FFFFFF80")))
+## read past the empty alpha vector and seg.faulted in R <= 4.6.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
