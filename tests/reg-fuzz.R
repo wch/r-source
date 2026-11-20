@@ -366,6 +366,19 @@ local({
 ## in R <= 4.6.2
 
 
+## unserialize() of an attribute list with a non-symbol tag -- PR#19354
+s <- serialize(structure(1:4, dim = c(2L, 2L)), NULL, xdr = TRUE)
+tag <- c(as.raw(c(0,0,0,1, 0,4,0,9, 0,0,0,3)), charToRaw("dim"))
+i <- grepRaw(tag, s, fixed = TRUE)
+stopifnot(length(i) == 1L)
+for (newtag in list(as.raw(c(0,0,0,0xfe)),            # NULL
+                    as.raw(c(0,0,0,0x0d, 0,0,0,1, 0,0,0,7)))) # 7L
+    assertErrV(unserialize(c(s[seq_len(i - 1L)], newtag, s[-seq_len(i + 14L)])))
+s[i + 3L] <- as.raw(0xfe) # SYMSXP -> NILSXP, "dim" read as the value
+assertErrV(unserialize(s))
+## returned an object whose attributes() crashed R in R <= 4.6.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

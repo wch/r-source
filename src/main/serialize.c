@@ -1820,6 +1820,18 @@ static SEXP R_FindNamespace1(SEXP info)
     return val;
 }
 
+/* An attribute list must be a pairlist with symbol tags: getAttrib()
+   and friends assume this, so a corrupt stream must not get past
+   here (PR#19354). */
+static SEXP ReadAttrib(SEXP ref_table, R_inpstream_t stream)
+{
+    SEXP a = ReadItem(ref_table, stream);
+    for (SEXP t = a; t != R_NilValue; t = CDR(t))
+	if (TYPEOF(t) != LISTSXP || TYPEOF(TAG(t)) != SYMSXP)
+	    error(_("invalid attribute list"));
+    return a;
+}
+
 static SEXP ReadItem_Recursive(int flags, SEXP ref_table, R_inpstream_t stream);
 
 static SEXP ReadItem_Iterative(int flags, SEXP ref_table, R_inpstream_t stream)
@@ -1848,7 +1860,7 @@ static SEXP ReadItem_Iterative(int flags, SEXP ref_table, R_inpstream_t stream)
 	SET_OBJECT(s, objf);
 	R_ReadItemDepth++;
 	bool set_lastname = false;
-	SET_ATTRIB(s, hasattr ? ReadItem(ref_table, stream) : R_NilValue);
+	SET_ATTRIB(s, hasattr ? ReadAttrib(ref_table, stream) : R_NilValue);
 	SET_TAG(s, hastag ? ReadItem(ref_table, stream) : R_NilValue);
 	if (hastag && R_ReadItemDepth == R_InitReadItemDepth + 1 &&
 	    isSymbol(TAG(s))) {
@@ -1926,7 +1938,7 @@ static SEXP ReadItem_Recursive (int flags, SEXP ref_table, R_inpstream_t stream)
 	    R_ReadItemDepth++;
 	    SEXP info = PROTECT(ReadItem(ref_table, stream));
 	    SEXP state = PROTECT(ReadItem(ref_table, stream));
-	    SEXP attr = PROTECT(ReadItem(ref_table, stream));
+	    SEXP attr = PROTECT(ReadAttrib(ref_table, stream));
 	    s = ALTREP_UNSERIALIZE_EX(info, state, attr, objf, levs);
 	    UNPROTECT(3); /* info, state, attr */
 	    R_ReadItemDepth--;
@@ -1966,7 +1978,7 @@ static SEXP ReadItem_Recursive (int flags, SEXP ref_table, R_inpstream_t stream)
 	    SET_ENCLOS(s, ReadItem(ref_table, stream));
 	    SET_FRAME(s, ReadItem(ref_table, stream));
 	    SET_HASHTAB(s, ReadItem(ref_table, stream));
-	    SET_ATTRIB(s, ReadItem(ref_table, stream));
+	    SET_ATTRIB(s, ReadAttrib(ref_table, stream));
 	    R_ReadItemDepth--;
 	    if (ATTRIB(s) != R_NilValue &&
 		getAttrib(s, R_ClassSymbol) != R_NilValue)
@@ -2132,7 +2144,7 @@ static SEXP ReadItem_Recursive (int flags, SEXP ref_table, R_inpstream_t stream)
 	}
 	else {
 	    R_ReadItemDepth++;
-	    SET_ATTRIB(s, hasattr ? ReadItem(ref_table, stream) : R_NilValue);
+	    SET_ATTRIB(s, hasattr ? ReadAttrib(ref_table, stream) : R_NilValue);
 	    R_ReadItemDepth--;
 	}
 	UNPROTECT(1); /* s */
@@ -2178,7 +2190,7 @@ static SEXP ReadBCLang(int type, SEXP ref_table, SEXP reps,
 		SET_VECTOR_ELT(reps, pos, ans);
 	    R_ReadItemDepth++;
 	    if (hasattr)
-		SET_ATTRIB(ans, ReadItem(ref_table, stream));
+		SET_ATTRIB(ans, ReadAttrib(ref_table, stream));
 	    SET_TAG(ans, ReadItem(ref_table, stream));
 	    R_ReadItemDepth--;
 	    SETCAR(ans, ReadBCLang(InInteger(stream), ref_table, reps,
