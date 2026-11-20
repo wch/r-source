@@ -379,6 +379,17 @@ assertErrV(unserialize(s))
 ## returned an object whose attributes() crashed R in R <= 4.6.2
 
 
+## unserialize() of a 'dim' inconsistent with the length -- PR#19354
+s <- serialize(structure(1:4, dim = c(2L, 2L)), NULL, xdr = TRUE)
+i <- grepRaw(as.raw(c(0,0,0,0x0d, 0,0,0,2, 0,0,0,2, 0,0,0,2)), s, fixed = TRUE)
+stopifnot(length(i) == 1L)
+for (d in list(c(3L, 2L), c(NA, 2L), c(-2L, -2L))) {
+    s[i + 8:15] <- writeBin(d, raw(), endian = "big")
+    assertErrV(unserialize(s))
+}
+## gave a matrix whose print() crashed R in R <= 4.6.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

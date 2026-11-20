@@ -1834,6 +1834,26 @@ static SEXP ReadAttrib(SEXP ref_table, R_inpstream_t stream)
 
 static SEXP ReadItem_Recursive(int flags, SEXP ref_table, R_inpstream_t stream);
 
+/* As in dimgets(): a dim inconsistent with the length makes e.g.
+   print() read out of bounds. */
+static void CheckDim(SEXP s)
+{
+    for (SEXP a = ATTRIB(s); a != R_NilValue; a = CDR(a))
+	if (TAG(a) == R_DimSymbol) {
+	    SEXP dim = CAR(a);
+	    double total = 1;
+	    if (TYPEOF(dim) != INTSXP || LENGTH(dim) == 0)
+		error(_("invalid 'dim' attribute"));
+	    for (int i = 0; i < LENGTH(dim); i++) {
+		if (INTEGER(dim)[i] < 0) /* includes NA */
+		    error(_("invalid 'dim' attribute"));
+		total *= INTEGER(dim)[i];
+	    }
+	    if (total != (double) xlength(s))
+		error(_("invalid 'dim' attribute"));
+	}
+}
+
 static SEXP ReadItem_Iterative(int flags, SEXP ref_table, R_inpstream_t stream)
 {
     /* Building dotted pair objects with recursion on the CDR will
@@ -1940,6 +1960,7 @@ static SEXP ReadItem_Recursive (int flags, SEXP ref_table, R_inpstream_t stream)
 	    SEXP state = PROTECT(ReadItem(ref_table, stream));
 	    SEXP attr = PROTECT(ReadAttrib(ref_table, stream));
 	    s = ALTREP_UNSERIALIZE_EX(info, state, attr, objf, levs);
+	    if (attr != R_NilValue) CheckDim(s);
 	    UNPROTECT(3); /* info, state, attr */
 	    R_ReadItemDepth--;
 	    return s;
@@ -2146,6 +2167,7 @@ static SEXP ReadItem_Recursive (int flags, SEXP ref_table, R_inpstream_t stream)
 	    R_ReadItemDepth++;
 	    SET_ATTRIB(s, hasattr ? ReadAttrib(ref_table, stream) : R_NilValue);
 	    R_ReadItemDepth--;
+	    if (hasattr && isVector(s)) CheckDim(s);
 	}
 	UNPROTECT(1); /* s */
 	if (TYPEOF(s) == BCODESXP && !R_BCVersionOK(s))
