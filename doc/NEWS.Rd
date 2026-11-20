@@ -146,8 +146,16 @@
       or \code{along.with} not missing, fulfilling the wish of
       \I{Hugo Gruson} (\PR{19282}).
 
+      \item \code{duplicated()}, \code{unique()} etc, become much faster for
+      the case of a long latin1 encoded string among smaller UTF-8 and ASCII
+      encoded ones, thanks to \I{Kevin Ushey}'s report and patch in \PR{19329}.
+
       \item Using \code{structure()} to add a \code{"factor"} class no
       longer ensures that numeric codes are given integer storage mode.
+
+      \item \code{format(<chr>)}, \code{encodeString()}, etc, have become
+      considerably faster in some cases, thanks to \I{Kevin Ushey}'s
+      \PR{19338}.
     }
   }
 
@@ -1629,7 +1637,7 @@
       longer outputs \code{"List of <...>"} in the default method, thanks
       to \I{Ian Farm}'s report and fix proposal in \PR{19001}.
 
-      \item \code{as.POSIXlt(ch)}, \code{as.Date(ch)} etc now also work
+      \item \code{as.POSIXlt(ch)}, \code{as.Date(ch)}, etc, now also work
       correctly when \code{ch} contains \code{"Inf"}, via
       \code{strptime(.)}, fixing \PR{19006}.
 
@@ -1682,10 +1690,6 @@
       \item When \code{file.choose()} is terminated with an \command{EOF},
       it now signals an error rather than returning garbage, thanks to
       \I{Kevin Ushey}'s report and patch in \PR{19053}.
-
-      \item \code{duplicated()}, \code{unique()} etc, become much faster for
-      the case of a long latin1 encoded string among smaller UTF-8 and ASCII
-      encoded ones, thanks to \I{Kevin Ushey}'s report and patch in \PR{19329}.
     }
   }
 }

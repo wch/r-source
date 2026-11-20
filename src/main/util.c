@@ -1388,11 +1388,8 @@ utf8toucs32(wchar_t high, const char *s)
 size_t
 utf8toucs(wchar_t *wc, const char *s)
 {
-    unsigned int byte;
-    wchar_t local, *w;
-    byte = *((unsigned char *)s);
-    w = wc ? wc: &local;
-
+    unsigned int byte = *((unsigned char *)s);
+    wchar_t local, *w = wc ? wc : &local;
     if (byte == 0) {
 	*w = (wchar_t) 0;
 	return 0;
@@ -1401,14 +1398,15 @@ utf8toucs(wchar_t *wc, const char *s)
 	return 1;
     } else if (byte < 0xC0) {
 	return (size_t)-1;
+    /* no longer check strlen(s) < j : NUL is never a continuation byte, and each
+       && chain below stops at the first byte that is not one, so a sequence
+       cut short by the terminator gives (size_t)-1 without reading past it. */
     } else if (byte < 0xE0) {
-	if(strlen(s) < 2) return (size_t)-2;
 	if ((s[1] & 0xC0) == 0x80) {
 	    *w = (wchar_t) (((byte & 0x1F) << 6) | (s[1] & 0x3F));
 	    return 2;
 	} else return (size_t)-1;
     } else if (byte < 0xF0) {
-	if(strlen(s) < 3) return (size_t)-2;
 	if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)) {
 	    *w = (wchar_t) (((byte & 0x0F) << 12)
 			    | (unsigned int) ((s[1] & 0x3F) << 6)
@@ -1421,7 +1419,6 @@ utf8toucs(wchar_t *wc, const char *s)
 	} else return (size_t)-1;
 
     } else if (byte < 0xf8) {
-	if(strlen(s) < 4) return (size_t)-2;
 	if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80) && ((s[3] & 0xC0) == 0x80)) {
 	    unsigned int cvalue = (((byte & 0x0F) << 18)
 			| (unsigned int) ((s[1] & 0x3F) << 12)
@@ -1439,7 +1436,6 @@ utf8toucs(wchar_t *wc, const char *s)
        for compatibility, but checked like the shorter forms so the
        result fits in 31 bits.  0xFE and 0xFF are never lead bytes. */
     if (byte < 0xFC) {
-	if(strlen(s) < 5) return (size_t)-2;
 	if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)
 	    && ((s[3] & 0xC0) == 0x80) && ((s[4] & 0xC0) == 0x80)) {
 	    *w = (wchar_t) (((byte & 0x03) << 24)
@@ -1450,7 +1446,6 @@ utf8toucs(wchar_t *wc, const char *s)
 	    return 5;
 	} else return (size_t)-1;
     } else if (byte < 0xFE) {
-	if(strlen(s) < 6) return (size_t)-2;
 	if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)
 	    && ((s[3] & 0xC0) == 0x80) && ((s[4] & 0xC0) == 0x80)
 	    && ((s[5] & 0xC0) == 0x80)) {
@@ -1472,10 +1467,8 @@ utf8towcs(wchar_t *wc, const char *s, size_t n)
 {
     ssize_t m, res = 0;
     const char *t;
-    wchar_t *p;
-    wchar_t local;
-
-    if(wc)
+    if(wc) {
+	wchar_t *p;
 	for(p = wc, t = s; ; p++, t += m) {
 	    m  = (ssize_t) utf8toucs(p, t);
 	    if (m < 0) error(_("invalid input '%s' in 'utf8towcs'"), s);
@@ -1488,8 +1481,10 @@ utf8towcs(wchar_t *wc, const char *s, size_t n)
 		if (res >= n) break;
 	    }
 	}
+    }
     else
 	for(t = s; ; t += m) {
+	    wchar_t local;
 	    m  = (ssize_t) utf8toucs(&local, t);
 	    if (m < 0) error(_("invalid input '%s' in 'utf8towcs'"), s);
 	    if (m == 0) break;

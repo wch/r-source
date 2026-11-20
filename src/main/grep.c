@@ -864,6 +864,9 @@ attribute_hidden SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			continue;
 		    }
 		}
+		/* Storing strlen() now, where passes below use the remaining length,
+		   not needing to call strlen() again */
+		size_t buflen = strlen(buf);
 		/* find out how many splits there will be */
 		ntok = 0;
 		bufp = buf;
@@ -871,12 +874,12 @@ attribute_hidden SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    int rc;
 #ifdef HAVE_PCRE2
 		    while((rc = pcre2_match(re, (PCRE2_SPTR) bufp,
-		                            PCRE2_ZERO_TERMINATED,
+		                            buflen - (size_t)(bufp - buf),
 					    0, eflag, mdata, mcontext)) >= 0) {
 			ovector = pcre2_get_ovector_pointer(mdata);
 #else
 		    while((rc = pcre_exec(re_pcre, re_pe, bufp,
-					  (int) strlen(bufp),
+					  (int) (buflen - (size_t)(bufp - buf)),
 					  0, 0, ovector, ovecsize)) >= 0) {
 #endif
 			/* Empty matches get the next char, so move by one. */
@@ -897,15 +900,15 @@ attribute_hidden SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 			       t = allocVector(STRSXP, ntok + (*bufp ? 1 : 0)));
 		/* and fill with the splits */
 		bufp = buf;
-		pt = R_Realloc(pt, strlen(buf)+1, char);
+		pt = R_Realloc(pt, buflen+1, char);
 		for (j = 0; j < ntok; j++) {
 #ifdef HAVE_PCRE2
 		    int rc = pcre2_match(re, (PCRE2_SPTR) bufp,
-				       PCRE2_ZERO_TERMINATED,
+				       buflen - (size_t)(bufp - buf),
 		                       0, eflag, mdata, mcontext);
 #else
 		    int rc = pcre_exec(re_pcre, re_pe, bufp,
-				       (int) strlen(bufp), 0, 0,
+				       (int) (buflen - (size_t)(bufp - buf)), 0, 0,
 				       ovector, ovecsize);
 #endif
 		    R_pcre_exec_error(rc, i);
@@ -2003,15 +2006,14 @@ char *R_pcre_string_adj(char *target, const char *orig, const char *repl,
 static wchar_t *wstring_adj(wchar_t *target, const wchar_t *orig,
 			    const wchar_t *repl, regmatch_t *regmatch)
 {
-    int i, k;
     const wchar_t *p = repl;
     wchar_t *t = target;
 
     while (*p) {
 	if (*p == L'\\') {
 	    if (L'1' <= p[1] && p[1] <= L'9') {
-		k = p[1] - L'0';
-		for (i = regmatch[k].rm_so ; i < regmatch[k].rm_eo ; i++)
+		int k = p[1] - L'0';
+		for (int i = regmatch[k].rm_so ; i < regmatch[k].rm_eo ; i++)
 		    *t++ = orig[i];
 		p += 2;
 	    }
@@ -2064,7 +2066,7 @@ sub_buffer_size_init(size_t replen, int ns, int nsubs, int global,
 	                                 (double)*maxrep + 1000.);
 }
 
-static int
+static bool
 sub_buffer_size_expand(double needed, int *nns)
 {
     int ineeded = sub_buffer_check_overflow(needed);
@@ -2075,9 +2077,9 @@ sub_buffer_size_expand(double needed, int *nns)
 	    (*nns) *= 2;
 	if (*nns < ineeded)
 	    (*nns) = ineeded;
-	return 1; 
+	return true; 
     } else
-	return 0;
+	return false;
 }
 
 static void
