@@ -922,6 +922,7 @@ static int pushback[PUSHBACK_BUFSIZE];
 static int *pushbase;
 static unsigned int npush, pushsize;
 static int macrolevel;
+static int macroline, macrobyte, macrorepeats;
 static int prevpos = 0;
 static int prevlines[PUSHBACK_BUFSIZE];
 static int prevcols[PUSHBACK_BUFSIZE];
@@ -956,6 +957,13 @@ static int xxgetc(void)
     	    	macrolevel++;
     	    	if (macrolevel > 1000) 
     	    	    error(_("macros nested too deeply: infinite recursion?"));
+    	    	if (parseState.xxlineno != macroline || parseState.xxbyteno != macrobyte) {
+    	    	    macroline = parseState.xxlineno;
+    	    	    macrobyte = parseState.xxbyteno;
+    	    	    macrorepeats = 0;
+    	    	} else if (++macrorepeats > 1000) {
+    	    	    error(_("macros nested too deeply: infinite recursion?"));
+    	    	}
     	    } else if (c == END_MACRO) macrolevel--;
     	} else  c = ptr_getc();
     } while (c == START_MACRO || c == END_MACRO);
@@ -1106,6 +1114,7 @@ static SEXP ParseRd(ParseStatus *status, SEXP srcfile, bool fragment, SEXP macro
     pushbase = pushback;
     pushsize = PUSHBACK_BUFSIZE;
     macrolevel = 0;
+    macroline = macrobyte = macrorepeats = 0;
     
     parseState.xxmode = LATEXLIKE; 
     parseState.xxitemType = UNKNOWN;
