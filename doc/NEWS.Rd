@@ -49,6 +49,10 @@
       and \code{/./}) also when they were percent-encoded.  On Windows,
       converts \code{\\} to the \code{/} path separator.  Paths that
       include \code{\%00} are rejected.
+
+      \item \code{runmed(<has_NA_not_at_pos_1>, na.action = "na.omit")} no
+      longer returns a \dQuote{random} smoothed value before the \code{NA},
+      fixing \PR{19300}, from the report and patch by \I{Adam Berkeš}.
     }
   }
 }

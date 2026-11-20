@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2012-2025  The R Core Team
+ *  Copyright (C) 2012-2026  The R Core Team
  *  Copyright (C) 2003       The R Foundation
  *  Copyright (C) 1995-2002  Martin Maechler <maechler@stat.math.ethz.ch>
  *
@@ -250,7 +250,7 @@ SEXP runmed(SEXP sx, SEXP stype, SEXP sk, SEXP end, SEXP naAct, SEXP printLev)
 	    R_xlen_t i1 = firstNA-1; // firstNA is "1-index"
 	    // xx <- x[!is.na(x)] :
 	    xx = (double *) R_alloc(n-1, sizeof(double)); // too much if sum(is.na(.)) > 1
-	    if(i1 > 1) Memcpy(xx, x, i1-1);
+	    if(i1 > 0) Memcpy(xx, x, i1);
 	    for(R_xlen_t i=i1, ix=i; i < n; i++) { //  i-ix == n-nn  {identity}
 		if(ISNAN(x[i])) // drop NA/NaN and shift all to the left by 1 :
 		    nn--; // nn + (i-ix) == n
