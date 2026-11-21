@@ -540,7 +540,8 @@ static double mktime0 (stm *tm, const int local)
    glibc from 2.2.5 until late 2004 also gave -1 for such dates.
 */
     if(sizeof(time_t) == 8) {
-	OK = true;
+	/* some mktime()s (OpenBSD) fail when tm_year + 1900 overflows int */
+	OK = tm->tm_year <= INT_MAX - 1900;
 #ifndef HAVE_WORKING_MKTIME_AFTER_2037
 	OK = OK && tm->tm_year < 138;
 #endif
