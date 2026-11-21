@@ -518,11 +518,18 @@ static double complex z_tan(double complex z)
     double complex r = ctan(z);
     if(R_FINITE(y) && fabs(y) > 25.0) {
 	/* at this point the real part is nearly zero, and the
-	   imaginary part is one: but some OSes get the imag as NaN */
+	   imaginary part is one: but some OSes get the imag as NaN,
+	   and OpenBSD also the real part (it multiplies Inf/Inf by I) */
+	double rr = creal(r);
+	if(ISNAN(rr)) {
+	    double x2 = 2.0 * creal(z);
+	    rr = sin(x2) / (cos(x2) + cosh(2.0 * y)); /* A&S 4.3.57 */
+	}
 #if __GNUC__
+	__real__ r = rr;
 	__imag__ r = y < 0 ? -1.0 : 1.0;
 #else
-	r = creal(r) + (y < 0 ? -1.0 : 1.0) * I;
+	r = rr + (y < 0 ? -1.0 : 1.0) * I;
 #endif
     }
     return r;
