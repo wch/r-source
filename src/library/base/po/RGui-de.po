@@ -1,6 +1,6 @@
 # Translation of po/RGui.pot to German.
+# Copyright (C) 2005-2026 The R Foundation
 # This file is distributed under the same license as the R package.
-# Copyright (C) 2005-2022.
 # Detlef Steuer <steuer@hsu-hh.de>, 2005-2023.
 #
 msgid ""
@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: R-4.2.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
 "POT-Creation-Date: 2026-04-25 10:48-0700\n"
-"PO-Revision-Date: 2024-03-18 21:18+0000\n"
-"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
+"PO-Revision-Date: 2026-11-21 18:07+0100\n"
+"Last-Translator: Sebastian Meyer <seb.meyer@fau.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -65,7 +65,7 @@ msgstr "Scrolling.\n"
 
 #: src/gnuwin32/console.c:2458
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
-msgstr "  Tastatur: PgUp, PgDown, Strg+Arrows, Strg+Home, Strg+End,\n"
+msgstr "  Tastatur: Bild auf, Bild ab, Strg+Pfeiltasten, Strg+Pos1, Strg+Ende,\n"
 
 #: src/gnuwin32/console.c:2459
 msgid ""
@@ -125,7 +125,7 @@ msgstr "     Strg+U: lösche den Text der aktuellen Zeile.\n"
 
 #: src/gnuwin32/console.c:2472
 msgid "  Copy and paste.\n"
-msgstr "  Copy und Paste.\n"
+msgstr "  Kopieren und Einfügen.\n"
 
 #: src/gnuwin32/console.c:2473
 msgid "     Use the mouse (with the left button held down) to mark (select) text.\n"
@@ -133,15 +133,15 @@ msgstr "     Nutze die Maus (linke Taste gedrückt) um Text zu markieren (auszuw
 
 #: src/gnuwin32/console.c:2474
 msgid "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
-msgstr "     Nutzte Shift+Entf (oder Strg+C) um markierten Text in die Zwischenablage zu kopieren und\n"
+msgstr "     Nutze Shift+Entf (oder Strg+C) um markierten Text in die Zwischenablage zu kopieren und\n"
 
 #: src/gnuwin32/console.c:2475
 msgid "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n"
-msgstr "     Shift+Einf (oder Strg+V oder Strg+Y) um den Inhalt der Zwischenablage einzufügen (falls nicht leer)  \n"
+msgstr "     Shift+Einfg (oder Strg+V oder Strg+Y) um den Inhalt der Zwischenablage einzufügen (falls nicht leer)  \n"
 
 #: src/gnuwin32/console.c:2476
 msgid "     to the console, Ctrl+X first copy then paste\n"
-msgstr "     an die Konsole, Strg+X zuerst copy, dann paste\n"
+msgstr "     in die Konsole, Strg+X zuerst kopieren, dann einfügen\n"
 
 #: src/gnuwin32/console.c:2477
 msgid "  Misc:\n"
@@ -153,7 +153,7 @@ msgstr "     Strg+L: Leere die Konsole.\n"
 
 #: src/gnuwin32/console.c:2479
 msgid "     Ctrl+O or INS: Toggle overwrite mode: initially off.\n"
-msgstr "     Strg+O: Zwischen Überschreiben und Einfügen hin und herschalten, steht anfangs auf Einfügen.\n"
+msgstr "     Strg+O oder Einfg: zwischen Überschreiben und Einfügen umschalten, anfangs im Einfügemodus.\n"
 
 #: src/gnuwin32/console.c:2480
 msgid "     Ctrl+T: Interchange current char with one to the left.\n"
@@ -165,7 +165,7 @@ msgid ""
 "Note: Console is updated only when some input is required.\n"
 msgstr ""
 "\n"
-"Bemerkung: Konsole wird nur aktualisiert, wenn eine Eingabe erwartet wird.\n"
+"Hinweis: Die Konsole wird nur aktualisiert, wenn eine Eingabe erwartet wird.\n"
 
 #: src/gnuwin32/console.c:2482
 msgid ""
@@ -193,7 +193,7 @@ msgstr ""
 
 #: src/gnuwin32/console.c:2485
 msgid "Standard Windows hotkeys can be used to switch to the\n"
-msgstr "Die üblichen Windowos short-cuts können benutzt werden um umzuschalten zum\n"
+msgstr "Die üblichen Windows Tastenkürzel können benutzt werden um umzuschalten zum\n"
 
 #: src/gnuwin32/console.c:2486
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
@@ -253,11 +253,11 @@ msgstr "     drücke Strg+R\n"
 
 #: src/gnuwin32/editor.c:725
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
-msgstr "     wähle \"Ausführung Zeile oder Auswahl\" aus dem \"Bearbeiten\" Menü\n"
+msgstr "     wähle \"Zeile oder Auswahl ausführen\" aus dem \"Bearbeiten\" Menü\n"
 
 #: src/gnuwin32/editor.c:726
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
-msgstr "     drücke das \"Ausführung Zeile oder Auswahl\" Icon in der Toolbar\n"
+msgstr "     drücke das \"Zeile oder Auswahl ausführen\" Icon in der Symbolleiste\n"
 
 #: src/gnuwin32/editor.c:727
 msgid "This will copy the selected commands to the console and evaluate them.\n"
@@ -274,7 +274,7 @@ msgstr "in die nächste Zeile gesetzt.\n"
 #: src/gnuwin32/editor.c:741 src/gnuwin32/editor.c:820
 #: src/gnuwin32/editor.c:878
 msgid "Run line or selection"
-msgstr "Ausführung Zeile oder Auswahl"
+msgstr "Zeile oder Auswahl ausführen"
 
 #: src/gnuwin32/editor.c:743 src/gnuwin32/editor.c:863
 msgid "Undo"
@@ -407,7 +407,7 @@ msgstr "Wähle Datei"
 
 #: src/gnuwin32/pager.c:83 src/gnuwin32/pager.c:99
 msgid "Error opening file"
-msgstr "Fehler beim Datei öffnen"
+msgstr "Fehler beim Öffnen der Datei"
 
 #: src/gnuwin32/pager.c:88 src/gnuwin32/pager.c:106 src/gnuwin32/pager.c:116
 msgid "Insufficient memory to display file in internal pager"
@@ -444,7 +444,7 @@ msgstr "Speichern in Datei..."
 
 #: src/gnuwin32/pager.c:501 src/gnuwin32/rui.c:1244
 msgid "View"
-msgstr "Ansehen"
+msgstr "Ansicht"
 
 #: src/gnuwin32/pager.c:533
 msgid "Unable to create pager window"
@@ -469,7 +469,7 @@ msgid ""
 "\n"
 "Save the preferences and restart Rgui to apply to menus.\n"
 msgstr ""
-"Die Sprache der Menüs können nicht bei laufender Konsole geändert\n"
+"Die Sprache der Menüs kann nicht bei laufender Konsole geändert\n"
 "werden.\n"
 "\n"
 "Sichern Sie die Einstellungen und starten Sie Rgui neu.\n"
@@ -566,7 +566,7 @@ msgstr "Füge nur Befehle ein"
 
 #: src/gnuwin32/rui.c:939 src/gnuwin32/rui.c:1184
 msgid "Copy and paste"
-msgstr "Copy und Paste"
+msgstr "Kopieren und Einfügen"
 
 #: src/gnuwin32/rui.c:941
 msgid "Clear window"
@@ -646,7 +646,7 @@ msgstr "Über"
 
 #: src/gnuwin32/rui.c:1085 src/extra/graphapp/gmenus.c:52
 msgid "Windows"
-msgstr "Windows"
+msgstr "Fenster"
 
 #: src/gnuwin32/rui.c:1086 src/extra/graphapp/gmenus.c:53
 msgid "Cascade"
@@ -714,7 +714,7 @@ msgstr "Beenden"
 
 #: src/gnuwin32/rui.c:1236
 msgid "Copy and Paste"
-msgstr "Copy und Paste"
+msgstr "Kopieren und Einfügen"
 
 #: src/gnuwin32/rui.c:1240
 msgid "Data editor..."
@@ -722,11 +722,11 @@ msgstr "Dateneditor..."
 
 #: src/gnuwin32/rui.c:1245
 msgid "Toolbar"
-msgstr "Toolbar"
+msgstr "Symbolleiste"
 
 #: src/gnuwin32/rui.c:1246
 msgid "Statusbar"
-msgstr "Statusbar"
+msgstr "Statusleiste"
 
 #: src/gnuwin32/rui.c:1250
 msgid "Misc"
@@ -770,7 +770,7 @@ msgstr "Konsole"
 
 #: src/gnuwin32/rui.c:1336
 msgid "'mname' is limited to 1000 bytes"
-msgstr "'mname' ist auf 1000 Zeichen begrenzt"
+msgstr "'mname' ist auf 1000 Bytes begrenzt"
 
 #: src/gnuwin32/rui.c:1381
 #, c-format
@@ -779,7 +779,7 @@ msgstr "Menü %s existiert nicht"
 
 #: src/gnuwin32/rui.c:1434
 msgid "'menu' is limited to 500 bytes"
-msgstr "'menu' ist begrenzt auf 500 Zeichen"
+msgstr "'menu' ist auf 500 Bytes begrenzt"
 
 #: src/gnuwin32/rui.c:1444
 msgid "base menu does not exist"
@@ -791,7 +791,7 @@ msgstr "Allokieren eines Menüs fehlgeschlagen"
 
 #: src/gnuwin32/rui.c:1476 src/gnuwin32/rui.c:1600
 msgid "menu + item is limited to 1000 bytes"
-msgstr "Menü + Eintrag sind auf 1000 Zeichen begrenzt"
+msgstr "Menü + Eintrag ist auf 1000 Bytes begrenzt"
 
 #: src/gnuwin32/rui.c:1484 src/gnuwin32/rui.c:1567
 msgid "menu does not exist"
@@ -979,11 +979,11 @@ msgstr ""
 "Navigation.\n"
 "  Tastatur: Cursortasten bewegen Auswahl\n"
 "\tTab rechts, Shift+Tab links\n"
-"\tPgDn oder Strg+F: eine Seite nach unten\n"
-"\tPgUp or Strg+B: eine Seite nach oben\n"
+"\tBild ab oder Strg+F: eine Seite nach unten\n"
+"\tBild auf oder Strg+B: eine Seite nach oben\n"
 "\tPos1: gehe zu Zelle (1,1)\n"
 "\tEnde: zeige letzte Zeilen der letzten Spalte.\n"
-"   Mouse: Linksklick in eine Zelle, nutze die Scrollbar(s).\n"
+"   Maus: Linksklick in eine Zelle, nutze die Scrollbar(s).\n"
 "\n"
 "Bearbeiten.\n"
 "  Tippe in die aktuell gewählte Zelle\n"
@@ -1006,7 +1006,7 @@ msgstr "Füge in ausgewählte Zelle ein"
 
 #: src/library/utils/src/windows/dataentry.c:1748
 msgid "Autosize column"
-msgstr "Autosize Spalte"
+msgstr "Automatische Spaltenbreite"
 
 #: src/library/utils/src/windows/dataentry.c:1844
 msgid "Copy  \tCTRL+C"
@@ -1148,11 +1148,11 @@ msgstr "Ersetzen"
 
 #: src/library/grDevices/src/devWindows.c:1685
 msgid "Previous\tPgUp"
-msgstr "Vorhergehender\tPgUp"
+msgstr "Vorhergehender\tBild auf"
 
 #: src/library/grDevices/src/devWindows.c:1686
 msgid "Next\tPgDown"
-msgstr "Nächster\tPgDown"
+msgstr "Nächster\tBild ab"
 
 #: src/library/grDevices/src/devWindows.c:1688
 msgid "Save to variable..."
@@ -1168,11 +1168,11 @@ msgstr "Leere History"
 
 #: src/library/grDevices/src/devWindows.c:1692
 msgid "Resize"
-msgstr "Resize"
+msgstr "Größe ändern"
 
 #: src/library/grDevices/src/devWindows.c:1693
 msgid "R mode"
-msgstr "R Mode"
+msgstr "R-Modus"
 
 #: src/library/grDevices/src/devWindows.c:1695
 msgid "Fit to window"
@@ -1209,84 +1209,3 @@ msgstr "Warte auf Bestätigung des Seitenwechsels..."
 #: src/library/grDevices/src/devWindows.c:3911
 msgid "Click or hit ENTER for next page"
 msgstr "Klick oder Return für die nächste Seite"
-
-#~ msgid "Print...\tCTRL+P"
-#~ msgstr "Drucken...\tStrg+P"
-
-#~ msgid "invalid device"
-#~ msgstr "ungültiges Gerät"
-
-#~ msgid "Html search page"
-#~ msgstr "HTML Suchseite"
-
-#~ msgid "Tile"
-#~ msgstr "Pflastern"
-
-#~ msgid "Postscript files (*.ps)"
-#~ msgstr "Postscript Dateien (*.ps)"
-
-#~ msgid "PDF files (*.pdf)"
-#~ msgstr "PDF Dateien (*.pdf)"
-
-#~ msgid "Enhanced metafiles (*.emf)"
-#~ msgstr "Enhanced Metafile (*.emf)"
-
-#~ msgid "Png files (*.png)"
-#~ msgstr "Png Dateien (*.png)"
-
-#~ msgid "Windows bitmap files (*.bmp)"
-#~ msgstr "Windows Bitmap Dateien (*.bmp)"
-
-#~ msgid "TIFF files (*.tiff,*tif)"
-#~ msgstr "TIFF Dateien (*.tiff,*.tif)"
-
-#~ msgid "Jpeg files (*.jpeg,*jpg)"
-#~ msgstr "Jpeg Dateien (*.jpeg,*jpg)"
-
-#~ msgid "Metafile..."
-#~ msgstr "Metafile..."
-
-#~ msgid "Postscript..."
-#~ msgstr "Postscript..."
-
-#~ msgid "PDF..."
-#~ msgstr "PDF..."
-
-#~ msgid "Png..."
-#~ msgstr "Png..."
-
-#~ msgid "Bmp..."
-#~ msgstr "Bmp..."
-
-#~ msgid "TIFF..."
-#~ msgstr "TIFF..."
-
-#~ msgid "Jpeg"
-#~ msgstr "Jpeg"
-
-#~ msgid "Choose a folder"
-#~ msgstr "Wählen sie einen Ordner"
-
-#~ msgid "Browse"
-#~ msgstr "Browse"
-
-#~ msgid "Load image"
-#~ msgstr "Lade Speicherabbild"
-
-#~ msgid "Save image"
-#~ msgstr "Sichere Speicherabbild"
-
-#~ msgid "Apply"
-#~ msgstr "Anwenden"
-
-#~ msgid "Save..."
-#~ msgstr "Speichern..."
-
-#~ msgid "Load..."
-#~ msgstr "Laden..."
-
-#~ msgid "75% quality..."
-#~ msgstr "75% Qualität..."
-
-#~ msgid "100% quality..."
-#~ msgstr "100% Qualität..."
