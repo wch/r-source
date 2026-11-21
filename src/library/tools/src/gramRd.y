@@ -384,6 +384,7 @@ RLikeArg:	goRLike Arg			{ xxpopMode($1); $$ = $2; }
 
 RLikeArg2:	'{' goRLike2 ArgItems '}'	{ xxpopMode($2); $$ = $3; }
 	|	'{' goRLike2 '}'		{ xxpopMode($2); $$ = xxnewlist(NULL); }
+	|	'{' goRLike2 ArgItems error END_OF_INPUT { xxpopMode($2); $$ = $3; }
 
 VerbatimArg:	goVerbatim Arg		 	{ xxpopMode($1); $$ = $2; }
 
@@ -393,6 +394,7 @@ VerbatimArg1:	goVerbatim1 Arg			{ xxpopMode($1); $$ = $2; }
 
 VerbatimArg2:   '{' goVerbatim2 ArgItems '}'    { xxpopMode($2); $$ = $3; }
 	|	'{' goVerbatim2 '}'		{ xxpopMode($2); $$ = xxnewlist(NULL); }
+	|	'{' goVerbatim2 ArgItems error END_OF_INPUT { xxpopMode($2); $$ = $3; }
 
 IfDefTarget:	goLatexLike TEXT	{ xxpopMode($1); $$ = xxnewlist(PROTECT(xxtag($2, TEXT, &@$)));
 						  UNPROTECT(1); }
@@ -423,6 +425,7 @@ Arg:		'{' ArgItems  '}'		{ $$ = $2; }
 	|	'{' ArgItems error END_OF_INPUT { $$ = $2; }
 
 Option:		'[' Item ']'			{ $$ = $2; }	
+	|	'[' Item error END_OF_INPUT	{ $$ = $2; }
 		
 %%
 
@@ -1632,6 +1635,7 @@ static int mkText(int c)
     	    }
     	    xxungetc(lookahead);
     	    if (isalpha(lookahead)) goto stop;
+    	    break;
     	case ']':
     	    if (parseState.xxmode == INOPTION) goto stop;
             break;
