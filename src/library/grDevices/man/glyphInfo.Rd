@@ -82,7 +82,7 @@ glyphJust(just, ...)
   \item{which}{When \code{x} is numeric, a character value identifying
     which width metric the numeric value is relative to.}
   \item{\dots}{For \code{glyphFontList()}, one or more
-    \code{glyphFont()}s. For \code{glyphFontVar()}, one or more named
+    \code{glyphFont()}s. For \code{glyphFontVariation()}, one or more named
     numeric values (see Details). Otherwise, further arguments passed to
     other methods.}
 }

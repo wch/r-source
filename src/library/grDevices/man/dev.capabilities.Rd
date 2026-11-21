@@ -22,7 +22,7 @@ dev.capabilities(what = NULL)
 \details{
   The capabilities have to be specified by the author of the graphics
   device, unless they can be deduced from missing hooks.  Thus they will
-  often by returned as \code{NA}, and may reflect the maximal
+  often be returned as \code{NA}, and may reflect the maximal
   capabilities of the underlying device where several output formats are
   supported by one device.
 
@@ -75,6 +75,7 @@ dev.capabilities(what = NULL)
   \item{paths}{logical:  Does the device support stroking and filling
     paths?}
   \item{glyphs}{logical:  Does the device support rendering glyphs? }
+  \item{variableFonts}{logical:  Does the device support variable fonts?}
 }
 \seealso{
   See \code{\link{getGraphicsEvent}} for details on interactive events.
