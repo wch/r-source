@@ -47,8 +47,9 @@ bw_pair_cnts <- function(x, nb, binned)
         ## Emulate exactly how the C code does its binning.
         xx <- trunc(abs(x)/d) *sign(x)
         xx <- xx - min(xx) + 1
-        xxx <- tabulate(xx, nb)
-        list(d, .Call(C_bw_den_binned, xxx))
+        xxx <- tabulate(xx, nb + 1L) # max(xx) can be nb + 1
+        cnt <- .Call(C_bw_den_binned, xxx)
+        list(d, c(cnt[seq_len(nb - 1L)], cnt[nb] + cnt[nb + 1L]))
     } else .Call(C_bw_den, nb, x)
 }
 

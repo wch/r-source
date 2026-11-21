@@ -4581,6 +4581,17 @@ for (y in c(-x, x))
 ## in R <= 4.6.2
 
 
+## bw.SJ() & co, with a small 'nb', for points 'nb' bins apart -- PR#19351
+local({
+    x <- rep(c(0.024, 1.024), 10)
+    cnt <- function(x, nb) stats:::bw_pair_cnts(x, nb, length(x) > nb/2)[[2]]
+    stopifnot(sum(cnt(x, 41L)) == choose(20, 2), # in C
+              sum(cnt(rep(x, 3), 41L)) == choose(60, 2), # binned in R
+              is.finite(bw.SJ(x, nb = 41)))
+})
+## wrote past the end of the counts (C) or dropped points (R), in R <= 4.6.2
+
+
 
 
 ## keep at end

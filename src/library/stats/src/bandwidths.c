@@ -144,8 +144,9 @@ SEXP bw_den(SEXP nbin, SEXP sx)
 	for (int i = 1; i < n; i++) {
 	    int ii = (int)(x[i] / dd);
 	    for (int j = 0; j < i; j++) {
-		int jj = (int)(x[j] / dd);
-		cnt[abs(ii - jj)] += 1.0;
+		int jj = (int)(x[j] / dd), k = abs(ii - jj);
+		// not anchored at xmin, so k can be nb (for nb <= 100)
+		cnt[k < nb ? k : nb - 1] += 1.0;
 	    }
 	}
     }
