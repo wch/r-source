@@ -445,6 +445,21 @@ local({
 ## overflowed a stack buffer, typically crashing R, in R <= 4.6.2
 
 
+## unserialize() of a corrupt compact integer sequence state -- PR#19354
+s <- serialize(1:10, NULL, xdr = TRUE)
+i <- grepRaw(as.raw(c(0,0,0,0x0e, 0,0,0,3, 0x40,0x24)), s, fixed = TRUE)
+stopifnot(length(i) == 1L)
+setState <- function(st) # replace the REALSXP state c(10, 1, 1)
+    c(s[seq_len(i + 3L)], writeBin(length(st), raw(), endian = "big"),
+      writeBin(as.double(st), raw(), endian = "big"), s[-seq_len(i + 31L)])
+stopifnot(identical(unserialize(setState(c(10, 1, 1))), 1:10),
+          identical(unserialize(setState(c(5, 3, -1))), 3:-1))
+for (st in list(c(-10, 1, 1), 10, c(10, 1), c(10, 1, 2), c(NaN, 1, 1),
+                c(5, NA, 1), c(1e300, 1, 1), c(10, .Machine$integer.max, 1)))
+    assertErrV(unserialize(setState(st)))
+## gave negative lengths, integer overflow or out-of-bounds reads in R <= 4.6.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

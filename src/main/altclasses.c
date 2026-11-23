@@ -48,14 +48,6 @@
 #define COMPACT_SEQ_EXPANDED(x) R_altrep_data2(x)
 #define SET_COMPACT_SEQ_EXPANDED(x, v) R_set_altrep_data2(x, v)
 
-/* needed for now for objects serialized with INTSXP state */
-#define COMPACT_INTSEQ_SERIALIZED_STATE_LENGTH(info) \
-    (TYPEOF(info) == INTSXP ? INTEGER0(info)[0] : (R_xlen_t) REAL0(info)[0])
-#define COMPACT_INTSEQ_SERIALIZED_STATE_FIRST(info) \
-    (TYPEOF(info) == INTSXP ? INTEGER0(info)[1] : (int) REAL0(info)[1])
-#define COMPACT_INTSEQ_SERIALIZED_STATE_INCR(info) \
-    (TYPEOF(info) == INTSXP ? INTEGER0(info)[2] : (int) REAL0(info)[2])
-
 /* info is stored as REALSXP to allow for long vector length */
 #define COMPACT_INTSEQ_INFO_LENGTH(info) ((R_xlen_t) REAL0(info)[0])
 #define COMPACT_INTSEQ_INFO_FIRST(info) ((int) REAL0(info)[1])
@@ -90,16 +82,20 @@ static SEXP compact_intseq_Unserialize(SEXP class, SEXP state)
 	XLENGTH(state) < 3)
 	error("invalid compact_intseq serialized state");
 
-    R_xlen_t n = COMPACT_INTSEQ_SERIALIZED_STATE_LENGTH(state);
-    int n1 = COMPACT_INTSEQ_SERIALIZED_STATE_FIRST(state);
-    int inc = COMPACT_INTSEQ_SERIALIZED_STATE_INCR(state);
+    /* The values come from a possibly corrupt stream: check them before
+       converting to integer types.  INTSXP state is still accepted for
+       objects serialized by older R. */
+    double v[3];
+    for (int i = 0; i < 3; i++)
+	v[i] = TYPEOF(state) == REALSXP ? REAL0(state)[i] :
+	    INTEGER0(state)[i] == NA_INTEGER ? NA_REAL : INTEGER0(state)[i];
+    double n = v[0], n1 = v[1], inc = v[2], last = n1 + (n - 1) * inc;
+    if (! (n >= 0 && n <= R_XLEN_T_MAX && (inc == 1 || inc == -1) &&
+	   n1 > INT_MIN && n1 <= INT_MAX &&
+	   (n == 0 || (last > INT_MIN && last <= INT_MAX))))
+	error("invalid compact_intseq serialized state");
 
-    if (inc == 1)
-	return new_compact_intseq(n, n1,  1);
-    else if (inc == -1)
-	return new_compact_intseq(n, n1,  -1);
-    else
-	error("compact sequences with increment %d not supported yet", inc);
+    return new_compact_intseq((R_xlen_t) n, (int) n1, (int) inc);
 }
  
 static SEXP compact_intseq_Coerce(SEXP x, int type)
