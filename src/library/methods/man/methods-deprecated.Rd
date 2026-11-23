@@ -39,40 +39,35 @@
   From \R{} 4.7.0, they are deprecated: \code{\link{setGeneric}}
   continues to create objects from these classes, but user and package
   code must test only for inheritance from \code{"genericFunction"},
-  conditioning on \preformatted{is.call(body(.)) &&
-  identical(body(.)[[1L]], quote(standardGeneric))} in the rare case
-  that distinction is needed.  It is intended that from \R{} 4.8.0,
-  \code{setGeneric} will create objects of class
+  conditioning on
+  \preformatted{is.call(body(.)) && identical(body(.)[[1L]], quote(standardGeneric))}
+  in the rare case when distinction is needed.  It is intended that from
+  \R{} 4.8.0, \code{setGeneric} will create objects of class
   \code{"genericFunction"} instead.
-
-  Similarly, \code{"nonstandardGroupGenericFunction"} is a subclass of
-  \code{"\linkS4class{groupGenericFunction}"} designating group generic
-  functions that perform additional operations before or after dispatch.
-  From \R{} 4.7.0, it is deprecated: \code{\link{setGroupGeneric}}
-  continues to create objects from this class conditionally, but user
-  and package code must test only for inheritance from
-  \code{"groupGenericFunction"}.  It is intended that from \R{} 4.8.0,
-  \code{setGroupGeneric} will create objects of class
-  \code{"groupGenericFunction"} instead.
 
   \code{"standardGenericWithTrace"} is a subclass of
   \code{"standardGeneric"} also extending
   \code{"\linkS4class{traceable}"}.  It is used to represent standard
   non-group generic functions with tracing code.  From \R{} version
-  4.7.0, it is deprecated: \code{\link{trace}} continues to create
-  objects from this class conditionally, but user and package code must
-  test only for inheritance from \code{"genericFunction"} and
-  \code{"traceable"}.  It is intended that from \R{} 4.8.0, \code{trace}
-  will create objects of class
-  \code{"\linkS4class{genericFunctionWithTrace}"} instead, as a
+  4.7.0, it is deprecated: \code{\link{trace}} (without
+  \code{signature}) continues to create objects from this class
+  conditionally, but user and package code must test only for
+  inheritance from \code{"genericFunction"} and \code{"traceable"}.  It
+  is intended that from \R{} 4.8.0, \code{trace} will create objects of
+  class \code{"\linkS4class{genericFunctionWithTrace}"} instead, as a
   consequence of the change in behaviour of \code{setGeneric}.
 
   \code{"nonstandardGeneric"} is a virtual class containing the three
-  other \code{"nonstandardGeneric*"}.
-  \code{"nonstandardGenericWithTrace"} is nowhere used: because
-  \code{"nonstandardGeneric"} is virtual, objects of that class are
-  never created and hence never traced.  Both may be removed in \R{}
-  4.8.0.
+  other \code{"nonstandard*Generic*"}.
+  \code{"nonstandardGenericWithTrace"} is a subclass also extending
+  \code{"\linkS4class{traceable}"}, but it is nowhere used: since
+  \code{"nonstandardGeneric"} is virtual, objects of that class cannot
+  be created and hence cannot be traced.
+  \code{"nonstandardGroupGenericFunction"} is a subclass also extending
+  \code{"\linkS4class{groupGenericFunction}"}, but it is likewise
+  nowhere used: \code{\link{setGroupGeneric}} creates objects of class
+  \code{"groupGenericFunction"} unconditionally.  These three classes
+  are deprecated and may be removed in \R{} 4.8.0.
 }
 \seealso{
   \code{\link{Deprecated}}, \code{\link{methods-defunct}}
