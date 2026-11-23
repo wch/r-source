@@ -116,6 +116,8 @@ function(x, centers, iter.max = 10L, nstart = 1L,
     k <- as.integer(k)
     if(is.na(k)) stop(gettextf("invalid value of %s", "'k'"), domain = NA)
     if (k == 1L) nmeth <- 3L # Hartigan-Wong, (Fortran) needs k > 1
+    if(nmeth == 1L && length(trace) != 1L)
+        stop(gettextf("invalid value of %s", "'trace'"), domain = NA)
     iter.max <- as.integer(iter.max)
     if(is.na(iter.max) || iter.max < 1L) stop("'iter.max' must be positive")
     if(ncol(x) != ncol(centers))

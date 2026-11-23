@@ -420,6 +420,22 @@ stopifnot(identical(unserialize(serialize(x, NULL)), x))
 ## returned a dotted pair whose names() crashed R in R <= 4.6.2
 
 
+## kmeans() with a 'trace' not of length one, which the Hartigan-Wong code
+## reads and writes as a scalar; the other algorithms do not use 'trace'
+local({
+    x <- c(1, 2, 10, 11); cen <- c(1, 10)
+    lisE <- lapply(list(NULL, logical(), c(FALSE, FALSE)),
+                   function(tr) tryCid(kmeans(x, cen, trace = tr)))
+    stopifnot(vapply(lisE, inherits, NA, what = "error"))
+    stopifnot(identical(
+        vapply(lisE, conditionMessage, ""),
+        rep(sprintf(gettext("invalid value of %s", domain = "R-stats"), "'trace'"), 3)))
+    stopifnot(identical(kmeans(x, cen, algorithm = "Lloyd", trace = NULL)$size,
+                        c(2L, 2L)))
+})
+## segfaulted in R <= 4.6.2 builds not inlining DATAPTR(), otherwise gave a misleading error
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
