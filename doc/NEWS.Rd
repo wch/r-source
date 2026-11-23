@@ -45,11 +45,6 @@
       is unchanged on its right side, so "3RS3R" and "3RSS" are correct now
       in such cases.  Fixes \PR{19280} reported with patch by \I{Kevin Ushey}.
 
-      \item The internal HTTP server removes dot segments (\code{/../}
-      and \code{/./}) also when they were percent-encoded.  On Windows,
-      converts \code{\\} to the \code{/} path separator.  Paths that
-      include \code{\%00} are rejected.
-
       \item \code{runmed(<has_NA_not_at_pos_1>, na.action = "na.omit")} no
       longer returns a \dQuote{random} smoothed value before the \code{NA},
       fixing \PR{19300}, from the report and patch by \I{Adam Berkeš}.
@@ -57,6 +52,11 @@
       \item \code{bessel[IJKY](., nu = <large>)} no longer allocate memory
       in cases we know the current algorithm will give \code{NaN} with a
       warning anyway, thanks to \I{Jeroen Ooms}'s \PR{19326}.
+
+      \item The internal HTTP server removes dot segments (\code{/../}
+      and \code{/./}) also when they were percent-encoded.  On Windows,
+      converts \code{\\} to the \code{/} path separator.  Paths that
+      include \code{\%00} are rejected.
     }
   }
 }
