@@ -199,6 +199,7 @@ argument.
 compile <- function(e, env = .GlobalEnv, options = NULL, srcref = NULL) {
     cenv <- makeCenv(env)
     cntxt <- make.toplevelContext(cenv, options)
+    cntxt$needRETURNJMP <- TRUE ## not a function body
     cntxt$env <- addCenvVars(cenv, findLocals(e, cntxt))
     if (mayCallBrowser(e, cntxt))
         ## NOTE: compilation will be attempted repeatedly
@@ -211,7 +212,10 @@ compile <- function(e, env = .GlobalEnv, options = NULL, srcref = NULL) {
 @ %def compile
 The supplied environment is converted into a compilation environment
 data structure.  This compilation environment and any options
-provided are then used to construct a compiler context.  The function
+provided are then used to construct a compiler context.  The
+expression is not a function body, so [[return]] calls in it have to
+use [[RETURNJMP]]; this signals an error if there is no function to
+return from, as in the interpreter.  The function
 [[genCode]] is then used to generate a byte code object for the
 expression and the constructed compilation context.
 

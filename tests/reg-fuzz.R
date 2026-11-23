@@ -460,6 +460,17 @@ for (st in list(c(-10, 1, 1), 10, c(10, 1), c(10, 1, 2), c(NaN, 1, 1),
 ## gave negative lengths, integer overflow or out-of-bounds reads in R <= 4.6.2
 
 
+## return() in a top-level loop compiled by the JIT -- PR#19359
+local({
+    oJIT <- compiler::enableJIT(3)
+    on.exit(compiler::enableJIT(oJIT))
+    r <- eval(quote({ for (i in 1:3) if (i == 2) return("x"); "fell through" }),
+              globalenv())
+    stopifnot(identical(r, "x"))
+})
+## acted like break (giving "fell through") in R <= 4.6.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

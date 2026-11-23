@@ -2964,6 +2964,7 @@ notifyCompilerError <- function(msg)
 compile <- function(e, env = .GlobalEnv, options = NULL, srcref = NULL) {
     cenv <- makeCenv(env)
     cntxt <- make.toplevelContext(cenv, options)
+    cntxt$needRETURNJMP <- TRUE ## not a function body
     cntxt$env <- addCenvVars(cenv, findLocals(e, cntxt))
     if (mayCallBrowser(e, cntxt))
         ## NOTE: compilation will be attempted repeatedly
