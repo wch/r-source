@@ -420,6 +420,18 @@ stopifnot(identical(unserialize(serialize(x, NULL)), x))
 ## returned a dotted pair whose names() crashed R in R <= 4.6.2
 
 
+## byte-compiled complex assignment to a missing argument -- PR#19358
+local({
+    `set<-` <- function(x, value) c(x, value)
+    f <- compiler::cmpfun(function(x) { set(x) <- 1; x })
+    g <- compiler::cmpfun(function(x) { x[1] <- 1; x })
+    stopifnot(inherits(tryCid(f()), "missingArgError"),
+              inherits(tryCid(g()), "missingArgError"),
+              identical(f(0), c(0, 1)), identical(g(0), 1))
+})
+## passed the empty symbol to the replacement function in R <= 4.6.2
+
+
 ## kmeans() with a 'trace' not of length one, which the Hartigan-Wong code
 ## reads and writes as a scalar; the other algorithms do not use 'trace'
 local({
