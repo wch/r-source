@@ -8,11 +8,6 @@
 \alias{EmptyMethodsList-class}
 \alias{optionalMethod-class}
 \alias{PossibleMethod-class}
-\alias{standardGeneric-class}
-\alias{standardGenericWithTrace-class}
-\alias{nonstandardGeneric-class}
-\alias{nonstandardGenericFunction-class}
-\alias{nonstandardGroupGenericFunction-class}
 \alias{OptionalFunction-class}
 \alias{derivedDefaultMethod-class}
 \alias{internalDispatchMethod-class}
@@ -26,11 +21,6 @@
 "EmptyMethodsList" # deprecated, since \R 3.2.0; rather "defunct" from 4.5.0
 
 ### Other, virtual classes used in method dispatch
-"standardGeneric"
-"standardGenericWithTrace"
-"nonstandardGeneric"
-"nonstandardGenericFunction"
-"nonstandardGroupGenericFunction"
 "OptionalFunction"
 "optionalMethod"
 "PossibleMethod"

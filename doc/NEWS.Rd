@@ -212,6 +212,23 @@
       substitute \code{attributes}' names \code{".Dim", ".Dimnames", ".Names", ".Tsp", ".Label"}
       in favour of the respective \code{"dim", "dimnames", "names", "tsp", "levels"}
       names.
+
+      \item S4 classes \code{"standardGeneric"},
+      \code{"standardGenericWithTrace"}, \code{"nonstandardGeneric"},
+      \code{"nonstandardGenericWithTrace"},
+      \code{"nonstandardGenericFunction"}, and
+      \code{"nonstandardGroupGenericFunction"} from package
+      \pkg{methods} are deprecated.  \code{setGeneric},
+      \code{setGroupGeneric}, and \code{trace} continue to create
+      objects from these classes, but user and package code testing for
+      such objects must be adapted to test only for inheritance from
+      superclasses \code{"genericFunction"},
+      \code{"groupGenericFunction"}, and \code{"traceable"},
+      conditioning on \code{body(.)} only if needed.  It is intended
+      that from \R{} 4.8.0, \code{setGeneric} and \code{setGroupGeneric}
+      will create objects of class \code{"genericFunction"} or
+      \code{"groupGenericFunction"} unconditionally.  For details, see
+      \code{deprecated?methods}.
     }
   }
 
