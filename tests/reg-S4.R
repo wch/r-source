@@ -12,7 +12,7 @@ assertError <- tools::assertError # "import"
 require(stats4)
 detach("package:methods")
 require("methods")
-cc <- methods::getClassDef("standardGeneric")
+cc <- methods::getClassDef("genericFunction")
 cc ## (auto) print failed here, in R <= 3.2.2
 stopifnot(.isMethodsDispatchOn()) ## was FALSE in R <= 3.2.2
 
@@ -557,7 +557,7 @@ stopifnot(is.character(R[["class"]]),
 ## implicit generics ..
 setMethod("sample", "C2",
           function(x, size, replace=FALSE, prob=NULL) {"sample.C2"})
-stopifnot(is(sample,"standardGeneric"),
+stopifnot(is(sample,"genericFunction"),
 	  ## the signature must come from the implicit generic:
 	  identical(sample@signature, c("x", "size")),
 	  identical(packageSlot(sample), "base"),
@@ -569,7 +569,7 @@ stopifnot(is(sample,"standardGeneric"),
 ## (For test, qqplot must be a "simple" function:)
 stopifnot(is.function(qqplot) && identical(class(qqplot), "function"))
 setGeneric("qqplot", function(x, y, ...) standardGeneric("qqplot"))
-stopifnot(is(qqplot, "standardGeneric"),
+stopifnot(is(qqplot, "genericFunction"),
 	  identical(qqplot@signature, c("x","y")))
 ## failed for a day ~ 2005-05-26, for R-devel only
 

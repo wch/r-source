@@ -12,7 +12,7 @@ aa <- new("A", x=1)
 
 setGeneric("ff", function(x)"default ff")
 ## test that the setGeneric() call created the generic & default
-stopifnot(is(ff, "standardGeneric"),
+stopifnot(is(ff, "genericFunction"),
           identical(body(getMethod("ff","ANY")), "default ff"))
 
 ffMaybe <- function(x) "ff maybe method"

@@ -199,7 +199,7 @@ z <- list(a = letters[1:3], b = (-pi+0i)^((-2:2)/2), c = c(1,10,100,1000),
 f1 == f2 ## 2 FALSE, 4 TRUE
 
 ## A "minimal" format() for S4 objects without their own format() method:
-cc <- methods::getClassDef("standardGeneric")
+cc <- methods::getClassDef("genericFunction")
 format(cc) ## "<S4 class ......>"
 }
 \keyword{character}

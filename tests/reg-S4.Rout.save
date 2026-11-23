@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-11-10 r90872) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-11-20 r90943) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: aarch64-apple-darwin25.6.0
 
@@ -31,9 +31,9 @@ Loading required package: stats4
 > detach("package:methods")
 > require("methods")
 Loading required package: methods
-> cc <- methods::getClassDef("standardGeneric")
+> cc <- methods::getClassDef("genericFunction")
 > cc ## (auto) print failed here, in R <= 3.2.2
-Class "standardGeneric" [package "methods"]
+Class "genericFunction" [package "methods"]
 
 Slots:
                                                                   
@@ -44,13 +44,19 @@ Name:      valueClass      signature        default       skeleton
 Class:      character      character optionalMethod           call
 
 Extends: 
-Class "genericFunction", directly
-Class "function", by class "genericFunction", distance 2
-Class "OptionalFunction", by class "function", distance 3
-Class "PossibleMethod", by class "genericFunction", distance 3
-Class "optionalMethod", by class "genericFunction", distance 4
+Class "function", from data part
+Class "OptionalFunction", by class "function", distance 2
+Class "PossibleMethod", by class "function", distance 2
+Class "optionalMethod", by class "function", distance 3
 
-Known Subclasses: "standardGenericWithTrace"
+Known Subclasses: 
+Class "standardGeneric", directly
+Class "nonstandardGenericFunction", directly
+Class "groupGenericFunction", directly
+Class "genericFunctionWithTrace", directly
+Class "nonstandardGroupGenericFunction", by class "groupGenericFunction", distance 2
+Class "standardGenericWithTrace", by class "standardGeneric", distance 2
+Class "groupGenericFunctionWithTrace", by class "groupGenericFunction", distance 2
 > stopifnot(.isMethodsDispatchOn()) ## was FALSE in R <= 3.2.2
 > 
 > 
@@ -788,7 +794,7 @@ List of 7
 > setMethod("sample", "C2",
 +           function(x, size, replace=FALSE, prob=NULL) {"sample.C2"})
 creating formal generic function 'sample' in global environment
-> stopifnot(is(sample,"standardGeneric"),
+> stopifnot(is(sample,"genericFunction"),
 + 	  ## the signature must come from the implicit generic:
 + 	  identical(sample@signature, c("x", "size")),
 + 	  identical(packageSlot(sample), "base"),
@@ -803,7 +809,7 @@ creating formal generic function 'sample' in global environment
 creating formal generic function 'qqplot' in global environment
   ignoring implicit definition in package 'stats'
 [1] "qqplot"
-> stopifnot(is(qqplot, "standardGeneric"),
+> stopifnot(is(qqplot, "genericFunction"),
 + 	  identical(qqplot@signature, c("x","y")))
 > ## failed for a day ~ 2005-05-26, for R-devel only
 > 
@@ -1185,7 +1191,7 @@ class(from) <- "foo"
 > ## ----- from here on, keep at EOF -----
 > 
 > cat('Time elapsed: ', proc.time(),'\n')
-Time elapsed:  0.427 0.03 0.466 0.005 0.005 
+Time elapsed:  0.422 0.028 0.456 0.005 0.004 
 > 
 > ### NB: Only add new tests here _IF_   checking output,
 > ### --  otherwise use ./classes-methods.R
