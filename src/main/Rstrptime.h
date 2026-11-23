@@ -690,13 +690,13 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 	  tm->tm_yday = ((7 - (tm->tm_wday - w_offset)) % 7
 			 + (week_no - (int)(del >= 0)) * 7
 			 + del);
-	  if (tm->tm_yday < 0) return NULL;
       }
 
       if (!have_mday || !have_mon)
       {
 	  int t_mon = 0;
 	  int yr = 1900 + tm->tm_year;
+	  if (tm->tm_yday < 0) return NULL;
 	  if(tm->tm_yday > (__isleap(yr) ? 365 : 364)) {
 	      warning("(0-based) yday %d in year %d is invalid\n",
 		      tm->tm_yday, yr);
@@ -1180,13 +1180,13 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 	  tm->tm_yday = ((7 - (tm->tm_wday - w_offset)) % 7
 			 + (week_no - (int)(del >= 0)) * 7
 			 + del);
-	  if (tm->tm_yday < 0) return NULL;
       }
 
       if (!have_mday || !have_mon)
       {
 	  int t_mon = 0;
 	  int yr = 1900 + tm->tm_year;
+	  if (tm->tm_yday < 0) return NULL;
 	  if(tm->tm_yday > (__isleap(yr) ? 365 : 364)) {
 		warning("(0-based) yday %d in year %d is invalid\n",
 			tm->tm_yday, yr);

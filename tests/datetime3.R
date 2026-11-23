@@ -687,7 +687,7 @@ frI <- `storage.mode<-`(from, "integer")
 toI <- `storage.mode<-`( to , "integer")
 ## 2 weeks in sec
 wks2sec <- as.integer( 2*7*86400 )
-All.eq0 <- function(x,y, ...) all.equal(x, y, tolerance = 0, ...)
+all.equal.0 <- function(x,y, ...) all.equal(x, y, tolerance = 0, ...)
 ## (Checking assumptions (dbl <-> int) here which useRs/developers should *not* make)
 stopifnot(exprs = {
   ## NB: use 'from' on LHS of reference to ensure the time zone of 'from' is used in the result
@@ -734,8 +734,8 @@ stopifnot(exprs = {
   identical(seq(from, to, by=by), from + 2*7*(0:4))
   identical(seq(from, to, length.out=length.out),
             from + seq(0, difftime(to, from, units="days"), length.out=length.out))
-  All.eq0(seq(from,  by=by, length.out=length.out), from + 2*7*seq(0, length.out-1L))
-  All.eq0(seq(to=to, by=by, length.out=length.out),   to - 2*7*seq(length.out-1L, 0))
+  all.equal.0(seq(from,  by=by, length.out=length.out), from + 2*7*seq(0, length.out-1L))
+  all.equal.0(seq(to=to, by=by, length.out=length.out),   to - 2*7*seq(length.out-1L, 0))
   identical(seq(from, to), seq(from=from, to=to, by = "days") -> s.)
   identical(structure(19724:19727, class = "Date"), seq(from , length.out=length.out) -> s.f)
   identical(structure(19782:19785, class = "Date"), seq(to=to, length.out=length.out) -> s.t)
@@ -752,8 +752,8 @@ stopifnot(exprs = {
   ## missing from=
   identical(seq(to=to, by='day',     length.out=6),
             seq(to=to,               length.out=6))
-  All.eq0 ( seq(to=to,               length.out=6), to - (5:0))
-  All.eq0 ( seq(to=to, by='-3 days', length.out=6), to + 3*(5:0))
+  all.equal.0( seq(to=to,               length.out=6), to - (5:0))
+  all.equal.0( seq(to=to, by='-3 days', length.out=6), to + 3*(5:0))
   identical(seq(to=to, by='2 months',length.out=3), to - c(31+29+31+30, 31+29, 0))
   identical(seq(to=to, by='quarter', length.out=3), to - c(31+29+31+30+31+30, 31+29+31, 0))
   identical(seq(to=to, by='year',    length.out=3), to - c(366+365, 366, 0))
@@ -1053,9 +1053,15 @@ stopifnot(chltU[,1] == "2026", chltU[,2] == "01",
 ## Week zero --> weekday before January 1 now rejected (-> NA) --> PR#19124, comment #7
 oldLCctype <- Sys.getlocale("LC_CTYPE")
 for (lc in c("C", "C.UTF-8")) {
-    if (nzchar(suppressWarnings(Sys.setlocale("LC_CTYPE", lc))))
-        stopifnot(is.na(strptime("2026 0 0", "%Y %U %w", tz = "UTC")),
-                  is.na(strptime("2026 0 1", "%Y %W %w", tz = "UTC")))
+  if (nzchar(suppressWarnings(Sys.setlocale("LC_CTYPE", lc))))
+      stopifnot(exprs = { is.null(cat(paste("lc =", lc,": ")))
+          is.na(strptime("2026 0 0", "%Y %U %w", tz = "UTC"))
+          is.na(strptime("2026 0 1", "%Y %W %w", tz = "UTC"))
+          inherits(print(lt1 <- strptime("2026  0  0  1  4", "%Y %U %w %m %d", tz = "UTC")), "POSIXlt")
+          inherits(      lt2 <- strptime("2026  53 0  1  4", "%Y %U %w %m %d", tz = "UTC") , "POSIXlt")
+          identical(lt1, lt2)
+          identical(as.Date(lt1), as.Date("2026-01-04"))
+      }) ## ok in R 3.0.1, 3.3.3, 4.0.1, 4.4.1, 4.5.1, 4.6.0, 4.6.2 (but not some R-devel)
 }
 Sys.setlocale("LC_CTYPE", oldLCctype)
 ## ASan reported an out-of-bounds read in R-devel r90605 through r90798.
