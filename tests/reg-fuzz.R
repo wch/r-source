@@ -483,6 +483,24 @@ local({
 ## acted like break (giving "fell through") in R <= 4.6.2
 
 
+## parse_Rd() must free a grown token buffer when lexing the token fails
+local({
+    txt <- paste0("\\", strrep("a", 10001L))
+    for (fragment in c(FALSE, TRUE))
+        assertErrV(tools::parse_Rd(textConnection(txt), fragment = fragment))
+    long <- strrep("a", 5000L)
+    rd <- tools::parse_Rd(textConnection(c(
+        "\\name{x}", paste0("\\alias{", long, "}"), paste0("\\title{", long, "}"),
+        paste0("\\examples{", long, "}"), paste0("% ", long))))
+    tags <- vapply(rd, attr, "", "Rd_tag")
+    stopifnot(identical(unlist(rd[tags == "\\alias"]), long),
+              identical(unlist(rd[tags == "\\title"]), long),
+              identical(unlist(rd[tags == "\\examples"]), long),
+              identical(unlist(rd[tags == "COMMENT"]), paste("%", long)))
+})
+## leaked the token buffer in R <= 4.6.2 (visible under LSan)
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
