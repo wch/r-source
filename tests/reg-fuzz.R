@@ -436,6 +436,15 @@ local({
 ## segfaulted in R <= 4.6.2 builds not inlining DATAPTR(), otherwise gave a misleading error
 
 
+## parse_Rd() reporting a syntax error at a long token
+local({
+    txt <- c("\\name{x}",
+             paste0("\\description{\\link[{x}", strrep("a", 300L), "]{y}}"))
+    assertWarnV(tools::parse_Rd(textConnection(txt)))
+})
+## overflowed a stack buffer, typically crashing R, in R <= 4.6.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
