@@ -53,6 +53,10 @@
       \item \code{runmed(<has_NA_not_at_pos_1>, na.action = "na.omit")} no
       longer returns a \dQuote{random} smoothed value before the \code{NA},
       fixing \PR{19300}, from the report and patch by \I{Adam Berkeš}.
+
+      \item \code{bessel[IJKY](., nu = <large>)} no longer allocate memory
+      in cases we know the current algorithm will give \code{NaN} with a
+      warning anyway, thanks to \I{Jeroen Ooms}'s \PR{19326}.
     }
   }
 }
@@ -1072,7 +1076,7 @@
       longer outputs \code{"List of <...>"} in the default method, thanks
       to \I{Ian Farm}'s report and fix proposal in \PR{19001}.
 
-      \item \code{as.POSIXlt(ch)}, \code{as.Date(ch)} etc now also work
+      \item \code{as.POSIXlt(ch)}, \code{as.Date(ch)}, etc, now also work
       correctly when \code{ch} contains \code{"Inf"}, via
       \code{strptime(.)}, fixing \PR{19006}.
 
@@ -1124,7 +1128,7 @@
 
       \item When \code{file.choose()} is terminated with an \command{EOF},
       it now signals an error rather than returning garbage, thanks to
-      \I{Kevin Ushey}'s report and patch in \PR{19053},
+      \I{Kevin Ushey}'s report and patch in \PR{19053}.
     }
   }
 }

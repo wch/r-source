@@ -1623,16 +1623,14 @@ static SEXP math2B(SEXP sa, SEXP sb,
 {
     SETUP_Math2;
 
-    /* allocate work array for BesselJ, BesselY large enough for all
-       arguments */
+    /* allocate work array for BesselJ, BesselY large enough for all arguments,
+       unless av=|nu| is too large and will give NaN & warning in ../nmath/bessel_[jy].c */
     double amax = 0.;
     for (i = 0; i < nb; i++) {
 	double av = b[i] < 0. ? -b[i] : b[i];
-	if (amax < av)
+	if (amax < av && av <= max_alpha)
 	    amax = av;
     }
-    if (amax > max_alpha)
-	amax = max_alpha; // and warning will happen in ../nmath/bessel_[jy].c
     const void *vmax = vmaxget();
     size_t nw = 1 + (size_t)floor(amax);
     double *work = (double *) R_alloc(nw, sizeof(double));
@@ -2062,15 +2060,14 @@ static SEXP math3B(SEXP sa, SEXP sb, SEXP sc,
 
     SETUP_Math3;
 
-    /* allocate work array for BesselI, BesselK large enough for all
-       arguments */
+    /* allocate work array for BesselI, BesselK large enough for all arguments,
+       unless av=|nu| is too large and will give NaN & warning in ../nmath/bessel_[ik].c */
     amax = 0.0;
     for (i = 0; i < nb; i++) {
 	double av = b[i] < 0 ? -b[i] : b[i];
-	if (av > amax) amax = av;
+	if (amax < av && av <= M_bessel_ik_max_alpha)
+	    amax = av;
     }
-    if (amax > M_bessel_ik_max_alpha)
-	amax = M_bessel_ik_max_alpha; // and warning will happen in ../nmath/bessel_[ik].c
     const void *vmax = vmaxget();
     nw = 1 + (size_t)floor(amax);
     work = (double *) R_alloc(nw, sizeof(double));
