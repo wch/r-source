@@ -61,6 +61,7 @@ As from R 4.1.0 we translate latin1 strings in a non-latin1-locale to UTF-8.
 /* How many encoding warnings to give */
 #define NWARN 5
 
+#define R_USE_SIGNALS 1 /* for the cleanup context in do_grep/do_regexpr */
 #include <Defn.h>
 #include <Internal.h>
 #include <R_ext/RS.h>  /* for R_Calloc/R_Free */
@@ -542,7 +543,93 @@ R_pcre_prepare(const char *pattern, SEXP subject, bool use_UTF8,
 }
 #endif
 
-// FIXME: Protect PCRE/PCRE2 data via contexts (as well as other data).
+/* The compiled pattern is malloc()ed, and the matching loops of the
+   regex functions below signal warnings about untranslatable input
+   strings, which options(warn = 2) turns into errors (gsub() and
+   regexec() raise errors there themselves).  The loops run under a
+   context whose cleanup releases the pattern on such an unwind.  The
+   context carries the call so that getCurrentCall() still finds it for
+   the warnings when the .Internal is not reached from byte code. */
+typedef struct {
+    bool fixed_opt, perl_opt;
+    regex_t *reg;
+    const unsigned char *tables;
+#ifdef HAVE_PCRE2
+    pcre2_code *re;
+    pcre2_match_data *mdata;
+    pcre2_match_context *mcontext;
+#else
+    pcre *re_pcre;
+    pcre_extra *re_pe;
+    int *ovector;
+#endif
+} regex_cleanup_info;
+
+static void regex_cleanup(void *data)
+{
+    regex_cleanup_info *ci = (regex_cleanup_info *) data;
+
+    if (ci->fixed_opt)
+	return;
+    if (ci->perl_opt) {
+#ifdef HAVE_PCRE2
+	pcre2_match_data_free(ci->mdata);
+	pcre2_code_free(ci->re);
+	pcre2_match_context_free(ci->mcontext);
+	if (ci->tables)
+	    /* new PCRE2 will have pcre2_maketables_free() */
+	    free((void *) ci->tables);
+#else
+	if (ci->re_pe)
+	    pcre_free_study(ci->re_pe);
+	pcre_free(ci->re_pcre);
+	pcre_free((void *) ci->tables);
+	free(ci->ovector);
+#endif
+    } else {
+	tre_regfree(ci->reg);
+    }
+}
+
+#ifdef HAVE_PCRE2
+static void regex_cleanup_begin(regex_cleanup_info *ci, RCNTXT *cntxt,
+				SEXP call, bool fixed_opt, bool perl_opt,
+				regex_t *reg, const unsigned char *tables,
+				pcre2_code *re, pcre2_match_data *mdata,
+				pcre2_match_context *mcontext)
+#else
+static void regex_cleanup_begin(regex_cleanup_info *ci, RCNTXT *cntxt,
+				SEXP call, bool fixed_opt, bool perl_opt,
+				regex_t *reg, const unsigned char *tables,
+				pcre *re_pcre, pcre_extra *re_pe, int *ovector)
+#endif
+{
+    ci->fixed_opt = fixed_opt;
+    ci->perl_opt = perl_opt;
+    ci->reg = reg;
+    ci->tables = tables;
+#ifdef HAVE_PCRE2
+    ci->re = re;
+    ci->mdata = mdata;
+    ci->mcontext = mcontext;
+#else
+    ci->re_pcre = re_pcre;
+    ci->re_pe = re_pe;
+    ci->ovector = ovector;
+#endif
+    begincontext(cntxt, CTXT_CCODE, call, R_BaseEnv, R_BaseEnv,
+		 R_NilValue, R_NilValue);
+    cntxt->cend = &regex_cleanup;
+    cntxt->cenddata = ci;
+}
+
+/* The normal exit: leave the context, then release the pattern. */
+static void regex_cleanup_end(regex_cleanup_info *ci, RCNTXT *cntxt)
+{
+    endcontext(cntxt);
+    regex_cleanup(ci);
+}
+
 // FIXME: Do not rebuild locale tables repeatedly.
 // FIXME: There is no documented way to free locale tables with PCRE2.
 //        Using free() would not work on Windows if PCRE2 is dynamically
@@ -835,6 +922,15 @@ attribute_hidden SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    R_pcre_prepare(split, x, use_UTF8, false, true, &tables, &re_pcre,
 	                 &re_pe);
 #endif
+	    regex_cleanup_info ci;
+	    RCNTXT cntxt;
+#ifdef HAVE_PCRE2
+	    regex_cleanup_begin(&ci, &cntxt, call, false, true, NULL, tables,
+				re, mdata, mcontext);
+#else
+	    regex_cleanup_begin(&ci, &cntxt, call, false, true, NULL, tables,
+				re_pcre, re_pe, NULL);
+#endif
 	    vmax2 = vmaxget();
 	    for (i = itok; i < len; i += tlen) {
 		SEXP t;
@@ -942,14 +1038,10 @@ attribute_hidden SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		vmaxset(vmax2);
 	    }
-#ifdef HAVE_PCRE2
-	    pcre2_match_data_free(mdata);
-	    pcre2_code_free(re);
-	    pcre2_match_context_free(mcontext);
-#else
-	    if(re_pe) pcre_free_study(re_pe);
-	    pcre_free(re_pcre);
-#endif
+	    /* The character tables serve all tokens and are freed after the
+	       loop; the context releases them only on an unwind. */
+	    ci.tables = NULL;
+	    regex_cleanup_end(&ci, &cntxt);
 	} else if (!useBytes && use_UTF8) { /* ERE in wchar_t */
 	    regex_t reg;
 	    regmatch_t regmatch[1];
@@ -969,6 +1061,10 @@ attribute_hidden SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		error(_("'split' string %lld is invalid"), (long long)itok+1);
 	    if ((rc = tre_regwcomp(&reg, wsplit, cflags)))
 		reg_report(rc, &reg, translateChar(STRING_ELT(tok, itok)));
+	    regex_cleanup_info ci;
+	    RCNTXT cntxt;
+	    regex_cleanup_begin(&ci, &cntxt, call, false, false, &reg, NULL,
+				NULL, NULL, NULL);
 	    bool ascii_split = IS_ASCII(STRING_ELT(tok, itok));
 
 	    vmax2 = vmaxget();
@@ -1028,7 +1124,7 @@ attribute_hidden SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 				                   ascii_split && ascii_xi));
 		vmaxset(vmax2);
 	    }
-	    tre_regfree(&reg);
+	    regex_cleanup_end(&ci, &cntxt);
 	} else { /* ERE in normal chars -- single byte */
 	         /* previously used also with MBCS */
 	    regex_t reg;
@@ -1057,6 +1153,11 @@ attribute_hidden SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		rc = tre_regcomp(&reg, split, cflags);
 
 	    if(rc) reg_report(rc, &reg, split);
+
+	    regex_cleanup_info ci;
+	    RCNTXT cntxt;
+	    regex_cleanup_begin(&ci, &cntxt, call, false, false, &reg, NULL,
+				NULL, NULL, NULL);
 
 	    vmax2 = vmaxget();
 	    for (i = itok; i < len; i += tlen) {
@@ -1146,7 +1247,7 @@ attribute_hidden SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		vmaxset(vmax2);
 	    }
-	    tre_regfree(&reg);
+	    regex_cleanup_end(&ci, &cntxt);
 	}
 	vmaxset(vmax);
     }
@@ -1386,6 +1487,16 @@ attribute_hidden SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (rc) reg_report(rc, &reg, spat);
     }
 
+    regex_cleanup_info ci;
+    RCNTXT cntxt;
+#ifdef HAVE_PCRE2
+    regex_cleanup_begin(&ci, &cntxt, call, fixed_opt, perl_opt, &reg, tables,
+			re, mdata, mcontext);
+#else
+    regex_cleanup_begin(&ci, &cntxt, call, fixed_opt, perl_opt, &reg, tables,
+			re_pcre, re_pe, NULL);
+#endif
+
     PROTECT(ind = allocVector(LGLSXP, n));
     vmax = vmaxget();
     for (i = 0 ; i < n ; i++) {
@@ -1456,22 +1567,7 @@ attribute_hidden SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (invert ^ LOGICAL(ind)[i]) nmatches++;
     }
 
-    if (fixed_opt);
-    else if (perl_opt) {
-#ifdef HAVE_PCRE2
-	pcre2_match_data_free(mdata);
-	pcre2_code_free(re);
-	pcre2_match_context_free(mcontext);
-	if (tables)
-	    /* new PCRE2 will have pcre2_maketables_free() */
-	    free((void *)tables);
-#else
-	if (re_pe) pcre_free_study(re_pe);
-	pcre_free(re_pcre);
-	pcre_free((void *)tables);
-#endif
-    } else
-	tre_regfree(&reg);
+    regex_cleanup_end(&ci, &cntxt);
 
     if (PRIMVAL(op)) {/* grepl case */
 	UNPROTECT(1); /* ind */
@@ -2250,6 +2346,16 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
+    regex_cleanup_info ci;
+    RCNTXT cntxt;
+#ifdef HAVE_PCRE2
+    regex_cleanup_begin(&ci, &cntxt, call, fixed_opt, perl_opt, &reg, tables,
+			re, mdata, mcontext);
+#else
+    regex_cleanup_begin(&ci, &cntxt, call, fixed_opt, perl_opt, &reg, tables,
+			re_pcre, re_pe, NULL);
+#endif
+
     PROTECT(ans = allocVector(STRSXP, n));
     vmax = vmaxget();
     for (i = 0 ; i < n ; i++) {
@@ -2506,21 +2612,7 @@ attribute_hidden SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	vmaxset(vmax);
     }
 
-    if (fixed_opt) ;
-    else if (perl_opt) {
-#ifdef HAVE_PCRE2
-	pcre2_match_data_free(mdata);
-	pcre2_code_free(re);
-	pcre2_match_context_free(mcontext);
-	if (tables)
-	    /* new PCRE2 will have pcre2_maketables_free() */
-	    free((void *)tables);
-#else
-	if (re_pe) pcre_free_study(re_pe);
-	pcre_free(re_pcre);
-	pcre_free((void *)tables);
-#endif
-    } else tre_regfree(&reg);
+    regex_cleanup_end(&ci, &cntxt);
 
   exit_gsub: 
     SHALLOW_DUPLICATE_ATTRIB(ans, text);
@@ -3110,6 +3202,16 @@ attribute_hidden SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (rc) reg_report(rc, &reg, spat);
     }
 
+    regex_cleanup_info ci;
+    RCNTXT cntxt;
+#ifdef HAVE_PCRE2
+    regex_cleanup_begin(&ci, &cntxt, call, fixed_opt, perl_opt, &reg, tables,
+			re, mdata, mcontext);
+#else
+    regex_cleanup_begin(&ci, &cntxt, call, fixed_opt, perl_opt, &reg, tables,
+			re_pcre, re_pe, ovector);
+#endif
+
     if (PRIMVAL(op) == 0) { /* regexpr */
 	SEXP matchlen, capture_start, capturelen;
 	int *is, *il;
@@ -3295,24 +3397,9 @@ attribute_hidden SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    if (fixed_opt) ;
-    else if (perl_opt) {
-#ifdef HAVE_PCRE2
-	pcre2_match_data_free(mdata);
-	pcre2_code_free(re);
-	pcre2_match_context_free(mcontext);
-	if (tables)
-	    /* new PCRE2 will have pcre2_maketables_free() */
-	    free((void *)tables);
-#else
-	if (re_pe) pcre_free_study(re_pe);
-	pcre_free(re_pcre);
-	pcre_free((void *)tables);
-	free(ovector);
-#endif
-	UNPROTECT(1);
-    } else
-	tre_regfree(&reg);
+    regex_cleanup_end(&ci, &cntxt);
+    if (perl_opt)
+	UNPROTECT(1); /* capture_names */
 
     UNPROTECT(2);
     return ans;
@@ -3401,9 +3488,15 @@ attribute_hidden SEXP do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("regcomp error: '%s'"), errbuf);
     }
 
+    regex_cleanup_info ci;
+    RCNTXT cntxt;
+    regex_cleanup_begin(&ci, &cntxt, call, false, false, &reg, NULL,
+			NULL, NULL, NULL);
+
     nmatch = reg.re_nsub + 1;
 
-    pmatch = (regmatch_t *) malloc(nmatch * sizeof(regmatch_t));
+    /* R_alloc()ed so that it is released on an error unwind as well */
+    pmatch = (regmatch_t *) R_alloc(nmatch, sizeof(regmatch_t));
 
     PROTECT(ans = allocVector(VECSXP, n));
 
@@ -3473,9 +3566,7 @@ attribute_hidden SEXP do_regexec(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
 
-    free(pmatch);
-
-    tre_regfree(&reg);
+    regex_cleanup_end(&ci, &cntxt);
 
     UNPROTECT(2);
 
