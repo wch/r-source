@@ -4592,6 +4592,19 @@ local({
 ## wrote past the end of the counts (C) or dropped points (R), in R <= 4.6.2
 
 
+## model.matrix() column names filling its name buffer -- PR#19363
+local({
+    A <- strrep("A", 2100L); B <- strrep("B", 2100L); L <- strrep("L", 4095L)
+    d <- as.data.frame(matrix(1, 2L, 5L,
+                              dimnames = list(NULL, c(A, B, L, "x", "y"))))
+    cn <- function(rhs) colnames(model.matrix(as.formula(paste("~", rhs)), d))
+    assertWarnV(cnL <- cn(paste(L, "x", "y", sep = ":")))
+    stopifnot(identical(cn(paste(A, "+", B)), c("(Intercept)", A, B)),
+              identical(cnL, c("(Intercept)", L)))
+})
+## B's column was named A, with a warning; L:x:y overflowed the buffer, in R <= 4.6.2
+
+
 
 
 ## keep at end

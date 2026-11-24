@@ -604,12 +604,17 @@ SEXP modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    first = 1;
 	    indx = kk;
 	    bufp = &buf[0];
+	    buf[0] = '\0'; // the checks below use strlen(buf)
 	    for (i = 0; i < nVar; i++) {
 		ll = INTEGER(factors)[i + j * nVar];
 		if (ll) {
 		    var_i = VECTOR_ELT(variable, i);
-		    if (!first)
-			bufp = AppendString(bufp, ":");
+		    if (!first) {
+			if(strlen(buf) + 1 < BUFSIZE)
+			    bufp = AppendString(bufp, ":");
+			else
+			    warning(_("term names will be truncated"));
+		    }
 		    first = 0;
 		    if (isFactor(var_i) || isLogical(var_i)) {
 			if (ll == 1) {
