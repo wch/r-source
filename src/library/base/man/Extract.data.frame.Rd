@@ -200,15 +200,17 @@ sw
 stopifnot(identical(dim(sw), 5:4))
 
 ## adding a column
-sw <- swiss[1:5, 1:4]  # select a manageable subset
+sw <- swiss[1:5, 1:4] # (reset)
 sw ["new1"]  <- LETTERS[1:5] # adds a character column
 sw[["new2"]] <- letters[1:5] # ditto
 sw[, "new3"] <- LETTERS[1:5] # ditto
 sw$new4 <- 1:5
 sapply(sw, class)
+(sw. <- sw)
 sw$new  # -> NULL: no unique partial match
-sw$new4 <- NULL              # delete the column
-sw
+sw$new4 <- NULL # delete the column
+sw$new  <- NULL # delete ?   column -- no match, no change, no warning
+stopifnot(identical(sw, sw.[, -8]))
 ## with a list(.) rhs, update col. 6, delete 7, append 8
 sw[6:8] <- list(letters[10:14], NULL, aa = 1:5)
 sw
@@ -224,10 +226,10 @@ tools::assertError(verbose = TRUE,
 ##         Tmp$nc5 <- tmp   --> Error 
 ##
 ## Add a new _ROW_ using  <df>[i,j] <- val  (but not  <df>$<j>[i] <- val):
-i <- c(1L, 4:6) ; c4 <- c("J",  "4th", "5.", "6th")
+i <- c(1L, 4L,6L) ;   c4 <- c("J",  "4th", "6th")
 try( sw $ N2 [i] <- c4 )# _fails_ to create row 6
      sw[i, "N2"] <- c4  #  works  to create row 6 & col 'N2'
-     sw $ N3[i]  <- c4  # (creates new col 'N3' when we have 6 rows)
+     sw $ N3 [i] <- c4  # (creates new col 'N3' when we have 6 rows)
 stopifnot(identical(sw$N3, sw$N2), identical(sw$N3[i], c4) , identical(sw[i,"N2"], c4))
 
 ## "Summarizing" the cases adding a column via subassignment(i.e., `[<-` and `$<-`):
