@@ -3923,9 +3923,9 @@ MKL="-L$@{MKL_LIB_PATH@} -lmkl_gf_lp64 -lmkl_core -lmkl_sequential"
 @noindent
 The option @option{--with-lapack} is used since @I{MKL} contains a tuned
 copy of LAPACK (often older than the current version) as well as the
-@acronym{BLAS} (@pxref{LAPACK}).  Also, it does not at the time of
-writing contain the BLAS functions such as @code{dgemmtr} and so to
-be used with LAPACK 3.12.1 included in @R{} 4.5.0 and later needs @R{}
+@acronym{BLAS} (@pxref{LAPACK}).  Also, prior to version 2026.2.0
+it did not contain the BLAS functions such as @code{dgemmtr} and so to
+be used with LAPACK 3.12.1 (as included in @R{} 4.5.0 and later) needed @R{}
 configured with @option{--with-2025blas}.
 
 Threaded @I{MKL} may be used by replacing the line defining the variable
@@ -3957,8 +3957,8 @@ but @code{configure} includes tests which may discover some errors such as a
 failure to set the correct @abbr{OpenMP} and @I{MKL} interface layer.
 
 Note that the Debian/Ubuntu distribution can be quite old (for example
-@code{2020.4} in mid-2026 when @code{2026.1} was current): this can be
-important for the LAPACK version included.
+@code{2020.4} in late 2026 when @code{2026.2} was current): this can be
+important for the LAPACK version included (and for other changes).
 
 @noindent
 The default number of threads will be chosen by the @abbr{OpenMP} software, but
@@ -5454,8 +5454,8 @@ SHLIB_FCLDFLAGS="-Wl,-dylib -Wl,-headerpad_max_install_names -Wl,-undefined -Wl,
 @end example
 in @file{config.site}.
 
-Currently (Oct 2026) this successfully builds @R{} and all but one
-@acronym{CRAN} package (although a score or so fail their checks).
+Currently (Nov 2026) this successfully builds @R{} and all
+@acronym{CRAN} packages (although a score or so fail their checks).
 
 @node Cairo graphics
 @subsection Cairo graphics
@@ -5712,7 +5712,7 @@ in the use of @code{NA} @emph{vs} @code{NaN} and a substantial number of
 @node OpenBLAS (macOS)
 @subsubsection @I{OpenBLAS}
 
-@R{} has been built on @cputype{arm64} using @I{OpenBLAS} 0.3.29 (sources
+@R{} has been built on @cputype{arm64} using @I{OpenBLAS} 0.3.34 (sources
 from @uref{https://github.com/OpenMathLib/OpenBLAS/releases}) by
 symlinking @file{/opt/OpenBLAS/lib/libopenblas.dylib} to
 @file{lib/libRblas.dylib} (see @ref{Shared BLAS}).
