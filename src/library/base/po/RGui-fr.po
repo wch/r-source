@@ -1,5 +1,5 @@
-# Translation of RGui.po to French
-# Copyright (C) 2005 The R Foundation
+# Translation of RGui.pot to French
+# Copyright (C) 2005-2026 The R Foundation
 # This file is distributed under the same license as the R package.
 # Philippe Grosjean <phgrosjean@sciviews.org>, 2005.
 #
@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGui 4.1.3\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-04-25 10:48-0700\n"
-"PO-Revision-Date: 2024-03-18 21:18+0000\n"
-"Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
+"POT-Creation-Date: 2026-11-23 14:58+0100\n"
+"PO-Revision-Date: 2026-11-23 16:39+0100\n"
+"Last-Translator: Sebastian Meyer <seb.meyer@fau.de>\n"
 "Language-Team: French <R-core@r-project.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -221,6 +221,11 @@ msgstr "Impossible de sauver le fichier '%s'"
 #: src/gnuwin32/editor.c:270
 msgid "Save script as"
 msgstr "Sauver le script comme"
+
+#: src/gnuwin32/editor.c:422
+#, c-format
+msgid "\"%s\" has been modified. Do you want to save the changes?"
+msgstr "«%s» a été modifié. Voulez-vous enregistrer les modifications?"
 
 #: src/gnuwin32/editor.c:480 src/gnuwin32/editor.c:812 src/gnuwin32/pager.c:445
 #: src/gnuwin32/rui.c:1164
@@ -1209,9 +1214,3 @@ msgstr "Changement de page : attente de confirmation..."
 #: src/library/grDevices/src/devWindows.c:3911
 msgid "Click or hit ENTER for next page"
 msgstr "Cliquez ou appuyez ENTREE pour la page suivante"
-
-#~ msgid "Print...\tCTRL+P"
-#~ msgstr "Imprimer...\tCTRL+P"
-
-#~ msgid "invalid device"
-#~ msgstr "périphérique incorrect"

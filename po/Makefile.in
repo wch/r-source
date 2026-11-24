@@ -52,7 +52,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 update-RGui:
-	@$(ECHO) "tools:::update_RGui_po(\"$(top_srcdir)\", mergeOpts=\"--no-wrap --no-location\")" | \
+	@$(ECHO) "tools:::update_RGui_po(\"$(top_srcdir)\", mergeOpts=\"--no-wrap --add-location\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE)
 
 ## en@quot has to be done in a UTF-8 locale

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.15.2\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-04-25 10:48-0700\n"
+"POT-Creation-Date: 2026-11-23 14:58+0100\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Persian\n"
@@ -223,6 +223,11 @@ msgstr "را ذخیره کرد '%s' نمی‌توان فایل"
 #: src/gnuwin32/editor.c:270
 msgid "Save script as"
 msgstr "ذخیره دست‌نوشته به عنوان"
+
+#: src/gnuwin32/editor.c:422
+#, c-format
+msgid "\"%s\" has been modified. Do you want to save the changes?"
+msgstr ""
 
 #: src/gnuwin32/editor.c:480 src/gnuwin32/editor.c:812 src/gnuwin32/pager.c:445
 #: src/gnuwin32/rui.c:1164

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2025  The R Core Team
+ *  Copyright (C) 1999-2026  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -416,10 +416,10 @@ int editorchecksave(editor c)
     textbox t = getdata(c);
     EditorData p = getdata(t);
     int save;
-    char buf[EDITORMAXTITLE + 100];
+    char buf[EDITORMAXTITLE + MSGSIZE];
     if (ggetmodified(t)) {
-	snprintf(buf, EDITORMAXTITLE + 100,
-		 "\"%s\" has been modified.  Do you want to save the changes?",
+	snprintf(buf, EDITORMAXTITLE + MSGSIZE,
+		 G_("\"%s\" has been modified. Do you want to save the changes?"),
 		 (p->title ? p->title : "Untitled"));
 	save = askyesnocancel(buf);
 	switch (save) {

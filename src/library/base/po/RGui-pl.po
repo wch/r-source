@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 3.5.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-04-25 10:48-0700\n"
+"POT-Creation-Date: 2026-11-23 14:58+0100\n"
 "PO-Revision-Date: 2024-03-18 21:18+0000\n"
 "Last-Translator: Michael Chirico <michaelchirico4@gmail.com>\n"
 "Language-Team: Łukasz Daniel <lukasz.daniel@gmail.com>\n"
@@ -266,6 +266,11 @@ msgstr "Nie można zapisać pliku '%s'"
 #: src/gnuwin32/editor.c:270
 msgid "Save script as"
 msgstr "Zapisz skrypt jako"
+
+#: src/gnuwin32/editor.c:422
+#, c-format
+msgid "\"%s\" has been modified. Do you want to save the changes?"
+msgstr ""
 
 # src/gnuwin32/rui.c: 1074
 # G_("Open script")

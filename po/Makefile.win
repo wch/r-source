@@ -10,8 +10,9 @@ top_srcdir = ..
 ECHO = echo
 
 R_EXE = ../bin/R --vanilla --no-echo
+
 update-RGui:
-	@$(ECHO) "tools:::update_RGui_po(\"$(top_srcdir)\", mergeOpts=\"--no-wrap --no-location\")" | \
+	@$(ECHO) "tools:::update_RGui_po(\"$(top_srcdir)\", mergeOpts=\"--no-wrap --add-location\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_ALL=C $(R_EXE)
 
 ## en@quot has to be done in a UTF-8 locale
