@@ -585,7 +585,12 @@
 
       \item \code{grid.pack()} and \code{grid.frame()} did not listen
       to \code{redraw} argument.  Thanks to \I{Athenkosi Nkonyeni}
-      for report.
+      for the report.
+
+      \item More explanation and examples on row/column creation via
+      subassignments such as \code{<data.frame>$newcol[i] <- val},
+      along the report and discussions in \PR{18364}, notably by \I{Gabe
+	Becker} and \I{Suharto Anggono}.
     }
   }
 }

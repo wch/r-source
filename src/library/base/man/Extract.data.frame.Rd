@@ -20,7 +20,7 @@
 \method{[}{data.frame}(x, i, j) <- value
 \method{[[}{data.frame}(x, ..., exact = TRUE)
 \method{[[}{data.frame}(x, i, j) <- value
-% \method{$}{data.frame}(x, name)
+% \method{$}{data.frame}(x, name) %
 \method{$}{data.frame}(x, name) <- value
 }
 \arguments{
@@ -81,8 +81,17 @@
   right-hand edge of the data frame and numerical indices must be
   contiguous to existing indices.  On the other hand, rows can be added
   at any row after the current last row, and the columns will be
-  in-filled with missing values.  Missing values in the indices are not
+  in-filled with \code{NA}s.  Missing values in the indices are not
   allowed for replacement.
+
+  Unlike when the \code{[} replacement method is called with both \code{i}
+  and \code{j} set, combining the \code{$} and \code{[} replacement methods
+  to \I{subassign} into a column vector can be used to add a new column (but 
+  not a new row), hence the \code{i} must correspond to existing rows, and
+  e.g., numerical indices \code{i} must contain \code{nrow(x)}, see the
+  examples.  Columns added this way will be placed and filled as above (by
+  \code{NA}s).  See \manual{R-lang}{Subset assignment} for a rationale for
+  this difference.
 
   For \code{[} the replacement value can be a list: each element of the
   list is used to replace (part of) one column, recycling the list as
@@ -104,17 +113,11 @@
   will if \code{exact = FALSE} (and with a warning if \code{exact =
   NA}).  If you want to exact matching on row names use
   \code{\link{match}}, as in the examples.
-
-  When the replacement methods are used to \I{subassign} into a column vector,
-  the vector elements assigned into must correspond to existing rows in the
-  data frame.  If \I{subassignment} is used to add a non-existing column, the
-  column will be added as described above, with unassigned elements set
-  to \code{NA}, see \manual{R-lang}{Subset assignment} for a rationale.
 }
 \section{Coercion}{
   The story over when replacement values are coerced is a complicated
-  one, and one that has changed during \R's development.  This section
-  is a guide only.
+  one, and one that has changed during \R's development. %'
+  This section is a guide only.
 
   When \code{[} and \code{[[} are used to add or replace a whole column,
   no coercion takes place but \code{value} will be
@@ -194,9 +197,11 @@ sw[c(1, 1:2), ]        # duplicate row, unique row names are created
 
 sw[sw <= 6] <- 6  # logical matrix indexing
 sw
+stopifnot(identical(dim(sw), 5:4))
 
 ## adding a column
-sw["new1"] <- LETTERS[1:5]   # adds a character column
+sw <- swiss[1:5, 1:4]  # select a manageable subset
+sw ["new1"]  <- LETTERS[1:5] # adds a character column
 sw[["new2"]] <- letters[1:5] # ditto
 sw[, "new3"] <- LETTERS[1:5] # ditto
 sw$new4 <- 1:5
@@ -204,9 +209,38 @@ sapply(sw, class)
 sw$new  # -> NULL: no unique partial match
 sw$new4 <- NULL              # delete the column
 sw
+## with a list(.) rhs, update col. 6, delete 7, append 8
 sw[6:8] <- list(letters[10:14], NULL, aa = 1:5)
-# update col. 6, delete 7, append
 sw
+## + a new column for *some* rows, *must* include last one (5th here) --> fill-in w/ NAs:
+sw $ nc4[c(1, 5)] <-            c("J",           "K")
+stopifnot(identical(sw[,"nc4"], c("J", NA,NA,NA, "K")))
+## However, '4' instead of '5' gives an error -- possibly surprisingly (at first):
+tools::assertError(verbose = TRUE,
+ sw $ nc5[c(1, 4)] <-           c("J",           "K") )
+     # Asserted error: replacement has 4 rows, data has 5
+## Reason: Tmp <- sw; tmp <- sw$nc5 # = NULL
+##                    tmp[c(1,4)] <- c("J","K") # -> tmp is  "J" NA NA "K"
+##         Tmp$nc5 <- tmp   --> Error 
+##
+## Add a new _ROW_ using  <df>[i,j] <- val  (but not  <df>$<j>[i] <- val):
+i <- c(1L, 4:6) ; c4 <- c("J",  "4th", "5.", "6th")
+try( sw $ N2 [i] <- c4 )# _fails_ to create row 6
+     sw[i, "N2"] <- c4  #  works  to create row 6 & col 'N2'
+     sw $ N3[i]  <- c4  # (creates new col 'N3' when we have 6 rows)
+stopifnot(identical(sw$N3, sw$N2), identical(sw$N3[i], c4) , identical(sw[i,"N2"], c4))
+
+## "Summarizing" the cases adding a column via subassignment(i.e., `[<-` and `$<-`):
+dd <- data.frame(x = 1:6, y = 7:12)
+try( dd$z[c(1, 5)]  <- 3:4 ) # error (5 vs 6 rows)
+     dd$z[c(1, 3)]  <- 3:4   # no error, recycled (2*3 = 6)
+     dd  [c(1, 3), "w"] <- 0 # no error, *no* recycling
+dd # note columns 'z' and 'w'
+\dontshow{
+  stopifnot(identical(dd$z, rep(c(3L, NA, 4L), 2)),
+            identical(dd$w, c(0, NA, 0, NA, NA, NA)))
+  tools::assertError(dd$u[c(1, 5)] <- 1:2)
+}
 
 ## matrices in a data frame
 A <- data.frame(x = 1:3, y = I(matrix(4:9, 3, 2)),
