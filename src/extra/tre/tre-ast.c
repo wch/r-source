@@ -10,7 +10,6 @@
 #include <config.h>
 #endif /* HAVE_CONFIG_H */
 #include <assert.h>
-#include <limits.h>
 
 #include "tre-ast.h"
 #include "tre-mem.h"
@@ -34,7 +33,7 @@ tre_ast_new_node(tre_mem_t mem, tre_ast_type_t type, size_t size)
 }
 
 tre_ast_node_t *
-tre_ast_new_literal(tre_mem_t mem, int code_min, int code_max, int position)
+tre_ast_new_literal(tre_mem_t mem, int code_min, int code_max)
 {
   tre_ast_node_t *node;
   tre_literal_t *lit;
@@ -45,7 +44,7 @@ tre_ast_new_literal(tre_mem_t mem, int code_min, int code_max, int position)
   lit = node->obj;
   lit->code_min = code_min;
   lit->code_max = code_max;
-  lit->position = position;
+  lit->position = -1;
 
   return node;
 }
@@ -96,11 +95,7 @@ tre_ast_new_catenation(tre_mem_t mem, tre_ast_node_t *left,
     return NULL;
   ((tre_catenation_t *)node->obj)->left = left;
   ((tre_catenation_t *)node->obj)->right = right;
-  // UBSAN warning in clang 10: signed integer overflow
-  double tmp = (double)left->num_submatches + (double)right->num_submatches;
-  if (tmp >= INT_MIN && tmp <= INT_MAX)
-      node->num_submatches = left->num_submatches + right->num_submatches;
-  else node->num_submatches = 0;
+  node->num_submatches = left->num_submatches + right->num_submatches;
 
   return node;
 }

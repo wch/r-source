@@ -27,13 +27,7 @@ char *alloca ();
 #endif
 #endif /* TRE_USE_ALLOCA */
 
-/* These seem compiler/OS-specific, but unexplained
-On Linux the first is intended to be used only with GCC.
-#define __USE_STRING_INLINES
-#undef __NO_INLINE__
-*/
-
-// #include <assert.h>
+#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
@@ -52,10 +46,7 @@ On Linux the first is intended to be used only with GCC.
 
 #include "tre-internal.h"
 #include "tre-match-utils.h"
-#include "tre.h"
 #include "xmalloc.h"
-
-#define assert(a) R_assert(a) 
 
 #define TRE_M_COST	0
 #define TRE_M_NUM_INS	1
@@ -206,7 +197,7 @@ tre_set_params(tre_tnfa_approx_reach_t *reach,
 }
 
 reg_errcode_t
-tre_tnfa_run_approx(const tre_tnfa_t *tnfa, const void *string, int len,
+tre_tnfa_run_approx(const tre_tnfa_t *tnfa, const void *string, ssize_t len,
 		    tre_str_type_t type, int *match_tags,
 		    regamatch_t *match, regaparams_t default_params,
 		    int eflags, int *match_end_ofs)
@@ -214,7 +205,7 @@ tre_tnfa_run_approx(const tre_tnfa_t *tnfa, const void *string, int len,
   /* State variables required by GET_NEXT_WCHAR. */
   tre_char_t prev_c = 0, next_c = 0;
   const char *str_byte = string;
-  int pos = -1;
+  ssize_t pos = -1;
   unsigned int pos_add_next = 1;
 #ifdef TRE_WCHAR
   const wchar_t *str_wide = string;
@@ -222,6 +213,7 @@ tre_tnfa_run_approx(const tre_tnfa_t *tnfa, const void *string, int len,
   mbstate_t mbstate;
 #endif /* !TRE_WCHAR */
 #endif /* TRE_WCHAR */
+  reg_errcode_t ret;
   int reg_notbol = eflags & REG_NOTBOL;
   int reg_noteol = eflags & REG_NOTEOL;
   int reg_newline = tnfa->cflags & REG_NEWLINE;
@@ -246,16 +238,20 @@ tre_tnfa_run_approx(const tre_tnfa_t *tnfa, const void *string, int len,
 
   int i, id;
 
-  if (!match_tags)
-    num_tags = 0;
-  else
-    num_tags = tnfa->num_tags;
+  /*
+   * TRE internals tend to use int instead of size_t for positions or
+   * lengths and don't check for overflow.  This will take time to fix
+   * properly.  In the meantime, simply limit the input to what we can
+   * handle.
+   */
+  if (len > TRE_MAX_STRING)
+    len = TRE_MAX_STRING;
 
 #ifdef TRE_MBSTATE
   memset(&mbstate, '\0', sizeof(mbstate));
 #endif /* TRE_MBSTATE */
 
-  DPRINT(("tre_tnfa_run_approx, input type %d, len %d, eflags %d, "
+  DPRINT(("tre_tnfa_run_approx, input type %d, len %zd, eflags %d, "
 	  "match_tags %p\n",
 	  type, len, eflags,
 	  match_tags));
@@ -264,6 +260,11 @@ tre_tnfa_run_approx(const tre_tnfa_t *tnfa, const void *string, int len,
 	  default_params.cost_ins,
 	  default_params.cost_del,
 	  default_params.cost_subst));
+
+  if (!match_tags)
+    num_tags = 0;
+  else
+    num_tags = tnfa->num_tags;
 
   /* Allocate memory for temporary data required for matching.	This needs to
      be done for every matching operation to be thread safe.  This allocates
@@ -294,17 +295,17 @@ tre_tnfa_run_approx(const tre_tnfa_t *tnfa, const void *string, int len,
     /* Allocate `tmp_tags' from `buf'. */
     tmp_tags = (void *)buf;
     buf_cursor = buf + tag_bytes;
-    buf_cursor += ALIGN(buf_cursor, anytype);
+    buf_cursor += ALIGN(buf_cursor, tre_aligned_t);
 
     /* Allocate `reach' from `buf'. */
     reach = (void *)buf_cursor;
     buf_cursor += reach_bytes;
-    buf_cursor += ALIGN(buf_cursor, anytype);
+    buf_cursor += ALIGN(buf_cursor, tre_aligned_t);
 
     /* Allocate `reach_next' from `buf'. */
     reach_next = (void *)buf_cursor;
     buf_cursor += reach_bytes;
-    buf_cursor += ALIGN(buf_cursor, anytype);
+    buf_cursor += ALIGN(buf_cursor, tre_aligned_t);
 
     /* Allocate tag arrays for `reach' and `reach_next' from `buf'. */
     for (i = 0; i < tnfa->num_states; i++)
@@ -330,7 +331,7 @@ tre_tnfa_run_approx(const tre_tnfa_t *tnfa, const void *string, int len,
 
   while (/*CONSTCOND*/(void)1,1)
     {
-      DPRINT(("%03d:%2lc/%05d\n", pos, (tre_cint_t)next_c, (int)next_c));
+      DPRINT(("%03zd:%2lc/%05d\n", pos, (tre_cint_t)next_c, (int)next_c));
 
       /* Add initial states to `reach_next' if an exact match has not yet
 	 been found. */
@@ -487,34 +488,34 @@ tre_tnfa_run_approx(const tre_tnfa_t *tnfa, const void *string, int len,
 	      continue;
 	    *deque_end = &reach_next[id];
 	    deque_end++;
-	    /* check if we need to resize the buffer */
-	    if (deque_end >= (ringbuffer + rb_size)) {
-	      tre_tnfa_approx_reach_t **larger_buf;
-	      rb_size += 512;
-	      size_t os = deque_start - ringbuffer,
-		  oe = deque_end - ringbuffer;
-	      // GCC complained here that ringbuffer is still used.
-	      // Although realloc could free it, it does not change the pointer.
-	      larger_buf = (tre_tnfa_approx_reach_t **)
-		((ringbuffer == static_ringbuffer) ?
-		 xmalloc(sizeof(tre_tnfa_approx_reach_t *) * rb_size) :
-		 xrealloc(ringbuffer, sizeof(tre_tnfa_approx_reach_t *) * rb_size));
-	      if (!larger_buf) {
-		DPRINT(("tre_tnfa_run_approx: cannot resize ring buffer\n"));
-		if (ringbuffer != static_ringbuffer)
-		  xfree(ringbuffer);
+	    /* Grow the buffer (moving to the heap) if full. */
+	    if (deque_end >= (ringbuffer + rb_size))
+	      {
+		tre_tnfa_approx_reach_t **larger_buf;
+		size_t os = deque_start - ringbuffer;
+		size_t oe = deque_end - ringbuffer;
+		rb_size += 512;
+		if (ringbuffer == static_ringbuffer)
+		  larger_buf = xmalloc(sizeof(*ringbuffer) * rb_size);
+		else
+		  larger_buf = xrealloc(ringbuffer, sizeof(*ringbuffer) * rb_size);
+		if (larger_buf == NULL)
+		  {
+		    if (ringbuffer != static_ringbuffer)
+		      xfree(ringbuffer);
 #ifndef TRE_USE_ALLOCA
-		if (buf)
-		  xfree(buf);
+		    if (buf)
+		      xfree(buf);
 #endif /* !TRE_USE_ALLOCA */
-		return REG_ESPACE;
+		    return REG_ESPACE;
+		  }
+		if (ringbuffer == static_ringbuffer)
+		  /* Moving from stack to heap: copy existing contents. */
+		  memcpy(larger_buf, ringbuffer, sizeof(static_ringbuffer));
+		ringbuffer = larger_buf;
+		deque_start = ringbuffer + os;
+		deque_end = ringbuffer + oe;
 	      }
-	      deque_start = larger_buf + os;
-	      deque_end = larger_buf + oe;
-	      if (ringbuffer == static_ringbuffer) /* when switching from stack to heap we need to copy */
-		memcpy(larger_buf, ringbuffer, sizeof(static_ringbuffer));
-	      ringbuffer = larger_buf;
-	    }
 	  }
 
 	/* Repeat until the deque is empty. */
@@ -527,7 +528,7 @@ tre_tnfa_run_approx(const tre_tnfa_t *tnfa, const void *string, int len,
 
 	    /* Pop the first item off the deque. */
 	    reach_p = *deque_start;
-	    id = (int)(reach_p - reach_next);
+	    id = reach_p - reach_next;
 	    depth = reach_p->depth;
 
 	    /* Compute cost at current depth. */
@@ -632,7 +633,7 @@ tre_tnfa_run_approx(const tre_tnfa_t *tnfa, const void *string, int len,
 			    && (num_tags > 0
 				&& tmp_tags[0] <= match_tags[0]))))
 		  {
-		    DPRINT(("	 setting new match at %d, cost %d\n",
+		    DPRINT(("	 setting new match at %zd, cost %d\n",
 			    pos, cost0));
 		    match_eo = pos;
 		    memcpy(match_costs, reach_next[dest_id].costs[0],
@@ -669,7 +670,7 @@ tre_tnfa_run_approx(const tre_tnfa_t *tnfa, const void *string, int len,
 	      if (str_user_end)
 		break;
 	    }
-	  else if (next_c == L'\0')
+	  else if (next_c == L'\0' || pos >= TRE_MAX_STRING)
 	    break;
 	}
       else
@@ -817,7 +818,7 @@ tre_tnfa_run_approx(const tre_tnfa_t *tnfa, const void *string, int len,
 		      || (cost0 == match_costs[TRE_M_COST]
 			  && num_tags > 0 && tmp_tags[0] <= match_tags[0])))
 		{
-		  DPRINT(("    setting new match at %d, cost %d\n",
+		  DPRINT(("    setting new match at %zd, cost %d\n",
 			  pos, cost0));
 		  match_eo = pos;
 		  for (i = 0; i < TRE_M_LAST; i++)
@@ -832,16 +833,17 @@ tre_tnfa_run_approx(const tre_tnfa_t *tnfa, const void *string, int len,
   DPRINT(("match end offset = %d, match cost = %d\n", match_eo,
 	  match_costs[TRE_M_COST]));
 
-#ifndef TRE_USE_ALLOCA
-  if (buf)
-    xfree(buf);
-#endif /* !TRE_USE_ALLOCA */
-
   match->cost = match_costs[TRE_M_COST];
   match->num_ins = match_costs[TRE_M_NUM_INS];
   match->num_del = match_costs[TRE_M_NUM_DEL];
   match->num_subst = match_costs[TRE_M_NUM_SUBST];
   *match_end_ofs = match_eo;
 
-  return match_eo >= 0 ? REG_OK : REG_NOMATCH;
+  ret = match_eo >= 0 ? REG_OK : REG_NOMATCH;
+
+#ifndef TRE_USE_ALLOCA
+  if (buf)
+    xfree(buf);
+#endif /* !TRE_USE_ALLOCA */
+  return ret;
 }

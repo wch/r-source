@@ -76,7 +76,8 @@ local({
 
 
 ## grepRaw() with truncated TRE patterns -- PR#18995
-for (p in c("[", "[[:alpha:", "[a-", "(", "(?", "(?#", "\\x", "\\x4", "\\x{4"))
+for (p in c("[", "[[:alpha:", "[a-", "(", "(?", "(?#", "\\x", "\\x4", "\\x{4",
+            "a{ 1i + 1d < ", "a{ 1i + 12"))
     tryCatch(grepRaw(p, "abc"), error = function(e) NULL)
 ## read past the end of the pattern in R <= 4.6.2 (visible under ASan)
 
@@ -499,6 +500,29 @@ local({
               identical(unlist(rd[tags == "COMMENT"]), paste("%", long)))
 })
 ## leaked the token buffer in R <= 4.6.2 (visible under LSan)
+
+
+## TRE: nested bounded repetitions multiply when expanded
+r <- tryCid(suppressWarnings(grepl("(?:a{2,101,})(?:a{2,101,}){100}{100}", "aaaa")))
+stopifnot(inherits(r, "error"),
+          ## the limit leaves room for the longest case-insensitive pattern
+          !grepl(strrep("a", 65536L), "b", ignore.case = TRUE))
+## allocated ~8.5 GB to compile the 36-byte pattern in R <= 4.6.2
+
+
+## TRE: assertions in alternatives that match the empty string -- PR#17992
+stopifnot(exprs = {
+    grepl("(^|\\b)a", "this is a sentence")
+    grepl("(\\b|^)a", "this is a sentence")
+    identical(gsub("(^|\\<)a", "A", " a"), " A")
+    identical(gsub("(\\>|\\<)a", "A", " a"), " A")
+    identical(gsub("($|^)a", "A", "a"), "A")
+    grepl("a($|\\b)", "a b")
+    ## still no match where neither assertion holds
+    !grepl("(^|\\b)a", "ba")
+    !grepl("a($|\\b)", "ab")
+})
+## only the first alternative's assertion was tried in R <= 4.6.2
 
 
 

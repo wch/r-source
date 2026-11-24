@@ -1,10 +1,12 @@
 /*
-  tre-match-utils.h - TRE matcher helper definitions
+ * tre-match-utils.h - TRE matcher helper definitions
+ *
+ * This software is released under a BSD-style license.
+ * See the file LICENSE for details and copyright.
+ */
 
-  This software is released under a BSD-style license.
-  See the file LICENSE for details and copyright.
-
-*/
+#ifndef TRE_MATCH_UTILS_H
+#define TRE_MATCH_UTILS_H
 
 #define str_source ((const tre_str_source*)string)
 
@@ -41,7 +43,7 @@
 	else								      \
 	  {								      \
 	    size_t w;							      \
-	    int max;							      \
+	    size_t max;							      \
 	    if (len >= 0)						      \
 	      max = len - pos;						      \
 	    else							      \
@@ -64,7 +66,7 @@
 		  }							      \
 		else							      \
 		  {							      \
-		    pos_add_next = (unsigned int)w;					      \
+		    pos_add_next = w;					      \
 		    str_byte += w;					      \
 		  }							      \
 	      }								      \
@@ -156,7 +158,17 @@
 	   && IS_WORD_CHAR(prev_c) == IS_WORD_CHAR(next_c)))		      \
    || ((assertions & ASSERT_AT_WB_NEG)					      \
        && (pos == 0 || next_c == L'\0'					      \
-	   || IS_WORD_CHAR(prev_c) != IS_WORD_CHAR(next_c))))
+	   || IS_WORD_CHAR(prev_c) != IS_WORD_CHAR(next_c)))		      \
+   || ((assertions & ASSERT_NOT_BOL)					      \
+       && !((pos > 0 || reg_notbol)					      \
+	    && (prev_c != L'\n' || !reg_newline)))			      \
+   || ((assertions & ASSERT_NOT_EOL)					      \
+       && !((next_c != L'\0' || reg_noteol)				      \
+	    && (next_c != L'\n' || !reg_newline)))			      \
+   || ((assertions & ASSERT_NOT_BOW)					      \
+       && !IS_WORD_CHAR(prev_c) && IS_WORD_CHAR(next_c))		      \
+   || ((assertions & ASSERT_NOT_EOW)					      \
+       && IS_WORD_CHAR(prev_c) && !IS_WORD_CHAR(next_c)))
 
 #define CHECK_CHAR_CLASSES(trans_i, tnfa, eflags)                             \
   (((trans_i->assertions & ASSERT_CHAR_CLASS)                                 \
@@ -213,3 +225,7 @@ tre_neg_char_classes_match(tre_ctype_t *classes, tre_cint_t wc, int icase)
       classes++;
   return 0; /* No match. */
 }
+
+#endif /* TRE_MATCH_UTILS_H */
+
+/* EOF */

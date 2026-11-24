@@ -6,18 +6,11 @@
 
 */
 
-/*
-  TODO:
-   - Fix tre_ast_to_tnfa() to recurse using a stack instead of recursive
-     function calls.
-*/
-
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif /* HAVE_CONFIG_H */
 #include <stdio.h>
-//#include <assert.h>
+#include <assert.h>
 #include <string.h>
 
 #include "tre-internal.h"
@@ -26,10 +19,7 @@
 #include "tre-ast.h"
 #include "tre-parse.h"
 #include "tre-compile.h"
-#include "tre.h"
 #include "xmalloc.h"
-
-#define assert(a) R_assert(a)
 
 /*
   Algorithms to setup tags so that submatch addressing can be done.
@@ -49,7 +39,7 @@ tre_add_tag_left(tre_mem_t mem, tre_ast_node_t *node, int tag_id)
   c = tre_mem_alloc(mem, sizeof(*c));
   if (c == NULL)
     return REG_ESPACE;
-  c->left = tre_ast_new_literal(mem, TAG, tag_id, -1);
+  c->left = tre_ast_new_literal(mem, TAG, tag_id);
   if (c->left == NULL)
     return REG_ESPACE;
   c->right = tre_mem_alloc(mem, sizeof(tre_ast_node_t));
@@ -81,7 +71,7 @@ tre_add_tag_right(tre_mem_t mem, tre_ast_node_t *node, int tag_id)
   c = tre_mem_alloc(mem, sizeof(*c));
   if (c == NULL)
     return REG_ESPACE;
-  c->right = tre_ast_new_literal(mem, TAG, tag_id, -1);
+  c->right = tre_ast_new_literal(mem, TAG, tag_id);
   if (c->right == NULL)
     return REG_ESPACE;
   c->left = tre_mem_alloc(mem, sizeof(tre_ast_node_t));
@@ -149,14 +139,14 @@ tre_add_tags(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *tree,
   reg_errcode_t status = REG_OK;
   tre_addtags_symbol_t symbol;
   tre_ast_node_t *node = tree; /* Tree node we are currently looking at. */
-  int bottom = tre_stack_num_objects(stack);
+  size_t bottom = tre_stack_num_items(stack);
   /* True for first pass (counting number of needed tags) */
   int first_pass = (mem == NULL || tnfa == NULL);
   int *regset, *orig_regset;
-  int num_tags = 0; /* Total number of tags. */
-  int num_minimals = 0;	 /* Number of special minimal tags. */
-  int tag = 0;	    /* The tag that is to be added next. */
-  int next_tag = 1; /* Next tag to use after this one. */
+  unsigned int num_tags = 0; /* Total number of tags. */
+  unsigned int num_minimals = 0;	 /* Number of special minimal tags. */
+  unsigned int tag = 0;	    /* The tag that is to be added next. */
+  unsigned int next_tag = 1; /* Next tag to use after this one. */
   int *parents;	    /* Stack of submatches the current submatch is
 		       contained in. */
   int minimal_tag = -1; /* Tag that marks the beginning of a minimal match. */
@@ -200,11 +190,8 @@ tre_add_tags(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *tree,
   STACK_PUSH(stack, voidptr, node);
   STACK_PUSH(stack, int, ADDTAGS_RECURSE);
 
-  while (tre_stack_num_objects(stack) > bottom)
+  while (status == REG_OK && tre_stack_num_items(stack) > bottom)
     {
-      if (status != REG_OK)
-	break;
-
       symbol = (tre_addtags_symbol_t)tre_stack_pop_int(stack);
       switch (symbol)
 	{
@@ -611,7 +598,7 @@ tre_add_tags(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *tree,
 	  break;
 
 	} /* end switch(symbol) */
-    } /* end while(tre_stack_num_objects(stack) > bottom) */
+    } /* end while(tre_stack_num_items(stack) > bottom) */
 
   if (!first_pass)
     tre_purge_regset(regset, tnfa, tag);
@@ -662,7 +649,7 @@ tre_copy_ast(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *ast,
 	     tre_ast_node_t **copy, int *max_pos)
 {
   reg_errcode_t status = REG_OK;
-  int bottom = tre_stack_num_objects(stack);
+  size_t bottom = tre_stack_num_items(stack);
   int num_copied = 0;
   int first_tag = 1;
   tre_ast_node_t **result = copy;
@@ -671,7 +658,7 @@ tre_copy_ast(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *ast,
   STACK_PUSH(stack, voidptr, ast);
   STACK_PUSH(stack, int, COPY_RECURSE);
 
-  while (status == REG_OK && tre_stack_num_objects(stack) > bottom)
+  while (status == REG_OK && tre_stack_num_items(stack) > bottom)
     {
       tre_ast_node_t *node;
       if (status != REG_OK)
@@ -691,8 +678,8 @@ tre_copy_ast(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *ast,
 	      {
 		tre_literal_t *lit = node->obj;
 		int pos = lit->position;
-		int min = (int)lit->code_min;
-		int max = (int)lit->code_max;
+		long min = lit->code_min;
+		long max = lit->code_max;
 		if (!IS_SPECIAL(lit) || IS_BACKREF(lit))
 		  {
 		    /* XXX - e.g. [ab] has only one position but two
@@ -714,11 +701,18 @@ tre_copy_ast(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *ast,
 		    tag_directions[max] = TRE_TAG_MAXIMIZE;
 		    first_tag = 0;
 		  }
-		*result = tre_ast_new_literal(mem, min, max, pos);
-		if (*result == NULL)
+		*result = tre_ast_new_literal(mem, min, max);
+		if (*result == NULL) {
 		  status = REG_ESPACE;
+		  break;
+		}
+		if (!IS_SPECIAL(lit)) {
+		  ((tre_literal_t *)(*result)->obj)->u.class = lit->u.class;
+		  ((tre_literal_t *)(*result)->obj)->neg_classes = lit->neg_classes;
+		} else if (IS_PARAMETER(lit)) {
+		  ((tre_literal_t *)(*result)->obj)->u.params = lit->u.params;
+		}
 
-                ((tre_literal_t*)(*result)->obj)->u.class = lit->u.class;  
 		if (pos > *max_pos)
 		  *max_pos = pos;
 		break;
@@ -799,14 +793,18 @@ typedef enum {
 } tre_expand_ast_symbol_t;
 
 /* Expands each iteration node that has a finite nonzero minimum or maximum
-   iteration count to a catenated sequence of copies of the node. */
+   iteration count to a catenated sequence of copies of the node.
+
+   Nested bounds multiply, so the expansion can be far larger than the
+   pattern: ((a{255}){255}){255} has 16 million positions.  Enforce
+   TRE_MAX_POS as the copies are made, rather than leaving it to
+   tre_compute_npfl() after all of them have been allocated. */
 static reg_errcode_t
 tre_expand_ast(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *ast,
-	       int *position, tre_tag_direction_t *tag_directions,
-	       int *max_depth)
+	       tre_tag_direction_t *tag_directions, int *max_depth)
 {
   reg_errcode_t status = REG_OK;
-  int bottom = tre_stack_num_objects(stack);
+  size_t bottom = tre_stack_num_items(stack);
   int pos_add = 0;
   int pos_add_total = 0;
   int max_pos = 0;
@@ -822,7 +820,7 @@ tre_expand_ast(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *ast,
 
   STACK_PUSHR(stack, voidptr, ast);
   STACK_PUSHR(stack, int, EXPAND_RECURSE);
-  while (status == REG_OK && tre_stack_num_objects(stack) > bottom)
+  while (status == REG_OK && tre_stack_num_items(stack) > bottom)
     {
       tre_ast_node_t *node;
       tre_expand_ast_symbol_t symbol;
@@ -917,6 +915,8 @@ tre_expand_ast(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *ast,
 					  &max_pos);
 		    if (status != REG_OK)
 		      return status;
+		    if (max_pos >= TRE_MAX_POS)
+		      return REG_ESPACE;
 		    if (seq1 != NULL)
 		      seq1 = tre_ast_new_catenation(mem, seq1, copy);
 		    else
@@ -933,6 +933,8 @@ tre_expand_ast(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *ast,
 					  &pos_add, NULL, &seq2, &max_pos);
 		    if (status != REG_OK)
 		      return status;
+		    if (max_pos >= TRE_MAX_POS)
+		      return REG_ESPACE;
 		    seq2 = tre_ast_new_iter(mem, seq2, 0, -1, 0);
 		    if (seq2 == NULL)
 		      return REG_ESPACE;
@@ -941,22 +943,21 @@ tre_expand_ast(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *ast,
 		  {
 		    for (j = iter->min; j < iter->max; j++)
 		      {
-			tre_ast_node_t *tmp, *copy;
+			tre_ast_node_t *copy;
 			pos_add_save = pos_add;
 			status = tre_copy_ast(mem, stack, iter->arg, 0,
 					      &pos_add, NULL, &copy, &max_pos);
 			if (status != REG_OK)
 			  return status;
+			if (max_pos >= TRE_MAX_POS)
+			  return REG_ESPACE;
 			if (seq2 != NULL)
 			  seq2 = tre_ast_new_catenation(mem, copy, seq2);
 			else
 			  seq2 = copy;
 			if (seq2 == NULL)
 			  return REG_ESPACE;
-			tmp = tre_ast_new_literal(mem, EMPTY, -1, -1);
-			if (tmp == NULL)
-			  return REG_ESPACE;
-			seq2 = tre_ast_new_union(mem, tmp, seq2);
+			seq2 = tre_ast_new_iter(mem, seq2, 0, 1, 0);
 			if (seq2 == NULL)
 			  return REG_ESPACE;
 		      }
@@ -987,12 +988,12 @@ tre_expand_ast(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *ast,
 		tre_ast_node_t *tmp_l, *tmp_r, *tmp_node, *node_copy;
 		int *old_params;
 
-		tmp_l = tre_ast_new_literal(mem, PARAMETER, 0, -1);
+		tmp_l = tre_ast_new_literal(mem, PARAMETER, 0);
 		if (!tmp_l)
 		  return REG_ESPACE;
 		((tre_literal_t *)tmp_l->obj)->u.params = iter->params;
 		iter->params[TRE_PARAM_DEPTH] = params_depth + 1;
-		tmp_r = tre_ast_new_literal(mem, PARAMETER, 0, -1);
+		tmp_r = tre_ast_new_literal(mem, PARAMETER, 0);
 		if (!tmp_r)
 		  return REG_ESPACE;
 		old_params = tre_mem_alloc(mem, sizeof(*old_params)
@@ -1032,19 +1033,9 @@ tre_expand_ast(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *ast,
 	}
     }
 
-  *position += pos_add_total;
-
-  /* `max_pos' should never be larger than `*position' if the above
-     code works, but just an extra safeguard let's make sure
-     `*position' is set large enough so enough memory will be
-     allocated for the transition table. */
-  if (max_pos > *position)
-    *position = max_pos;
-
 #ifdef TRE_DEBUG
   DPRINT(("Expanded AST:\n"));
   tre_ast_print(ast);
-  DPRINT(("*position %d, max_pos %d\n", *position, max_pos));
 #endif
 
   return status;
@@ -1067,7 +1058,7 @@ tre_set_empty(tre_mem_t mem)
 }
 
 static tre_pos_and_tags_t *
-tre_set_one(tre_mem_t mem, int position, int code_min, int code_max,
+tre_set_one(tre_mem_t mem, int position, long code_min, long code_max,
 	    tre_ctype_t class, tre_ctype_t *neg_classes, int backref)
 {
   tre_pos_and_tags_t *new_set;
@@ -1089,253 +1080,385 @@ tre_set_one(tre_mem_t mem, int position, int code_min, int code_max,
   return new_set;
 }
 
-static tre_pos_and_tags_t *
-tre_set_union(tre_mem_t mem, tre_pos_and_tags_t *set1, tre_pos_and_tags_t *set2,
-	      int *tags, int assertions, int *params)
-{
-  int s1, s2, i, j;
-  tre_pos_and_tags_t *new_set;
-  int *new_tags;
-  int num_tags;
+/* One way of matching the empty string through a nullable subtree: the
+   tags on the way, the assertions that must hold there, and the matching
+   parameters that are set on the way. */
+typedef struct tre_empty_path {
+  int *tags;		/* -1 terminated array of tags, or NULL. */
+  int assertions;	/* Bitmask of ASSERT_* flags. */
+  int *params;		/* TRE_PARAM_LAST parameters, or NULL. */
+  struct tre_empty_path *next;
+} tre_empty_path_t;
 
-  for (num_tags = 0; tags != NULL && tags[num_tags] >= 0; num_tags++);
+/* A list of empty paths in order of POSIX preference. */
+typedef struct {
+  tre_empty_path_t *head;
+  tre_empty_path_t *tail;
+} tre_empty_path_list_t;
+
+/* Sets `*result' to the -1 terminated union of the tag arrays `t1' and
+   `t2' (either may be NULL), or to NULL if both are empty.  Tag arrays are
+   never changed once made, so the result may be one of them. */
+static reg_errcode_t
+tre_merge_tags(tre_mem_t mem, int *t1, int *t2, int **result)
+{
+  int n1, n2, n, i, j;
+  int *tags;
+
+  for (n1 = 0; t1 != NULL && t1[n1] >= 0; n1++);
+  for (n2 = 0; t2 != NULL && t2[n2] >= 0; n2++);
+  if (n1 == 0 || n2 == 0)
+    {
+      *result = n1 > 0 ? t1 : n2 > 0 ? t2 : NULL;
+      return REG_OK;
+    }
+
+  tags = tre_mem_alloc(mem, sizeof(*tags) * (n1 + n2 + 1));
+  if (tags == NULL)
+    return REG_ESPACE;
+  for (n = 0; n < n1; n++)
+    tags[n] = t1[n];
+  for (j = 0; j < n2; j++)
+    {
+      /* Don't add duplicates. */
+      for (i = 0; i < n && tags[i] != t2[j]; i++);
+      if (i == n)
+	tags[n++] = t2[j];
+    }
+  tags[n] = -1;
+  *result = tags;
+  return REG_OK;
+}
+
+/* Sets `*result' to the parameters `p1' overridden by the values set in
+   `p2'.  Either may be NULL. */
+static reg_errcode_t
+tre_merge_params(tre_mem_t mem, int *p1, int *p2, int **result)
+{
+  int *params;
+  int i;
+
+  if (p1 == NULL || p2 == NULL)
+    {
+      *result = p1 != NULL ? p1 : p2;
+      return REG_OK;
+    }
+
+  params = tre_mem_alloc(mem, sizeof(*params) * TRE_PARAM_LAST);
+  if (params == NULL)
+    return REG_ESPACE;
+  for (i = 0; i < TRE_PARAM_LAST; i++)
+    params[i] = p2[i] != TRE_PARAM_UNSET ? p2[i] : p1[i];
+  *result = params;
+  return REG_OK;
+}
+
+/* Returns 1 if the parameter arrays `p1' and `p2' (either may be NULL) are
+   the same. */
+static int
+tre_params_equal(const int *p1, const int *p2)
+{
+  int i;
+
+  if (p1 == NULL || p2 == NULL)
+    return p1 == p2;
+  for (i = 0; i < TRE_PARAM_LAST; i++)
+    if (p1[i] != p2[i])
+      return 0;
+  return 1;
+}
+
+/* Pairs of assertions where one holds exactly when the other does not. */
+static const int tre_assertion_pairs[][2] = {
+  { ASSERT_AT_BOL, ASSERT_NOT_BOL },
+  { ASSERT_AT_EOL, ASSERT_NOT_EOL },
+  { ASSERT_AT_BOW, ASSERT_NOT_BOW },
+  { ASSERT_AT_EOW, ASSERT_NOT_EOW },
+  { ASSERT_AT_WB, ASSERT_AT_WB_NEG }
+};
+
+/* Returns 1 if the assertions in the bitmask `assertions' can never hold
+   together. */
+static int
+tre_assertions_contradict(int assertions)
+{
+  size_t i;
+
+  for (i = 0; i < elementsof(tre_assertion_pairs); i++)
+    if ((assertions & tre_assertion_pairs[i][0])
+	&& (assertions & tre_assertion_pairs[i][1]))
+      return 1;
+  return 0;
+}
+
+/* Returns the assertion that holds exactly when `assertion' does not. */
+static int
+tre_assertion_negate(int assertion)
+{
+  size_t i;
+
+  for (i = 0; i < elementsof(tre_assertion_pairs); i++)
+    {
+      if (assertion == tre_assertion_pairs[i][0])
+	return tre_assertion_pairs[i][1];
+      if (assertion == tre_assertion_pairs[i][1])
+	return tre_assertion_pairs[i][0];
+    }
+  assert(0);
+  return 0;
+}
+
+static tre_empty_path_t *
+tre_empty_path_new(tre_mem_t mem, int *tags, int assertions, int *params)
+{
+  tre_empty_path_t *path = tre_mem_calloc(mem, sizeof(*path));
+  if (path == NULL)
+    return NULL;
+  path->tags = tags;
+  path->assertions = assertions;
+  path->params = params;
+  return path;
+}
+
+/* The path that adds nothing, for the plain union of two sets. */
+static const tre_empty_path_t tre_no_path = { NULL, 0, NULL, NULL };
+
+/* Appends to `list' the parts of the path that sets `tags', needs
+   `assertions' and sets `params' that apply where no earlier path of the
+   list does.  POSIX prefers the earlier paths, so the new one may only be
+   taken where each of them fails, that is, where one of its assertions
+   a1, ..., an does not hold.  For each of them, the path is split into
+   disjoint parts that also need not a1, or a1 and not a2, ..., or a1, ...,
+   an-1 and not an.  Parts that need contradicting assertions are left out.
+   So the paths in a list never apply together: the preferred one is taken
+   whenever it can be, and the next one only where it cannot. */
+static reg_errcode_t
+tre_empty_path_list_add(tre_mem_t mem, tre_empty_path_list_t *list,
+			int *tags, int assertions, int *params)
+{
+  tre_empty_path_t *earlier, *part, *next, *parts, *kept, **tail;
+  int needed, missing, bit;
+
+  if (tre_assertions_contradict(assertions))
+    return REG_OK;
+  parts = tre_empty_path_new(mem, tags, assertions, params);
+  if (parts == NULL)
+    return REG_ESPACE;
+  for (earlier = list->head; earlier != NULL && parts != NULL;
+       earlier = earlier->next)
+    {
+      kept = NULL;
+      tail = &kept;
+      for (part = parts; part != NULL; part = next)
+	{
+	  next = part->next;
+	  needed = part->assertions;
+	  if (tre_assertions_contradict(needed | earlier->assertions))
+	    {
+	      /* The earlier path never applies together with this part. */
+	      *tail = part;
+	      tail = &part->next;
+	      continue;
+	    }
+	  /* If nothing is missing, the earlier path applies wherever this
+	     part does, and the part is left out. */
+	  missing = earlier->assertions & ~needed;
+	  for (bit = 1; missing != 0; bit <<= 1)
+	    if (missing & bit)
+	      {
+		*tail = tre_empty_path_new(mem, part->tags,
+					   needed | tre_assertion_negate(bit),
+					   part->params);
+		if (*tail == NULL)
+		  return REG_ESPACE;
+		tail = &(*tail)->next;
+		needed |= bit;
+		missing &= ~bit;
+	      }
+	}
+      *tail = NULL;
+      parts = kept;
+    }
+
+  if (parts == NULL)
+    return REG_OK;
+  if (list->tail != NULL)
+    list->tail->next = parts;
+  else
+    list->head = parts;
+  for (list->tail = parts; list->tail->next != NULL;
+       list->tail = list->tail->next);
+  return REG_OK;
+}
+
+/* Appends the paths `paths' to `list'. */
+static reg_errcode_t
+tre_empty_path_list_append(tre_mem_t mem, tre_empty_path_list_t *list,
+			   const tre_empty_path_t *paths)
+{
+  reg_errcode_t status;
+
+  for (; paths != NULL; paths = paths->next)
+    {
+      status = tre_empty_path_list_add(mem, list, paths->tags,
+				       paths->assertions, paths->params);
+      if (status != REG_OK)
+	return status;
+    }
+  return REG_OK;
+}
+
+/* Appends the empty path through the literal `lit' to `list'. */
+static reg_errcode_t
+tre_empty_path_literal(tre_mem_t mem, tre_literal_t *lit,
+		       tre_empty_path_list_t *list)
+{
+  int *tags = NULL;
+  int assertions = 0;
+  int *params = NULL;
+
+  switch (lit->code_min)
+    {
+    case TAG:
+      if (lit->code_max >= 0)
+	{
+	  tags = tre_mem_alloc(mem, sizeof(*tags) * 2);
+	  if (tags == NULL)
+	    return REG_ESPACE;
+	  tags[0] = lit->code_max;
+	  tags[1] = -1;
+	}
+      break;
+    case ASSERTION:
+      assert(lit->code_max >= 1 && lit->code_max <= ASSERT_LAST);
+      assertions = lit->code_max;
+      break;
+    case PARAMETER:
+      params = lit->u.params;
+      break;
+    case EMPTY:
+      break;
+    default:
+      assert(0);
+      break;
+    }
+  return tre_empty_path_list_add(mem, list, tags, assertions, params);
+}
+
+/* Appends to `list' each path of `left' followed by each path of
+   `right'. */
+static reg_errcode_t
+tre_empty_path_catenate(tre_mem_t mem, tre_empty_path_list_t *list,
+			const tre_empty_path_t *left,
+			const tre_empty_path_t *right)
+{
+  const tre_empty_path_t *l, *r;
+  int *tags, *params;
+  reg_errcode_t status;
+
+  for (l = left; l != NULL; l = l->next)
+    for (r = right; r != NULL; r = r->next)
+      {
+	status = tre_merge_tags(mem, l->tags, r->tags, &tags);
+	if (status != REG_OK)
+	  return status;
+	status = tre_merge_params(mem, l->params, r->params, &params);
+	if (status != REG_OK)
+	  return status;
+	status = tre_empty_path_list_add(mem, list, tags,
+					 l->assertions | r->assertions,
+					 params);
+	if (status != REG_OK)
+	  return status;
+      }
+  return REG_OK;
+}
+
+/* Sets `*dst' to the set entry `src' reached through the empty path
+   `path'. */
+static reg_errcode_t
+tre_set_entry_add_path(tre_mem_t mem, tre_pos_and_tags_t *dst,
+		       const tre_pos_and_tags_t *src,
+		       const tre_empty_path_t *path)
+{
+  reg_errcode_t status;
+
+  *dst = *src;
+  dst->assertions |= path->assertions;
+  status = tre_merge_tags(mem, src->tags, path->tags, &dst->tags);
+  if (status != REG_OK)
+    return status;
+  return tre_merge_params(mem, src->params, path->params, &dst->params);
+}
+
+/* Returns the union of `set2' and the entries of `set1' reached through
+   each path of `paths', which add their tags, assertions, and parameters
+   to the entries.  Entries that would need contradicting assertions are
+   left out.  For the plain union of the sets, `paths' is &tre_no_path. */
+static tre_pos_and_tags_t *
+tre_set_union(tre_mem_t mem, tre_pos_and_tags_t *set1,
+	      tre_pos_and_tags_t *set2, const tre_empty_path_t *paths)
+{
+  int s1, s2, n, i, num_paths;
+  const tre_empty_path_t *path;
+  tre_pos_and_tags_t *new_set;
+
   for (s1 = 0; set1[s1].position >= 0; s1++);
   for (s2 = 0; set2[s2].position >= 0; s2++);
-  new_set = tre_mem_calloc(mem, sizeof(*new_set) * (s1 + s2 + 1));
-  if (!new_set )
+  for (num_paths = 0, path = paths; path != NULL; path = path->next)
+    num_paths++;
+
+  new_set = tre_mem_calloc(mem, sizeof(*new_set) * (s1 * num_paths + s2 + 1));
+  if (new_set == NULL)
     return NULL;
 
-  for (s1 = 0; set1[s1].position >= 0; s1++)
-    {
-      new_set[s1].position = set1[s1].position;
-      new_set[s1].code_min = set1[s1].code_min;
-      new_set[s1].code_max = set1[s1].code_max;
-      new_set[s1].assertions = set1[s1].assertions | assertions;
-      new_set[s1].class = set1[s1].class;
-      new_set[s1].neg_classes = set1[s1].neg_classes;
-      new_set[s1].backref = set1[s1].backref;
-      if (set1[s1].tags == NULL && tags == NULL)
-	new_set[s1].tags = NULL;
-      else
-	{
-	  for (i = 0; set1[s1].tags != NULL && set1[s1].tags[i] >= 0; i++);
-	  new_tags = tre_mem_alloc(mem, (sizeof(*new_tags)
-					 * (i + num_tags + 1)));
-	  if (new_tags == NULL)
-	    return NULL;
-	  for (j = 0; j < i; j++)
-	    new_tags[j] = set1[s1].tags[j];
-	  for (i = 0; i < num_tags; i++)
-	    new_tags[j + i] = tags[i];
-	  new_tags[j + i] = -1;
-	  new_set[s1].tags = new_tags;
-	}
-      if (set1[s1].params)
-	new_set[s1].params = set1[s1].params;
-      if (params)
-	{
-	  if (!new_set[s1].params)
-	    new_set[s1].params = params;
-	  else
-	    {
-	      new_set[s1].params = tre_mem_alloc(mem, sizeof(*params) *
-						 TRE_PARAM_LAST);
-	      if (!new_set[s1].params)
-		return NULL;
-	      for (i = 0; i < TRE_PARAM_LAST; i++)
-		if (params[i] != TRE_PARAM_UNSET)
-		  new_set[s1].params[i] = params[i];
-	    }
-	}
-    }
+  n = 0;
+  for (path = paths; path != NULL; path = path->next)
+    for (i = 0; i < s1; i++)
+      if (!tre_assertions_contradict(set1[i].assertions | path->assertions)
+	  && tre_set_entry_add_path(mem, &new_set[n++], &set1[i], path)
+	     != REG_OK)
+	return NULL;
 
-  for (s2 = 0; set2[s2].position >= 0; s2++)
-    {
-      new_set[s1 + s2].position = set2[s2].position;
-      new_set[s1 + s2].code_min = set2[s2].code_min;
-      new_set[s1 + s2].code_max = set2[s2].code_max;
-      /* XXX - why not | assertions here as well? */
-      new_set[s1 + s2].assertions = set2[s2].assertions;
-      new_set[s1 + s2].class = set2[s2].class;
-      new_set[s1 + s2].neg_classes = set2[s2].neg_classes;
-      new_set[s1 + s2].backref = set2[s2].backref;
-      if (set2[s2].tags == NULL)
-	new_set[s1 + s2].tags = NULL;
-      else
-	{
-	  for (i = 0; set2[s2].tags[i] >= 0; i++);
-	  new_tags = tre_mem_alloc(mem, sizeof(*new_tags) * (i + 1));
-	  if (new_tags == NULL)
-	    return NULL;
-	  for (j = 0; j < i; j++)
-	    new_tags[j] = set2[s2].tags[j];
-	  new_tags[j] = -1;
-	  new_set[s1 + s2].tags = new_tags;
-	}
-      if (set2[s2].params)
-	new_set[s1 + s2].params = set2[s2].params;
-      if (params)
-	{
-	  if (!new_set[s1 + s2].params)
-	    new_set[s1 + s2].params = params;
-	  else
-	    {
-	      new_set[s1 + s2].params = tre_mem_alloc(mem, sizeof(*params) *
-						      TRE_PARAM_LAST);
-	      if (!new_set[s1 + s2].params)
-		return NULL;
-	      for (i = 0; i < TRE_PARAM_LAST; i++)
-		if (params[i] != TRE_PARAM_UNSET)
-		  new_set[s1 + s2].params[i] = params[i];
-	    }
-	}
-    }
-  new_set[s1 + s2].position = -1;
+  for (i = 0; i < s2; i++)
+    new_set[n++] = set2[i];
+  new_set[n].position = -1;
   return new_set;
 }
 
-/* Finds the empty path through `node' which is the one that should be
-   taken according to POSIX.2 rules, and adds the tags on that path to
-   `tags'.   `tags' may be NULL.  If `num_tags_seen' is not NULL, it is
-   set to the number of tags seen on the path. */
-static reg_errcode_t
-tre_match_empty(tre_stack_t *stack, tre_ast_node_t *node, int *tags,
-		int *assertions, int *params, int *num_tags_seen,
-		int *params_seen)
-{
-  tre_literal_t *lit;
-  tre_union_t *uni;
-  tre_catenation_t *cat;
-  tre_iteration_t *iter;
-  int i;
-  int bottom = tre_stack_num_objects(stack);
-  reg_errcode_t status = REG_OK;
-  if (num_tags_seen)
-    *num_tags_seen = 0;
-  if (params_seen)
-    *params_seen = 0;
-
-  status = tre_stack_push_voidptr(stack, node);
-
-  /* Walk through the tree recursively. */
-  while (status == REG_OK && tre_stack_num_objects(stack) > bottom)
-    {
-      node = tre_stack_pop_voidptr(stack);
-
-      switch (node->type)
-	{
-	case LITERAL:
-	  lit = (tre_literal_t *)node->obj;
-	  switch (lit->code_min)
-	    {
-	    case TAG:
-	      if (lit->code_max >= 0)
-		{
-		  if (tags != NULL)
-		    {
-		      /* Add the tag to `tags'. */
-		      for (i = 0; tags[i] >= 0; i++)
-			if (tags[i] == lit->code_max)
-			  break;
-		      if (tags[i] < 0)
-			{
-			  tags[i] = (int)lit->code_max;
-			  tags[i + 1] = -1;
-			}
-		    }
-		  if (num_tags_seen)
-		    (*num_tags_seen)++;
-		}
-	      break;
-	    case ASSERTION:
-	      assert(lit->code_max >= 1
-		     || lit->code_max <= ASSERT_LAST);
-	      if (assertions != NULL)
-		*assertions |= lit->code_max;
-	      break;
-	    case PARAMETER:
-	      if (params != NULL)
-		for (i = 0; i < TRE_PARAM_LAST; i++)
-		  params[i] = lit->u.params[i];
-	      if (params_seen != NULL)
-		*params_seen = 1;
-	      break;
-	    case EMPTY:
-	      break;
-	    default:
-	      assert(0);
-	      break;
-	    }
-	  break;
-
-	case UNION:
-	  /* Subexpressions starting earlier take priority over ones
-	     starting later, so we prefer the left subexpression over the
-	     right subexpression. */
-	  uni = (tre_union_t *)node->obj;
-	  if (uni->left->nullable)
-	    STACK_PUSHX(stack, voidptr, uni->left)
-	  else if (uni->right->nullable)
-	    STACK_PUSHX(stack, voidptr, uni->right)
-	  else
-	    assert(0);
-	  break;
-
-	case CATENATION:
-	  /* The path must go through both children. */
-	  cat = (tre_catenation_t *)node->obj;
-	  assert(cat->left->nullable);
-	  assert(cat->right->nullable);
-	  STACK_PUSHX(stack, voidptr, cat->left);
-	  STACK_PUSHX(stack, voidptr, cat->right);
-	  break;
-
-	case ITERATION:
-	  /* A match with an empty string is preferred over no match at
-	     all, so we go through the argument if possible. */
-	  iter = (tre_iteration_t *)node->obj;
-	  if (iter->arg->nullable)
-	    STACK_PUSHX(stack, voidptr, iter->arg);
-	  break;
-
-	default:
-	  assert(0);
-	  break;
-	}
-    }
-
-  return status;
-}
-
-
 typedef enum {
-  NFL_RECURSE,
-  NFL_POST_UNION,
-  NFL_POST_CATENATION,
-  NFL_POST_ITERATION
-} tre_nfl_stack_symbol_t;
+  NPFL_RECURSE,
+  NPFL_POST_UNION,
+  NPFL_POST_CATENATION,
+  NPFL_POST_ITERATION
+} tre_npfl_stack_symbol_t;
 
 
-/* Computes and fills in the fields `nullable', `firstpos', and `lastpos' for
-   the nodes of the AST `tree'. */
+/* Computes and fills in the fields `nullable', `position`, `firstpos',
+   and `lastpos' for the nodes of the AST `tree'; `nextpos' points to an
+   integer indicating the next available position, and will be updated on
+   return to reflect the number of additional positions assigned. */
 static reg_errcode_t
-tre_compute_nfl(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *tree)
+tre_compute_npfl(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *tree,
+		 int *nextpos)
 {
-  int bottom = tre_stack_num_objects(stack);
+  size_t bottom = tre_stack_num_items(stack);
+  tre_empty_path_list_t paths;
+  reg_errcode_t status;
 
   STACK_PUSHR(stack, voidptr, tree);
-  STACK_PUSHR(stack, int, NFL_RECURSE);
+  STACK_PUSHR(stack, int, NPFL_RECURSE);
 
-  while (tre_stack_num_objects(stack) > bottom)
+  while (tre_stack_num_items(stack) > bottom)
     {
-      tre_nfl_stack_symbol_t symbol;
+      tre_npfl_stack_symbol_t symbol;
       tre_ast_node_t *node;
 
-      symbol = (tre_nfl_stack_symbol_t)tre_stack_pop_int(stack);
+      symbol = (tre_npfl_stack_symbol_t)tre_stack_pop_int(stack);
       node = tre_stack_pop_voidptr(stack);
       switch (symbol)
 	{
-	case NFL_RECURSE:
+	case NPFL_RECURSE:
 	  switch (node->type)
 	    {
 	    case LITERAL:
@@ -1346,13 +1469,16 @@ tre_compute_nfl(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *tree)
 		    /* Back references: nullable = false, firstpos = {i},
 		       lastpos = {i}. */
 		    node->nullable = 0;
+		    if (*nextpos == TRE_MAX_POS)
+		      return REG_ESPACE;
+		    lit->position = (*nextpos)++;
 		    node->firstpos = tre_set_one(mem, lit->position, 0,
 					     TRE_CHAR_MAX, 0, NULL, -1);
 		    if (!node->firstpos)
 		      return REG_ESPACE;
 		    node->lastpos = tre_set_one(mem, lit->position, 0,
 						TRE_CHAR_MAX, 0, NULL,
-						(int)lit->code_max);
+						lit->code_max);
 		    if (!node->lastpos)
 		      return REG_ESPACE;
 		  }
@@ -1367,20 +1493,28 @@ tre_compute_nfl(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *tree)
 		    node->lastpos = tre_set_empty(mem);
 		    if (!node->lastpos)
 		      return REG_ESPACE;
+		    paths.head = paths.tail = NULL;
+		    status = tre_empty_path_literal(mem, lit, &paths);
+		    if (status != REG_OK)
+		      return status;
+		    node->empty_paths = paths.head;
 		  }
 		else
 		  {
 		    /* Literal at position i: nullable = false, firstpos = {i},
 		       lastpos = {i}. */
 		    node->nullable = 0;
+		    if (*nextpos == TRE_MAX_POS)
+		      return REG_ESPACE;
+		    lit->position = (*nextpos)++;
 		    node->firstpos =
-		      tre_set_one(mem, lit->position, (int)lit->code_min,
-				  (int)lit->code_max, 0, NULL, -1);
+		      tre_set_one(mem, lit->position, lit->code_min,
+				  lit->code_max, 0, NULL, -1);
 		    if (!node->firstpos)
 		      return REG_ESPACE;
 		    node->lastpos = tre_set_one(mem, lit->position,
-						(int)lit->code_min,
-						(int)lit->code_max,
+						lit->code_min,
+						lit->code_max,
 						lit->u.class, lit->neg_classes,
 						-1);
 		    if (!node->lastpos)
@@ -1393,51 +1527,61 @@ tre_compute_nfl(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *tree)
 	      /* Compute the attributes for the two subtrees, and after that
 		 for this node. */
 	      STACK_PUSHR(stack, voidptr, node);
-	      STACK_PUSHR(stack, int, NFL_POST_UNION);
+	      STACK_PUSHR(stack, int, NPFL_POST_UNION);
 	      STACK_PUSHR(stack, voidptr, ((tre_union_t *)node->obj)->right);
-	      STACK_PUSHR(stack, int, NFL_RECURSE);
+	      STACK_PUSHR(stack, int, NPFL_RECURSE);
 	      STACK_PUSHR(stack, voidptr, ((tre_union_t *)node->obj)->left);
-	      STACK_PUSHR(stack, int, NFL_RECURSE);
+	      STACK_PUSHR(stack, int, NPFL_RECURSE);
 	      break;
 
 	    case CATENATION:
 	      /* Compute the attributes for the two subtrees, and after that
 		 for this node. */
 	      STACK_PUSHR(stack, voidptr, node);
-	      STACK_PUSHR(stack, int, NFL_POST_CATENATION);
+	      STACK_PUSHR(stack, int, NPFL_POST_CATENATION);
 	      STACK_PUSHR(stack, voidptr, ((tre_catenation_t *)node->obj)->right);
-	      STACK_PUSHR(stack, int, NFL_RECURSE);
+	      STACK_PUSHR(stack, int, NPFL_RECURSE);
 	      STACK_PUSHR(stack, voidptr, ((tre_catenation_t *)node->obj)->left);
-	      STACK_PUSHR(stack, int, NFL_RECURSE);
+	      STACK_PUSHR(stack, int, NPFL_RECURSE);
 	      break;
 
 	    case ITERATION:
 	      /* Compute the attributes for the subtree, and after that for
 		 this node. */
 	      STACK_PUSHR(stack, voidptr, node);
-	      STACK_PUSHR(stack, int, NFL_POST_ITERATION);
+	      STACK_PUSHR(stack, int, NPFL_POST_ITERATION);
 	      STACK_PUSHR(stack, voidptr, ((tre_iteration_t *)node->obj)->arg);
-	      STACK_PUSHR(stack, int, NFL_RECURSE);
+	      STACK_PUSHR(stack, int, NPFL_RECURSE);
 	      break;
 	    }
-	  break; /* end case: NFL_RECURSE */
+	  break; /* end case: NPFL_RECURSE */
 
-	case NFL_POST_UNION:
+	case NPFL_POST_UNION:
 	  {
 	    tre_union_t *uni = (tre_union_t *)node->obj;
 	    node->nullable = uni->left->nullable || uni->right->nullable;
+	    /* The left operand is preferred. */
+	    paths.head = paths.tail = NULL;
+	    status = tre_empty_path_list_append(mem, &paths,
+						uni->left->empty_paths);
+	    if (status == REG_OK)
+	      status = tre_empty_path_list_append(mem, &paths,
+						  uni->right->empty_paths);
+	    if (status != REG_OK)
+	      return status;
+	    node->empty_paths = paths.head;
 	    node->firstpos = tre_set_union(mem, uni->left->firstpos,
-					   uni->right->firstpos, NULL, 0, NULL);
+					   uni->right->firstpos, &tre_no_path);
 	    if (!node->firstpos)
 	      return REG_ESPACE;
 	    node->lastpos = tre_set_union(mem, uni->left->lastpos,
-					  uni->right->lastpos, NULL, 0, NULL);
+					  uni->right->lastpos, &tre_no_path);
 	    if (!node->lastpos)
 	      return REG_ESPACE;
 	    break;
 	  }
 
-	case NFL_POST_ITERATION:
+	case NPFL_POST_ITERATION:
 	  {
 	    tre_iteration_t *iter = (tre_iteration_t *)node->obj;
 
@@ -1445,116 +1589,61 @@ tre_compute_nfl(tre_mem_t mem, tre_stack_t *stack, tre_ast_node_t *tree)
 	      node->nullable = 1;
 	    else
 	      node->nullable = 0;
+	    /* Matching the empty string through the argument is preferred
+	       over skipping the iteration. */
+	    paths.head = paths.tail = NULL;
+	    status = tre_empty_path_list_append(mem, &paths,
+						iter->arg->empty_paths);
+	    if (status == REG_OK && iter->min == 0)
+	      status = tre_empty_path_list_add(mem, &paths, NULL, 0, NULL);
+	    if (status != REG_OK)
+	      return status;
+	    node->empty_paths = paths.head;
 	    node->firstpos = iter->arg->firstpos;
 	    node->lastpos = iter->arg->lastpos;
 	    break;
 	  }
 
-	case NFL_POST_CATENATION:
+	case NPFL_POST_CATENATION:
 	  {
-	    int num_tags, *tags, assertions, params_seen;
-	    int *params;
-	    reg_errcode_t status;
 	    tre_catenation_t *cat = node->obj;
 	    node->nullable = cat->left->nullable && cat->right->nullable;
-
-	    /* Compute firstpos. */
-	    if (cat->left->nullable)
+	    if (node->nullable)
 	      {
-		/* The left side matches the empty string.  Make a first pass
-		   with tre_match_empty() to get the number of tags and
-		   parameters. */
-		status = tre_match_empty(stack, cat->left,
-					 NULL, NULL, NULL, &num_tags,
-					 &params_seen);
+		paths.head = paths.tail = NULL;
+		status = tre_empty_path_catenate(mem, &paths,
+						 cat->left->empty_paths,
+						 cat->right->empty_paths);
 		if (status != REG_OK)
 		  return status;
-		/* Allocate arrays for the tags and parameters. */
-		tags = xmalloc(sizeof(*tags) * (num_tags + 1));
-		if (!tags)
-		  return REG_ESPACE;
-		tags[0] = -1;
-		assertions = 0;
-		params = NULL;
-		if (params_seen)
-		  {
-		    params = tre_mem_alloc(mem, sizeof(*params)
-					   * TRE_PARAM_LAST);
-		    if (!params)
-		      {
-			xfree(tags);
-			return REG_ESPACE;
-		      }
-		  }
-		/* Second pass with tre_mach_empty() to get the list of
-		   tags and parameters. */
-		status = tre_match_empty(stack, cat->left, tags,
-					 &assertions, params, NULL, NULL);
-		if (status != REG_OK)
-		  {
-		    xfree(tags);
-		    return status;
-		  }
+		node->empty_paths = paths.head;
+	      }
+
+	    /* Compute firstpos.  If the left side matches the empty string,
+	       the first positions of the right side are reached through each
+	       of the empty paths of the left side. */
+	    if (cat->left->nullable)
+	      {
 		node->firstpos =
 		  tre_set_union(mem, cat->right->firstpos, cat->left->firstpos,
-				tags, assertions, params);
-		xfree(tags);
+				cat->left->empty_paths);
 		if (!node->firstpos)
 		  return REG_ESPACE;
 	      }
 	    else
-	      {
-		node->firstpos = cat->left->firstpos;
-	      }
+	      node->firstpos = cat->left->firstpos;
 
-	    /* Compute lastpos. */
+	    /* Compute lastpos the same way. */
 	    if (cat->right->nullable)
 	      {
-		/* The right side matches the empty string.  Make a first pass
-		   with tre_match_empty() to get the number of tags and
-		   parameters. */
-		status = tre_match_empty(stack, cat->right,
-					 NULL, NULL, NULL, &num_tags,
-					 &params_seen);
-		if (status != REG_OK)
-		  return status;
-		/* Allocate arrays for the tags and parameters. */
-		tags = xmalloc(sizeof(int) * (num_tags + 1));
-		if (!tags)
-		  return REG_ESPACE;
-		tags[0] = -1;
-		assertions = 0;
-		params = NULL;
-		if (params_seen)
-		  {
-		    params = tre_mem_alloc(mem, sizeof(*params)
-					   * TRE_PARAM_LAST);
-		    if (!params)
-		      {
-			xfree(tags);
-			return REG_ESPACE;
-		      }
-		  }
-		/* Second pass with tre_mach_empty() to get the list of
-		   tags and parameters. */
-		status = tre_match_empty(stack, cat->right, tags,
-					 &assertions, params, NULL, NULL);
-		if (status != REG_OK)
-		  {
-		    xfree(tags);
-		    return status;
-		  }
 		node->lastpos =
 		  tre_set_union(mem, cat->left->lastpos, cat->right->lastpos,
-				tags, assertions, params);
-		xfree(tags);
+				cat->right->empty_paths);
 		if (!node->lastpos)
 		  return REG_ESPACE;
 	      }
 	    else
-	      {
-		node->lastpos = cat->right->lastpos;
-	      }
+	      node->lastpos = cat->right->lastpos;
 	    break;
 	  }
 
@@ -1576,22 +1665,21 @@ tre_make_trans(tre_pos_and_tags_t *p1, tre_pos_and_tags_t *p2,
 {
   tre_pos_and_tags_t *orig_p2 = p2;
   tre_tnfa_transition_t *trans;
-  int i, j, k, l, dup, prev_p2_pos;
+  int i, j, k, l, dup;
 
   if (transitions != NULL)
     while (p1->position >= 0)
       {
 	p2 = orig_p2;
-	prev_p2_pos = -1;
 	while (p2->position >= 0)
 	  {
-	    /* Optimization: if this position was already handled, skip it. */
-	    if (p2->position == prev_p2_pos)
+	    /* A transition that needs contradicting assertions is never
+	       taken. */
+	    if (tre_assertions_contradict(p1->assertions | p2->assertions))
 	      {
 		p2++;
 		continue;
 	      }
-	    prev_p2_pos = p2->position;
 	    /* Set `trans' to point to the next unused transition from
 	       position `p1->position'. */
 	    trans = transitions + offs[p1->position];
@@ -1787,12 +1875,13 @@ tre_make_trans(tre_pos_and_tags_t *p1, tre_pos_and_tags_t *p2,
    labelled with one character range (there are no transitions on empty
    strings).  The TNFA takes O(n^2) space in the worst case, `n' is size of
    the regexp.
-   This is the iterative version using a stack (previously used recursion
-   which will fail for large patterns)
- */
+
+   This is the iterative version using an explicit stack; the previous
+   recursive implementation could overflow the C stack for large patterns. */
 static reg_errcode_t
-tre_ast_to_tnfa_iter(tre_stack_t *stack, tre_ast_node_t *node, tre_tnfa_transition_t *transitions,
-		     int *counts, int *offs)
+tre_ast_to_tnfa(tre_stack_t *stack, tre_ast_node_t *node,
+		tre_tnfa_transition_t *transitions,
+		int *counts, int *offs)
 {
   tre_union_t *uni;
   tre_catenation_t *cat;
@@ -1801,69 +1890,167 @@ tre_ast_to_tnfa_iter(tre_stack_t *stack, tre_ast_node_t *node, tre_tnfa_transiti
 
   STACK_PUSHR(stack, voidptr, node);
 
-  while (tre_stack_num_objects(stack)) {
-    node = (tre_ast_node_t*) tre_stack_pop_voidptr(stack);
+  while (tre_stack_num_items(stack))
+    {
+      node = tre_stack_pop_voidptr(stack);
 
-    switch (node->type)
-      {
-      case LITERAL:
-	break;
+      switch (node->type)
+	{
+	case LITERAL:
+	  break;
 
-      case UNION:
-	uni = (tre_union_t *)node->obj;
-	STACK_PUSHR(stack, voidptr, uni->right);
-	STACK_PUSHR(stack, voidptr, uni->left);
-	break;
+	case UNION:
+	  uni = (tre_union_t *)node->obj;
+	  /* Push right before left so that left is processed first,
+	     preserving the traversal order of the recursive version. */
+	  STACK_PUSHR(stack, voidptr, uni->right);
+	  STACK_PUSHR(stack, voidptr, uni->left);
+	  break;
 
-      case CATENATION:
-	cat = (tre_catenation_t *)node->obj;
-	/* Add a transition from each position in cat->left->lastpos
-	   to each position in cat->right->firstpos. */
-	errcode = tre_make_trans(cat->left->lastpos, cat->right->firstpos,
-				 transitions, counts, offs);
-	if (errcode != REG_OK)
-	  return errcode;
-	
-	STACK_PUSHR(stack, voidptr, cat->right);
-	STACK_PUSHR(stack, voidptr, cat->left);
-	break;
+	case CATENATION:
+	  cat = (tre_catenation_t *)node->obj;
+	  /* Add a transition from each position in cat->left->lastpos
+	     to each position in cat->right->firstpos. */
+	  errcode = tre_make_trans(cat->left->lastpos, cat->right->firstpos,
+				   transitions, counts, offs);
+	  if (errcode != REG_OK)
+	    return errcode;
+	  STACK_PUSHR(stack, voidptr, cat->right);
+	  STACK_PUSHR(stack, voidptr, cat->left);
+	  break;
 
-      case ITERATION:
-	iter = (tre_iteration_t *)node->obj;
-	// assert(iter->max == -1 || iter->max == 1);
-	if(!(iter->max == -1 || iter->max == 1)) return REG_BADBR;
+	case ITERATION:
+	  iter = (tre_iteration_t *)node->obj;
+	  assert(iter->max == -1 || iter->max == 1);
 
-	if (iter->max == -1)
-	  {
-	    // assert(iter->min == 0 || iter->min == 1);
-	    if(!(iter->min == 0 || iter->min == 1)) return REG_BADBR;
-	    /* Add a transition from each last position in the iterated
-	       expression to each first position. */
-	    errcode = tre_make_trans(iter->arg->lastpos, iter->arg->firstpos,
-				     transitions, counts, offs);
-	    if (errcode != REG_OK)
-	      return errcode;	  
-	  }
-	STACK_PUSHR(stack, voidptr, iter->arg);
-	break;
-      }
-  }
+	  if (iter->max == -1)
+	    {
+	      assert(iter->min == 0 || iter->min == 1);
+	      /* Add a transition from each last position in the iterated
+		 expression to each first position. */
+	      errcode = tre_make_trans(iter->arg->lastpos, iter->arg->firstpos,
+				       transitions, counts, offs);
+	      if (errcode != REG_OK)
+		return errcode;
+	    }
+	  STACK_PUSHR(stack, voidptr, iter->arg);
+	  break;
+	}
+    }
   return REG_OK;
 }
 
-static reg_errcode_t
-tre_ast_to_tnfa(tre_ast_node_t *node, tre_tnfa_transition_t *transitions,
-		int *counts, int *offs)
+/* Returns 1 if each tag in the tag array `t1' is also in `t2'.  Either may
+   be NULL. */
+static int
+tre_tags_subset(const int *t1, const int *t2)
 {
-  reg_errcode_t errcode;
-  tre_stack_t *stack;
-  /* I made up max_size, there is no reason for that particular value */
-  stack = tre_stack_new(1024, 256*1024, 4096);
-  errcode = tre_ast_to_tnfa_iter(stack, node, transitions, counts, offs);
-  tre_stack_destroy(stack);
-  return errcode;
+  int i, j;
+
+  for (i = 0; t1 != NULL && t1[i] >= 0; i++)
+    {
+      for (j = 0; t2 != NULL && t2[j] >= 0 && t2[j] != t1[i]; j++);
+      if (t2 == NULL || t2[j] < 0)
+	return 0;
+    }
+  return 1;
 }
 
+/* Returns 1 if the 0 terminated character class arrays `c1' and `c2'
+   (either may be NULL) are the same. */
+static int
+tre_neg_classes_equal(const tre_ctype_t *c1, const tre_ctype_t *c2)
+{
+  if (c1 == NULL || c2 == NULL)
+    return c1 == c2;
+  for (; *c1 != (tre_ctype_t)0 && *c1 == *c2; c1++, c2++);
+  return *c1 == *c2;
+}
+
+/* Returns 1 if taking the transitions `a' and `b' from one state has the
+   same outcome: the same characters lead to the same state, setting the
+   same tags and parameters. */
+static int
+tre_trans_same_outcome(const tre_tnfa_transition_t *a,
+		       const tre_tnfa_transition_t *b)
+{
+  const int kind = ASSERT_CHAR_CLASS | ASSERT_CHAR_CLASS_NEG | ASSERT_BACKREF;
+
+  if (a->state_id != b->state_id
+      || a->code_min != b->code_min || a->code_max != b->code_max
+      || (a->assertions & kind) != (b->assertions & kind))
+    return 0;
+  if (a->assertions & ASSERT_BACKREF
+      ? a->u.backref != b->u.backref : a->u.class != b->u.class)
+    return 0;
+  return tre_neg_classes_equal(a->neg_classes, b->neg_classes)
+    && tre_tags_subset(a->tags, b->tags) && tre_tags_subset(b->tags, a->tags)
+    && tre_params_equal(a->params, b->params);
+}
+
+/* Removes the transitions that another transition from the same state
+   makes unnecessary: of two transitions with the same outcome, only the
+   one with the weaker assertions is needed.  Different parts of the regexp
+   can add such transitions between the same two positions.  The remaining
+   transitions keep their order. */
+static reg_errcode_t
+tre_merge_transitions(tre_tnfa_transition_t *transitions,
+		      unsigned int num_transitions, int *offs, int numpos)
+{
+  /* For each target state, the last kept transition into it from the
+     state in `source', and for each kept transition the one before it. */
+  int *last, *source, *prev;
+  int s, t, k, kept;
+
+  last = xmalloc(sizeof(*last) * (2 * numpos + num_transitions + 1));
+  if (last == NULL)
+    return REG_ESPACE;
+  source = last + numpos;
+  prev = source + numpos;
+  for (s = 0; s < numpos; s++)
+    source[s] = -1;
+
+  for (s = 0; s < numpos; s++)
+    {
+      kept = offs[s];
+      for (t = offs[s]; transitions[t].state != NULL; t++)
+	{
+	  tre_tnfa_transition_t *trans = &transitions[t];
+	  int target = trans->state_id;
+	  int head = source[target] == s ? last[target] : -1;
+
+	  for (k = head; k >= 0; k = prev[k])
+	    if (tre_trans_same_outcome(&transitions[k], trans)
+		&& ((transitions[k].assertions & ~trans->assertions) == 0
+		    || (trans->assertions & ~transitions[k].assertions) == 0))
+	      break;
+	  if (k >= 0)
+	    {
+	      /* Keep the earlier transition with the weaker assertions. */
+	      transitions[k].assertions &= trans->assertions;
+	      if (trans->tags != NULL)
+		xfree(trans->tags);
+	      if (trans->params != NULL)
+		xfree(trans->params);
+	      if (trans->neg_classes != NULL)
+		xfree(trans->neg_classes);
+	      continue;
+	    }
+	  if (kept != t)
+	    transitions[kept] = *trans;
+	  prev[kept] = head;
+	  last[target] = kept;
+	  source[target] = s;
+	  kept++;
+	}
+      /* Clear the slots that were moved or freed. */
+      if (kept < t)
+	memset(&transitions[kept], 0, sizeof(*transitions) * (t - kept));
+    }
+
+  xfree(last);
+  return REG_OK;
+}
 
 #define ERROR_EXIT(err)		  \
   do				  \
@@ -1889,13 +2076,14 @@ tre_compile(regex_t *preg, const tre_char_t *regex, size_t n, int cflags)
   tre_tag_direction_t *tag_directions = NULL;
   reg_errcode_t errcode;
   tre_mem_t mem;
+  int numpos = 0;
 
   /* Parse context. */
   tre_parse_ctx_t parse_ctx;
 
   /* Allocate a stack used throughout the compilation process for various
      purposes. */
-  stack = tre_stack_new(512, 10240, 128);
+  stack = tre_stack_new(512, TRE_MAX_STACK);
   if (!stack)
     return REG_ESPACE;
   /* Allocate a fast memory allocator. */
@@ -1914,8 +2102,8 @@ tre_compile(regex_t *preg, const tre_char_t *regex, size_t n, int cflags)
   parse_ctx.len = n;
   parse_ctx.cflags = cflags;
   parse_ctx.max_backref = -1;
-  /* workaround for PR#14408: use 8-bit optimizations in 8-bit mode */
-  parse_ctx.cur_max = (cflags & REG_USEBYTES) ? 1 : TRE_MB_CUR_MAX;
+  /* Use 8-bit optimizations in 8-bit mode */
+  parse_ctx.mb_cur_max = (cflags & REG_USEBYTES) ? 1 : TRE_MB_CUR_MAX;
   DPRINT(("tre_compile: parsing '%.*" STRF "'\n", (int)n, regex));
   errcode = tre_parse(&parse_ctx);
   if (errcode != REG_OK)
@@ -1968,8 +2156,8 @@ tre_compile(regex_t *preg, const tre_char_t *regex, size_t n, int cflags)
 	  memset(tag_directions, -1,
 		 sizeof(*tag_directions) * (tnfa->num_tags + 1));
 	}
-      tnfa->minimal_tags = xcalloc((unsigned)tnfa->num_tags * 2 + 1,
-				   sizeof(tnfa->minimal_tags));
+      tnfa->minimal_tags = xcalloc(tnfa->num_tags * 2 + 1,
+				   sizeof(*tnfa->minimal_tags));
       if (tnfa->minimal_tags == NULL)
 	ERROR_EXIT(REG_ESPACE);
 
@@ -1995,8 +2183,8 @@ tre_compile(regex_t *preg, const tre_char_t *regex, size_t n, int cflags)
     }
 
   /* Expand iteration nodes. */
-  errcode = tre_expand_ast(mem, stack, tree, &parse_ctx.position,
-			   tag_directions, &tnfa->params_depth);
+  errcode = tre_expand_ast(mem, stack, tree, tag_directions,
+			   &tnfa->params_depth);
   if (errcode != REG_OK)
     ERROR_EXIT(errcode);
 
@@ -2005,7 +2193,7 @@ tre_compile(regex_t *preg, const tre_char_t *regex, size_t n, int cflags)
 	   for example "a*" or "ab*".	Figure out a simple way to detect
 	   this possibility. */
   tmp_ast_l = tree;
-  tmp_ast_r = tre_ast_new_literal(mem, 0, 0, parse_ctx.position++);
+  tmp_ast_r = tre_ast_new_literal(mem, 0, 0);
   if (tmp_ast_r == NULL)
     ERROR_EXIT(REG_ESPACE);
 
@@ -2013,31 +2201,37 @@ tre_compile(regex_t *preg, const tre_char_t *regex, size_t n, int cflags)
   if (tree == NULL)
     ERROR_EXIT(REG_ESPACE);
 
-#ifdef TRE_DEBUG
-  tre_ast_print(tree);
-  DPRINT(("Number of states: %d\n", parse_ctx.position));
-#endif /* TRE_DEBUG */
-
-  errcode = tre_compute_nfl(mem, stack, tree);
+  errcode = tre_compute_npfl(mem, stack, tree, &numpos);
   if (errcode != REG_OK)
     ERROR_EXIT(errcode);
 
-  counts = xmalloc(sizeof(int) * parse_ctx.position);
+#ifdef TRE_DEBUG
+  tre_ast_print(tree);
+  DPRINT(("Number of states: %d\n", numpos));
+#endif /* TRE_DEBUG */
+
+  counts = xmalloc(sizeof(int) * numpos);
   if (counts == NULL)
     ERROR_EXIT(REG_ESPACE);
 
-  offs = xmalloc(sizeof(int) * parse_ctx.position);
+  offs = xmalloc(sizeof(int) * numpos);
   if (offs == NULL)
     ERROR_EXIT(REG_ESPACE);
 
-  for (i = 0; i < parse_ctx.position; i++)
+  for (i = 0; i < numpos; i++)
     counts[i] = 0;
-  tre_ast_to_tnfa(tree, NULL, counts, NULL);
+  errcode = tre_ast_to_tnfa(stack, tree, NULL, counts, NULL);
+  if (errcode != REG_OK)
+    ERROR_EXIT(errcode);
 
   add = 0;
-  for (i = 0; i < parse_ctx.position; i++)
+  for (i = 0; i < numpos; i++)
     {
       offs[i] = add;
+      /* Note that counts[i] cannot exceed TRE_MAX_POS which is orders of
+	 magnitude smaller than TRE_MAX_TRANS */
+      if (add >= TRE_MAX_TRANS - counts[i] - 1)
+	  ERROR_EXIT(REG_ESPACE);
       add += counts[i] + 1;
       counts[i] = 0;
     }
@@ -2048,14 +2242,19 @@ tre_compile(regex_t *preg, const tre_char_t *regex, size_t n, int cflags)
   tnfa->num_transitions = add;
 
   DPRINT(("Converting to TNFA:\n"));
-  errcode = tre_ast_to_tnfa(tree, transitions, counts, offs);
+  errcode = tre_ast_to_tnfa(stack, tree, transitions, counts, offs);
+  if (errcode != REG_OK)
+    ERROR_EXIT(errcode);
+
+  errcode = tre_merge_transitions(transitions, tnfa->num_transitions, offs,
+				  numpos);
   if (errcode != REG_OK)
     ERROR_EXIT(errcode);
 
   /* If in eight bit mode, compute a table of characters that can be the
      first character of a match. */
   tnfa->first_char = -1;
-  if (TRE_MB_CUR_MAX == 1 && !tmp_ast_l->nullable)
+  if (parse_ctx.mb_cur_max == 1 && !tmp_ast_l->nullable)
     {
       int count = 0;
       tre_cint_t k;
@@ -2173,7 +2372,7 @@ tre_compile(regex_t *preg, const tre_char_t *regex, size_t n, int cflags)
 
   tnfa->num_transitions = add;
   tnfa->final = transitions + offs[tree->lastpos[0].position];
-  tnfa->num_states = parse_ctx.position;
+  tnfa->num_states = numpos;
   tnfa->cflags = cflags;
 
   DPRINT(("final state %p\n", (void *)tnfa->final));
@@ -2265,12 +2464,8 @@ tre_version(void)
   if (str[0] == 0)
     {
       (void) tre_config(TRE_CONFIG_VERSION, &version);
-	  assert(strlen(version) < 200);
-#if defined(_MSC_VER)
-	  (void) _snprintf(str, sizeof(str), "TRE %s R_fixes (BSD)", version);
-#else
-	  (void) snprintf(str, sizeof(str), "TRE %s R_fixes (BSD)", version);
-#endif
+      /* R change: mark this as R's modified copy of TRE. */
+      (void) snprintf(str, sizeof(str), "TRE %s R_fixes (BSD)", version);
     }
   return str;
 }

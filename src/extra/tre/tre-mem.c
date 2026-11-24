@@ -111,8 +111,8 @@ tre_mem_alloc_impl(tre_mem_t mem, int provided, void *provided_block,
 	    block_size = size * 8;
 	  else
 	    block_size = TRE_MEM_BLOCK_SIZE;
-	  DPRINT(("tre_mem_alloc: allocating new %lu byte block\n",
-		  (unsigned long)block_size));
+	  DPRINT(("tre_mem_alloc: allocating new %zu byte block\n",
+		  block_size));
 	  l = xmalloc(sizeof(*l));
 	  if (l == NULL)
 	    {
@@ -138,7 +138,7 @@ tre_mem_alloc_impl(tre_mem_t mem, int provided, void *provided_block,
     }
 
   /* Make sure the next pointer will be aligned. */
-  size += ALIGN(mem->ptr + size, anytype);
+  size += ALIGN(mem->ptr + size, tre_aligned_t);
 
   /* Allocate from current block. */
   ptr = mem->ptr;
