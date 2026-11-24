@@ -2058,9 +2058,9 @@ SEXP termsform(SEXP args)
 #endif
 	for (int i = 1; i <= nvar; i++) {
 	    if (GetBit(CAR(call), i)) {
-		if (l > 0)
-		    l += 1;
-		l += (int) strlen(CHAR(STRING_ELT(varnames, i - 1)));
+		/* + 1 for the ':' before the next variable; not conditional
+		   on l > 0, as the empty symbol has a zero-length name */
+		l += strlen(CHAR(STRING_ELT(varnames, i - 1))) + 1;
 	    }
 	}
 #ifdef DEBUG_terms

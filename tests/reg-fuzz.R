@@ -525,6 +525,12 @@ stopifnot(exprs = {
 ## only the first alternative's assertion was tried in R <= 4.6.2
 
 
+## terms() of a term starting with the empty symbol -- PR#19362
+tt <- terms(eval(call("~", call(":", quote(expr = ), quote(b)))))
+stopifnot(identical(attr(tt, "term.labels"), ":b"))
+## wrote one byte past the label buffer in R <= 4.6.2 (visible under ASan)
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,
