@@ -75,7 +75,7 @@
   the numeric argument \code{scale} is set (with optional \code{df}), it
   is used as the residual standard deviation in the computation of the
   standard errors, otherwise this is extracted from the model fit.
-  Setting \code{intervals} specifies computation of confidence or
+  Setting \code{interval} specifies computation of confidence or
   prediction (tolerance) intervals at the specified \code{level}, sometimes
   referred to as narrow vs. wide intervals.
 
