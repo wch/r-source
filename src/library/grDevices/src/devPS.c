@@ -5822,6 +5822,7 @@ static SEXP addPattern(SEXP pattern, PDFDesc *pd)
     return ref;
 }
 
+#if 0
 static int countPatterns(PDFDesc *pd) 
 {
     int i, count = 0;
@@ -5833,6 +5834,7 @@ static int countPatterns(PDFDesc *pd)
     }
     return count;
 }
+#endif
 
 /***********************************************************************
  * Stuff for (clipping) paths
