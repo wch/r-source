@@ -4546,8 +4546,8 @@ next_char:
 	    int clen = utf8clen(*i_buf);
 	    wchar_t wc;
 	    int res =
-		(int) utf8toucs(&wc, i_buf); // gives -1 for a conversion error
-	    if (res != -1) {
+		(int) utf8toucs(&wc, i_buf); // negative for a conversion error
+	    if (res > 0) {
 		R_wchar_t ucs = wc;
 		R_CheckStack2(clen + 1);
 		char badchar[clen + 1];

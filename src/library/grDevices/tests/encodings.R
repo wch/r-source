@@ -132,6 +132,19 @@ dev.off()
     dev.off()
 #}
 
+## A string ending part way through a UTF-8 character, or (on Windows)
+## with a lead byte from 0xF8, gets one dot per byte
+pdf(tf <- tempfile(fileext = ".pdf"))
+plot.new()
+for (x in c("ab\xf0", "ab\xe2\x82", "ab\xf8", "ab\xff")) {
+    text(0.5, 0.5, x)
+    dots <- strrep(".", nchar(x, "bytes") - 2L)
+    stopifnot(strwidth(x) == strwidth(paste0("ab", dots)))
+}
+invisible(dev.off())
+unlink(tf)
+## read past the string, giving an error or a segfault, in R 4.4.0 to 4.6.2
+
 ## Now with --as-cran settings in recent R, only.
 if (getRversion() < "4.4.0") q("no")
 Sys.setenv("_R_CHECK_MBCS_CONVERSION_FAILURE_" = "TRUE")
