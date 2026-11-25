@@ -531,6 +531,29 @@ stopifnot(identical(attr(tt, "term.labels"), ":b"))
 ## wrote one byte past the label buffer in R <= 4.6.2 (visible under ASan)
 
 
+## deparse() of a `=` call in list(), expression() or quote() -- PR#19352
+local({
+    eq <- quote(`=`(a, 1))
+    stopifnot(exprs = {
+        identical(deparse(list(eq)), "list((a = 1))")
+        identical(deparse(list(x = eq)), "list(x = (a = 1))")
+        identical(deparse(as.expression(eq)), "expression((a = 1))")
+        identical(deparse(eq, control = "all"), "quote((a = 1))")
+        identical(deparse(list(eq), control = "all"), "list(quote((a = 1)))")
+        ## unchanged:
+        identical(deparse(eq), "a = 1")
+        identical(deparse(list(quote(a <- 1)), control = "all"),
+                  "list(quote(a <- 1))")
+    })
+    e <- eval(parse(text = deparse(parse(text = "x = 1"))))
+    l <- eval(parse(text = deparse(list(eq), control = "all")))
+    stopifnot(is.null(names(e)), is.call(e[[1]]),
+              identical(l[[1]][[2]], eq))
+})
+## gave "list(a = 1)" (a name), "quote(a = 1)" (an error) or "list(x = a = 1)"
+## (a parse error) in R <= 4.6.2
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

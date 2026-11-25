@@ -1133,6 +1133,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	    if (doquote) {
 		print2buff("quote(", d);
 		d->opts &= SIMPLE_OPTS;
+		fnarg = true; // s is the argument of quote()
 	    } else { // `~`
 		d->opts &= ~QUOTEEXPRESSIONS;
 	    }
@@ -1915,8 +1916,10 @@ static void vec2buff(SEXP v, LocalParseData *d,
 	linebreak(&lbreak, d);
 	if(do_names) // put '<tag> = '
 	    deparse2buf_name(nv, i, d);
-	if (!src2buff(sv, i, d))
+	if (!src2buff(sv, i, d)) {
+	    d->fnarg = true;
 	    deparse2buff(VECTOR_ELT(v, i), d);
+	}
     }
     if (lbreak)
 	d->indent--;
