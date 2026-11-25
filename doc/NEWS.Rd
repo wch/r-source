@@ -591,6 +591,11 @@
       subassignments such as \code{<data.frame>$newcol[i] <- val},
       along the report and discussions in \PR{18364}, notably by \I{Gabe
 	Becker} and \I{Suharto Anggono}.
+
+      \item Fix for segfault in \code{pdf()} graphics device when
+      closing device having used many definitions, e.g., clipping paths,
+      masks, fill patterns, or groups (\PR{19324}).
+      Thanks to \I{Gilles Colling} and \I{Ivan Krylov}.
     }
   }
 }

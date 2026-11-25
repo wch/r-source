@@ -7899,7 +7899,7 @@ static int PDFwriteResourceDictionary(int objOffset, bool endpage,
 static void PDF_endfile(PDFDesc *pd)
 {
     int i, startxref, tempnobj, nfonts, cidnfonts, firstencobj;
-    int nraster, nmask, npattern;
+    int nraster, nmask, ndefn;
 
     /* object 3 lists all the pages */
 
@@ -7915,13 +7915,13 @@ static void PDF_endfile(PDFDesc *pd)
 
     /* Object 4 is the standard resources dict for each page */
 
-    /* Count how many images and masks and patterns */
+    /* Count how many images and masks and definitions */
     nraster = pd->numRasters;
     nmask = pd->numMasks;
-    npattern = countPatterns(pd);
+    ndefn = pd->numDefns;
 
-    if(pd->nobjs + nraster + nmask + npattern + 500 >= pd->max_nobjs) {
-	int new =  pd->nobjs + nraster + nmask + npattern + 500;
+    if(pd->nobjs + nraster + nmask + ndefn + 500 >= pd->max_nobjs) {
+	int new =  pd->nobjs + nraster + nmask + ndefn + 500;
 	void *tmp = realloc(pd->pos, new * sizeof(int));
 	if(!tmp)
 	    error("unable to increase object limit: please shutdown the pdf device");
