@@ -19,7 +19,7 @@
 }
 \usage{
 checkRdaFiles(paths)
-resaveRdaFiles(paths, compress = c("auto", "gzip", "bzip2", "xz"),
+resaveRdaFiles(paths, compress = c("auto", "gzip", "bzip2", "xz", "zstd"),
                compression_level, version = NULL)
 }
 

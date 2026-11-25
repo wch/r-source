@@ -985,13 +985,28 @@ add_dummies <- function(dir, Log)
     ## src/symbols.rds in the sources.
     check_serialization <- function(allfiles)
     {
+        ## We should not not do this if there is a dependence
+        ## on R >= 4.5.0, and we have to check that on the sources.
+        needs450 <- .package_depends_on_R_at_least(".", "4.5.0")
+        if (needs450) return()
         checkingLog(Log, "serialization versions")
-        bad <- get_serialization_version(allfiles)
-        bad <- names(bad[bad >= 3L])
-        if(length(bad)) {
+        needs350 <- .package_depends_on_R_at_least(".", "3.5.0")
+        bad_ver <- get_serialization_version(allfiles)
+        bad_cmp <- .guess_file_compression_type(names(bad_ver))
+        bad_ver <- names(bad_ver[(!needs350 & bad_ver >= 3L)])
+        bad_cmp <- names(bad_cmp)[bad_cmp == "zstd"]
+        if(length(bad_cmp)) {
+            msg <- "Found zstd-compressed serialized file(s):"
+            warningLog(Log, msg)
+            printLog0(Log, paste0(.pretty_format(sort(bad_cmp)), "\n"))
+            wrapLog("Such files are only readable in R >= 4.5.0.\n",
+                    "Recreate them without compress = \"zstd\"",
+                    "or set Depends: R (>= 4.5.0) as appropriate")
+        }
+        if(length(bad_ver)) {
             msg <- "Found file(s) with version 3 serialization:"
             warningLog(Log, msg)
-            printLog0(Log, paste0(.pretty_format(sort(bad)), "\n"))
+            printLog0(Log, paste0(.pretty_format(sort(bad_ver)), "\n"))
             wrapLog("Such files are only readable in R >= 3.5.0.\n",
                     "Recreate them with R < 3.5.0 or",
                     "save(version = 2) or saveRDS(version = 2)",
@@ -8089,16 +8104,8 @@ add_dummies <- function(dir, Log)
             setwd(pkgdir)
             allfiles <- check_file_names()
             if (R_check_permissions) check_permissions(allfiles)
-            if (!is_base_pkg && R_check_serialization) {
-                ## We should not not do this if there is a dependence
-                ## on R >= 3.5.0, and we have to check that on the sources.
-                db <- .read_description("DESCRIPTION")
-                Rver <-.split_description(db, verbose = TRUE)$Rdepends2
-                if(length(Rver) && Rver[[1L]]$op == ">="
-                   && Rver[[1L]]$version >= "3.5.0") {
-                       ## skip
-                } else check_serialization(allfiles)
-            }
+            if (!is_base_pkg && R_check_serialization)
+                check_serialization(allfiles)
             setwd(startdir)
 
             ## record this before installation.

@@ -3000,6 +3000,22 @@ function(file, x = readBin(file, 'raw', file.size(file)))
     .Call(C_Rbase64_encode, x)
 }
 
+### ** .guess_compression_type
+
+.guess_file_compression_type <-
+function(files)
+{
+    names(files) <- files
+    vapply(files, function(p) {
+        magic <- readBin(p, "raw", n = 5)
+        if(all(magic[1:2] == c(0x1f, 0x8b))) "gzip"
+        else if(rawToChar(magic[1:3]) == "BZh") "bzip2"
+        else if(magic[1L] == 0xFD && rawToChar(magic[2:5]) == "7zXZ") "xz"
+        else if(all(magic[1:4] == c(0x28, 0xB5, 0x2F, 0xFD))) "zstd"
+        else if(grepl("RD[ABX][1-9]", rawToChar(magic), useBytes = TRUE)) "none"
+        else "unknown"
+    }, "")
+}
 
 ### Local variables: ***
 ### mode: outline-minor ***

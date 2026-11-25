@@ -794,7 +794,9 @@ build_exclude <- function(allfiles, pkgdir, pkgname) {
             messageLog(Log, "re-saving image files")
             resaveRdaFiles(files)
             rdas <- checkRdaFiles(files)
-            if(any(rdas$compress %in% c("bzip2", "xz")))
+            if (any(rdas$compress == "zstd")) {
+                fixup_R_dep(pkgname, "4.5")
+            } else if (any(rdas$compress %in% c("bzip2", "xz")))
                 fixup_R_dep(pkgname, "2.10")
         } else {
             ## ddir need not exist if just R/sysdata.rda
@@ -1206,21 +1208,23 @@ build_exclude <- function(allfiles, pkgdir, pkgname) {
         hasDep410 <- FALSE
         hasDep420 <- FALSE
         hasDep430 <- FALSE
+        hasDep450 <- FALSE
         for(dep in Rdeps) {
             if(dep$op != '>=') next
             if(dep$version >= "3.5.0") hasDep350 <- TRUE
             if(dep$version >= "4.1.0") hasDep410 <- TRUE
             if(dep$version >= "4.2.0") hasDep420 <- TRUE
             if(dep$version >= "4.3.0") hasDep430 <- TRUE
+            if(dep$version >= "4.5.0") hasDep450 <- TRUE
         }
-        if(!hasDep350) {
+        if(!hasDep450) {
             ## re-read files after exclusions have been applied
             allfiles <- dir(".", all.files = TRUE, recursive = TRUE,
                             full.names = TRUE)
             allfiles <- substring(allfiles, 3L)  # drop './'
             vers  <- get_serialization_version(allfiles)
-            toonew <- names(vers[vers >= 3L])
-            if (length(toonew)) {
+            need350 <- names(vers[vers >= 3L])
+            if (length(need350)) {
                 fixup_R_dep(pkgname, "3.5.0")
                 msg <- paste("WARNING: Added dependency on R >= 3.5.0 because",
                              "serialized objects in serialize/load version 3",
@@ -1228,7 +1232,21 @@ build_exclude <- function(allfiles, pkgdir, pkgname) {
                 printLog(Log,
                          paste(c(strwrap(msg, indent = 2L, exdent = 2L),
                                  "  File(s) containing such objects:",
-                                 paste0("  ", .pretty_format(sort(toonew)))),
+                                 paste0("  ", .pretty_format(sort(need350)))),
+                               collapse = "\n"),
+                         "\n")
+            }
+            need450 <- .guess_file_compression_type(names(vers)) == "zstd"
+            need450 <- names(need450)[need450]
+            if (length(need450)) {
+                fixup_R_dep(pkgname, "4.5.0")
+                msg <- paste("WARNING: Added dependency on R >= 4.5.0 because",
+                             "zstd-compressed serialized objects",
+                             "cannot be read in older versions of R.")
+                printLog(Log,
+                         paste(c(strwrap(msg, indent = 2L, exdent = 2L),
+                                 "  File(s) containing such objects:",
+                                 paste0("  ", .pretty_format(sort(need450)))),
                                collapse = "\n"),
                          "\n")
             }
