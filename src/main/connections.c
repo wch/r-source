@@ -7333,7 +7333,8 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
         enum libdeflate_result res;
 	Bytef *buf, *p = (Bytef *)RAW(from);
 
-	if (p[0] == 0x1f && p[1] == 0x8b) { // in-memory gzip file
+	// in-memory gzip file: at least a 10-byte header and an 8-byte trailer
+	if (inlen >= 18 && p[0] == 0x1f && p[1] == 0x8b) {
 	    while(1) {
 		outlen = get_unaligned_le32(&p[inlen - 4]);
 		if (outlen == 0) outlen = 1;
@@ -7377,7 +7378,7 @@ do_memDecompress(SEXP call, SEXP op, SEXP args, SEXP env)
 	Bytef *buf, *p = (Bytef *)RAW(from);
 	int opt = 0;
 
-	if (p[0] == 0x1f && p[1] == 0x8b) { // in-memory gzip file
+	if (inlen >= 2 && p[0] == 0x1f && p[1] == 0x8b) { // in-memory gzip file
 	    // in this case we could read outlen from the trailer
 	    opt = 16;  // force gzip format
 	}

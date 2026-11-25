@@ -204,6 +204,20 @@ local({
 })
 ## read freed memory (visible under ASan or valgrind) in R <= 4.6.2
 
+## memDecompress(<empty>, "gzip") must not read the gzip magic number -- PR#19332
+## of a zero-length vector; it gives an error, as for other non-gzip input
+local({
+    E <- tryCid(memDecompress(raw(0), "gzip"))
+    ## a zero-length ALTREP raw vector has a data pointer that cannot be read
+    E2 <- tryCid(memDecompress(.Internal(wrap_meta(raw(0), 0L, 0L)), "gzip"))
+    stopifnot(inherits(E, "error"), inherits(E2, "error"),
+              identical(memDecompress(memCompress(raw(0), "gzip"), "gzip"),
+                        raw(0)))
+})
+## segfaulted for the ALTREP vector, and for raw(0) when zero-length
+## vectors are checked (e.g. under ASan at -O0), in R <= 4.6.2
+
+
 
 ## parse_Rd() with a user macro whose expansion ends by calling itself -- PR#19348
 for (txt in c("\\newcommand{\\foo}{\\foo}\\foo", "\\newcommand{\\foo}{x\\foo}\\foo",
