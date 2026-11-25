@@ -248,6 +248,20 @@ if (l10n_info()[["UTF-8"]]) {
 ## wrote past its buffer where MB_CUR_MAX is 4 (macOS), seg.faulting, in R <= 4.6.2
 
 
+## toupper() of UTF-8 with overlong forms, of NUL and of a surrogate
+local({
+    overlong <- list(c(0xc0, 0x80), c(0xe0, 0x80, 0x80),
+                     c(0xf0, 0x8d, 0xbf, 0xb0), c(0xf8, 0x80, 0x8d, 0xbf, 0xb0))
+    for (b in overlong) {
+        x <- rawToChar(as.raw(c(0x61, b, 0x62)))
+        Encoding(x) <- "UTF-8"
+        assertErrV(toupper(x))
+    }
+})
+## truncated the string at NUL, or returned an invalid surrogate (warning
+## twice per surrogate on Linux), in R <= 4.6.2
+
+
 ## gc() accounting after releasing a long string that carries a hash value -- PR#19195
 local({
     used <- function() gc()["Vcells", "used"]

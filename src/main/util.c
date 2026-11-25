@@ -1404,6 +1404,7 @@ utf8toucs(wchar_t *wc, const char *s)
     } else if (byte < 0xE0) {
 	if ((s[1] & 0xC0) == 0x80) {
 	    *w = (wchar_t) (((byte & 0x1F) << 6) | (s[1] & 0x3F));
+	    if(*w < 0x80) return (size_t)-1; /* overlong */
 	    return 2;
 	} else return (size_t)-1;
     } else if (byte < 0xF0) {
@@ -1412,6 +1413,7 @@ utf8toucs(wchar_t *wc, const char *s)
 			    | (unsigned int) ((s[1] & 0x3F) << 6)
 			    | (s[2] & 0x3F));
 	    byte = (unsigned int) *w;
+	    if(byte < 0x800) return (size_t)-1; /* overlong */
 	    /* Surrogates range */
 	    if(byte >= 0xD800 && byte <= 0xDFFF) return (size_t)-1;
 	    if(byte == 0xFFFE || byte == 0xFFFF) return (size_t)-1;
@@ -1424,6 +1426,10 @@ utf8toucs(wchar_t *wc, const char *s)
 			| (unsigned int) ((s[1] & 0x3F) << 12)
 			| (unsigned int) ((s[2] & 0x3F) << 6)
 			| (s[3] & 0x3F));
+	    /* Overlong (non-shortest) forms are invalid in every branch;
+	       here they could also encode NUL or the surrogates the
+	       3-byte branch rejects. */
+	    if(cvalue < 0x10000) return (size_t)-1;
 	    if(sizeof(wchar_t) < 4) /* Assume UTF-16 and return high surrogate.  Users need to call utf8toutf16low next. */
 		*w = (wchar_t) ((cvalue - 0x10000) >> 10) | 0xD800;
 	    else
@@ -1438,23 +1444,27 @@ utf8toucs(wchar_t *wc, const char *s)
     if (byte < 0xFC) {
 	if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)
 	    && ((s[3] & 0xC0) == 0x80) && ((s[4] & 0xC0) == 0x80)) {
-	    *w = (wchar_t) (((byte & 0x03) << 24)
+	    unsigned int cvalue = (((byte & 0x03) << 24)
 			    | (unsigned int) ((s[1] & 0x3F) << 18)
 			    | (unsigned int) ((s[2] & 0x3F) << 12)
 			    | (unsigned int) ((s[3] & 0x3F) << 6)
 			    | (s[4] & 0x3F));
+	    if(cvalue < 0x200000) return (size_t)-1; /* overlong */
+	    *w = (wchar_t) cvalue;
 	    return 5;
 	} else return (size_t)-1;
     } else if (byte < 0xFE) {
 	if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)
 	    && ((s[3] & 0xC0) == 0x80) && ((s[4] & 0xC0) == 0x80)
 	    && ((s[5] & 0xC0) == 0x80)) {
-	    *w = (wchar_t) (((byte & 0x01) << 30)
+	    unsigned int cvalue = (((byte & 0x01) << 30)
 			    | (unsigned int) ((s[1] & 0x3F) << 24)
 			    | (unsigned int) ((s[2] & 0x3F) << 18)
 			    | (unsigned int) ((s[3] & 0x3F) << 12)
 			    | (unsigned int) ((s[4] & 0x3F) << 6)
 			    | (s[5] & 0x3F));
+	    if(cvalue < 0x4000000) return (size_t)-1; /* overlong */
+	    *w = (wchar_t) cvalue;
 	    return 6;
 	} else return (size_t)-1;
     } else return (size_t)-1;
