@@ -3986,10 +3986,10 @@ static void clearLockFlag(void *data)
 
 static void lockDevice(RCNTXT *cntxt, pGEDevDesc dd)
 {
-    cntxt->cend = &clearLockFlag;
-    cntxt->cenddata = dd;
     begincontext(cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
                  R_NilValue, R_NilValue);
+    cntxt->cend = &clearLockFlag;
+    cntxt->cenddata = dd;
     dd->lock = TRUE;
 }
 
