@@ -1,6 +1,6 @@
 % File src/library/base/man/grep.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2025 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{grep}
@@ -64,7 +64,7 @@ gregexec(pattern, text, ignore.case = FALSE, perl = FALSE,
     vector.  \link{Long vectors} are supported.}
   \item{ignore.case}{logical. if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
-  \item{perl}{logical.  Should Perl-compatible regexps be used?}
+  \item{perl}{logical.  Should Perl-compatible \abbr{regexps} be used?}
   \item{value}{logical. If \code{FALSE}, a vector containing the (\code{integer})
     indices of the matches determined by \code{grep} is returned, and if
     \code{TRUE}, a vector containing the matching elements themselves is
@@ -78,11 +78,11 @@ gregexec(pattern, text, ignore.case = FALSE, perl = FALSE,
     elements that do \emph{not} match.}
   \item{replacement}{a replacement for the matched pattern in \code{sub} and
     \code{gsub}.  Coerced to character if possible.  For
-    \code{fixed = FALSE} this can include backreferences \code{"\\1"} to
-    \code{"\\9"} to parenthesized subexpressions of \code{pattern}.  For
-    \code{perl = TRUE} only, it can also contain \code{"\\U"} or
-    \code{"\\L"} to convert the rest of the replacement to upper or
-    lower case and \code{"\\E"} to end case conversion.  If a
+    \code{fixed = FALSE} this can include backreferences \code{"\\\\1"} to
+    \code{"\\\\9"} to parenthesized subexpressions of \code{pattern}.  For
+    \code{perl = TRUE} only, it can also contain \code{"\\\\U"} or
+    \code{"\\\\L"} to convert the rest of the replacement to upper or
+    lower case and \code{"\\\\E"} to end case conversion.  If a
     character vector of length 2 or more is supplied, the first element
     is used with a warning.  If \code{NA}, all elements in the result
     corresponding to matches will be set to \code{NA}.
@@ -99,7 +99,7 @@ gregexec(pattern, text, ignore.case = FALSE, perl = FALSE,
     \item \code{fixed = FALSE, perl = FALSE}: use POSIX 1003.2
     extended regular expressions (the default).
   }
-  See the help pages on \link{regular expression} for details of the
+  See the \sQuote{\link{regexp}} help page for details of the
   different types of regular expressions.
 
   The two \code{*sub} functions differ only in that \code{sub} replaces
@@ -211,7 +211,7 @@ gregexec(pattern, text, ignore.case = FALSE, perl = FALSE,
 \section{Warning}{
   The POSIX 1003.2 mode of \code{gsub} and \code{gregexpr} does not
   work correctly with repeated word-boundaries (e.g.,
-  \code{pattern = "\\b"}).
+  \code{pattern = "\\b"}, see Examples).
   Use \code{perl = TRUE} for such matches (but that may not
   work as expected with non-ASCII inputs, as the meaning of
   \sQuote{word} is system-dependent).
@@ -318,7 +318,7 @@ gregexec(pattern, text, ignore.case = FALSE, perl = FALSE,
   \code{\link{tolower}}, \code{\link{toupper}} and \code{\link{chartr}}
   for character translations.
 
-  \code{\link{apropos}} uses regexps and has more examples.
+  \code{\link{apropos}} uses \abbr{regexps} and has more examples.
 
   \code{\link{grepRaw}} for matching raw vectors.
 
@@ -388,6 +388,10 @@ sub(" +$", "", str)  ## spaces only
 sub("[[:space:]]+$", "", str) ## white space, POSIX-style
 ## what PCRE considered white space changed in version 8.34: see ?regex
 sub("\\\\s+$", "", str, perl = TRUE) ## PCRE-style white space
+
+## match word boundaries repeatedly: use perl=TRUE
+gsub("\\\\b", "|", "see the warning")  # wrongly matches every position
+gsub("\\\\b", "|", "see the warning", perl = TRUE)
 
 ## capitalizing
 txt <- "a test of capitalizing"
