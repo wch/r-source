@@ -10,11 +10,13 @@
 #include <config.h>
 #endif /* HAVE_CONFIG_H */
 #include <stdlib.h>
-#include <assert.h>
+//#include <assert.h>
 
 #include "tre-internal.h"
 #include "tre-stack.h"
 #include "xmalloc.h"
+
+#define assert(a) R_assert(a)
 
 union tre_stack_item {
   void *voidptr_value;
@@ -22,15 +24,16 @@ union tre_stack_item {
 };
 
 struct tre_stack_rec {
-  size_t size;
-  size_t max_size;
-  size_t ptr;
+  int size;
+  int max_size;
+  int increment;
+  int ptr;
   union tre_stack_item *stack;
 };
 
 
 tre_stack_t *
-tre_stack_new(size_t size, size_t max_size)
+tre_stack_new(int size, int max_size, int increment)
 {
   tre_stack_t *s;
 
@@ -45,6 +48,7 @@ tre_stack_new(size_t size, size_t max_size)
 	}
       s->size = size;
       s->max_size = max_size;
+      s->increment = increment;
       s->ptr = 0;
     }
   return s;
@@ -57,8 +61,8 @@ tre_stack_destroy(tre_stack_t *s)
   xfree(s);
 }
 
-size_t
-tre_stack_num_items(tre_stack_t *s)
+int
+tre_stack_num_objects(tre_stack_t *s)
 {
   return s->ptr;
 }
@@ -81,9 +85,9 @@ tre_stack_push(tre_stack_t *s, union tre_stack_item value)
       else
 	{
 	  union tre_stack_item *new_buffer;
-	  size_t new_size;
+	  int new_size;
 	  DPRINT(("tre_stack_push: trying to realloc more space\n"));
-	  new_size = s->size + s->size;
+	  new_size = s->size + s->increment;
 	  if (new_size > s->max_size)
 	    new_size = s->max_size;
 	  new_buffer = xrealloc(s->stack, sizeof(*new_buffer) * new_size);

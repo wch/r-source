@@ -14,6 +14,7 @@
 #include <errno.h>
 #include <stdlib.h>
 
+#include "tre.h"
 #include "tre-internal.h"
 #include "xmalloc.h"
 
@@ -21,8 +22,6 @@ int
 tre_regncomp(regex_t *preg, const char *regex, size_t n, int cflags)
 {
   int ret;
-  if (n > TRE_MAX_RE)
-    return REG_ESPACE;
 #if TRE_WCHAR
   tre_char_t *wregex;
   size_t wlen;
@@ -72,11 +71,11 @@ tre_regncomp(regex_t *preg, const char *regex, size_t n, int cflags)
 		  return REG_BADPAT;
 		}
 	      break;
-	    case -1:
+	    case (size_t)-1:
 	      DPRINT(("mbrtowc: error %d: %s.\n", errno, strerror(errno)));
 	      xfree(wregex);
 	      return REG_BADPAT;
-	    case -2:
+	    case (size_t)-2:
 	      /* The last character wasn't complete.  Let's not call it a
 		 fatal error. */
 	      consumed = n;
@@ -105,8 +104,6 @@ int
 tre_regncompb(regex_t *preg, const char *regex, size_t n, int cflags)
 {
   int ret;
-  if (n > TRE_MAX_RE)
-    return REG_ESPACE;
 #if TRE_WCHAR /* wide chars = we need to convert it all to the wide format */
   tre_char_t *wregex;
   size_t i;
@@ -130,10 +127,7 @@ tre_regncompb(regex_t *preg, const char *regex, size_t n, int cflags)
 int
 tre_regcomp(regex_t *preg, const char *regex, int cflags)
 {
-  size_t n = regex ? strlen(regex) : 0;
-  if (n > TRE_MAX_RE)
-    return REG_ESPACE;
-  return tre_regncomp(preg, regex, n, cflags);
+  return tre_regncomp(preg, regex, regex ? strlen(regex) : 0, cflags);
 }
 
 int
@@ -141,20 +135,19 @@ tre_regcompb(regex_t *preg, const char *regex, int cflags)
 {
   int ret;
   tre_char_t *wregex;
-  size_t i, n = regex ? strlen(regex) : 0;
+  size_t wlen, n = strlen(regex);
+  unsigned int i;
   const unsigned char *str = (const unsigned char *)regex;
   tre_char_t *wstr;
 
-  if (n > TRE_MAX_RE)
-    return REG_ESPACE;
   wregex = xmalloc(sizeof(tre_char_t) * (n + 1));
   if (wregex == NULL) return REG_ESPACE;
   wstr = wregex;
 
-  for (i = 0; i < n; i++)
-    *(wstr++) = *(str++);
-  wregex[n] = L'\0';
-  ret = tre_compile(preg, wregex, n, cflags | REG_USEBYTES);
+  for (i = 0; i < n; i++) *(wstr++) = *(str++);
+  wlen = n;
+  wregex[wlen] = L'\0';
+  ret = tre_compile(preg, wregex, wlen, cflags | REG_USEBYTES);
   xfree(wregex);
   return ret;
 }
@@ -164,18 +157,13 @@ tre_regcompb(regex_t *preg, const char *regex, int cflags)
 int
 tre_regwncomp(regex_t *preg, const wchar_t *regex, size_t n, int cflags)
 {
-  if (n > TRE_MAX_RE)
-    return REG_ESPACE;
   return tre_compile(preg, regex, n, cflags);
 }
 
 int
 tre_regwcomp(regex_t *preg, const wchar_t *regex, int cflags)
 {
-  size_t n = regex ? wcslen(regex) : 0;
-  if (n > TRE_MAX_RE)
-    return REG_ESPACE;
-  return tre_compile(preg, regex, n, cflags);
+  return tre_compile(preg, regex, regex ? wcslen(regex) : 0, cflags);
 }
 #endif /* TRE_WCHAR */
 

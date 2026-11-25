@@ -1,12 +1,14 @@
 /*
- * tre-ast.h - Abstract syntax tree (AST) definitions
- *
- * This software is released under a BSD-style license.
- * See the file LICENSE for details and copyright.
- */
+  tre-ast.h - Abstract syntax tree (AST) definitions
+
+  This software is released under a BSD-style license.
+  See the file LICENSE for details and copyright.
+
+*/
+
 
 #ifndef TRE_AST_H
-#define TRE_AST_H
+#define TRE_AST_H 1
 
 #include "tre-mem.h"
 #include "tre-internal.h"
@@ -35,8 +37,6 @@ typedef enum {
 #define IS_PARAMETER(x) ((x)->code_min == PARAMETER)
 
 
-struct tre_empty_path;
-
 /* A generic AST node.  All AST nodes consist of this node on the top
    level with `obj' pointing to the actual content. */
 typedef struct {
@@ -44,13 +44,10 @@ typedef struct {
   void *obj;             /* Pointer to actual node. */
   int nullable;
   int submatch_id;
-  unsigned int num_submatches;
-  unsigned int num_tags;
+  int num_submatches;
+  int num_tags;
   tre_pos_and_tags_t *firstpos;
   tre_pos_and_tags_t *lastpos;
-  /* The ways of matching the empty string through the node, in order of
-     POSIX preference; computed with firstpos and lastpos. */
-  struct tre_empty_path *empty_paths;
 } tre_ast_node_t;
 
 
@@ -104,7 +101,7 @@ tre_ast_node_t *
 tre_ast_new_node(tre_mem_t mem, tre_ast_type_t type, size_t size);
 
 tre_ast_node_t *
-tre_ast_new_literal(tre_mem_t mem, int code_min, int code_max);
+tre_ast_new_literal(tre_mem_t mem, int code_min, int code_max, int position);
 
 tre_ast_node_t *
 tre_ast_new_iter(tre_mem_t mem, tre_ast_node_t *arg, int min, int max,

@@ -1,114 +1,56 @@
-This directory contains a copy of TRE (https://github.com/laurikari/tre),
-taken from git commit 46577ec6241529f1b5117445401eab356a46eeae of the
-integration branch at https://github.com/kevinushey/tre/tree/r-integration.
-That branch is upstream master (2026-05-23, post-0.9.0) plus the following
-pull requests pending upstream.  The first five restore behaviors R's
-previous bundled copy (based on TRE 0.8.0) had patched in locally:
+tre-config.h contains additional defines that their configure puts in
+config.h.
 
-  #144  Convert tre_ast_to_tnfa() to iteration over a tre_stack
-  #145  Grow the delete-handling deque in tre_tnfa_run_approx() dynamically
-  #146  Make REG_LITERAL match the empty pattern
-  #148  Fix pointer truncation and under-alignment in ALIGN() on LLP64
-  #149  Do not use the system wctype() on Windows
+We have remapped the POSIX entry points with a tre_ suffix: without
+it there was confusion with entry points in OS libraries on some OSes
+(e.g. macOS).
 
-and the others fix bugs present in both copies:
+alloca has been disabled: the declarations used do not work on
+Windows, and most likely not on FreeBSD.
 
-  #131  Fix parser out-of-bounds reads
-  #167  Fix two parser out-of-bounds reads that #131 misses ("[[:alpha:"
-        and the cost equation of approximate bounds); with #131, this
-        supersedes the PR#18995 patch
-  #142  Protect against combinatorial explosion (TRE_MAX_POS, TRE_MAX_TRANS)
-  #168  Enforce TRE_MAX_POS while bounded repetitions are expanded, so
-        that nested bounds such as ((a{255}){255}){255} are rejected
-        before their copies are allocated
-  #163  Keep every empty path through a nullable subexpression, so that
-        each alternative's assertions are tried: "(^|\b)a" now matches
-        wherever "(\b|^)a" does (PR#17992)
+The way we compile it, TRE works internally in one of three modes
 
-The files in lib/ and include/tre/tre.h were copied verbatim into this
-flat directory, except for the R-specific changes listed below.  Files
-tre-filter.[ch] (referenced by nothing) and include/tre/regex.h (R
-includes tre/tre.h directly) were omitted.  xmalloc.c is retained but,
-as before, only compiled for debugging.
+STR_BYTE, using bytes
+STR_MBS , using wchar_t for matching, I/O in MBCS
+STR_WIDE, using wchar_t
 
-R-specific changes, all confined to three files:
-
-tre-internal.h:
- - includes "tre.h" rather than "tre/tre.h" (flat layout);
- - assert() is remapped to R_assert(), which calls Rf_error(), so that
-   a failed invariant raises an R error instead of aborting the R
-   process.  Every compiled TRE unit includes <assert.h> (if at all)
-   before tre-internal.h, so the remapping applies throughout; xmalloc.c
-   is the one file that includes <assert.h> without tre-internal.h, and
-   it is not compiled (see above);
- - rlocale.h is included under either USE_RI18N_FNS or USE_RI18N_CASE.
-   R selects the two independently: USE_RI18N_FNS (Windows, and by
-   default macOS, AIX and Solaris) makes rlocale.h remap iswalpha() and
-   friends, and the iswctype()/wctype() pair, onto R's internal Unicode
-   tables; USE_RI18N_CASE (Windows, and by default macOS and Solaris)
-   additionally supplies Ri18n_towlower/Ri18n_towupper, which TRE uses
-   for case-insensitive matching because the system versions are
-   deficient there (the UCRT ones fail for e.g. \ue9/\uc9);
- - TRE_MAX_POS is 1<<18 rather than upstream's 1<<20.  At 1<<20 the
-   36-byte pattern "(?:a{2,101,})(?:a{2,101,}){100}{100}" still compiles,
-   using 3-4 GB; 1<<18 keeps such patterns near the ~1 GB that
-   TRE_MAX_TRANS already allows, and still fits a REG_ICASE pattern of
-   TRE_MAX_RE letters (two literals per letter, plus an end marker);
- - HAVE_ISWBLANK is asserted here rather than in tre-config.h.  Upstream's
-   configure tests iswblank(); R's tests isblank() but not iswblank(),
-   which is C99 and required by R.  Defining it in tre-config.h would
-   also make it visible to every R source that includes <tre/tre.h>
-   (grep.c, agrep.c, dcf.c, platform.c).  Without it TRE omits "blank"
-   from tre_ctype_map and [[:blank:]] fails with REG_ECTYPE wherever
-   TRE_USE_SYSTEM_WCTYPE is not defined, i.e. on Windows.
-
-tre-compile.c:
- - tre_version() reports "R_fixes" to mark this as a modified copy.
-
-tre-config.h:
- - R-maintained (upstream generates it with configure); other HAVE_*
-   macros come from R's config.h.  TRE_USE_ALLOCA is deliberately not
-   defined: the matchers allocate buffers proportional to the automaton
-   size, which for large patterns can exceed the stack.  TRE_VERSION
-   carries the upstream commit ("0.9.0-46577ec"), since these sources are
-   post-0.9.0 plus the pull requests above; update it whenever the copy
-   is refreshed.
-
-Patterns whose expansion exceeds TRE_MAX_POS positions or TRE_MAX_TRANS
-transitions now fail to compile with REG_ESPACE ("Out of memory").  The
-0.8.0 copy had no such limits: nested bounds multiply, and it would
-allocate many gigabytes for short patterns such as the one above.
-
-Behavior changes in bound expressions, from upstream's parser rewrite:
-
- - {n,} with n > RE_DUP_MAX (255) is now rejected with REG_BADMAX.  The
-   0.8.0 copy checked only the maximum, so grepl("a{300,}", strrep("a",
-   400)) was TRUE and is now an "invalid regular expression" error.
-   {n,m} with m > 255 was already rejected; only the error code changes
-   there (REG_BADBR -> REG_BADMAX).
- - {,} and {,~n} now mean "zero or more" rather than "exactly one":
-   regexpr("a{,}", "aaa") matches 3 characters rather than 1, and
-   agrep()/aregexec() patterns using {,~n} match a wider language.
-   Relatedly, {,m} now allows m copies rather than m+1, which is a fix:
-   regexpr("a{,3}", "aaaa") matched 4 characters and now matches 3.
-
-Notes carried over from the previous (0.8.0-based) copy:
-
-The way we compile it, TRE works internally in one of three modes:
-STR_BYTE (bytes), STR_MBS (wchar_t matching, I/O in MBCS), STR_WIDE
-(wchar_t).  The interfaces tre_regcompb, tre_regncompb, tre_regexecb,
-tre_regnexecb and tre_regaexecb force STR_BYTE; unless forced, bytes
+We've added interfaces tre_regcompb, tre_regncompb, tre_regexecb,
+tre_regnexecb and regaexecb to force STR_BYTE.  Unless forced, bytes
 are used in a single-byte locale and wchar_t in a MBCS.  We need to
-force for useBytes=TRUE, for UTF-8 encoded strings in a single-byte
-locale and when dealing with raw vectors.  regcomp and regexec must use
-the same type.  The offsets in the regmatch_t structure are in
-characters for STR_WIDE, bytes for the other two modes.  (These
-interfaces, added for R, are part of upstream TRE since 0.9.0.)
+force for useBytes=TRUE, for support for UTF-8 encoded strings
+in a single-byte locale (principally on Windows) and when dealing with
+raw vectors. You do need to ensure that regcomp and regexec use the
+same type.
 
-Most other historical R patches have been merged upstream or are
-superseded: the byte-mode interfaces and REG_USEBYTES, the 8-bit
-optimizations in 8-bit mode (PR#14408), copying the class member of a
-LITERAL in tre_copy_ast (PR#16009), the tre_parse_int overflow fix,
-the WCHAR_MAX/AIX workaround, and various matcher fixes.  Upstream now
-also caps pattern length at TRE_MAX_RE (65536) characters, so guards
-that were only needed for unbounded patterns have been dropped.
+The offsets in the regmatch_t structure are in characters for
+STR_WIDE, bytes for the other two modes.
+
+On Windows (MinGW?), iswctype is missing 'blank'.
+
+REG_LITERAL was not matching "" in some cases, hence a change at
+line 1652 of tre-parse.c.
+
+We fixed stack trampling in tre_tnfa_run_approx() and converted
+tre_ast_to_tnfa() from recursion to iteration over a TRE stack.
+
+We commented out in tre-match-approx.c
+
+/* These seem compiler/OS-specific, but unexplained
+On Linux the first is intended to be used only with GCC.
+#define __USE_STRING_INLINES
+#undef __NO_INLINE__
+*/
+
+since it failed on clang
+https://stat.ethz.ch/pipermail/r-devel/2010-February/056728.html
+
+Nov 2011: incorporated minor fixes from https://github.com/GerHobbelt/libtre
+(see https://laurikari.net/tre/website-issues-and-future-plans/#comments).
+
+Oct 2014: fixed R bug PR#16009 by copying the class member of a LITERAL
+in tre_copy_ast.
+
+Nov 2014: changed tre_version() to report this is a modified version.
+
+Apr 2020: incorporated a patch to tre-parse.c from
+https://github.com/laurikari/tre/issues/55
