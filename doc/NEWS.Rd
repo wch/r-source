@@ -596,6 +596,16 @@
       closing device having used many definitions, e.g., clipping paths,
       masks, fill patterns, or groups (\PR{19324}).
       Thanks to \I{Gilles Colling} and \I{Ivan Krylov}.
+
+      \item Keyboard handlers for \code{getGraphicsEvent()} on the X11
+      on-screen devices now receive the documented key names in more
+      cases, and is more consistent with behaviour on \code{windows()}.
+      Specifically, \kbd{Delete}, \kbd{Home}, and the keypad navigation
+      keys now work as expected. The behaviour with Control key pressed
+      is also more correct, particularly when used with \kbd{Shift} or
+      with Caps Lock on. Thanks to report and patches in \PR{19081} by
+      \I{Trevor Davis}.
+
     }
   }
 }
