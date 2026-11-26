@@ -3650,25 +3650,20 @@ function(dfile, strict = FALSE, db = NULL)
     if(any(ind <- !.is_ASCII(db[ASCII_fields])))
         out$fields_with_non_ASCII_values <- ASCII_fields[ind]
 
+    ## <FIXME> (check for invalid UTF-8, which read.dcf substitutes)
     ## Determine encoding and re-encode if necessary and possible.
     if("Encoding" %in% names(db)) {
-        encoding <- db["Encoding"]
-        if(Sys.getlocale("LC_CTYPE") %notin% c("C", "POSIX"))
-            db <- iconv(db, encoding, sub = "byte")
+        ## encoding <- db["Encoding"]
+        ## if(Sys.getlocale("LC_CTYPE") %notin% c("C", "POSIX"))
+        ##     db <- iconv(db, encoding, sub = "byte")
     }
     else if(!all(.is_ISO_8859(db))) {
         ## No valid Encoding metadata.
         ## Determine whether we can assume Latin1.
         out$missing_encoding <- TRUE
     }
-
-    if(anyNA(nchar(db, "c", TRUE))) {
-        ## Ouch, invalid in the current locale.
-        ## (Can only happen in a MBCS locale.)
-        ## Try re-encoding from Latin1.
-        db <- iconv(db, "latin1")
-    }
-
+    ## </FIXME>
+    
     ## Check Authors@R and expansion if needed.
     if(!is.na(aar <- db["Authors@R"]) &&
        (is.na(db["Author"]) || is.na(db["Maintainer"]))) {
@@ -4168,6 +4163,8 @@ function(dfile)
         out$fields_with_non_ASCII_tags <- names(db)[ind]
 
     if("Encoding" %notin% names(db)) {
+        ## In principle, a DESCRIPTION could now use UTF-8 without declaration,
+        ## but such packages tend to use UTF-8 in other places that need one ...
         ind <- !.is_ASCII(db)
         if(any(ind)) {
             out$missing_encoding <- TRUE

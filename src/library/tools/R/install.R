@@ -2993,7 +2993,7 @@ if(FALSE) {
         order(xx, toupper(x), x)
     }
 
-    html_header <- function(pkg, title, version, encoding, conn)
+    html_header <- function(pkg, title, version, conn)
     {
         cat(paste(HTMLheader(title,
                              logo = staticLogoPath(dir, relative = TRUE, Rhome = "../../..", dir = TRUE),
@@ -3004,11 +3004,8 @@ if(FALSE) {
            '<h2>Documentation for package &lsquo;', pkg, '&rsquo; version ',
             version, '</h2>\n\n', sep = "", file = conn)
 
-	cat('<ul><li><a href="../DESCRIPTION" type="text/plain',
-            ## These days we should really always have UTF-8 ...
-            if(!is.na(encoding) && (encoding == "UTF-8"))
-                "; charset=utf-8",
-            '">DESCRIPTION file</a></li>\n',
+	cat('<ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">',
+            'DESCRIPTION file</a></li>\n',
             sep = "", file = conn)
 	if (file.exists(file.path(outDir, "doc")))
 	    cat('<li><a href="../doc/index.html">User guides, package vignettes and other documentation</a></li>\n',
@@ -3089,11 +3086,6 @@ if(FALSE) {
     on.exit(close(outcon))
     ## we know we have a valid file by now.
     desc <- read.dcf(file.path(outDir, "DESCRIPTION"))[1L, ]
-    ## re-encode if necessary
-    if(!is.na(enc <- desc["Encoding"])) {
-        ## should be valid in UTF-8, might be invalid in declared encoding
-        desc <- iconv(desc, enc, "UTF-8", sub = "byte")
-    }
     ## drop internal entries (by default)
     if(!config_val_to_logical(Sys.getenv("_R_INSTALL_HTML_INDEX_INTERNAL_TOO_",
                                          "FALSE")))
@@ -3145,7 +3137,7 @@ if(FALSE) {
     ## No need to handle encodings: everything is in UTF-8
 
     html_header(desc["Package"], htmlize(desc["Title"], TRUE),
-                desc["Version"], desc["Encoding"], outcon)
+                desc["Version"], outcon)
 
     use_alpha <- (nrow(M) > 100)
     if (use_alpha) {

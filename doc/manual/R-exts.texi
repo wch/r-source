@@ -395,7 +395,8 @@ As from @R{} 4.6.0, lines starting with @samp{#} are treated as
 comments and are ignored.
 
 For maximal portability, the @file{DESCRIPTION} file should be written
-entirely in @acronym{ASCII} --- if this is not possible, use UTF-8.
+entirely in @acronym{ASCII} --- if this is not possible, use UTF-8
+(also as the package @samp{Encoding}, see below).
 
 Several optional fields take @emph{logical values}: these can be
 specified as @samp{yes}, @samp{true}, @samp{no} or @samp{false}:
@@ -633,7 +634,8 @@ suggests and so the user package needs to do so too and include this in
 @c This included latin2 but we now know musl does not support it.
 @c DESCRIPTION field Encoding
 The @samp{Encoding} field specifies the encoding used for the
-@file{R}, @file{NAMESPACE} and @file{CITATION} files,
+@file{R}, @file{NAMESPACE}, @file{NEWS} and @file{CITATION} files,
+for reading plain-text data files when using @samp{LazyData},
 and as the default encoding of @file{.Rd} files and vignette sources.
 The examples are assumed to be in this encoding when
 running @command{R CMD check}.  Only encoding names @code{latin1} and
