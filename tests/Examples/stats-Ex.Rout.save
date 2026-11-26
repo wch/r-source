@@ -1,5 +1,5 @@
 
-R Under development (unstable) (2026-11-10 r90868) -- "Unsuffered Consequences"
+R Under development (unstable) (2026-11-26 r90993) -- "Unsuffered Consequences"
 Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -10567,7 +10567,7 @@ NA        0    3    0
 > ### ** Examples
 > 
 > a <- model.frame(cbind(ncases,ncontrols) ~ agegp + tobgp + alcgp, data = esoph)
-> model.extract(a, "response")
+>              model.extract(a, "response")
    ncases ncontrols
 1       0        40
 2       0        10
@@ -10657,7 +10657,12 @@ NA        0    3    0
 86      1         0
 87      2         0
 88      1         0
-> stopifnot(model.extract(a, "response") == model.response(a))
+>    stopifnot(model.extract(a, "response") == model.response(a))
+> tools::assertWarning(verbose = TRUE, ## "passing a bare name .... is deprecated."
++    stopifnot(model.extract(a, response) == model.response(a)))
+Asserted warning: 'passing a bare name as 'component' to model.extract()' is deprecated.
+Use 'model.response()' instead.
+See help("Deprecated")
 > 
 > a <- model.frame(ncases/(ncases+ncontrols) ~ agegp + tobgp + alcgp,
 +                  data = esoph, weights = ncases+ncontrols)
@@ -10701,10 +10706,16 @@ NA        0    3    0
 > 
 > a <- model.frame(cbind(ncases,ncontrols) ~ agegp,
 +                  something = tobgp, data = esoph)
-> names(a)
+> names(a) # .. .. "(something)"
 [1] "cbind(ncases, ncontrols)" "agegp"                   
 [3] "(something)"             
 > stopifnot(model.extract(a, "something") == esoph$tobgp)
+>      all (model.extract(a,  something ) == esoph$tobgp) # TRUE (w/ deprecation warning)
+Warning in model.extract(a, something) :
+  'passing a bare name as 'component' to model.extract()' is deprecated.
+Use 'the string "something"' instead.
+See help("Deprecated")
+[1] TRUE
 > 
 > 
 > 
@@ -19954,7 +19965,7 @@ Number of Fisher Scoring iterations: 6
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  5.26 0.136 5.4 0 0 
+Time elapsed:  3.689 0.346 4.123 0 0 
 > grDevices::dev.off()
 null device 
           1 

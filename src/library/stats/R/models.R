@@ -693,9 +693,16 @@ model.response <- function (data, type = "any")
 
 model.extract <- function (frame, component)
 {
-    component <- as.character(substitute(component))
+    component <- as.character(subC <- substitute(component))
+    if(is.name(subC)) { # allowed for S compatibility; deprecated in R 4.7.0
+	new <- if(component %in% c("response", "weights", "offset"))
+		     sprintf(     "model.%s()", component)
+	       else gettextf('the string "%s"', component)
+	.Deprecated(new, old = "passing a bare name as 'component' to model.extract()")
+    }
     rval <- switch(component,
 		   response = model.response(frame),
+		   weights  = model.weights (frame),
 		   offset   = model.offset  (frame),
                    ## otherwise :
                    frame[[paste0("(", component, ")")]]

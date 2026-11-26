@@ -4630,6 +4630,27 @@ stopifnot(identical(as.numeric(c("0x1p-1024", "0x1p-1040", "0x1p-1074",
 ## gave 0 in R <= 4.6.x, so also the round trip where "%a" gives 0x1p-1074
 
 
+## model.extract(*, <name>) is deprecated in favour of a string, r-dev-day#167
+mf <- model.frame(dist ~ speed, data = cars, subset = speed < 10,
+                  weights = speed, offset = log(speed), z = log(dist))
+for(cmp in c("response", "weights", "offset", "z", "nonexistent")) {
+    rs <- eval(substitute(model.extract(mf, CMP), list(CMP = cmp))) # NB: warnings would error (warn=2)
+    expr <-    substitute(model.extract(mf, CMP), list(CMP = as.name(cmp)))
+    ww <-         tryCatch(eval(expr), warning = identity)
+    rn <- suppressWarnings(eval(expr))
+    stopifnot(inherits(ww, "deprecatedWarning"),
+              grepl(if(cmp %in% c("response", "weights", "offset"))
+                        paste0("model.", cmp, "()") else paste0('"', cmp, '"'),
+                    conditionMessage(ww), fixed = TRUE),
+              identical(rn, rs))
+}
+stopifnot(identical(unname(model.extract(mf, "weights")), model.weights(mf)),
+          identical(names (model.extract(mf, "weights")), rownames(mf)),
+          identical(unname(model.extract(mf, "offset")),  model.offset(mf)),
+          is.null(model.extract(mf, "nonexistent")))
+## bare names were accepted silently in R <= 4.6.x
+
+
 
 ## keep at end
 rbind(last =  proc.time() - .pt,

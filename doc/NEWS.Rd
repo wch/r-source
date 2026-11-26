@@ -236,6 +236,15 @@
       they are effectively unused.\cr
       \cr
       For details, see \code{deprecated?methods}.
+
+      \item Passing a name (rather than a character string) as
+      \code{component} to \code{model.extract()}, as in
+      \code{model.extract(mf, weights)}, is deprecated.  The warning
+      recommends \code{model.response()}, \code{model.weights()} or
+      \code{model.offset()} for those three components;
+      \code{model.extract(mf, "weights")} now also uses
+      \code{model.weights()}.  As suggested in r-dev-day issue #167 and
+      reported as \PR{19366} with analysis and patch by \I{Ashish Tiwari}.
     }
   }
 
