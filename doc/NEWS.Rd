@@ -606,6 +606,10 @@
       with Caps Lock on. Thanks to report and patches in \PR{19081} by
       \I{Trevor Davis}.
 
+      \item Hexadecimal constants of subnormal numbers such as
+      \code{c(0x1p-1024, 0x1p-1074)} are correctly parsed now (instead of
+      \dQuote{underflowing} to \code{0}). Thanks to \I{Kevin Ushey}'s
+      report and patch in \PR{19342}.
     }
   }
 }

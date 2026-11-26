@@ -670,10 +670,13 @@ stopifnot(exprs = {
 
 
 ## Underflow happened when parsing small hex constants PR#17199
+##' all.equal() with tolerance in the scale of 'y'
+all.equalS <- function(x,y, tol = 1e-7, ...) all.equal.numeric(x,y, scale = abs(y), tolerance=tol, ...)
 stopifnot(exprs = {
-    as.double("0x1.00000000d0000p-987") > 0   # should be 7.645296e-298
-    as.double("0x1.0000000000000p-1022") > 0  # should be 2.225074e-308
-    as.double("0x1.f89fc1a6f6613p-974") > 0   # should be 1.23456e-293
+    !isTRUE(all.equalS(0, 2e-308))
+    all.equalS(as.double("0x1.00000000d0000p-987"),  7.645296e-298)
+    all.equalS(as.double("0x1.0000000000000p-1022"), 2.225074e-308)
+    abs(print(eps <- as.double("0x1.f89fc1a6f6613p-974") - 1.23456e-293)) < .Machine$double.xmin
 })
 ##
 

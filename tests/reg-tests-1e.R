@@ -4219,7 +4219,6 @@ stopifnot(!bindingIsLocked("out", environment()))
 ## replaced the first
 
 
-
 ## unzip(*, unzip = "internal") leaks the zip handle on error -- PR#19233
 le <- function(x, n) writeBin(as.integer(x), raw(), size = n, endian = "little")
 entries <- as.raw(c(0x01, 0x00, 0x00, 0xff, 0, 0, 0, 0))
@@ -4238,6 +4237,7 @@ if(dir.exists(dfd <- "/dev/fd")) withAutoprint({
 })          # ^^^^^^^
 unlink(zipfile)
 ## n2 - n1 was 50 in R <= 4.6.2
+
 
 ## parse error after a #line directive read a freed srcfile -- PR#19255
 local({
@@ -4605,7 +4605,6 @@ local({
 ## B's column was named A, with a warning; L:x:y overflowed the buffer, in R <= 4.6.2
 
 
-
 ## an error in a clipping path function left the PDF device locked -- PR#19335
 pdf(tf <- tempfile(fileext = ".pdf"))
 plot.new()
@@ -4618,6 +4617,17 @@ withCallingHandlers(dev.off(), warning = function(e) {
 stopifnot(is.null(w))
 unlink(tf)
 ## dev.off() warned "Killing locked device" in R <= 4.6.*
+
+
+## parse() hexadecimal constants with a binary exponent below -1023 -- PR#19942
+x <- c(2^-1024, 2^-1040, 2^-1074, 3 * 2^-1074, 2^-1074, 2^-1074)
+stopifnot(identical(as.numeric(c("0x1p-1024", "0x1p-1040", "0x1p-1074",
+                                 "0x1.8p-1073", "0x0.8p-1073", "0x1.8p-1075")),
+                    x),
+          identical(0x1p-1074, 2^-1074),
+          identical(as.numeric("0x1p-1075"), 0), # a tie, to even
+          identical(as.numeric(sprintf("%a", x)), x))
+## gave 0 in R <= 4.6.x, so also the round trip where "%a" gives 0x1p-1074
 
 
 
