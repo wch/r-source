@@ -956,7 +956,7 @@
 
       \item \code{read.dcf()} now recognizes lines starting with
       \samp{#} as comment lines.  By \I{Dirk Eddelbuettel}, \I{Laurent
-      Gatto} and \I{Hugo Gruson}.
+      Gatto} and \I{Hugo Gruson} (\PR{18903}).
 
       \item \code{tcltk::tclVersion()} now only optionally includes the
       \sQuote{patch level}, as Tcl full versions can be of the form
