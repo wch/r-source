@@ -74,16 +74,12 @@ write.dcf(x, file = "", append = FALSE, useBytes = FALSE,
     length limit was approximately 8191 bytes per line.
   }
 
-  DCF files are required to be encoded in UTF-8.  \code{read.dcf}
-  therefore returns values in UTF-8 (non-ASCII values being marked as
-  such), and \code{write.dcf} converts values with a declared encoding
-  (such as \code{"latin1"}) to UTF-8 and always writes UTF-8, regardless
-  of the session's locale.  Any bytes which are not valid UTF-8 are not
-  dropped but preserved visually by escaping them as \samp{<xx>} (where
-  \code{xx} is the byte in hexadecimal), as done by
-  \code{\link{iconv}(sub = "byte")}.  As a consequence, the
-  \samp{Encoding} field of a \file{DESCRIPTION} file is no longer used to
-  re-encode the other fields.
+  As from \R 4.7.0, DCF files are required to be encoded in UTF-8.
+  \code{read.dcf} therefore returns values in UTF-8 (non-ASCII values
+  being marked as such) and \code{write.dcf} converts values to UTF-8,
+  regardless of the session's locale.  Any bytes which are not valid
+  UTF-8 are preserved using hex codes (\samp{<xx>}), as done by
+  \code{\link{iconv}(sub = "byte")}.
 
   \code{write.dcf} does not write \code{NA} fields.
 }

@@ -8,18 +8,15 @@
 \section{\Rlogo Changes in R-devel}{
   \subsection{Significant User-Visible Changes}{
     \itemize{
-      \item \code{read.dcf()} and \code{write.dcf()} now treat \abbr{DCF}
-      files (such as package \file{DESCRIPTION} and repository
-      \file{PACKAGES} files) as \abbr{UTF-8}, as required by the Debian
-      control file format.  \code{read.dcf()} returns values in
-      \abbr{UTF-8} and \code{write.dcf()} always writes \abbr{UTF-8}
-      regardless of the session locale; bytes which are not valid
-      \abbr{UTF-8} are preserved by escaping them as \samp{<xx>} rather
-      than being re-encoded via a \samp{Encoding} field.  As a
-      consequence, the \code{useBytes} argument of \code{write.dcf()} is
-      ignored, and non-\abbr{UTF-8} \file{DESCRIPTION} files (e.g. those
-      declaring \samp{Encoding: latin1}) are no longer re-encoded on
-      reading.
+      \item \acronym{DCF} files such as package \file{DESCRIPTION} and
+      repository \file{PACKAGES} files are now treated as \abbr{UTF-8},
+      as required by the Debian control file format.  \code{read.dcf()}
+      and \code{write.dcf()} substitute bytes which are not valid
+      \abbr{UTF-8} by hex codes (\samp{<xx>}).  The \code{useBytes}
+      argument of \code{write.dcf()} is ignored.  An \samp{Encoding}
+      field in the \file{DESCRIPTION} file is no longer used to
+      re-encode the other fields when installing the package.
+      %(\code{packageDescription()} currently still re-encodes.)
 
       \item Fixing \code{rbinom()}, see \PR{19049} below, to reproduce
       old results needs \code{RNGkind()} to get a new \code{binom.kind}
