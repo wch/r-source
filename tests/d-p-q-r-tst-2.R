@@ -1015,5 +1015,14 @@ stopifnot(identical(
 ## was not at all true, without "long-double", e.g., on M<n> Macs
 
 
+## [dpq]wilcox(*, m, n) bug -- PR#19375
+stopifnot(all.equal14(dwilcox(c(16, 0:8), c(4, rep(1, 9)), c(8, rep(8, 9)))[-1],
+                      rep(1/9, 9)),
+          all.equal14(pwilcox(c(10, 4), c(6, 3), c(6, 3)),
+                      c(pwilcox(10, 6, 6), pwilcox(4, 3, 3))),
+          qwilcox(c(0.5, 0.5), c(4, 1), c(8, 8)) == c(qwilcox(0.5, 4, 8), qwilcox(0.5, 1, 8)))
+## larger memory was not freed but reused wrongly in R 4.6.0 -- R 4.6.2
+
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

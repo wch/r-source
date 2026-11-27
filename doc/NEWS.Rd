@@ -672,6 +672,10 @@
       and \code{/./}) also when they were percent-encoded.  On Windows,
       converts \code{\\} to the \code{/} path separator.  Paths that
       include \code{\%00} are rejected.
+
+      \item \code{[dpq]wilcox(*, m, n)} no longer re-use hashed values when
+      (vector) \code{m} or \code{n} is decreasing, fixing \PR{19375}
+      reported with patch by \I{Tasuku Kobayashi}.
     }
   }
 }

@@ -1,6 +1,6 @@
 /*
   Mathlib : A C Library of Special Functions
-  Copyright (C) 1999-2024  The R Core Team
+  Copyright (C) 1999-2026  The R Core Team
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -110,7 +110,7 @@ w_init_maybe(int m, int n)
     if (m==0 || n==0) return;
 
     /* if we need to resize, first free the existing array */
-    if ((w || sigma) && (m > allocated_m || n > allocated_n))
+    if ((w || sigma) && (m != allocated_m || n != allocated_n))
         wilcox_free();
 
     if (!w || !sigma) { /* initialize w[] */
