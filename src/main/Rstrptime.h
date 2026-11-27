@@ -218,8 +218,8 @@ static int Rwcsncasecmp(const wchar_t *cs1, const wchar_t *s2)
 #define w_match_string(cs1, s2) \
   (Rwcsncasecmp ((cs1), (s2)) ? 0 : ((s2) += wcslen (cs1), 1))
 
-#define w_recursive(new_fmt) \
-  (*(new_fmt) != '\0'							      \
+#define w_recursive(new_fmt)	\
+  (*(new_fmt) != '\0'		\
    && (rp = w_strptime_internal (rp, (new_fmt), tm, psecs, poffset)) != NULL)
 
 // FIXME: this has a *lot* "cut-n-paste" from strptime_internal() below
@@ -651,7 +651,7 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 	    int t_mon = 0;
 	    int yr = 1900 + tm->tm_year;
 	    if(tm->tm_yday > (__isleap(yr) ? 365 : 364)) {
-		warning("day-of-year %d in year %d is invalid\n",
+		warning("day-of-year %d in year %d is invalid",
 			tm->tm_yday+1, yr);
 		t_mon = 12; // this will give an invalid mday, so invalid tm
 	    } else {
@@ -696,11 +696,15 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
       {
 	  int t_mon = 0;
 	  int yr = 1900 + tm->tm_year;
-	  if (tm->tm_yday < 0) return NULL;
 	  if(tm->tm_yday > (__isleap(yr) ? 365 : 364)) {
-	      warning("(0-based) yday %d in year %d is invalid\n",
+	    if(!have_mday) // mon+mday => "valid"
+	      warning("(0-based) yday %d in year %d is invalid",
 		      tm->tm_yday, yr);
 	      t_mon = 12;
+	  } else if(tm->tm_yday < 0) {
+	      if(!have_mday)
+		  warning("(0-based) yday %d is negative, invalid", tm->tm_yday);
+	      t_mon = 1;
 	  } else {
 	      while (__mon_yday[__isleap(yr)][t_mon] <= tm->tm_yday)
 		  t_mon++;
@@ -714,7 +718,6 @@ w_strptime_internal (wchar_t *rp, const wchar_t *fmt, stm *tm,
 
       tm->tm_wday = save_wday;
   }
-
   return rp;
 }
 
@@ -1143,7 +1146,7 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 	    int t_mon = 0;
 	    int yr = 1900 + tm->tm_year;
 	    if(tm->tm_yday > (__isleap(yr) ? 365 : 364)) {
-		warning("day-of-year %d in year %d is invalid\n",
+		warning("day-of-year %d in year %d is invalid",
 			tm->tm_yday+1, yr);
 		t_mon = 12;
 	    } else {
@@ -1186,11 +1189,15 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
       {
 	  int t_mon = 0;
 	  int yr = 1900 + tm->tm_year;
-	  if (tm->tm_yday < 0) return NULL;
 	  if(tm->tm_yday > (__isleap(yr) ? 365 : 364)) {
-		warning("(0-based) yday %d in year %d is invalid\n",
+	      if(!have_mday) // mon+mday => "valid"
+		warning("(0-based) yday %d in year %d is invalid",
 			tm->tm_yday, yr);
 		t_mon = 12;
+	  } else if(tm->tm_yday < 0) {
+	      if(!have_mday)
+		  warning("(0-based) yday %d is negative, invalid", tm->tm_yday);
+	      t_mon = 1;
 	  } else {
 	      while (__mon_yday[__isleap(yr)][t_mon] <= tm->tm_yday)
 		  t_mon++;
@@ -1204,8 +1211,7 @@ strptime_internal (const char *rp, const char *fmt, stm *tm,
 
       tm->tm_wday = save_wday;
   }
-
-    return (char *) rp;
+  return (char *) rp;
 }
 
 /*

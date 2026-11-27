@@ -1055,13 +1055,22 @@ oldLCctype <- Sys.getlocale("LC_CTYPE")
 for (lc in c("C", "C.UTF-8")) {
   if (nzchar(suppressWarnings(Sys.setlocale("LC_CTYPE", lc))))
       stopifnot(exprs = { is.null(cat(paste("lc =", lc,": ")))
-          is.na(strptime("2026 0 0", "%Y %U %w", tz = "UTC"))
-          is.na(strptime("2026 0 1", "%Y %W %w", tz = "UTC"))
+          is.na(strptime("2026 0 0", "%Y %U %w", tz = "UTC"))# warning " .. yday -4 .."
+          is.na(strptime("2026 0 1", "%Y %W %w", tz = "UTC"))# warning " .. yday -3 .."
+          is.list(op <- options(warn = 2)) # no warnings from here till '(revert)'
           inherits(print(lt1 <- strptime("2026  0  0  1  4", "%Y %U %w %m %d", tz = "UTC")), "POSIXlt")
           inherits(      lt2 <- strptime("2026  53 0  1  4", "%Y %U %w %m %d", tz = "UTC") , "POSIXlt")
           identical(lt1, lt2)
           identical(as.Date(lt1), as.Date("2026-01-04"))
-      }) ## ok in R 3.0.1, 3.3.3, 4.0.1, 4.4.1, 4.5.1, 4.6.0, 4.6.2 (but not some R-devel)
+          ## Even more back compatibly & consistent; PR#19124, comments __ #9, #14: no "%m"
+          inherits(print(ltnm1 <- strptime("2026  0 0  1 4 ", "%Y %U %w  1 %d", tz = "UTC")), "POSIXlt")# NA (*)
+          inherits(print(ltnm2 <- strptime("2026 53 0  1 4 ", "%Y %U %w  1 %d", tz = "UTC")), "POSIXlt")
+          inherits(      ltnm3 <- strptime("2026 53 0 12 31", "%Y %U %w 12 %d", tz = "UTC") , "POSIXlt")
+          identical(ltnm1, lt1)         #                               ~~
+          identical(as.Date(ltnm2), as.Date("2026-12-04"))
+          identical(ltnm3, as.POSIXlt(ltnm2 + 27*24*3600))
+          is.list(op <- options(op)) # (revert)
+      }) ## ok in R 3.0.1, 3.3.3, 4.0.1, 4.4.1, 4.5.1, 4.6.0, 4.6.2 (but not some R-devel); *) R 4.6.2 only
 }
 Sys.setlocale("LC_CTYPE", oldLCctype)
 ## ASan reported an out-of-bounds read in R-devel r90605 through r90798.

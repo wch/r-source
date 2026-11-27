@@ -616,6 +616,11 @@
       \code{c(0x1p-1024, 0x1p-1074)} are correctly parsed now (instead of
       \dQuote{underflowing} to \code{0}). Thanks to \I{Kevin Ushey}'s
       report and patch in \PR{19342}.
+
+      \item \code{strptime(x, format)} again sets a missing month also at
+      the beginning of year, when possible, e.g., from \code{"\%Y \%U \%w"}.
+      In such cases, it no longer warns when inferring non-\code{NA}
+      date-times.
     }
   }
 }
