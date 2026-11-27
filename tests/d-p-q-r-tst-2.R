@@ -29,7 +29,7 @@ rErr <- function(approx, true, eps = getOption("rErr.eps", 1e-30))
 	   true - approx)     # absolute error (e.g. when true=0)
 }
 ## Numerical equality: Here want "rel.error" almost always:
-All.eq <- function(x,y) {
+all.equal14 <- function(x,y) {
     all.equal.numeric(x,y, tolerance = 64*.Machine$double.eps,
                       scale = max(0, mean(abs(x), na.rm=TRUE)))
 }
@@ -46,19 +46,19 @@ PQonly <- c("tukey")
 
 
 ### (Extreme) tail tests added more recently:
-All.eq(1, -1e-17/ pexp(qexp(-1e-17, log=TRUE),log=TRUE))
+all.equal14(1, -1e-17/ pexp(qexp(-1e-17, log=TRUE),log=TRUE))
 abs(pgamma(30,100, lower=FALSE, log=TRUE) + 7.3384686328784e-24) < 1e-36
-All.eq(1, pcauchy(-1e20)           /  3.18309886183791e-21)
-All.eq(1, pcauchy(+1e15, log=TRUE) / -3.18309886183791e-16)## PR#6756
+all.equal14(1, pcauchy(-1e20)           /  3.18309886183791e-21)
+all.equal14(1, pcauchy(+1e15, log=TRUE) / -3.18309886183791e-16)## PR#6756
 x <- 10^(ex <- c(1,2,5*(1:5),50,100,200,300,Inf))
 for(a in x[ex > 10]) ## improve pt() : cbind(x,t= pt(-x, df=1), C=pcauchy(-x))
     stopifnot(all.equal(pt(-a, df=1), pcauchy(-a), tolerance = 1e-15))
 ## for PR#7902:
 ex <- -c(rev(1/x), ex)
-All.eq(-x, qcauchy(pcauchy(-x)))
-All.eq(+x, qcauchy(pcauchy(+x, log=TRUE), log=TRUE))
-All.eq(1/x, pcauchy(qcauchy(1/x)))
-All.eq(ex,  pcauchy(qcauchy(ex, log=TRUE), log=TRUE))
+all.equal14(-x, qcauchy(pcauchy(-x)))
+all.equal14(+x, qcauchy(pcauchy(+x, log=TRUE), log=TRUE))
+all.equal14(1/x, pcauchy(qcauchy(1/x)))
+all.equal14(ex,  pcauchy(qcauchy(ex, log=TRUE), log=TRUE))
 II <- c(-Inf,Inf)
 stopifnot(pcauchy(II) == 0:1, qcauchy(0:1) == II,
           pcauchy(II, log=TRUE) == c(-Inf,0),
@@ -78,7 +78,7 @@ stopifnot(all.equal(2*pp, pgeom(1, pp), scale= 1e-20))
 x <- 10^(100:295)
 sapply(c(1e-250, 1e-25, 0.9, 1.1, 101, 1e10, 1e100),
        function(shape)
-       All.eq(-x, pgamma(x, shape=shape, lower=FALSE, log=TRUE)))
+       all.equal14(-x, pgamma(x, shape=shape, lower=FALSE, log=TRUE)))
 x <- 2^(-1022:-900)
 ## where all completely off in R 2.0.1
 all.equal(pgamma(x, 10, log = TRUE) - 10*log(x),
@@ -86,16 +86,16 @@ all.equal(pgamma(x, 10, log = TRUE) - 10*log(x),
 all.equal(pgamma(x, 0.1, log = TRUE) - 0.1*log(x),
           rep(0.0498724412598364, length(x)), tolerance = 1e-13)# 7e-16 (i386)
 
-All.eq(dpois(  10*1:2, 3e-308, log=TRUE),
+all.equal14(dpois(  10*1:2, 3e-308, log=TRUE),
        c(-7096.08037610806, -14204.2875435307))
-All.eq(dpois(1e20, 1e-290, log=TRUE), -7.12801378828154e+22)
+all.equal14(dpois(1e20, 1e-290, log=TRUE), -7.12801378828154e+22)
 ## all gave -Inf in R 2.0.1
 
 
 x <- c(outer(1:12, 10^c(-3:2, 6:9, 10*(2:30))))
 for(nu in c(.75, 1.2, 4.5, 999, 1e50)) {
     lfx <- dt(x, df=nu, log=TRUE)
-    stopifnot(is.finite(lfx), All.eq(exp(lfx), dt(x, df=nu)))
+    stopifnot(is.finite(lfx), all.equal14(exp(lfx), dt(x, df=nu)))
 }## dt(1e160, 1.2, log=TRUE) was -Inf  up to R 2.15.2
 
 ## pf() with large df1 or df2
@@ -103,7 +103,7 @@ for(nu in c(.75, 1.2, 4.5, 999, 1e50)) {
 nu <- 2^seq(25, 34, 0.5)
 target <- pchisq(1, 1) # 0.682...
 y <- pf(1, 1, nu)
-stopifnot(All.eq(pf(1, 1, Inf), target),
+stopifnot(all.equal14(pf(1, 1, Inf), target),
           diff(c(y, target)) > 0, # i.e. pf(1, 1, *) is monotone increasing
           abs(y[1] - (target - 7.21129e-9)) < 1e-11) # computed value
 ## non-monotone in R <= 2.1.0
@@ -124,8 +124,8 @@ qg2<- qgamma(1:100 * 1e-9, shape=11)
 stopifnot(diff(qg, diff=2) < -6e-6,
           diff(qg2,diff=2) < -6e-6,
 	  abs(1 - pgamma(qg, 19)/ p) < 1e-13,
-          All.eq(qg  [1], 2.35047385139143),
-          All.eq(qg2[30], 1.11512318734547))
+          all.equal14(qg  [1], 2.35047385139143),
+          all.equal14(qg2[30], 1.11512318734547))
 ## was non-continuous in R 2.6.2 and earlier
 
 f2 <- c(0.5, 1:4)
@@ -144,10 +144,10 @@ stopifnot(fx0 == 0,  pbinom(x0, size = 3, prob = 0.1) == 0)
 db.x <- c(0, 5, 80, 405, 1280, 3125, 6480, 12005, 20480, 32805,
 	  50000, 73205, 103680, 142805, 192080, 253125, 327680)
 a <- rlnorm(100)
-stopifnot(All.eq(a, dbeta(0, 1, a, ncp=0)),
+stopifnot(all.equal14(a, dbeta(0, 1, a, ncp=0)),
 	  dbeta(0, 0.9, 2.2, ncp = c(0, a)) == Inf,
-	  All.eq(65536 * dbeta(0:16/16, 5,1), db.x),
-	  All.eq(exp(16 * log(2) + dbeta(0:16/16, 5,1, log=TRUE)), db.x)
+	  all.equal14(65536 * dbeta(0:16/16, 5,1), db.x),
+	  all.equal14(exp(16 * log(2) + dbeta(0:16/16, 5,1, log=TRUE)), db.x)
           )
 ## the first gave 0, the 2nd NaN in R <= 2.3.0; others use 'TRUE' values
 stopifnot(all.equal(dbeta(0.8, 0.5, 5, ncp=1000),# was way too small in R <= 2.6.2
@@ -163,7 +163,7 @@ x <- seq(0, 10, length=101)
 h <- 1e-7
 dx.h <- (pf(x+h, 7, 5, ncp= 2.5) - pf(x-h, 7, 5, ncp= 2.5)) / (2*h)
 stopifnot(all.equal(dx.h, df(x, 7, 5, ncp= 2.5), tolerance = 1e-6),# (1.50 | 1.65)e-8
-          All.eq(df(0, 2, 4, ncp=x), df(1e-300, 2, 4, ncp=x))
+          all.equal14(df(0, 2, 4, ncp=x), df(1e-300, 2, 4, ncp=x))
           )
 
 ## qt(p ~ 0, df=1) - PR#9804
@@ -229,7 +229,7 @@ P <- pbeta(x, 3, 2200, lower.tail=FALSE, log.p=TRUE)
 stopifnot(is.finite(P), P < -600,
 	  -.001 < (D3P <- diff(P, diff = 3)), D3P < 0, diff(D3P) < 0)
 ## all but the first 43 where -Inf in R <= 2.9.1
-stopifnot(All.eq(pt(2^-30, df=10),
+stopifnot(all.equal14(pt(2^-30, df=10),
                  0.50000000036238542))
 ## = .5+ integrate(dt, 0,2^-30, df=10, rel.tol=1e-20)
 
@@ -317,7 +317,7 @@ for(sz in sizes) {
     for(p in p.s) {
 	qb <- qbinom(p=p, size = sz, prob=pr)
 	pb <- qpois (p=p, lambda = sz * pr)
-	stopifnot(All.eq(qb, pb))
+	stopifnot(all.equal14(qb, pb))
     }
     pp.x <- outer(pr, k.s, function(pr, q) pbinom(q, size = sz, prob=pr))
     qq.x <- apply(pp.x, 2, function(p)     qbinom(p, size = sz, prob=pr))
@@ -372,12 +372,12 @@ stopifnot(all.equal(pchisq(1:2, 1.01, ncp = 80*(1-e), log=TRUE),
 
 ## logit() == qlogit() on the right extreme:
 x <- c(10:80, 80 + 5*(1:24), 200 + 20*(1:25))
-stopifnot(All.eq(x, qlogis(plogis(x, log.p=TRUE),
+stopifnot(all.equal14(x, qlogis(plogis(x, log.p=TRUE),
 			   log.p=TRUE)))
 ## qlogis() gave Inf much too early for R <= 2.12.1
 ## Part 2:
 x <- c(x, seq(700, 800, by=10))
-stopifnot(All.eq(x, qlogis(plogis(x, lower=FALSE, log.p=TRUE),
+stopifnot(all.equal14(x, qlogis(plogis(x, lower=FALSE, log.p=TRUE),
 			   lower=FALSE, log.p=TRUE)))
 # plogis() underflowed to -Inf too early for R <= 2.15.0
 
@@ -487,10 +487,10 @@ rle(qb1$y)
 p <- 0.6948886
 qp <- qbeta(p, a1,b1)
 stopifnot(qp < 2e-8, # was '1' (with a warning) in R <= 3.1.0
-          All.eq(p, pbeta(qp, a1,b1)))
+          all.equal14(p, pbeta(qp, a1,b1)))
 ## less extreme example, same phenomenon:
 a <- 43779; b <- 0.06728
-stopifnot(All.eq(0.695, pbeta(qbeta(0.695, b,a), b,a)))
+stopifnot(all.equal14(0.695, pbeta(qbeta(0.695, b,a), b,a)))
 x <- -exp(seq(0, 14, by=2^-9))
 qx <- qbeta(x, a,b, log.p=TRUE)# used to be slow
 pqx <- pbeta(qx, a,b, log=TRUE)
