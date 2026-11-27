@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.7.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-05-25 12:54\n"
+"POT-Creation-Date: 2026-11-27 20:20\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -93,13 +93,16 @@ msgstr ""
 msgid "must supply a function skeleton for %s, explicitly or via an existing function"
 msgstr ""
 
-msgid "Creating a generic function for %s from %s in %s\n    (from the saved implicit definition)"
+msgid "creating formal generic function '%s' in global environment"
 msgstr ""
 
-msgid "Creating a new generic function for %s in %s"
+msgid "creating formal generic function '%s' in package '%s'"
 msgstr ""
 
-msgid "no generic version of %s on package %s is allowed;\n   a new generic will be assigned for %s"
+msgid "using implicit definition in package '%s'"
+msgstr ""
+
+msgid "ignoring implicit definition in package '%s'"
 msgstr ""
 
 msgid "fdef appears to be a generic function, but with generic name %s instead of %s"
@@ -121,12 +124,6 @@ msgid "Copying the generic function %s to environment %s, because the previous v
 msgstr ""
 
 msgid "no existing definition for function %s"
-msgstr ""
-
-msgid "Creating a generic function from function %s in %s"
-msgstr ""
-
-msgid "Creating a generic function for %s from package %s in %s"
 msgstr ""
 
 msgid "the method for function %s and signature %s is sealed and cannot be re-defined"
@@ -747,6 +744,9 @@ msgstr ""
 msgid "%s is not one of the element names"
 msgstr ""
 
+msgid "is(%s, \"%s\") is TRUE but '%s' implies otherwise"
+msgstr ""
+
 msgid "no method or default for coercing %s to %s"
 msgstr ""
 
@@ -1116,7 +1116,7 @@ msgstr ""
 msgid "invalid 'source' argument: expected file names or a connection but got an object of class %s"
 msgstr ""
 
-msgid "cannot find an environment corresponding to package name '%s\""
+msgid "cannot find an environment corresponding to package name \"%s\""
 msgstr ""
 
 msgid "supplied package, %s, differs from package inferred from source, %s"

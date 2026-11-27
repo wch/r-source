@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 4.7.0\n"
 "Report-Msgid-Bugs-To: bugs.r-project.org\n"
-"POT-Creation-Date: 2026-10-23 17:38\n"
+"POT-Creation-Date: 2026-11-27 20:20\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1596,7 +1596,10 @@ msgstr ""
 msgid "Unparseable 'response' \"%s\"; use is deprecated.  Use as.name(.) or `..`!"
 msgstr ""
 
-msgid "'termobj' must be a object of class %s"
+msgid "'%s' must be an object of class \"%s\""
+msgstr ""
+
+msgid "'%s' must be numeric or NULL"
 msgstr ""
 
 msgid "setting '%s' in terms.formula() is deprecated"
@@ -1629,13 +1632,13 @@ msgstr ""
 msgid "model frame and formula mismatch in model.matrix()"
 msgstr ""
 
-msgid "non-list contrasts argument ignored"
-msgstr ""
-
 msgid "'contrasts.arg' argument must be named"
 msgstr ""
 
-msgid "variable '%s' is absent, its contrast will be ignored"
+msgid "non-list contrasts argument ignored"
+msgstr ""
+
+msgid "cannot set contrasts for variable '%s'"
 msgstr ""
 
 msgid "using type = \"numeric\" with a factor response will be ignored"
@@ -1645,6 +1648,9 @@ msgid "invalid response type"
 msgstr ""
 
 msgid "invalid 'data' argument"
+msgstr ""
+
+msgid "the string \"%s\""
 msgstr ""
 
 msgid "all times contain an NA"
@@ -1870,6 +1876,12 @@ msgid "number of observations in each group must be at least 2"
 msgstr ""
 
 msgid "'nterms' is missing with no default"
+msgstr ""
+
+msgid "'nterms' must be a positive integer"
+msgstr ""
+
+msgid "'max.terms' must be at least 'nterms'"
 msgstr ""
 
 msgid "'ppr' applies only to numerical variables"

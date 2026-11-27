@@ -53,7 +53,8 @@ function(..., list = character(), package = NULL, lib.loc = NULL,
         ccount <- unique_fields(file, sep = ",")
         sOK <- length(scount) == 1L
         cOK <- length(ccount) == 1L
-        if (!(cOK || sOK)) stop(gettextf("File '%s' has unequal number of fields", file))
+        if (!(cOK || sOK))
+            stop(gettextf("file '%s' has an inconsistent number of fields", file))
         ## If !sOK, use comma. If both OK, we could prefer the one
         ## with more fields, but for now prefer comma only if scount == 1
         if (!sOK || (cOK && sOK && scount == 1)) {
