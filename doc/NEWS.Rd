@@ -199,7 +199,7 @@
 
       \item \command{R CMD check} now \samp{NOTE}s packages listed more
       than once in a dependency field other than to give a version
-      range, e.g., \samp{Imports: utils, stats, utils}.
+      range, e.g., \samp{Imports: utils, stats, utils} (\PR{19256}).
     }
   }
 
@@ -236,12 +236,12 @@
 
       \item Passing a name (rather than a character string) as
       \code{component} to \code{model.extract()}, as in
-      \code{model.extract(mf, weights)}, is deprecated.  The warning
+      \code{model.extract(\var{mf}, weights)}, is deprecated.  The warning
       recommends \code{model.response()}, \code{model.weights()} or
       \code{model.offset()} for those three components;
-      \code{model.extract(mf, "weights")} now also uses
-      \code{model.weights()}.  As suggested in r-dev-day issue #167 and
-      reported as \PR{19366} with analysis and patch by \I{Ashish Tiwari}.
+      \code{model.extract(\var{mf}, "weights")} now also uses
+      \code{model.weights()}.
+      (\PR{19366}, with analysis and patch by \I{Ashish Tiwari})
     }
   }
 
@@ -594,7 +594,7 @@
       for the report.
 
       \item More explanation and examples on row/column creation via
-      subassignments such as \code{<data.frame>$newcol[i] <- val},
+      \I{subassignments} such as \code{<data.frame>$newcol[i] <- val},
       along the report and discussions in \PR{18364}, notably by \I{Gabe
 	Becker} and \I{Suharto Anggono}.
 
@@ -643,7 +643,7 @@
   \subsection{Bug Fixes}{
     \itemize{
       \item \code{unzip(., unzip = "internal")} no longer leaks the zip
-      handle on error, thanks to \I{Kevin Ushey}, see \PR{19233}
+      handle on error, thanks to \I{Kevin Ushey}, see \PR{19233}.
 
       \item The internal method of \code{untar()} now checks the whole path
       of every member, so that a final component of \code{".."} or \code{"~"}

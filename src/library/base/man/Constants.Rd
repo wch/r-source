@@ -47,6 +47,7 @@ pi
 \seealso{
   \code{\link{data}}, \code{\link{DateTimeClasses}}.
 
+  \code{\link{Reserved}} for the \dQuote{reserved words} in \R,
   \code{\link{Quotes}} for the parsing of character constants,
   \code{\link{NumericConstants}} for numeric constants.
 }

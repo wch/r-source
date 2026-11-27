@@ -1,6 +1,6 @@
 % File src/library/base/man/cat.Rd
 % Part of the R package, https://www.R-project.org
-% Copyright 1995-2020 R Core Team
+% Copyright 1995-2026 R Core Team
 % Distributed under GPL 2 or later
 
 \name{cat}
@@ -93,11 +93,13 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
 \seealso{
   \code{\link{print}}, \code{\link{format}}, and \code{\link{paste}}
   which concatenates into a string.
+
+  \code{\link{message}} for suppressible output to \code{\link{stderr}}.
 }
 \examples{
 iter <- stats::rpois(1, lambda = 10)
 ## print an informative message
-cat("iteration = ", iter <- iter + 1, "\n")
+cat("iteration = ", iter <- iter + 1, "\n", sep = "")
 
 ## 'fill' and label lines:
 cat(paste(letters, 100* 1:26), fill = TRUE, labels = paste0("{", 1:10, "}:"))

@@ -49,11 +49,11 @@ extSoftVersion()
   Note that the values for \code{bzlib} and \code{pcre} normally contain
   a date as well as the version number, and that for \code{tre} includes
   several items separated by spaces, the version number being the
-  second.  \code{zlib}'s value can be something like \code{1.3.1.zlib-ng}.
+  second.  \code{zlib}'s value can be something like \samp{1.3.1.zlib-ng}.
 
   For \code{\link{iconv}} this will give the implementation as well as the
-  version, for example \code{"GNU libiconv 1.14"}, \code{"glibc
-  2.18"} or \code{"win_iconv"} (which has no version number).
+  version, for example \code{"GNU libiconv 1.14"}, \code{"glibc 2.18"}
+  or \code{"win_iconv"} (which has no version number), or \code{"unknown"}.
 
   The name of the binary/executable file for \code{BLAS} can be used as an
   indication of which implementation is in use.  Typically, the R version of

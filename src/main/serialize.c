@@ -2734,7 +2734,7 @@ do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
 	cntxt.cenddata = con;
     }
     if (!ascii && con->text)
-	error(_("binary-mode connection required for ascii=false"));
+	error(_("binary-mode connection required for ascii=FALSE"));
     if(!con->canwrite)
 	error(_("connection not open for writing"));
 

@@ -5567,7 +5567,7 @@ When last tested it was not possible to use @command{gcc} to build the
 @code{quartz()} device, so @command{configure --without-aqua} may be
 required.
 
-@c Failed to cofigure on macOS 27 with the 'fixed' headers, specifically stdio.h
+@c Failed to configure on macOS 27 with the 'fixed' headers, specifically stdio.h
 @c @R{} was built and tested with the GCC 14.2 compilers in the
 @c @code{arm64} @command{gfortran} distribution mentioned above using a
 @c @file{config.site} containing
