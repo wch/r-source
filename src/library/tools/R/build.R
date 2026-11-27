@@ -1224,7 +1224,7 @@ build_exclude <- function(allfiles, pkgdir, pkgname) {
             allfiles <- substring(allfiles, 3L)  # drop './'
             vers  <- get_serialization_version(allfiles)
             need350 <- names(vers[vers >= 3L])
-            if (length(need350)) {
+            if (!hasDep350 && length(need350)) {
                 fixup_R_dep(pkgname, "3.5.0")
                 msg <- paste("WARNING: Added dependency on R >= 3.5.0 because",
                              "serialized objects in serialize/load version 3",
